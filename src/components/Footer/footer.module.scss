@@ -1,0 +1,174 @@
+
+.footerWrapper{
+    background-color: #247A81;
+}
+
+.footerContainer{
+    width: 85%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    .footerHeaderTxt{
+        font-weight: 500;
+        font-size: 20px;
+    }
+    
+}
+
+
+
+/* Categories */
+.categoriesWrapper{
+    background-color: #247A81;
+    color: #FFFFFF;
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 12px;
+        li {
+            width: 49%;
+            list-style: none;
+            font-weight: 400;
+            font-size: 14px;
+            padding: 15px 0px;
+            cursor: pointer;
+            word-break: break-word;
+            line-height: 18px;
+        }
+    }
+}
+
+
+
+/* useful Link */
+
+.usefulLinksWrapper{
+    background-color: #247A81;
+    color: #FFFFFF;
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 12px;
+        li{
+            width: 49%;
+            list-style: none;
+            font-weight: 400;
+            font-size: 14px;
+            padding: 15px 0px;
+            cursor: pointer;
+            word-break: break-word;
+            line-height: 18px;
+        }
+    }
+}
+
+
+/* Contact Info */
+
+.contactInfoWrapper{
+    background-color: #247A81;
+    color: #FFFFFF;
+    .contactIntoContainer{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 12px;
+        .contactInfoItem{
+            list-style: none;
+            font-weight: 400;
+            font-size: 14px;
+            padding: 20px 0px;
+            cursor: pointer;
+            display: flex;
+        }
+        
+        .contactInfoIcon{
+            height: 24px;
+            width: 24px;
+           
+        }
+        .contactInfoIcon img {
+            height: 100%;
+        }
+        .contactInfoItemTxt{
+            line-height: 24px;
+            margin-left: 16px;
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+   
+}
+
+
+
+/* socialIcon */
+
+.socialIconWrapper{
+    background-color: #247A81;
+    color: #FFFFFF;
+    margin-top: -1px;
+    display: flex;
+    gap: 20px;
+}
+
+.socialIconItem{
+    list-style: none;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 20px 0px;
+    cursor: pointer;
+    display: flex;
+}
+.socialIconImg{
+    width: 16px;
+    height: 16px;
+}
+
+/* CopyRight */
+.copyRightInfoWrapper{
+    text-align: center;
+    padding: 32px 0px;
+    .copyRightTxt{
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .copyRightCardImg{
+        width: 155px;
+        margin-top: 18px;
+    }
+}
+
+
+/* mobile screen */
+@media (max-width:990px) {
+    .footerContainer{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        width: 90%;
+    }
+    .usefulLinksWrapper,.contactInfoWrapper{
+        margin-top: 10%;
+    }
+}
+
+/* Desktop */
+
+@media (min-width:990px) {
+    .footerContainer{
+        gap: 30px;
+    }
+    .categoriesWrapper,.usefulLinksWrapper,.contactInfoWrapper{
+        flex: 1;
+    }
+}
+

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import styles from './page.module.css';
 import Homew from './Home';
+import Footer from '../components/Footer/Footer'
 
 export default async function Home({data}) {
 
@@ -22,8 +23,7 @@ export default async function Home({data}) {
 
   return (
     <>
-        <Homew></Homew>
-        <div>ss</div>
+        <Footer />
     </>
 
   )

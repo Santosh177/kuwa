@@ -30,3 +30,12 @@ a {
     color-scheme: dark;
   }
 }
+
+@media (min-width:1500px){
+
+  body{
+    max-width: 1500px !important;
+    margin: 0 auto;
+  }
+  
+}
