@@ -57,8 +57,20 @@ a {
 .glider {
   padding-bottom: 27px !important;
 }
-
-.glider-track {
-  gap: 2%;
+.glider-dots{
+  display: none !important;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+@media(min-width:990px){
+  .glider-track {
+    gap: 2%;
+  }
+  .glider-dots{
+    display: flex !important;
+  }
+ }
+ 
