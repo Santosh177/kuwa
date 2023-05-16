@@ -15,11 +15,21 @@
 
    }
 
+   .headerTxt{
+      font-weight: 500;
+      font-size: 24px;
+   }
+
 
    @media(min-width:990px){
     .container{
       padding-right: 227px;
        padding-left: 227px;
     }
+    .headerTxt{
+      font-weight: 600;
+      font-size: 18px;
+   }
+
    }
    

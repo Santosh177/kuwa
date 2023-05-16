@@ -24,7 +24,7 @@ const ProductSlider = ({backgroundColor,topColor,design}) => {
             <div className={styles.sliderLine1} style={{backgroundColor:topColor}}></div><div className={styles.sliderLine2} style={{backgroundColor:topColor}}></div>
           </div>
           <div className={styles.container} style={{backgroundImage:backgroundColor}}>
-            <div>Immunity</div>
+            <div className={styles.headerTxt}>Immunity</div>
             <div className={styles.sliderContainer}>
             <Glider
               hasArrows
