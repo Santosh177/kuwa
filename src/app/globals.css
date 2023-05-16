@@ -67,7 +67,8 @@ a {
 
 @media(min-width:990px){
   .glider-track {
-    gap: 2%;
+    /* gap: 2%; */
+    gap: 70px;
   }
   .glider-dots{
     display: flex !important;
