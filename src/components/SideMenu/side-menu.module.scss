@@ -1,0 +1,23 @@
+.sideMenuWrapper{
+
+
+    .backDrop{
+        height: 100vh;
+        position: fixed;
+        width: 100%;
+        opacity: .8;
+        top: 0px;
+        background: rgba(7, 20, 26, 0.4);
+        backdrop-filter: blur(4px);
+    }
+
+    .sideMenuContainer{
+        height: 100vh;
+        width: 90%;
+        position: fixed;
+        background-color: #FFF;
+        top: 0px;
+        max-width: 364px;
+    }
+
+}

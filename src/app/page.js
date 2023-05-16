@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import styles from './page.module.css';
 import Homew from './Home';
+import Header from '@/components/Header/Header';
 import AssuredInfo from './Home/AssuredInfo/AssuredInfo';
 import ProductSlider from '@/components/ProductSlider/ProductSlider';
 import ProductCard from '@/components/ProductCard/ProductCard';
@@ -27,14 +28,14 @@ export default async function Home({data}) {
 
   return (
     <>
-        <AssuredInfo />
+        <Header />
+        {/* <AssuredInfo />
            <ProductSlider />
         <ProductSlider />
         <ProductSlider />
-        {/* <ProductCard /> */}
         <MedicalExpert />
         <Blogs />
-        <Footer />
+        <Footer /> */}
     </>
 
   )
