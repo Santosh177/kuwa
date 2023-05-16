@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import styles from './page.module.css';
 import Homew from './Home';
+import ProductCard from '@/components/ProductCard/ProductCard';
 import MedicalExpert from './Home/MedicalExpert/MedicalExpert';
 import Blogs from './Home/Blogs/Blogs';
 import Footer from '../components/Footer/Footer'
@@ -25,6 +26,7 @@ export default async function Home({data}) {
 
   return (
     <>
+        <ProductCard />
         <MedicalExpert />
         <Blogs />
         <Footer />
