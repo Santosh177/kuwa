@@ -39,3 +39,26 @@ a {
   }
   
 }
+
+
+.glider-prev,
+.glider-next {
+  top: 75px;
+}
+
+.glider-prev {
+  left: -63px !important;
+}
+
+.glider-next {
+  right: -63px !important;
+}
+
+.glider {
+  padding-bottom: 27px !important;
+}
+
+.glider-track {
+  gap: 2%;
+}
+
