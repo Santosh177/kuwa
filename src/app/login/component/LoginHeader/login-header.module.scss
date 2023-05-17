@@ -9,7 +9,6 @@
     position: relative;
     z-index: -1;
 
-
     .backArrow{
         height: 24px;
         width: 24px;
@@ -36,4 +35,11 @@
     }
 
     
+}
+
+@media (min-width:550px){
+    // .headerWrapper{
+    //     max-width: 400px;
+    //     margin: 0 auto;
+    // }
 }

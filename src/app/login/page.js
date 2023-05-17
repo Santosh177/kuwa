@@ -33,9 +33,11 @@ export default function LoginPage() {
   
       return (
         <>
-
-          <LoginHeader  />
-          <LoginCard />
+          <div >
+            <LoginHeader  />
+            <LoginCard />
+          </div>
+          
 
           {/* <div>{theme.isLogin}</div> */}
          

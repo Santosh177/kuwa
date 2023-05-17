@@ -2,10 +2,11 @@
     padding-right: 16px;
     padding-left: 16px;
     background-color: #FFFFFF;
-    margin-top: -26px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     padding-top: 32px;
+    margin: 0 auto;
+    margin-top: -26px;
     .loginTxt{
         font-weight: 500;
         font-size: 16px;
@@ -42,6 +43,7 @@
             font-size: 14px;
             margin-top: 20px;
             text-align: center;
+            cursor: pointer;
         }
        
     }
@@ -57,3 +59,20 @@
         color: #247A81;
     }
 }
+
+
+@media (min-width:550px){
+    .loginCardWrapper{
+        max-width: 400px;
+        margin-top: unset !important;
+        .loginTxt{
+            text-align: center;
+        }
+        .descTxt{
+            text-align: center;
+            margin-top: 5px;
+        }
+    }
+}
+
+
