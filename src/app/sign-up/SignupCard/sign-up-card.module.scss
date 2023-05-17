@@ -1,0 +1,137 @@
+.signUpCardWrapper{
+    padding-right: 16px;
+    padding-left: 16px;
+    background-color: #FFFFFF;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding-top: 32px;
+    margin: 0 auto;
+    margin-top: -26px;
+    .signUpTxt{
+        font-weight: 500;
+        font-size: 16px;
+    }
+    .descTxt{
+        font-weight: 400;
+        font-size: 12px;
+        color: #A0A0A0;
+        margin-top: 2px;
+    }
+    .createAccountBtn{
+        background: #247A81;
+        border-radius: 24px;
+        width: 100%;
+        padding-top: 14px;
+        padding-bottom: 14px;
+        border: 1px solid #247A81;
+        color: #FFFFFF;
+        font-weight: 500;
+        font-size: 14px;
+        margin-top: 20px;
+        text-align: center;
+        cursor: pointer;
+    }
+  
+    .loginTxt{
+        font-weight: 400;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 24px;
+    }
+    .loginSubTxt{
+        font-weight: 600;
+        font-size: 14px;
+        color: #247A81;
+    }
+      
+}
+
+.signUpFormContainer{
+    margin-top: 18px;
+
+    .userNameContainer{
+        justify-content: space-between;
+        display: flex;
+        .inputContain{
+            position: relative;
+            width: 49%;
+        }
+        input{
+            height: 48px;
+            width: 100%;
+            border: 1px solid #E6E7E7;
+            border-radius: 8px;
+        }
+        input:focus{
+            outline: none;
+            border-color: #247A81;
+        }
+        input:focus + .placeholderText .text, :not(input[value=""]) + .placeholderText .text{
+            background-color: white;
+            font-size: 12px;
+            color: #A0A0A0;
+            transform: translate(0, -180%);
+        }
+        .placeholderText{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border: 3px solid transparent;
+            background-color: transparent;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+        .text{
+            font-weight: 500;
+            font-size: 14px;
+            padding-left: 16px;
+            background-color: transparent;
+            transform: translate(0);
+            color: black;
+            transition: transform 0.15s ease-out, font-size 0.15s ease-out, background-color 0.2s ease-out, color 0.15s ease-out;
+        }
+        input, .placeholderText{
+            font-weight: 500;
+            font-size: 14px;
+            padding-left: 16px;
+        }
+    }
+    .inputBox{
+        background: #FFFFFF;
+        border: 1px solid #E6E7E7;
+        border-radius: 8px;
+        height: 48px;
+        width: 100%;
+        margin-top: 16px;
+        padding-left: 16px;
+        font-weight: 500;
+        font-size: 14px;
+    }
+    .inputBox:focus{
+        outline: none;
+        border-color: #247A81;
+    }
+}
+
+
+
+
+
+@media (min-width:550px){
+    .signUpCardWrapper{
+        max-width: 400px;
+        margin-top: unset !important;
+        .signUpTxt{
+            text-align: center;
+        }
+        .descTxt{
+            text-align: center;
+            margin-top: 5px;
+        }
+    }
+}
+
+
