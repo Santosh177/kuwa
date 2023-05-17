@@ -28,7 +28,7 @@ export default async function Home({data}) {
 
   return (
     <>
-        <Header />
+        {/* <Header /> */}
         {/* <AssuredInfo />
            <ProductSlider />
         <ProductSlider />
