@@ -37,11 +37,13 @@
         font-size: 14px;
         text-align: center;
         margin-top: 24px;
+        cursor: pointer;
     }
     .loginSubTxt{
         font-weight: 600;
         font-size: 14px;
         color: #247A81;
+        cursor: pointer;
     }
       
 }
@@ -61,16 +63,18 @@
             width: 100%;
             border: 1px solid #E6E7E7;
             border-radius: 8px;
+            padding-left: 16px;
         }
         input:focus{
             outline: none;
             border-color: #247A81;
         }
         input:focus + .placeholderText .text, :not(input[value=""]) + .placeholderText .text{
-            background-color: white;
+            background-color:white;
             font-size: 12px;
             color: #A0A0A0;
             transform: translate(0, -180%);
+            margin-left: 12px;
         }
         .placeholderText{
             position: absolute;
@@ -83,6 +87,7 @@
             pointer-events: none;
             display: flex;
             align-items: center;
+            color: #A0A0A0;
         }
         .text{
             font-weight: 500;
@@ -90,13 +95,12 @@
             padding-left: 16px;
             background-color: transparent;
             transform: translate(0);
-            color: black;
+            color: #A0A0A0;
             transition: transform 0.15s ease-out, font-size 0.15s ease-out, background-color 0.2s ease-out, color 0.15s ease-out;
         }
         input, .placeholderText{
             font-weight: 500;
             font-size: 14px;
-            padding-left: 16px;
         }
     }
     .inputBox{
@@ -113,6 +117,12 @@
     .inputBox:focus{
         outline: none;
         border-color: #247A81;
+    }
+    .inputBox::placeholder{
+        color: #A0A0A0;
+    }
+    .inputError{
+        border: 1px solid red;
     }
 }
 
