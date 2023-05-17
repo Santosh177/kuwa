@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import LoginHeader from './component/LoginHeader/LoginHeader';
-import LoginInfo from './component/LoginInfo/LoginInfo';
+import LoginCard from './component/LoginCard/LoginCard';
 
 
 export default function LoginPage() {
@@ -35,7 +35,7 @@ export default function LoginPage() {
         <>
 
           <LoginHeader  />
-          <LoginInfo />
+          <LoginCard />
 
           {/* <div>{theme.isLogin}</div> */}
          

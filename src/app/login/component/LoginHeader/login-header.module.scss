@@ -1,0 +1,39 @@
+.headerWrapper{
+    background-image: url('https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/loginHeader.png');
+    height: 132px;
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: -1;
+
+
+    .backArrow{
+        height: 24px;
+        width: 24px;
+        position: absolute;
+        left: 16px;
+        top: 32px;
+    }
+
+
+    .kuwaLogo{
+        display: flex;
+        flex-direction: column;
+        img{
+            height: 32px;
+            width: 68px;
+            margin: 0 auto;
+        }
+        .txt{
+            font-weight: 600;
+            font-size: 24px;
+            color: #FFFFFF;
+            text-align: center;
+        }
+    }
+
+    
+}

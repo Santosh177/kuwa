@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import styles from './login-info.module.scss';
+import styles from './login-card.module.scss';
 import { useState } from 'react';
 
 
@@ -47,15 +47,20 @@ export default function Login() {
   
 
       return (
-        <div className={styles['login-wrapper']}>
-            <div>
-                <input type='email' onChange={onEmailChange} value={userEmail} />
-            </div>
-            <div>
-                <input type='passord' onChange={onPasswordChange} value={password} />
-            </div>
-            <button onClick={onLogin}>Login</button>
-            <div>Don’t have an account ? <span>Create account</span></div>
+        <div className={styles.loginCardWrapper}>
+          <div className={styles.loginTxt}>Login</div>
+          <div className={styles.descTxt}>Create or login to enjoy exclusive benefits.</div>
+          <div className={styles.loginInputContainer}>
+              <div>
+                  <input className={styles.inputBox} type='email' onChange={onEmailChange} value={userEmail} placeholder='Email ID (ex. abc@gmail.com)' />
+              </div>
+              <div>
+                  <input className={styles.inputBox} type='passord' onChange={onPasswordChange} value={password} placeholder='Password' />
+              </div>
+              <div className={styles.loginBtn} onClick={onLogin}>Login</div>
+          </div>
+           
+            <div className={styles.signUpTxt}>Don’t have an account ? <span className={styles.createAccountTxt}>Create account</span></div>
         </div>
       )
     }
