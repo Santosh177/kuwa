@@ -2,6 +2,7 @@
 
 import Input from "@/components/Input/Input";
 import PhoneNumberInput from "@/components/PhoneNumberInput/PhoneNumberInput";
+import CreateAccountBox from "../components/CreateAccountBox/CreateAccountBox";
 import styles from './address-form.module.scss';
 
 const PersonalInfoFrom = () => {
@@ -9,6 +10,7 @@ const PersonalInfoFrom = () => {
     return (
         <div className={styles.personalInfoForm}>
             <div className={styles.headerTxt}>Personal Info</div>
+            <CreateAccountBox />
             <div className={styles.userNameContainer}>
                 <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  />
                 <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}}  />
@@ -49,6 +51,7 @@ export default function AddressForm() {
       return (
         <>
           <div className={styles.addressForm}> 
+        
             <PersonalInfoFrom />
             <AddressInfoForm />
           </div>
