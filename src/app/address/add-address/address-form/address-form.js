@@ -1,6 +1,7 @@
 'use client';
 
 import Input from "@/components/Input/Input";
+import PhoneNumberInput from "@/components/PhoneNumberInput/PhoneNumberInput";
 import styles from './address-form.module.scss';
 
 
@@ -16,6 +17,7 @@ export default function AddressForm() {
                 <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  />
                 <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}}  />
             </div>
+            <PhoneNumberInput />
             <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)"  />
             <div className={styles.areaInputText}>
                 <div className={styles.inputContainer}>
