@@ -1,6 +1,7 @@
 
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
+import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import styles from './page.module.scss';
 
 export default function AllProduct() {
@@ -21,7 +22,7 @@ export default function AllProduct() {
             <div className={styles.priceInfo}>
               <PriceDetails />
             </div>
-            
+            <CompanyInfo />
           </div>
          
           
