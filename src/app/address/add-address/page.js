@@ -1,5 +1,6 @@
 'use client';
 
+import PageInfoTicker from '@/components/PageInfoTicker/PageInfoTicker';
 import AddressForm from "./address-form/address-form";
 import SubmitBtn from "./components/SubmitBtn/SubmitBtn";
 import styles from './page.module.scss';
@@ -12,8 +13,9 @@ export default function AddAddress() {
   
       return (
         <>
-          <div className={styles.addAddressWrapper}> 
              
+          {/* <PageInfoTicker /> */}
+          <div className={styles.addAddressWrapper}> 
               <AddressForm />
               <SubmitBtn />
           </div>
