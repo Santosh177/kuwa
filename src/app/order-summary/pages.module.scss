@@ -1,0 +1,18 @@
+.orderSummary{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: 0 auto;
+    gap: 28px;
+    .headerTxt{
+        font-weight: 500;
+        font-size: 16px;
+    }
+    .addressAndProductDetails{
+        width: 50%;
+    }
+
+    .priceDetails{
+        width: 50%;
+    }
+}
