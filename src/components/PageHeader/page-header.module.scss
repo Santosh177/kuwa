@@ -1,0 +1,36 @@
+.pageHeader{
+    // background-image: url('https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/header_background+(1).png');
+    // // height: 70px;
+    // background-repeat: no-repeat, repeat;
+    // background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 16px;
+    padding-right: 16px;
+
+    .headerInfo{
+        display: flex;
+        align-items: center;
+        .headerTxt{
+            margin-left: 8px;
+            font-weight: 500;
+            font-size: 16px;
+        }
+    }
+    
+    
+    .backArrow{
+        height: 24px;
+        width: 24px;
+    }
+    .kuwaLogo{
+        width: 68px;
+        height: 32px;
+    }
+}
