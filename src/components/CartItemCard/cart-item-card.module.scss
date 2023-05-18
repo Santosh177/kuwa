@@ -1,0 +1,108 @@
+.cartItemCard{
+    background: #FFFFFF;
+    box-shadow: 0px 6px 7px rgba(173, 173, 173, 0.16);
+    border-radius: 16px;
+    box-shadow: 0px 6px 7px rgba(173, 173, 173, 0.16);
+    border-radius: 16px;
+    padding: 8px;
+    max-width: 396px;
+    display: flex;
+    padding-right: 27px;
+    padding-bottom: 0px;
+    gap: 16px;
+    margin-top: 16px;
+    .cartItemContainer{
+        display: flex;
+        flex-direction: column;
+        img{
+            height: 77px;
+        }
+    }
+
+    .cartItemInfo{
+
+        .itemName{
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .discountTag{
+            margin-top: 6px;
+            background: #CE4224;
+            border-radius: 8px;
+            color: #FFFFFF;
+            display: flex;
+            gap: 5px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-right: 12px;
+            width: fit-content;
+            padding-left: 10px;
+            .discountText{
+                font-weight: 600;
+                font-size: 12px;
+            }
+            .discountPrice{
+                font-weight: 400;
+                font-size: 12px;
+            }
+        }
+
+        .priceContainer{
+
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            margin-top: 8px;
+            .finalPrice{
+                font-weight: 600;
+                font-size: 14px;
+            }
+            .retailPrice{
+                font-weight: 400;
+                font-size: 12px;
+            }
+        }
+
+    }
+}
+
+
+.quantityContainer{
+    display: inline-flex;
+    width: 77px;
+    height: 26px;
+    border-radius: 8px;
+    border: solid 1px rgba(54, 68, 89, 0.25) !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+    top: -12px;
+    background: white;
+    .quantityBtn{
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        color: #32445b;
+    }
+
+}
+@media(max-width:768px){
+    .quantityContainer{
+        display: inline-flex;
+        width: 66px;
+        height: 22px;
+        border-radius: 8px;
+        border: solid 1px rgb(54,68,89,.25 )!important;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        .quantityBtn{
+            cursor: pointer;
+            font-size: 9px;
+            font-weight: 600;
+            color: #32445b;
+        }
+    
+    }
+}
