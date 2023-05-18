@@ -1,4 +1,9 @@
 .addressForm{
+    .headerTxt{
+        font-weight: 500;
+        font-size: 16px;
+        display: none;
+    }
 
     .userNameContainer{
         display: flex;
@@ -60,4 +65,27 @@
         flex-direction: row;
         justify-content: space-between;
     }
+    
+}
+
+@media(min-width: 990px){
+    .addressForm{
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        width: 55%;
+        gap: 78px;
+        margin-top: 20px;
+        .headerTxt{
+            display: block;
+        }
+        .addressInfoForm{
+            width: 50%;
+        }
+        .personalInfoForm{
+            width: 50%;
+        }
+    }
+    
+
 }

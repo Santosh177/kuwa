@@ -4,21 +4,25 @@ import Input from "@/components/Input/Input";
 import PhoneNumberInput from "@/components/PhoneNumberInput/PhoneNumberInput";
 import styles from './address-form.module.scss';
 
+const PersonalInfoFrom = () => {
 
-export default function AddressForm() {
-
-
-
-  
-      return (
-        <>
-          <div className={styles.addressForm}> 
+    return (
+        <div className={styles.personalInfoForm}>
+            <div className={styles.headerTxt}>Personal Info</div>
             <div className={styles.userNameContainer}>
                 <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  />
                 <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}}  />
             </div>
             <PhoneNumberInput />
             <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)"  />
+        </div>
+    )
+}
+
+const AddressInfoForm = () => {
+    return (
+        <div className={styles.addressInfoForm}>
+         <div className={styles.headerTxt}>Address</div>
             <div className={styles.areaInputText}>
                 <div className={styles.inputContainer}>
                     <input type="text" id='area' name='area' autocomplete="off" value={''} onChange={(e)=>onInputChange(e,fieldName)} />
@@ -32,6 +36,21 @@ export default function AddressForm() {
                 <Input type="text" fieldName="country" placeHolder="Country *"  style={{width:'49%'}} />
                 <Input type="text" fieldName="stateProvince" placeHolder="State Province*" style={{width:'49%'}}  />
             </div>
+        </div>
+    )
+}
+
+
+export default function AddressForm() {
+
+
+
+  
+      return (
+        <>
+          <div className={styles.addressForm}> 
+            <PersonalInfoFrom />
+            <AddressInfoForm />
           </div>
         </>
       )
