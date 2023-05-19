@@ -1,4 +1,4 @@
-.paymentSuceesContainer{
+.paymentFailureContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,7 +36,7 @@
 }
 
 @media (min-width:990px){
-    .paymentSuceesContainer{
+    .paymentFailureContainer{
         width: 50%;
         max-width: 343px;
         .subTxt{
