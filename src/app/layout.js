@@ -8,7 +8,7 @@ import { getTokenCookie } from '../lib/auth-cookies';
 import { cookies } from 'next/headers';
 // import { Work_Sans } from 'next/font/google';
 
-const workSans = Work_Sans({ weight: ['400', '700'],
+const workSans = Work_Sans({ weight: ['400','500','600', '700'],
 style: ['normal', 'italic'],
 subsets: ['latin'],})
 

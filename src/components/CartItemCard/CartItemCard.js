@@ -26,6 +26,7 @@ const CartItemCard = ({number,image}) => {
                     <div className={styles.retailPrice}>Dhs 179</div>
                 </div>
             </div>
+            <img className={styles.deleteIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/delete.png' alt='delete-icon'/>
            
         </div>
     )
