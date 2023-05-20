@@ -1,4 +1,5 @@
 'use client';
+import PageHeader from '@/components/PageHeader/PageHeader';
 import AddressInfo from './AddressInfo/AddressInfo';
 import styles from './pages.module.scss'
 
@@ -9,7 +10,9 @@ export default function SelectAddress() {
 
   
       return (
-        <div className={styles.addressListWrapper}>
+        <>
+          <PageHeader headerName='Select Address' />
+          <div className={styles.addressListWrapper}>
             <div className={styles.addNewAddressTxt}>+ Add new address</div>
             <div className={styles.addressInfoContainer}>
               <AddressInfo />
@@ -19,8 +22,9 @@ export default function SelectAddress() {
               <AddressInfo />
               <AddressInfo />
             </div>
-          
-        </div>
+          </div>
+        </>
+       
       )
     }
     
