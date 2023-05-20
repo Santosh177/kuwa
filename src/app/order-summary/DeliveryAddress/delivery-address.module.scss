@@ -33,6 +33,19 @@
     }
 }
 
+@media(max-width:990px){
+    .deliveryAddress{
+        background: #FFFFFF;
+        border: 1px solid #E6E7E7;
+        border-radius: 16px;
+        max-width: 396px;
+        padding-right: 16px;
+        padding-left: 16px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        margin-top: 16px;
+    }
+}
 
 @media(min-width:990px){
     .deliveryAddress{

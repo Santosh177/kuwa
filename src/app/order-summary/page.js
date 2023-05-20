@@ -19,7 +19,7 @@ export default function AllProduct() {
          
           <div className={styles.orderSummary}>
             <div className={styles.addressAndProductDetails}> 
-              <div className={styles.headerTxt}>Address & product details</div>
+              <div className={[styles.headerTxt,styles.addressTxt].join(" ")}>Address & product details</div>
               <DeliveryAddress />
               <CartItemCard />
               <CartItemCard />
