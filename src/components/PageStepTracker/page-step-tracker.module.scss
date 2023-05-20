@@ -53,11 +53,8 @@
 }
 
 .StepCount{
-    font-size: 19px;
+    font-size: 14px;
     color: #f3e7f3;
-    @media (max-width: 600px) {
-      font-size: 16px;
-    }
     .stepIcon{
         height: 24px;
         width: 24px;
@@ -67,14 +64,14 @@
 
 .StepsLabelContainer{
     position: absolute;
-    top: 66px;
+    top: 55px;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 .StepLabel{
-    font-size: 19px;
-  color: #4a154b;
+    font-size: 14px;
+  color: #A0A0A0;
   width: max-content;
   text-align: center;
   @media (max-width: 600px) {
