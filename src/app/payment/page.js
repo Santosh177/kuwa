@@ -1,6 +1,7 @@
 
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
+import PaymentFooterBtn from "./components/PaymentFooterBtn/PaymentFooterBtn";
 import styles from './pages.module.scss';
 
 export default function Payment() {
@@ -18,6 +19,7 @@ export default function Payment() {
             <div className={styles.headerTxt}>Price Details</div>
             <PriceDetails />
           </div> */}
+          <PaymentFooterBtn />
         </div>
       )
     }
