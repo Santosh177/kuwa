@@ -2,7 +2,7 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
-import PaymentFooterBtn from "../payment/components/PaymentFooterBtn/PaymentFooterBtn";
+import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import styles from './page.module.scss';
 
 export default function Cart() {
@@ -27,7 +27,7 @@ export default function Cart() {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn />
+          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice="AED 350" />
         </>
       )
     }
