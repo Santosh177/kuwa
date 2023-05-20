@@ -1,8 +1,4 @@
 .pageHeader{
-    // background-image: url('https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/header_background+(1).png');
-    // // height: 70px;
-    // background-repeat: no-repeat, repeat;
-    // background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,33 +8,49 @@
     align-items: center;
     justify-content: space-between;
    
+    .headerBackgroundImg{
+        display: none;
+    }
+    .mobHeaderBackgroundImg{
+        width: 100%;
+    }
 
-    .headerInfo{
+     .headerContent{
+        position: absolute;
+        width: 90%;
+        margin: 0 auto;
+        justify-content: space-between;
         display: flex;
+        left: 0;
+        right: 0;
         align-items: center;
         .headerTxt{
-            margin-left: 8px;
             font-weight: 500;
-            font-size: 16px;
+            font-size: 24px;
+            flex: 1;
+            padding-left: 13px;
+        }
+        .backArrow{
+            height: 24px;
+            width: 24px;
+            cursor: pointer;
+        }
+        .kuwaLogo{
+            width: 68px;
+            height: 32px;
         }
     }
-    
-    
-    .backArrow{
-        height: 24px;
-        width: 24px;
-        cursor: pointer;
-    }
-    .kuwaLogo{
-        width: 68px;
-        height: 32px;
-    }
+
 }
 
 @media(min-width:990px){
     .pageHeader{
+        .mobHeaderBackgroundImg{
+            display: none;
+        }
         .headerBackgroundImg{
             width: 100%;
+            display: block;
         }
         .headerContent{
             position: absolute;
