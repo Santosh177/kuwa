@@ -1,4 +1,4 @@
-import PageInfoTicker from "@/components/PageInfoTicker/PageInfoTicker";
+import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
@@ -13,8 +13,8 @@ export default function Payment() {
   
       return (
         <div className={styles.orderSummary}>
-          {/* <PageHeader/> */}
-          <PageInfoTicker />
+          <PageHeader/>
+          <PageStepTracker />
 
           {/* <PaymentMethod /> */}
          

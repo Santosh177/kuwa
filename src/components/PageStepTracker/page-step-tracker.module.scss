@@ -21,7 +21,6 @@
   height: 40px;
   border-radius: 50%;
   background-color: #E6E7E7;
-  border: 3px solid #E6E7E7;
   transition: 0.4s ease;
   display: flex;
   justify-content: center;
@@ -45,6 +44,12 @@
 }
 .StepStyleActive{
     background-color: #247A81;
+    
+}
+.StepStyleActiveTracker{
+    ::after{
+        background-color: #247A81;
+    }
 }
 
 .StepCount{
