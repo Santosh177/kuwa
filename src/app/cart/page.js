@@ -15,7 +15,7 @@ export default function Cart() {
           <PageHeader headerName="My Cart" />
           <div className={styles.cartPage}>
             <div className={styles.cartItemsContainer}>
-              <div className={styles.headerTxt}> Cart Items </div>
+              <div className={[styles.headerTxt,styles.cartHeaderTxt].join(" ")}> Cart Items </div>
               <CartItemCard />
               <CartItemCard />
             </div>
