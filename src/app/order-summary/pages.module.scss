@@ -16,3 +16,12 @@
         width: 50%;
     }
 }
+
+@media (min-width:990px){
+    .orderSummary{
+        margin-top: 55px;
+        .priceDetailsContainer{
+            margin-top: 16px;
+        }
+    }
+}

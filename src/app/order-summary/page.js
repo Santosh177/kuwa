@@ -17,7 +17,7 @@ export default function AllProduct() {
           <PageHeader headerName="Order Summary"/>
           <PageStepTracker stepCount={2} />
          
-          {/* <div className={styles.orderSummary}>
+          <div className={styles.orderSummary}>
             <div className={styles.addressAndProductDetails}> 
               <div className={styles.headerTxt}>Address & product details</div>
               <DeliveryAddress />
@@ -26,9 +26,11 @@ export default function AllProduct() {
             </div>
             <div className={styles.priceDetails}>
               <div className={styles.headerTxt}>Price Details</div>
-              <PriceDetails />
+              <div className={styles.priceDetailsContainer}>
+                <PriceDetails />
+              </div>
             </div>
-          </div> */}
+          </div>
           <PatmentFooterBtn btnName="Proceed to next"  totalPrice="AED  350"/>
         </>
       )
