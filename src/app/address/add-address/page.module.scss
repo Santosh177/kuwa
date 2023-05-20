@@ -2,4 +2,11 @@
     padding-right: 16px;
     padding-left: 16px;
     height: 100vh;
+    margin-top: 35px;
+}
+
+@media (min-width:990px){
+    .addAddressWrapper{
+        margin-top: 52px;
+    }
 }
