@@ -8,7 +8,6 @@
 .StepContainer{
     display: flex;
     justify-content: space-between;
-    margin-top: 70px;
     position: relative;
 }
 
@@ -78,36 +77,37 @@
   }
 }
 
-.ButtonsContainer{
-    display: flex;
-    justify-content: space-between;
-    margin: 0 -15px;
-    margin-top: 100px;
-}
 
-.ButtonStyle{
-    border-radius: 4px;
-    border: 0;
-    background: #4a154b;
-    color: #ffffff;
-    cursor: pointer;
-    padding: 8px;
-    width: 90px;
-    :active {
-      transform: scale(0.98);
-    }
-    :disabled {
-      background: #f3e7f3;
-      color: #000000;
-      cursor: not-allowed;
-    }
-}
 
-.CheckMark{
-    font-size: 26px;
-    font-weight: 600;
-    color: #4a154b;
-    -ms-transform: scaleX(-1) rotate(-46deg); /* IE 9 */
-    -webkit-transform: scaleX(-1) rotate(-46deg); /* Chrome, Safari, Opera */
-    transform: scaleX(-1) rotate(-46deg);
+@media(max-width:768px){
+    .MainContainer{
+        max-width: 290px;
+    }
+    .StepStyle{
+        width: 28px;
+        height: 28px;
+        ::after{
+            content: "";
+            position: absolute;
+            background: #E6E7E7;
+            height: 3px;
+            width: 70px;
+            top: 50%;
+            transition: 0.4s ease;
+            transform: translateY(-50%);
+            left: 37px;
+        }
+    }
+    .StepLabel{
+        font-size: 12px;
+    }
+    .StepCount{
+        .stepIcon{
+            height: 18px;
+            width: 18px;
+        }
+    }
+    .StepsLabelContainer{
+        top: 41px;
+    }
 }

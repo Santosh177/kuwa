@@ -2,32 +2,24 @@
 import styles from './page-info-ticker.module.scss';
 
 
-const Ticker = ({text}) => {
-    return(
-        <div className={styles.pageInfoTicker}>
-        <div className={styles.pageInfoContainer}>
-             <div className={styles.pageInfoItem}>
-                 <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/address.png' alt='icon'/>
-             </div>
-             <div className={styles.txt}>{text}</div>
-        </div>
-    </div>
-    )
-}
+
 
 
 const PageInfoTicker = ({}) => {
     const steps = [
         {
           label: 'Address',
+          icon:"",
           step: 1,
         },
         {
           label: 'Order Summary',
+          icon:"",
           step: 2,
         },
         {
           label: 'Payment',
+          icon:"",
           step: 3,
         },
       ]
