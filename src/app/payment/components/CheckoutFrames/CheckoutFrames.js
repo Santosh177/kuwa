@@ -111,6 +111,7 @@ export default function CheckoutFrames() {
         </div>
         </div>
       </div>
+
     </Frames>
         </div>
       )

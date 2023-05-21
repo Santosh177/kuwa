@@ -93,32 +93,49 @@
         }
     }
 
-    .paymentInfoContainer{
-        display: flex;
-        justify-content: space-between;
-        padding-right: 20px;
-        padding-left: 10px;
-        align-items: center;
+    .paymentInfoWrapper{
+        margin-top: 15px;
         border: 1px solid #E6E7E7;
         border-radius: 16px;
-        margin-top: 15px;
-        padding-top: 12px;
-        padding-bottom: 12px;
-        .paymentInfo{
-            .visa{
-                width: 70px;
-                height: 28px;
+        .paymentInfoContainer{
+            display: flex;
+            justify-content: space-between;
+            padding-right: 20px;
+            padding-left: 10px;
+            align-items: center;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            .paymentInfo{
+                .visa{
+                    width: 70px;
+                    height: 28px;
+                }
+                .masterCard{
+                    width: 70px;
+                    height: 28px;
+                }
             }
-            .masterCard{
-                width: 70px;
-                height: 28px;
+        
+        }
+        .security{
+            font-weight: 400;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 15px;
+            padding-top: 10px;
+            gap: 5px;
+            img{
+                height: 16px;
+                width: 16px;
             }
         }
-       
     }
 }
 
 .payWithEmi{
+    margin-top: 20px;
     .headerContainer{
         display: flex;
         align-items: center;

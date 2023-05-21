@@ -2,6 +2,7 @@
 import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import CheckoutFrames from '../components/CheckoutFrames/CheckoutFrames';
 import styles from './payment-method.module.scss';
+import { useState } from 'react';
 
 
 const CheckBox = ({isChecked=false}) => {
@@ -16,23 +17,33 @@ const CheckBox = ({isChecked=false}) => {
 }
 
 const CreditCardOption = () => {
+
+  const [ isShowCard , setIsShowCard] = useState(false)
+
   return(
     <div className={styles.creditCardOption}>
         <div className={styles.paymentTypeHeaderTxt}>
                 <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/payment.png' alt=''/>
                 <div className={styles.txt}>Pay with Credit or Debit card</div>
             </div>
-            <div className={styles.paymentInfoContainer}>
+            <div className={styles.paymentInfoWrapper} onClick={()=> setIsShowCard(!isShowCard)}>
+              <div className={styles.paymentInfoContainer}>
                 <div className={styles.paymentInfo}>
-                  <img className={styles.visa} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/visa.png'/>
-                  <img className={styles.masterCard} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/mastercard.png' />
-                </div>
+                    <img className={styles.visa} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/visa.png'/>
+                    <img className={styles.masterCard} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/mastercard.png' />
+                  </div>
+                  <CheckBox />
+              </div>
                 
-                <CheckBox />
+                {isShowCard && 
+                <><CheckoutFrames />
+                <div className={styles.security}><img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/security.png' alt='safe' /> <span>Safe & Secured</span></div>
+                </>
+                }
 
             </div>
 
-            <CheckoutFrames />
+           
     </div>
   )
 }
