@@ -32,7 +32,7 @@ const CreditCardMethod = () => {
 
             </div>
 
-            {/* <CheckoutFrames /> */}
+            <CheckoutFrames />
     </div>
   )
 }

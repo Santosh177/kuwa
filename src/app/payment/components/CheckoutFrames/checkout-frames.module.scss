@@ -1,302 +1,43 @@
-
-.loader {
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
-    animation: spin 2s linear infinite;
-  }
-  
-  /* Safari */
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
 .checkout-frames-wrapper{
-    background: #FFFCF7;
+    background: #ffffff;
     display: flex;
     justify-content: center;
     padding-bottom: 10%;
-    font-family: 'Poppins';
-
-    .checkout-frame-details{
-        display: block;
-        margin-bottom: 40px;
-        background: #fff;
-        border: 0.5px solid #eaeaea;
-        border-radius: 12px;
-        box-shadow: 0 6px 4px #0000000f;
-        padding-top: 20px;
-        padding-right: 20px;
-        padding-left: 20px;
-        padding-bottom: 20px;
-        padding: 25px;
+    .field{
+        height: 48px !important;
     }
-    .checkout-frames-container{
-        margin-top: 22px;
+    .frames-card-number-container{
+        height: 48px;
+        border: 1px solid #E6E7E7;
+        border-radius: 8px;
+        padding-left: 16px;
     }
-    .card-number-txt{
-        margin-bottom: 3px;
-        font-weight: 400;
-        color: #818086;
-        font-family: 'Poppins';
-    }
-    
-    
     .frames-card-details-container{
         display: flex;
-        margin-top: 18px;
+        height: 48px;
         justify-content: space-between;
+        margin-top: 16px;
+
+        .frames-expiry-date-container{
+            border: 1px solid #E6E7E7;
+            border-radius: 8px;
+            padding-left: 16px;
+            width: 48%;
+        }
+
+        .frames-cvv-container{
+            border: 1px solid #E6E7E7;
+            border-radius: 8px;
+            padding-left: 16px;
+            width: 48%;
+        }
+
+        .expiry-date-frame{
+            height: 48px;
+        }
+        input {
+            height: 48px;
+        }
     }
-    
-    .frames-expiry-date-container{
-        width: 48%;
-    }
-    
-    .frames-cvv-container{
-        width: 48%;
-    }
-    
-    .frames-btn-container{
-    
-    
-    }
-    .amount-txt{
-        font-weight: 400 !important;
-    }
-    .checkout-amout-container{
-        margin-bottom: 40px;
-        padding: 15px;
-        font-weight: 400;
-        text-align: center;
-        padding: 0.86rem 1rem;
-        font-size: 20px;
-        font-weight: 700;
-        color: #1e1e1e;
-        background: #fff;
-        border: 0.5px solid #eaeaea;
-        border-radius: 12px;
-        box-shadow: 0 6px 4px #0000000f;
-    }
-    
-    
-    
-    
-    #payment-form {
-        width: 280px;
-        margin: 0 auto;
-    }
-    
-    label {
-        display: block;
-        height: 10px;
-        color: #13395E;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 10px;
-        margin: 8px 0;
-    }
-    
-    .date-and-code {
-        display: flex;
-        margin-bottom: 8px;
-    }
-    
-    .date-and-code>div:nth-child(1) {
-        width: 55.715%;
-    }
-    
-    .date-and-code>div:nth-child(2) {
-        width: 45.719%;
-    }
-    
-    .input-container {
-        position: relative;
-        display: flex;
-        height: 40px;
-    }
-    
-    .icon-container:last-child {
-        right: 0;
-    }
-    
-    .icon-container.payment-method {
-        right: 0;
-    }
-    
-    .input-container.card-number {
-        margin-bottom: 8px;
-    }
-    input.card-number{
-        font-family: 'Poppins';
-    }
-    
-    .input-container.expiry-date {
-        margin-right: 4px;
-        font-size: 13px;
-    }
-    
-    .input-container.cvv {
-        margin-left: 4px;
-    }
-    
-    .card-number-frame {
-        padding-left: 16px;
-    }
-    
-    .expiry-date-frame {
-        padding-left: 16px;
-    }
-    
-    .cvv-frame {
-        padding-left: 16px;
-    }
-    
-    
-    .icon-container {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        display: flex;
-        justify-content: center;
-        width: 26px;
-        margin: 0 7px;
-    }
-    
-    .icon-container.payment-method {
-        transform: translateY(-50%) rotateY(90deg);
-        transition: opacity 0.15s ease-out;
-        opacity: 0;
-        top: 50%;
-    }
-    
-    .icon-container.payment-method.show {
-        opacity: 1;
-        transition: all 0.4s ease-out;
-        transform: translateY(-50%) rotateY(0deg);
-    }
-    
-    .icon-container.payment-method img {
-        width: 100%;
-    }
-    
-    [id$="-error"] {
-        display: none
-    }
-    
-    .field{
-        font-family: 'Poppins' !important;
-    }
-    
-    .frame {
-        opacity: 0;
-    }
-    
-    .frame--activated {
-        opacity: 1;
-        border-radius: 3px;
-        color: #6e707e;
-        background-color: #fff;
-        /* background-clip: padding-box; */
-        border: 1px solid #d1d3e2;
-        border-radius: 10px;
-        height: 38px;
-    }
-    
-    .frame--activated.frame--focus {
-        border: solid 1px #13395E;
-        box-shadow: 0 2px 5px 0 rgba(19, 57, 94, 0.15);
-    }
-    
-    .frame--activated.frame--invalid {
-        border: solid 1px #D96830;
-        box-shadow: 0 2px 5px 0 rgba(217, 104, 48, 0.15);
-    }
-    
-    .error-message {
-        display: block;
-        color: #C9501C;
-        font-size: .9rem;
-        margin: 8px 0 0 1px;
-        font-weight: 300;
-    }
-    
-    #pay-button {
-        border: none;
-        border-radius: 3px;
-        color: #FFF;
-        font-weight: 900;
-        height: 40px;
-        width: 100%;
-        color: #FFFFFF !important;
-        background: #40C1AB !important;
-        background-color: #40C1AB !important;
-        border-color: #40C1AB !important;
-        box-shadow: 0 2px 3px #40c1ab65 !important
-    }
-    
-    #pay-button:active {
-        background-color: #0B2A49;
-        box-shadow: 0 1px 3px 0 rgba(19, 57, 94, 0.4);
-    }
-    
-    #pay-button:hover {
-        background-color: #15406B;
-        box-shadow: 0 2px 5px 0 rgba(19, 57, 94, 0.4);
-    }
-    
-    #pay-button:disabled {
-        background-color: #697887;
-        box-shadow: none;
-    }
-    
-    #pay-button:not(:disabled) {
-        cursor: pointer;
-    }
-    
-    .success-payment-message {
-        color: #13395E;
-        line-height: 1.4;
-    }
-    
-    .token {
-        color: #b35e14;
-        font-size: .9rem;
-        font-family: monospace;
-    }
-    
-    /**
-      IE11-targeted optimisations
-       */
-    
-    _:-ms-fullscreen, :root .icon-container {
-        display: block;
-    }
-    
-    _:-ms-fullscreen, :root .icon-container img {
-        top: 50%;
-        -ms-transform: translateY(-50%);
-        position: absolute;
-    }
-    
-    _:-ms-fullscreen, #icon-card-number, _:-ms-fullscreen, #icon-expiry-date, _:-ms-fullscreen, #icon-cvv {
-        left: 7px;
-    }
-    
-    #checkout-frames-card-number::-ms-clear {
-        display: none;
-    }
-    
+
 }
-
-
-
-
-

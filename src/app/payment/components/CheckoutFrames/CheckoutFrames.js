@@ -17,8 +17,8 @@ export default function CheckoutFrames() {
       const PUBLIC_KEY = 'pk_sbox_y4kryfiio2emn57e2pdayxfpre5';
 
       const cardNumber = "Card Number";
-      const expiryDate="Expiry Date";
-      const cvvTxt = "CVV";
+      const expiryDate="Expiry (MM/YYYY)";
+      const cvvTxt = "Security code";
       const placeHolderExpiryDate = "MM";
       const placeholderExpiryYY = "YY";
       const loadCheckoutScript = () => {
@@ -46,20 +46,23 @@ export default function CheckoutFrames() {
             debug: true,
             publicKey: PUBLIC_KEY,
             localization: {
-                cardNumberPlaceholder: '**** **** **** ****',
+                cardNumberPlaceholder: 'Card number',
                 expiryMonthPlaceholder: `${placeHolderExpiryDate}    `,
                 expiryYearPlaceholder: `    ${placeholderExpiryYY}`,
                 cvvPlaceholder: cvvTxt,
             },
             style: {
                 base: {
-                    fontSize: '13px',
+                    fontSize: '14px',
                     letterSpacing: '0.5px',
                     fontWeight:'400',
+                    height:'48px',
+                    fontWeight: 500
                 },
                 placeholder:{
                     base:{
-                        fontSize: '12px',
+                      fontSize: '14px',
+                      fontWeight: 500,
                         opacity:'0.5',
                         letterSpacing: '0.5px',
                     }
@@ -87,12 +90,7 @@ export default function CheckoutFrames() {
         cardValidationChanged={(e) => {}}
         cardSubmitted={() => {}}
         cardTokenized={(data) => {
-            // const { token =''} = data
-            // orderPayment(token)
-            // call place Order Api
-            // placeOrder(token)
-            // onCardPayment(token);
-            // setIsLoading(false);
+      
 
         }}
         cardTokenizationFailed={(e) => {}}
@@ -101,16 +99,13 @@ export default function CheckoutFrames() {
       <div  className={styles['checkout-frames-container']}>
         <div  className={styles['checkout-frame-details']}>
         <div  className={styles['frames-card-number-container']}>
-          {/* <div  className={styles['card-number-txt']} >{cardNumber}</div> */}
-          <CardNumber placeholder="ww**" />
+          <CardNumber placeholder="Card number" />
         </div>
         <div  className={styles['frames-card-details-container']}>
             <div className={styles['frames-expiry-date-container']}>
-              {/* <div  className={styles['card-number-txt']} >{expiryDate}</div> */}
               <ExpiryDate />
             </div>
             <div  className={styles['frames-cvv-container']}>
-              {/* <div  className={styles['card-number-txt']} >{cvvTxt}</div> */}
               <Cvv/>
             </div>
         </div>
