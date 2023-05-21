@@ -15,9 +15,9 @@ const CheckBox = ({isChecked=false}) => {
   )
 }
 
-const CreditCardMethod = () => {
+const CreditCardOption = () => {
   return(
-    <div>
+    <div className={styles.creditCardOption}>
         <div className={styles.paymentTypeHeaderTxt}>
                 <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/payment.png' alt=''/>
                 <div className={styles.txt}>Pay with Credit or Debit card</div>
@@ -84,7 +84,7 @@ export default function PaymentMethod() {
         <div className={styles.paymentMethodWrapper}>
             <div className={styles.headerTxt}>Payment Method</div>
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
-            <CreditCardMethod />
+            <CreditCardOption />
             <PayWithEmi />
         </div>
       )

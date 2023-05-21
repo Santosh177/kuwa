@@ -8,45 +8,9 @@
         font-weight: 400;
         font-size: 12px;
         color: #A0A0A0;
-        margin-top: 3px;
+        margin-top: 4px;
     }
-    .paymentTypeHeaderTxt{
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        img{
-            width: 24px;
-            height: 24px;
-        }
-        .txt{
-            font-weight: 500;
-            font-size: 14px;
-        }
-    }
-
-    .paymentInfoContainer{
-        display: flex;
-        justify-content: space-between;
-        padding-right: 20px;
-        padding-left: 10px;
-        align-items: center;
-        border: 1px solid #E6E7E7;
-        border-radius: 16px;
-        padding-top: 20px;
-        padding-bottom: 20px;
-        
-        .paymentInfo{
-            .visa{
-                width: 70px;
-                height: 28px;
-            }
-            .masterCard{
-                width: 70px;
-                height: 28px;
-            }
-        }
-       
-    }
+  
 }
 
 
@@ -113,6 +77,47 @@
     }
 }
 
+.creditCardOption{
+    margin-top: 28px;
+    .paymentTypeHeaderTxt{
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        img{
+            width: 24px;
+            height: 24px;
+        }
+        .txt{
+            font-weight: 500;
+            font-size: 14px;
+        }
+    }
+
+    .paymentInfoContainer{
+        display: flex;
+        justify-content: space-between;
+        padding-right: 20px;
+        padding-left: 10px;
+        align-items: center;
+        border: 1px solid #E6E7E7;
+        border-radius: 16px;
+        margin-top: 20px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        .paymentInfo{
+            .visa{
+                width: 70px;
+                height: 28px;
+            }
+            .masterCard{
+                width: 70px;
+                height: 28px;
+            }
+        }
+       
+    }
+}
+
 .payWithEmi{
     .headerContainer{
         display: flex;
@@ -129,6 +134,7 @@
 
     }
         .paymentOptionsList{
+            margin-top: 20px;
             .paymentOptionItem{
                 border: 1px solid #E6E7E7;
                 border-radius: 16px 16px 0px 0px;
