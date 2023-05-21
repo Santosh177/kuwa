@@ -7,9 +7,9 @@ import styles from './payment-method.module.scss';
 const CheckBox = ({isChecked=false}) => {
   return(
     <div className={styles['payment-options-checkbox']}>
-      <div className='checkbox-container'>
+      <div className={styles['checkbox-container']}>
           <input type="checkbox" checked={isChecked}/>
-          <span className="checkmark"></span>
+          <span className={styles.checkmark}></span>
         </div>
     </div>
   )
