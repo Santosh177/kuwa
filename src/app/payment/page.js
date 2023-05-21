@@ -1,5 +1,6 @@
 import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import PageHeader from "@/components/PageHeader/PageHeader";
+import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import PaymentFooterBtn from "./components/PaymentFooterBtn/PaymentFooterBtn";
@@ -13,10 +14,11 @@ export default function Payment() {
   
       return (
         <div className={styles.orderSummary}>
-          <PageHeader/>
-          <PageStepTracker />
+          <PageHeader headerName="Payment"/>
+          {/* <PageStepTracker /> */}
+          {/* <CouponCode /> */}
 
-          {/* <PaymentMethod /> */}
+          <PaymentMethod />
          
           {/* <div className={styles.priceDetails}>
             <div className={styles.headerTxt}>Price Details</div>
