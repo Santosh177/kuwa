@@ -1,14 +1,35 @@
-'use client';
 
 import PageHeader from "@/components/PageHeader/PageHeader";
-import CartItemCard from "@/components/CartItemCard/CartItemCard"
-import PriceDetails from "@/components/PriceDetails/PriceDetails";
-import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
+import CartPage from './cartPage';
 import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
+import {getCartItemDetails} from "@/utils";
 import styles from './page.module.scss';
 
-export default function Cart() {
-const cartItems = [
+export default async function Cart() {
+  
+  const getCartItemResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
+    method: 'GET',
+    headers:{
+      'Content-Type': 'text/plain',
+      'X-My-Custom-Header': 'value-v',
+      'Authorization': 'Bearer ' + "token",
+      "user":"10",
+      "country":1
+    },
+  })
+  const getCartItems = await getCartItemResp.json();
+  // const cartItems = getCartItems.products || [];
+  // const data = await getCartItemDetails(cartItems);
+
+
+  // console.log("dfff",data)
+
+
+
+      
+
+
+const cartItemsd = [
   {
 
     "image":"https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
@@ -47,25 +68,7 @@ const priceDetails = {
       return (
         <>
           <PageHeader headerName="My Cart" />
-          <div className={styles.cartPage}>
-            <div className={styles.cartItemsContainer}>
-              <div className={[styles.headerTxt,styles.cartHeaderTxt].join(" ")}> Cart Items </div>
-              {
-                cartItems.map((data, index)=>{
-                  return(
-                    <CartItemCard data={data} />
-                  )
-                })
-              }
-            </div>
-            <div className={styles.priceDetailsContainer}>
-              <div className={styles.headerTxt}>Price Details</div>
-              <div className={styles.priceInfo}>
-                <PriceDetails data={priceDetails} />
-              </div>
-              <CompanyInfo />
-            </div>
-          </div>
+          <CartPage cartData={getCartItems}/>
           <PaymentFooterBtn btnName="Proceed to checkout" totalPrice="AED 350" />
         </>
       )
