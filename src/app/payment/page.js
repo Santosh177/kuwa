@@ -13,19 +13,24 @@ export default function Payment() {
     console.log("ht")
   
       return (
-        <div className={styles.orderSummary}>
+        <>
           <PageHeader headerName="Payment"/>
-          {/* <PageStepTracker /> */}
-          {/* <CouponCode /> */}
-
-          <PaymentMethod />
+          <div className={styles.orderSummary}>
+            <PageStepTracker />
+            <div className={styles.couponCode}>
+              <CouponCode />
+            </div>
+            <div className={styles.paymentMethod}>
+              <PaymentMethod />
+            </div>
          
-          {/* <div className={styles.priceDetails}>
-            <div className={styles.headerTxt}>Price Details</div>
-            <PriceDetails />
-          </div> */}
-          <PaymentFooterBtn />
-        </div>
+            <div className={styles.priceDetails}>
+              <div className={styles.headerTxt}>Price Details</div>
+              <PriceDetails />
+            </div>
+            <PaymentFooterBtn />
+          </div>
+        </>
       )
     }
     
