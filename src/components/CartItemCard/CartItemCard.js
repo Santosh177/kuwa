@@ -3,27 +3,32 @@ import styles from './cart-item-card.module.scss';
 
 
 
-const CartItemCard = ({number,image}) => {
+
+
+
+const CartItemCard = ({data}) => {
+
+    const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="" } = data || {}
 
     return(
         <div className={styles.cartItemCard}>
             <div className={styles.cartItemContainer}>
-                <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png'></img>
-                <div className={styles.quantityContainer} id="incriment-box">
+                <img src={image}></img>
+                <div className={styles.quantityContainer}>
                     <div className={styles.quantityBtn} >-</div>
-                    <span>{1}</span>
+                    <span>{qty}</span>
                     <div className={styles.quantityBtn}>+</div>
                 </div>
             </div>
             <div className={styles.cartItemInfo}>
-                <div className={styles.itemName}>Korean Marine Collagen Peptides, 200 Gms</div>
+                <div className={styles.itemName}>{productName}</div>
                 <div className={styles.discountTag}>
                     <div className={styles.discountText}>Save</div>
                     <div className={styles.discountPrice}>Dhs 40</div>
                 </div>
                 <div className={styles.priceContainer}>
-                    <div className={styles.finalPrice}>Dhs 139</div>
-                    <div className={styles.retailPrice}>Dhs 179</div>
+                    <div className={styles.finalPrice}>{currency + " " + finalPrice}</div>
+                    <div className={styles.retailPrice}>{currency + " " + retailPrice}</div>
                 </div>
             </div>
             <img className={styles.deleteIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/delete.png' alt='delete-icon'/>
