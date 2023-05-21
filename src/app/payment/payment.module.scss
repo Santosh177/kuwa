@@ -1,0 +1,22 @@
+
+
+@media (max-width:990px){
+    .orderSummary{
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 20px;
+        padding-bottom: 50%;
+        .couponCode{
+            margin-top: 35px;
+        }
+        .paymentMethod{
+            margin-top: 30px;
+        }
+        .priceDetails{
+            margin-top: 35px;
+            .headerTxt{
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

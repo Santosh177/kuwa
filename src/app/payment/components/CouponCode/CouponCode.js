@@ -21,7 +21,7 @@ export default function CouponCode() {
   
       return (
         <div className={styles.couponCodeWrapper}>
-            <div>Discount code or Gift card</div>
+            <div className={styles.headerTxt}>Discount code or Gift card</div>
             <div className={styles.couponCodeContainer}>
                 <Input type="text" fieldName="couponCode" placeHolder="Enter coupon code" style={{width:'49%'}}  />
                 <div className={styles.applyBtn}> Apply</div>

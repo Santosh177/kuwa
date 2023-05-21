@@ -1,12 +1,10 @@
-import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
+
 import PageHeader from "@/components/PageHeader/PageHeader";
-import CouponCode from "./components/CouponCode/CouponCode";
-import PriceDetails from "@/components/PriceDetails/PriceDetails";
-import PaymentMethod from "./PaymentMethod/PaymentMethod";
-import PaymentFooterBtn from "./components/PaymentFooterBtn/PaymentFooterBtn";
+import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
+import Payment from "./payment";
 import styles from './pages.module.scss';
 
-export default function Payment() {
+export default function PaymentPage() {
 
 
 
@@ -15,21 +13,8 @@ export default function Payment() {
       return (
         <>
           <PageHeader headerName="Payment"/>
-          <div className={styles.orderSummary}>
-            <PageStepTracker />
-            <div className={styles.couponCode}>
-              <CouponCode />
-            </div>
-            <div className={styles.paymentMethod}>
-              <PaymentMethod />
-            </div>
-         
-            <div className={styles.priceDetails}>
-              <div className={styles.headerTxt}>Price Details</div>
-              <PriceDetails />
-            </div>
-            <PaymentFooterBtn />
-          </div>
+          <PageStepTracker />
+          <Payment />
         </>
       )
     }
