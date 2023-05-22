@@ -103,8 +103,8 @@ const SideMenu = ({children , isShowSideMenu}) => {
     return(
         <SideMenuWrapper isShowSideMenu={true}>
             <>
-               {/* <SideMenuItem /> */}
-               <MyAccount />
+               <SideMenuItem />
+               {/* <MyAccount /> */}
             </>
         </SideMenuWrapper>
     )

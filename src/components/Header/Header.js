@@ -1,8 +1,11 @@
 'use client';
+import { useState } from 'react';
 import SideMenu from '../SideMenu/SideMenu';
 import styles from './header.module.scss';
 
 const Header = () => {
+
+    const [ isShowSideMenu,setIsShowSideMenu] = useState(false)
     
 
     return(
@@ -12,7 +15,7 @@ const Header = () => {
 
            <div className={styles.headerWrapper}>
                 <div className={styles.headerIcon}>
-                    <div className={styles.menuIcon}>
+                    <div className={styles.menuIcon} onClick={()=>setIsShowSideMenu(!isShowSideMenu)}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/menu.png' alt='menu-icon'/>
                     </div>
                     <div className={styles.logo}>
@@ -26,9 +29,7 @@ const Header = () => {
                             <img src='https://d2co62zyg9wi44.cloudfront.net/media/country_United%20Arab%20Emirates_1/Flag_UAE_-_Square.png' alt='country-img'/>
                         </div>
                         <div className={styles.countryTxt}>UAE</div>
-                        {/* <div className={styles.dropDownIcon}>
-                            <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/Group+2.png' alt='drop-down-icon'/>
-                        </div> */}
+                        {/* <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown.png' alt='drop-down-icon'/> */}
                     </div>
                     <div className={styles.searchIcon}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/search.png" alt='search-icon'></img>
@@ -41,9 +42,9 @@ const Header = () => {
            </div>
 
         </div>
-        <SideMenu isShowSideMenu={true}>
+       {isShowSideMenu && <SideMenu isShowSideMenu={true}>
             <div onClick={()=>alert("uoi")}>dd</div>
-        </SideMenu>
+        </SideMenu>}
         </>
     )
 
