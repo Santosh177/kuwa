@@ -13,18 +13,13 @@ export default  function Cart({cartData}) {
 
     const [ data , setData ] = useState(cartData);
     const [ cartItems , setCartItems ] = useState([]);
-    const [ priceDetails , setCartDetails ] = useState({});
+    const [ priceDetails , setPriceDetails ] = useState({});
 
-    // useEffect(()=>{
-    //     if(data && Object.keys(data).length > 0 ){
-    //         setCartItems(data)
-    //     }
-    // },[data])
 
+    console.log("cartData",cartData)
 
     useEffect(()=>{
         if(data && Object.keys(data).length > 0 ){
-                // setCartItems(data)
                 if(data['products']){
                     getData();
                 }
@@ -35,25 +30,50 @@ export default  function Cart({cartData}) {
 
     const getData = async() => {
         const getCartItem = await getCartItemDetails(data['products']);
-        console.log("getCartItemgetCartItem",getCartItem)
         setCartItems(getCartItem)
     }
-
-  
     
-      
-      
-      
-      const priceDetails2 = {
-        cartItemCount: 2,
-        subTotal: 300,
-        totalAmount: 300,
-        savedAmount: 50,
-        discountAmount:40,
-        currency:'AED'
+    useEffect(()=>{
+      if(cartItems && cartItems.length > 0){
+        getPriceDetails()
+
       }
 
-      console.log("cartItemscartItems",cartItems)
+    },[cartItems]);
+
+    const getPriceDetails = () => {
+      const { total=0, subtotal=0, currency = "Dhs" } = data || {};
+      const priceDetails2 = {
+        cartItemCount: cartItems && cartItems.length,
+        subTotal: subtotal,
+        totalAmount: total,
+        savedAmount: 50,
+        discountAmount:40,
+        currency:currency
+      }
+      setPriceDetails(priceDetails2)
+    }
+    
+      
+
+    const onUpdateItem = async(data) => {
+      console.log("datadata",data)
+      const updateItemResp  =  await fetch('/api/update-cart-item', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + "didToken",
+          },
+          body:JSON.stringify(data)
+        })
+
+        console.log("updateItemResp",updateItemResp);
+        
+
+    }
+      
+      
+     
         
   
       return (
@@ -64,7 +84,7 @@ export default  function Cart({cartData}) {
               {
                 cartItems.map((data, index)=>{
                   return(
-                    <CartItemCard data={data} />
+                    <CartItemCard data={data} key={index} onUpdateItem={onUpdateItem} />
                   )
                 })
               }
@@ -72,7 +92,7 @@ export default  function Cart({cartData}) {
             <div className={styles.priceDetailsContainer}>
               <div className={styles.headerTxt}>Price Details</div>
               <div className={styles.priceInfo}>
-                <PriceDetails data={priceDetails2} />
+                <PriceDetails data={priceDetails} />
               </div>
               <CompanyInfo />
             </div>
