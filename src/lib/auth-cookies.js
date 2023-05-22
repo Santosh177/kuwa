@@ -6,7 +6,7 @@ const TOKEN_NAME = 'token'
 
 export const MAX_AGE = 60 * 60 * 8 // 8 hours
 
-export function setTokenCookie(res, token) {
+export function setTokenCookie(res, token,userId) {
   const cookie = serialize(TOKEN_NAME, token, {
     maxAge: MAX_AGE,
     expires: new Date(Date.now() + MAX_AGE * 1000),
@@ -16,8 +16,10 @@ export function setTokenCookie(res, token) {
     sameSite: 'lax',
   })
   cookies().set('token', token);
+  cookies().set('userId',userId)
 	const response = NextResponse.next()
-  response.cookies.set('user_token', token)
+  response.cookies.set('token', token)
+  response.cookies.set('userId', userId)
 }
 
 export function removeTokenCookie(res) {

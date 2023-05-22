@@ -11,11 +11,8 @@ export async function POST(request,res) {
         },
         body:JSON.stringify(requestBody)
       });
-      const loginRespp = await loginResp.json();
+      const loginData = await loginResp.json();
 
-
-    console.log("loginResp",loginRespp)
-
-   const data =  setTokenCookie(res, loginRespp.token)
-    return NextResponse.json({message:'Hello'})
+    setTokenCookie(res, loginData.token , loginData.id)
+    return NextResponse.json({status:"SUCCESS"})
 }
