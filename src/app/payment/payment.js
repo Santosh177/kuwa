@@ -3,16 +3,18 @@ import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import PaymentFooterBtn from "./components/PaymentFooterBtn/PaymentFooterBtn";
-import { getCartItemDetails } from "@/utils";
+import { getCartItemDetails , createPayloadForCartItems } from "@/utils";
+import { useRouter } from 'next/navigation';
 import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
 
 export default function Payment({cartData}) {
-
+  const router = useRouter();
   console.log("data",cartData)
   const [data, setData] = useState(cartData);
   const [cartItems , setCartItems] = useState([]);
   const [ priceDetails , setPriceDetails] = useState({});
+  const [ paymentOption, setPaymentOption] = useState("");
 
 
   useEffect(()=>{
@@ -52,8 +54,62 @@ const getPriceDetails = () => {
 }
 
 
-  const onPayment = () => {
-    alert("Dd")
+  const onPayment = async() => {
+
+    const cartItemPayload = await createPayloadForCartItems();
+    const description = `${"fullName" + ",MULTIPLE_ITEM," + "couponData"}`;
+      let payload = {
+        "cartUuid":1265,
+        "orderType": "one-time",
+        "userId": 2200,
+        "addressId": 511,
+        "countryCode": "AE",
+        "countryId": 1,
+        "cityId": 2,
+        "description": "product, MULTIPLE_ITEM, No Coupon",
+        "paymentMode": "CARD",
+        "finalAmount": 11829,
+        "totalAmount": 11829,
+        "currency": "AED",
+        "orderSource": "WEBSITE",
+        "orderCategory": "CART",
+        "couponApplied": true,
+        "couponCode": "QA100X",
+        "discount": 0,
+        "paymentType": "Regular",
+        "taxAmount": 81.25,
+        "shippingAmount": 80.00,
+        "locale": "en_AE",
+        "cartItems": cartItemPayload,
+        "customerCity": "",
+      }
+     
+      if(paymentOption == "CARD"){
+          payload['token'] = 'tok_7hm6eqpr452evmkcqruagdeway'
+            const placeOrderResp  =  await fetch('/api/checkout-place-order', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: 'Bearer ' + "didToken",
+                },
+                body:JSON.stringify(payload)
+            })
+            const placeOrder = await placeOrderResp.json();
+            console.log("placeOrderplaceOrder",placeOrder)
+            if(placeOrder && placeOrder.status_code == 200){
+              router.push(placeOrder.redirect_link)
+            }
+      }else if(paymentOption == "TAMARA"){
+
+      }else if(paymentOption == "APPLE_PAY"){
+
+      }else if(paymentOption == "COD"){
+
+      }
+
+
+
+
   }
 
       return (

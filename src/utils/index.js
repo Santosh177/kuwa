@@ -20,3 +20,29 @@ export const getCartItemDetails = async(data) => {
     })
     return cartItem;
 }
+
+export const createPayloadForCartItems = async() => {
+    let cartItems = [];
+     const getCartItemResp = await fetch('/api/get-cart-item', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + "didToken",
+        }
+      })
+      const getCartItems = await getCartItemResp.json();
+      if(getCartItems && getCartItems['products'] && getCartItems['products'].length > 0){
+        getCartItems['products'].map((data,index)=>{
+            cartItems.push({
+                "quantity": data.quantity || 1,
+                "itemId": data.id || "",
+                "itemType": "Supplement",
+                "price": data.finalPrice || "",
+                "orderType": "one-time",
+                "subscriptionDetail": null
+            })
+        })
+      }
+      return cartItems; 
+
+}
