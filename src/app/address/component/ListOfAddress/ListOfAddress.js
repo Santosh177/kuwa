@@ -22,7 +22,6 @@ export default function ListOfAddress({addressList}) {
             <div className={styles.addressInfoContainer}>
                 {
                     addressList.map((data,index)=>{
-                        console.log("Ddd",data)
                         const addressTxt = data.address +" " +data.apartment + " " +data.city + " " +data.country || "";
                         const addressData = {
                             userName:data.firstName + " " + data.lastName,

@@ -34,7 +34,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
             <div className={styles.addressDetail}>{addressTxt}</div>
             <div className={styles.phoneNo}>Phone no : {phoneNo}</div>
             <div className={styles.delivereHere}>
-                <CheckBox />
+                <CheckBox isChecked={isSelected}/>
                 <div className={styles.txt}>Deliver here</div>
             </div>
         </div>
