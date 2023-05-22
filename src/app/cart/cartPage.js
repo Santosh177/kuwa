@@ -2,7 +2,7 @@
 'use client';
 import React, { useEffect, useState } from "react"
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
-import PriceDetails from "@/components/PriceDetails/PriceDetails";
+import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails } from "@/utils";
@@ -47,8 +47,8 @@ export default  function Cart({cartData}) {
         cartItemCount: cartItems && cartItems.length,
         subTotal: subtotal,
         totalAmount: total,
-        savedAmount: 50,
-        discountAmount:40,
+        savedAmount: total - subtotal,
+        discountAmount:total - subtotal,
         currency:currency
       }
       setPriceDetails(priceDetails2)
@@ -65,16 +65,23 @@ export default  function Cart({cartData}) {
             Authorization: 'Bearer ' + "didToken",
           },
           body:JSON.stringify(data)
-        })
+      })
+      const cartItem = await updateItemResp.json();
+      if(cartItem && cartItem.data){
+        console.log("cartItem.datacartItem.data",cartItem.data)
+        setData(cartItem.data)
+      }
 
-        console.log("updateItemResp",updateItemResp);
+        // console.log("updateItemResp",datas);
         
 
     }
       
+
       
      
         
+    console.log("priceDetails.totalAmount",priceDetails.totalAmount)
   
       return (
         <>
@@ -92,12 +99,12 @@ export default  function Cart({cartData}) {
             <div className={styles.priceDetailsContainer}>
               <div className={styles.headerTxt}>Price Details</div>
               <div className={styles.priceInfo}>
-                <PriceDetails data={priceDetails} />
+                <PriceDetailsInfo data={priceDetails} />
               </div>
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice="AED 350" />
+          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={priceDetails.totalAmount} />
         </>
       )
     }

@@ -4,7 +4,6 @@ import styles from './payment-footer-btn.module.scss';
 export default function PatmentFooterBtn({btnName="",totalPrice=""}) {
 
 
-
   
       return (
         <div className={styles.paymentFooterbtn}>

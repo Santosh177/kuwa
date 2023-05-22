@@ -5,7 +5,7 @@ export const getCartItemDetails = async(data) => {
         const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
         console.log("CART PRODUCT",data)
         let item ={
-            "image":image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+            "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
             "qty":quantity,
             "productName":description.name || "",
             "retailPrice":price,

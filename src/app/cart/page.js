@@ -22,7 +22,7 @@ export default async function Cart() {
         <>
           <PageHeader headerName="My Cart" />
           <CartPage cartData={getCartItems}/>
-          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice="AED 350" />
+          {/* <PaymentFooterBtn btnName="Proceed to checkout" totalPrice="AED 350" /> */}
         </>
       )
     }
