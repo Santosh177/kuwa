@@ -15,7 +15,7 @@ const getTimezoneOffset = () =>{
   return sign + z(offset/60 | 0) + z(offset%60);
 }
 
-const CountryContext = React.createContext({})
+export const CountryContext = React.createContext({})
 
 
 export const CountryProvider = ({ children, countryCode }) => {
@@ -35,6 +35,10 @@ export const CountryProvider = ({ children, countryCode }) => {
 //     }
 
 //   },[userData])
+
+const userData = {
+  "dd":"d"
+}
 
 
 

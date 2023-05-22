@@ -1,5 +1,5 @@
 import { AuthProvider } from "@/context/userDetail";
-// import { CountryProvider } from "@/context/contryDetails";
+import { CountryProvider } from "@/context/contryDetails";
 
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
@@ -22,34 +22,60 @@ export const metadata = {
 const getUser = async () => {
   const nextCookies = cookies(); 
   const token = nextCookies.get('token');
-  if(token){
-    try {
-      const userLoginResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/private/customer/1', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token.value,
+
+  return {
+    "id": 2200,
+    "emailAddress": "anand@f.com",
+    "newBillingAddress": [],
+    "newShippingAddress": [],
+    "gender": "M",
+    "language": "en",
+    "firstName": "an",
+    "lastName": "an",
+    "notes": null,
+    "provider": null,
+    "storeCode": null,
+    "userName": "anand@f.com",
+    "rating": 0.0,
+    "ratingCount": 0,
+    "attributes": [],
+    "groups": [
+        {
+            "name": "CUSTOMER",
+            "type": "CUSTOMER",
+            "id": 8
         }
-      })
-      // const userData = await userLoginResp.json()
-      const userData = {
-        id:1,
-        countryId: 1,
-        countryCode: 'AE'
-      }
-      return userData;
-     } catch (err) {
-         return null
-     }
-  }else{
-    return null
-  }
+    ]
+}
+  // if(token){
+  //   try {
+  //     const userLoginResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/private/customer/1', {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: 'Bearer ' + token.value,
+  //       }
+  //     })
+  //     // const userData = await userLoginResp.json()
+  //     const userData = {
+  //       id:1,
+  //       countryId: 1,
+  //       countryCode: 'AE'
+  //     }
+  //     return userData;
+  //    } catch (err) {
+  //        return null
+  //    }
+  // }else{
+  //   return null
+  // }
 
 };
 
 
 export default async function RootLayout({ children }) {
-  // const userData = await getUser();
+  const userData = await getUser();
+
 
   // const countryCode = userData && userData.countryCode || null
 
@@ -62,11 +88,11 @@ export default async function RootLayout({ children }) {
       <body className={workSans.className}>
       <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
       <script src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
-        {/* <CountryProvider countryCode={"AE"}> */}
-          {/* <AuthProvider  userData={userData}> */}
+        <CountryProvider countryCode={"AE"}>
+          <AuthProvider  userData={userData}>
             {children}
-          {/* </AuthProvider> */}
-        {/* </CountryProvider> */}
+          </AuthProvider>
+        </CountryProvider>
       </body>
     </html>
   )

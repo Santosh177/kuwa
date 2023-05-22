@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+
 export const getCartItemDetails = async(data) => {
    let cartItem = []
     data.map((data, index)=>{
@@ -81,3 +83,16 @@ export const createPayloadForTabby = async (cartItems) => {
    }
    return tamaraItems; 
 }
+
+
+export const authHeader = async() =>{
+  return (
+    {
+      'country':1,
+      'Authorization':"Bearer "+"",
+      'user':9090
+    }
+  )
+}
+
+

@@ -1,22 +1,24 @@
 
 'use client';
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState ,useContext} from "react"
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails } from "@/utils";
+import { useAuth } from '../../context/userDetail';
 import styles from './cart-page.module.scss';
 
 
-export default  function Cart({cartData}) {
-
-    const [ data , setData ] = useState(cartData);
+export default  function Cart(props) {
+  const value = useAuth()
+  console.log("valuevaluevalue",value)
+    const [ data , setData ] = useState(props.cartData);
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
 
 
-    console.log("cartData",cartData)
+    // console.log("cartData",cartData)
 
     useEffect(()=>{
         if(data && Object.keys(data).length > 0 ){
@@ -81,7 +83,7 @@ export default  function Cart({cartData}) {
       
      
         
-    console.log("priceDetails.totalAmount",priceDetails.totalAmount)
+    // console.log("priceDetails.totalAmount",priceDetails.totalAmount)
   
       return (
         <>

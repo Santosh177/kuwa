@@ -19,7 +19,6 @@ export default function Login() {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + "didToken",
             },
             body:JSON.stringify({
                 'username':userEmail,
