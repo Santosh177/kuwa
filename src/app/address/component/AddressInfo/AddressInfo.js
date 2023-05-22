@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import styles from './address-info.module.scss';
 
 const CheckBox = ({ isChecked=false }) => {
@@ -9,8 +10,8 @@ const CheckBox = ({ isChecked=false }) => {
       </div>
     );
   };
-export default function AddressInfo({data={},isSelected=false,onSelectAddress={}}) {
-
+export default function AddressInfo({data={},isSelected=false,onSelectAddress={},onEditAddress={},onRemoveAddress={}}) {
+  const router = useRouter();
 
   const { userName="",addressTxt="", phoneNo="",id="" } = data || {}
 
@@ -20,11 +21,11 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
             <div className={styles.addressInfo}>
                 <div className={styles.name}>{userName}</div>
                 <div className={styles.actionWrapper}>
-                    <div className={styles.action}>
+                    <div className={styles.action} onClick={()=>router.push('/address/edit-address/1')}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                         <div className={styles.actionTxt}>Edit</div>
                     </div>
-                    <div className={styles.action}>
+                    <div className={styles.action} onClick={()=>onRemoveAddress()}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                         <div className={styles.actionTxt}>Remove</div>
                     </div>

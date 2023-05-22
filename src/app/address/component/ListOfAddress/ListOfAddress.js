@@ -14,6 +14,12 @@ export default function ListOfAddress({addressList}) {
     }
   },[addressList])
 
+  const onRemoveAddress = () =>{
+
+  }
+
+
+
   
       return (
         <>
@@ -31,7 +37,7 @@ export default function ListOfAddress({addressList}) {
                         }
                         const isSelected = selectedAdddressId === data.id;
                         return(
-                            <AddressInfo data={addressData} key={index} onSelectAddress={setSelectedAddressId} isSelected={isSelected}/>
+                            <AddressInfo data={addressData} key={index} onSelectAddress={setSelectedAddressId} isSelected={isSelected} onRemoveAddress={onRemoveAddress}/>
                         )
                     })
                 }
