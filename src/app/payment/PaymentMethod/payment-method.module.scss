@@ -152,9 +152,10 @@
     }
         .paymentOptionsList{
             margin-top: 20px;
+            border: 1px solid #E6E7E7;
+            border-radius: 16px;
             .paymentOptionItem{
-                border: 1px solid #E6E7E7;
-                border-radius: 16px 16px 0px 0px;
+                border-bottom: 1px solid #E6E7E7;
                 padding: 10px;
                 padding-right: 27px;
                 display: flex;

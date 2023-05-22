@@ -71,7 +71,7 @@ const PayWithEmi = () =>{
           </div>
           <div className={styles.paymentOptionItem}>
               <div className={styles.paymentOptionInfo}>
-                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
+                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
                 <div className={styles.desc}>
                    <div className={styles.txt}>Just pay AED 20 now</div>
                    <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
