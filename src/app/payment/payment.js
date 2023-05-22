@@ -52,6 +52,9 @@ const getPriceDetails = () => {
 }
 
 
+  const onPayment = () => {
+    alert("Dd")
+  }
 
       return (
         <>
@@ -66,7 +69,7 @@ const getPriceDetails = () => {
                 <div className={styles.headerTxt}>Price Details</div>
                 <PriceDetails data={priceDetails}/>
               </div>
-              <PaymentFooterBtn />
+              <PaymentFooterBtn onProceed={()=>onPayment()} />
           </div>
           <div className={styles.orderSummaryDesktop}>
               <div className={styles.paymentLeftContainer}>
@@ -82,7 +85,7 @@ const getPriceDetails = () => {
                 <PaymentMethod />
               </div>
             
-              <PaymentFooterBtn />
+              <PaymentFooterBtn onProceed={()=>{alert("D")}} />
           </div>
         </>
       )
