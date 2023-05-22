@@ -25,13 +25,13 @@ const CartItemCard = ({data,onUpdateItem={}}) => {
             </div>
             <div className={styles.cartItemInfo}>
                 <div className={styles.itemName}>{productName}</div>
-                { <div className={styles.discountTag} style={(discountAmount > 0)?{opacity:1}:{opacity:0}}>
+                <div className={styles.discountTag} style={(discountAmount > 0)?{opacity:1}:{opacity:0}}>
                     <div className={styles.discountText}>Save</div>
                     <div className={styles.discountPrice}>{currency + " " + discountAmount}</div>
-                </div>}
-                <div className={styles.priceContainer}>
+                </div>
+               <div className={styles.priceContainer}>
                     <div className={styles.finalPrice}>{currency + " " + finalPrice}</div>
-                    <div className={styles.retailPrice}>{currency + " " + retailPrice}</div>
+                    {discountAmount > 0 &&<div className={styles.retailPrice}>{currency + " " + retailPrice}</div>}
                 </div>
             </div>
             <img className={styles.deleteIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/delete.png' alt='delete-icon'/>

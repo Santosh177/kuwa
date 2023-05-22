@@ -8,7 +8,7 @@ export const getCartItemDetails = async(data) => {
             "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
             "qty":quantity,
             "productName":description.name || "",
-            "retailPrice":price,
+            "retailPrice":originalPrice,
             'finalPrice':finalPrice,
             'discountType':"fixed",
             "discountAmount":discountAmount || 0,
