@@ -22,53 +22,25 @@ export const metadata = {
 const getUser = async () => {
   const nextCookies = cookies(); 
   const token = nextCookies.get('token');
-
-  return {
-    "id": 2200,
-    "emailAddress": "anand@f.com",
-    "newBillingAddress": [],
-    "newShippingAddress": [],
-    "gender": "M",
-    "language": "en",
-    "firstName": "an",
-    "lastName": "an",
-    "notes": null,
-    "provider": null,
-    "storeCode": null,
-    "userName": "anand@f.com",
-    "rating": 0.0,
-    "ratingCount": 0,
-    "attributes": [],
-    "groups": [
-        {
-            "name": "CUSTOMER",
-            "type": "CUSTOMER",
-            "id": 8
+  console.log("tokentoken",token)
+  if(token && token.value){
+    try {
+      const userLoginResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/private/customer/1', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token.value,
         }
-    ]
-}
-  // if(token){
-  //   try {
-  //     const userLoginResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/private/customer/1', {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: 'Bearer ' + token.value,
-  //       }
-  //     })
-  //     // const userData = await userLoginResp.json()
-  //     const userData = {
-  //       id:1,
-  //       countryId: 1,
-  //       countryCode: 'AE'
-  //     }
-  //     return userData;
-  //    } catch (err) {
-  //        return null
-  //    }
-  // }else{
-  //   return null
-  // }
+      })
+      const userData = await userLoginResp.json();
+      console.log("user Data",userData)
+      return {isLogin:true, userData:userData};
+     } catch (err) {
+      return {isLogin:false,userData:null}
+     }
+  }else{
+    return {isLogin:false,userData:null}
+  }
 
 };
 
@@ -89,7 +61,7 @@ export default async function RootLayout({ children }) {
       <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
       <script src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
         <CountryProvider countryCode={"AE"}>
-          <AuthProvider  userData={userData}>
+          <AuthProvider authData={userData}>
             {children}
           </AuthProvider>
         </CountryProvider>

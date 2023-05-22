@@ -27,8 +27,8 @@ export function removeTokenCookie(res) {
     maxAge: -1,
     path: '/',
   })
-
-  res.setHeader('Set-Cookie', cookie)
+  cookies().delete('token')
+  cookies().delete('userId')
 }
 
 export function parseCookies(req) {
