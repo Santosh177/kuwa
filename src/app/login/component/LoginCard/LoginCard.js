@@ -26,7 +26,7 @@ export default function Login() {
             })
           })
           if (res.status === 200) {
-            router.push('/')
+            window.location.href = '/'
           } else {
             throw new Error(await res.text())
           }
