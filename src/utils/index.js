@@ -21,18 +21,11 @@ export const getCartItemDetails = async(data) => {
     return cartItem;
 }
 
-export const createPayloadForCartItems = async() => {
+export const createPayloadForCartItems = async(cartData) => {
     let cartItems = [];
-     const getCartItemResp = await fetch('/api/get-cart-item', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + "didToken",
-        }
-      })
-      const getCartItems = await getCartItemResp.json();
-      if(getCartItems && getCartItems['products'] && getCartItems['products'].length > 0){
-        getCartItems['products'].map((data,index)=>{
+    
+      if(cartData && cartData.length > 0){
+        cartData.map((data,index)=>{
             cartItems.push({
                 "quantity": data.quantity || 1,
                 "itemId": data.id || "",
@@ -44,5 +37,47 @@ export const createPayloadForCartItems = async() => {
         })
       }
       return cartItems; 
+}
 
+export const createPayloadForTamaraItems = async (cartItems) => {
+  console.log("cartItemscartItemscartItems",cartItems)
+  let tamaraItems = [];
+   if(cartItems && cartItems.length > 0){
+      cartItems.map((data,index)=>{
+        tamaraItems.push({
+            "imageUrl":data.image && data.image.imageUrl || "https://d2krpu1dx8jgw5.cloudfront.net/media/subscription/Adv-Woman_Crllhff.png",
+            "type":"Supplement",
+            "name":data.description && data.description.name || "",
+            "quantity":data.quantity || 1,
+            "retailPrice":data.originalPrice || "",
+            "finalAmount":data.finalPrice || "",
+            "taxAmount":"8.45",
+            "sku":"hari hari,MULTIPLE_ITEM,No_Coupon",
+            "discountAmount":0,
+            "referenceId":"hari hari,MULTIPLE_ITEM,No_Coupon"
+          })
+      })
+   }
+   return tamaraItems; 
+}
+
+export const createPayloadForTabby = async (cartItems) => {
+  let tamaraItems = [];
+   if(cartItems && cartItems.length > 0){
+      cartItems.map((data,index)=>{
+          cartItems.push({
+            "imageUrl":data.image && data.image.imageUrl || "",
+            "type":"Supplement",
+            "name":data.description && data.description.name || "",
+            "quantity":data.quantity || 1,
+            "retailPrice":data.originalPrice || "",
+            "finalAmount":data.finalPrice || "",
+            "taxAmount":"8.45",
+            "sku":"hari hari,MULTIPLE_ITEM,No_Coupon",
+            "discountAmount":0,
+            "referenceId":"hari hari,MULTIPLE_ITEM,No_Coupon"
+          })
+      })
+   }
+   return tamaraItems; 
 }

@@ -3,7 +3,7 @@ import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import PaymentFooterBtn from "./components/PaymentFooterBtn/PaymentFooterBtn";
-import { getCartItemDetails , createPayloadForCartItems } from "@/utils";
+import { getCartItemDetails , createPayloadForCartItems , createPayloadForTamaraItems} from "@/utils";
 import { useRouter } from 'next/navigation';
 import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
@@ -14,7 +14,7 @@ export default function Payment({cartData}) {
   const [data, setData] = useState(cartData);
   const [cartItems , setCartItems] = useState([]);
   const [ priceDetails , setPriceDetails] = useState({});
-  const [ paymentOption, setPaymentOption] = useState("");
+  const [ paymentOption, setPaymentOption] = useState("TAP");
 
 
   useEffect(()=>{
@@ -55,8 +55,17 @@ const getPriceDetails = () => {
 
 
   const onPayment = async() => {
-
-    const cartItemPayload = await createPayloadForCartItems();
+    const getCartItemResp = await fetch('/api/get-cart-item', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + "didToken",
+      }
+    })
+    const getCartItems = await getCartItemResp.json();
+    const cartItemsData = getCartItems && getCartItems['products'];
+    console.log("cartItemsDatacartItemsData",getCartItems)
+    const cartItemPayload = await createPayloadForCartItems(cartItemsData);
     const description = `${"fullName" + ",MULTIPLE_ITEM," + "couponData"}`;
       let payload = {
         "cartUuid":1265,
@@ -68,8 +77,8 @@ const getPriceDetails = () => {
         "cityId": 2,
         "description": "product, MULTIPLE_ITEM, No Coupon",
         "paymentMode": "CARD",
-        "finalAmount": 11829,
-        "totalAmount": 11829,
+        "finalAmount": 1500,
+        "totalAmount": 1500,
         "currency": "AED",
         "orderSource": "WEBSITE",
         "orderCategory": "CART",
@@ -79,11 +88,9 @@ const getPriceDetails = () => {
         "paymentType": "Regular",
         "taxAmount": 81.25,
         "shippingAmount": 80.00,
-        "locale": "en_AE",
         "cartItems": cartItemPayload,
         "customerCity": "",
       }
-     
       if(paymentOption == "CARD"){
           payload['token'] = 'tok_7hm6eqpr452evmkcqruagdeway'
             const placeOrderResp  =  await fetch('/api/checkout-place-order', {
@@ -100,11 +107,85 @@ const getPriceDetails = () => {
               router.push(placeOrder.redirect_link)
             }
       }else if(paymentOption == "TAMARA"){
+          //   let tamaraItems = await createPayloadForTamaraItems();
+          //   let tamaraPayload = {
+          //     "paymentMode":"TAMARA",
+          //     "paymentType":"PAY_BY_INSTALMENTS",
+          //     "locale":"en_AE",
+          //     "installments":3,
+          //     "items": tamaraItems
+          //   }
+          //   payload = {...tamaraPayload}
+          //   console.log("Paylaof",payload)
+          //   const placeOrderResp  =  await fetch('/api/tamara-place-order', {
+          //     method: 'POST',
+          //     headers: {
+          //       'Content-Type': 'application/json',
+          //       Authorization: 'Bearer ' + "didToken",
+          //     },
+          //     body:JSON.stringify(payload)
+          // })
+          // const placeOrder = await placeOrderResp.json();
+          // console.log("placeOrderplaceOrder",placeOrder)
+          // if(placeOrder && placeOrder.status_code == 200){
+          //   router.push(placeOrder.redirect_link)
+          // }
 
       }else if(paymentOption == "APPLE_PAY"){
 
       }else if(paymentOption == "COD"){
 
+      }else if(paymentOption == "TABBY"){
+         let tamaraItems = await createPayloadForTamaraItems(cartItemsData);
+            let tamaraPayload = {
+              "paymentMode":"TABBY",
+              "paymentType":"PAY_BY_INSTALMENTS",
+              "locale":"en",  
+              "installments":4,
+              "items": tamaraItems
+            }
+            let tabbyPayload = {...payload,...tamaraPayload}
+
+            console.log("PAyloadd",tabbyPayload)
+               const placeOrderResp  =  await fetch('/api/tabby-place-order', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + "didToken",
+              },
+              body:JSON.stringify(payload)
+          })
+            const placeOrder = await placeOrderResp.json();
+            console.log("placeOrderplaceOrder",placeOrder)
+            if(placeOrder && placeOrder.status_code == 200){
+              router.push(placeOrder.redirect_link)
+            }
+
+      }else if(paymentOption == "TAP"){
+        let tamaraItems = await createPayloadForTamaraItems(cartItemsData);
+            let tamaraPayload = {
+              "paymentMode":"TABBY",
+              "paymentType":"PAY_BY_INSTALMENTS",
+              "locale":"en",  
+              "installments":4,
+              "items": tamaraItems
+            }
+            let tabbyPayload = {...payload,...tamaraPayload}
+
+            console.log("PAyloadd",tabbyPayload)
+               const placeOrderResp  =  await fetch('/api/tap-place-order', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + "didToken",
+              },
+              body:JSON.stringify(payload)
+          })
+            const placeOrder = await placeOrderResp.json();
+            console.log("placeOrderplaceOrder",placeOrder)
+            if(placeOrder && placeOrder.status_code == 200){
+              router.push(placeOrder.redirect_link)
+            }
       }
 
 
