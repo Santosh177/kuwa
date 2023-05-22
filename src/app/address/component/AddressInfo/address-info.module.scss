@@ -1,6 +1,6 @@
 .addressInfoCard{
-    background: #F1FAF8;
-    border: 1px solid #247A81;
+    background: #ffffff;
+    border: 1px solid #E6E7E7;
     border-radius: 16px;
     padding-right: 16px;
     padding-left: 16px;
@@ -58,6 +58,11 @@
         }
     }
     
+}
+
+.isActive{
+    border: 1px solid #247A81;
+    background: #F1FAF8;
 }
 
 .checkboxContainer {

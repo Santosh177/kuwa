@@ -9,14 +9,14 @@ const CheckBox = ({ isChecked=false }) => {
       </div>
     );
   };
-export default function AddressInfo({data}) {
+export default function AddressInfo({data={},isSelected=false,onSelectAddress={}}) {
 
 
-  const { userName="",addressTxt="", phoneNo="" } = data || {}
+  const { userName="",addressTxt="", phoneNo="",id="" } = data || {}
 
   
       return (
-        <div className={styles.addressInfoCard}>
+        <div className={[styles.addressInfoCard,(isSelected)&&styles.isActive].join(" ")} onClick={()=>onSelectAddress(id)}>
             <div className={styles.addressInfo}>
                 <div className={styles.name}>{userName}</div>
                 <div className={styles.actionWrapper}>
