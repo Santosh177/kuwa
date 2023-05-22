@@ -44,3 +44,15 @@ export function getTokenCookie(req) {
   const cookies = parseCookies(req)
   return cookies[TOKEN_NAME]
 }
+export const authHeader = async() =>{
+  const token = cookies().get('token')
+  const user = cookies().get('userId')
+  return (
+    {
+      'country':1,
+      'Authorization':"Bearer "+token.value,
+      'user':user.value
+    }
+  )
+}
+

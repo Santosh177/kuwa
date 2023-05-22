@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+
 
 export const getCartItemDetails = async(data) => {
    let cartItem = []
