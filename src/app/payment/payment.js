@@ -13,18 +13,33 @@ export default function Payment() {
       return (
         <>
           <div className={styles.orderSummary}>
-            <div className={styles.couponCode}>
-              <CouponCode />
-            </div>
-            <div className={styles.paymentMethod}>
-              <PaymentMethod />
-            </div>
-         
-            <div className={styles.priceDetails}>
-              <div className={styles.headerTxt}>Price Details</div>
-              <PriceDetails />
-            </div>
-            <PaymentFooterBtn />
+              <div className={styles.couponCode}>
+                <CouponCode />
+              </div>
+              <div className={styles.paymentMethod}>
+                <PaymentMethod />
+              </div>
+              <div className={styles.priceDetails}>
+                <div className={styles.headerTxt}>Price Details</div>
+                <PriceDetails />
+              </div>
+              <PaymentFooterBtn />
+          </div>
+          <div className={styles.orderSummaryDesktop}>
+              <div className={styles.paymentLeftContainer}>
+                <div className={styles.couponCode}>
+                  <CouponCode />
+                </div>
+                <div className={styles.priceDetails}>
+                <div className={styles.headerTxt}>Price Details</div>
+                <PriceDetails />
+              </div>
+              </div>
+              <div className={styles.paymentMethod}>
+                <PaymentMethod />
+              </div>
+            
+              <PaymentFooterBtn />
           </div>
         </>
       )

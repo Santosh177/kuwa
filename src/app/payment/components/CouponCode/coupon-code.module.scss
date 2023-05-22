@@ -1,14 +1,9 @@
 
-
-
-
 .couponCodeWrapper{
-
     .headerTxt{
         font-weight: 500;
         font-size: 14px;
     }
-
     .couponCodeContainer{
         display: flex;
         margin-top: 9px;
@@ -79,9 +74,14 @@
             font-weight: 500;
             font-size: 12px;
         }
-    }
+    } 
+}
 
-    
-    
+@media(min-width:990px){
+    .couponCodeContainer{
+        .inputWrapper{
+            width: 68% !important;
+        }
+    }
 }
 
