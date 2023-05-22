@@ -1,28 +1,25 @@
-'use client';
+
 import PageHeader from '@/components/PageHeader/PageHeader';
-import AddressInfo from './AddressInfo/AddressInfo';
-import styles from './pages.module.scss'
+import ListOfAddress from '../component/ListOfAddress/ListOfAddress';
+import { authHeader } from "../../../lib/auth-cookies";
 
+export default async function SelectAddress() {
 
-export default function SelectAddress() {
-
-
-
-  
+  const customHeader = await authHeader();
+  console.log("customHeader",customHeader)
+  const getAddressResp  =  await fetch(`https://api.kuwa.bevaleo.dev/module/address/${customHeader.user}`, {
+    method: 'GET',
+    headers:{
+      ...customHeader
+    },
+    next: { revalidate: 0} 
+  })
+  const getAddress = await getAddressResp.json();
+  console.log("getAddressgetAddress",getAddress)
       return (
         <>
           <PageHeader headerName='Select Address' />
-          <div className={styles.addressListWrapper}>
-            <div className={styles.addNewAddressTxt}>+ Add new address</div>
-            <div className={styles.addressInfoContainer}>
-              <AddressInfo />
-              <AddressInfo />
-              <AddressInfo />
-              <AddressInfo />
-              <AddressInfo />
-              <AddressInfo />
-            </div>
-          </div>
+          <ListOfAddress  addressList = {getAddress['billingAddresses'] || []}/>
         </>
        
       )

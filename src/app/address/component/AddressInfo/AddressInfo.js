@@ -9,15 +9,16 @@ const CheckBox = ({ isChecked=false }) => {
       </div>
     );
   };
-export default function AddressInfo() {
+export default function AddressInfo({data}) {
 
 
+  const { userName="",addressTxt="", phoneNo="" } = data || {}
 
   
       return (
         <div className={styles.addressInfoCard}>
             <div className={styles.addressInfo}>
-                <div className={styles.name}>Karif Daoud</div>
+                <div className={styles.name}>{userName}</div>
                 <div className={styles.actionWrapper}>
                     <div className={styles.action}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
@@ -30,8 +31,8 @@ export default function AddressInfo() {
                 </div>
                 
             </div>
-            <div className={styles.addressDetail}>12th Floor Yes Business Centre Al Barsha – Dubai United Arab Emirates</div>
-            <div className={styles.phoneNo}>Phone no : 971-8996689</div>
+            <div className={styles.addressDetail}>{addressTxt}</div>
+            <div className={styles.phoneNo}>Phone no : {phoneNo}</div>
             <div className={styles.delivereHere}>
                 <CheckBox />
                 <div className={styles.txt}>Deliver here</div>
