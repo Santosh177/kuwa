@@ -1,7 +1,10 @@
+
 import ProductDeatil from "../component/productDetail/productDetail"
 import ProductDiscription from "../component/productDiscription/productDiscription"
 import ProductFaq from "../component/productFaq/productFaq"
 import ProductReview from "../component/productReview/productReview"
+import Footer from "@/components/Footer/Footer"
+import Header from "@/components/Header/Header"
 import style from "./page.module.scss"
 
 export default async function AllProduct() {
@@ -11,14 +14,18 @@ export default async function AllProduct() {
     },
   });
   const productData = await res.json();
+
   return (
     <div className={style.productDetailContainerPage}>
-      <ProductDeatil productData={productData} />
+      <Header/>
+      <div className={style.routeDetail} >Home / men's performance / product</div>
+      <ProductDeatil productData={productData}/>
       <div className={style.allDetailDisciptionContainer}>
-        <ProductDiscription productData={productData} />
+        <ProductDiscription productData={productData}/>
         <ProductFaq productData={productData} />
         <ProductReview productData={productData} />
       </div>
+      <Footer/>
     </div>
   )
 }

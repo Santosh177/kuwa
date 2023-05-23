@@ -4,7 +4,19 @@ import styles from './ProductPricingSection.module.scss'
 import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
 const ProductPricingSection= ({productData}) =>{
     const {benefits="",currency="Dhs",description="",id="",name="",numberOfProductReview="832",price="60",quantity=0,title="AADAR Endure Capsule For Premature Ejaculation (60 Capsules)"} = {}  
-    const [noOfProduct,setNoOfProduct] = useState(0)
+    const [noOfProduct,setNoOfProduct] = useState(1)
+    const payload = {
+        "product": id,
+        "quantity": noOfProduct
+    }
+    const handelAddToCart = (payload) => {
+        console.log(payload);
+        setNoOfProduct(1)
+    }
+    const handelBuyNow = (payload) => {
+        console.log(payload)
+        setNoOfProduct(1)
+    }
     return(
         <div className={styles.pricingSectionContainer}>
             <div className={styles.title}>{title}</div>
@@ -19,8 +31,8 @@ const ProductPricingSection= ({productData}) =>{
                 </div>
             </div>
             <div className={styles.addToCartContainer}>
-                <div className={styles.addToCart}><span>Add to Cart</span></div>
-                <div className={styles.buyNow}><span>Buy Now</span></div>
+                <div className={styles.addToCart} onClick={()=>handelAddToCart(payload)} ><span>Add to Cart</span></div>
+                <div className={styles.buyNow} onClick={()=>handelBuyNow(payload)} ><span>Buy Now</span></div>
             </div>
             <div className={styles.shareConatiner}>
                 <div className={styles.Share} >Share:</div>

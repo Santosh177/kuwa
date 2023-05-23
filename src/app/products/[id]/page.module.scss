@@ -1,6 +1,18 @@
-.productDetailContainerPage{
+.productDetailContainerPage {
     width: 100%;
-    .allDetailDisciptionContainer{
+
+    .routeDetail {
+        width: 90%;
+        max-width: 980px;
+        margin: auto;
+        margin-top: 18px;
+        margin-bottom: 32px;
+        font-weight: 500;
+        font-size: 14px;
+
+    }
+
+    .allDetailDisciptionContainer {
         padding: 16px;
         width: 100%;
         margin-top: 100px;

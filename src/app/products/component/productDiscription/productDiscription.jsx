@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import style from "./ProductDiscription.module.scss"
-const ProductDiscription = ({ productData }) => {
+const ProductDiscription = ({ productData}) => {
     const { benefits = "Premature ejaculation is a common issue faced by 40% of men at some point in their lives. However, this problem can be addressed naturally with Ayurveda. AADAR's Endure", description = "Premature ejaculation is a common issue faced by 40% o", ingredients = "Capsules are designed to help men increase" } = {}
     const [selectedTabData, setSelectedTabData] = useState("");
     const [selectedTab, setSelectedTab] = useState("")
