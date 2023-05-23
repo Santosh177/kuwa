@@ -21,10 +21,11 @@ export const AddressProvider = ({ children, countryCode }) => {
     selectedAddress: selectedAddress
   }
 
-  useEffect(()=>(
-    getAddress()
-  ),[])
 
+
+  useEffect(()=>{
+      getAddress();
+  },[])
 
   const getAddress = async() => {
     const getAddressResp  =  await fetch('/api/get-address', {
@@ -35,22 +36,14 @@ export const AddressProvider = ({ children, countryCode }) => {
     })
     const addressData = await getAddressResp.json();
     const addressList = addressData && addressData['billingAddresses'] && addressData['billingAddresses'];
-
-    console.log("addressListaddressList",addressList)
     if(addressList && addressList.length > 0){
       setListOfAddress(addressList);
-    }
-    const defaultAddress = addressList.find((data) => data.isDefault);
-    if(defaultAddress){
-      setSelectedAddress(defaultAddress)
-    }else{
-      setSelectedAddress(addressList[0])
     }
   }
 
   
   
-  return <AddressContext.Provider value={{...data,setSelectedAddress}}>{children}</AddressContext.Provider>
+  return <AddressContext.Provider value={{...data,setSelectedAddress,setListOfAddress}}>{children}</AddressContext.Provider>
 }
 
 

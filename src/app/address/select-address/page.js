@@ -1,4 +1,4 @@
-
+import { AddressProvider } from "@/context/address";
 import PageHeader from '@/components/PageHeader/PageHeader';
 import ListOfAddress from '../component/ListOfAddress/ListOfAddress';
 import { authHeader } from "../../../lib/auth-cookies";
@@ -18,8 +18,8 @@ export default async function SelectAddress() {
   console.log("getAddressgetAddress",getAddress)
       return (
         <>
-          <PageHeader headerName='Select Address' />
-          <ListOfAddress  addressList = {getAddress['billingAddresses'] || []}/>
+            <PageHeader headerName='Select Address' />
+            <ListOfAddress  addressList = {getAddress['billingAddresses'] || []}/>
         </>
        
       )

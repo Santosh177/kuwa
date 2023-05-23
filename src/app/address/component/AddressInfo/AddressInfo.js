@@ -17,7 +17,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
 
   
       return (
-        <div className={[styles.addressInfoCard,(isSelected)&&styles.isActive].join(" ")} onClick={()=>onSelectAddress(id)}>
+        <div className={[styles.addressInfoCard,(isSelected)&&styles.isActive].join(" ")} onClick={()=>onSelectAddress(data)}>
             <div className={styles.addressInfo}>
                 <div className={styles.name}>{userName}</div>
                 <div className={styles.actionWrapper}>

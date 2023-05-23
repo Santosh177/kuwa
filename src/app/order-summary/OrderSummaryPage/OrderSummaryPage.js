@@ -5,16 +5,29 @@ import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PatmentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { useAddressData } from "@/context/address";
 import styles from './order-summary-page.module.scss';
+import { useEffect } from "react";
+
 
 export default function OrderSummaryPage({addressData}) {
 
-  console.log("addressDataaddressData",addressData)
-
-  const { selectedAddress ={},} = useAddressData();
-
-  console.log("Dasdsa",selectedAddress)
+  const { listOfAddress=[], selectedAddress ={},setSelectedAddress={},setListOfAddress={}} = useAddressData();
 
 
+
+  useEffect(()=>{
+    if(selectedAddress && Object.keys(selectedAddress).length == 0){
+          const defaultAddress = listOfAddress.find((data) => data.isDefault);
+          if(defaultAddress){
+            setSelectedAddress(defaultAddress)
+          }else{
+            setSelectedAddress(listOfAddress[0])
+          }
+    }
+  },[listOfAddress])
+
+ 
+
+ 
   
       return (
         <>

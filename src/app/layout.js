@@ -1,6 +1,6 @@
 import { AuthProvider } from "@/context/userDetail";
 import { CountryProvider } from "@/context/contryDetails";
-
+import { AddressProvider } from "@/context/address";
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
 import { getUserDetails } from '../lib/auth';
@@ -63,7 +63,9 @@ export default async function RootLayout({ children }) {
       <script src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
         <CountryProvider countryCode={"AE"}>
           <AuthProvider authData={userData}>
+            <AddressProvider >
             {children}
+            </AddressProvider>        
           </AuthProvider>
         </CountryProvider>
       </body>

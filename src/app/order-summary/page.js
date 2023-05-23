@@ -26,11 +26,9 @@ export default async function OrderSummary() {
   
       return (
         <>
-          <AddressProvider>
             <PageHeader headerName="Order Summary"/>
             <PageStepTracker stepCount={2} />
             <OrderSummaryPage addressData= {billingAddresses} />
-          </AddressProvider>
         </>
       )
     }
