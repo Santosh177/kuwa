@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import PageHeader from "@/components/PageHeader/PageHeader";
 import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import AddressForm from "./address-form/address-form";
@@ -8,7 +9,7 @@ import { useState } from "react";
 
 
 export default function AddAddress() {
-
+  const router = useRouter();
   const [ addressData, setAddressData] = useState({})
 
 
@@ -26,6 +27,7 @@ export default function AddAddress() {
         if (res.status === 200) {
 
           console.log("Dddd++++",res)
+          router.push('/order-summary')
           // window.location.href = '/'
         } else {
           // throw new Error(await res.text())
