@@ -12,6 +12,9 @@ import styles from './cart-page.module.scss';
 
 
 export default  function Cart(props) {
+
+
+  console.log("cartDatacartData",props.cartData)
     const router = useRouter();
     const [ data , setData ] = useState(props.cartData);
     const [ cartItems , setCartItems ] = useState([]);

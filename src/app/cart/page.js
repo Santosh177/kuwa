@@ -22,11 +22,12 @@ export default async function Cart() {
   }
 
 
+  const isNonEmptyCart = getCartItems && Object.keys(getCartItems).length > 0 ;
   
       return (
         <>
           <PageHeader headerName="My Cart" />
-          {getCartItems && getCartItems.length > 0?<CartPage cartData={getCartItems}/>: <EmptyCart />}
+          {isNonEmptyCart?<CartPage cartData={getCartItems}/>:<EmptyCart />}
         </>
       )
     }
