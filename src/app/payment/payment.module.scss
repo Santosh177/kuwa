@@ -31,12 +31,10 @@
         display: none;
     }
     .orderSummaryDesktop{
-        width: 55%;
-        margin: 0 auto;
         display: flex;
-        justify-content: space-between;
-        margin-top: 55px;
-        gap: 28px;
+        gap: 30px;
+        justify-content: center;
+        margin-top: 60px;
         .paymentLeftContainer{
             display: flex;
             flex-direction: column;
