@@ -1,14 +1,17 @@
 
 import { NextResponse } from 'next/server'
 import { setTokenCookie } from '../../../lib/auth-cookies';
+import { authHeader } from '../../../lib/auth-cookies';
 
 export async function POST(request,res) {
     const requestBody = await request.json();
     console.log("requestBody",requestBody)
+    const customHeader = await authHeader();
     const signupResp = await fetch('https://api.kuwa.bevaleo.dev/api/v1/customer/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'country': customHeader.country
         },
         body:JSON.stringify(requestBody)
       });
@@ -17,6 +20,6 @@ export async function POST(request,res) {
 
     console.log("signUpResp",signupData)
 
-   const data =  setTokenCookie(res, loginRespp.token)
-    return NextResponse.json({message:'Hello'})
+   const data =  setTokenCookie(res, signupData.token)
+    return NextResponse.json(data)
 }
