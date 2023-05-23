@@ -1,12 +1,10 @@
 'use client';
 import React,{useEffect, useState }  from "react";
 import { useRouter, useParams,useSearchParams } from 'next/navigation';
-
 import { useAddressData } from "@/context/address";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import AddressForm from "../../add-address/address-form/address-form";
 import SubmitBtn from "../../component/SubmitBtn/SubmitBtn";
-// import styles from './page.module.scss';
 
 
 export default function AddAddress() {
@@ -16,7 +14,7 @@ export default function AddAddress() {
   const refererPath = searchParams.get('referer');
   console.log("searchParams",refererPath)
   const editAddressid = params.id;
-  const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
+  const { selectedAddress ={},listOfAddress={},setSelectedAddress={},setListOfAddress={} } = useAddressData();
   const [ addressData, setAddressData] = useState({});
 
 
@@ -40,9 +38,22 @@ export default function AddAddress() {
         next: { revalidate: 0} 
       })
       const updateAddress = await updateAddressResp.json();
-      console.log("updateAddressupdateAddress",updateAddress)
+      getAddress()
       router.push(refererPath);
 
+  }
+  const getAddress = async() => {
+    const getAddressResp  =  await fetch('/api/get-address', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const addressData = await getAddressResp.json();
+    const addressList = addressData && addressData['billingAddresses'] && addressData['billingAddresses'];
+    if(addressList && addressList.length > 0){
+      setListOfAddress(addressList);
+    }
   }
 
 
