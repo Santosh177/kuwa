@@ -29,6 +29,10 @@ export default function ListOfAddress({}) {
     router.push('/order-summary')
   }
 
+
+  const onEditAddress = () => {
+    
+  }
  
 
 
@@ -50,7 +54,7 @@ export default function ListOfAddress({}) {
                         }
                         const isSelected = false;
                         return(
-                            <AddressInfo data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} />
+                            <AddressInfo data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
                         )
                     })
                 }
