@@ -105,6 +105,9 @@
 
 }
 @media(max-width:768px){
+
+  
+
     .quantityContainer{
         display: inline-flex;
         width: 66px;
@@ -120,6 +123,46 @@
             font-weight: 600;
             color: #247A81;
         }
+    
+    }
+}
+
+
+@media (min-width: 990px){
+    .cartItemCard{
+        .cartItemInfo{
+            .itemName{
+                font-weight: 500;
+                font-size: 14px;
+            }
+            .discountTag{
+                .discountText{
+                    font-weight: 600;
+                    font-size: 12px;
+                }
+                .discountPrice{
+                    font-weight: 400;
+                    font-size: 12px;
+                }
+            }
+    
+            .priceContainer{
+                .finalPrice{
+                    font-weight: 600;
+                    font-size: 14px;
+                }
+                .retailPrice{
+                    font-weight: 400;
+                    font-size: 12px;
+                    text-decoration-line: line-through;
+                    color: #A0A0A0;
+                }
+            }
+    
+        }
+    }
+    .quantityContainer{
+        font-size: 12px;
     
     }
 }
