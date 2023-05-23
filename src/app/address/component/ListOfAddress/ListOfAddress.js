@@ -11,14 +11,25 @@ export default function ListOfAddress({}) {
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   const [selectedAdddressId, setSelectedAddressId] = useState(null);
 
-  const onRemoveAddress = () =>{
-
+  const onRemoveAddress = async(addressId) =>{
+    const removeAddressResp  =  await fetch(`/api/delete-address`, {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify({addressId:addressId}),
+      next: { revalidate: 0} 
+    })
+    const removeAddress = await removeAddressResp.json();
+    console.log("removeAddress",removeAddress)
   }
 
   const onChangeAddress = (data) =>{
     setSelectedAddress(data)
     router.push('/order-summary')
   }
+
+ 
 
 
 
@@ -39,7 +50,7 @@ export default function ListOfAddress({}) {
                         }
                         const isSelected = false;
                         return(
-                            <AddressInfo data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={onRemoveAddress}/>
+                            <AddressInfo data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} />
                         )
                     })
                 }
