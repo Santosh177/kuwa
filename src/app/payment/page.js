@@ -22,7 +22,7 @@ export default async function PaymentPage() {
       return (
         <>
           <PageHeader headerName="Payment"/>
-          <PageStepTracker stepCount={2} />
+          <PageStepTracker stepCount={3} />
           <Payment cartData={getCartItems} />
         </>
       )

@@ -99,14 +99,14 @@ export default function CheckoutFrames() {
       <div  className={styles['checkout-frames-container']}>
         <div  className={styles['checkout-frame-details']}>
         <div  className={styles['frames-card-number-container']}>
-          <CardNumber placeholder="Card number" />
+          <CardNumber placeholder="Card number" style={{height:'48px'}} />
         </div>
         <div  className={styles['frames-card-details-container']}>
             <div className={styles['frames-expiry-date-container']}>
-              <ExpiryDate />
+              <ExpiryDate style={{height:'48px'}}  />
             </div>
             <div  className={styles['frames-cvv-container']}>
-              <Cvv/>
+              <Cvv style={{height:'48px'}} />
             </div>
         </div>
         </div>

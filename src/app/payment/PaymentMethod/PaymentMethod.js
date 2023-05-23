@@ -26,8 +26,11 @@ const CreditCardOption = () => {
                 <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/payment.png' alt=''/>
                 <div className={styles.txt}>Pay with Credit or Debit card</div>
             </div>
-            <div className={styles.paymentInfoWrapper} onClick={()=> setIsShowCard(!isShowCard)}>
-              <div className={styles.paymentInfoContainer}>
+            <div className={styles.paymentInfoWrapper} >
+              <div className={styles.paymentInfoContainer} onClick={(e)=>{
+
+setIsShowCard(!isShowCard)
+            } }>
                 <div className={styles.paymentInfo}>
                     <img className={styles.visa} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/visa.png'/>
                     <img className={styles.masterCard} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/mastercard.png' />

@@ -23,6 +23,7 @@ const PageInfoTicker = ({stepCount=0}) => {
         {
           label: 'Payment',
           icon:"https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/payment+(1).png",
+          icon_white:'https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/payment.png',
           step: 3,
           tickIcon:"https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tick.png"
         },
