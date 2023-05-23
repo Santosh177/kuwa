@@ -10,6 +10,7 @@ const PageInfoTicker = ({stepCount=0}) => {
         {
           label: 'Address',
           icon:"https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/address+(1).png",
+          icon_white:"https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Group+42405.png",
           step: 1,
           tickIcon:"https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tick.png"
         },
