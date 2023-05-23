@@ -16,7 +16,7 @@ const CheckBox = ({isChecked=false}) => {
   )
 }
 
-const CreditCardOption = () => {
+const CardOption = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) => {
 
   const [ isShowCard , setIsShowCard] = useState(false)
 
@@ -28,31 +28,27 @@ const CreditCardOption = () => {
             </div>
             <div className={styles.paymentInfoWrapper} >
               <div className={styles.paymentInfoContainer} onClick={(e)=>{
-
-setIsShowCard(!isShowCard)
+                setIsShowCard(!isShowCard)
+                onSelectedPaymentMethod("CHECKOUT_CARD")
             } }>
                 <div className={styles.paymentInfo}>
                     <img className={styles.visa} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/visa.png'/>
                     <img className={styles.masterCard} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/mastercard.png' />
                   </div>
-                  <CheckBox />
+                  <CheckBox isChecked={selectedPaymentMethod === "CHECKOUT_CARD"} />
               </div>
-                
                 {isShowCard && 
                 <><CheckoutFrames />
                 <div className={styles.security}><img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/security.png' alt='safe' /> <span>Safe & Secured</span></div>
                 </>
                 }
-
             </div>
-
-           
     </div>
   )
 }
 
 
-const PayWithEmi = () =>{
+const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) =>{
 
   return(
     <div className={styles.payWithEmi}>
@@ -61,8 +57,7 @@ const PayWithEmi = () =>{
         <div className={styles.txt}>Pay with Emi</div>
       </div>
       <div className={styles.paymentOptionsList}>
-
-          <div className={styles.paymentOptionItem}>
+          <div className={styles.paymentOptionItem} onClick={()=> onSelectedPaymentMethod("TAMARA")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
                 <div className={styles.desc}>
@@ -70,9 +65,9 @@ const PayWithEmi = () =>{
                    <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
                 </div>
               </div>
-              <CheckBox />
+              <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
           </div>
-          <div className={styles.paymentOptionItem}>
+          <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("TABBY")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
                 <div className={styles.desc}>
@@ -80,7 +75,17 @@ const PayWithEmi = () =>{
                    <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
                 </div>
               </div>
-              <CheckBox />
+              <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>
+          </div>
+          <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("TAP")}>
+              <div className={styles.paymentOptionInfo}>
+                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
+                <div className={styles.desc}>
+                   <div className={styles.txt}>Just pay AED 20 now</div>
+                   <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
+                </div>
+              </div>
+              <CheckBox  isChecked={selectedPaymentMethod === 'TAP'}/>
           </div>
       </div>
     </div>
@@ -89,7 +94,7 @@ const PayWithEmi = () =>{
 
 
 
-export default function PaymentMethod() {
+export default function PaymentMethod({selectedPaymentMethod="",onSelectedPaymentMethod={}}) {
 
 
 
@@ -98,8 +103,8 @@ export default function PaymentMethod() {
         <div className={styles.paymentMethodWrapper}>
             <div className={styles.headerTxt}>Payment Method</div>
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
-            <CreditCardOption />
-            <PayWithEmi />
+            <CardOption selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod}/>
+            <PayWithEmi selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod}/>
         </div>
       )
     }
