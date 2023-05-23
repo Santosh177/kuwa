@@ -90,11 +90,11 @@ export default function SignupCard() {
       const onSignup = async() =>{
         try {
 
-          formData['country'] = 1;
           const res = await fetch('/api/signup', {
             method: 'POST',
             body:JSON.stringify(formData)
           })
+          console.log("resresres",res)
           if (res.status === 200) {
             router.push('/')
           } else {

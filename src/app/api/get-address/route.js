@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { authHeader } from '@/utils';
+import { authHeader } from '../../../lib/auth-cookies';
 
  
 export async function GET() {
