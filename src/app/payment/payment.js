@@ -187,7 +187,6 @@ const getPriceDetails = () => {
 
 
  
-  console.log("paymentMethod",selectedPaymentMethod)
 
       return (
         <>
