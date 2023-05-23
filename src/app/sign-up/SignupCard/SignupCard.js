@@ -94,15 +94,13 @@ export default function SignupCard() {
             method: 'POST',
             body:JSON.stringify(formData)
           })
-          console.log("resresres",res)
           if (res.status === 200) {
-            router.push('/')
+            window.location.href = '/'
           } else {
             throw new Error(await res.text())
           }
         } catch (error) {
           console.error('An unexpected error happened occurred:', error)
-          setErrorMsg(error.message)
         }
       }
 
