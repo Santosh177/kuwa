@@ -3,7 +3,7 @@ import React,{useState,useEffect} from 'react';
 import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import styles from './checkout-frames.module.scss';
 
-export default function CheckoutFrames() {
+export default function CheckoutFrames({onPayment}) {
       const [isDomReady , setDomReady ] = useState(false);
       const [isLoading, setIsLoading] = useState(false);
       const [isCardNumValid ,setIsCardNumValid ]= useState(false);
@@ -21,23 +21,7 @@ export default function CheckoutFrames() {
       const cvvTxt = "Security code";
       const placeHolderExpiryDate = "MM";
       const placeholderExpiryYY = "YY";
-      const loadCheckoutScript = () => {
-        let checkoutScript = document.createElement("script");
-        checkoutScript.setAttribute("src", "https://cdn.checkout.com/js/framesv2.min.js");
-        document.body.appendChild(checkoutScript);
-      }
-      useEffect(()=>{
-        loadCheckoutScript()
-        try{
-          let contentElem = document.getElementsByClassName('content-wrap');
-          if(contentElem && contentElem[0] ){
-            contentElem[0].scrollIntoView()
-          }
-        }catch(e){
-      
-        }
-        
-      },[])
+    
   
       return (
         <div className={styles['checkout-frames-wrapper']}>
@@ -89,10 +73,10 @@ export default function CheckoutFrames() {
         paymentMethodChanged={(e) => {}}
         cardValidationChanged={(e) => {}}
         cardSubmitted={() => {}}
-        cardTokenized={(data) => {
-      
-
-        }}
+        cardTokenized={(e) => {
+          console.log("TOKENN",e.token)
+          onPayment({token:e.token})
+      }}
         cardTokenizationFailed={(e) => {}}
         cardBinChanged={(e) => {}}
     >
@@ -111,7 +95,6 @@ export default function CheckoutFrames() {
         </div>
         </div>
       </div>
-
     </Frames>
         </div>
       )

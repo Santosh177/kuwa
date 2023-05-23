@@ -2,6 +2,7 @@
 import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
+import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import PaymentFooterBtn from "./components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails , createPayloadForCartItems , createPayloadForItems} from "@/utils";
 import { useRouter } from 'next/navigation';
@@ -55,7 +56,7 @@ const getPriceDetails = () => {
 }
 
 
-  const onPayment = async() => {
+  const onPayment = async(data) => {
     const getCartItemResp = await fetch('/api/get-cart-item', {
       method: 'GET',
       headers: {
@@ -91,7 +92,7 @@ const getPriceDetails = () => {
         "customerCity": "",
       }
       if(paymentOption == "CHECKOUT_CARD"){
-          payload['token'] = 'tok_7hm6eqpr452evmkcqruagdeway';
+          payload['token'] = data['token'];
           console.log("CHECKOUT_CARD",payload)
             // const placeOrderResp  =  await fetch('/api/checkout-place-order', {
             //     method: 'POST',
@@ -186,6 +187,15 @@ const getPriceDetails = () => {
   }
 
 
+  const onProceed = () => {
+    if(selectedPaymentMethod =="CHECKOUT_CARD"){
+      Frames.submitCard()
+    }else{
+      onPayment()
+    }
+
+  }
+
  
 
       return (
@@ -195,7 +205,7 @@ const getPriceDetails = () => {
                 <CouponCode />
               </div>
               <div className={styles.paymentMethod}>
-              <PaymentMethod onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
+              <PaymentMethod onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
               </div>
               <div className={styles.priceDetails}>
                 <div className={styles.headerTxt}>Price Details</div>
@@ -214,10 +224,9 @@ const getPriceDetails = () => {
               </div>
               </div>
               <div className={styles.paymentMethod}>
-                <PaymentMethod onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
+                <PaymentMethod onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
               </div>
-            
-              <PaymentFooterBtn onProceed={()=>onPayment()} />
+              <PaymentFooterBtn onProceed={()=>onProceed()  } />
           </div>
         </>
       )

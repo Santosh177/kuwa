@@ -16,7 +16,7 @@ const CheckBox = ({isChecked=false}) => {
   )
 }
 
-const CardOption = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) => {
+const CardOption = ({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayment={}}) => {
 
   const [ isShowCard , setIsShowCard] = useState(false)
 
@@ -38,7 +38,7 @@ const CardOption = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) => {
                   <CheckBox isChecked={selectedPaymentMethod === "CHECKOUT_CARD"} />
               </div>
                 {isShowCard && 
-                <><CheckoutFrames />
+                <><CheckoutFrames onPayment={(data)=>onPayment(data)}/>
                 <div className={styles.security}><img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/security.png' alt='safe' /> <span>Safe & Secured</span></div>
                 </>
                 }
@@ -94,7 +94,8 @@ const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) =>{
 
 
 
-export default function PaymentMethod({selectedPaymentMethod="",onSelectedPaymentMethod={}}) {
+export default function PaymentMethod({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayment={}}) {
+
 
 
 
@@ -103,7 +104,7 @@ export default function PaymentMethod({selectedPaymentMethod="",onSelectedPaymen
         <div className={styles.paymentMethodWrapper}>
             <div className={styles.headerTxt}>Payment Method</div>
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
-            <CardOption selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod}/>
+            <CardOption selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod} onPayment={(data)=>onPayment(data)}/>
             <PayWithEmi selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod}/>
         </div>
       )
