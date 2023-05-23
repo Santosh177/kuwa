@@ -44,7 +44,7 @@
     }
 }
 .StepStyleActive{
-    background-color: #247A81;
+    background-color: #247A81 !important;
     
 }
 .StepStyleActiveTracker{
@@ -121,6 +121,7 @@
     .MainContainer{
         max-width: 349px;
     }
+    
     .StepStyle{
         width: 40px;
          height: 40px;
