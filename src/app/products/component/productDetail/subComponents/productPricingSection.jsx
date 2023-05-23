@@ -9,13 +9,31 @@ const ProductPricingSection= ({productData}) =>{
         "product": id,
         "quantity": noOfProduct
     }
+    const addToCart = async(payload) =>{
+        try {
+            const res = await fetch('/api/add-to-cart', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body:JSON.stringify(payload)
+            })
+            if (res.status === 200) {
+              window.location.href = '/'
+              setNoOfProduct(1)
+            } else {
+              throw new Error(await res.text())
+            }
+          } catch (error) {
+            console.error('An unexpected error happened occurred:', error)
+            setErrorMsg(error.message)
+          }
+    }
     const handelAddToCart = (payload) => {
-        console.log(payload);
-        setNoOfProduct(1)
+        addToCart(payload)
     }
     const handelBuyNow = (payload) => {
-        console.log(payload)
-        setNoOfProduct(1)
+        addToCart(payload)
     }
     return(
         <div className={styles.pricingSectionContainer}>
