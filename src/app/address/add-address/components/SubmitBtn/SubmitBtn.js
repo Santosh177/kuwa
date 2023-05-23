@@ -3,15 +3,13 @@
 import styles from './submit-btn.module.scss';
 
 
-export default function SubmitBtn({}) {
-
-{/* <div className={styles.submitBtn}>Save address & proceed</div> */}
+export default function SubmitBtn({onSaveAddress={}}) {
 
   
       return (
         <>
-            <div className={styles.submitBtnWrapper}>
-                <div className={styles.submitBtn}>Save address & proceed</div>
+            <div className={styles.submitBtnWrapper} onClick={()=>onSaveAddress()}>
+                <div className={styles.submitBtn} >Save address & proceed</div>
             </div>
           
         </>
