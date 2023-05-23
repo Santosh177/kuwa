@@ -87,6 +87,10 @@ export default function AddressForm({onFormData,formData, isEdit=false}) {
       }
 
       useEffect(()=>{
+            setValues(formData)
+      },[formData])
+
+      useEffect(()=>{
         validate();
         onFormData(values);
       },[values]);
