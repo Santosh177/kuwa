@@ -26,7 +26,7 @@ const getUser = async () => {
   console.log("tokentoken",token)
   if(token && token.value){
     try {
-      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/private/customer/${user.value}`, {
+      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${user.value}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

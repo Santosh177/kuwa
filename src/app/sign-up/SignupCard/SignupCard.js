@@ -1,5 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import Input from "@/components/Input/Input";
 import styles from './sign-up-card.module.scss';
 import { useState } from 'react';
 
@@ -13,16 +14,10 @@ const SignupForm = ({setFormData={},formData={}}) => {
         <div className={styles.signUpFormContainer}>
             <div className={styles.userNameContainer}>
                 <div className={styles.inputContain}>
-                    <input type="text" id="fname" name="fname" autocomplete="off" value={formData.firstName || ""} onChange={(e)=>onInputChange(e,'firstName')}  />
-                    <label className={styles.placeholderText}>
-                        <div className={styles.text}>First name *</div>
-                    </label>
+                    <Input type="text" id="fname" name="fname" placeHolder='First name *'  value={formData.firstName || ""} onInputChange={(e)=>onInputChange(e,'firstName')}  />
                 </div>
                 <div className={styles.inputContain}>
-                    <input type="text" id="lname" name="fname" autocomplete="off" value={formData.lastName || ""} onChange={(e)=>onInputChange(e,'lastName')}  />
-                    <label className={styles.placeholderText}>
-                        <div className={styles.text}>Last name *</div>
-                    </label>
+                    <Input type="text" id="lname" name="fname" placeHolder='Last name *'  value={formData.lastName || ""} onInputChange={(e)=>onInputChange(e,'lastName')}  />
                 </div>
             </div>
             <div>
@@ -30,11 +25,11 @@ const SignupForm = ({setFormData={},formData={}}) => {
                 {/* <span>Error</span> */}
             </div>
             <div>
-                <input className={styles.inputBox} type='email'  value={formData.email || ""} placeholder='Email ID (ex. abc@gmail.com)' onChange={(e)=>onInputChange(e,'email')} />
+                <Input lassName={styles.inputBox} type='email'  value={formData.email || ""} placeHolder='Email ID (ex. abc@gmail.com)' onInputChange={(e)=>onInputChange(e,'email')}  />
                 {/* <span>Error</span> */}
             </div>
             <div>
-                <input className={styles.inputBox} type='password'  value={formData.password || ""} placeholder='Set password' onChange={(e)=>onInputChange(e,'password')} />
+                <Input className={styles.inputBox} type='password'  value={formData.password || ""} placeHolder='Set password' onInputChange={(e)=>onInputChange(e,'password')} />
                 {/* <span>Error</span> */}
             </div>
         </div>

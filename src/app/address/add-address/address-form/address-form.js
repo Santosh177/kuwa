@@ -59,7 +59,7 @@ const AddressInfoForm = ({onChange={},values={}}) => {
          <div className={styles.headerTxt}>Address</div>
             <div className={styles.areaInputText}>
                 <div className={styles.inputContainer}>
-                    <input type="text" id='address' name='address' autocomplete="off" value={values['address']} onChange={(e)=>onChange(e,"address")} />
+                    <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")} />
                     <label className={styles.placeholderText}>
                         <div className={styles.text}>Area name, Colony *</div>
                     </label>

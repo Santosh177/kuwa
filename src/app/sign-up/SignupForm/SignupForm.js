@@ -27,13 +27,13 @@ export default function SignupForm() {
         <div className={styles.signUpFormContainer}>
             <div className={styles.userNameContainer}>
                 <div className={styles.inputContain}>
-                    <input type="text" id="fname" name="fname" autocomplete="off" value={formData.firstName || ""} onChange={(e)=>onInputChange(e,'firstName')}  />
+                    <input type="text" id="fname" name="fname"  value={formData.firstName || ""} onChange={(e)=>onInputChange(e,'firstName')}  />
                     <label className={styles.placeholderText}>
                         <div className={styles.text}>First name *</div>
                     </label>
                 </div>
                 <div className={styles.inputContain}>
-                    <input type="text" id="lname" name="fname" autocomplete="off" value={formData.lastName || ""} onChange={(e)=>onInputChange(e,'lastName')}  />
+                    <input type="text" id="lname" name="fname"  value={formData.lastName || ""} onChange={(e)=>onInputChange(e,'lastName')}  />
                     <label className={styles.placeholderText}>
                         <div className={styles.text}>Last name *</div>
                     </label>

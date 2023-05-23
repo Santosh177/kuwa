@@ -59,7 +59,7 @@ export default function Login() {
               <div className={styles.loginBtn} onClick={onLogin}>Login</div>
           </div>
            
-            <div className={styles.signUpTxt}>Don’t have an account ? <span className={styles.createAccountTxt} onClick={()=>router.push('/login')}>Create account</span></div>
+            <div className={styles.signUpTxt}>Don’t have an account ? <span className={styles.createAccountTxt} onClick={()=>router.push('/sign-up')}>Create account</span></div>
         </div>
       )
     }
