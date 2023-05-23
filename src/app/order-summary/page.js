@@ -1,3 +1,7 @@
+import PageHeader from "@/components/PageHeader/PageHeader";
+import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
+import OrderSummaryPage from "./OrderSummaryPage/OrderSummaryPage";
+import styles from './pages.module.scss';
 
 export default function AllProduct() {
 
@@ -7,7 +11,9 @@ export default function AllProduct() {
   
       return (
         <>
-          <div> Order - summary </div>
+          <PageHeader headerName="Order Summary"/>
+          <PageStepTracker stepCount={2} />
+          <OrderSummaryPage />
         </>
       )
     }

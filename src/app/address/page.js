@@ -1,4 +1,4 @@
-
+import PageHeader from '@/components/PageHeader/PageHeader';
 export default function AllProduct() {
 
 
@@ -7,6 +7,7 @@ export default function AllProduct() {
   
       return (
         <>
+          <PageHeader />
           <div> address </div>
         </>
       )

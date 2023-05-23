@@ -48,3 +48,13 @@ export function createCustomHeader(req) {
     const cookies = parseCookies(req)
     
 }
+
+export const authHeader = async() =>{
+  return (
+    {
+      'country':1,
+      'Authorization':"Bearer "+"",
+      'user':9090
+    }
+  )
+}

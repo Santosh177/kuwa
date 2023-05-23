@@ -11,10 +11,10 @@ export const userInfo = {
 const AuthContext = React.createContext({})
 
 
-export const AuthProvider = ({ children, userData }) => {
+export const AuthProvider = ({ children, authData }) => {
 
   
-  return <AuthContext.Provider value={{userData}}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
 }
 
 

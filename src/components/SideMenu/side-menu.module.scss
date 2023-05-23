@@ -4,6 +4,7 @@
     padding-left: 16px;
     display: flex;
     align-items: center;
+    gap: 15px;
     .profileIcon{
         height: 64px;
         width: 64px;
@@ -17,6 +18,7 @@
         .userName{
             font-weight: 600;
             font-size: 14px;
+            margin-top: 3px;
         }
 
     }

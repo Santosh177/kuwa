@@ -1,0 +1,62 @@
+.deliveryAddress{
+    .actionItem{
+        display: flex;
+        justify-content: space-between;
+        .headerTxt{
+            font-weight: 500;
+            font-size: 12px;
+            color: #A0A0A0;
+        }
+        .changeAction{
+            display: flex;
+            gap: 4px;
+            img{
+                width: 16px;
+                height: 16px;
+            }
+            .changeTxt{
+                font-weight: 500;
+                font-size: 12px;
+                color: #247A81;
+            }
+        }
+    }
+    .name{
+        font-weight: 500;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+    .txt{
+        font-weight: 400;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+}
+
+@media(max-width:990px){
+    .deliveryAddress{
+        background: #FFFFFF;
+        border: 1px solid #E6E7E7;
+        border-radius: 16px;
+        max-width: 396px;
+        padding-right: 16px;
+        padding-left: 16px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        margin-top: 16px;
+    }
+}
+
+@media(min-width:990px){
+    .deliveryAddress{
+        background: #FFFFFF;
+        border: 1px solid #E6E7E7;
+        border-radius: 16px;
+        max-width: 396px;
+        padding-right: 16px;
+        padding-left: 16px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        margin-top: 16px;
+    }
+}

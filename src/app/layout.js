@@ -1,5 +1,5 @@
 import { AuthProvider } from "@/context/userDetail";
-// import { CountryProvider } from "@/context/contryDetails";
+import { CountryProvider } from "@/context/contryDetails";
 
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
@@ -8,7 +8,7 @@ import { getTokenCookie } from '../lib/auth-cookies';
 import { cookies } from 'next/headers';
 // import { Work_Sans } from 'next/font/google';
 
-const workSans = Work_Sans({ weight: ['400', '700'],
+const workSans = Work_Sans({ weight: ['400','500','600', '700'],
 style: ['normal', 'italic'],
 subsets: ['latin'],})
 
@@ -22,7 +22,8 @@ export const metadata = {
 const getUser = async () => {
   const nextCookies = cookies(); 
   const token = nextCookies.get('token');
-  if(token){
+  console.log("tokentoken",token)
+  if(token && token.value){
     try {
       const userLoginResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/private/customer/1', {
         method: 'GET',
@@ -31,25 +32,22 @@ const getUser = async () => {
           Authorization: 'Bearer ' + token.value,
         }
       })
-      // const userData = await userLoginResp.json()
-      const userData = {
-        id:1,
-        countryId: 1,
-        countryCode: 'AE'
-      }
-      return userData;
+      const userData = await userLoginResp.json();
+      console.log("user Data",userData)
+      return {isLogin:true, userData:userData};
      } catch (err) {
-         return null
+      return {isLogin:false,userData:null}
      }
   }else{
-    return null
+    return {isLogin:false,userData:null}
   }
 
 };
 
 
 export default async function RootLayout({ children }) {
-  // const userData = await getUser();
+  const userData = await getUser();
+
 
   // const countryCode = userData && userData.countryCode || null
 
@@ -60,13 +58,13 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={workSans.className}>
-     
+      <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
       <script src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
-        {/* <CountryProvider countryCode={"AE"}> */}
-          {/* <AuthProvider  userData={userData}> */}
+        <CountryProvider countryCode={"AE"}>
+          <AuthProvider authData={userData}>
             {children}
-          {/* </AuthProvider> */}
-        {/* </CountryProvider> */}
+          </AuthProvider>
+        </CountryProvider>
       </body>
     </html>
   )

@@ -29,13 +29,13 @@ export default async function Home({data}) {
   return (
     <>
         <Header />
-        {/* <AssuredInfo />
-           <ProductSlider />
+        <AssuredInfo />
+        <ProductSlider />
         <ProductSlider />
         <ProductSlider />
         <MedicalExpert />
         <Blogs />
-        <Footer /> */}
+        <Footer />
     </>
 
   )

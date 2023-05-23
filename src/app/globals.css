@@ -18,6 +18,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  height: 100vh;
 }
 
 a {
@@ -34,8 +35,8 @@ a {
 @media (min-width:1500px){
 
   body{
-    max-width: 1500px !important;
-    margin: 0 auto;
+    /* max-width: 1500px !important;
+    margin: 0 auto; */
   }
   
 }
@@ -74,4 +75,3 @@ a {
     display: flex !important;
   }
  }
- 

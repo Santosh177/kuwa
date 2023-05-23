@@ -1,0 +1,56 @@
+
+
+@media (max-width:990px){
+    .orderSummary{
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 20px;
+        padding-bottom: 50%;
+        .couponCode{
+            margin-top: 35px;
+        }
+        .paymentMethod{
+            margin-top: 30px;
+        }
+        .priceDetails{
+            margin-top: 35px;
+            .headerTxt{
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .orderSummaryDesktop{
+        display: none;
+    }
+}
+
+
+@media (min-width:990px){
+    .orderSummary{
+        display: none;
+    }
+    .orderSummaryDesktop{
+        width: 55%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 55px;
+        gap: 28px;
+        .paymentLeftContainer{
+            display: flex;
+            flex-direction: column;
+            max-width: 346px;
+            width: 100%;
+        }
+        .headerTxt{
+            padding-bottom: 18px;
+        }
+        .paymentMethod{
+            max-width: 398px;
+        }
+        .priceDetails{
+            margin-top:18px;
+        }
+    }
+}

@@ -1,0 +1,53 @@
+
+
+@media (max-width:990px){
+    .orderSummary{
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        margin-top: 25px;
+        flex-direction: column;
+        width: 90%;
+        padding-bottom: 30%;
+        .headerTxt{
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .addressTxt{
+            display: none;
+        }
+        .priceDetails{
+            margin-top: 32px;
+        }
+        
+        .priceDetailsContainer{
+            margin-top: 16px;
+        }
+    }
+}
+
+@media (min-width:990px){
+    .orderSummary{
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        margin: 0 auto;
+        gap: 28px;
+        margin-top: 55px;
+        .headerTxt{
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .addressAndProductDetails{
+            width: 50%;
+        }
+    
+        .priceDetails{
+            width: 50%;
+        }
+        .priceDetailsContainer{
+            margin-top: 16px;
+        }
+    }
+}

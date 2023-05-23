@@ -1,0 +1,43 @@
+.checkout-frames-wrapper{
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    margin: 14px;
+    .field{
+        height: 48px !important;
+    }
+    .frames-card-number-container{
+        height: 48px;
+        border: 1px solid #E6E7E7;
+        border-radius: 8px;
+        padding-left: 16px;
+    }
+    .frames-card-details-container{
+        display: flex;
+        height: 48px;
+        justify-content: space-between;
+        margin-top: 16px;
+
+        .frames-expiry-date-container{
+            border: 1px solid #E6E7E7;
+            border-radius: 8px;
+            padding-left: 16px;
+            width: 48%;
+        }
+
+        .frames-cvv-container{
+            border: 1px solid #E6E7E7;
+            border-radius: 8px;
+            padding-left: 16px;
+            width: 48%;
+        }
+
+        .expiry-date-frame{
+            height: 48px;
+        }
+        input {
+            height: 48px;
+        }
+    }
+
+}

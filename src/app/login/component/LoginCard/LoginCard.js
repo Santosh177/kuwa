@@ -19,7 +19,6 @@ export default function Login() {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + "didToken",
             },
             body:JSON.stringify({
                 'username':userEmail,
@@ -27,7 +26,7 @@ export default function Login() {
             })
           })
           if (res.status === 200) {
-            router.push('/')
+            window.location.href = '/'
           } else {
             throw new Error(await res.text())
           }

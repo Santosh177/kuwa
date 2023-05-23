@@ -1,0 +1,47 @@
+.paymentFailureContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    img{
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+    }
+    .txt{
+        font-weight: 600;
+        font-size: 18px;
+        margin-top: 8px;
+    }
+    .subTxt{
+        font-weight: 400;
+        font-size: 14px;
+        color: #A0A0A0;
+        margin-top: 5px;
+    }
+    .btn{
+        background: #247A81;
+        border-radius: 24px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        color: #FFF;
+        margin-top: 24px;
+    }
+}
+
+@media (min-width:990px){
+    .paymentFailureContainer{
+        width: 50%;
+        max-width: 343px;
+        .subTxt{
+            margin: 0 auto;
+            margin-top: 5px;
+        }
+    }
+}

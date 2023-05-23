@@ -1,0 +1,83 @@
+.paymentFooterbtn{
+    bottom: 0px;
+    background: #FFFFFF;
+    box-shadow: 0px -6px 7px rgba(173, 173, 173, 0.16);
+    width: 100%;
+    position: fixed;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    .paymentFooterBtnContainer{
+        display: flex;
+        justify-content: space-between;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        width: 100%;
+        padding-left: 14px;
+        padding-right: 14px;
+        .txt{
+            font-weight: 400;
+            font-size: 14px;
+            color: #9AA1AB;
+        }
+        .price{
+            font-weight: 600;
+            font-size: 18px;
+            color: #000000;
+        }
+
+        .subTxt{
+            font-weight: 600;
+            font-size: 12px;
+            color: #247A81;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        .btn{
+            background: #247A81;
+            border-radius: 24px;
+            color: #FFFFFF;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            cursor: pointer;
+            padding-left: 14px;
+            padding-right: 14px;
+            width: 53%;
+            text-align: center;
+        }
+    }
+    
+}
+
+@media(min-width:768px){
+    .paymentFooterbtn{
+        .paymentFooterBtnContainer{
+            display: flex;
+            justify-content: space-between;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            max-width: 440px;
+            .txt{
+                font-weight: 400;
+                font-size: 16px;
+                color: #9AA1AB;
+            }
+            .price{
+                font-weight: 600;
+                font-size: 24px;
+                color: #000000;
+            }
+    
+            .subTxt{
+                font-weight: 600;
+                font-size: 14px;
+                color: #247A81;
+            }
+            .btn{
+                padding-right: 40px;
+                padding-left: 40px;
+                width: unset;
+            }
+        }
+    }
+}

@@ -1,0 +1,55 @@
+.priceDetailsWrapper{
+    background: #FFFFFF;
+    border: 1px solid #E6E7E7;
+    border-radius: 16px;
+    padding-top: 10px;
+    padding-bottom: 24px;
+    padding-right: 16px;
+    padding-left: 16px;
+    .rowItemContainer{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 16px;
+        .rowItemLeftText{
+            font-weight: 400;
+            font-size: 14px;
+        }
+        .rowItemRightText{
+            font-weight: 400;
+            font-size: 14px;
+        }
+        .discountAmount{
+            color: #247A81;
+        }
+        .freeDeliveryTxt{
+            color: #247A81;
+        }
+        .totalAmountTxt{
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .totalAmountPrice{
+            font-weight: 400;
+            font-size: 18px;
+        }
+    }
+}
+
+.amountSavedInfo{
+    background: #F1FAF8;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    color: #247A81;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 16px;
+}
+
+
+@media (min-width:990px){
+    .priceDetailsWrapper{
+        max-width: 346px;
+    }
+}
+   
