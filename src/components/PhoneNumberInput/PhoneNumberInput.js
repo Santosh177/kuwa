@@ -1,6 +1,7 @@
 
-import styles from './phone-number-input.module.scss';
-
+import styles from './phone-number-input.scss';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 
 /* 
@@ -13,7 +14,16 @@ errorMsg = "",
 isEditable= true
 style = {}
 */
+{/* <PhoneInput
+country={"ae"}
+className={`${phoneErr && 'error-box-container'}`}
+value={contactNo || ""}
+onChange={(e,value) => handleInput(e,value, "phone-no")} */}
 
+// value={contactNo}
+// onChange={(value, data) => {
+//   numberCheck(value, data);
+// }}
 
 
 const PhoneNumberInput = ({onInputChange={},type="text",fieldName="",value="",placeHolder="phoneNumber *",isError="",errorMsg="",isDisabled="",style={}}) => {
@@ -21,12 +31,13 @@ const PhoneNumberInput = ({onInputChange={},type="text",fieldName="",value="",pl
 
     return(
         <div className={styles.inputWrapper} style={...style}>
-            <div className={styles.inputContainer}>
-                <input type={type} id={fieldName} name={fieldName}  value={value} onChange={(e)=>onInputChange(e,fieldName)}  disabled={isDisabled}/>
-                <label className={styles.placeholderText}>
-                    <div className={styles.text}>{placeHolder}</div>
-                </label>
-            </div>
+           <PhoneInput
+                    country={'us'}
+                    value={'this.state.phone'}
+                    onChange={phone => this.setState({ phone })}
+                    placeholder='fieldName'
+                    searchPlaceholder="ss"
+                    />
          {isError && <span className={styles.errorMsg}>{errorMsg}</span>}
          </div>
        

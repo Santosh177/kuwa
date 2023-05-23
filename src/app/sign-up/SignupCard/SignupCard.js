@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import Input from "@/components/Input/Input";
+import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
 import styles from './sign-up-card.module.scss';
 import { useState } from 'react';
 
@@ -21,6 +22,7 @@ const SignupForm = ({setFormData={},formData={}}) => {
                 </div>
             </div>
             <div>
+              <PhoneNumberInput />
                 <input className={styles.inputBox} type='phone'  value={formData.mobNumber || ""} placeholder='Phone number *' onChange={(e)=>onInputChange(e,'mobNumber')}  />
                 {/* <span>Error</span> */}
             </div>
