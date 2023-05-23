@@ -1,6 +1,7 @@
 
 'use client';
 import React, { useEffect, useState ,useContext} from "react"
+import { useRouter } from 'next/navigation';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
@@ -11,14 +12,16 @@ import styles from './cart-page.module.scss';
 
 
 export default  function Cart(props) {
-  const value = useAuth()
-  console.log("valuevaluevalue",value)
+    const router = useRouter();
     const [ data , setData ] = useState(props.cartData);
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
+    const [ haveAddress, setHaveAddress] = useState(false);
 
+    useEffect(()=>{
+      getAddress()
+    },[])
 
-    // console.log("cartData",cartData)
 
     useEffect(()=>{
         if(data && Object.keys(data).length > 0 ){
@@ -78,12 +81,36 @@ export default  function Cart(props) {
         
 
     }
+
+
+    const getAddress = async() => {
+      const getAddressResp  =  await fetch('/api/get-address', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const addressData = await getAddressResp.json();
+      console.log("Address+++",addressData)
+      const haveAddress = addressData && addressData['billingAddresses'] && addressData['billingAddresses'] .length > 0;
+      if(haveAddress){
+        setHaveAddress(haveAddress);
+      }
+    }
       
+
+
+    const onProceed = () => {
+      if(haveAddress){
+        router.push('/order-summary');
+      }else{
+        router.push('/address/add-address');
+      }
+    }
 
       
      
         
-    // console.log("priceDetails.totalAmount",priceDetails.totalAmount)
   
       return (
         <>
@@ -106,7 +133,7 @@ export default  function Cart(props) {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={priceDetails.totalAmount} />
+          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={priceDetails.totalAmount} onProceed={onProceed} />
         </>
       )
     }
