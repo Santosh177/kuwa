@@ -50,13 +50,15 @@ export const authHeader = async() =>{
   if(token && token.value){
     return (
       {
+        'Content-Type': 'application/json',
         'country':1,
         'Authorization':"Bearer "+token.value,
-        'user':user.value
+        'user':user.value,
       }
     )
   }else{
     return({
+      'Content-Type': 'application/json',
       'country' : 1
     })
   }

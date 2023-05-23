@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { authHeader } from '@/utils';
-
+import { authHeader } from '../../../lib/auth-cookies';
  
 // export async function GET() {
 //   const cartData =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
@@ -19,7 +18,7 @@ export async function GET() {
   console.log("authHeader",authHeader())
   const cartData =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
     method: 'GET',
-    headers: {...customHeader},
+    headers: customHeader,
     next: { revalidate: 0} 
   })
   const data = await cartData.json();

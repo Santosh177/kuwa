@@ -8,27 +8,34 @@ import styles from './pages.module.scss';
 
 export default async function OrderSummary() {
 
+  let getCartItems = []
+  try {
+    const customHeader = await authHeader();
+    const getCartItemResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
+      method: 'GET',
+      headers:{
+        ...customHeader
+      },
+      next: { revalidate: 0} 
+    })
+     getCartItems = await getCartItemResp.json();
+  } catch (error) {
+    getCartItems = []
+  }
+
+
+  console.log("getCartItemsgetCartItems",getCartItems)
+
+
+
   
-
-
-
-  const customHeader = await authHeader();
-  const getAddressResp  =  await fetch(`https://api.kuwa.bevaleo.dev/module/address/${customHeader.user}`, {
-    method: 'GET',
-    headers:{
-      ...customHeader
-    },
-    next: { revalidate: 0} 
-  })
-  const getAddress = await getAddressResp.json();
-  const billingAddresses = getAddress && getAddress['billingAddresses'] || [];
 
   
       return (
         <>
             <PageHeader headerName="Order Summary"/>
             <PageStepTracker stepCount={2} />
-            <OrderSummaryPage addressData= {billingAddresses} />
+            <OrderSummaryPage cartData={getCartItems} />
         </>
       )
     }
