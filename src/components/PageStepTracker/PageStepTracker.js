@@ -16,6 +16,7 @@ const PageInfoTicker = ({stepCount=0}) => {
         {
           label: 'Order Summary',
           icon:"https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/my_order.png",
+          icon_white:"https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/my_order_white.png",
           step: 2,
           tickIcon:"https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tick.png"
         },
@@ -32,12 +33,11 @@ const PageInfoTicker = ({stepCount=0}) => {
     return(
     <div className={styles.MainContainer}>
       <div className={styles.StepContainer} >
-        {steps.map(({ step, label,icon, tickIcon }) => (
+        {steps.map(({ step, label,icon,icon_white, tickIcon }) => (
           <div className={styles.StepWrapper} key={step}>
             <div className={[styles.StepStyle,(step==3)?styles.StepStyle3:"", (step<=stepCount)?styles.StepStyleActive:'' , (step + 1 <= stepCount)?styles.StepStyleActiveTracker:''].join(" ")}>
                 <div className={styles.StepCount}>
-                    <img className={styles.stepIcon} src={(step<=stepCount)?tickIcon:icon} />
-                    
+                    <img className={styles.stepIcon} src={(step<stepCount)?tickIcon:(step<=stepCount)?icon_white:icon} />
                 </div>
             </div>
             <div className={styles.StepsLabelContainer}>
