@@ -1,0 +1,47 @@
+.emptyCartWrapper{
+    top: 20%;
+    position: relative;
+    .txt{
+        font-weight: 500;
+        font-size: 16px;
+        text-align: center;
+    }
+    .subTxt{
+        margin-top: 8px;
+        font-weight: 400;
+        font-size: 14px;
+        text-align: center;
+        color: #ADADAD;
+    }
+    .btn{
+        color: #FFFFFF;  
+        font-weight: 500;
+        font-size: 14px;
+        background: #247A81;
+        border-radius: 24px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        width: 60%;
+        margin: 0 auto;
+        margin-top: 16px;
+        cursor: pointer;
+    }
+}
+
+@media(max-width:990px){
+    .emptyCartWrapper{
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width:990px){
+    .emptyCartWrapper{
+        margin: 0 auto;
+        max-width: 328px;
+        .btn{
+            width: 100%;
+        }
+    }
+}

@@ -7,7 +7,8 @@ import ProductSlider from '@/components/ProductSlider/ProductSlider';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import MedicalExpert from './Home/MedicalExpert/MedicalExpert';
 import Blogs from './Home/Blogs/Blogs';
-import Footer from '../components/Footer/Footer'
+import Footer from '../components/Footer/Footer';
+
 export default async function Home({data}) {
 
 
@@ -34,7 +35,7 @@ export default async function Home({data}) {
         <ProductSlider />
         <ProductSlider />
         <MedicalExpert />
-        <Blogs />
+        {/* <Blogs /> */}
         <Footer />
     </>
 

@@ -2,6 +2,7 @@
 import PageHeader from "@/components/PageHeader/PageHeader";
 import {getCartItemDetails} from "@/utils";
 import CartPage from './cartPage';
+import EmptyCart from "./EmptyCart/EmptyCart";
 import { authHeader } from "../../lib/auth-cookies";
 
 export default async function Cart() {
@@ -25,7 +26,7 @@ export default async function Cart() {
       return (
         <>
           <PageHeader headerName="My Cart" />
-          <CartPage cartData={getCartItems}/>
+          {getCartItems && getCartItems.length > 0?<CartPage cartData={getCartItems}/>: <EmptyCart />}
         </>
       )
     }
