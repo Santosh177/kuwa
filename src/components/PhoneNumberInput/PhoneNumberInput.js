@@ -32,9 +32,9 @@ const PhoneNumberInput = ({onInputChange={},type="text",fieldName="",value="",pl
     return(
         <div className={styles.inputWrapper} style={...style}>
            <PhoneInput
-                    country={'us'}
+                    country={'ae'}
                     value={'this.state.phone'}
-                    onChange={phone => this.setState({ phone })}
+                    onChange={phone => onInputChange(phone,fieldName)}
                     placeholder='fieldName'
                     searchPlaceholder="ss"
                     />

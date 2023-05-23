@@ -47,7 +47,7 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit}) => {
                 <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  value={values['firstName']} onInputChange={onChange} />
                 <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}} value={values['lastName']} onInputChange={onChange} />
             </div>
-            <PhoneNumberInput type="text" fieldName="phone" style={{width:'49%'}} value={values['phone']} onInputChange={onChange} />
+            <PhoneNumberInput type="text" fieldName="phone"  value={values['phone']} onInputChange={onChange} />
             <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange}   />
         </div>
     )
@@ -81,13 +81,17 @@ export default function AddressForm({onFormData,formData, isEdit=false}) {
       const [ errors , setErrors ] = useState({});
 
       const onChange = (e,fieldName) => {
-        const value = e.target.value;
+        let value = ""
+        if(fieldName === 'phone'){
+            value = e
+        }else{
+            value = e.target.value;
+        }
         setValues(currentValues =>({...currentValues,[fieldName]:value}))
-
       }
 
       useEffect(()=>{
-            setValues(formData)
+            // setValues(formData)
       },[formData])
 
       useEffect(()=>{
