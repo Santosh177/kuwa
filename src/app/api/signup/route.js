@@ -20,6 +20,6 @@ export async function POST(request,res) {
 
     console.log("signUpResp",signupData)
 
-   const data =  setTokenCookie(res, signupData.token)
-    return NextResponse.json(data)
+   const data =  setTokenCookie(res, signupData.token, signupData.id)
+    return NextResponse.json({"data":"ssss"})
 }
