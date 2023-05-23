@@ -2,38 +2,50 @@
 import React, { useState } from "react";
 import styles from './ProductPricingSection.module.scss'
 import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
+import { useRouter } from 'next/navigation';
 const ProductPricingSection= ({productData}) =>{
     const {benefits="",currency="Dhs",description="",id="",name="",numberOfProductReview="832",price="60",quantity=0,title="AADAR Endure Capsule For Premature Ejaculation (60 Capsules)"} = {}  
-    const [noOfProduct,setNoOfProduct] = useState(1)
+    const [noOfProduct,setNoOfProduct] = useState(1);
+    const router = useRouter()
+
     const payload = {
         "product": id,
         "quantity": noOfProduct
     }
     const addToCart = async(payload) =>{
-        try {
-            const res = await fetch('/api/add-to-cart', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body:JSON.stringify(payload)
-            })
-            if (res.status === 200) {
-              window.location.href = '/'
-              setNoOfProduct(1)
-            } else {
-              throw new Error(await res.text())
-            }
-          } catch (error) {
-            console.error('An unexpected error happened occurred:', error)
-            setErrorMsg(error.message)
-          }
+            try {
+                const res = await fetch('/api/add-to-cart', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body:JSON.stringify(payload)
+                })
+                if (res.status === 200) {
+                    return res.status
+                } else {
+                  throw new Error(await res.text())
+                }
+              } catch (error) {
+                console.error('An unexpected error happened occurred:', error)
+                setErrorMsg(error.message)
+              }
     }
-    const handelAddToCart = (payload) => {
-        addToCart(payload)
+    const handelAddToCart = async(payload) => {
+        const response = await addToCart(payload);
+        console.log(response,"responseresponse")
+        if(response === 200){
+            setNoOfProduct(1);
+            router.push('/cart')
+        }
     }
-    const handelBuyNow = (payload) => {
-        addToCart(payload)
+    const handelBuyNow = async (payload) => {
+        const response = await addToCart(payload)
+        console.log(response,"responseresponse")
+        if(response === 200){
+            setNoOfProduct(1);
+            router.push('/order-summary')
+        }
     }
     return(
         <div className={styles.pricingSectionContainer}>

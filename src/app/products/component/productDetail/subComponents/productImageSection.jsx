@@ -13,12 +13,11 @@ const ProductImageSection = ({ }) => {
                 <div className={styles.isDesktop}>
                     <Glider
                         hasArrows
-                        slidesToShow={1}
+                        slidesToShow={"auto"}
                         slidesToScroll={1}
                         hasDots
                         draggable={false}
                         scrollLock={true}
-                        // gap={20}
                         itemWidth={342}
                         iconLeft={
                             <img style={{ width: 48, height: 48 }} src='https://d25uasl7utydze.cloudfront.net/kuwa/right%20arrow.png' alt='left-icon' />
@@ -41,13 +40,12 @@ const ProductImageSection = ({ }) => {
                 </div>
                 <div className={styles.isMobile}>
                     <Glider
-                        slidesToShow={1}
+                        slidesToShow={"auto"}
                         slidesToScroll={1}
                         hasDots
                         draggable={false}
                         scrollLock={true}
-                        // gap={20}
-                        itemWidth={342}
+                        itemWidth={278}
                     >
                         {images.map((item, i) => {
                             return <>
