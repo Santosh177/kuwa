@@ -22,10 +22,11 @@ export const metadata = {
 const getUser = async () => {
   const nextCookies = cookies(); 
   const token = nextCookies.get('token');
+  const user = nextCookies.get('userId');
   console.log("tokentoken",token)
   if(token && token.value){
     try {
-      const userLoginResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/private/customer/1', {
+      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/private/customer/${user.value}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
