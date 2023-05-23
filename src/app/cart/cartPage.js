@@ -1,20 +1,18 @@
 
 'use client';
-import React, { useEffect, useState ,useContext} from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails } from "@/utils";
-import { useAuth } from '../../context/userDetail';
 import styles from './cart-page.module.scss';
 
 
 export default  function Cart(props) {
 
-
-  console.log("cartDatacartData",props.cartData)
+  console.log("props.card",props.cartData)
     const router = useRouter();
     const [ data , setData ] = useState(props.cartData);
     const [ cartItems , setCartItems ] = useState([]);
@@ -79,10 +77,6 @@ export default  function Cart(props) {
         console.log("cartItem.datacartItem.data",cartItem.data)
         setData(cartItem.data)
       }
-
-        // console.log("updateItemResp",datas);
-        
-
     }
 
 
@@ -112,7 +106,23 @@ export default  function Cart(props) {
     }
 
       
-     
+     const onDeleteItem = async (data) => {
+         const deleteData = {
+          cartItemId: data.id
+         }
+        const updateItemResp  =  await fetch('/api/delete-cart-item', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body:JSON.stringify(deleteData)
+      })
+      const cartItem = await updateItemResp.json();
+        // if(cartItem && cartItem.data){
+        //   console.log("cartItem.datacartItem.data",cartItem.data)
+        //   setData(cartItem.data)
+        // }
+     }
         
   
       return (
@@ -123,7 +133,7 @@ export default  function Cart(props) {
               {
                 cartItems.map((data, index)=>{
                   return(
-                    <CartItemCard data={data} key={index} onUpdateItem={onUpdateItem} />
+                    <CartItemCard data={data} key={index} onUpdateItem={onUpdateItem} onDeleteItem={()=>onDeleteItem(data)} />
                   )
                 })
               }
