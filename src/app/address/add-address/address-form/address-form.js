@@ -38,11 +38,11 @@ const ValidationSchema = [
     }
 ]
 
-const PersonalInfoFrom = ({onChange={},values={}}) => {
+const PersonalInfoFrom = ({onChange={},values={},isEdit}) => {
     return (
         <div className={styles.personalInfoForm}>
             <div className={styles.headerTxt}>Personal Info</div>
-            <CreateAccountBox />
+           {!isEdit && <CreateAccountBox />}
             <div className={styles.userNameContainer}>
                 <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  value={values['firstName']} onInputChange={onChange} />
                 <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}} value={values['lastName']} onInputChange={onChange} />
@@ -75,7 +75,7 @@ const AddressInfoForm = ({onChange={},values={}}) => {
 }
 
 
-export default function AddressForm({onFormData,formData}) {
+export default function AddressForm({onFormData,formData, isEdit=false}) {
 
       const [ values , setValues ] = useState(formData);
       const [ errors , setErrors ] = useState({});
@@ -111,7 +111,7 @@ export default function AddressForm({onFormData,formData}) {
       return (
         <>
           <div className={styles.addressForm}> 
-            <PersonalInfoFrom onChange={onChange} values={values} />
+            <PersonalInfoFrom onChange={onChange} values={values} isEdit={isEdit} />
             <AddressInfoForm onChange={onChange} values={values}/>
           </div>
         </>

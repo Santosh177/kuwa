@@ -24,7 +24,7 @@ export default function AddAddress() {
         <>
           <PageHeader headerName="Edit Address" />
           <div > 
-              <AddressForm onFormData={()=>{}} formData={addressData}/>
+              <AddressForm onFormData={()=>{}} formData={addressData} isEdit={true}/>
               {/* <SubmitBtn /> */}
           </div>
         </>
