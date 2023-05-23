@@ -48,7 +48,7 @@ export default function AddAddress() {
           <PageHeader headerName="Add Address" />
           <PageStepTracker />
           <div className={styles.addAddressWrapper}> 
-              <AddressForm  onFormData={onFormData}/>
+              <AddressForm  onFormData={onFormData} formData={addressData}/>
               <SubmitBtn onSaveAddress={onSaveAddress}/>
           </div>
         </>

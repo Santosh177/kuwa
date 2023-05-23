@@ -75,9 +75,9 @@ const AddressInfoForm = ({onChange={},values={}}) => {
 }
 
 
-export default function AddressForm({onFormData}) {
+export default function AddressForm({onFormData,formData}) {
 
-      const [ values , setValues ] = useState({});
+      const [ values , setValues ] = useState(formData);
       const [ errors , setErrors ] = useState({});
 
       const onChange = (e,fieldName) => {
