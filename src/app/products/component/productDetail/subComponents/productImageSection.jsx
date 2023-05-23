@@ -22,15 +22,15 @@ const ProductImageSection = ({ }) => {
         }
 
     }
-    const handleTransitionEnd = () =>{
+    const handleTransitionEnd = () => {
         console.log("helloooo")
     }
 
     const [width, setWidth] = useState(window.innerWidth);
     const handleResize = () => setWidth(window.innerWidth);
     useEffect(() => {
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, [width]);
     if (images && images.length > 0) {
         return (
@@ -55,43 +55,57 @@ const ProductImageSection = ({ }) => {
                         )
                     })}
                 </div> */}
-                <Glider
-                    hasArrows
-                    slidesToShow={1}
-                    slidesToScroll={1}
-                    hasDots
-                    draggable = {false}
-                    scrollLock={true}
-                    gap={"20px"}
-                    itemWidth={(width > 990) ? 204 : 138}
-                    iconLeft={
-                        <img style={{width:48,height:48}} src='https://d25uasl7utydze.cloudfront.net/kuwa/right%20arrow.png' alt='left-icon' />
-                    }
-                    iconRight={
-                        <img style={{width:48,height:48}} src='https://d25uasl7utydze.cloudfront.net/kuwa/left%20arrow.png' alt='right-icon' />
-                    }
-                    responsive={[
-                        {
-                          breakpoint: 864,
-                          settings: {
-                            hasArrows : false,
-                            iconLeft: null,
-                            iconRight: null,
-                          },
-                        },
-                      ]}
-                >
-                    {images.map((item,i) => {
-                        return <>
-                            <div className={styles.imageSection}>
-                                <div className={styles.imageContainer}>
-                                    <img src={item} alt={"productImage"} />
+                <div className={styles.isDesktop}>
+                    <Glider
+                        hasArrows
+                        slidesToShow={1}
+                        slidesToScroll={1}
+                        hasDots
+                        draggable={false}
+                        scrollLock={true}
+                        gap={"20px"}
+                        itemWidth={(width > 990) ? 204 : 138}
+                        iconLeft={
+                            <img style={{ width: 48, height: 48 }} src='https://d25uasl7utydze.cloudfront.net/kuwa/right%20arrow.png' alt='left-icon' />
+                        }
+                        iconRight={
+                            <img style={{ width: 48, height: 48 }} src='https://d25uasl7utydze.cloudfront.net/kuwa/left%20arrow.png' alt='right-icon' />
+                        }
+                    >
+                        {images.map((item, i) => {
+                            return <>
+                                <div className={styles.imageSection}>
+                                    <div className={styles.imageContainer}>
+                                        <img src={item} alt={"productImage"} />
+                                    </div>
                                 </div>
-                            </div>
-                        </>
-                    })}
+                            </>
+                        })}
 
-                </Glider>
+                    </Glider>
+                </div>
+                <div className={styles.isMobile}>
+                    <Glider
+                        slidesToShow={1}
+                        slidesToScroll={1}
+                        hasDots
+                        draggable={false}
+                        scrollLock={true}
+                        gap={"20px"}
+                        itemWidth={(width > 990) ? 204 : 138}
+                    >
+                        {images.map((item, i) => {
+                            return <>
+                                <div className={styles.imageSection}>
+                                    <div className={styles.imageContainer}>
+                                        <img src={item} alt={"productImage"} />
+                                    </div>
+                                </div>
+                            </>
+                        })}
+
+                    </Glider>
+                </div>
             </div>
         )
     } else {

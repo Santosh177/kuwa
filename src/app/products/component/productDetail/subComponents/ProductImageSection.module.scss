@@ -2,7 +2,12 @@
     width: 50%;
     margin: auto;
     max-width: 470px;
-
+    .isDesktop{
+        display: block !important;
+    }
+    .isMobile{
+        display: none !important;
+    }
     .imageSectionOuter {
         display: flex;
         gap: 16px;
@@ -65,6 +70,12 @@
     .imageSectionContainer {
         width: 100%;
         margin: auto;
+        .isDesktop{
+            display: none !important;
+        }
+        .isMobile{
+            display: block !important;
+        }
     }
 
 }
