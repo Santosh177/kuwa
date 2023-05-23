@@ -17,15 +17,23 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
 
   
       return (
-        <div className={[styles.addressInfoCard,(isSelected)&&styles.isActive].join(" ")} onClick={()=>onSelectAddress(data)}>
+        <div className={[styles.addressInfoCard,(isSelected)&&styles.isActive].join(" ")} onClick={(e)=>{
+          // e.preventDefault();
+          onSelectAddress(data)
+          }}>
             <div className={styles.addressInfo}>
                 <div className={styles.name}>{userName}</div>
                 <div className={styles.actionWrapper}>
-                    <div className={styles.action} onClick={()=>router.push('/address/edit-address/1')}>
+                    <div className={styles.action} onClick={(e)=>{
+                     e.stopPropagation();
+                      router.push('/address/edit-address/1')}}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                         <div className={styles.actionTxt}>Edit</div>
                     </div>
-                    <div className={styles.action} onClick={()=>onRemoveAddress()}>
+                    <div className={styles.action} onClick={(e)=>{
+                     e.stopPropagation();
+                      onRemoveAddress()
+                      }}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                         <div className={styles.actionTxt}>Remove</div>
                     </div>
