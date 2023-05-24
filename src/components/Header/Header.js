@@ -1,10 +1,11 @@
 'use client';
 import { useState } from 'react';
+import { useRouter,usePathname } from 'next/navigation';
 import SideMenu from '../SideMenu/SideMenu';
 import styles from './header.module.scss';
 
 const Header = () => {
-
+    const router = useRouter();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false)
     
 
@@ -34,7 +35,7 @@ const Header = () => {
                     <div className={styles.searchIcon}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/search.png" alt='search-icon'></img>
                     </div>
-                    <div className={styles.cartIcon}>
+                    <div className={styles.cartIcon} onClick={()=>router.push('/cart')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img>
                     </div>
                 </div>
