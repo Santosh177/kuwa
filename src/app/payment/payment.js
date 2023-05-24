@@ -118,18 +118,18 @@ const getPriceDetails = () => {
             const finalPayload ={...payload,...tamaraPayload};
             console.log("TAMARA",finalPayload)
           //   console.log("Paylaof",payload)
-          //   const placeOrderResp  =  await fetch('/api/tamara-place-order', {
-          //     method: 'POST',
-          //     headers: {
-          //       'Content-Type': 'application/json'
-          //     },
-          //     body:JSON.stringify(finalPayload)
-          // })
-          // const placeOrder = await placeOrderResp.json();
-          // console.log("placeOrderplaceOrder",placeOrder)
-          // if(placeOrder && placeOrder.status_code == 200){
-          //   router.push(placeOrder.redirect_link)
-          // }
+            const placeOrderResp  =  await fetch('/api/tamara-place-order', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body:JSON.stringify(finalPayload)
+          })
+          const placeOrder = await placeOrderResp.json();
+          console.log("placeOrderplaceOrder",placeOrder)
+          if(placeOrder && placeOrder.status_code == 200){
+            router.push(placeOrder.redirect_link)
+          }
 
       }else if(selectedPaymentMethod == "TABBY"){
             let items = await createPayloadForItems(cartItemsData);
