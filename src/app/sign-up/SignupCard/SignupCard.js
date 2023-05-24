@@ -9,8 +9,16 @@ import { useState } from 'react';
 const SignupForm = ({setFormData={},formData={}}) => {
 
   const onInputChange = (event, labelId) =>{
-    setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
+    if(labelId === 'mobNumber'){
+      setFormData(inputs => ({ ...inputs, [labelId]: event}));
+    }else{
+      setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
+    }
+
+    
   }
+
+  
     return (
         <div className={styles.signUpFormContainer}>
             <div className={styles.userNameContainer}>
@@ -22,8 +30,8 @@ const SignupForm = ({setFormData={},formData={}}) => {
                 </div>
             </div>
             <div>
-              <PhoneNumberInput />
-                <input className={styles.inputBox} type='phone'  value={formData.mobNumber || ""} placeholder='Phone number *' onChange={(e)=>onInputChange(e,'mobNumber')}  />
+            <PhoneNumberInput type="text" fieldName="mobNumber"   value={formData.mobNumber || ""} onInputChange={onInputChange} />
+                {/* <input className={styles.inputBox} type='phone'  value={formData.mobNumber || ""} placeholder='Phone number *' onChange={(e)=>onInputChange(e,'mobNumber')}  /> */}
                 {/* <span>Error</span> */}
             </div>
             <div>
