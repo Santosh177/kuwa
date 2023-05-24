@@ -6,11 +6,13 @@ import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails , createPayloadForCartItems , createPayloadForItems} from "@/utils";
 import { useRouter } from 'next/navigation';
+import { useAddressData } from "@/context/address";
 import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
 
 export default function Payment({cartData}) {
   const router = useRouter();
+  const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   console.log("data",cartData)
   const [data, setData] = useState(cartData);
   const [cartItems , setCartItems] = useState([]);
@@ -67,32 +69,33 @@ const getPriceDetails = () => {
     const cartItemsData = getCartItems && getCartItems['products'];
     const cartItemPayload = await createPayloadForCartItems(cartItemsData);
     const description = `${"fullName" + ",MULTIPLE_ITEM," + "couponData"}`;
+    console.log("selectedAddress",selectedAddress)
       let payload = {
-        "cartUuid":1265,
+        "cartUuid":getCartItems['code'] || "",
         "orderType": "one-time",
-        "userId": 2200,
-        "addressId": 511,
+        "userId": getCartItems['customer'] || "",
+        "addressId": selectedAddress && selectedAddress.id || 511,
         "countryCode": "AE",
         "countryId": 1,
-        "cityId": 2,
+        "cityId": 1,
         "description": "product, MULTIPLE_ITEM, No Coupon",
-        "paymentMode": "CARD",
-        "finalAmount": 1500,
-        "totalAmount": 1500,
+        "finalAmount": getCartItems['total'],
+        "totalAmount": getCartItems['total'],
         "currency": "AED",
         "orderSource": "WEBSITE",
         "orderCategory": "CART",
-        "couponApplied": true,
-        "couponCode": "QA100X",
+        "couponApplied": false,
+        "couponCode": "",
         "discount": 0,
         "paymentType": "Regular",
-        "taxAmount": 81.25,
-        "shippingAmount": 80.00,
+        "taxAmount": 0,
+        "shippingAmount": 0,
         "cartItems": cartItemPayload,
-        "customerCity": "",
+        "customerCity": 12,
       }
       if(selectedPaymentMethod == "CHECKOUT_CARD"){
           payload['token'] = data['token'];
+          payload['paymentMode'] = "CARD";
           console.log("CHECKOUT_CARD",payload)
             const placeOrderResp  =  await fetch('/api/checkout-place-order', {
                 method: 'POST',
