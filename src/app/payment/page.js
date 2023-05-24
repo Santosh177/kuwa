@@ -6,8 +6,8 @@ import { authHeader } from "../../lib/auth-cookies";
 import styles from './pages.module.scss';
 
 export default async function PaymentPage() {
-
-  const customHeader = await authHeader();
+  
+    const customHeader = await authHeader();
     const getCartItemResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
       method: 'GET',
       headers:{
@@ -17,9 +17,9 @@ export default async function PaymentPage() {
     })
     const getCartItems = await getCartItemResp.json();
 
-    console.log("getCartItemsgetCartItems",getCartItems)
 
-  
+
+ 
       return (
         <>
           <PageHeader headerName="Payment"/>

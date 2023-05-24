@@ -38,15 +38,14 @@ const getData = async() => {
 
 useEffect(()=>{
   if(cartItems && cartItems.length > 0){
-    getPriceDetails()
-
+    calculatePriceDetails()
   }
 
 },[cartItems]);
 
-const getPriceDetails = () => {
-  const { total=0, subtotal=0, currency = "Dhs" } = data || {};
-  const priceDetails2 = {
+const calculatePriceDetails = () => {
+  const { total=0, subtotal=0, currency = "" } = data || {};
+  const priceDetailsData = {
     cartItemCount: cartItems && cartItems.length,
     subTotal: subtotal,
     totalAmount: total,
@@ -54,7 +53,7 @@ const getPriceDetails = () => {
     discountAmount:total - subtotal,
     currency:currency
   }
-  setPriceDetails(priceDetails2)
+  setPriceDetails(priceDetailsData)
 }
 
 
