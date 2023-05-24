@@ -5,7 +5,7 @@ import { authHeader } from '../../../lib/auth-cookies';
 export async function POST(request,res) {
     const requestBody = await request.json();
     const customHeader = await authHeader();
-    const applyCouponResp = await fetch('https://api.kuwa.bevaleo.dev/apply-coupon-cart', {
+    const applyCouponResp = await fetch('https://phoenix.bevaleo.dev/apply-coupon-cart', {
         method: 'POST',
         headers: {...customHeader},
         body:JSON.stringify(requestBody)

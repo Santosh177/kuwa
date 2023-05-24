@@ -84,6 +84,17 @@ export const createPayloadForTabby = async (cartItems) => {
    return tamaraItems; 
 }
 
+export const createCouponPayload = async(cartItems) => {
+  let supplements = [];
+  if(cartItems && cartItems.length > 0){
+     cartItems.map((item,index)=>{
+      console.log("itemitem",item)
+        supplements.push({"id":item.id,"quantity":item.quantity})
+     })
+  }
+  return supplements; 
+}
+
 
 export const authHeader = async() =>{
   return (

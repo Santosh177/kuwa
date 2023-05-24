@@ -1,4 +1,5 @@
 'use client';
+import { usePaymentPageData } from '@/context/payment';
 import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
@@ -12,6 +13,8 @@ import { useState , useEffect} from "react";
 
 export default function Payment({cartData}) {
   const router = useRouter();
+  const paymentPageContext = usePaymentPageData();
+  console.log("paymentPageContextpaymentPageContext",paymentPageContext)
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   console.log("data",cartData)
   const [data, setData] = useState(cartData);

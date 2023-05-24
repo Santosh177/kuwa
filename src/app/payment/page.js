@@ -1,4 +1,4 @@
-
+import { PaymentPageProvider } from "@/context/payment";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import Payment from "./payment";
@@ -22,9 +22,13 @@ export default async function PaymentPage() {
  
       return (
         <>
+
           <PageHeader headerName="Payment"/>
           <PageStepTracker stepCount={3} />
-          <Payment cartData={getCartItems} />
+          <PaymentPageProvider cartItemsResp={getCartItems}>
+              <Payment cartData={getCartItems} />
+          </PaymentPageProvider>
+          
         </>
       )
     }
