@@ -13,8 +13,7 @@ import { useState , useEffect} from "react";
 
 export default function Payment({cartData}) {
   const router = useRouter();
-  const paymentPageContext = usePaymentPageData();
-  console.log("paymentPageContextpaymentPageContext",paymentPageContext)
+  const {couponCodeData={}} = usePaymentPageData();
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   console.log("data",cartData)
   const [data, setData] = useState(cartData);
@@ -32,6 +31,36 @@ export default function Payment({cartData}) {
             
     }
 },[data]);
+
+
+useEffect(()=>{
+  console.log("couponCodeDatacouponCodeData",couponCodeData)
+  applyCouponDiscount()
+},[couponCodeData])
+
+
+const applyCouponDiscount = () => {
+  const { totalAmount=0 } = priceDetails || {};
+  const {total=0} = data || {};
+  if(couponCodeData && Object.keys(couponCodeData).length > 0 && couponCodeData.discount ){
+    const couponDiscountAmount = couponCodeData.discount || 0;
+    setPriceDetails((prevState) => {
+      return({
+        ...prevState,
+        totalAmount:totalAmount - couponDiscountAmount,
+        discountAmount: couponDiscountAmount
+      });
+    });
+  }else{
+    setPriceDetails((prevState) => {
+      return({
+        ...prevState,
+        totalAmount:total,
+        discountAmount: 0
+      });
+    });
+  }
+}
 
 
 const getData = async() => {

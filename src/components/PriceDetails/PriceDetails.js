@@ -12,6 +12,7 @@ const PriceDetails = ({data}) => {
 
     const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency=""} = data || {}
 
+    console.log("discountAmountdiscountAmount",discountAmount)
 
     return(
        <div className={styles.priceDetailsWrapper}>
@@ -27,7 +28,7 @@ const PriceDetails = ({data}) => {
                 <div className={styles.rowItemLeftText}>Delivery Fee</div>
                 <div className={[styles.rowItemRightText,styles.freeDeliveryTxt].join(" ")}>Free Delivery</div>
             </div>
-            {savedAmount> 0 &&  <AmountSavedInfo savedAmount={savedAmount}/>}
+            {discountAmount> 0 &&  <AmountSavedInfo savedAmount={discountAmount}/>}
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>Total Amount</div>
                 <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + totalAmount}</div>
