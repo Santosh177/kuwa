@@ -34,7 +34,7 @@ export default async function Home({}) {
   return (
     <>
         <Header />
-        {/* <AssuredInfo /> */}
+        <AssuredInfo />
         <BrandMustTry />
         {
           data.map((data,index)=>{
