@@ -1,5 +1,6 @@
 'use client';
 import { usePaymentPageData } from '@/context/payment';
+import { useCountryList } from '@/context/countryList';
 import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
@@ -14,6 +15,8 @@ import { useState , useEffect} from "react";
 export default function Payment({cartData}) {
   const router = useRouter();
   const {couponCodeData={}} = usePaymentPageData();
+  const countryList = useCountryList();
+  const deliveryFeesConfig = countryList.find((data) => data.code == "AE")
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   console.log("data",cartData)
   const [data, setData] = useState(cartData);
@@ -77,13 +80,20 @@ useEffect(()=>{
 
 const calculatePriceDetails = () => {
   const { total=0, subtotal=0, currency = "" } = data || {};
+  const minThreshold = deliveryFeesConfig.minThreshold || 0;
+  let  finalAmount = total;
+  if(total < minThreshold){
+    finalAmount = total + deliveryFeesConfig.deliveryFee
+  }
+   
   const priceDetailsData = {
     cartItemCount: cartItems && cartItems.length,
     subTotal: subtotal,
-    totalAmount: total,
+    totalAmount: finalAmount,
     savedAmount: total - subtotal,
     discountAmount:total - subtotal,
-    currency:currency
+    currency:currency,
+    deliveryFees: (total < minThreshold) ? deliveryFeesConfig.deliveryFee : 0
   }
   setPriceDetails(priceDetailsData)
 }

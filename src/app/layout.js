@@ -6,6 +6,7 @@ import { Work_Sans } from 'next/font/google';
 import { getUserDetails } from '../lib/auth';
 import { getTokenCookie } from '../lib/auth-cookies';
 import { cookies } from 'next/headers';
+import { CountryListProvider } from "@/context/countryList";
 // import { Work_Sans } from 'next/font/google';
 
 const workSans = Work_Sans({ weight: ['400','500','600', '700'],
@@ -45,23 +46,30 @@ const getUser = async () => {
 
 };
 
+const getCountryList = async() => {
+  const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/country/', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  const countryListData = await getCountryListResp.json();
+  if(countryListData && countryListData.length > 0){
+      return countryListData;
+  }
+}
 
 export default async function RootLayout({ children }) {
   const userData = await getUser();
+  const countryList = await getCountryList();
   
 
-
-  // console.log("deviceId+++",deviceID)
-  // const countryCode = userData && userData.countryCode || null
-
-   
-
-  // console.log("userData",userData)
 
   return (
     <html lang="en">
       <body className={workSans.className}>
       <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
+      <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"}>
           <AuthProvider authData={userData}>
             <AddressProvider >
@@ -69,6 +77,7 @@ export default async function RootLayout({ children }) {
             </AddressProvider>        
           </AuthProvider>
         </CountryProvider>
+      </CountryListProvider>
       </body>
     </html>
   )
