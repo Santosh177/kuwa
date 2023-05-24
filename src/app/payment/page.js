@@ -2,15 +2,16 @@
 import PageHeader from "@/components/PageHeader/PageHeader";
 import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import Payment from "./payment";
+import { authHeader } from "../../lib/auth-cookies";
 import styles from './pages.module.scss';
 
 export default async function PaymentPage() {
 
+  const customHeader = await authHeader();
     const getCartItemResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
       method: 'GET',
       headers:{
-        "user":10,
-        "country":1
+        ...customHeader
       },
       next: { revalidate: 0} 
     })

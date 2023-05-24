@@ -3,7 +3,7 @@ import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
-import PaymentFooterBtn from "./components/PaymentFooterBtn/PaymentFooterBtn";
+import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails , createPayloadForCartItems , createPayloadForItems} from "@/utils";
 import { useRouter } from 'next/navigation';
 import styles from './payment.module.scss';
@@ -91,23 +91,22 @@ const getPriceDetails = () => {
         "cartItems": cartItemPayload,
         "customerCity": "",
       }
-      if(paymentOption == "CHECKOUT_CARD"){
+      if(selectedPaymentMethod == "CHECKOUT_CARD"){
           payload['token'] = data['token'];
           console.log("CHECKOUT_CARD",payload)
-            // const placeOrderResp  =  await fetch('/api/checkout-place-order', {
-            //     method: 'POST',
-            //     headers: {
-            //       'Content-Type': 'application/json',
-            //       Authorization: 'Bearer ' + "didToken",
-            //     },
-            //     body:JSON.stringify(payload)
-            // })
-            // const placeOrder = await placeOrderResp.json();
-            // console.log("placeOrderplaceOrder",placeOrder)
-            // if(placeOrder && placeOrder.status_code == 200){
-            //   router.push(placeOrder.redirect_link)
-            // }
-      }else if(paymentOption == "TAMARA"){
+            const placeOrderResp  =  await fetch('/api/checkout-place-order', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(payload)
+            })
+            const placeOrder = await placeOrderResp.json();
+            console.log("placeOrderplaceOrder",placeOrder)
+            if(placeOrder && placeOrder.status_code == 200){
+              router.push(placeOrder.redirect_link)
+            }
+      }else if(selectedPaymentMethod == "TAMARA"){
             let items = await createPayloadForItems();
             let tamaraPayload = {
               "paymentMode":"TAMARA",
@@ -132,7 +131,7 @@ const getPriceDetails = () => {
           //   router.push(placeOrder.redirect_link)
           // }
 
-      }else if(paymentOption == "TABBY"){
+      }else if(selectedPaymentMethod == "TABBY"){
             let items = await createPayloadForItems(cartItemsData);
             let tabbyPayload = {
               "paymentMode":"TABBY",
@@ -143,21 +142,21 @@ const getPriceDetails = () => {
             }
             const finalPayload = {...payload,...tabbyPayload}
            console.log("TABBY",finalPayload)
-        //     console.log("PAyloadd",tabbyPayload)
-          //      const placeOrderResp  =  await fetch('/api/tabby-place-order', {
-          //     method: 'POST',
-          //     headers: {
-          //       'Content-Type': 'application/json',
-          //     },
-          //     body:JSON.stringify(finalPayload)
-          // })
-          //   const placeOrder = await placeOrderResp.json();
-          //   console.log("placeOrderplaceOrder",placeOrder)
-          //   if(placeOrder && placeOrder.status_code == 200){
-          //     router.push(placeOrder.redirect_link)
-          //   }
+            console.log("PAyloadd",tabbyPayload)
+               const placeOrderResp  =  await fetch('/api/tabby-place-order', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body:JSON.stringify(finalPayload)
+          })
+            const placeOrder = await placeOrderResp.json();
+            console.log("placeOrderplaceOrder",placeOrder)
+            if(placeOrder && placeOrder.status_code == 200){
+              router.push(placeOrder.redirect_link)
+            }
 
-      }else if(paymentOption == "TAP"){
+      }else if(selectedPaymentMethod == "TAP"){
             let items = await createPayloadForItems(cartItemsData);
             let tapPayload = {
               "paymentMode":"TAP",
@@ -168,20 +167,19 @@ const getPriceDetails = () => {
             }
             const finalPayload = {...payload,...tapPayload}
             console.log("TAP",finalPayload)
-          //   console.log("PAyloadd",tabbyPayload)
-          //      const placeOrderResp  =  await fetch('/api/tap-place-order', {
-          //     method: 'POST',
-          //     headers: {
-          //       'Content-Type': 'application/json',
-          //     },
-          //     body:JSON.stringify(finalPayload)
-          // })
-          //   const placeOrder = await placeOrderResp.json();
-          //   console.log("placeOrderplaceOrder",placeOrder)
-          //   if(placeOrder && placeOrder.status_code == 200){
-          //     router.push(placeOrder.redirect_link)
-          //   }
-      }else if(paymentOption == "COD"){
+               const placeOrderResp  =  await fetch('/api/tap-place-order', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body:JSON.stringify(finalPayload)
+          })
+            const placeOrder = await placeOrderResp.json();
+            console.log("placeOrderplaceOrder",placeOrder)
+            if(placeOrder && placeOrder.status_code == 200){
+              router.push(placeOrder.redirect_link)
+            }
+      }else if(selectedPaymentMethod == "COD"){
         console.log("COD",payload)
       }
   }
@@ -211,7 +209,8 @@ const getPriceDetails = () => {
                 <div className={styles.headerTxt}>Price Details</div>
                 <PriceDetails data={priceDetails}/>
               </div>
-              <PaymentFooterBtn onProceed={()=>onPayment()} />
+              {/* <PaymentFooterBtn onProceed={()=>onPayment()} /> */}
+              <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
           </div>
           <div className={styles.orderSummaryDesktop}>
               <div className={styles.paymentLeftContainer}>
@@ -226,7 +225,8 @@ const getPriceDetails = () => {
               <div className={styles.paymentMethod}>
                 <PaymentMethod onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
               </div>
-              <PaymentFooterBtn onProceed={()=>onProceed()  } />
+              {/* <PaymentFooterBtn onProceed={()=>onProceed()  } /> */}
+              <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
           </div>
         </>
       )
