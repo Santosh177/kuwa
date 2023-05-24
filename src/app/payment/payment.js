@@ -77,7 +77,6 @@ const getPriceDetails = () => {
         "addressId": selectedAddress && selectedAddress.id || 511,
         "countryCode": "AE",
         "countryId": 1,
-        "cityId": 1,
         "description": "product, MULTIPLE_ITEM, No Coupon",
         "finalAmount": getCartItems['total'],
         "totalAmount": getCartItems['total'],
@@ -90,8 +89,7 @@ const getPriceDetails = () => {
         "paymentType": "Regular",
         "taxAmount": 0,
         "shippingAmount": 0,
-        "cartItems": cartItemPayload,
-        "customerCity": 12,
+        "cartItems": cartItemPayload
       }
       if(selectedPaymentMethod == "CHECKOUT_CARD"){
           payload['token'] = data['token'];
