@@ -35,6 +35,10 @@ const Header = () => {
                     <div className={styles.searchIcon}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/search.png" alt='search-icon'></img>
                     </div>
+                    <div className={styles.searchInputWrapper} >
+                        <input className={styles.searchInput} placeholder='Search by product name' type='text' />
+                        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
+                    </div>
                     <div className={styles.cartIcon} onClick={()=>router.push('/cart')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img>
                     </div>
