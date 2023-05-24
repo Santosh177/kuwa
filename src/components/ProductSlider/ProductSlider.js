@@ -1,12 +1,13 @@
 'use client'
 import React,{useState,useEffect} from 'react';
+import { useRouter } from 'next/navigation';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 
 const ProductSlider = ({backgroundColor,topColor,design,data}) => {
-
+  const router = useRouter();
   console.log("datadata",data)
 
   const { product=[],headerTitle= ""} = data || {};
@@ -18,6 +19,27 @@ const ProductSlider = ({backgroundColor,topColor,design,data}) => {
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
 
+ 
+
+  const onAddToCart = async(data) =>{
+    try {
+      const res = await fetch('/api/add-to-cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(data)
+      })
+      if (res.status === 200) {
+        router.push('/cart')
+      } else {
+        throw new Error(await res.text())
+      }
+    } catch (error) {
+      console.error('An unexpected error happened occurred:', error)
+      setErrorMsg(error.message)
+    }
+}
     return (
 
 
@@ -60,7 +82,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data}) => {
                     discountType:discountType
                   }
                   return(
-                    <ProductCard  cardData={cardData} />
+                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} />
                   )
                 })
               }
