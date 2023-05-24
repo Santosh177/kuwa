@@ -1,0 +1,32 @@
+.secondaryBannerDesktop{
+    display: none;
+}
+
+.secondaryBannerMob{
+    margin-top: 30px;
+    display: flex;
+}
+
+
+
+
+@media(min-width:990px){
+    .secondaryBannerMob{
+        display: none;
+
+    }
+    .secondaryBannerDesktop{
+        display: flex;
+        gap: 16px;
+        margin: 0 auto;
+        padding-right: 227px;
+        padding-left: 227px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        img{
+            width: 50%;
+        }
+    }
+    
+}
+
