@@ -5,7 +5,11 @@ import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 
-const ProductSlider = ({backgroundColor,topColor,design}) => {
+const ProductSlider = ({backgroundColor,topColor,design,data}) => {
+
+  console.log("datadata",data)
+
+  const { product=[],headerTitle= ""} = data || {};
  
   const [width, setWidth] = useState(window.innerWidth);
   const handleResize = () => setWidth(window.innerWidth);
@@ -24,7 +28,7 @@ const ProductSlider = ({backgroundColor,topColor,design}) => {
             <div className={styles.sliderLine1} style={{backgroundColor:topColor}}></div><div className={styles.sliderLine2} style={{backgroundColor:topColor}}></div>
           </div>
           <div className={styles.container} style={{backgroundImage:backgroundColor}}>
-            <div className={styles.headerTxt}>Immunity</div>
+            <div className={styles.headerTxt}>{headerTitle}</div>
             <div className={styles.sliderContainer}>
             <Glider
               hasArrows
@@ -42,94 +46,26 @@ const ProductSlider = ({backgroundColor,topColor,design}) => {
                 <img style={{width:48,height:48}}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/right_arrow.png' alt='right-icon'/>
               }
             >
-                <ProductCard  image={'https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png'} />
-                 <ProductCard image={'https://production-website-builds.s3.ap-south-1.amazonaws.com/collagen+(1).png'}/>
-                <ProductCard image={'https://production-website-builds.s3.ap-south-1.amazonaws.com/shilajit.png'}/>
-               <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
-                <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
-                <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
-                <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
-                <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
+
+              {
+                product.map((data,index)=>{
+                  console.log("datadata+++",data)
+                  const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
+                  const cardData = {
+                    productName:data && data.name || "",
+                    finalPrice:finalPrice,
+                    retailPrice:retailPrice,
+                    currency:currency,
+                    discount:discount,
+                    discountType:discountType
+                  }
+                  return(
+                    <ProductCard  cardData={cardData} />
+                  )
+                })
+              }
+                
+               
             </Glider>
             </div>
           </div>

@@ -9,7 +9,7 @@ import MedicalExpert from './Home/MedicalExpert/MedicalExpert';
 import Blogs from './Home/Blogs/Blogs';
 import Footer from '../components/Footer/Footer';
 
-export default async function Home({data}) {
+export default async function Home({}) {
 
 
    
@@ -24,16 +24,23 @@ export default async function Home({data}) {
 
 
 
-  console.log("homePageDataResp",data)
+  console.log("homePageDataResp",homePageDataResp)
+
+  const {data=[], } = homePageDataResp || {};
 
 
   return (
     <>
         <Header />
-        <AssuredInfo />
-        <ProductSlider />
-        <ProductSlider />
-        <ProductSlider />
+        {/* <AssuredInfo /> */}
+        {
+          data.map((data,index)=>{
+            console.log("datatad",data)
+            return(
+              <ProductSlider data={data}/>
+            )
+          })
+        }
         <MedicalExpert />
         {/* <Blogs /> */}
         <Footer />

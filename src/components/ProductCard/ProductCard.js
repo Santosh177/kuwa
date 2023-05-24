@@ -3,19 +3,21 @@ import styles from './product-card.module.scss';
 
 
 
-const ProductCard = ({number,image}) => {
+const ProductCard = ({cardData}) => {
+
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image=""  } = cardData || {}
 
     return(
         <div className={styles.productCardItem}>
             <div className={styles.productCardWrapper}>
                 <div className={styles.productImgWrapper}>
                     <div className={styles.productImgContainer}>
-                        <img className={styles.productImg} src={(image)?image:"https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png"}alt='product-name' />
+                        <img className={styles.productImg} src={image} alt='product-name' />
                     </div>
                 </div>
-                <div className={styles.productName}>Korean Marine Collagen Peptides, 200 Gms</div>
-                <div className={styles.discountTag}><span>Save</span> Dhs 40</div>
-                <div className={styles.price}>Dhs 139 <span className={[styles.price,styles.retailPrice].join(" ")}>Dhs 179</span></div>
+                <div className={styles.productName}>{productName}</div>
+               { <div className={styles.discountTag} style={(discount > 0)?{opacity:1}:{opacity:0}}><span>Save</span> {currency} {discount}</div>}
+                <div className={styles.price}>{currency} {finalPrice} <span className={[styles.price,styles.retailPrice].join(" ")}>{currency} {retailPrice}</span></div>
                 <div className={styles.btn}>Add to cart</div>
             </div>
         </div>

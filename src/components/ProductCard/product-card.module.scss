@@ -47,8 +47,9 @@
             padding-left: 6px;
             color: #FFFFFF;
             font-size: 10px;
-            max-width: 74px;
+            // max-width: 74px;
             margin-top: 8px;
+            width: fit-content;
         }
         .price{
             font-weight: 600;
@@ -134,7 +135,8 @@
                 font-weight: 600;
                 font-size: 14px;
                 margin-top: 8px;
-                max-width: 100px;
+                // max-width: 100px;
+                width: fit-content;
             }
             .price{
                 font-weight: 600;
