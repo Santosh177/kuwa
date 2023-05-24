@@ -125,6 +125,7 @@ export default  function Cart(props) {
      }
         
   
+     console.log("priceDetailspriceDetails",priceDetails)
       return (
         <>
           <div className={styles.cartPage}>
@@ -146,7 +147,7 @@ export default  function Cart(props) {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={priceDetails.totalAmount} onProceed={onProceed} />
+          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
         </>
       )
     }

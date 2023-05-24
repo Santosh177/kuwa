@@ -1,8 +1,9 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import DeliveryAddress from "../DeliveryAddress/DeliveryAddress";
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
-import PatmentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
+import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { useAddressData } from "@/context/address";
 import styles from './order-summary-page.module.scss';
 import {getCartItemDetails} from "@/utils";
@@ -10,7 +11,7 @@ import { useEffect, useState } from "react";
 
 
 export default function OrderSummaryPage({cartData}) {
-
+  const router = useRouter();
   const { listOfAddress=[], selectedAddress ={},setSelectedAddress={},setListOfAddress={}} = useAddressData();
   const [ data , setData ] = useState(cartData);
     const [ cartItems , setCartItems ] = useState([]);
@@ -88,6 +89,10 @@ const onUpdateItem = async(data) => {
 
 }
  
+const onProceed = () => {
+    router.push('/payment');
+ 
+}
   
       return (
         <>
@@ -108,11 +113,11 @@ const onUpdateItem = async(data) => {
             <div className={styles.priceDetails}>
               <div className={styles.headerTxt}>Price Details</div>
               <div className={styles.priceDetailsContainer}>
-                <PriceDetails />
+                <PriceDetails data={priceDetails} />
               </div>
             </div>
           </div>
-          <PatmentFooterBtn btnName="Proceed to next"  totalPrice="AED  350"/>
+          <PaymentFooterBtn btnName="Proceed to next"  totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
         </>
       )
     }
