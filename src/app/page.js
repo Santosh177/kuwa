@@ -3,6 +3,7 @@ import styles from './page.module.css';
 import Homew from './Home';
 import Header from '@/components/Header/Header';
 import AssuredInfo from './Home/AssuredInfo/AssuredInfo';
+import BrandMustTry from './Home/BrandMustTry/BrandMustTry';
 import ProductSlider from '@/components/ProductSlider/ProductSlider';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import MedicalExpert from './Home/MedicalExpert/MedicalExpert';
@@ -34,6 +35,7 @@ export default async function Home({}) {
     <>
         <Header />
         {/* <AssuredInfo /> */}
+        <BrandMustTry />
         {
           data.map((data,index)=>{
             console.log("datatad",data)
