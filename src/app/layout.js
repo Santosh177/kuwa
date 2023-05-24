@@ -48,8 +48,23 @@ const getUser = async () => {
 
 export default async function RootLayout({ children }) {
   const userData = await getUser();
+  try {
+    const res = await fetch('/api/device-id', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    if (res.status === 200) {
+      console.log("ress")
+    } 
+  } catch (error) {
+    console.error('An unexpected error happened occurred:', error)
+    // setErrorMsg(error.message)
+  }
 
 
+  // console.log("deviceId+++",deviceID)
   // const countryCode = userData && userData.countryCode || null
 
    

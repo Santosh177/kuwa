@@ -46,7 +46,8 @@ export function getTokenCookie(req) {
 }
 export const authHeader = async() =>{
   const token = cookies().get('token')
-  const user = cookies().get('userId')
+  const user = cookies().get('userId');
+  const getDeviceID = cookies().get("deviceID");
   if(token && token.value){
     return (
       {
@@ -54,12 +55,14 @@ export const authHeader = async() =>{
         'country':1,
         'Authorization':"Bearer "+token.value,
         'user':user.value,
+        'deviceId':getDeviceID
       }
     )
   }else{
     return({
       'Content-Type': 'application/json',
-      'country' : 1
+      'country' : 1,
+      'deviceId':getDeviceID
     })
   }
   
