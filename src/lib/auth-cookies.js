@@ -63,14 +63,14 @@ export const authHeader = async() =>{
         'country':1,
         'Authorization':"Bearer "+token.value,
         'user':user.value,
-        'deviceId':cookies().get("deviceID").value || ""
+        'device':cookies().get("deviceID").value || ""
       }
     )
   }else{
     return({
       'Content-Type': 'application/json',
       'country' : 1,
-      'deviceId':cookies().get("deviceID").value || ""
+      'device':cookies().get("deviceID").value || ""
     })
   }
   

@@ -62,7 +62,6 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={workSans.className}>
       <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
-      <script src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
         <CountryProvider countryCode={"AE"}>
           <AuthProvider authData={userData}>
             <AddressProvider >
