@@ -79,7 +79,8 @@ const ProductSlider = ({backgroundColor,topColor,design,data}) => {
                     retailPrice:retailPrice,
                     currency:currency,
                     discount:discount,
-                    discountType:discountType
+                    discountType:discountType,
+                    image:data.image || ""
                   }
                   return(
                     <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} />
