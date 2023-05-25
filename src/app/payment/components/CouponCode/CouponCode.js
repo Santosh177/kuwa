@@ -45,29 +45,9 @@ export default function CouponCode() {
           })
           const couponApiResp = await res.json();
           if(couponApiResp && couponApiResp.discount && couponApiResp.discount > 0){
-            setCouponCodeData({
-              "couponCategory": "Discount",
-              "couponAppliedAr": "مبروك، لقد حصلت على خصم بقيمة 250.0 درهم",
-              "cashbackMsg": "Coupon code is expired or invalid",
-              "cashbackMsgAr": "Coupon code is expired or invalid",
-              "couponApplied": "Congrats ,you got a discount of 250.0 AED",
-              "discount": 250.0,
-              "cashback": 0.0,
-              "couponCode": "qa9900",
-              "reason": "Applied Successfully"
-          });
+            setCouponCodeData(couponApiResp);
           }else{
-            setCouponCodeData({
-              "couponCategory": "Discount",
-              "couponAppliedAr": "مبروك، لقد حصلت على خصم بقيمة 250.0 درهم",
-              "cashbackMsg": "Coupon code is expired or invalid",
-              "cashbackMsgAr": "Coupon code is expired or invalid",
-              "couponApplied": "Congrats ,you got a discount of 250.0 AED",
-              "discount": 250.0,
-              "cashback": 0.0,
-              "couponCode": "qa9900",
-              "reason": "Applied Successfully"
-          });
+            setCouponCodeData(couponApiResp);
           }
         }
      }
