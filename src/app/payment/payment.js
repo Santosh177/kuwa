@@ -244,7 +244,7 @@ const calculatePriceDetails = () => {
   const onProceed = () => {
     if(selectedPaymentMethod =="CHECKOUT_CARD"){
       Frames.submitCard()
-    }else{
+    }else if(selectedPaymentMethod){
       onPayment()
     }
 
