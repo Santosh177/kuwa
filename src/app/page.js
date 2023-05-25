@@ -10,6 +10,7 @@ import ProductCard from '@/components/ProductCard/ProductCard';
 import MedicalExpert from './Home/MedicalExpert/MedicalExpert';
 import Blogs from './Home/Blogs/Blogs';
 import Footer from '../components/Footer/Footer';
+import Loader from '@/components/Loader/Loader';
 
 export default async function Home({}) {
 
@@ -49,6 +50,7 @@ export default async function Home({}) {
         <MedicalExpert />
         {/* <Blogs /> */}
         <Footer />
+        <Loader />
     </>
 
   )
