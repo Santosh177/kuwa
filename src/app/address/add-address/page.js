@@ -16,29 +16,6 @@ export default function AddAddress() {
   const [ getFormValues , setGetFormValues] = useState(false);
 
 
-
-    const onSaveAddress1 = async(data) =>{
-      try {
-        const res = await fetch('/api/save-address', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body:JSON.stringify(addressData)
-        })
-        if (res.status === 200) {
-          const saveAddress = await res.json()
-          setSelectedAddress(saveAddress);
-          router.push('/order-summary')
-        } else {
-          // throw new Error(await res.text())
-        }
-      } catch (error) {
-        console.error('An unexpected error happened occurred:', error)
-      }
-
-    }
-
     const onFormData = (formData) => {
       setAddressData(formData)
     }
@@ -48,6 +25,7 @@ export default function AddAddress() {
     }
 
     const onGetFormValues = async(data) => {
+      console.log("datadata",data)
       try {
         const res = await fetch('/api/save-address', {
           method: 'POST',

@@ -68,7 +68,7 @@ const BillingAddressForm = ({onChange={},values={}}) => {
 
 export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues}) {
 
-      const [ isShowBillingAddress, setIsShowBillingAddress ] = useState(false);
+      const [ isSameBillingAddress, setIsSameBillingAddress ] = useState(false);
       const [ personalInfo, setPersonalInfo ] = useState({});
       const [ shippingAddress, setShippingAddress ] = useState ({});
       const [ billngAddress, setBillngAddress ] = useState({});
@@ -80,13 +80,23 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
 
       useEffect(()=>{
-        let combineFormData = {
-            "shippingAddress":{...personalInfo,...shippingAddress},
+      if(getFormValues){
+            let combineFormData = {
+                "shippingAddress":{...personalInfo,...shippingAddress},
+            }
+            if(isSameBillingAddress){
+                combineFormData['billingAddress'] ={...personalInfo,...shippingAddress}
+            }else{
+                combineFormData['billingAddress'] = {...personalInfo,...billngAddress}
+            }
+            combineFormData['shippingAddress']['billingAddress'] = true;
+            combineFormData['shippingAddress']['isDefaultAddress'] = true;
+            combineFormData['shippingAddress']['isActive'] = true;
+            combineFormData['billingAddress']['shippingAddress'] = true;
+            combineFormData['billingAddress']['isDefaultAddress'] = true;
+            combineFormData['billingAddress']['isActive'] = true;
+            onGetFormValues(combineFormData);
         }
-        if(isShowBillingAddress){
-            combineFormData['billingAddress'] = {...personalInfo,...billngAddress}
-        }
-        onGetFormValues(combineFormData);
       },[getFormValues])
 
      
@@ -125,7 +135,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         // if(!isShowBillingAddress){
         //     setBillngAddress({})
         // }
-        setIsShowBillingAddress(!isShowBillingAddress)
+        setIsSameBillingAddress(!isSameBillingAddress)
       }
 
   
@@ -139,10 +149,10 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
             <div className={styles.addressContainer}>
                 <ShippingAddressForm onChange={onShippingAddress} values={shippingAddress}/>
                 <div className={styles.selectBillingAddressBtn} onClick={()=> onSelectBillngAddress()}>
-                    <CheckBox isChecked={isShowBillingAddress}/>
+                    <CheckBox isChecked={isSameBillingAddress}/>
                     <div className={styles.txt}>Use this same address for billing</div>
                 </div>
-                {isShowBillingAddress && <BillingAddressForm onChange={onBillngAddress} values={billngAddress} />}
+                {!isSameBillingAddress && <BillingAddressForm onChange={onBillngAddress} values={billngAddress} />}
             </div>
           </div>
         </>
