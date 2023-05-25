@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 export default function OrderSummaryPage({cartData}) {
   const router = useRouter();
   const countryList = useCountryList();
-  const deliveryFeesConfig = countryList.find((data) => data.code == "AE")
+  const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
   const { listOfAddress=[], selectedAddress ={},setSelectedAddress={},setListOfAddress={}} = useAddressData();
   const [ data , setData ] = useState(cartData);
     const [ cartItems , setCartItems ] = useState([]);

@@ -19,7 +19,7 @@ export default function Payment({cartData}) {
   const {couponCodeData={}} = usePaymentPageData();
   const countryList = useCountryList();
   const {isLogin=false, userData={}} = useAuth();
-  const deliveryFeesConfig = countryList.find((data) => data.code == "AE")
+  const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   console.log("data",cartData)
   const [data, setData] = useState(cartData);
