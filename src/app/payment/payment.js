@@ -159,7 +159,7 @@ const calculatePriceDetails = () => {
               router.push(placeOrder.redirect_link)
             }
       }else if(selectedPaymentMethod == "TAMARA"){
-            let items = await createPayloadForItems();
+            let items = await createPayloadForItems(cartItemsData);
             let tamaraPayload = {
               "paymentMode":"TAMARA",
               "paymentType":"PAY_BY_INSTALMENTS",
