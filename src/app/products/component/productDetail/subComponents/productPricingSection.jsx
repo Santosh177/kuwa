@@ -2,58 +2,10 @@
 import React, { useEffect, useState } from "react";
 import styles from './ProductPricingSection.module.scss'
 import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
-import { useRouter } from 'next/navigation';
 import Varients from "./productVarients";
-const ProductPricingSection= ({productData}) =>{
-    const {benefits="",variants=[],currency="Dhs",description="",id="",name="",numberOfProductReview="832",price="60",quantity=0,title="AADAR Endure Capsule For Premature Ejaculation (60 Capsules)"} =productData || {}  
-    const [noOfProduct,setNoOfProduct] = useState(1);
-    const [selectedVarients, setselectedVarients] = useState("");
-    const [finalPrice,setFinalPrice] = useState(0)
-    const router = useRouter()
-
-    useEffect(()=>{
-        setFinalPrice(price)
-    },[])
-    const payload = {
-        "product": id,
-        "quantity": noOfProduct
-    }
-    const addToCart = async(payload) =>{
-            try {
-                const res = await fetch('/api/add-to-cart', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body:JSON.stringify(payload)
-                })
-                if (res.status === 200) {
-                    return res.status
-                } else {
-                  throw new Error(await res.text())
-                }
-              } catch (error) {
-                console.error('An unexpected error happened occurred:', error)
-                setErrorMsg(error.message)
-              }
-    }
-    const handelAddToCart = async(payload) => {
-        const response = await addToCart(payload);
-        console.log(response,"responseresponse")
-        if(response === 200){
-            setNoOfProduct(1);
-            router.push('/cart')
-        }
-    }
-    const handelBuyNow = async (payload) => {
-        const response = await addToCart(payload)
-        console.log(response,"responseresponse")
-        if(response === 200){
-            setNoOfProduct(1);
-            router.push('/order-summary')
-        }
-    }
-    return(
+const ProductPricingSection = ({ pricingSectionVariables }) => {
+    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 } = pricingSectionVariables
+    return (
         <div className={styles.pricingSectionContainer}>
             <div className={styles.title}>{title}</div>
             <div className={styles.reviewContainer}>
@@ -67,18 +19,16 @@ const ProductPricingSection= ({productData}) =>{
                 </div>
             </div>
             <div className={styles.packOf}>Pack of</div>
-            <Varients variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients}  />
+            <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} />
             <div className={styles.addToCartContainer}>
-                <div className={styles.addToCart} onClick={()=>handelAddToCart(payload)} ><span>Add to Cart</span></div>
-                <div className={styles.buyNow} onClick={()=>handelBuyNow(payload)} ><span>Buy Now</span></div>
+                <div className={styles.addToCart} onClick={() => handelAddToCart(payload)} ><span>Add to Cart</span></div>
+                <div className={styles.buyNow} onClick={() => handelBuyNow(payload)} ><span>Buy Now</span></div>
             </div>
             <div className={styles.shareConatiner}>
                 <div className={styles.Share} >Share:</div>
                 <div className={styles.shareLogo}>
-                    <img src="https://d25uasl7utydze.cloudfront.net/kuwa/facebook.svg" alt="facebook" />
-                    <img src="https://d25uasl7utydze.cloudfront.net/kuwa/linkedin.svg" alt="linkedin" />
-                    <img src="https://d25uasl7utydze.cloudfront.net/kuwa/mail.svg" alt="mail" />
-                    <img src="https://d25uasl7utydze.cloudfront.net/kuwa/twitter.svg" alt="twitter" />
+                    <img onClick={() => handelShareOption("WhatsApp")} src="https://d25uasl7utydze.cloudfront.net/kuwa/whatsapp.svg" alt="whatsapp" />
+                    <img onClick={() => handelShareOption("FaceBook")} src="https://d25uasl7utydze.cloudfront.net/kuwa/facebook%20(1).svg" alt="facebook" />
                 </div>
             </div>
         </div>

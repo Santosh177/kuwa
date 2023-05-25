@@ -8,7 +8,7 @@ import Header from "@/components/Header/Header"
 import style from "./page.module.scss"
 
 export default async function AllProduct() {
-  const res = await fetch('https://api.kuwa.bevaleo.dev/module/product-page/1?country=1', {
+  const res = await fetch('https://api.kuwa.bevaleo.dev/module/product-page/1001?country=1', {
     headers: {
       'Content-Type': 'application/json',
     },
