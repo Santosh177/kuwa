@@ -1,13 +1,8 @@
 'use client'
-import { useRouter } from 'next/navigation';
 import styles from './loader.module.scss';
 
-const Loader = ({isLoader=false}) => {
-
-
-    
-
-    if(!isLoader)
+const Loader = ({isShow=false}) => {
+    if(!isShow)
     return
      
     return(

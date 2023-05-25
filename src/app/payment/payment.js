@@ -2,6 +2,7 @@
 import { usePaymentPageData } from '@/context/payment';
 import { useCountryList } from '@/context/countryList';
 import { useAuth } from '@/context/userDetail';
+import Loader from '@/components/Loader/Loader';
 import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
@@ -26,6 +27,7 @@ export default function Payment({cartData}) {
   const [ priceDetails , setPriceDetails] = useState({});
   const [ paymentOption, setPaymentOption] = useState("TAP");
   const [ selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [ isLoader , setIsLoader] = useState(false)
 
 
   useEffect(()=>{
@@ -102,7 +104,8 @@ const calculatePriceDetails = () => {
 
 
   const onPayment = async(data) => {
-    console.log("userDatauserData",userData)
+    console.log("userDatauserData",userData);
+    setIsLoader(true);
     const getCartItemResp = await fetch('/api/get-cart-item', {
       method: 'GET',
       headers: {
@@ -151,6 +154,7 @@ const calculatePriceDetails = () => {
             })
             const placeOrder = await placeOrderResp.json();
             console.log("placeOrderplaceOrder",placeOrder)
+            setIsLoader(false);
             if(placeOrder && placeOrder.status_code == 200){
               router.push(placeOrder.redirect_link)
             }
@@ -175,6 +179,7 @@ const calculatePriceDetails = () => {
           })
           const placeOrder = await placeOrderResp.json();
           console.log("placeOrderplaceOrder",placeOrder)
+          setIsLoader(false);
           if(placeOrder && placeOrder.status_code == 200){
             router.push(placeOrder.redirect_link)
           }
@@ -200,6 +205,7 @@ const calculatePriceDetails = () => {
           })
             const placeOrder = await placeOrderResp.json();
             console.log("placeOrderplaceOrder",placeOrder)
+            setIsLoader(false);
             if(placeOrder && placeOrder.status_code == 200){
               router.push(placeOrder.redirect_link)
             }
@@ -224,11 +230,13 @@ const calculatePriceDetails = () => {
           })
             const placeOrder = await placeOrderResp.json();
             console.log("placeOrderplaceOrder",placeOrder)
+            setIsLoader(false);
             if(placeOrder && placeOrder.status_code == 200){
               router.push(placeOrder.redirect_link)
             }
       }else if(selectedPaymentMethod == "COD"){
         console.log("COD",payload)
+        setIsLoader(false);
       }
   }
 
@@ -246,6 +254,7 @@ const calculatePriceDetails = () => {
 
       return (
         <>
+          
           <div className={styles.orderSummary}>
               <div className={styles.couponCode}>
                 <CouponCode />
@@ -276,6 +285,7 @@ const calculatePriceDetails = () => {
               {/* <PaymentFooterBtn onProceed={()=>onProceed()  } /> */}
               <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
           </div>
+          <Loader isShow={isLoader} />
         </>
       )
     }
