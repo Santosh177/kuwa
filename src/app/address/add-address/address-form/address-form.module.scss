@@ -65,6 +65,17 @@
         flex-direction: row;
         justify-content: space-between;
     }
+    .selectBillingAddressBtn{
+        display: flex;
+        align-items: center;
+        gap: 0px;
+        margin-top: 21px;
+        margin-bottom: 27px;
+        .txt{
+            font-weight: 500;
+            font-size: 12px;
+        }
+    }
     
 }
 
@@ -76,15 +87,31 @@
         width: 55%;
         gap: 78px;
         margin-top: 20px;
+        padding-bottom: 150px;
+      
         .headerTxt{
             display: block;
             padding-bottom: 10px;
         }
         .addressInfoForm{
+            width: 100%;
+        }
+        .addressContainer{
             width: 50%;
         }
         .personalInfoForm{
             width: 50%;
+        }
+        .selectBillingAddressBtn{
+            display: flex;
+            align-items: center;
+            gap: 0px;
+            margin-top: 21px;
+            margin-bottom: 27px;
+            .txt{
+                font-weight: 500;
+                font-size: 12px;
+            }
         }
     }
     

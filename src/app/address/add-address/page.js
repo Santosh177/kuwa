@@ -12,11 +12,12 @@ import { useAddressData } from "@/context/address";
 export default function AddAddress() {
   const router = useRouter();
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
-  const [ addressData, setAddressData] = useState({})
+  const [ addressData, setAddressData] = useState({});
+  const [ getFormValues , setGetFormValues] = useState(false);
 
 
 
-    const onSaveAddress = async(data) =>{
+    const onSaveAddress1 = async(data) =>{
       try {
         const res = await fetch('/api/save-address', {
           method: 'POST',
@@ -42,13 +43,40 @@ export default function AddAddress() {
       setAddressData(formData)
     }
 
+    const onSaveAddress = () => {
+      setGetFormValues(true)
+    }
+
+    const onGetFormValues = async(data) => {
+      try {
+        const res = await fetch('/api/save-address', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body:JSON.stringify(data)
+        })
+        if (res.status === 200) {
+          const saveAddress = await res.json()
+          setSelectedAddress(saveAddress);
+          router.push('/order-summary')
+        } else {
+          // throw new Error(await res.text())
+        }
+      } catch (error) {
+        console.error('An unexpected error happened occurred:', error)
+      }
+    }
+
+    
+
   
       return (
         <>
           <PageHeader headerName="Add Address" />
           <PageStepTracker stepCount={1} />
           <div className={styles.addAddressWrapper}> 
-              <AddressForm  onFormData={onFormData} formData={addressData}/>
+              <AddressForm  getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>
               <SubmitBtn onSaveAddress={onSaveAddress}/>
           </div>
         </>

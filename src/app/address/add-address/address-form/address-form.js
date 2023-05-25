@@ -1,42 +1,12 @@
 'use client';
 
 import Input from "@/components/Input/Input";
+import CheckBox from "@/components/Checkbox/Checkbox";
 import PhoneNumberInput from "@/components/PhoneNumberInput/PhoneNumberInput";
 import CreateAccountBox from "../components/CreateAccountBox/CreateAccountBox";
 import styles from './address-form.module.scss';
 import { useEffect, useState } from "react";
 
-
-const ValidationSchema = [
-    {
-        "firstName":{
-            isRequired: true,
-            rules: [
-                {
-
-                }
-            ]
-        },
-        "lastName":{
-            isRequired: true
-        },
-        "email":{
-            isRequired: true
-        },
-        "area":{
-            isRequired: true
-        },
-        "apartment":{
-            isRequired: true
-        },
-        "country": {
-            isRequired: true
-        },
-        "stateProvince":{
-            isRequired: true
-        }
-    }
-]
 
 const PersonalInfoFrom = ({onChange={},values={},isEdit}) => {
     return (
@@ -53,10 +23,31 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit}) => {
     )
 }
 
-const AddressInfoForm = ({onChange={},values={}}) => {
+const ShippingAddressForm = ({onChange={},values={}}) => {
     return (
         <div className={styles.addressInfoForm}>
-         <div className={styles.headerTxt}>Address</div>
+         <div className={styles.headerTxt}>Shipping Address</div>
+            <div className={styles.areaInputText}>
+                <div className={styles.inputContainer}>
+                    <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")} />
+                    <label className={styles.placeholderText}>
+                        <div className={styles.text}>Area name, Colony *</div>
+                    </label>
+                </div>
+            </div>
+            <Input type="text" fieldName="apartment" placeHolder="Appartment name, Floor, Room no, City*" value={values['apartment']} onInputChange={onChange}  />
+            <div className={styles.countryContainer}>
+                <Input type="text" fieldName="country" placeHolder="Country *"  style={{width:'49%'}} value={values['country']} onInputChange={onChange}  />
+                <Input type="text" fieldName="stateProvince" placeHolder="State Province*" style={{width:'49%'}} value={values['stateProvince']} onInputChange={onChange}   />
+            </div>
+        </div>
+    )
+}
+
+const BillingAddressForm = ({onChange={},values={}}) => {
+    return (
+        <div className={styles.addressInfoForm}>
+         <div className={styles.headerTxt}>Billing Address</div>
             <div className={styles.areaInputText}>
                 <div className={styles.inputContainer}>
                     <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")} />
@@ -75,52 +66,84 @@ const AddressInfoForm = ({onChange={},values={}}) => {
 }
 
 
-export default function AddressForm({onFormData,formData, isEdit=false}) {
+export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues}) {
 
-      const [ values , setValues ] = useState(formData);
-      const [ errors , setErrors ] = useState({});
+      const [ isShowBillingAddress, setIsShowBillingAddress ] = useState(false);
+      const [ personalInfo, setPersonalInfo ] = useState({});
+      const [ shippingAddress, setShippingAddress ] = useState ({});
+      const [ billngAddress, setBillngAddress ] = useState({});
 
-      const onChange = (e,fieldName) => {
+
+      useEffect(()=>{
+            // setValues(formData)
+      },[formData]);
+
+
+      useEffect(()=>{
+        let combineFormData = {
+            "shippingAddress":{...personalInfo,...shippingAddress},
+        }
+        if(isShowBillingAddress){
+            combineFormData['billingAddress'] = {...personalInfo,...billngAddress}
+        }
+        onGetFormValues(combineFormData);
+      },[getFormValues])
+
+     
+
+      const onPersonalInfo = (e,fieldName) => {
         let value = ""
         if(fieldName === 'phone'){
             value = e
         }else{
             value = e.target.value;
         }
-        setValues(currentValues =>({...currentValues,[fieldName]:value}))
+        setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value}))
       }
-
-      useEffect(()=>{
-            // setValues(formData)
-      },[formData])
-
-      useEffect(()=>{
-        validate();
-        onFormData(values);
-      },[values]);
-
-      const validate = () => {
-        try {
-            console.log("validatevalidate")
-        } catch (error) {
-            
-        }
-      }
-
-
       
+      const onShippingAddress = (e,fieldName) => {
+        let value = ""
+        if(fieldName === 'phone'){
+            value = e
+        }else{
+            value = e.target.value;
+        }
+        setShippingAddress(currentValues =>({...currentValues,[fieldName]:value}))
+      }
 
+      const onBillngAddress = (e,fieldName) => {
+        let value = ""
+        if(fieldName === 'phone'){
+            value = e
+        }else{
+            value = e.target.value;
+        }
+        setBillngAddress(currentValues =>({...currentValues,[fieldName]:value}))
+      }
 
-      console.log("valuesvalues",values)
-
-
+      const onSelectBillngAddress = () => {
+        // if(!isShowBillingAddress){
+        //     setBillngAddress({})
+        // }
+        setIsShowBillingAddress(!isShowBillingAddress)
+      }
 
   
+      console.log("personalInfo",personalInfo)
+      console.log("shippingAddress",shippingAddress)
+      console.log("billngAddress",billngAddress)
       return (
         <>
           <div className={styles.addressForm}> 
-            <PersonalInfoFrom onChange={onChange} values={values} isEdit={isEdit} />
-            <AddressInfoForm onChange={onChange} values={values}/>
+            <PersonalInfoFrom onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} />
+            <div className={styles.addressContainer}>
+                <ShippingAddressForm onChange={onShippingAddress} values={shippingAddress}/>
+                <div className={styles.selectBillingAddressBtn} onClick={()=> onSelectBillngAddress()}>
+                    <CheckBox isChecked={isShowBillingAddress}/>
+                    <div className={styles.txt}>Use this same address for billing</div>
+                </div>
+                {isShowBillingAddress && <BillingAddressForm onChange={onBillngAddress} values={billngAddress} />}
+            </div>
           </div>
         </>
       )
