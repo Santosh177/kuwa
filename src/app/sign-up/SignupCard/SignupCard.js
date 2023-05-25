@@ -23,7 +23,7 @@ const validateForm = (formData) => {
   }
   if(!formData.password){
     errors.password = "Password is required";
-  }else if(!formData.password.length > 7){
+  }else if(!(formData.password.length > 7)){
     errors.password = "Passwords need to be a min. of 8 characters";
   }
   return errors;
