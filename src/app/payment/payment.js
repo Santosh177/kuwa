@@ -1,6 +1,7 @@
 'use client';
 import { usePaymentPageData } from '@/context/payment';
 import { useCountryList } from '@/context/countryList';
+import { useAuth } from '@/context/userDetail';
 import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
@@ -16,6 +17,7 @@ export default function Payment({cartData}) {
   const router = useRouter();
   const {couponCodeData={}} = usePaymentPageData();
   const countryList = useCountryList();
+  const {isLogin=false, userData={}} = useAuth();
   const deliveryFeesConfig = countryList.find((data) => data.code == "AE")
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   console.log("data",cartData)
@@ -100,16 +102,19 @@ const calculatePriceDetails = () => {
 
 
   const onPayment = async(data) => {
+    console.log("userDatauserData",userData)
     const getCartItemResp = await fetch('/api/get-cart-item', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
     })
+
     const getCartItems = await getCartItemResp.json();
     const cartItemsData = getCartItems && getCartItems['products'];
     const cartItemPayload = await createPayloadForCartItems(cartItemsData);
-    const description = `${"fullName" + ",MULTIPLE_ITEM," + "couponData"}`;
+    const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
+    const description = `${userData['userName'] + ",MULTIPLE_ITEM," + couponCodeData['couponCode']}`;
     console.log("selectedAddress",selectedAddress)
       let payload = {
         "cartId":getCartItems['id'] || "",
@@ -118,18 +123,19 @@ const calculatePriceDetails = () => {
         "addressId": selectedAddress && selectedAddress.id || 511,
         "countryCode": "AE",
         "countryId": 1,
-        "description": "product, MULTIPLE_ITEM, No Coupon",
-        "finalAmount": getCartItems['total'],
-        "totalAmount": getCartItems['total'],
+        "description": description,
+        "finalAmount": priceDetails['totalAmount'],
+        "totalAmount": priceDetails['totalAmount'],
         "currency": "AED",
         "orderSource": "WEBSITE",
         "orderCategory": "CART",
-        "couponApplied": false,
-        "couponCode": "",
-        "discount": 0,
+        "couponApplied": isCouponApplied || false,
+        "couponCode": couponCodeData['couponCode'] || "",
+        "discount": priceDetails['discountAmount'],
         "paymentType": "Regular",
         "taxAmount": 0,
         "shippingAmount": 0,
+        "deliveryCharges":priceDetails['deliveryFees'],
         "cartItems": cartItemPayload
       }
       if(selectedPaymentMethod == "CHECKOUT_CARD"){
