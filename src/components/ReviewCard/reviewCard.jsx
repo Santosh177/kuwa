@@ -13,7 +13,6 @@ const ReviewCard = ({item}) => {
     const randomNum =4
     const numberOfStar = new Array(randomNum).fill("");
     const numberOfHeart =3
-    console.log(numberOfStar);
     return (
         <div className={style.reviewCardConatiner}>
             <div className={style.reviewStarConatiner}>

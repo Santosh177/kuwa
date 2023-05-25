@@ -14,7 +14,6 @@ export default async function AllProduct() {
     },
   });
   const productData = await res.json();
-
   return (
     <div className={style.productDetailContainerPage}>
       <Header/>
@@ -22,9 +21,9 @@ export default async function AllProduct() {
       <ProductDeatil productData={productData}/>
       <div className={style.allDetailDisciptionContainer}>
         <ProductDiscription productData={productData}/>
+      </div>
         <ProductFaq productData={productData} />
         <ProductReview productData={productData} />
-      </div>
       <Footer/>
     </div>
   )

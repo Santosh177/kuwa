@@ -1,13 +1,19 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from './ProductPricingSection.module.scss'
 import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
 import { useRouter } from 'next/navigation';
+import Varients from "./productVarients";
 const ProductPricingSection= ({productData}) =>{
-    const {benefits="",currency="Dhs",description="",id="",name="",numberOfProductReview="832",price="60",quantity=0,title="AADAR Endure Capsule For Premature Ejaculation (60 Capsules)"} = {}  
+    const {benefits="",variants=[],currency="Dhs",description="",id="",name="",numberOfProductReview="832",price="60",quantity=0,title="AADAR Endure Capsule For Premature Ejaculation (60 Capsules)"} =productData || {}  
     const [noOfProduct,setNoOfProduct] = useState(1);
+    const [selectedVarients, setselectedVarients] = useState("");
+    const [finalPrice,setFinalPrice] = useState(0)
     const router = useRouter()
 
+    useEffect(()=>{
+        setFinalPrice(price)
+    },[])
     const payload = {
         "product": id,
         "quantity": noOfProduct
@@ -55,11 +61,13 @@ const ProductPricingSection= ({productData}) =>{
                 <div className={styles.numberOfReview}>({numberOfProductReview})</div>
             </div>
             <div className={styles.pricingConatiner}>
-                <div className={styles.price}>{currency + ". " + price}</div>
+                <div className={styles.price}>{currency + ". " + finalPrice}</div>
                 <div className={styles.incriment}>
                     <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} />
                 </div>
             </div>
+            <div className={styles.packOf}>Pack of</div>
+            <Varients variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients}  />
             <div className={styles.addToCartContainer}>
                 <div className={styles.addToCart} onClick={()=>handelAddToCart(payload)} ><span>Add to Cart</span></div>
                 <div className={styles.buyNow} onClick={()=>handelBuyNow(payload)} ><span>Buy Now</span></div>

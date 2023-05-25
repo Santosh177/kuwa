@@ -1,6 +1,7 @@
-.pricingSectionContainer{
+.pricingSectionContainer {
     width: 50%;
     margin: auto;
+
     // background-color: red;
     .title {
         font-weight: 500;
@@ -10,6 +11,7 @@
 
     .reviewContainer {
         margin-top: 17px;
+
         .imageReview {}
 
         .numberOfReview {
@@ -23,6 +25,7 @@
         margin-top: 13px;
         display: flex;
         justify-content: space-between;
+
         .price {
             font-weight: 500;
             font-size: 18px;
@@ -31,11 +34,18 @@
         .incriment {}
     }
 
+    .packOf {
+        font-weight: 400;
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
     .addToCartContainer {
         display: flex;
         gap: 8px;
         width: 100%;
         margin-top: 24px;
+
         .addToCart {
             background: #247A81;
             border-radius: 24px;
@@ -47,7 +57,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            
+
         }
 
         .buyNow {
@@ -71,6 +81,7 @@
         gap: 18px;
         align-items: center;
         margin-top: 24px;
+
         .Share {
             font-weight: 400;
             font-size: 14px;
@@ -79,6 +90,7 @@
         .shareLogo {
             display: flex;
             gap: 16px;
+
             img {
                 cursor: pointer;
                 width: 24px;
@@ -87,27 +99,29 @@
         }
     }
 }
-@media(max-width:960px){
-    .pricingSectionContainer{
-        width:100%;
+
+@media(max-width:960px) {
+    .pricingSectionContainer {
+        width: 100%;
+
         .title {
             font-size: 16px;
         }
-    
+
         .reviewContainer {
             margin-top: 17px;
         }
-    
+
         .addToCartContainer {
             .addToCart {
                 font-size: 14px;
             }
-    
+
             .buyNow {
                 font-size: 14px;
             }
         }
-    
+
     }
-    
+
 }
