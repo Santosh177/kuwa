@@ -31,13 +31,13 @@ export default async function Home({}) {
 
   console.log("homePageDataResp",homePageDataResp)
 
-  const {data=[],brandUMustTry=[] } = homePageDataResp || {};
+  const {kuwaUsps=[],data=[],brandUMustTry=[] } = homePageDataResp || {};
 
 
   return (
     <>
         <Header />
-        <AssuredInfo />
+        <AssuredInfo assuredInfo={kuwaUsps} />
         <BestSellingProduct data={data} />
         <BrandMustTry data={brandUMustTry}/>
         <SecondaryBanner />

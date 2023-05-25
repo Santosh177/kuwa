@@ -20,7 +20,8 @@
         padding-bottom: 9px;
         padding-right: 15px;
         padding-left: 38px;
-        width: 207px;
+        width: max-content;
+        min-width: 207px;
         
         .assuredIcon{
             position: absolute;

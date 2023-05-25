@@ -6,15 +6,15 @@ import "glider-js/glider.min.css";
 {/* <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/assuredInfo.png' alt='logo'></img> */}
 
 
-const AssuredInfoCard = () => {
+const AssuredInfoCard = ({data={}}) => {
     return(
         <div className={styles.assuredInfoCard}>
             <div className={styles.assuredCard}>
                     <div className={styles.assuredIcon}>
-                    <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/assuredInfo.png' alt='logo'></img>
+                    <img src={data.icon} alt='logo'></img>
                     </div>
-                    <div className={styles.assuredTxt}>Free Home Delivery</div>
-                    <div className={styles.assuredSubTxt}>Above 100 AED</div>
+                    <div className={styles.assuredTxt}>{data.text}</div>
+                    <div className={styles.assuredSubTxt}>{data.subText}</div>
             </div>
         </div>
     )
@@ -23,15 +23,14 @@ const AssuredInfoCard = () => {
 
 
 
-const AssuredInfo = () => {
+const AssuredInfo = ({assuredInfo=[]}) => {
 
     return(
 
         <div className={styles.assuredInfoWrapper}>
-          <AssuredInfoCard/>
-          <AssuredInfoCard />
-          <AssuredInfoCard />
-
+            {
+                assuredInfo.map((data,index)=><AssuredInfoCard key={index} data={data} />)
+            }
         </div>
            
 
