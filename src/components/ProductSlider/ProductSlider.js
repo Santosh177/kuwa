@@ -1,6 +1,7 @@
 'use client'
 import React,{useState,useEffect} from 'react';
 import { useRouter } from 'next/navigation';
+import Loader from '../Loader/Loader';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
@@ -8,9 +9,8 @@ import "glider-js/glider.min.css";
 
 const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}) => {
   const router = useRouter();
-  console.log("datadata",data)
-
   const { product=[],headerTitle= ""} = data || {};
+  const [isLoading , setIsLoading] = useState(false)
  
   const [width, setWidth] = useState(window.innerWidth);
   const handleResize = () => setWidth(window.innerWidth);
@@ -23,6 +23,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}
 
   const onAddToCart = async(data) =>{
     try {
+      setIsLoading(true)
       const res = await fetch('/api/add-to-cart', {
         method: 'POST',
         headers: {
@@ -30,14 +31,14 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}
         },
         body:JSON.stringify(data)
       })
+      setIsLoading(false)
       if (res.status === 200) {
         router.push('/cart')
       } else {
-        throw new Error(await res.text())
+        
       }
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
-      setErrorMsg(error.message)
     }
 }
     return (
@@ -92,6 +93,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}
             </Glider>
             </div>
           </div>
+          <Loader isShow={isLoading} />
           </>
       );
     
