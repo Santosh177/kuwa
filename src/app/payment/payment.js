@@ -112,7 +112,7 @@ const calculatePriceDetails = () => {
     const description = `${"fullName" + ",MULTIPLE_ITEM," + "couponData"}`;
     console.log("selectedAddress",selectedAddress)
       let payload = {
-        "cartUuid":getCartItems['code'] || "",
+        "cartId":getCartItems['id'] || "",
         "orderType": "one-time",
         "userId": getCartItems['customer'] || "",
         "addressId": selectedAddress && selectedAddress.id || 511,
