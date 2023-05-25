@@ -6,7 +6,7 @@ import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 
-const ProductSlider = ({backgroundColor,topColor,design,data}) => {
+const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}) => {
   const router = useRouter();
   console.log("datadata",data)
 
@@ -50,7 +50,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data}) => {
             <div className={styles.sliderLine1} style={{backgroundColor:topColor}}></div><div className={styles.sliderLine2} style={{backgroundColor:topColor}}></div>
           </div>
           <div className={styles.container} style={{backgroundImage:backgroundColor}}>
-            <div className={styles.headerTxt}>{headerTitle}</div>
+            <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
             <div className={styles.sliderContainer}>
             <Glider
               hasArrows

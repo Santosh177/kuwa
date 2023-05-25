@@ -3,6 +3,7 @@ import styles from './page.module.css';
 import Homew from './Home';
 import Header from '@/components/Header/Header';
 import AssuredInfo from './Home/AssuredInfo/AssuredInfo';
+import BestSellingProduct from './Home/BestSellingProduct/BestSellingProduct';
 import BrandMustTry from './Home/BrandMustTry/BrandMustTry';
 import SecondaryBanner from './Home/SecondaryBanner/SecondaryBanner';
 import ProductSlider from '@/components/ProductSlider/ProductSlider';
@@ -30,14 +31,15 @@ export default async function Home({}) {
 
   console.log("homePageDataResp",homePageDataResp)
 
-  const {data=[], } = homePageDataResp || {};
+  const {data=[],brandUMustTry=[] } = homePageDataResp || {};
 
 
   return (
     <>
         <Header />
         <AssuredInfo />
-        <BrandMustTry />
+        <BestSellingProduct data={data} />
+        <BrandMustTry data={brandUMustTry}/>
         <SecondaryBanner />
         {
           data.map((data,index)=>{
