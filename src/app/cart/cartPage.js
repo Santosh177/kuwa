@@ -16,7 +16,7 @@ export default  function Cart(props) {
   console.log("props.card",props.cartData)
     const router = useRouter();
     const countryList = useCountryList();
-    const deliveryFeesConfig = countryList.find((data) => data.code == "AE")
+    const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
     const [ data , setData ] = useState(props.cartData);
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
