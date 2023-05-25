@@ -2,6 +2,7 @@
 'use client';
 import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
+import { useCountryList } from '@/context/countryList';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
@@ -14,6 +15,8 @@ export default  function Cart(props) {
 
   console.log("props.card",props.cartData)
     const router = useRouter();
+    const countryList = useCountryList();
+    const deliveryFeesConfig = countryList.find((data) => data.code == "AE")
     const [ data , setData ] = useState(props.cartData);
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
@@ -41,23 +44,31 @@ export default  function Cart(props) {
     
     useEffect(()=>{
       if(cartItems && cartItems.length > 0){
-        getPriceDetails()
+        calculatePriceDetails()
 
       }
 
     },[cartItems]);
 
-    const getPriceDetails = () => {
-      const { total=0, subtotal=0, currency = "Dhs" } = data || {};
-      const priceDetails2 = {
+
+    const calculatePriceDetails = () => {
+      const { total=0, subtotal=0, currency = "" } = data || {};
+      const minThreshold = deliveryFeesConfig.minThreshold || 0;
+      let  finalAmount = total;
+      if(total < minThreshold){
+        finalAmount = total + deliveryFeesConfig.deliveryFee
+      }
+       
+      const priceDetailsData = {
         cartItemCount: cartItems && cartItems.length,
         subTotal: subtotal,
-        totalAmount: total,
+        totalAmount: finalAmount,
         savedAmount: total - subtotal,
         discountAmount:total - subtotal,
-        currency:currency
+        currency:currency,
+        deliveryFees: (total < minThreshold) ? deliveryFeesConfig.deliveryFee : 0
       }
-      setPriceDetails(priceDetails2)
+      setPriceDetails(priceDetailsData)
     }
     
       
