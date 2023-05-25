@@ -68,7 +68,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={workSans.className}>
-      <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
+      <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"}>
           <AuthProvider authData={userData}>
