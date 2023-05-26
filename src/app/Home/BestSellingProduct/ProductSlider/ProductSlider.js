@@ -1,13 +1,13 @@
 'use client'
 import React,{useState,useEffect} from 'react';
 import { useRouter } from 'next/navigation';
-import Loader from '../Loader/Loader';
+import Loader from '@/components/Loader/Loader';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 
-const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},index=0}) => {
+const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}) => {
   const router = useRouter();
   const { product=[],headerTitle= ""} = data || {};
   const [isLoading , setIsLoading] = useState(false)
@@ -44,12 +44,12 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
     return (
 
 
-          <>
+          <div className={styles.bestSellingProductSlider}>
           
           
-          <div className={styles.sliderDecoration} style={{flexDirection:(index % 2 == 0)?'row-reverse':'row'}}>
-            <div className={styles.sliderLine1} style={{backgroundColor:topColor}}></div><div className={styles.sliderLine2} style={{backgroundColor:topColor}}></div>
-          </div>
+          {/* <div className={styles.sliderTopDecoration} >
+            <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top.png' alt='background'/>
+          </div> */}
           <div className={styles.container} style={{backgroundImage:backgroundColor}}>
             <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
             <div className={styles.sliderContainer}>
@@ -94,7 +94,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
             </div>
           </div>
           <Loader isShow={isLoading} />
-          </>
+          </div>
       );
     
 

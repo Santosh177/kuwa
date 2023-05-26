@@ -20,6 +20,24 @@
       font-size: 24px;
    }
 
+   .sliderDecoration{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+  }
+
+  .sliderLine1{
+    height: 9px;
+    background: #F2E9E7;
+    width: 60%;
+  }
+
+  .sliderLine2{
+    height: 9px;
+    background:#F2E9E7;
+    width: 80px;
+  }
+  
 
    @media(min-width:990px){
     .container{

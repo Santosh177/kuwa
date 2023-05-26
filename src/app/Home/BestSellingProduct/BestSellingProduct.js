@@ -1,6 +1,6 @@
 
 import styles from './best-selling-product.module.scss';
-import ProductSlider from '@/components/ProductSlider/ProductSlider';
+import ProductSlider from './ProductSlider/ProductSlider';
 
 
 
@@ -60,6 +60,7 @@ const BestSellingProduct = ({}) => {
       }
     return(
         <div>
+
             <ProductSlider data={rr} headerTextStyle={{'textAlign':'center'}} />
         </div>
    

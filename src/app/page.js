@@ -45,7 +45,7 @@ export default async function Home({}) {
           data.map((data,index)=>{
             console.log("datatad",data)
             return(
-              <ProductSlider data={data}/>
+              <ProductSlider data={data} index={index}/>
             )
           })
         }
