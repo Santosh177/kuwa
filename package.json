@@ -13,7 +13,6 @@
     "frames-react": "^1.1.0",
     "next": "13.4.2",
     "react": "18.2.0",
-    "react-collapsible": "^2.10.0",
     "react-dom": "18.2.0",
     "react-glider": "^4.0.2",
     "react-phone-input-2": "^2.15.1",
