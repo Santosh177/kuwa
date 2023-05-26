@@ -15,7 +15,7 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit}) => {
     return (
         <div className={styles.personalInfoForm}>
             <div className={styles.headerTxt}>Personal Info</div>
-           {!isEdit && <CreateAccountBox />}
+           {(!isEdit && !values['email']) && <CreateAccountBox />}
             <div className={styles.userNameContainer}>
                 <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  value={values['firstName']} onInputChange={onChange} isDisabled={values['firstName']} />
                 <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}} value={values['lastName']} onInputChange={onChange} isDisabled={values['lastName']} />

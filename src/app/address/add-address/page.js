@@ -41,9 +41,9 @@ export default function AddAddress() {
           setSelectedAddress(saveAddress['shippingAddress']);
           setListOfAddress(currentState => [...currentState, saveAddress['shippingAddress']])
           if(refererPath){
-            router.push(refererPath)
+            router.replace(refererPath)
           }else{
-            router.push('/order-summary')
+            router.replace('/order-summary')
           }
           
         } else {

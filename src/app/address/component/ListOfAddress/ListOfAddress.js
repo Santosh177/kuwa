@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 export default function ListOfAddress({}) {
   const router = useRouter();
   const pathName = usePathname();
-  const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
+  const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [selectedAdddressId, setSelectedAddressId] = useState(null);
 
   const onRemoveAddress = async(addressId) =>{
@@ -23,7 +23,19 @@ export default function ListOfAddress({}) {
       next: { revalidate: 0} 
     })
     const removeAddress = await removeAddressResp.json();
-    console.log("removeAddress",removeAddress)
+
+    
+    const filterAddressId = listOfAddress.filter((data,index)=> data.id != removeAddress.id);
+    const isSelectedAddressId = removeAddress.id === selectedAddress.id;
+    if(isSelectedAddressId){
+      const defaultAddress = filterAddressId.find((data) => data.isDefault);
+      if(defaultAddress){
+        setSelectedAddress(defaultAddress)
+      }else{
+        setSelectedAddress(filterAddressId[0])
+      }
+    }
+    setListOfAddress(filterAddressId);
   }
 
   const onChangeAddress = (data) =>{
