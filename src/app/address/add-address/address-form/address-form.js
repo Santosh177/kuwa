@@ -11,11 +11,11 @@ import { useEffect, useState } from "react";
 
 const PersonalInfoFrom = ({onChange={},values={},isEdit}) => {
 
-
+    const {isLogin=false, userData={}} = useAuth();
     return (
         <div className={styles.personalInfoForm}>
             <div className={styles.headerTxt}>Personal Info</div>
-           {(!isEdit && !values['email']) && <CreateAccountBox />}
+           {(!isEdit && !isLogin) && <CreateAccountBox />}
             <div className={styles.userNameContainer}>
                 <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  value={values['firstName']} onInputChange={onChange} isDisabled={isEdit && values['firstName']} />
                 <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}} value={values['lastName']} onInputChange={onChange} isDisabled={isEdit &&  values['lastName']} />
