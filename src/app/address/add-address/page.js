@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter,useSearchParams } from 'next/navigation';
 import PageHeader from "@/components/PageHeader/PageHeader";
 import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import AddressForm from "./address-form/address-form";
@@ -11,7 +11,9 @@ import { useAddressData } from "@/context/address";
 
 export default function AddAddress() {
   const router = useRouter();
-  const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
+  const searchParams = useSearchParams();
+  const refererPath = searchParams.get('referer');
+  const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [ addressData, setAddressData] = useState({});
   const [ getFormValues , setGetFormValues] = useState(false);
 
@@ -36,8 +38,14 @@ export default function AddAddress() {
         })
         if (res.status === 200) {
           const saveAddress = await res.json()
-          setSelectedAddress(saveAddress);
-          router.push('/order-summary')
+          setSelectedAddress(saveAddress['shippingAddress']);
+          setListOfAddress(currentState => [...currentState, saveAddress['shippingAddress']])
+          if(refererPath){
+            router.push(refererPath)
+          }else{
+            router.push('/order-summary')
+          }
+          
         } else {
           // throw new Error(await res.text())
         }

@@ -1,13 +1,15 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter,usePathname } from 'next/navigation';
 import AddressInfo from '../AddressInfo/AddressInfo';
 import { useAddressData } from "@/context/address";
+import SubmitBtn from '../SubmitBtn/SubmitBtn';
 import styles from './list-of-address.module.scss'
 import { useEffect, useState } from 'react';
 
 
 export default function ListOfAddress({}) {
   const router = useRouter();
+  const pathName = usePathname();
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   const [selectedAdddressId, setSelectedAddressId] = useState(null);
 
@@ -26,12 +28,16 @@ export default function ListOfAddress({}) {
 
   const onChangeAddress = (data) =>{
     setSelectedAddress(data)
-    router.push('/order-summary')
+    // router.push('/order-summary')
   }
 
 
   const onEditAddress = () => {
     
+  }
+
+  const onSelectAddress = () => {
+    router.push('/order-summary')
   }
  
 
@@ -41,7 +47,7 @@ export default function ListOfAddress({}) {
       return (
         <>
           <div className={styles.addressListWrapper}>
-            <div className={styles.addNewAddressTxt} onClick={()=> router.push('/address/add-address')}>+ Add new address</div>
+            <div className={styles.addNewAddressTxt} onClick={()=> router.push(`/address/add-address?referer=${pathName}`)}>+ Add new address</div>
             <div className={styles.addressInfoContainer}>
                 {
                     listOfAddress.map((data,index)=>{
@@ -52,7 +58,7 @@ export default function ListOfAddress({}) {
                             phoneNo:data.phone || "",
                             id:data.id
                         }
-                        const isSelected = false;
+                        const isSelected = (selectedAddress.id == data.id);
                         return(
                             <AddressInfo data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
                         )
@@ -60,6 +66,7 @@ export default function ListOfAddress({}) {
                 }
             </div>
           </div>
+          <SubmitBtn btnName='Save & proceed' onClick={onSelectAddress} />
         </>
        
       )

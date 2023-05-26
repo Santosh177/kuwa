@@ -100,7 +100,7 @@ export default  function Cart(props) {
       })
       const addressData = await getAddressResp.json();
       console.log("Address+++",addressData)
-      const haveAddress = addressData && addressData['billingAddresses'] && addressData['billingAddresses'] .length > 0;
+      const haveAddress = addressData && addressData['shippingAddress'] && addressData['shippingAddress'] .length > 0;
       if(haveAddress){
         setHaveAddress(haveAddress);
       }

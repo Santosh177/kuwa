@@ -4,7 +4,7 @@ import styles from './delivery-address.module.scss';
 
 export default function DeliveryAddress() {
   const router = useRouter();
-  const { selectedAddress ={},} = useAddressData();
+  const { selectedAddress ={}} = useAddressData();
   const { firstName="", lastName="" , phone="" , apartment="", address="",country=""} = selectedAddress || {};
   const userName = firstName + " " +lastName;
   const addressTxt = apartment+ " " +address + " " +country;
