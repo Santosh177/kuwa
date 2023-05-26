@@ -23,7 +23,7 @@ const UsefulLinks = () => (
     <ul className={styles.usefulLinkList}>
     {
      FooterData['UsefulLinks'].map((data,index)=>
-     <li className={styles.usefulLinkItem} key={index}><a href='/'>{data.name}</a></li>
+     <li className={styles.usefulLinkItem} key={index}><a href={data.url}>{data.name}</a></li>
          )
     }
       </ul>
