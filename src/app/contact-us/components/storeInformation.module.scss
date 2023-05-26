@@ -1,0 +1,76 @@
+.storeInformationContainer {
+    width: 90%;
+    margin: auto;
+    margin-top: 32px;
+    color: #07141A;
+
+    .storeInformation {
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .discription {
+        font-weight: 400;
+        font-size: 12px;
+        margin-top: 8px;
+    }
+
+    .locationCotainer {
+        background: #F9F9F9;
+        border-radius: 8px;
+        display: flex;
+        padding: 16px;
+        gap: 8px;
+        margin-top: 8px;
+
+        .discriptionImg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .discriptionText {
+            font-weight: 400;
+            font-size: 12px;
+
+        }
+    }
+
+    .report {
+        background: #F9F9F9;
+        border-radius: 8px;
+        display: flex;
+        padding: 16px;
+        gap: 8px;
+        margin-top: 8px;
+        .reportImg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .reportText {
+            font-weight: 400;
+            font-size: 12px;
+            span{
+                color: #247A81;
+            }
+        }
+    }
+
+    .clock {
+        background: #F9F9F9;
+        border-radius: 8px;
+        display: flex;
+        padding: 16px;
+        gap: 8px;
+        margin-top: 8px;
+        .clockImg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .clockText {
+            font-weight: 400;
+            font-size: 12px;
+        }
+    }
+}

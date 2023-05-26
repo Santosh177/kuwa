@@ -8,7 +8,9 @@ export async function POST(request,res) {
     console.log("customHeadercustomHeader",customHeader)
     const addToCartResp = await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart/', {
         method: 'POST',
-        headers: {...customHeader},
+        headers: {
+          'Content-Type': 'application/json',
+          ...customHeader},
         body:JSON.stringify(requestBody)
       });
       const addToCartData = await addToCartResp.json();

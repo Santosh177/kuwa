@@ -2,7 +2,11 @@
 import { useRouter } from 'next/navigation';
 import styles from './page-header.module.scss';
 
-const PageHeader = ({headerName=""}) => {
+const PageHeader = ({headerName="",backButtonAction}) => {
+
+    const handelBakButton = () =>{
+        backButtonAction()
+    }
 
     const router = useRouter()
 
