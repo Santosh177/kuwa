@@ -19,9 +19,11 @@
         .actionWrapper{
             display: flex;
             gap: 10px;
+            cursor: pointer;
             .action{
                 display: flex;
                 gap: 4px;
+                cursor: pointer;
                 img{
                     width: 16px;
                     height: 16px;
@@ -31,6 +33,7 @@
                     font-weight: 500;
                     font-size: 12px;
                     color: #247A81;
+                    cursor: pointer;
                 }
             }
         }
@@ -130,7 +133,8 @@
 
 @media (min-width:990px){
    .addressInfoCard{
-    max-width: 343px;
+    max-width: 346px;
+    width: 346px;
    }
 
 }

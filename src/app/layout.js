@@ -1,11 +1,12 @@
 import { AuthProvider } from "@/context/userDetail";
 import { CountryProvider } from "@/context/contryDetails";
-
+import { AddressProvider } from "@/context/address";
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
 import { getUserDetails } from '../lib/auth';
 import { getTokenCookie } from '../lib/auth-cookies';
 import { cookies } from 'next/headers';
+import { CountryListProvider } from "@/context/countryList";
 // import { Work_Sans } from 'next/font/google';
 
 const workSans = Work_Sans({ weight: ['400','500','600', '700'],
@@ -22,10 +23,11 @@ export const metadata = {
 const getUser = async () => {
   const nextCookies = cookies(); 
   const token = nextCookies.get('token');
+  const user = nextCookies.get('userId');
   console.log("tokentoken",token)
   if(token && token.value){
     try {
-      const userLoginResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/private/customer/1', {
+      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${user.value}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -44,27 +46,38 @@ const getUser = async () => {
 
 };
 
+const getCountryList = async() => {
+  const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/country/', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  const countryListData = await getCountryListResp.json();
+  if(countryListData && countryListData.length > 0){
+      return countryListData;
+  }
+}
 
 export default async function RootLayout({ children }) {
   const userData = await getUser();
+  const countryList = await getCountryList();
+  
 
-
-  // const countryCode = userData && userData.countryCode || null
-
-   
-
-  // console.log("userData",userData)
 
   return (
     <html lang="en">
       <body className={workSans.className}>
-      <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
-      <script src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
+      <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
+      <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"}>
           <AuthProvider authData={userData}>
+            <AddressProvider >
             {children}
+            </AddressProvider>        
           </AuthProvider>
         </CountryProvider>
+      </CountryListProvider>
       </body>
     </html>
   )

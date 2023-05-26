@@ -1,18 +1,22 @@
 
 'use client';
-import React, { useEffect, useState ,useContext} from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
+import { useCountryList } from '@/context/countryList';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails } from "@/utils";
-import { useAuth } from '../../context/userDetail';
 import styles from './cart-page.module.scss';
 
 
 export default  function Cart(props) {
+
+  console.log("props.card",props.cartData)
     const router = useRouter();
+    const countryList = useCountryList();
+    const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
     const [ data , setData ] = useState(props.cartData);
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
@@ -40,23 +44,31 @@ export default  function Cart(props) {
     
     useEffect(()=>{
       if(cartItems && cartItems.length > 0){
-        getPriceDetails()
+        calculatePriceDetails()
 
       }
 
     },[cartItems]);
 
-    const getPriceDetails = () => {
-      const { total=0, subtotal=0, currency = "Dhs" } = data || {};
-      const priceDetails2 = {
+
+    const calculatePriceDetails = () => {
+      const { total=0, subtotal=0, currency = "" } = data || {};
+      const minThreshold = deliveryFeesConfig.minThreshold || 0;
+      let  finalAmount = total;
+      if(total < minThreshold){
+        finalAmount = total + deliveryFeesConfig.deliveryFee
+      }
+       
+      const priceDetailsData = {
         cartItemCount: cartItems && cartItems.length,
         subTotal: subtotal,
-        totalAmount: total,
+        totalAmount: finalAmount,
         savedAmount: total - subtotal,
         discountAmount:total - subtotal,
-        currency:currency
+        currency:currency,
+        deliveryFees: (total < minThreshold) ? deliveryFeesConfig.deliveryFee : 0
       }
-      setPriceDetails(priceDetails2)
+      setPriceDetails(priceDetailsData)
     }
     
       
@@ -76,10 +88,6 @@ export default  function Cart(props) {
         console.log("cartItem.datacartItem.data",cartItem.data)
         setData(cartItem.data)
       }
-
-        // console.log("updateItemResp",datas);
-        
-
     }
 
 
@@ -92,7 +100,7 @@ export default  function Cart(props) {
       })
       const addressData = await getAddressResp.json();
       console.log("Address+++",addressData)
-      const haveAddress = addressData && addressData['billingAddresses'] && addressData['billingAddresses'] .length > 0;
+      const haveAddress = addressData && addressData['shippingAddress'] && addressData['shippingAddress'] .length > 0;
       if(haveAddress){
         setHaveAddress(haveAddress);
       }
@@ -109,9 +117,26 @@ export default  function Cart(props) {
     }
 
       
-     
+     const onDeleteItem = async (data) => {
+         const deleteData = {
+          cartItemId: data.id
+         }
+        const updateItemResp  =  await fetch('/api/delete-cart-item', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body:JSON.stringify(deleteData)
+      })
+      const cartItem = await updateItemResp.json();
+        // if(cartItem && cartItem.data){
+        //   console.log("cartItem.datacartItem.data",cartItem.data)
+        //   setData(cartItem.data)
+        // }
+     }
         
   
+     console.log("priceDetailspriceDetails",priceDetails)
       return (
         <>
           <div className={styles.cartPage}>
@@ -120,7 +145,7 @@ export default  function Cart(props) {
               {
                 cartItems.map((data, index)=>{
                   return(
-                    <CartItemCard data={data} key={index} onUpdateItem={onUpdateItem} />
+                    <CartItemCard data={data} key={index} onUpdateItem={onUpdateItem} onDeleteItem={()=>onDeleteItem(data)} />
                   )
                 })
               }
@@ -133,7 +158,7 @@ export default  function Cart(props) {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={priceDetails.totalAmount} onProceed={onProceed} />
+          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
         </>
       )
     }

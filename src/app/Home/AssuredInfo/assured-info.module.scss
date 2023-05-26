@@ -20,6 +20,9 @@
         padding-bottom: 9px;
         padding-right: 15px;
         padding-left: 38px;
+        width: max-content;
+        min-width: 207px;
+        
         .assuredIcon{
             position: absolute;
             left: -45px;
@@ -45,16 +48,28 @@
 
 
 }
+.assuredInfoWrapper{
+    display: flex;
+    gap: 60px;
+    overflow: scroll;
+    padding-right: 16px;
+    margin-top: 24px;
+    padding-left: 60px;
 
-.gliderWre{
-    padding-left: 16px;
-    
 }
 
+
+
 @media(min-width:990px){
-    .gliderWre{
-        // margin-left: 227px;
-        // margin-right: 227px;
+    .assuredInfoWrapper{
+        display: flex;
+        gap: 60px;
+        overflow: scroll;
+        padding-right: 16px;
+        margin-top: 24px;
+        padding-left: 60px;
+        justify-content: center;
+    
     }
 }
 

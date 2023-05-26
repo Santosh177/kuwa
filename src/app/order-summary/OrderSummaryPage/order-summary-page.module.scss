@@ -30,21 +30,20 @@
 @media (min-width:990px){
     .orderSummary{
         display: flex;
-        justify-content: space-between;
-        width: 50%;
-        margin: 0 auto;
-        gap: 28px;
-        margin-top: 55px;
+        gap: 30px;
+        justify-content: center;
+        margin-top: 60px;
         .headerTxt{
             font-weight: 500;
             font-size: 16px;
         }
         .addressAndProductDetails{
-            width: 50%;
+            width: 396px;
         }
     
         .priceDetails{
-            width: 50%;
+            width: 346px;
+            max-width: 346px;
         }
         .priceDetailsContainer{
             margin-top: 16px;

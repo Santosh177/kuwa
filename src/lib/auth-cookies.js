@@ -1,6 +1,7 @@
 import { serialize, parse } from 'cookie'
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers';
+import { generateDeviceId } from './deviceId';
 
 const TOKEN_NAME = 'token'
 
@@ -29,6 +30,7 @@ export function removeTokenCookie(res) {
   })
   cookies().delete('token')
   cookies().delete('userId')
+  cookies().delete('deviceID')
 }
 
 export function parseCookies(req) {
@@ -46,18 +48,30 @@ export function getTokenCookie(req) {
 }
 export const authHeader = async() =>{
   const token = cookies().get('token')
-  const user = cookies().get('userId')
+  const user = cookies().get('userId');
+
+ 
+  console.log("-----",cookies().get("deviceID"))
   if(token && token.value){
     return (
       {
+        'Content-Type': 'application/json',
         'country':1,
         'Authorization':"Bearer "+token.value,
         'user':parseInt(user.value)
       }
     )
   }else{
+    const getDeviceID = cookies().get("deviceID");
+    console.log("getDeviceIDgetDeviceID",getDeviceID)
+    if(!getDeviceID && !getDeviceID){
+        const deviceId = generateDeviceId();
+        cookies().set('deviceID', deviceId);
+    }
     return({
-      'country' : 1
+      'Content-Type': 'application/json',
+      'country' : 1,
+      'device':cookies().get("deviceID").value || ""
     })
   }
   

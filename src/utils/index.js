@@ -41,12 +41,12 @@ export const createPayloadForCartItems = async(cartData) => {
       return cartItems; 
 }
 
-export const createPayloadForTamaraItems = async (cartItems) => {
+export const createPayloadForItems = async (cartItems) => {
   console.log("cartItemscartItemscartItems",cartItems)
-  let tamaraItems = [];
+  let items = [];
    if(cartItems && cartItems.length > 0){
       cartItems.map((data,index)=>{
-        tamaraItems.push({
+        items.push({
             "imageUrl":data.image && data.image.imageUrl || "https://d2krpu1dx8jgw5.cloudfront.net/media/subscription/Adv-Woman_Crllhff.png",
             "type":"Supplement",
             "name":data.description && data.description.name || "",
@@ -60,7 +60,7 @@ export const createPayloadForTamaraItems = async (cartItems) => {
           })
       })
    }
-   return tamaraItems; 
+   return items; 
 }
 
 export const createPayloadForTabby = async (cartItems) => {
@@ -82,6 +82,17 @@ export const createPayloadForTabby = async (cartItems) => {
       })
    }
    return tamaraItems; 
+}
+
+export const createCouponPayload = async(cartItems) => {
+  let supplements = [];
+  if(cartItems && cartItems.length > 0){
+     cartItems.map((item,index)=>{
+      console.log("itemitem",item)
+        supplements.push({"id":item.id,"quantity":item.quantity})
+     })
+  }
+  return supplements; 
 }
 
 

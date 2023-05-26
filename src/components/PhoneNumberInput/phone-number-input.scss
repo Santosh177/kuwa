@@ -1,0 +1,21 @@
+.inputWrapper{
+    margin-top: 20px;
+    .errorMsg{
+        font-size: 10px;
+        color: #e6787a;
+    }
+
+  }
+.react-tel-input {
+
+  margin-top: 16px;
+    .form-control{
+      height: 48px !important;
+      width: 100% !important;
+      border: 1px solid #E6E7E7 !important;
+    }
+    .selected-flag{
+      background: #F1FAF8;
+      border-radius: 8px;
+    }
+}

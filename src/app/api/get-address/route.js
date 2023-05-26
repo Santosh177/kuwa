@@ -6,7 +6,7 @@ export async function GET() {
 
   const customHeader = await authHeader();
   console.log("authHeader",authHeader())
-  const getAddressResp =  await fetch(`https://api.kuwa.bevaleo.dev/module/address/${customHeader.user}`, {
+  const getAddressResp =  await fetch(`https://api.kuwa.bevaleo.dev/module/address/`, {
     method: 'GET',
     headers: {...customHeader},
     next: { revalidate: 0} 

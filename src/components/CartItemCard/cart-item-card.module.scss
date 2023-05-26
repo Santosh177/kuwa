@@ -5,7 +5,7 @@
     box-shadow: 0px 6px 7px rgba(173, 173, 173, 0.16);
     border-radius: 16px;
     padding: 8px;
-    max-width: 396px;
+    // max-width: 396px;
     display: flex;
     padding-right: 27px;
     padding-bottom: 0px;
@@ -15,6 +15,7 @@
     .cartItemContainer{
         display: flex;
         flex-direction: column;
+        align-items: center;
         img{
             height: 71px;
             width: 77px;
@@ -26,12 +27,12 @@
 
         .itemName{
             font-weight: 500;
-            font-size: 14px;
+            font-size: 12px;
         }
         .discountTag{
             margin-top: 6px;
             background: #CE4224;
-            border-radius: 8px;
+            border-radius: 4px;
             color: #FFFFFF;
             display: flex;
             gap: 5px;
@@ -42,11 +43,11 @@
             padding-left: 8px;
             .discountText{
                 font-weight: 600;
-                font-size: 12px;
+                font-size: 10px;
             }
             .discountPrice{
                 font-weight: 400;
-                font-size: 12px;
+                font-size: 10px;
             }
         }
 
@@ -58,11 +59,11 @@
             margin-top: 8px;
             .finalPrice{
                 font-weight: 600;
-                font-size: 14px;
+                font-size: 12px;
             }
             .retailPrice{
                 font-weight: 400;
-                font-size: 12px;
+                font-size: 10px;
                 text-decoration-line: line-through;
                 color: #A0A0A0;
             }
@@ -92,6 +93,8 @@
     position: relative;
     top: -12px;
     background: white;
+    font-weight: 600;
+    font-size: 10px;
 
     .quantityBtn{
         cursor: pointer;
@@ -102,11 +105,14 @@
 
 }
 @media(max-width:768px){
+
+  
+
     .quantityContainer{
         display: inline-flex;
         width: 66px;
         height: 22px;
-        border-radius: 8px;
+        border-radius: 16px;
         border: solid 1px rgb(54,68,89,.25 )!important;
         justify-content: space-between;
         align-items: center;
@@ -117,6 +123,46 @@
             font-weight: 600;
             color: #247A81;
         }
+    
+    }
+}
+
+
+@media (min-width: 990px){
+    .cartItemCard{
+        .cartItemInfo{
+            .itemName{
+                font-weight: 500;
+                font-size: 14px;
+            }
+            .discountTag{
+                .discountText{
+                    font-weight: 600;
+                    font-size: 12px;
+                }
+                .discountPrice{
+                    font-weight: 400;
+                    font-size: 12px;
+                }
+            }
+    
+            .priceContainer{
+                .finalPrice{
+                    font-weight: 600;
+                    font-size: 14px;
+                }
+                .retailPrice{
+                    font-weight: 400;
+                    font-size: 12px;
+                    text-decoration-line: line-through;
+                    color: #A0A0A0;
+                }
+            }
+    
+        }
+    }
+    .quantityContainer{
+        font-size: 12px;
     
     }
 }

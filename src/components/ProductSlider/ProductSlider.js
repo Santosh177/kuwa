@@ -1,11 +1,16 @@
 'use client'
 import React,{useState,useEffect} from 'react';
+import { useRouter } from 'next/navigation';
+import Loader from '../Loader/Loader';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 
-const ProductSlider = ({backgroundColor,topColor,design}) => {
+const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}) => {
+  const router = useRouter();
+  const { product=[],headerTitle= ""} = data || {};
+  const [isLoading , setIsLoading] = useState(false)
  
   const [width, setWidth] = useState(window.innerWidth);
   const handleResize = () => setWidth(window.innerWidth);
@@ -14,6 +19,28 @@ const ProductSlider = ({backgroundColor,topColor,design}) => {
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
 
+ 
+
+  const onAddToCart = async(data) =>{
+    try {
+      setIsLoading(true)
+      const res = await fetch('/api/add-to-cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(data)
+      })
+      setIsLoading(false)
+      if (res.status === 200) {
+        router.push('/cart')
+      } else {
+        
+      }
+    } catch (error) {
+      console.error('An unexpected error happened occurred:', error)
+    }
+}
     return (
 
 
@@ -24,7 +51,7 @@ const ProductSlider = ({backgroundColor,topColor,design}) => {
             <div className={styles.sliderLine1} style={{backgroundColor:topColor}}></div><div className={styles.sliderLine2} style={{backgroundColor:topColor}}></div>
           </div>
           <div className={styles.container} style={{backgroundImage:backgroundColor}}>
-            <div className={styles.headerTxt}>Immunity</div>
+            <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
             <div className={styles.sliderContainer}>
             <Glider
               hasArrows
@@ -42,97 +69,31 @@ const ProductSlider = ({backgroundColor,topColor,design}) => {
                 <img style={{width:48,height:48}}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/right_arrow.png' alt='right-icon'/>
               }
             >
-                <ProductCard  image={'https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png'} />
-                 <ProductCard image={'https://production-website-builds.s3.ap-south-1.amazonaws.com/collagen+(1).png'}/>
-                <ProductCard image={'https://production-website-builds.s3.ap-south-1.amazonaws.com/shilajit.png'}/>
-               <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
-                <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
-                <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
-                <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
-                <ProductCard number={4}/>
-               <ProductCard number={5}/>
-                <ProductCard number={6}/>
-                  <ProductCard number={7}/>
-               <ProductCard number={8}/>
-                <ProductCard number={9}/>
-                <ProductCard number={10}/>
-                <ProductCard number={11}/>
-                <ProductCard number={12}/>
-                <ProductCard number={13}/>
-                <ProductCard  number={14}/>
-                <ProductCard number={15}/>
-                <ProductCard number={16}/>
-               <ProductCard number={17}/>
-                <ProductCard number={18}/>
-                <ProductCard number={19}/>
-                <ProductCard number={20}/>  
+
+              {
+                product.map((data,index)=>{
+                  console.log("datadata+++",data)
+                  const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
+                  const cardData = {
+                    productName:data && data.name || "",
+                    finalPrice:finalPrice,
+                    retailPrice:retailPrice,
+                    currency:currency,
+                    discount:discount,
+                    discountType:discountType,
+                    image:data.image || ""
+                  }
+                  return(
+                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} />
+                  )
+                })
+              }
+                
+               
             </Glider>
             </div>
           </div>
+          <Loader isShow={isLoading} />
           </>
       );
     

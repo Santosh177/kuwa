@@ -83,7 +83,15 @@
 
     }
 
+    .searchInputWrapper{
+        display: none;
+    }
+
+ 
+   
+
     .cartIcon{
+        cursor: pointer;
         img{
             height: 24px;
             width: 24px;
@@ -97,6 +105,33 @@
         .headerWrapper{
             width: 80%;
             margin: 0 auto;
+            .searchInputWrapper{
+                position: relative;
+                display: flex;
+                .searchInput{
+                    width: 424px;
+                    height: 36px;
+                    border-radius: 8px;
+                    border: 1px;
+                    font-weight: 500;
+                    font-size: 14px;
+                    padding-left: 16px;
+                    font-weight: 500;
+                    color: #ADADAD;
+                }
+            
+                img{
+                    position: absolute;
+                    right: 5px;
+                    height: 32px;
+                    width: 32px;
+                    top: 3px;
+                }
+            }
         }
     }
+    .searchIcon{
+        display: none;
+    }
+
 }

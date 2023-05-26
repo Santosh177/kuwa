@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter,usePathname } from 'next/navigation';
 import styles from './address-info.module.scss';
 
 const CheckBox = ({ isChecked=false }) => {
@@ -12,20 +12,30 @@ const CheckBox = ({ isChecked=false }) => {
   };
 export default function AddressInfo({data={},isSelected=false,onSelectAddress={},onEditAddress={},onRemoveAddress={}}) {
   const router = useRouter();
+  const pathName = usePathname();
+  console.log("PathBane",pathName)
 
   const { userName="",addressTxt="", phoneNo="",id="" } = data || {}
 
   
       return (
-        <div className={[styles.addressInfoCard,(isSelected)&&styles.isActive].join(" ")} onClick={()=>onSelectAddress(id)}>
+        <div className={[styles.addressInfoCard,(isSelected)&&styles.isActive].join(" ")} onClick={(e)=>{
+          // e.preventDefault();
+          onSelectAddress(data)
+          }}>
             <div className={styles.addressInfo}>
                 <div className={styles.name}>{userName}</div>
                 <div className={styles.actionWrapper}>
-                    <div className={styles.action} onClick={()=>router.push('/address/edit-address/1')}>
+                    <div className={styles.action} onClick={(e)=>{
+                     e.stopPropagation();
+                      router.push(`/address/edit-address/${id}?referer=${pathName}`)}}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                         <div className={styles.actionTxt}>Edit</div>
                     </div>
-                    <div className={styles.action} onClick={()=>onRemoveAddress()}>
+                    <div className={styles.action} onClick={(e)=>{
+                     e.stopPropagation();
+                      onRemoveAddress()
+                      }}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                         <div className={styles.actionTxt}>Remove</div>
                     </div>

@@ -6,7 +6,7 @@ import styles from './cart-item-card.module.scss';
 
 
 
-const CartItemCard = ({data,onUpdateItem={}}) => {
+const CartItemCard = ({data,onUpdateItem={},onDeleteItem={}}) => {
 
     console.log("CartItemCardCartItemCard",data)
     const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="", id="" } = data || {};
@@ -34,7 +34,7 @@ const CartItemCard = ({data,onUpdateItem={}}) => {
                     {discountAmount > 0 &&<div className={styles.retailPrice}>{currency + " " + retailPrice}</div>}
                 </div>
             </div>
-            <img className={styles.deleteIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/delete.png' alt='delete-icon'/>
+            <img className={styles.deleteIcon} onClick={()=>onDeleteItem()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/delete.png' alt='delete-icon'/>
            
         </div>
     )

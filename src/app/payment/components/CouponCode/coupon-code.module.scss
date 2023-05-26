@@ -6,8 +6,8 @@
     }
     .couponCodeContainer{
         display: flex;
-        margin-top: 9px;
         gap: 15px;
+        margin-top: 15px;
         .inputWrapper{
             .inputContainer{
                 position: relative;
@@ -62,6 +62,14 @@
             }
         }
 
+        .removeIcon{
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            right: 10px;
+            top: 8px;
+        }
+
         .applyBtn{
             width: 28%;
             text-align: center;
@@ -74,13 +82,20 @@
             font-weight: 500;
             font-size: 12px;
         }
+        
     } 
+    .couponMsg{
+        font-weight: 500;
+        font-size: 12px; 
+        color: #247A81;   
+        margin-top: 8px;    
+    }
 }
 
 @media(min-width:990px){
     .couponCodeContainer{
         .inputWrapper{
-            width: 68% !important;
+            // width: 68% !important;
         }
     }
 }
