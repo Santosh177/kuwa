@@ -6,7 +6,7 @@ export default function ContactUs() {
     return (
         <div>
             <PageHeader headerName="Contact Us" />
-            <GetBackForm/>
+            {/* <GetBackForm/> */}
             <StoreInformation/>
         </div>
     )
