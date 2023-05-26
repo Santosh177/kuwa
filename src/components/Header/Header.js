@@ -1,14 +1,16 @@
 'use client';
 import { useState } from 'react';
 import { useRouter,usePathname } from 'next/navigation';
+import {  useCartItems } from '@/context/cartItems'
 import SideMenu from '../SideMenu/SideMenu';
 import styles from './header.module.scss';
 
 const Header = () => {
     const router = useRouter();
-    const [ isShowSideMenu,setIsShowSideMenu] = useState(false)
+    const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
+    const {cartItemCount = 0} = useCartItems()
     
-
+    // console.log("cartItemCOuntcartItemCOunt",cartItemCount)
     return(
         <>
      
@@ -41,6 +43,7 @@ const Header = () => {
                     </div>
                     <div className={styles.cartIcon} onClick={()=>router.push('/cart')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img>
+                        {cartItemCount > 0 && <div className={styles.cartCount}>{cartItemCount}</div>}
                     </div>
                 </div>
                 

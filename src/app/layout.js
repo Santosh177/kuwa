@@ -1,6 +1,7 @@
 import { AuthProvider } from "@/context/userDetail";
 import { CountryProvider } from "@/context/contryDetails";
 import { AddressProvider } from "@/context/address";
+import { CartItemProvider } from "@/context/cartItems";
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
 import { getUserDetails } from '../lib/auth';
@@ -72,9 +73,11 @@ export default async function RootLayout({ children }) {
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"}>
           <AuthProvider authData={userData}>
+            <CartItemProvider>
             <AddressProvider >
             {children}
-            </AddressProvider>        
+            </AddressProvider> 
+            </CartItemProvider>       
           </AuthProvider>
         </CountryProvider>
       </CountryListProvider>
