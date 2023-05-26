@@ -4,21 +4,24 @@ import Input from "@/components/Input/Input";
 import CheckBox from "@/components/Checkbox/Checkbox";
 import PhoneNumberInput from "@/components/PhoneNumberInput/PhoneNumberInput";
 import CreateAccountBox from "../components/CreateAccountBox/CreateAccountBox";
+import { useAuth } from '@/context/userDetail';
 import styles from './address-form.module.scss';
 import { useEffect, useState } from "react";
 
 
 const PersonalInfoFrom = ({onChange={},values={},isEdit}) => {
+
+
     return (
         <div className={styles.personalInfoForm}>
             <div className={styles.headerTxt}>Personal Info</div>
            {!isEdit && <CreateAccountBox />}
             <div className={styles.userNameContainer}>
-                <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  value={values['firstName']} onInputChange={onChange} />
-                <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}} value={values['lastName']} onInputChange={onChange} />
+                <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  value={values['firstName']} onInputChange={onChange} isDisabled={values['firstName']} />
+                <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}} value={values['lastName']} onInputChange={onChange} isDisabled={values['lastName']} />
             </div>
             <PhoneNumberInput type="text" fieldName="phone"  value={values['phone']} onInputChange={onChange} />
-            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange}   />
+            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange} isDisabled={values['email']}   />
         </div>
     )
 }
@@ -67,7 +70,7 @@ const BillingAddressForm = ({onChange={},values={}}) => {
 
 
 export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues}) {
-
+     const {isLogin=false, userData={}} = useAuth();
       const [ isSameBillingAddress, setIsSameBillingAddress ] = useState(false);
       const [ personalInfo, setPersonalInfo ] = useState({});
       const [ shippingAddress, setShippingAddress ] = useState ({});
@@ -77,6 +80,18 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       useEffect(()=>{
             // setValues(formData)
       },[formData]);
+      
+
+      useEffect(()=>{
+        const { firstName="", lastName="", emailAddress="" } = userData || {}
+        const userObject = {
+            'firstName':firstName,
+            'lastName':lastName,
+            'phone':"",
+            'email':emailAddress
+        }
+        setPersonalInfo(userObject)
+      },[userData])
 
 
       useEffect(()=>{
