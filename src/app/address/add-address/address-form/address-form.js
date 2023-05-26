@@ -21,6 +21,10 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit}) => {
                 <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}} value={values['lastName']} onInputChange={onChange} isDisabled={values['lastName']} />
             </div>
             <PhoneNumberInput type="text" fieldName="phone"  value={values['phone']} onInputChange={onChange} />
+            <div className={styles.orderUpdate} onClick={()=>onChange(!values['orderUpdate'],'orderUpdate')}>
+                <CheckBox isChecked={values['orderUpdate']}/>
+                <div className={styles.txt}>Get order updates on WhatsApp</div>
+            </div>
             <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange} isDisabled={values['email']}   />
         </div>
     )
@@ -76,7 +80,6 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const [ shippingAddress, setShippingAddress ] = useState ({});
       const [ billngAddress, setBillngAddress ] = useState({});
 
-
       useEffect(()=>{
             // setValues(formData)
       },[formData]);
@@ -119,8 +122,11 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const onPersonalInfo = (e,fieldName) => {
         let value = ""
         if(fieldName === 'phone'){
-            value = e
-        }else{
+            value = e;
+        }else if(fieldName === 'orderUpdate'){
+            value = e;
+        }
+        else{
             value = e.target.value;
         }
         setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value}))

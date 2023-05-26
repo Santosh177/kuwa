@@ -101,6 +101,16 @@
         }
         .personalInfoForm{
             width: 50%;
+            .orderUpdate{
+                display: flex;
+                align-items: center;
+                margin-top: 7px;
+                margin-left: 10px;
+                .txt{
+                    font-weight: 500;
+                    font-size: 12px;
+                }
+            }
         }
         .selectBillingAddressBtn{
             display: flex;
