@@ -1,0 +1,27 @@
+import { AddressProvider } from "@/context/address";
+import PageHeader from '@/components/PageHeader/PageHeader';
+import ListOfAddress from './ListOfAddress/ListOfAddress';
+import { authHeader } from "../../../lib/auth-cookies";
+
+export default async function SelectAddress() {
+
+  const customHeader = await authHeader();
+  console.log("customHeader",customHeader)
+  const getAddressResp  =  await fetch(`https://api.kuwa.bevaleo.dev/module/address/${customHeader.user}`, {
+    method: 'GET',
+    headers:{
+      ...customHeader
+    },
+    next: { revalidate: 0} 
+  })
+  const getAddress = await getAddressResp.json();
+  console.log("getAddressgetAddress",getAddress)
+      return (
+        <>
+            <PageHeader headerName='Manage Address' />
+            <ListOfAddress  addressList = {getAddress['shippingAddress'] || []}/>
+        </>
+       
+      )
+    }
+    

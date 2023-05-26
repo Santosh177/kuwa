@@ -15,7 +15,7 @@ export default function DeliveryAddress() {
       return (
         <div className={styles.deliveryAddress}> 
             <div className={styles.actionItem}>
-                <div className={styles.headerTxt}>Delivery address</div>
+                <div className={styles.headerTxt}>Shipping address</div>
                 <div className={styles.changeAction}>
                     <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                     <div className={styles.changeTxt} onClick={()=>router.push('/address/select-address')}>Change</div>

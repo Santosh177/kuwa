@@ -30,6 +30,7 @@ export function removeTokenCookie(res) {
   })
   cookies().delete('token')
   cookies().delete('userId')
+  cookies().delete('deviceID')
 }
 
 export function parseCookies(req) {
