@@ -141,6 +141,22 @@ const calculatePriceDetails = () => {
         "deliveryCharges":priceDetails['deliveryFees'],
         "cartItems": cartItemPayload
       }
+      if(priceDetails['totalAmount'] == 0){
+        payload['paymentMode'] = "100%";
+            const placeOrderResp  =  await fetch('/api/place-order-without-payment', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(payload)
+            })
+            const placeOrder = await placeOrderResp.json();
+            console.log("placeOrderplaceOrder",placeOrder)
+            setIsLoader(false);
+            if(placeOrder && placeOrder.status_code == 200){
+              router.push('/payment/success')
+            }
+      }
       if(selectedPaymentMethod == "CHECKOUT_CARD"){
           payload['token'] = data['token'];
           payload['paymentMode'] = "CARD";
@@ -235,8 +251,20 @@ const calculatePriceDetails = () => {
               router.push(placeOrder.redirect_link)
             }
       }else if(selectedPaymentMethod == "COD"){
-        console.log("COD",payload)
-        setIsLoader(false);
+          payload['paymentMode'] = "COD";
+            const placeOrderResp  =  await fetch('/api/place-order-without-payment', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(payload)
+            })
+            const placeOrder = await placeOrderResp.json();
+            console.log("placeOrderplaceOrder",placeOrder)
+            setIsLoader(false);
+            if(placeOrder && placeOrder.status_code == 200){
+              router.push('/payment/success')
+            }
       }
   }
 

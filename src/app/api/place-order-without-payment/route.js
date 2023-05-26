@@ -1,0 +1,15 @@
+
+import { NextResponse } from 'next/server'
+
+export async function POST(request,res) {
+    const requestBody = await request.json();
+    const placeOrder = await fetch('https://api.kuwa.bevaleo.dev/api/v1/place-order-without-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(requestBody)
+      });
+      const placeOrderResp = await placeOrder.json();
+    return NextResponse.json(placeOrderResp)
+}

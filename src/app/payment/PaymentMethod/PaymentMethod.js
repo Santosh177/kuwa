@@ -23,7 +23,7 @@ const CardOption = ({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayme
   return(
     <div className={styles.creditCardOption}>
         <div className={styles.paymentTypeHeaderTxt}>
-                <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/payment.png' alt=''/>
+                <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/paymentheaderimg.png' alt=''/>
                 <div className={styles.txt}>Pay with Credit or Debit card</div>
             </div>
             <div className={styles.paymentInfoWrapper} >
@@ -53,7 +53,7 @@ const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) =>{
   return(
     <div className={styles.payWithEmi}>
       <div className={styles.headerContainer}>
-        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/payment.png' alt=''/>
+        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/paymentheaderimg.png' alt=''/>
         <div className={styles.txt}>Pay with Emi</div>
       </div>
       <div className={styles.paymentOptionsList}>
@@ -77,50 +77,42 @@ const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) =>{
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>
           </div>
-          <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("TAP")}>
-              <div className={styles.paymentOptionInfo}>
-                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
-                <div className={styles.desc}>
-                   <div className={styles.txt}>Just pay AED 20 now</div>
-                   <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
-                </div>
-              </div>
-              <CheckBox  isChecked={selectedPaymentMethod === 'TAP'}/>
-          </div>
+         
       </div>
     </div>
   )
 }
 
 const OtherPaymentMethod = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) => {
+  return(
   <div className={styles.payWithEmi}>
       <div className={styles.headerContainer}>
-        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/payment.png' alt=''/>
-        <div className={styles.txt}>Pay with Emi</div>
+        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/paymentheaderimg.png' alt=''/>
+        <div className={styles.txt}>Other payment option</div>
       </div>
       <div className={styles.paymentOptionsList}>
-          <div className={styles.paymentOptionItem} onClick={()=> onSelectedPaymentMethod("TAMARA")}>
+          <div className={styles.paymentOptionItem} onClick={()=> onSelectedPaymentMethod("APPLE_PAY")}>
               <div className={styles.paymentOptionInfo}>
-                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
+                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/apple_pay.png' alt='logo'/>
                 <div className={styles.desc}>
-                   <div className={styles.txt}>Just pay AED 20 now</div>
-                   <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
+                   <div className={styles.txt}>Apple Pay</div>
                 </div>
               </div>
-              <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
+              <CheckBox  isChecked={selectedPaymentMethod === 'APPLE_PAY'}/>
           </div>
-          <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("TABBY")}>
+          <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("COD")}>
               <div className={styles.paymentOptionInfo}>
-                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
+                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cash_on_delivery.png' alt='logo'/>
                 <div className={styles.desc}>
-                   <div className={styles.txt}>Just pay AED 20 now</div>
-                   <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
+                   <div className={styles.txt}>Cash on delivery</div>
+                   <div className={styles.subTxt}>Pay when you receive your order</div>
                 </div>
               </div>
-              <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>
+              <CheckBox  isChecked={selectedPaymentMethod === 'COD'}/>
           </div>
       </div>
     </div>
+    )
 }
 
 
