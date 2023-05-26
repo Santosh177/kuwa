@@ -1,0 +1,22 @@
+.productDetailContainerPage {
+    width: 100%;
+
+    .routeDetail {
+        width: 90%;
+        max-width: 980px;
+        margin: auto;
+        margin-top: 18px;
+        margin-bottom: 32px;
+        font-weight: 500;
+        font-size: 14px;
+        color: #858585;
+
+    }
+
+    .allDetailDisciptionContainer {
+        padding: 16px;
+        width: 100%;
+        margin-top: 100px;
+        background: linear-gradient(180deg, #F4FCF3 0%, rgba(252, 238, 224, 0) 100%, rgba(244, 252, 243, 0) 100%);
+    }
+}

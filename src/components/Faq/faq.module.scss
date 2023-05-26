@@ -1,0 +1,117 @@
+.faqHeaderTxt {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 18px;
+    line-height: 1.21;
+}
+
+.faqWrapper {
+    max-width: 550px;
+    margin: auto;
+
+    .faqQuesContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        .faqQues {
+            font-size: 18px;
+            font-weight: 600;
+            color: #32445b;
+            line-height: 1.22;
+        }
+    }
+
+    .faqContainer {
+        background: #F9F9F9;
+        border-radius: 8px;
+        margin-bottom: 16px;
+    }
+
+    .faqAns {
+        font-size: 14px;
+        font-weight: 400;
+        color: #32445b;
+        padding-bottom: 16px;
+        // margin-top: 12px;
+    }
+
+    .faqDropDownIcon {
+        transition: all .25s ease;
+    }
+
+    .isOpen>.downIcon {
+        transform: rotate(178deg) !important;
+    }
+
+    .isOpen .faqQuesContainer>.faqDropDownIcon {
+        transform: rotate(178deg) !important;
+        transition: all .25s ease;
+    }
+}
+
+
+@media (min-width: 769px) {
+    .faqHeaderTxt {
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 32px;
+        line-height: 1.44;
+    }
+
+    .faqWrapper {
+        .faqQuesContainer {
+            padding-left: 40px;
+            padding-right: 40px;
+
+            .faqQues {
+                font-size: 14px;
+                font-weight: 600;
+                padding-top: 12px;
+                padding-bottom: 12px;
+
+            }
+        }
+
+        .faqAns {
+            font-size: 12px;
+            padding-left: 40px;
+            padding-right: 70px;
+        }
+    }
+
+}
+@media (max-width: 960px) {
+    .faqHeaderTxt {
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 12px;
+        line-height: 1.44;
+    }
+
+    .faqWrapper {
+        .faqQuesContainer {
+            padding-left: 20px;
+            padding-right: 20px;
+
+            .faqQues {
+                font-size: 14px;
+                font-weight: 600;
+                padding-top: 12px;
+                padding-bottom: 12px;
+
+            }
+        }
+
+        .faqAns {
+            font-size: 12px;
+            font-weight: 400;
+            padding-left: 40px;
+            padding-right: 70px;
+        }
+    }
+
+}

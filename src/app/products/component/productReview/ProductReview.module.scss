@@ -1,0 +1,50 @@
+.reviewsContainerOuter {
+    width: 100%;
+    margin: auto;
+    max-width: 1100px;
+    margin-top: 56px;
+
+    .review {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 24px;
+        color: #07141A;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .reviewsContainer {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        .cards {
+            flex-wrap: wrap;
+        }
+    }
+
+    .seeMore {
+        font-weight: 600;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 127px;
+        height: 32px;
+        background: #FFFFFF;
+        border: 2px solid #247A81;
+        border-radius: 16px;
+        color: #247A81;
+        margin: auto;
+        margin-top: 32px;
+    }
+}
+
+@media(max-width:960px) {
+    .reviewsContainerOuter {
+        .reviewsContainer {
+            justify-content: center;
+        }
+    }
+}

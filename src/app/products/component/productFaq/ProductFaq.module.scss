@@ -1,0 +1,14 @@
+.FrequentlyAskQuestions {
+    font-weight: 500;
+    font-size: 24px;
+    max-width: 625px !important;
+    margin: auto;
+    text-align: center;
+}
+
+@media (max-width: 960px) {
+    .FrequentlyAskQuestions {
+        font-size: 16px;
+        text-align: start;
+    }
+}

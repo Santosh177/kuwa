@@ -1,0 +1,67 @@
+.reviewCardConatiner {
+    width: 343px;
+    background: #F9F9F9;
+    border-radius: 8px;
+    padding: 16px;
+
+    .reviewStarConatiner {
+        display: flex;
+        gap: 10px;
+
+        .reviewStar {
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+
+    .reviewBody {
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .bottomContainer {
+        display: flex;
+        justify-content: space-between;
+        .customer {
+            margin-top: 14px;
+            .customerName {
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 14px;
+            }
+
+            .verfied {
+                font-weight: 500;
+                font-size: 10px;
+                // width: 120px;
+                margin-top: 4px;
+                background: #E2ECEF;
+                border-radius: 4px;
+                color: #247A81;
+                display: flex;
+                gap: 6px;
+                padding: 4px;
+
+                img {
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+        }
+
+        .like {
+            font-weight: 500;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+}

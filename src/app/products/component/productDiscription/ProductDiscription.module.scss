@@ -1,0 +1,55 @@
+.productDiscriptionContainer {
+    max-width: 625px !important;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    .tabSectionContainer {
+        display: flex;
+        justify-content: space-between;
+
+        .tabs {
+            font-weight: 500;
+            font-size: 18px;
+            text-align: center;
+            color: #07141A;
+            padding-bottom: 10px;
+            border-bottom: 4px solid rgba(36, 122, 129, 0.16);
+
+        }
+
+        .bottomBorder {
+            border-bottom: 4px solid #247A81;
+            color: #247A81;
+        }
+    }
+
+    .selectedTabData {
+        font-weight: 400;
+        line-height: 24px;
+        margin-top: 35px;
+
+    }
+}
+@media(max-width:960px){
+.productDiscriptionContainer {
+    padding-top: 0px;
+    .tabSectionContainer {
+        .tabs {
+            font-size: 14px;
+
+        }
+
+        .bottomBorder {
+            border-bottom: 4px solid #247A81;
+            color: #247A81;
+        }
+    }
+
+    .selectedTabData {
+        font-weight: 400;
+        font-size: 14px;
+        margin-top: 24px;
+
+    }
+}
+}

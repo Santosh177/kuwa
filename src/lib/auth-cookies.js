@@ -58,7 +58,7 @@ export const authHeader = async() =>{
         'Content-Type': 'application/json',
         'country':1,
         'Authorization':"Bearer "+token.value,
-        'user':user.value
+        'user':parseInt(user.value)
       }
     )
   }else{
