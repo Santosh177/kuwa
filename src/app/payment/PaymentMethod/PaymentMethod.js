@@ -92,6 +92,37 @@ const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) =>{
   )
 }
 
+const OtherPaymentMethod = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) => {
+  <div className={styles.payWithEmi}>
+      <div className={styles.headerContainer}>
+        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/payment.png' alt=''/>
+        <div className={styles.txt}>Pay with Emi</div>
+      </div>
+      <div className={styles.paymentOptionsList}>
+          <div className={styles.paymentOptionItem} onClick={()=> onSelectedPaymentMethod("TAMARA")}>
+              <div className={styles.paymentOptionInfo}>
+                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
+                <div className={styles.desc}>
+                   <div className={styles.txt}>Just pay AED 20 now</div>
+                   <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
+                </div>
+              </div>
+              <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
+          </div>
+          <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("TABBY")}>
+              <div className={styles.paymentOptionInfo}>
+                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
+                <div className={styles.desc}>
+                   <div className={styles.txt}>Just pay AED 20 now</div>
+                   <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
+                </div>
+              </div>
+              <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>
+          </div>
+      </div>
+    </div>
+}
+
 
 
 export default function PaymentMethod({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayment={}}) {
@@ -106,6 +137,7 @@ export default function PaymentMethod({selectedPaymentMethod="",onSelectedPaymen
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
             <CardOption selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod} onPayment={(data)=>onPayment(data)}/>
             <PayWithEmi selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod}/>
+            <OtherPaymentMethod selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod} />
         </div>
       )
     }

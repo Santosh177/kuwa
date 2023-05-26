@@ -17,15 +17,15 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit}) => {
             <div className={styles.headerTxt}>Personal Info</div>
            {(!isEdit && !values['email']) && <CreateAccountBox />}
             <div className={styles.userNameContainer}>
-                <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  value={values['firstName']} onInputChange={onChange} isDisabled={values['firstName']} />
-                <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}} value={values['lastName']} onInputChange={onChange} isDisabled={values['lastName']} />
+                <Input type="text" fieldName="firstName" placeHolder="First name *" style={{width:'49%'}}  value={values['firstName']} onInputChange={onChange} isDisabled={isEdit && values['firstName']} />
+                <Input type="text" fieldName="lastName" placeHolder="Last name *" style={{width:'49%'}} value={values['lastName']} onInputChange={onChange} isDisabled={isEdit &&  values['lastName']} />
             </div>
             <PhoneNumberInput type="text" fieldName="phone"  value={values['phone']} onInputChange={onChange} />
             <div className={styles.orderUpdate} onClick={()=>onChange(!values['orderUpdate'],'orderUpdate')}>
                 <CheckBox isChecked={values['orderUpdate']}/>
                 <div className={styles.txt}>Get order updates on WhatsApp</div>
             </div>
-            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange} isDisabled={values['email']}   />
+            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange} isDisabled={isEdit && values['email']}   />
         </div>
     )
 }
