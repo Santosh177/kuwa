@@ -50,7 +50,7 @@ export default function AddAddress() {
       },
     })
     const addressData = await getAddressResp.json();
-    const addressList = addressData && addressData['billingAddresses'] && addressData['billingAddresses'];
+    const addressList = addressData && addressData['shippingAddress'] && addressData['shippingAddress'];
     if(addressList && addressList.length > 0){
       setListOfAddress(addressList);
     }

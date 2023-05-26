@@ -81,7 +81,16 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const [ billngAddress, setBillngAddress ] = useState({});
 
       useEffect(()=>{
-            // setValues(formData)
+        if(isEdit && formData && Object.keys(formData).length > 0){
+            const { address="", apartment="", country=""  , stateProvince=""} = formData || {}
+            const shippingAddressObject = {
+                'address':address,
+                'apartment':apartment,
+                'country':country,
+                'stateProvince':stateProvince
+            }
+            setShippingAddress(shippingAddressObject)
+        }
       },[formData]);
       
 
