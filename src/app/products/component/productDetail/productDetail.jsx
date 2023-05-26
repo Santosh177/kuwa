@@ -6,7 +6,7 @@ import ProductPricingSection from "./subComponents/productPricingSection";
 import { useRouter } from 'next/navigation';
 import style from "./ProductDetail.module.scss"
 const ProductDeatil = ({ productData = {} }) => {
-    console.log(productData,"productDataproductDataproductData")
+    console.log(productData, "productDataproductDataproductData")
     const { benefits = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {}
     const [noOfProduct, setNoOfProduct] = useState(1);
     const [selectedVarients, setselectedVarients] = useState("");
@@ -18,10 +18,12 @@ const ProductDeatil = ({ productData = {} }) => {
     const router = useRouter()
 
     useEffect(() => {
-        const { retailPrice = 0, finalPrice = 0, discount = 0 } = price || {};
-        setFinalPrice(finalPrice);
-        setRetailPrice(retailPrice);
-        setDiscount(discount);
+        const { productPriceAmount = 0, productPriceType = "", productPriceSpecialAmount = 0 } = price || {};
+        setFinalPrice(productPriceSpecialAmount);
+        setRetailPrice(productPriceAmount);
+        if (productPriceAmount > productPriceSpecialAmount) {
+            setDiscount(productPriceAmount - productPriceSpecialAmount);
+        }
         setAllImages(images)
     }, [])
     useEffect(() => {

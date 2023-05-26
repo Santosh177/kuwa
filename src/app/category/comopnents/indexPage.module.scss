@@ -1,0 +1,56 @@
+.CategoryIndexPage {
+    .FilterTabOptionMobile {
+        display: none;
+    }
+
+    .productAndFilter {}
+}
+
+@media(max-width:990px) {
+    .CategoryIndexPage {
+        .FilterTabOptionMobile {
+            display: block !important;
+            margin-left: 16px;
+            margin-top: 14px;
+            margin-bottom: 14px;
+            .FilterTabOption {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                img{
+                    width: 13px;
+                    height: 13px;
+                }
+
+                .filter {
+                    width: 68px;
+                    height: 30px;
+                    background: #F7FCFB;
+                    border-radius: 8px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 6px;
+                    font-weight: 500;
+                    font-size: 12px;
+                    cursor: pointer;
+                }
+
+                .sortBy {
+                    width: 79px;
+                    height: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 6px;
+                    background: #F7FCFB;
+                    border-radius: 8px;
+                    font-weight: 500;
+                    font-size: 12px;
+                    cursor: pointer;
+
+                }
+            }
+        }
+    }
+}

@@ -6,12 +6,12 @@ import ProductReview from "../component/productReview/productReview"
 import Footer from "@/components/Footer/Footer"
 import Header from "@/components/Header/Header"
 import style from "./page.module.scss"
+import { authHeader } from "@/lib/auth-cookies"
 
 export default async function AllProduct() {
-  const res = await fetch('https://api.kuwa.bevaleo.dev/module/product-page/1001?country=1', {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  const customHeader = await authHeader();
+  const res = await fetch('https://api.kuwa.bevaleo.dev/module/product-page/1001', {
+    headers: {...customHeader},
   });
   const productData = await res.json();
   return (

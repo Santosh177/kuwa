@@ -10,7 +10,7 @@ const ProductPricingSection = ({ pricingSectionVariables }) => {
             <div className={styles.title}>{title}</div>
             <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
-                <div className={styles.numberOfReview}>({numberOfProductReview})</div>
+                {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
             </div>
             <div className={styles.pricingConatiner}>
                 <div className={styles.price}>{currency + ". " + finalPrice}</div>
@@ -18,11 +18,11 @@ const ProductPricingSection = ({ pricingSectionVariables }) => {
                     <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} />
                 </div>
             </div>
-            <div className={styles.packOf}>Pack of</div>
+            {variants && variants.lenght > 0 ? <div className={styles.packOf}>Pack of</div> :<></>}
             <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} />
             <div className={styles.addToCartContainer}>
-                <div className={styles.addToCart} onClick={() => handelAddToCart(payload)} ><span>Add to Cart</span></div>
-                <div className={styles.buyNow} onClick={() => handelBuyNow(payload)} ><span>Buy Now</span></div>
+                <div className={styles.addToCart} onClick={() => handelAddToCart()} ><span>Add to Cart</span></div>
+                <div className={styles.buyNow} onClick={() => handelBuyNow()} ><span>Buy Now</span></div>
             </div>
             <div className={styles.shareConatiner}>
                 <div className={styles.Share} >Share:</div>
