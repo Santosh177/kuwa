@@ -1,4 +1,5 @@
-
+'use client';
+import React,{useState} from 'react';
 import Banner from './Banner/Banner';
 import Header from '@/components/Header/Header';
 import AssuredInfo from './AssuredInfo/AssuredInfo';
@@ -10,13 +11,35 @@ import MedicalExpert from './MedicalExpert/MedicalExpert';
 import Footer from '@/components/Footer/Footer';
 import Loader from '@/components/Loader/Loader';
 
-export default async function Home({homePageDataResp={}}) {
+export default async function Home(homePageData) {
+
+  const {kuwaUsps=[],data=[],brandUMustTry=[] } = homePageData || {};
+//   const [y, setY] = useState(0);
 
 
-   
-  const {kuwaUsps=[],data=[],brandUMustTry=[] } = homePageDataResp || {};
+//   useEffect(() => {
+  
+//     window.addEventListener("scroll", handleNavigation);
+  
+//     return () => {
+//       window.removeEventListener("scroll", handleNavigation);
+//     };
+//   }, []);
 
+//   const handleNavigation = useCallback(
+//     e => {
+//       const window = e.currentTarget;
+//       if (y > window.scrollY) {
+//         console.log("scrolling up");
+//       } else if (y < window.scrollY) {
+//         console.log("scrolling down");
+//       }
+//     //   setY(window.scrollY);
+//     }, [y]
+//   );
+  
 
+//   console.log("yy",y)
   return (
     <>
     <div>

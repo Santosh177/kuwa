@@ -16,9 +16,8 @@ export default async function Home({}) {
 
 
 
-  console.log("homePageDataResp",homePageDataResp)
 
-  const {kuwaUsps=[],data=[],brandUMustTry=[] } = homePageDataResp || {};
+  // const {kuwaUsps=[],data=[],brandUMustTry=[] } = homePageDataResp || {};
 
 
   return (

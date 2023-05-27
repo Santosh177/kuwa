@@ -12,7 +12,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}
   const { product=[],headerTitle= ""} = data || {};
   const [isLoading , setIsLoading] = useState(false)
  
-  const [width, setWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState(0);
   const handleResize = () => setWidth(window.innerWidth);
   useEffect(() => {
     window.addEventListener('resize', handleResize);
