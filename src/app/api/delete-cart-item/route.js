@@ -13,7 +13,7 @@ export async function POST(request,res) {
           ...customHeader
         }
       });
-      const deleteCartItem = await deleteCartItemResp.json();
-      console.log("deleteCartItem",deleteCartItem)
-    return NextResponse.json(deleteCartItem)
+      // const deleteCartItem = await deleteCartItemResp.json();
+      // console.log("deleteCartItem",deleteCartItem)
+    return NextResponse.json("deleteCartItem")
 }
