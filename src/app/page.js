@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import styles from './page.module.css';
 import Homew from './Home';
+import Banner from './Home/Banner/Banner';
 import Header from '@/components/Header/Header';
 import AssuredInfo from './Home/AssuredInfo/AssuredInfo';
 import BestSellingProduct from './Home/BestSellingProduct/BestSellingProduct';
@@ -36,7 +37,12 @@ export default async function Home({}) {
 
   return (
     <>
-        <Header />
+    <Banner />
+        {/* <div className={styles.mobileBanner}> */}
+          {/* <img style={{width:'100%',height:'100%'}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top_banner_desktop+(1).png' /> */}
+          {/* <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top_banner_mobile+(1).png' /> */}
+        {/* </div> */}
+        {/* <Header />
         <AssuredInfo assuredInfo={kuwaUsps} />
         <BestSellingProduct data={data} />
         <BrandMustTry data={brandUMustTry}/>
@@ -50,9 +56,8 @@ export default async function Home({}) {
           })
         }
         <MedicalExpert />
-        {/* <Blogs /> */}
         <Footer />
-        <Loader />
+        <Loader /> */}
     </>
 
   )

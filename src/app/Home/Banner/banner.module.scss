@@ -1,0 +1,33 @@
+.mobBanner{
+    height: 100vh;
+    background: #247A81;
+
+    img{
+        width: 100%;
+        position: absolute;
+        object-fit: contain;
+        height: 100vh;
+    }
+}
+
+.desktopBanner{
+    display: none;
+}
+
+@media (min-width:990px){
+    .mobBanner{
+        display: none;
+    } 
+    .desktopBanner{
+        display: block;
+        height: 100vh;
+        background: #247A81;
+        img{
+            width: 100%;
+            position: absolute;
+            object-fit: contain;
+            height: 100vh;
+        }
+    }
+
+}
