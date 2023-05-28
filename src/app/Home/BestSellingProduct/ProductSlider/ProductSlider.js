@@ -45,55 +45,56 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}
 
 
           <div className={styles.bestSellingProductSlider}>
-          
-          
-          {/* <div className={styles.sliderTopDecoration} >
-            <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top.png' alt='background'/>
-          </div> */}
-          <div className={styles.container} style={{backgroundImage:backgroundColor}}>
-            <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
-            <div className={styles.sliderContainer}>
-            <Glider
-              hasArrows
-              slidesToShow={4.5}
-              slidesToScroll={4}
-              hasDots
-              draggable
-              gap={20}
-              exactWidth={true}
-              itemWidth={(width>990)?204:138}
-              iconLeft={
-                <img style={{width:48,height:48}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/left_arrow.png' alt='left-icon'/>
-              }
-              iconRight={
-                <img style={{width:48,height:48}}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/right_arrow.png' alt='right-icon'/>
-              }
-            >
-
-              {
-                product.map((data,index)=>{
-                  console.log("datadata+++",data)
-                  const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
-                  const cardData = {
-                    productName:data && data.name || "",
-                    finalPrice:finalPrice,
-                    retailPrice:retailPrice,
-                    currency:currency,
-                    discount:discount,
-                    discountType:discountType,
-                    image:data.image || ""
-                  }
-                  return(
-                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} />
-                  )
-                })
-              }
-                
-               
-            </Glider>
+            <div className={styles.sliderTopDecorationDesktop} >
+              <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/desktop_top.png' alt='background'/>
             </div>
-          </div>
-          <Loader isShow={isLoading} />
+            <div className={styles.container} style={{backgroundImage:backgroundColor}}>
+              <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
+              <div className={styles.sliderContainer}>
+              <Glider
+                hasArrows
+                slidesToShow={4.5}
+                slidesToScroll={4}
+                hasDots
+                draggable
+                gap={20}
+                exactWidth={true}
+                itemWidth={(width>990)?204:138}
+                iconLeft={
+                  <img style={{width:48,height:48}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/left_arrow.png' alt='left-icon'/>
+                }
+                iconRight={
+                  <img style={{width:48,height:48}}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/right_arrow.png' alt='right-icon'/>
+                }
+              >
+
+                {
+                  product.map((data,index)=>{
+                    console.log("datadata+++",data)
+                    const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
+                    const cardData = {
+                      productName:data && data.name || "",
+                      finalPrice:finalPrice,
+                      retailPrice:retailPrice,
+                      currency:currency,
+                      discount:discount,
+                      discountType:discountType,
+                      image:data.image || ""
+                    }
+                    return(
+                      <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} />
+                    )
+                  })
+                }
+                  
+                
+              </Glider>
+              </div>
+            </div>
+            <div className={styles.sliderBottomDecorationDesktop} >
+              <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/desktop_bottom.png' alt='background'/>
+            </div>
+            <Loader isShow={isLoading} />
           </div>
       );
     

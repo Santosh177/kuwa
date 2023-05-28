@@ -2,11 +2,9 @@
 
 .container {
     // background-image: linear-gradient(180deg, #F9E8E4 0%, rgba(249, 232, 228, 0) 100%);
-    background-color: #F4FCF3;;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    margin-top: 10px;
-    padding-left: 16px;
+  
+    background-color: #F4FCF3;
+    padding-top: 10px;
   }
 
   .sliderContainer{
@@ -25,9 +23,9 @@
   .sliderTopDecoration{
     position: relative;
     img{
-      width: 100%;
-    position: absolute;
-    top: -68px;
+        width: 100%;
+        position: absolute;
+        top: -68px;
     }
   }
 }
@@ -59,6 +57,28 @@
    .headerTxt{
      font-weight: 600;
      font-size: 18px;
+  }
+  .bestSellingProductSlider{
+    position: relative;
+    margin-bottom: 100px;
+    .sliderTopDecorationDesktop{
+      position: absolute;
+      top: -90px;
+      z-index: -1;
+      img{
+        width: 100%;
+        
+      }
+    }
+
+    .sliderBottomDecorationDesktop{
+      position: absolute;
+      bottom: -95px;
+      z-index: -1;
+      img{
+        width: 100%;
+      }
+    }
   }
 
   }
