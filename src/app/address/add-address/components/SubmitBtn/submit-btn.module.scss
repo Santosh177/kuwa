@@ -8,6 +8,12 @@
     margin-top: 28px;
 }
 
+@media (max-width:990px){
+    .submitBtnWrapper{
+        padding-bottom: 20px;
+    }
+}
+
 @media(min-width: 990px){
     .submitBtnWrapper{
         background: #FFFFFF;

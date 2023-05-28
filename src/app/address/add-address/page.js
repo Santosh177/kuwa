@@ -15,7 +15,7 @@ export default function AddAddress() {
   const refererPath = searchParams.get('referer');
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [ addressData, setAddressData] = useState({});
-  const [ getFormValues , setGetFormValues] = useState(false);
+  const [ getFormValues , setGetFormValues] = useState(0);
 
 
     const onFormData = (formData) => {
@@ -23,7 +23,7 @@ export default function AddAddress() {
     }
 
     const onSaveAddress = () => {
-      setGetFormValues(true)
+      setGetFormValues(getFormValues => getFormValues + 1)
     }
 
     const onGetFormValues = async(data) => {

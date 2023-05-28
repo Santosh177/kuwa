@@ -2,13 +2,16 @@
     .headerTxt{
         font-weight: 500;
         font-size: 16px;
-        display: none;
     }
 
     .userNameContainer{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        gap: 15px;
+        .nameField{
+            width: 99%;
+        }
     }
     .areaInputText{
         margin-top: 20px;
@@ -64,6 +67,10 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        gap: 15px;
+        .countryInfoField{
+            width: 100%;
+        }
     }
     .selectBillingAddressBtn{
         display: flex;
@@ -76,9 +83,45 @@
             font-size: 12px;
         }
     }
+    .personalInfoForm{
+        .orderUpdate{
+            display: flex;
+            align-items: center;
+            margin-top: 7px;
+            margin-left: 10px;
+            .txt{
+                font-weight: 500;
+                font-size: 12px;
+            }
+        }
+        .errorMsg{
+            color: red;
+            font-size: 10px;
+        }
+    }
     
 }
+.errorMsg{
+    color: red;
+    font-size: 10px;
+}
 
+
+@media(max-width:990px){
+    .shippingAddressForm{
+        margin-top: 40px;
+        .areaInputText{
+            margin-top: 30px;
+        }
+       
+    }
+    .billingAddressForm{
+        margin-top: 20px;
+        .areaInputText{
+            margin-top: 30px;
+        }
+    }
+}
 @media(min-width: 990px){
     .addressForm{
         display: flex;
@@ -90,7 +133,6 @@
         padding-bottom: 150px;
       
         .headerTxt{
-            display: block;
             padding-bottom: 10px;
         }
         .addressInfoForm{
