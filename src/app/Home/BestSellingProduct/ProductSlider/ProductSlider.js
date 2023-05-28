@@ -48,14 +48,16 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}
             <div className={styles.sliderTopDecorationDesktop} >
               <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/desktop_top.png' alt='background'/>
             </div>
+            <div className={styles.sliderTopDecorationMob} >
+              <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top+(1).png' alt='background'/>
+            </div>
             <div className={styles.container} style={{backgroundImage:backgroundColor}}>
               <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
               <div className={styles.sliderContainer}>
               <Glider
-                hasArrows
                 slidesToShow={4.5}
                 slidesToScroll={4}
-                hasDots
+                hasDots={width>990}
                 draggable
                 gap={20}
                 exactWidth={true}
@@ -93,6 +95,9 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}
             </div>
             <div className={styles.sliderBottomDecorationDesktop} >
               <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/desktop_bottom.png' alt='background'/>
+            </div>
+            <div className={styles.sliderBottomDecorationMob} >
+              <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/bottom+(1).png' alt='background'/>
             </div>
             <Loader isShow={isLoading} />
           </div>

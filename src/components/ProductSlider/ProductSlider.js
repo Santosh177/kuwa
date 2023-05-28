@@ -18,7 +18,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
 
 
  
-  const [width, setWidth] = useState();
+  const [width, setWidth] = useState(0);
   const handleResize = () => setWidth(window.innerWidth);
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -66,7 +66,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
             <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
             <div className={styles.sliderContainer}>
             <Glider
-              hasArrows
+              hasArrows={(width>990)}
               slidesToShow={4.5}
               slidesToScroll={4}
               hasDots
