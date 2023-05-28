@@ -12,8 +12,8 @@ import Footer from '@/components/Footer/Footer';
 import Loader from '@/components/Loader/Loader';
 import styles from './home-page.module.scss';
 
-export default async function Home(props) {
-    const {kuwaUsps=[],data=[],brandUMustTry=[] } = props.homePageData || {};
+export default async function Home(homePageData) {
+    const {kuwaUsps=[],data=[],brandUMustTry=[] } = homePageData.homePageData || {};
 
 
 
