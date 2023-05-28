@@ -13,7 +13,7 @@ import Loader from '@/components/Loader/Loader';
 import styles from './home-page.module.scss';
 
 export default async function Home(homePageData) {
-    const {kuwaUsps=[],data=[],brandUMustTry=[] } = homePageData.homePageData || {};
+    const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[] } = homePageData.homePageData || {};
 
 
 
@@ -30,7 +30,7 @@ export default async function Home(homePageData) {
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={data} />
                     <BrandMustTry data={brandUMustTry}/>
-                    <SecondaryBanner />
+                    <SecondaryBanner data={secondryBanners}/>
                     {
                     data.map((data,index)=>{
                         console.log("datatad",data)
