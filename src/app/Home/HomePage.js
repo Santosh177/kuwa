@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import Banner from './Banner/Banner';
+import VideoBanner from "./VideoBanner/VideoBanner";
 import Header from '@/components/Header/Header';
 import AssuredInfo from './AssuredInfo/AssuredInfo';
 import BestSellingProduct from './BestSellingProduct/BestSellingProduct';
@@ -23,6 +24,7 @@ export default async function Home(homePageData) {
             <div className={styles.homePageContainer}>
                 <div className={styles.mainBanner}>
                     <Banner />
+                    {/* <VideoBanner /> */}
                 </div>
                 <div className={styles.mainContainer}>
                     <Header />
