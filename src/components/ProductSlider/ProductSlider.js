@@ -69,7 +69,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
               hasArrows={(width>990)}
               slidesToShow={4.5}
               slidesToScroll={4}
-              hasDots
+              hasDots={(width>990)}
               draggable
               gap={20}
               exactWidth={true}

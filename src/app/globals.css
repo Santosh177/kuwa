@@ -59,7 +59,7 @@ a {
   padding-bottom: 27px !important;
 }
 .glider-dots{
-  display: none !important;
+  /* display: none !important; */
 }
 
 ::-webkit-scrollbar {
