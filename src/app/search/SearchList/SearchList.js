@@ -1,5 +1,5 @@
 
-
+import SearchCard from "../SearchCard/SearchCard"
 
 
 
@@ -8,7 +8,24 @@ export default function SearchList() {
     return (
         <div>
 
-SearchList
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
+            <SearchCard />
    
         </div>
     )

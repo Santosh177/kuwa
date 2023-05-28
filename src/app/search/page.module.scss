@@ -1,0 +1,54 @@
+// .searchWrapper{
+    .searchInputBox{
+        height: 78px;
+        background: #247A81;
+        position: fixed;
+        align-items: center;
+        display: flex;
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+        .searchInput{
+            height: 48px;
+            background: #FFFFFF;
+            border-radius: 8px; 
+            width: 100%;
+            padding-left: 50px;
+            padding-right: 50px;
+            border: none;
+            position: relative;
+        }
+        input:focus{
+            outline: none;
+            border-color: #247A81;
+        }
+
+        .backArrow{
+            height: 24px;
+            width: 24px;
+            position: absolute;
+            top: 27px;
+            left: 23px;
+            cursor: pointer;
+        }
+        .crossIcon{
+            height: 22px;
+            width: 22px;
+            position: absolute;
+            top: 27px;
+            right: 23px;
+            cursor: pointer;
+        }
+    }
+  
+    .searchListWrapper{
+        margin-top: 80px;
+        padding: 16px;
+        .resultFound{
+            font-weight: 500;
+            font-size: 12px;
+            color: #A0A0A0;
+            text-align: center;
+        }
+    }
+// }
