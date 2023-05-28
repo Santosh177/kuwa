@@ -26,6 +26,7 @@ export default async function Home(homePageData) {
                 </div>
                 <div className={styles.mainContainer}>
                     <Header />
+                
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={data} />
                     <BrandMustTry data={brandUMustTry}/>
@@ -41,7 +42,7 @@ export default async function Home(homePageData) {
                     <MedicalExpert />
                     <Footer />
                     <Loader />
-                </div>
+                    </div>
             </div>
         </div>
       

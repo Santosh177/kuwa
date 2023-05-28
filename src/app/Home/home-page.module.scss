@@ -1,19 +1,26 @@
 .homePageContainer {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type:  y mandatory;
+  scroll-snap-points-y: repeat(100vh);
   // flex-basis: 50%;
   height: 100vh;
-  scroll-snap-stop: always;
   overflow-y: scroll;
 }
 
 .mainContainer{
   scroll-snap-align: start;
   // margin-top: -5px;
+  height: 100vh;
+  position: relative;
+  overflow-y: scroll;
+
+
 }
 
 .mainBanner{
   scroll-snap-align: start;
   height: 100vh;
+  position: relative;
+
  
  
 }
