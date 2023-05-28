@@ -51,7 +51,6 @@ export const authHeader = async() =>{
   const user = cookies().get('userId');
 
  
-  console.log("-----",cookies().get("deviceID"))
   if(token && token.value){
     return (
       {
@@ -63,7 +62,6 @@ export const authHeader = async() =>{
     )
   }else{
     const getDeviceID = cookies().get("deviceID");
-    console.log("getDeviceIDgetDeviceID",getDeviceID)
     if(!getDeviceID && !getDeviceID){
         const deviceId = generateDeviceId();
         cookies().set('deviceID', deviceId);

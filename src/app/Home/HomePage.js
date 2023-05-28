@@ -1,5 +1,3 @@
-'use client';
-import { useEffect, useState } from "react";
 import Banner from './Banner/Banner';
 import Header from '@/components/Header/Header';
 import AssuredInfo from './AssuredInfo/AssuredInfo';
@@ -13,6 +11,7 @@ import Loader from '@/components/Loader/Loader';
 import styles from './home-page.module.scss';
 
 export default async function Home(homePageData) {
+    console.log("homePageData",homePageData)
     const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[] } = homePageData.homePageData || {};
 
 
@@ -33,7 +32,6 @@ export default async function Home(homePageData) {
                     <SecondaryBanner data={secondryBanners}/>
                     {
                     data.map((data,index)=>{
-                        console.log("datatad",data)
                         return(
                         <ProductSlider data={data} index={index}/>
                         )

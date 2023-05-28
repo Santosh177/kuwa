@@ -7,7 +7,6 @@ import { cookies } from 'next/headers';
 
 export async function GET(request,res) {
     const getDeviceID = cookies().get("deviceID");
-    console.log("getDeviceIDgetDeviceID",getDeviceID)
     if(!getDeviceID && !getDeviceID.value){
         const deviceId = generateDeviceId();
         cookies().set('deviceID', deviceId);

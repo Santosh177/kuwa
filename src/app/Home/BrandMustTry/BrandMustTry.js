@@ -5,7 +5,6 @@ import styles from './brand-must-try.module.scss';
 
 const BrandMustTry = ({data={}}) => {
 
-    console.log("sdatadata",data)
 
     return(
         <>
