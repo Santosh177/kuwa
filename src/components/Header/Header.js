@@ -34,10 +34,10 @@ const Header = () => {
                         <div className={styles.countryTxt}>UAE</div>
                         {/* <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown.png' alt='drop-down-icon'/> */}
                     </div>
-                    <div className={styles.searchIcon}>
+                    <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/search.png" alt='search-icon'></img>
                     </div>
-                    <div className={styles.searchInputWrapper} >
+                    <div className={styles.searchInputWrapper}  >
                         <input className={styles.searchInput} placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
