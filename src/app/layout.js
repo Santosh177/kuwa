@@ -63,6 +63,20 @@ const getCountryList = async() => {
 export default async function RootLayout({ children }) {
   const userData = await getUser();
   const countryList = await getCountryList();
+
+  const selectedCountryData =  {
+    "id": 8,
+    "code": "AI",
+    "supported": true,
+    "name": "Bahrain",
+    "zones": [
+      
+    ],
+    "deliveryFee": 451.00,
+    "flagIcon": null,
+    "currency": null,
+    "minThreshold": 469.00
+  }
   
 
 
@@ -71,7 +85,7 @@ export default async function RootLayout({ children }) {
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
       <CountryListProvider countryList={countryList}>
-        <CountryProvider countryCode={"AE"}>
+        <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData}>
           <AuthProvider authData={userData}>
             <CartItemProvider>
             <AddressProvider >

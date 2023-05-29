@@ -1,16 +1,37 @@
 'use client';
 import { useState } from 'react';
 import { useRouter,usePathname } from 'next/navigation';
-import {  useCartItems } from '@/context/cartItems'
+
+import {  useCartItems } from '@/context/cartItems';
+import {useCountryList} from '@/context/countryList';
+import { useCountry } from '@/context/contryDetails';
 import SideMenu from '../SideMenu/SideMenu';
+import CountryList from '../CountryList/CountryList';
 import styles from './header.module.scss';
+
 
 const Header = () => {
     const router = useRouter();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
-    const {cartItemCount = 0} = useCartItems()
+    const {cartItemCount = 0} = useCartItems();
+    const countryList = useCountryList();
+    const {selectedCountry={},setSelectedCountry={}} = useCountry();
+
     
     // console.log("cartItemCOuntcartItemCOunt",cartItemCount)
+
+    const onSelectCountry = async(data) =>{
+        setSelectedCountry(data);
+        const coutryApiResp = await fetch('/api/update-country', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({countryId:data.id})
+          })
+        const coutryApiData = await coutryApiResp.json();
+    }
+
     return(
         <>
      
@@ -31,7 +52,8 @@ const Header = () => {
                         <div className={styles.countryImg}>
                             <img src='https://d2co62zyg9wi44.cloudfront.net/media/country_United%20Arab%20Emirates_1/Flag_UAE_-_Square.png' alt='country-img'/>
                         </div>
-                        <div className={styles.countryTxt}>UAE</div>
+                        <div className={styles.countryTxt}>{selectedCountry
+.name}</div>
                         {/* <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown.png' alt='drop-down-icon'/> */}
                     </div>
                     <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
@@ -53,6 +75,8 @@ const Header = () => {
        {isShowSideMenu && <SideMenu isShowSideMenu={true}>
             <div onClick={()=>alert("uoi")}>dd</div>
         </SideMenu>}
+
+        {/* <CountryList onSelectCountry={onSelectCountry} /> */}
         </>
     )
 

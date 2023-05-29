@@ -18,9 +18,9 @@ const getTimezoneOffset = () =>{
 export const CountryContext = React.createContext({})
 
 
-export const CountryProvider = ({ children, countryCode }) => {
+export const CountryProvider = ({ children, countryCode,selectedCountryData }) => {
    
-  const [ selectedCountry , setSelectedCountry ] = useState(countryDetails);
+  const [ selectedCountry , setSelectedCountry ] = useState(selectedCountryData);
 
 
   
@@ -36,9 +36,7 @@ export const CountryProvider = ({ children, countryCode }) => {
 
 //   },[userData])
 
-const userData = {
-  "dd":"d"
-}
+
 
 
 
@@ -47,7 +45,7 @@ const userData = {
   console.log("FINEEE",data)
 
   
-  return <CountryContext.Provider value={{data,userData}}>{children}</CountryContext.Provider>
+  return <CountryContext.Provider value={{data,selectedCountry,setSelectedCountry}}>{children}</CountryContext.Provider>
 }
 
 

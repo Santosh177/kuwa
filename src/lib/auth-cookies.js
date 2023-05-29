@@ -23,6 +23,13 @@ export function setTokenCookie(res, token,userId) {
   response.cookies.set('userId', userId)
 }
 
+export function setCountryCookie(res, countryId) {
+  console.log("countryIdcountryId",countryId)
+  cookies().set('countryId', countryId);
+	const response = NextResponse.next()
+  response.cookies.set('countryId', countryId)
+}
+
 export function removeTokenCookie(res) {
   const cookie = serialize(TOKEN_NAME, '', {
     maxAge: -1,
@@ -49,13 +56,15 @@ export function getTokenCookie(req) {
 export const authHeader = async() =>{
   const token = cookies().get('token')
   const user = cookies().get('userId');
+  const country = cookies().get('countryId');
 
  
+  console.log("33countrycountry",country)
   if(token && token.value){
     return (
       {
         'Content-Type': 'application/json',
-        'country':1,
+        'country':parseInt(country.value) || 1,
         'Authorization':"Bearer "+token.value,
         'user':parseInt(user.value)
       }
@@ -68,7 +77,7 @@ export const authHeader = async() =>{
     }
     return({
       'Content-Type': 'application/json',
-      'country' : 1,
+      'country' : parseInt(country.value) || 1,
       'device':cookies().get("deviceID").value || ""
     })
   }
