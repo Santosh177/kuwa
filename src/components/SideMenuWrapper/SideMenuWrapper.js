@@ -4,13 +4,11 @@ import styles from './side-menu-wrapper.module.scss';
 
 
 
-const SideMenuWrapper = ({children , isShowSideMenu}) => {
-    const [ isShow , setIsShow] = useState(false || isShowSideMenu);
-    if(!isShow)
-       return ""
+const SideMenuWrapper = ({children,onclose={}}) => {
+  
     return(
             <div className={styles.sideMenuWrapper}>
-                <div className={styles.backDrop} onClick={()=>setIsShow(false)}></div>
+                <div className={styles.backDrop} onClick={()=>onclose()}></div>
                 <div className={styles.sideMenuContainer}>
                     {children}
                 </div>

@@ -6,22 +6,15 @@ import { useAuth } from '../../context/userDetail';
 import styles from './side-menu.module.scss';
 
 
-const AccountInfo = () => {
+const AccountInfo = ({onclose}) => {
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
-
     const userName = userData && userData.userName || "";
-
-
     const onRedirect = () => {
         if(!isLogin){
             router.push('/login')
         }
-       
     }
-
-    console.log("userNameuserName",userName)
-    
     return(
         <div className={styles.accountInfoWrapper}>
             <img className={styles.profileIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/profile.png' alt='profile-icon'></img>
@@ -30,7 +23,7 @@ const AccountInfo = () => {
                 {(isLogin)?<div className={styles.userName}>{userName}</div>:
                 <div className={styles.notLoginTxt}>Sign Up / Login</div>}
             </div>
-            <img className={styles.closeIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
+            <img className={styles.closeIcon} onClick={onclose} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
         </div>
     )
 }
@@ -52,7 +45,6 @@ const SideMenuItemCard = ({data,onClick={}}) => {
 }
 
 const SideMenuData = ({onClick}) =>{
-
 
     const data = [
         {
@@ -105,8 +97,8 @@ const SideMenuData = ({onClick}) =>{
 const OtherInfo = () =>{
     return(
         <div className={styles.OtherInfo}>
-            <div className={styles.txt}>Blog</div>
-            <div className={styles.infoLine}> | </div>
+            {/* <div className={styles.txt}>Blog</div>
+            <div className={styles.infoLine}> | </div> */}
             <div className={styles.txt}>Contact Us</div>
             <div className={styles.infoLine}> | </div>
             <div className={styles.txt}>FAQ</div>
@@ -147,7 +139,7 @@ const LogOut = () =>{
 
 
 
-const MyAccount = ({onBack={}}) =>{
+const MyAccount = ({onBack={},onclose={}}) =>{
     const router = useRouter()
     return(
         <div className={styles.myAccountContainer}>
@@ -156,17 +148,19 @@ const MyAccount = ({onBack={}}) =>{
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/back_arrow.png' alt='arrow-icon' onClick={()=>onBack()}/>
                         <div className={styles.txt}>My account</div>
                     </div>
-                    <img className={styles.closeIcon}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
+                    <img className={styles.closeIcon} style={{top:'unset'}} onClick={onclose}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
             </div>
             <div className={styles.item} onClick={()=>router.push('/my-account')}>Edit Profile</div>
+            <div className={styles.horizontalLine}></div>
             <div className={styles.item}>Manage address</div>
+            <div className={styles.horizontalLine}></div>
             <div className={styles.item}>My orders</div>
         </div>
        
     )
 }
 
-const SideMenu = ({children , isShowSideMenu}) => {
+const SideMenu = ({onclose={}}) => {
     const {isLogin=false, userData={}} = useAuth();
     const [ key , setKey ] = useState("")
     const onClick = (data) => {
@@ -179,11 +173,11 @@ const SideMenu = ({children , isShowSideMenu}) => {
         switch (key) {
             case "My Account":
                 return(
-                    <MyAccount onBack={()=>setKey("")}/>
+                    <MyAccount onBack={()=>setKey("")} onclose={onclose}/>
                 )
             default:
                 return(<>
-                    <AccountInfo />
+                    <AccountInfo  onclose={onclose} />
                     <SideMenuData onClick={onClick} />
                     <OtherInfo />
                     {isLogin && <LogOut />}
@@ -191,11 +185,11 @@ const SideMenu = ({children , isShowSideMenu}) => {
         }
     }
     return(
-        <SideMenuWrapper isShowSideMenu={true}>
+        <SideMenuWrapper onclose={onclose}>
             <>
             {
-                    renderSideMenu(key)
-                }
+                renderSideMenu(key)
+            }
             </>
         </SideMenuWrapper>
     )

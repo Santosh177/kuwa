@@ -32,6 +32,11 @@ const Header = () => {
         const coutryApiData = await coutryApiResp.json();
     }
 
+    const onOpenSideMenu = () => {
+        console.log("isShowSideMenu",isShowSideMenu)
+        setIsShowSideMenu(!isShowSideMenu)
+    }
+
     return(
         <>
      
@@ -39,7 +44,7 @@ const Header = () => {
 
            <div className={styles.headerWrapper}>
                 <div className={styles.headerIcon}>
-                    <div className={styles.menuIcon} onClick={()=>setIsShowSideMenu(!isShowSideMenu)}>
+                    <div className={styles.menuIcon} onClick={onOpenSideMenu}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/menu.png' alt='menu-icon'/>
                     </div>
                     <div className={styles.logo}>
@@ -72,9 +77,8 @@ const Header = () => {
            </div>
 
         </div>
-       {isShowSideMenu && <SideMenu isShowSideMenu={true}>
-            <div onClick={()=>alert("uoi")}>dd</div>
-        </SideMenu>}
+        {isShowSideMenu&&<SideMenu  onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
+          
 
         {/* <CountryList onSelectCountry={onSelectCountry} /> */}
         </>

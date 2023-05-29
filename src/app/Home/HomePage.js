@@ -33,7 +33,7 @@ export default async function Home(homePageData) {
                     {
                     data.map((data,index)=>{
                         return(
-                        <ProductSlider data={data} index={index}/>
+                        <ProductSlider data={data} index={index} key={index}/>
                         )
                     })
                     }

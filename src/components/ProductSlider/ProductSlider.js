@@ -106,7 +106,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
                     id: data.id || ""
                   }
                   return(
-                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} />
+                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} key={index}/>
                   )
                 })
               }
