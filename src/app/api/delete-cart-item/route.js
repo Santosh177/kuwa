@@ -15,5 +15,5 @@ export async function POST(request,res) {
       });
       // const deleteCartItem = await deleteCartItemResp.json();
       // console.log("deleteCartItem",deleteCartItem)
-    return NextResponse.json("deleteCartItem")
+    return NextResponse.json({status:200,msg:"deleted Successfully"})
 }

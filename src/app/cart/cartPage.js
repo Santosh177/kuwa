@@ -8,6 +8,7 @@ import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails } from "@/utils";
+import Loader from "@/components/Loader/Loader";
 import styles from './cart-page.module.scss';
 
 
@@ -21,6 +22,7 @@ export default  function Cart(props) {
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
     const [ haveAddress, setHaveAddress] = useState(false);
+    const [ isLoading , setIsLoading ] = useState(false)
 
     useEffect(()=>{
       getAddress()
@@ -75,6 +77,7 @@ export default  function Cart(props) {
 
     const onUpdateItem = async(data) => {
       console.log("datadata",data)
+      setIsLoading(true)
       const updateItemResp  =  await fetch('/api/update-cart-item', {
           method: 'POST',
           headers: {
@@ -86,7 +89,7 @@ export default  function Cart(props) {
       const cartItem = await updateItemResp.json();
       if(cartItem && cartItem.data){
         console.log("cartItem.datacartItem.data",cartItem.data)
-        setData(cartItem.data)
+        getCartItem()
       }
     }
 
@@ -118,6 +121,7 @@ export default  function Cart(props) {
 
       
      const onDeleteItem = async (data) => {
+      setIsLoading(true)
          const deleteData = {
           cartItemId: data.id
          }
@@ -129,10 +133,26 @@ export default  function Cart(props) {
           body:JSON.stringify(deleteData)
       })
       const cartItem = await updateItemResp.json();
-        // if(cartItem && cartItem.data){
-        //   console.log("cartItem.datacartItem.data",cartItem.data)
-        //   setData(cartItem.data)
-        // }
+      if(cartItem && cartItem.status == 200) {
+        setIsLoading(false);
+        getCartItem()
+      }
+     }
+
+     const getCartItem = async() => {
+      const getCartItemResp = await fetch('/api/get-cart-item', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const getCartItemDetails = await getCartItemResp.json();
+      console.log("getCartItemDetails++",getCartItemDetails);
+      if(getCartItemDetails){
+        setData(getCartItemDetails);
+        setIsLoading(false)
+      }
+      
      }
         
   
@@ -159,6 +179,7 @@ export default  function Cart(props) {
             </div>
           </div>
           <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
+          <Loader isShow={isLoading}/>
         </>
       )
     }
