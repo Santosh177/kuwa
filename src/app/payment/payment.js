@@ -291,7 +291,7 @@ const calculatePriceDetails = () => {
                 <CouponCode />
               </div>
               <div className={styles.paymentMethod}>
-              <PaymentMethod paymentModes={paymentModes} onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
+              <PaymentMethod price={priceDetails.totalAmount } paymentModes={paymentModes} onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
               </div>
               <div className={styles.priceDetails}>
                 <div className={styles.headerTxt}>Price Details</div>
@@ -311,7 +311,7 @@ const calculatePriceDetails = () => {
               </div>
               </div>
               <div className={styles.paymentMethod}>
-                <PaymentMethod paymentModes={paymentModes} onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
+                <PaymentMethod price={priceDetails.totalAmount } paymentModes={paymentModes} onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
               </div>
               {/* <PaymentFooterBtn onProceed={()=>onProceed()  } /> */}
               <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />

@@ -53,7 +53,27 @@ const CardOption = ({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayme
 }
 
 
-const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}, isTamara=false,isTabby=false}) =>{
+const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}, isTamara=false,isTabby=false,price=0}) =>{
+
+  const tamaraInstallment = 3;
+  const tamaraMinLimit = 100;
+  const tamaraMaxLimit = 2000;
+  const decimals = {
+    AED: 2,
+    SAR: 2,
+    KWD: 3,
+    BDH: 3,
+  };
+  const splittedPrice = (parseFloat(price) / tamaraInstallment).toFixed(decimals["AED"]);
+  const isShow = (parseFloat(price) > 0)&&(parseFloat(price) >= parseFloat(tamaraMinLimit)) && (parseFloat(price) <= parseFloat(tamaraMaxLimit));
+
+  const tabbyInstallment = 4;
+  const tabbyMinLimit = 100;
+  const tabbyMaxLimit = 2000;
+
+  const splittedPriceTabby = (parseFloat(price) / tabbyInstallment).toFixed(decimals["AED"]);
+  const isShowTabby = (parseFloat(price) > 0)&&(parseFloat(price) >= parseFloat(tabbyMinLimit)) && (parseFloat(price) <= parseFloat(tabbyMaxLimit));
+  
 
   return(
     <div className={styles.payWithEmi}>
@@ -62,22 +82,22 @@ const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}, isTama
         <div className={styles.txt}>Pay with Emi</div>
       </div>
       <div className={styles.paymentOptionsList}>
-          {isTamara && <div className={styles.paymentOptionItem} onClick={()=> onSelectedPaymentMethod("TAMARA")}>
+          {(isTamara && isShow) && <div className={styles.paymentOptionItem} onClick={()=> onSelectedPaymentMethod("TAMARA")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
                 <div className={styles.desc}>
-                   <div className={styles.txt}>Just pay AED 20 now</div>
-                   <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
+                   <div className={styles.txt}>Just pay AED {splittedPrice} now</div>
+                   <div className={styles.subTxt}>Rest in {tamaraInstallment} interest free payments of AED {splittedPrice}</div>
                 </div>
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
           </div>}
-         {isTabby && <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("TABBY")}>
+         {(isTabby && isShowTabby) && <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("TABBY")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
                 <div className={styles.desc}>
-                   <div className={styles.txt}>Just pay AED 20 now</div>
-                   <div className={styles.subTxt}>Rest in 2 interest free payments of AED 20</div>
+                   <div className={styles.txt}>Just pay AED {splittedPriceTabby} now</div>
+                   <div className={styles.subTxt}>Rest in {tabbyInstallment} interest free payments of AED {splittedPriceTabby}</div>
                 </div>
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>
@@ -135,7 +155,7 @@ const getPaymentOption = (paymentModes=[], data={}) => {
 
 
 
-export default  function PaymentMethod({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayment={},paymentModes=[]}) {
+export default  function PaymentMethod({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayment={},paymentModes=[],price=0}) {
 
 
     const isCheckoutCard = getPaymentOption(paymentModes,{"paymentMode":"CARD","paymentGateway":"CHECKOUT"});
@@ -144,14 +164,13 @@ export default  function PaymentMethod({selectedPaymentMethod="",onSelectedPayme
     const isTabby =  getPaymentOption(paymentModes,{"paymentMode":"TABBY","paymentGateway":"TABBY"});
     const isApplePayCheckout =  getPaymentOption(paymentModes,{"paymentMode":"APPLE_PAY","paymentGateway":"CHECKOUT"});
     const isApplePayTap =  getPaymentOption(paymentModes,{"paymentMode":"APPLE_PAY","paymentGateway":"TAP"});
-
-  
+   
       return (
         <div className={styles.paymentMethodWrapper}>
             <div className={styles.headerTxt}>Payment Method</div>
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
           {(isCheckoutCard || isTapCard) &&<CardOption isCheckoutCard={isCheckoutCard} isTapCard={isTapCard} selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod} onPayment={(data)=>onPayment(data)}/>}
-          { (isTamara || isTabby) && <PayWithEmi isTamara={isTamara} isTabby={isTabby} selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod}/>}
+          { (isTamara || isTabby) && <PayWithEmi price={price} isTamara={isTamara} isTabby={isTabby} selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod}/>}
             <OtherPaymentMethod isApplePayCheckout={isApplePayCheckout} isApplePayTap={isApplePayTap}  selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod} />
         </div>
       )
