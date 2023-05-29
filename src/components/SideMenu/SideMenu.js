@@ -5,6 +5,33 @@ import SideMenuWrapper from '../SideMenuWrapper/SideMenuWrapper';
 import { useAuth } from '../../context/userDetail';
 import styles from './side-menu.module.scss';
 
+const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
+
+
+    return(
+        <div className={styles.myAccountContainer}>
+            <div className={styles.myAccount}>
+                    <div className={styles.headerTxt}>
+                        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/back_arrow.png' alt='arrow-icon' onClick={()=>onBack()}/>
+                        <div className={styles.txt}>{title}</div>
+                    </div>
+                    <img className={styles.closeIcon} style={{top:'unset'}} onClick={onclose}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
+            </div>
+            {
+                data.map((data,index)=>{
+                    return(
+                        <>
+                            <div className={styles.item} key={index}>{data.itemName}</div>
+                            <div className={styles.horizontalLine}></div>
+                        </>
+                    )
+                })
+            }
+        </div>
+    )
+}
+
+
 
 const AccountInfo = ({onclose}) => {
     const router = useRouter();
@@ -29,23 +56,9 @@ const AccountInfo = ({onclose}) => {
 }
 
 
-const SideMenuItemCard = ({data,onClick={}}) => {
-    return(
-        <div className={styles.sideMenuItemCard} onClick={()=>onClick(data.key)}>
-            <div className={styles.sideMenuItem}>
-                <img className={styles.icon} src={data.icon} alt=''/>
-                <div className={styles.itemInfo}>
-                    <div className={styles.itemTxt}>{data.txt}</div>
-                    <div className={styles.itemSubTxt}>{data.subTxt}</div>
-                </div>
-            </div>
-            <img className={styles.arrowIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/next.png' alt='arrow-icon'/>
-        </div>
-    )
-}
 
-const SideMenuData = ({onClick}) =>{
-
+const MainMenuData = ({onClick}) =>{
+    const {isLogin=false, userData={}} = useAuth();
     const data = [
         {
             "icon":"https://production-website-builds.s3.ap-south-1.amazonaws.com/health.png",
@@ -84,8 +97,19 @@ const SideMenuData = ({onClick}) =>{
 
                 {
                     data.map((data,index)=>{
+                        if(data.key == "My Account" && !isLogin)
+                        return
                         return(
-                            <SideMenuItemCard data={data} onClick={onClick} key={index}/>
+                            <div className={styles.sideMenuItemCard} onClick={()=>onClick(data.key)} key={index}>
+                            <div className={styles.sideMenuItem}>
+                                <img className={styles.icon} src={data.icon} alt=''/>
+                                <div className={styles.itemInfo}>
+                                    <div className={styles.itemTxt}>{data.txt}</div>
+                                    <div className={styles.itemSubTxt}>{data.subTxt}</div>
+                                </div>
+                            </div>
+                            <img className={styles.arrowIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/next.png' alt='arrow-icon'/>
+                        </div>
                         )
                     })
                 }
@@ -135,10 +159,6 @@ const LogOut = () =>{
 }
 
 
-
-
-
-
 const MyAccount = ({onBack={},onclose={}}) =>{
     const router = useRouter()
     return(
@@ -175,10 +195,18 @@ const SideMenu = ({onclose={}}) => {
                 return(
                     <MyAccount onBack={()=>setKey("")} onclose={onclose}/>
                 )
+            case "Health goals":
+                return(
+                    <SideMenuData  title='Health goals' data={[{itemName:"All Health Goals"},{itemName:'Collagen'}]}  onclose={onclose} onBack={()=>setKey("")}/>
+                )
+            case "Brands":
+                return(
+                    <SideMenuData  title='Brands' data={[{itemName:"All Health Goals"},{itemName:'Collagen'}]}  onclose={onclose} onBack={()=>setKey("")}/>
+                )
             default:
                 return(<>
                     <AccountInfo  onclose={onclose} />
-                    <SideMenuData onClick={onClick} />
+                    <MainMenuData onClick={onClick}  />
                     <OtherInfo />
                     {isLogin && <LogOut />}
                 </>)
