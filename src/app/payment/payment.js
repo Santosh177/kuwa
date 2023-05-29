@@ -14,7 +14,7 @@ import { useAddressData } from "@/context/address";
 import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
 
-export default function Payment({cartData}) {
+export default function Payment({cartData,paymentModes}) {
   const router = useRouter();
   const {couponCodeData={}} = usePaymentPageData();
   const countryList = useCountryList();
@@ -291,7 +291,7 @@ const calculatePriceDetails = () => {
                 <CouponCode />
               </div>
               <div className={styles.paymentMethod}>
-              <PaymentMethod onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
+              <PaymentMethod paymentModes={paymentModes} onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
               </div>
               <div className={styles.priceDetails}>
                 <div className={styles.headerTxt}>Price Details</div>
@@ -311,7 +311,7 @@ const calculatePriceDetails = () => {
               </div>
               </div>
               <div className={styles.paymentMethod}>
-                <PaymentMethod onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
+                <PaymentMethod paymentModes={paymentModes} onPayment={(data)=>onPayment(data)} onSelectedPaymentMethod ={(paymentMethod)=>setSelectedPaymentMethod(paymentMethod)} selectedPaymentMethod={selectedPaymentMethod} />
               </div>
               {/* <PaymentFooterBtn onProceed={()=>onProceed()  } /> */}
               <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
