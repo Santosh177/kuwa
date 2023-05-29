@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import { useAddressData } from "@/context/address";
 import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
+import {getCartItem} from '@/services'
 
 export default function Payment({cartData,paymentModes}) {
   const router = useRouter();
@@ -106,16 +107,10 @@ const calculatePriceDetails = () => {
   const onPayment = async(data) => {
     console.log("userDatauserData",userData);
     setIsLoader(true);
-    const getCartItemResp = await fetch('/api/get-cart-item', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
 
     const userName = userData && userData['userName'] || "";
    
-    const getCartItems = await getCartItemResp.json();
+    const getCartItems = await getCartItem();
     const cartItemsData = getCartItems && getCartItems['products'];
     const cartItemPayload = await createPayloadForCartItems(cartItemsData);
     const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
+import { getCartItem} from '@/services';
 
 
 export const CartItemContext = React.createContext({})
@@ -20,11 +21,7 @@ export const CartItemProvider = ({ children, countryCode }) => {
 
   const getCartItems = async() => {
     try {
-      const getCartItemResp  =  await fetch('/api/get-cart-item', {
-        method: 'GET',
-        next: { revalidate: 0} 
-      })
-      const getCartItems = await getCartItemResp.json();
+      const getCartItems = await getCartItem();
       const cartItems  = getCartItems && getCartItems['products'] || [];
       setCartItemData(cartItems)
       setCartItemCount(cartItems.length)

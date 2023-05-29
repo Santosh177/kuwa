@@ -10,7 +10,7 @@ import styles from './order-summary-page.module.scss';
 import {getCartItemDetails} from "@/utils";
 import Loader from '@/components/Loader/Loader';
 import { useEffect, useState } from "react";
-import { updateCartItem } from '@/services';
+import { updateCartItem , getCartItem} from '@/services';
 
 
 export default function OrderSummaryPage({cartData}) {
@@ -87,18 +87,13 @@ const onUpdateItem = async(data) => {
   const cartItem = await updateCartItem()
   if(cartItem && cartItem.data){
     console.log("cartItem.datacartItem.data",cartItem.data)
-    getCartItem()
+    getCartItemData()
   }
 }
 
-const getCartItem = async() => {
-  const getCartItemResp = await fetch('/api/get-cart-item', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-  const getCartItemDetails = await getCartItemResp.json();
+const getCartItemData = async() => {
+
+  const getCartItemDetails = await getCartItem();
   console.log("getCartItemDetails++",getCartItemDetails);
   if(getCartItemDetails && getCartItemDetails.status === 404){
     setIsLoading(false);

@@ -11,7 +11,7 @@ import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails } from "@/utils";
 import EmptyCart from "./EmptyCart/EmptyCart";
 import Loader from "@/components/Loader/Loader";
-import { deleteCartItem } from '@/services';
+import { deleteCartItem , getCartItem } from '@/services';
 import styles from './cart-page.module.scss';
 
 
@@ -129,13 +129,7 @@ export default  function Cart(props) {
      }
 
      const getCartItem = async() => {
-      const getCartItemResp = await fetch('/api/get-cart-item', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-      const getCartItemDetails = await getCartItemResp.json();
+      const getCartItemDetails = await getCartItem();
       console.log("getCartItemDetails++",getCartItemDetails);
       if(getCartItemDetails && getCartItemDetails.status === 404){
         setIsLoading(false);
