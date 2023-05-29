@@ -8,7 +8,6 @@ import ProductSlider from '@/components/ProductSlider/ProductSlider';
 import MedicalExpert from './MedicalExpert/MedicalExpert';
 import Footer from '@/components/Footer/Footer';
 import Loader from '@/components/Loader/Loader';
-import VideoBanner from './VideoBanner/VideoBanner';
 import styles from './home-page.module.scss';
 
 export default async function Home(homePageData) {
@@ -23,7 +22,6 @@ export default async function Home(homePageData) {
             <div className={styles.homePageContainer}>
                 <div className={styles.mainBanner}>
                     <Banner />
-                    {/* <VideoBanner /> */}
                 </div>
                 <div className={styles.mainContainer}>
                     <Header />
