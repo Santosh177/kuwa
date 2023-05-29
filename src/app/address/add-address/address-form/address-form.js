@@ -185,13 +185,28 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         setPersonalInfo(userObject)
       },[userData])
 
+      const addressValidation = () => {
+        const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
+        const validationShippingErrors = validateShippingAddressForm(shippingAddress);
+        const validationBillingErrors = validateBillingAddressForm(billngAddress);
+       
+        if (Object.keys(validationPersonalInfoErrors).length === 0 && Object.keys(validationShippingErrors).length === 0 && isSameBillingAddress ){
+          return true
+        }else if(Object.keys(validationPersonalInfoErrors).length === 0 && Object.keys(validationShippingErrors).length === 0 && Object.keys(validationBillingErrors).length === 0){
+          return true
+        }else{
+          return false
+        }
+       
+      }
+
 
       useEffect(()=>{
       if(getFormValues){
         const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
         const validationShippingErrors = validateShippingAddressForm(shippingAddress);
         const validationBillingErrors = validateBillingAddressForm(billngAddress);
-        if (Object.keys(validationPersonalInfoErrors).length === 0 && Object.keys(validationShippingErrors).length === 0 &&  Object.keys(validationBillingErrors).length === 0) {
+        if (addressValidation()) {
                 let combineFormData = {
                     "shippingAddress":{...personalInfo,...shippingAddress},
                 }
