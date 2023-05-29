@@ -57,7 +57,7 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
             {errors.mobNumber && <span className={styles.errorMsg}>{errors.mobNumber}</span>}
             </div>
             <div>
-                <Input lassName={styles.inputBox} type='email'  value={formData.email || ""} placeHolder='Email ID (ex. abc@gmail.com)' onInputChange={(e)=>onInputChange(e,'email')}  />
+                <Input isDisabled lassName={styles.inputBox} type='email'  value={formData.email || ""} placeHolder='Email ID (ex. abc@gmail.com)' onInputChange={(e)=>onInputChange(e,'email')}  />
                 {errors.email && <span className={styles.errorMsg}>{errors.email}</span>}
             </div>
         </div>
@@ -88,11 +88,12 @@ export default function SignupCard() {
 
 
       const onSignup = async() =>{
-        setIsLoading(true);
+       
         const validationErrors = validateForm(formData);
         if (Object.keys(validationErrors).length === 0) {
+          setIsLoading(true);
             try {
-              const res = await fetch('/api/signup', {
+              const res = await fetch('/api/profile-update', {
                 method: 'POST',
                 body:JSON.stringify(formData)
               })
