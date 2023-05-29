@@ -113,16 +113,19 @@ const calculatePriceDetails = () => {
       }
     })
 
+    const userName = userData && userData['userName'] || "";
+   
     const getCartItems = await getCartItemResp.json();
     const cartItemsData = getCartItems && getCartItems['products'];
     const cartItemPayload = await createPayloadForCartItems(cartItemsData);
     const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
-    const description = `${userData['userName'] + ",MULTIPLE_ITEM," + couponCodeData['couponCode']}`;
+    const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['couponCode']}`;
+    const userId = getCartItems['customer'] || null;
     console.log("selectedAddress",selectedAddress)
       let payload = {
         "cartId":getCartItems['id'] || "",
         "orderType": "one-time",
-        "userId": getCartItems['customer'] || "",
+        "userId": userId || "",
         "addressId": selectedAddress && selectedAddress.id || 511,
         "countryCode": "AE",
         "countryId": 1,
