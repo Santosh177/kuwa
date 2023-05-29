@@ -4,6 +4,7 @@ import Input from "@/components/Input/Input";
 import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
 import styles from './my-account.module.scss';
 import { useAuth } from '@/context/userDetail';
+import Loader from '@/components/Loader/Loader';
 import { useEffect, useState } from 'react';
 
 const validateForm = (formData) => {
@@ -70,6 +71,7 @@ export default function SignupCard() {
     const {isLogin=false, userData={}} = useAuth();
     const [ formData , setFormData] = useState({});
     const [ errors, setErrors] = useState({});  
+    const [isLoading, setIsLoading] = useState(false);
  
 
     useEffect(()=>{
@@ -86,6 +88,7 @@ export default function SignupCard() {
 
 
       const onSignup = async() =>{
+        setIsLoading(true);
         const validationErrors = validateForm(formData);
         if (Object.keys(validationErrors).length === 0) {
             try {
@@ -109,11 +112,15 @@ export default function SignupCard() {
 
 
       return (
-        <div className={styles.signUpCardWrapper}>
+        <>
+         <div className={styles.signUpCardWrapper}>
           <div className={styles.signUpTxt}>Personal Info</div>
             <SignupForm setFormData={setFormData} formData={formData} errors={errors}/>
             <div className={styles.createAccountBtn} onClick={onSignup}>Save details</div>
-        </div>
+          </div>
+          <Loader isShow={isLoading} />
+        </>
+       
       )
     }
     
