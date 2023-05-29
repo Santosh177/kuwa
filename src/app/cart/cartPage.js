@@ -8,6 +8,7 @@ import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails } from "@/utils";
+import EmptyCart from "./EmptyCart/EmptyCart";
 import Loader from "@/components/Loader/Loader";
 import styles from './cart-page.module.scss';
 
@@ -22,7 +23,8 @@ export default  function Cart(props) {
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
     const [ haveAddress, setHaveAddress] = useState(false);
-    const [ isLoading , setIsLoading ] = useState(false)
+    const [ isLoading , setIsLoading ] = useState(false);
+    const [isEmptyCart, setIsEmptyCart] = useState(false)
 
     useEffect(()=>{
       getAddress()
@@ -148,15 +150,20 @@ export default  function Cart(props) {
       })
       const getCartItemDetails = await getCartItemResp.json();
       console.log("getCartItemDetails++",getCartItemDetails);
-      if(getCartItemDetails){
+      if(getCartItemDetails && getCartItemDetails.status === 404){
+       router.refresh();
+      }else{
         setData(getCartItemDetails);
-        setIsLoading(false)
+        setIsLoading(false);
+        setIsEmptyCart(false)
       }
       
      }
         
   
-     console.log("priceDetailspriceDetails",priceDetails)
+
+     if(isEmptyCart)
+       return <EmptyCart />
       return (
         <>
           <div className={styles.cartPage}>

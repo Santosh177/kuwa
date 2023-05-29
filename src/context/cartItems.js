@@ -19,14 +19,20 @@ export const CartItemProvider = ({ children, countryCode }) => {
   },[])
 
   const getCartItems = async() => {
-    const getCartItemResp  =  await fetch('/api/get-cart-item', {
-      method: 'GET',
-      next: { revalidate: 0} 
-    })
-    const getCartItems = await getCartItemResp.json();
-    const cartItems  = getCartItems && getCartItems['products'] || [];
-    setCartItemData(cartItems)
-    setCartItemCount(cartItems.length)
+    try {
+      const getCartItemResp  =  await fetch('/api/get-cart-item', {
+        method: 'GET',
+        next: { revalidate: 0} 
+      })
+      const getCartItems = await getCartItemResp.json();
+      const cartItems  = getCartItems && getCartItems['products'] || [];
+      setCartItemData(cartItems)
+      setCartItemCount(cartItems.length)
+    } catch (error) {
+      setCartItemData([])
+      setCartItemCount(0)
+    }
+  
 
 
   }
