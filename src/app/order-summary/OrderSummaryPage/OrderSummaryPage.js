@@ -8,6 +8,7 @@ import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { useAddressData } from "@/context/address";
 import styles from './order-summary-page.module.scss';
 import {getCartItemDetails} from "@/utils";
+import Loader from '@/components/Loader/Loader';
 import { useEffect, useState } from "react";
 
 
@@ -17,8 +18,9 @@ export default function OrderSummaryPage({cartData}) {
   const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
   const { listOfAddress=[], selectedAddress ={},setSelectedAddress={},setListOfAddress={}} = useAddressData();
   const [ data , setData ] = useState(cartData);
-    const [ cartItems , setCartItems ] = useState([]);
-    const [ priceDetails , setPriceDetails ] = useState({});
+  const [ cartItems , setCartItems ] = useState([]);
+  const [ priceDetails , setPriceDetails ] = useState({});
+  const [isLoading, setIsLoading] = useState(false)  
 
 
   useEffect(()=>{
@@ -80,6 +82,7 @@ const calculatePriceDetails = () => {
  
 const onUpdateItem = async(data) => {
   console.log("datadata",data)
+  setIsLoading(true)
   const updateItemResp  =  await fetch('/api/update-cart-item', {
       method: 'POST',
       headers: {
@@ -91,13 +94,34 @@ const onUpdateItem = async(data) => {
   const cartItem = await updateItemResp.json();
   if(cartItem && cartItem.data){
     console.log("cartItem.datacartItem.data",cartItem.data)
-    setData(cartItem.data)
+    // setData(cartItem.data)
+    getCartItem()
   }
 
     // console.log("updateItemResp",datas);
     
 
 }
+
+const getCartItem = async() => {
+  const getCartItemResp = await fetch('/api/get-cart-item', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  const getCartItemDetails = await getCartItemResp.json();
+  console.log("getCartItemDetails++",getCartItemDetails);
+  if(getCartItemDetails && getCartItemDetails.status === 404){
+    setIsLoading(false);
+    router.refresh();
+  }else{
+    setData(getCartItemDetails);
+    setIsLoading(false);
+    // setIsEmptyCart(false)
+  }
+  
+ }
  
 const onProceed = () => {
     router.push('/payment');
@@ -128,6 +152,7 @@ const onProceed = () => {
             </div>
           </div>
           <PaymentFooterBtn btnName="Proceed to next"  totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
+          <Loader isShow={isLoading}/>
         </>
       )
     }

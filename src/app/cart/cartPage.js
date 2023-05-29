@@ -151,6 +151,7 @@ export default  function Cart(props) {
       const getCartItemDetails = await getCartItemResp.json();
       console.log("getCartItemDetails++",getCartItemDetails);
       if(getCartItemDetails && getCartItemDetails.status === 404){
+        setIsLoading(false);
        router.refresh();
       }else{
         setData(getCartItemDetails);

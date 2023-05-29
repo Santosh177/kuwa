@@ -11,8 +11,6 @@ export default function VideoBanner() {
   <source src="https://assets.codepen.io/6093409/river.mp4" type="video/mp4" />
 </video>
 
-<h1>THIS IS A RIVER.</h1>
-<h2>How majestic.</h2>
       </div>
     </>
 
