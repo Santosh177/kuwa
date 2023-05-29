@@ -3,6 +3,7 @@ import React,{useState,useEffect} from 'react';
 import { useRouter } from 'next/navigation';
 import Loader from '@/components/Loader/Loader';
 import ProductCard from '@/components/ProductCard/ProductCard';
+import { addToCart } from '@/services'
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
@@ -24,19 +25,9 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}
   const onAddToCart = async(data) =>{
     try {
       setIsLoading(true)
-      const res = await fetch('/api/add-to-cart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body:JSON.stringify(data)
-      })
+      const res = await addToCart(data);
       setIsLoading(false)
-      if (res.status === 200) {
-        router.push('/cart')
-      } else {
-        
-      }
+      router.push('/cart')
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
     }

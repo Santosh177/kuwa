@@ -1,6 +1,7 @@
 'use client'
 import React,{useState,useEffect} from 'react';
 import { useRouter } from 'next/navigation';
+import { addToCart } from '@/services'
 import { useCartItems } from '@/context/cartItems';
 import Loader from '../Loader/Loader';
 import ProductCard from '@/components/ProductCard/ProductCard';
@@ -25,34 +26,43 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
 
- 
-
   const onAddToCart = async(data) =>{
     try {
       setIsLoading(true)
-      const addToCartResp = await fetch('/api/add-to-cart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body:JSON.stringify(data)
-      })
-      const addToCartData = await addToCartResp.json();
-      console.log("addToCartData",addToCartData);
-      if(addToCartData && addToCartData['products'] && addToCartData['products'].length > 0){
-        setCartItemData(addToCartData['products']);
-        setCartItemCount(addToCartData['products'].length);
-        router.push('/cart')
-      }else{
-        setCartItemData([]);
-        setCartItemCount(0)
-      }
+      const res = await addToCart(data);
       setIsLoading(false)
-     
+      router.push('/cart')
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
     }
 }
+
+//   const onAddToCart = async(data) =>{
+//     try {
+//       setIsLoading(true)
+//       const addToCartResp = await fetch('/api/add-to-cart', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body:JSON.stringify(data)
+//       })
+//       const addToCartData = await addToCartResp.json();
+//       console.log("addToCartData",addToCartData);
+//       if(addToCartData && addToCartData['products'] && addToCartData['products'].length > 0){
+//         setCartItemData(addToCartData['products']);
+//         setCartItemCount(addToCartData['products'].length);
+//         router.push('/cart')
+//       }else{
+//         setCartItemData([]);
+//         setCartItemCount(0)
+//       }
+//       setIsLoading(false)
+     
+//     } catch (error) {
+//       console.error('An unexpected error happened occurred:', error)
+//     }
+// }
     return (
 
 

@@ -2,6 +2,7 @@
 'use client';
 import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
+import { updateCartItem } from '@/services'
 import { useCountryList } from '@/context/countryList';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
@@ -10,6 +11,7 @@ import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails } from "@/utils";
 import EmptyCart from "./EmptyCart/EmptyCart";
 import Loader from "@/components/Loader/Loader";
+import { deleteCartItem } from '@/services';
 import styles from './cart-page.module.scss';
 
 
@@ -80,15 +82,7 @@ export default  function Cart(props) {
     const onUpdateItem = async(data) => {
       console.log("datadata",data)
       setIsLoading(true)
-      const updateItemResp  =  await fetch('/api/update-cart-item', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + "didToken",
-          },
-          body:JSON.stringify(data)
-      })
-      const cartItem = await updateItemResp.json();
+      const cartItem = await updateCartItem(data);
       if(cartItem && cartItem.data){
         console.log("cartItem.datacartItem.data",cartItem.data)
         getCartItem()
@@ -127,14 +121,7 @@ export default  function Cart(props) {
          const deleteData = {
           cartItemId: data.id
          }
-        const updateItemResp  =  await fetch('/api/delete-cart-item', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body:JSON.stringify(deleteData)
-      })
-      const cartItem = await updateItemResp.json();
+      const cartItem = await deleteCartItem(deleteData);
       if(cartItem && cartItem.status == 200) {
         setIsLoading(false);
         getCartItem()
