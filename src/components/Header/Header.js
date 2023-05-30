@@ -108,9 +108,9 @@ const Header = () => {
                 <div className={styles.headerInfo}>
                     <div className={styles.countryInfo} onClick={()=>setIsShowCountry(true)}>
                         <div className={styles.countryImg}>
-                            <img src='https://d2co62zyg9wi44.cloudfront.net/media/country_United%20Arab%20Emirates_1/Flag_UAE_-_Square.png' alt='country-img'/>
+                            <img src={selectedCountry.flagIcon} alt='country-img'/>
                         </div>
-                        <div className={styles.countryTxt}>{selectedCountry.name}</div>
+                        <div className={styles.countryTxt}>{selectedCountry.shortName}</div>
                         <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown_icon_country.png' alt='drop-down-icon'/>
                     </div>
                     <div className={styles.searchIcon} onClick={()=>router.push('/search')}>

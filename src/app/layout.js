@@ -5,7 +5,7 @@ import { CartItemProvider } from "@/context/cartItems";
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
 import { getUserDetails } from '../lib/auth';
-import { getTokenCookie } from '../lib/auth-cookies';
+import { getTokenCookie , getCountryCookie} from '../lib/auth-cookies';
 import { cookies } from 'next/headers';
 import { CountryListProvider } from "@/context/countryList";
 // import { Work_Sans } from 'next/font/google';
@@ -63,20 +63,23 @@ const getCountryList = async() => {
 export default async function RootLayout({ children }) {
   const userData = await getUser();
   const countryList = await getCountryList();
-
-  const selectedCountryData =  {
-    "id": 8,
-    "code": "AI",
-    "supported": true,
-    "name": "Bahrain",
-    "zones": [
-      
-    ],
-    "deliveryFee": 451.00,
-    "flagIcon": null,
-    "currency": null,
-    "minThreshold": 469.00
+  const { isLogin= false } = userData || {}
+  let selectedCountryData = {};
+  if(isLogin){
+    const filteredCountry = countryList.find((data,index)=>data.id == 222)
+    selectedCountryData = filteredCountry;
+  }else{
+    const countryIdFromCookie = getCountryCookie();
+    if(countryIdFromCookie){
+      const filteredCountry = countryList.find((data,index)=>data.id == countryIdFromCookie)
+      selectedCountryData = filteredCountry;
+    }
   }
+  
+
+
+
+
   
 
 
@@ -85,7 +88,7 @@ export default async function RootLayout({ children }) {
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
       <CountryListProvider countryList={countryList}>
-        <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData}>
+        <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
           <AuthProvider authData={userData}>
             <CartItemProvider>
             <AddressProvider >

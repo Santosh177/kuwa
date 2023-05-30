@@ -53,6 +53,16 @@ export function getTokenCookie(req) {
   const cookies = parseCookies(req)
   return cookies[TOKEN_NAME]
 }
+
+export function getCountryCookie() {
+  const country = cookies().get('countryId');
+  if(country && country.value){
+    return country.value
+  }else{
+    return null;
+  }
+
+}
 export const authHeader = async() =>{
   const token = cookies().get('token')
   const user = cookies().get('userId');

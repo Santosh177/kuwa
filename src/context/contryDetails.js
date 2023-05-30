@@ -18,34 +18,29 @@ const getTimezoneOffset = () =>{
 export const CountryContext = React.createContext({})
 
 
-export const CountryProvider = ({ children, countryCode,selectedCountryData }) => {
+export const CountryProvider = ({ children, countryCode,selectedCountryData , countryList=[]}) => {
    
   const [ selectedCountry , setSelectedCountry ] = useState(selectedCountryData);
 
-
   
   
-//   console.log("countryDetail+++",countryDetail)
-//   useEffect(()=>{
-//     if(userData){
-//         const data = {
-//             selectedCountry:"UAE"
-//         }
-//         // setCountryDetails(data)
-//     }
-
-//   },[userData])
+  useEffect(()=>{
+    if(selectedCountryData && Object.keys(selectedCountryData).length == 0){
+         const data = getTimezoneOffset();
+         const timeZoneCountry = countryList.find((data,index)=>data.id == 222)
+         setSelectedCountry(timeZoneCountry)
+    }
+  },[countryList])
 
 
 
 
 
-  const data = getTimezoneOffset();
 
-  console.log("FINEEE",data)
+
 
   
-  return <CountryContext.Provider value={{data,selectedCountry,setSelectedCountry}}>{children}</CountryContext.Provider>
+  return <CountryContext.Provider value={{selectedCountry,setSelectedCountry}}>{children}</CountryContext.Provider>
 }
 
 
