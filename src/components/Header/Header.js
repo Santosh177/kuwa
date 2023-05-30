@@ -56,7 +56,6 @@ const Header = () => {
 
     const handleClickOutside = (event) =>{
         if (inputBoxRef.current && !inputBoxRef.current.contains(event.target)) {
-            if(searchTxt)
             setSearchTxt("")
         }
     }
