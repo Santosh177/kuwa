@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SideMenuWrapper from '../SideMenuWrapper/SideMenuWrapper';
 import { useAuth } from '../../context/userDetail';
+import Loader from '../Loader/Loader';
 import styles from './side-menu.module.scss';
 
 const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
@@ -133,14 +134,17 @@ const OtherInfo = () =>{
 
 const LogOut = () =>{
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
     const onLogout = async() => {
         try {
+            setIsLoading(true)
             const res = await fetch('/api/logout', {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
               }
             })
+            setIsLoading(false)
             if (res.status === 200) {
                 router.refresh();
             } else {
@@ -151,10 +155,14 @@ const LogOut = () =>{
           }
     }
     return(
-        <div className={styles.logoutContainer} onClick={onLogout}>
-            <img className={styles.logoutImg} src={'https://production-website-builds.s3.ap-south-1.amazonaws.com/logout.png'} alt='logout'/>
-            <div className={styles.txt}>Logout</div>
-        </div>
+        <>
+            <div className={styles.logoutContainer} onClick={onLogout}>
+                <img className={styles.logoutImg} src={'https://production-website-builds.s3.ap-south-1.amazonaws.com/logout.png'} alt='logout'/>
+                <div className={styles.txt}>Logout</div>
+            </div>
+            <Loader isShow={isLoading}/>
+        </>
+       
     )
 }
 

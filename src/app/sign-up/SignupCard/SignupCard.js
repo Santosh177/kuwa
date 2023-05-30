@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import Input from "@/components/Input/Input";
 import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
+import Loader from '@/components/Loader/Loader';
 import styles from './sign-up-card.module.scss';
 import { useState } from 'react';
 
@@ -77,6 +78,7 @@ export default function SignupCard() {
     const router = useRouter();
     const [ formData , setFormData] = useState({});
     const [ errors, setErrors] = useState({});  
+    const [isLoading , setIsLoading] = useState(false)
 
   
 
@@ -85,10 +87,12 @@ export default function SignupCard() {
         const validationErrors = validateForm(formData);
         if (Object.keys(validationErrors).length === 0) {
             try {
+              setIsLoading(true)
               const res = await fetch('/api/signup', {
                 method: 'POST',
                 body:JSON.stringify(formData)
               })
+              setIsLoading(false)
             if (res.status === 200) {
               window.location.href = '/'
             } else {
@@ -105,13 +109,17 @@ export default function SignupCard() {
 
 
       return (
-        <div className={styles.signUpCardWrapper}>
-          <div className={styles.signUpTxt}>Create an account</div>
-          <div className={styles.descTxt}>Create or login to enjoy exclusive benefits.</div>
-            <SignupForm setFormData={setFormData} formData={formData} errors={errors}/>
-            <div className={styles.createAccountBtn} onClick={onSignup}>Create account</div>
-            <div className={styles.loginTxt} onClick={()=> router.push('/login')}>Already have an account ? <span className={styles.loginSubTxt} >Login</span></div>
-        </div>
+        <>
+          <div className={styles.signUpCardWrapper}>
+            <div className={styles.signUpTxt}>Create an account</div>
+            <div className={styles.descTxt}>Create or login to enjoy exclusive benefits.</div>
+              <SignupForm setFormData={setFormData} formData={formData} errors={errors}/>
+              <div className={styles.createAccountBtn} onClick={onSignup}>Create account</div>
+              <div className={styles.loginTxt} onClick={()=> router.push('/login')}>Already have an account ? <span className={styles.loginSubTxt} >Login</span></div>
+          </div>
+          <Loader isShow={isLoading}/>
+        </>
+        
       )
     }
     

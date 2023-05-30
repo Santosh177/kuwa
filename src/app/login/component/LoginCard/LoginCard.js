@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import styles from './login-card.module.scss';
 import { useState } from 'react';
+import Loader from '@/components/Loader/Loader';
 const validateForm = (formData) => {
   const errors = {};
   if(!formData.userEmail){
@@ -23,13 +24,15 @@ export default function Login() {
 
     const [ userEmail , setUserEmail ] = useState("");
     const [ password , setPassword ] = useState("");
-    const [ errors, setErrors] = useState({});  
+    const [ errors, setErrors] = useState({});
+    const [isLoading, setIsLoading]= useState(false)  
    
 
     const onLogin = async() =>{
       const validationErrors = validateForm({userEmail:userEmail,password:password });
       if (Object.keys(validationErrors).length === 0) {
         try {
+          setIsLoading(true)
           const res = await fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -40,6 +43,7 @@ export default function Login() {
                 'password':password
             })
           })
+          setIsLoading(false)
           if (res.status === 200) {
             window.location.href = '/'
           } else {
@@ -62,7 +66,8 @@ export default function Login() {
   
 
       return (
-        <div className={styles.loginCardWrapper}>
+        <>
+         <div className={styles.loginCardWrapper}>
           <div className={styles.loginTxt}>Login</div>
           <div className={styles.descTxt}>Create or login to enjoy exclusive benefits.</div>
           <div className={styles.loginInputContainer}>
@@ -79,6 +84,10 @@ export default function Login() {
            
             <div className={styles.signUpTxt}>Don’t have an account ? <span className={styles.createAccountTxt} onClick={()=>router.push('/sign-up')}>Create account</span></div>
         </div>
+        
+        <Loader isShow={isLoading} />
+        </>
+       
       )
     }
     
