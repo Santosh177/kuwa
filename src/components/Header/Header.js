@@ -7,6 +7,7 @@ import {useCountryList} from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
 import SideMenu from '../SideMenu/SideMenu';
 import CountryList from '../CountryList/CountryList';
+import Loader from '../Loader/Loader';
 import styles from './header.module.scss';
 
 
@@ -16,6 +17,7 @@ const Header = () => {
     const {cartItemCount = 0} = useCartItems();
     const countryList = useCountryList();
     const {selectedCountry={},setSelectedCountry={}} = useCountry();
+    const [isLoading , setIsLoading] = useState(false);
 
     const [isShowCountry, setIsShowCountry] = useState(false);
 
@@ -24,6 +26,7 @@ const Header = () => {
 
     const onSelectCountry = async(data) =>{
         setSelectedCountry(data);
+        setIsLoading(true)
         const coutryApiResp = await fetch('/api/update-country', {
             method: 'POST',
             headers: {
@@ -33,6 +36,7 @@ const Header = () => {
           })
         const coutryApiData = await coutryApiResp.json();
         setIsShowCountry(false)
+        setIsLoading(false)
     }
 
     const onOpenSideMenu = () => {
@@ -85,6 +89,7 @@ const Header = () => {
         </div>
         {isShowSideMenu&&<SideMenu  onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
+        {isLoading && <Loader isShow={true} />}
         </>
     )
 
