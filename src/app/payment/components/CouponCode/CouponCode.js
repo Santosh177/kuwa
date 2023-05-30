@@ -32,9 +32,7 @@ export default function CouponCode() {
         const data = await createCouponPayload(cartItems);
           const couponPayload = {
             "couponCode": couponCode,
-            "supplements": data,
-            "userId": 3714,
-            "country": 1
+            "products": data
         }
           const res = await fetch('/api/apply-coupon', {
             method: 'POST',

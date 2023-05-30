@@ -196,6 +196,23 @@ const SideMenu = ({onclose={}}) => {
     }
 
 
+    useEffect(()=>{
+        getProductTypesData();
+    },[])
+
+    const getProductTypesData = async() => {
+        const type = "HEALTH";
+        const getProductTypeRes = await fetch('/api/product-types?super'+type, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          })
+          const getProductTypeData = await getProductTypeRes.json();
+          console.log("getProductTypeData",getProductTypeData)
+    }
+
+
 
     const renderSideMenu =(key) => {
         switch (key) {
