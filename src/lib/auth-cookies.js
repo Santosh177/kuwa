@@ -77,7 +77,7 @@ export const authHeader = async() =>{
     }
     return({
       'Content-Type': 'application/json',
-      'country' : parseInt(country.value) || 1,
+      'country' : country && parseInt(country.value) || 1,
       'device':cookies().get("deviceID").value || ""
     })
   }
