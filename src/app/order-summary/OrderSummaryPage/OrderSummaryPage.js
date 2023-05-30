@@ -10,7 +10,7 @@ import styles from './order-summary-page.module.scss';
 import {getCartItemDetails} from "@/utils";
 import Loader from '@/components/Loader/Loader';
 import { useEffect, useState } from "react";
-import { updateCartItem , getCartItem} from '@/services';
+import { updateCartItem ,deleteCartItem} from '@/services';
 
 
 export default function OrderSummaryPage({cartData}) {
@@ -24,6 +24,10 @@ export default function OrderSummaryPage({cartData}) {
   const [ priceDetails , setPriceDetails ] = useState({});
   const [isLoading, setIsLoading] = useState(false)  
 
+
+  useEffect(()=>{
+    setData(cartData)
+  },[cartData])
 
   useEffect(()=>{
     if(selectedAddress && Object.keys(selectedAddress).length == 0){
@@ -81,30 +85,32 @@ const calculatePriceDetails = () => {
   setPriceDetails(priceDetailsData)
 }
 
+const refreshData = () => {
+  router.refresh()
+  setTimeout(()=>{
+    setIsLoading(false);
+  },500)
+}
+
  
 const onUpdateItem = async(data) => {
   console.log("datadata",data)
   setIsLoading(true)
   const cartItem = await updateCartItem(data);
-  if(cartItem && cartItem.data){
-    console.log("cartItem.datacartItem.data",cartItem.data)
-    getCartItemData()
-  }
+  refreshData()
 }
 
-const getCartItemData = async() => {
-  const getCartItemDetails = await getCartItem();
-  console.log("getCartItemDetails++",getCartItemDetails);
-  if(getCartItemDetails && getCartItemDetails.status === 404){
-    setIsLoading(false);
-  //  router.refresh();
-  }else{
-    setData(getCartItemDetails);
-    setIsLoading(false);
-    // setIsEmptyCart(false)
+const onDeleteItem = async (data) => {
+  setIsLoading(true)
+     const deleteData = {
+      cartItemId: data.id
+     }
+  const cartItem = await deleteCartItem(deleteData);
+  if(cartItem && cartItem.status == 200) {
+    refreshData()
   }
-  
  }
+
  
 const onProceed = () => {
     router.push('/payment');
@@ -121,7 +127,7 @@ const onProceed = () => {
               {
                 cartItems.map((data,index)=>{
                   return(
-                    <CartItemCard data={data} key={index} onUpdateItem={onUpdateItem} />
+                    <CartItemCard data={data} key={index} onUpdateItem={onUpdateItem} onDeleteItem={()=>onDeleteItem(data)}/>
                   )
                 })
               }

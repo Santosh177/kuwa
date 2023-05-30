@@ -2,17 +2,14 @@
 'use client';
 import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
-import { updateCartItem } from '@/services'
 import { useCountryList } from '@/context/countryList';
-import { useCartItems } from '@/context/cartItems';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails } from "@/utils";
-import EmptyCart from "./EmptyCart/EmptyCart";
 import Loader from "@/components/Loader/Loader";
-import { deleteCartItem , getCartItem } from '@/services';
+import { deleteCartItem , updateCartItem } from '@/services';
 import styles from './cart-page.module.scss';
 
 
