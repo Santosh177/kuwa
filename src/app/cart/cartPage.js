@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
 import { useCountryList } from '@/context/countryList';
+import { useCartItems } from '@/context/cartItems';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
@@ -14,9 +15,9 @@ import styles from './cart-page.module.scss';
 
 
 export default  function Cart({cartData}) {
-
     const router = useRouter();
     const countryList = useCountryList();
+    const {setCartItemCount={} } = useCartItems();
     const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
     const [ data , setData ] = useState(cartData);
     const [ cartItems , setCartItems ] = useState([]);
@@ -25,7 +26,12 @@ export default  function Cart({cartData}) {
     const [ isLoading , setIsLoading ] = useState(false);
 
     useEffect(()=>{
-      setData(cartData)
+      setData(cartData);
+
+      if(cartData && cartData.quantity){
+        setCartItemCount(cartData.quantity)
+      }
+      
     },[cartData])
 
 

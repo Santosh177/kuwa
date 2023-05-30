@@ -24,7 +24,10 @@ export const CartItemProvider = ({ children, countryCode }) => {
       const getCartItems = await getCartItem();
       const cartItems  = getCartItems && getCartItems['products'] || [];
       setCartItemData(cartItems)
-      setCartItemCount(cartItems.length)
+      if(getCartItems && getCartItems.quantity){
+        setCartItemCount(getCartItems.quantity)
+      }
+     
     } catch (error) {
       setCartItemData([])
       setCartItemCount(0)

@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useCountryList } from '@/context/countryList';
+import { useCartItems } from '@/context/cartItems';
 import DeliveryAddress from "../DeliveryAddress/DeliveryAddress";
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
@@ -17,6 +18,7 @@ export default function OrderSummaryPage({cartData}) {
   console.log("ORDER SSUMMARY OAF",cartData)
   const router = useRouter();
   const countryList = useCountryList();
+  const {setCartItemCount={} } = useCartItems();
   const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
   const { listOfAddress=[], selectedAddress ={},setSelectedAddress={},setListOfAddress={}} = useAddressData();
   const [ data , setData ] = useState(cartData);
@@ -26,7 +28,10 @@ export default function OrderSummaryPage({cartData}) {
 
 
   useEffect(()=>{
-    setData(cartData)
+    setData(cartData);
+    if(cartData && cartData.quantity){
+      setCartItemCount(cartData.quantity)
+    }
   },[cartData])
 
   useEffect(()=>{

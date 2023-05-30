@@ -47,7 +47,7 @@ const Header = () => {
                     <div className={styles.menuIcon} onClick={onOpenSideMenu}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/menu.png' alt='menu-icon'/>
                     </div>
-                    <div className={styles.logo}>
+                    <div className={styles.logo} onClick={()=>window.location.href="/"}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/Group+2.png' alt='menu-icon'/>
                     </div>
                 </div>
