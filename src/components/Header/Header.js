@@ -7,8 +7,39 @@ import {useCountryList} from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
 import SideMenu from '../SideMenu/SideMenu';
 import CountryList from '../CountryList/CountryList';
+import SearchCard from '@/app/search/SearchCard/SearchCard';
 import Loader from '../Loader/Loader';
 import styles from './header.module.scss';
+
+const SearchList = () =>{
+    return(
+        <div className={styles.searchListWrapper}>
+                <div className={styles.resultFound}>15 Results found</div>
+                {/* <div> */}
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+                    <SearchCard />
+
+                {/* </div> */}
+       
+            </div>
+    )
+}
 
 
 const Header = () => {
@@ -20,6 +51,7 @@ const Header = () => {
     const [isLoading , setIsLoading] = useState(false);
 
     const [isShowCountry, setIsShowCountry] = useState(false);
+    const [searchTxt, setSearchTxt] = useState("");
 
     
     // console.log("cartItemCOuntcartItemCOunt",cartItemCount)
@@ -52,7 +84,6 @@ const Header = () => {
         <>
      
         <div className={styles.header}>
-
            <div className={styles.headerWrapper}>
                 <div className={styles.headerIcon}>
                     <div className={styles.menuIcon} onClick={onOpenSideMenu}>
@@ -69,15 +100,20 @@ const Header = () => {
                             <img src='https://d2co62zyg9wi44.cloudfront.net/media/country_United%20Arab%20Emirates_1/Flag_UAE_-_Square.png' alt='country-img'/>
                         </div>
                         <div className={styles.countryTxt}>{selectedCountry.name}</div>
-                        {/* <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown.png' alt='drop-down-icon'/> */}
+                        <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown_icon_country.png' alt='drop-down-icon'/>
                     </div>
                     <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/search.png" alt='search-icon'></img>
                     </div>
+                    <div>
                     <div className={styles.searchInputWrapper}  >
-                        <input className={styles.searchInput} placeholder='Search by product name' type='text' />
+                        <input className={styles.searchInput} style={(searchTxt)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchTxt} onChange={(e)=>setSearchTxt(e.target.value)} placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
+                    {searchTxt && <SearchList />}
+                    </div>
+                   
+                   
                     <div className={styles.cartIcon} onClick={()=>router.push('/cart')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img>
                         {cartItemCount > 0 && <div className={styles.cartCount}>{cartItemCount}</div>}
