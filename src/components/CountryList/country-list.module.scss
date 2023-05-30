@@ -1,22 +1,82 @@
-.countryListWrapper{
-    position: fixed;
-    top: 0px;
-    background: rgb(82, 80, 80);
-    height: 50vh;
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    width: 50%;
-
-    .countryItem{
-        padding-top: 10px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid;
-        cursor: pointer;
+.countryWrapper{
+    .backDrop{
+        height: 100vh;
+        position: fixed;
+        width: 100%;
+        opacity: .8;
+        top: 0px;
+        background: rgba(7, 20, 26, 0.4);
+        backdrop-filter: blur(4px);
+        z-index: 9;
     }
+    .countryContainer{
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        background-color: #FFF;
+        z-index: 99999;
+        width: 70%;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        height: 53%;
+        top: 50%;
+        transform: translate(0, -50%);
+        background: #FFFFFF;
+        border-radius: 8px;
+        padding: 20px;
+        .closeIcon{
+            position: absolute;
+            right: 12px;
+            top: 19px;
+            height: 24px;
+            width: 24px;
+            cursor: pointer;
+        }
+        .countryTitle{
+            font-weight: 500;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .countryListItem{
+            margin-top: 20px;
+            overflow: scroll;
+            height: 90%;
+
+            .listItem{
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                cursor: pointer;
+                .flagIcon{
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                }
+                .item{
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                    
+                }
+            }
+            .horizontalLine{
+                height: 1px;
+                width: 100%;
+                background: #E6E7E7;
+                opacity: 0.7;
+            }
+           
+        }
+    }
+}
+
+@media(min-width:990px){
+
+    .countryWrapper{
+        .countryContainer{
+            width: 25%;
+        }
+    }
+
 }
