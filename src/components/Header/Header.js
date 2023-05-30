@@ -17,6 +17,8 @@ const Header = () => {
     const countryList = useCountryList();
     const {selectedCountry={},setSelectedCountry={}} = useCountry();
 
+    const [isShowCountry, setIsShowCountry] = useState(false);
+
     
     // console.log("cartItemCOuntcartItemCOunt",cartItemCount)
 
@@ -30,11 +32,16 @@ const Header = () => {
             body:JSON.stringify({countryId:data.id})
           })
         const coutryApiData = await coutryApiResp.json();
+        setIsShowCountry(false)
     }
 
     const onOpenSideMenu = () => {
         console.log("isShowSideMenu",isShowSideMenu)
         setIsShowSideMenu(!isShowSideMenu)
+    }
+    
+    const onCloseCountry = () =>{
+        setIsShowCountry(false)
     }
 
     return(
@@ -53,12 +60,11 @@ const Header = () => {
                 </div>
                
                 <div className={styles.headerInfo}>
-                    <div className={styles.countryInfo}>
+                    <div className={styles.countryInfo} onClick={()=>setIsShowCountry(true)}>
                         <div className={styles.countryImg}>
                             <img src='https://d2co62zyg9wi44.cloudfront.net/media/country_United%20Arab%20Emirates_1/Flag_UAE_-_Square.png' alt='country-img'/>
                         </div>
-                        <div className={styles.countryTxt}>{selectedCountry
-.name}</div>
+                        <div className={styles.countryTxt}>{selectedCountry.name}</div>
                         {/* <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown.png' alt='drop-down-icon'/> */}
                     </div>
                     <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
@@ -78,9 +84,7 @@ const Header = () => {
 
         </div>
         {isShowSideMenu&&<SideMenu  onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
-          
-
-        <CountryList onSelectCountry={onSelectCountry} />
+        {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         </>
     )
 

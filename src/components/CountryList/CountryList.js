@@ -8,22 +8,21 @@ import styles from './country-list.module.scss';
 
 
 
-const CountryList = ({onSelectCountry={}}) => {
+const CountryList = ({onSelectCountry={},onclose={}}) => {
     const countryList = useCountryList();
     return(
 
         <div className={styles.countryWrapper}>
                 <div className={styles.backDrop} onClick={()=>onclose()}></div>
                 <div className={styles.countryContainer}>
-                    <img className={styles.closeIcon} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_country.png" alt="close"/>
+                    <img className={styles.closeIcon} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_country.png" alt="close" onClick={()=>onclose()}/>
                     <div className={styles.countryTitle}>Select Country</div>
                     <div className={styles.countryListItem}>
                         {
                             countryList.map((data,index)=>{
                                 return(
                                     <>
-                                
-                                    <div className={styles.listItem}>    
+                                    <div className={styles.listItem} onClick={()=>onSelectCountry(data)} key={index}>    
                                         <img className={styles.flagIcon} src="https://d2co62zyg9wi44.cloudfront.net/media/country_United%20Arab%20Emirates_1/Flag_UAE_-_Square.png" alt="flag"/>
                                         <div className={styles.item} onClick={()=>onSelectCountry(data)}>{data.name}</div>
                                     </div>
