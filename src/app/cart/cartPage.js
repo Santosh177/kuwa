@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
 import { updateCartItem } from '@/services'
 import { useCountryList } from '@/context/countryList';
+import { useCartItems } from '@/context/cartItems';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
@@ -15,18 +16,21 @@ import { deleteCartItem , getCartItem } from '@/services';
 import styles from './cart-page.module.scss';
 
 
-export default  function Cart(props) {
+export default  function Cart({cartData}) {
 
-  console.log("props.card",props.cartData)
     const router = useRouter();
     const countryList = useCountryList();
     const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
-    const [ data , setData ] = useState(props.cartData);
+    const [ data , setData ] = useState(cartData);
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
     const [ haveAddress, setHaveAddress] = useState(false);
     const [ isLoading , setIsLoading ] = useState(false);
-    const [isEmptyCart, setIsEmptyCart] = useState(false)
+
+    useEffect(()=>{
+      setData(cartData)
+    },[cartData])
+
 
     useEffect(()=>{
       getAddress()
@@ -35,9 +39,9 @@ export default  function Cart(props) {
 
     useEffect(()=>{
         if(data && Object.keys(data).length > 0 ){
-                if(data['products']){
-                    getData();
-                }
+          if(data['products']){
+              getData();
+          }
                 
         }
     },[data]);
@@ -80,13 +84,9 @@ export default  function Cart(props) {
       
 
     const onUpdateItem = async(data) => {
-      console.log("datadata",data)
       setIsLoading(true)
       const cartItem = await updateCartItem(data);
-      if(cartItem && cartItem.data){
-        console.log("cartItem.datacartItem.data",cartItem.data)
-        getCartItem()
-      }
+      refreshData()
     }
 
 
@@ -123,29 +123,19 @@ export default  function Cart(props) {
          }
       const cartItem = await deleteCartItem(deleteData);
       if(cartItem && cartItem.status == 200) {
-        setIsLoading(false);
-        getCartItem()
+        refreshData()
       }
      }
-
-     const getCartItem = async() => {
-      const getCartItemDetails = await getCartItem();
-      console.log("getCartItemDetails++",getCartItemDetails);
-      if(getCartItemDetails && getCartItemDetails.status === 404){
+     const refreshData = () => {
+      router.refresh()
+      setTimeout(()=>{
         setIsLoading(false);
-       router.refresh();
-      }else{
-        setData(getCartItemDetails);
-        setIsLoading(false);
-        setIsEmptyCart(false)
-      }
-      
-     }
-        
+      },500)
+    }
+     
   
 
-     if(isEmptyCart)
-       return <EmptyCart />
+ 
       return (
         <>
           <div className={styles.cartPage}>

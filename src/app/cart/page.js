@@ -18,10 +18,12 @@ export default async function Cart() {
       next: { revalidate: 0} 
     })
      getCartItems = await getCartItemResp.json();
+     if(getCartItems && getCartItems.status == 404){
+      getCartItems = []
+     }
   } catch (error) {
     getCartItems = []
   }
-
 
   const isNonEmptyCart = getCartItems && Object.keys(getCartItems).length > 0 ;
   

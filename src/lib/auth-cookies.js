@@ -59,7 +59,6 @@ export const authHeader = async() =>{
   const country = cookies().get('countryId');
 
  
-  console.log("33countrycountry",country)
   if(token && token.value){
     return (
       {

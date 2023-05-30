@@ -14,6 +14,7 @@ import { updateCartItem , getCartItem} from '@/services';
 
 
 export default function OrderSummaryPage({cartData}) {
+  console.log("ORDER SSUMMARY OAF",cartData)
   const router = useRouter();
   const countryList = useCountryList();
   const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
@@ -84,7 +85,7 @@ const calculatePriceDetails = () => {
 const onUpdateItem = async(data) => {
   console.log("datadata",data)
   setIsLoading(true)
-  const cartItem = await updateCartItem()
+  const cartItem = await updateCartItem(data);
   if(cartItem && cartItem.data){
     console.log("cartItem.datacartItem.data",cartItem.data)
     getCartItemData()
@@ -92,12 +93,11 @@ const onUpdateItem = async(data) => {
 }
 
 const getCartItemData = async() => {
-
   const getCartItemDetails = await getCartItem();
   console.log("getCartItemDetails++",getCartItemDetails);
   if(getCartItemDetails && getCartItemDetails.status === 404){
     setIsLoading(false);
-    router.refresh();
+  //  router.refresh();
   }else{
     setData(getCartItemDetails);
     setIsLoading(false);
