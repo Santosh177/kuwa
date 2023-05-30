@@ -9,7 +9,6 @@ export default async function Cart() {
   let getCartItems = []
   try {
     const customHeader = await authHeader();
-    console.log("CART Cuuuuh",customHeader)
     const getCartItemResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
       method: 'GET',
       headers:{

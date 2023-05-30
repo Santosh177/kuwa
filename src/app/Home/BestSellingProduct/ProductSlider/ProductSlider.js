@@ -27,7 +27,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={}}
       setIsLoading(true)
       const res = await addToCart(data);
       setIsLoading(false)
-      router.push('/cart')
+      window.location.href = '/cart';
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
     }
