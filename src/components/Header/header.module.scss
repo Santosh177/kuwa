@@ -164,6 +164,25 @@
                     font-weight: 500;
                     // color: #ADADAD;
                 }
+
+                .searchInput::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                        color: #ADADAD;
+                        opacity: 1; /* Firefox */
+                        font-weight: 500;
+                        font-size: 14px;
+                  }
+                  
+                  .searchInput:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color: #ADADAD;
+                    font-weight: 500;
+                    font-size: 14px;
+                  }
+                  
+                  .searchInput::-ms-input-placeholder { /* Microsoft Edge */
+                    color: #ADADAD;
+                    font-weight: 500;
+                    font-size: 14px;
+                  }
             
                 img{
                     position: absolute;

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useRouter,usePathname } from 'next/navigation';
 
 import {  useCartItems } from '@/context/cartItems';
@@ -49,12 +49,24 @@ const Header = () => {
     const countryList = useCountryList();
     const {selectedCountry={},setSelectedCountry={}} = useCountry();
     const [isLoading , setIsLoading] = useState(false);
-
     const [isShowCountry, setIsShowCountry] = useState(false);
     const [searchTxt, setSearchTxt] = useState("");
+    const inputBoxRef = useRef(null)
+ 
 
+    const handleClickOutside = (event) =>{
+        if (inputBoxRef.current && !inputBoxRef.current.contains(event.target)) {
+            if(searchTxt)
+            setSearchTxt("")
+        }
+    }
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, [inputBoxRef]);
     
-    // console.log("cartItemCOuntcartItemCOunt",cartItemCount)
 
     const onSelectCountry = async(data) =>{
         setSelectedCountry(data);
@@ -107,7 +119,7 @@ const Header = () => {
                     </div>
                     <div>
                     <div className={styles.searchInputWrapper}  >
-                        <input className={styles.searchInput} style={(searchTxt)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchTxt} onChange={(e)=>setSearchTxt(e.target.value)} placeholder='Search by product name' type='text' />
+                        <input ref={inputBoxRef} className={styles.searchInput} style={(searchTxt)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchTxt} onChange={(e)=>setSearchTxt(e.target.value)} placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
                     {searchTxt && <SearchList />}
