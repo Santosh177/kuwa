@@ -33,7 +33,7 @@ const PhoneNumberInput = ({onInputChange={},type="text",fieldName="",value="",pl
         <div className={styles.inputWrapper} style={...style}>
            <PhoneInput
                     country={'ae'}
-                    value={'this.state.phone'}
+                    value={value}
                     onChange={phone => onInputChange(phone,fieldName)}
                     placeholder='fieldName'
                     searchPlaceholder="ss"
