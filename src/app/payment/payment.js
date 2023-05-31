@@ -116,12 +116,13 @@ const calculatePriceDetails = () => {
     const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
     const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['couponCode']}`;
     const userId = getCartItems['customer'] || null;
-    console.log("selectedAddress",selectedAddress)
       let payload = {
         "cartId":getCartItems['id'] || "",
         "orderType": "one-time",
         "userId": userId || "",
-        "addressId": selectedAddress && selectedAddress.id || 511,
+        "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
+        "shippingAddressId":selectedAddress && selectedAddress.id || "",
+        "addressId": selectedAddress && selectedAddress.id || "",
         "countryCode": "AE",
         "countryId": 1,
         "description": description,
