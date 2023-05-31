@@ -1,4 +1,5 @@
-import OrderItem from '../OrderItem/OrderItem'
+import OrderItem from '../OrderItem/OrderItem';
+import OrderDeliveryStatus from '../OrderDeliveryStatus/OrderDeliveryStatus';
 import OrderAddress from '../OrderAddress/OrderAddress';
 import PriceDetails from '@/components/PriceDetails/PriceDetails';
 import styles from './order-details.module.scss'
@@ -10,6 +11,7 @@ export default async function OrderDetails({}) {
   return (
     <div className={styles.orderDetails}>
         <OrderItem />
+        <OrderDeliveryStatus />
         <OrderAddress />
         <PriceDetails />
         <div className={styles.needHelpTxt}>Need help ? <span>Contact Us</span></div>
