@@ -1,3 +1,4 @@
+import StarRating from '../StarRating/StarRating';
 import styles from './order-item.module.scss';
 
 
@@ -37,7 +38,7 @@ export default  function OrderItem({}) {
                 return (
                     <div className={styles.orderInfoDelivered}>
                         <div className={styles.ratingTxt}>Rate the product based on your experience.</div>
-                        <div>star rating</div>
+                        <StarRating />
                     </div>
                 
                 )
