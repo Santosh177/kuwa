@@ -12,7 +12,7 @@ import styles from './home-page.module.scss';
 
 export default async function Home(homePageData) {
     // console.log("homePageData",homePageData)
-    const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[] } = homePageData.homePageData || {};
+    const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[],bestSellings=[] } = homePageData.homePageData || {};
 
 
     
@@ -28,7 +28,7 @@ export default async function Home(homePageData) {
                     <Header />
                 
                     <AssuredInfo assuredInfo={kuwaUsps} />
-                    <BestSellingProduct data={data} />
+                    <BestSellingProduct data={bestSellings} />
                     <BrandMustTry data={brandUMustTry}/>
                     <SecondaryBanner data={secondryBanners}/>
                     {
