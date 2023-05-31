@@ -37,25 +37,28 @@ const Star = (props) => {
 
 const RatingStars = () => {
     const [gradeIndex, setGradeIndex] = useState();
-    const GRADES = ['Poor', 'Fair', 'Good', 'Very good', 'Excellent'];
+    const RATING = [1, 2, 3,4,5];
     const activeStar = {
         fill: '#D6B13E'
     };
 
     const changeGradeIndex = ( index ) => {
+        
         setGradeIndex(index);
     }
+
+    console.log("gradeIndexgradeIndex",gradeIndex)
 
     return (
         <div className="container">
             <div className="stars">
                 {
-                    GRADES.map((grade, index) => (
+                    RATING.map((grade, index) => (
                         <Star 
                             index={index} 
                             key={grade} 
                             changeGradeIndex={changeGradeIndex}
-                            style={ gradeIndex > index ? activeStar : {}}
+                            style={ gradeIndex >= index ? activeStar : {}}
                         />
                     ))
                 }

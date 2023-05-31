@@ -10,6 +10,11 @@ export default async function MyOrders({}) {
     <>
       <PageHeader headerName="My Orders" />
       <OrderItemList />
+      <OrderItemList />
+      <OrderItemList />
+      <OrderItemList />
+      <OrderItemList />
+      <OrderItemList />
     </>
 
   )

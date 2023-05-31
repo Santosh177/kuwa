@@ -1,3 +1,12 @@
 .orderItemList{
     padding: 16px;
+ 
+}
+
+
+@media (min-width:990px){
+    .orderItemList{
+        max-width: 376px;
+        margin: 0 auto;
+    }
 }
