@@ -22,7 +22,7 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
                 data.map((data,index)=>{
                     return(
                         <>
-                            <div className={styles.item} key={index}>{data.itemName}</div>
+                            <div className={styles.item} key={index}>{data.name}</div>
                             <div className={styles.horizontalLine}></div>
                         </>
                     )
@@ -58,40 +58,8 @@ const AccountInfo = ({onclose}) => {
 
 
 
-const MainMenuData = ({onClick}) =>{
+const MainMenuData = ({data,onClick}) =>{
     const {isLogin=false, userData={}} = useAuth();
-    const data = [
-        {
-            "icon":"https://production-website-builds.s3.ap-south-1.amazonaws.com/health.png",
-            "txt": "Health goals",
-            "subTxt":"Collagen, Digestion, Beauty & more",
-            "key":"Health goals"
-        },
-        {
-            "icon":"https://production-website-builds.s3.ap-south-1.amazonaws.com/health.png",
-            "txt": "Brands",
-            "subTxt":"Collagen, Digestion, Beauty & more",
-            "key":"Brands"
-        },
-        {
-            "icon":"https://production-website-builds.s3.ap-south-1.amazonaws.com/health.png",
-            "txt": "For him",
-            "subTxt":"Hair loss, Gym supplement, Skin & more ",
-            "key":"For him"
-        },
-        {
-            "icon":"https://production-website-builds.s3.ap-south-1.amazonaws.com/health.png",
-            "txt": "For her",
-            "subTxt":"Beauty, Skin, Perfect Hair, Workout & more",
-            "key":"For her"
-        },
-        {
-            "icon":"https://production-website-builds.s3.ap-south-1.amazonaws.com/health.png",
-            "txt": "My Account",
-            "subTxt":"Edit profile, Manage address, My orders",
-            "key":"My Account" 
-        }
-    ]
 
     return(
         <>
@@ -101,7 +69,7 @@ const MainMenuData = ({onClick}) =>{
                         if(data.key == "My Account" && !isLogin)
                         return
                         return(
-                            <div className={styles.sideMenuItemCard} onClick={()=>onClick(data.key)} key={index}>
+                            <div className={styles.sideMenuItemCard} onClick={()=>onClick({type:data.type,txt:data.txt})} key={index}>
                             <div className={styles.sideMenuItem}>
                                 <img className={styles.icon} src={data.icon} alt=''/>
                                 <div className={styles.itemInfo}>
@@ -190,48 +158,70 @@ const MyAccount = ({onBack={},onclose={}}) =>{
 
 const SideMenu = ({onclose={}}) => {
     const {isLogin=false, userData={}} = useAuth();
-    const [ key , setKey ] = useState("")
+    const [ key , setKey ] = useState("");
+    const [ sideMenuData , setSideMenuData] = useState([]);
+    const [ childMenuData , setChildMenuData ] = useState([]);
     const onClick = (data) => {
-            setKey(data)
+            setKey(data);
+            getProductTypesData(data.txt)
     }
 
-
     useEffect(()=>{
-        getProductTypesData();
+        getSideMenuData()
     },[])
 
-    const getProductTypesData = async() => {
-        const type = "HEALTH";
-        const getProductTypeRes = await fetch('/api/product-types?super'+type, {
+    const getSideMenuData = async() => {
+        const getSideMenuDataResp = await fetch('/api/side-menu', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             }
           })
+          const getSideMenuData = await getSideMenuDataResp.json();
+          console.log("getSideMenuData",getSideMenuData)
+          setSideMenuData(getSideMenuData);
+    }
+
+
+
+    const getProductTypesData = async(txt) => {
+        let childMenuData = []
+        const getProductTypeRes = await fetch('/api/product-types?super'+txt, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({"superType":txt})
+          })
           const getProductTypeData = await getProductTypeRes.json();
-          console.log("getProductTypeData",getProductTypeData)
+          console.log("getProductTypeData",getProductTypeData);
+          getProductTypeData['list'].map((data,index)=>{
+            const {description={} , id="" } = data || {}
+            childMenuData.push({name:description.name,id:id})
+          })
+          setChildMenuData(childMenuData)
     }
 
 
 
     const renderSideMenu =(key) => {
-        switch (key) {
+        switch (key.txt) {
             case "My Account":
                 return(
                     <MyAccount onBack={()=>setKey("")} onclose={onclose}/>
                 )
-            case "Health goals":
+            case "Health Goals":
                 return(
-                    <SideMenuData  title='Health goals' data={[{itemName:"All Health Goals"},{itemName:'Collagen'}]}  onclose={onclose} onBack={()=>setKey("")}/>
+                    <SideMenuData  title='Health goals' data={childMenuData}  onclose={onclose} onBack={()=>setKey("")}/>
                 )
             case "Brands":
                 return(
-                    <SideMenuData  title='Brands' data={[{itemName:"All Health Goals"},{itemName:'Collagen'}]}  onclose={onclose} onBack={()=>setKey("")}/>
+                    <SideMenuData  title='Brands' data={childMenuData}  onclose={onclose} onBack={()=>setKey("")}/>
                 )
             default:
                 return(<>
                     <AccountInfo  onclose={onclose} />
-                    <MainMenuData onClick={onClick}  />
+                    <MainMenuData data={sideMenuData} onClick={onClick}  />
                     <OtherInfo />
                     {isLogin && <LogOut />}
                 </>)
