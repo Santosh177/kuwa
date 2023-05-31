@@ -5,6 +5,7 @@ import CheckBox from "@/components/Checkbox/Checkbox";
 import PhoneNumberInput from "@/components/PhoneNumberInput/PhoneNumberInput";
 import CreateAccountBox from "../components/CreateAccountBox/CreateAccountBox";
 import { useAuth } from '@/context/userDetail';
+import { useCountry } from '@/context/contryDetails';
 import styles from './address-form.module.scss';
 import { useEffect, useState } from "react";
 
@@ -65,7 +66,6 @@ const validateShippingAddressForm = (formData) => {
 const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
 
     const {isLogin=false, userData={}} = useAuth();
-   
     const onOrderUpdate = async(isOrderUpdate) => {
       let formData = {
         updateWhatsapp: isOrderUpdate
@@ -121,7 +121,7 @@ const ShippingAddressForm = ({onChange={},values={},errors={}}) => {
             {errors.apartment && <span className={styles.errorMsg}>{errors.apartment}</span>}
             <div className={styles.countryContainer}>
                 <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="country" placeHolder="Country *"  value={values['country']} onInputChange={onChange}  />
+                    <Input type="text" fieldName="country" placeHolder="Country *"  value={values['country']} onInputChange={onChange} isDisabled={true} />
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
                 <div className={styles.countryInfoField}>
@@ -150,7 +150,7 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
             {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
             <div className={styles.countryContainer}>
                 <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="country" placeHolder="Country *"  value={values['country']} onInputChange={onChange}  />
+                    <Input type="text" fieldName="country" placeHolder="Country *"  value={values['country']} onInputChange={onChange} isDisabled={true} />
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
                 <div className={styles.countryInfoField}>
@@ -165,10 +165,11 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
 
 export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues}) {
      const {isLogin=false, userData={}} = useAuth();
+     const { selectedCountry={} } = useCountry();
       const [ isSameBillingAddress, setIsSameBillingAddress ] = useState(true);
       const [ personalInfo, setPersonalInfo ] = useState({});
-      const [ shippingAddress, setShippingAddress ] = useState ({});
-      const [ billngAddress, setBillngAddress ] = useState({});
+      const [ shippingAddress, setShippingAddress ] = useState ({country:selectedCountry.name});
+      const [ billngAddress, setBillngAddress ] = useState({country:selectedCountry.name});
       const [personalInfoErrors, setPersonalInfoErrors] = useState({});
       const [shippingAddressErrors, setShippingAddressErrors] = useState({});
       const [billingAddressErrors, setBillingAddressErrors] = useState({});
