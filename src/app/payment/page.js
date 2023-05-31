@@ -6,7 +6,6 @@ import { authHeader } from "../../lib/auth-cookies";
 import styles from './pages.module.scss';
 
 export default async function PaymentPage() {
-  
   let getCartItems = [];
   let paymentModes = [];
   try {

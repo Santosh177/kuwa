@@ -75,7 +75,7 @@ export default async function RootLayout({ children }) {
       selectedCountryData = filteredCountry;
     }
   }
-  
+
 
 
 
