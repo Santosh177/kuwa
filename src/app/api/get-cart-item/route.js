@@ -14,13 +14,18 @@ import { authHeader } from '../../../lib/auth-cookies';
 // }
 export async function GET() {
 
-  const customHeader = await authHeader();
-  console.log("authHeader",authHeader())
-  const cartData =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
-    method: 'GET',
-    headers: customHeader,
-    next: { revalidate: 0} 
-  })
-  const data = await cartData.json();
-  return NextResponse.json(data );
+  try {
+    const customHeader = await authHeader();
+    console.log("authHeader",authHeader())
+    const cartData =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
+      method: 'GET',
+      headers: customHeader,
+      next: { revalidate: 0} 
+    })
+    const data = await cartData.json();
+    return NextResponse.json(data );
+  } catch (error) {
+    return NextResponse.json({});
+  }
+ 
 }
