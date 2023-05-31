@@ -10,12 +10,17 @@ export default async function OrderDetails({}) {
 
   return (
     <div className={styles.orderDetails}>
-        <OrderItem />
-        <OrderDeliveryStatus />
-        <OrderAddress />
-        <PriceDetails />
-        <div className={styles.needHelpTxt}>Need help ? <span>Contact Us</span></div>
-        <div className={styles.cancelOrderBtn}>Cancel my order</div>
+        <div className={styles.orderDetailsLeftContainer}>
+            <OrderItem />
+            <OrderDeliveryStatus />
+            <OrderAddress />
+        </div>
+        <div className={styles.orderDetailsRightContainer}>
+            <PriceDetails />
+            <div className={styles.needHelpTxt}>Need help ? <span>Contact Us</span></div>
+            <div className={styles.cancelOrderBtn}>Cancel my order</div>
+        </div>
+      
         
     </div>
 
