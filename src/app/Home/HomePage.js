@@ -11,10 +11,11 @@ import Loader from '@/components/Loader/Loader';
 import styles from './home-page.module.scss';
 
 export default async function Home(homePageData) {
-    console.log("homePageData",homePageData)
+    // console.log("homePageData",homePageData)
     const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[] } = homePageData.homePageData || {};
 
 
+    
 
     return(
 

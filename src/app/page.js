@@ -1,12 +1,11 @@
 import HomePage from "./Home/HomePage";
-
+import { authHeader } from "@/lib/auth-cookies";
 export default async function Home({}) {
-
-
-  const homePageData  =  await fetch('https://api.kuwa.bevaleo.dev/module/home-page?country=1', {
+  const customHeader = await authHeader();
+  const homePageData  =  await fetch(`https://api.kuwa.bevaleo.dev/module/home-page`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
+    headers:{
+      ...customHeader
     },
     next: { revalidate: 0} 
   })

@@ -80,6 +80,7 @@ const Header = () => {
         const coutryApiData = await coutryApiResp.json();
         setIsShowCountry(false)
         setIsLoading(false)
+        router.refresh();
     }
 
     const onOpenSideMenu = () => {
