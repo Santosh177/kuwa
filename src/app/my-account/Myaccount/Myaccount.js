@@ -75,11 +75,11 @@ export default function SignupCard() {
  
 
     useEffect(()=>{
-        const { firstName="", lastName="", emailAddress="" } = userData || {}
+        const { firstName="", lastName="", emailAddress="", mobNumber="" } = userData || {}
         const userObject = {
             'firstName':firstName,
             'lastName':lastName,
-            'mobNumber':"",
+            'mobNumber':mobNumber,
             'email':emailAddress
         }
     setFormData(userObject)

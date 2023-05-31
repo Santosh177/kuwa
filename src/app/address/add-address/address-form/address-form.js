@@ -16,8 +16,8 @@ const validatePersonalForm = (formData) => {
     if (!formData.lastName) {
       errors.lastName = 'Last name is required.';
     }
-    if(!formData.phone){
-      errors.phone = "Mobile number is required";
+    if(!formData.mobNumber){
+      errors.mobNumber = "Mobile number is required";
     }
     if(!formData.email){
       errors.email = "Email is required";
@@ -65,6 +65,16 @@ const validateShippingAddressForm = (formData) => {
 const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
 
     const {isLogin=false, userData={}} = useAuth();
+   
+    const onOrderUpdate = async(isOrderUpdate) => {
+      let formData = {
+        updateWhatsapp: isOrderUpdate
+      }
+      const res = await fetch('/api/profile-update', {
+        method: 'POST',
+        body:JSON.stringify(formData)
+      })
+    }
     return (
         <div className={styles.personalInfoForm}>
             <div className={styles.headerTxt}>Personal Info</div>
@@ -79,9 +89,12 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
                     {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
                 </div>
             </div>
-            <PhoneNumberInput type="text" fieldName="phone"  value={values['phone']} onInputChange={onChange} />
-            {errors.phone && <span className={styles.errorMsg}>{errors.phone}</span>}
-            <div className={styles.orderUpdate} onClick={()=>onChange(!values['orderUpdate'],'orderUpdate')}>
+            <PhoneNumberInput type="text" fieldName="mobNumber"  value={values['mobNumber']} onInputChange={onChange} />
+            {errors.mobNumber && <span className={styles.errorMsg}>{errors.mobNumber}</span>}
+            <div className={styles.orderUpdate} onClick={()=>{
+              onChange(!values['orderUpdate'],'orderUpdate')
+              onOrderUpdate(!values['orderUpdate'])
+          }}>
                 <CheckBox isChecked={values['orderUpdate']}/>
                 <div className={styles.txt}>Get order updates on WhatsApp</div>
             </div>
@@ -175,12 +188,14 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       
 
       useEffect(()=>{
-        const { firstName="", lastName="", emailAddress="" } = userData || {}
+        const { firstName="", lastName="", emailAddress="", mobNumber="",updateWhatsapp=false } = userData || {}
         const userObject = {
             'firstName':firstName,
             'lastName':lastName,
-            'phone':"",
-            'email':emailAddress
+            'mobNumber':mobNumber,
+            'email':emailAddress,
+            'orderUpdate':updateWhatsapp
+
         }
         setPersonalInfo(userObject)
       },[userData])
@@ -236,7 +251,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
       const onPersonalInfo = (e,fieldName) => {
         let value = ""
-        if(fieldName === 'phone'){
+        if(fieldName === 'mobNumber'){
             value = e;
         }else if(fieldName === 'orderUpdate'){
             value = e;
@@ -249,7 +264,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       
       const onShippingAddress = (e,fieldName) => {
         let value = ""
-        if(fieldName === 'phone'){
+        if(fieldName === 'mobNumber'){
             value = e
         }else{
             value = e.target.value;
@@ -259,7 +274,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
       const onBillngAddress = (e,fieldName) => {
         let value = ""
-        if(fieldName === 'phone'){
+        if(fieldName === 'mobNumber'){
             value = e
         }else{
             value = e.target.value;
