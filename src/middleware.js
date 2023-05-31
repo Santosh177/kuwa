@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const getUser = async (data) => {
 
     try {
-      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${data.value}`, {
+      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${data.userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export async function middleware(req) {
     userData = await getUser({token:token.value , userId:userId.value});
     countryList = await getCountryList();
     if(userData && userData.isLogin){
-      const filteredCountry = countryList.find((data,index)=>data.id == 222)
+      const filteredCountry = countryList.find((data,index)=>data.id == userData.userData.country)
       const selectedCountryData = filteredCountry;
       response.cookies.set("countryId",selectedCountryData.id);
     }

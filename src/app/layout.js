@@ -63,10 +63,10 @@ const getCountryList = async() => {
 export default async function RootLayout({ children }) {
   const userData = await getUser();
   const countryList = await getCountryList();
-  const { isLogin= false } = userData || {}
+  const { isLogin= false, } = userData || {}
   let selectedCountryData = {};
   if(isLogin){
-    const filteredCountry = countryList.find((data,index)=>data.id == 222)
+    const filteredCountry = countryList.find((data,index)=>data.id == userData.userData.country)
     selectedCountryData = filteredCountry;
   }else{
     const countryIdFromCookie = getCountryCookie();
