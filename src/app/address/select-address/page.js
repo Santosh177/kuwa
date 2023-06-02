@@ -1,6 +1,7 @@
 import { AddressProvider } from "@/context/address";
 import PageHeader from '@/components/PageHeader/PageHeader';
 import ListOfAddress from '../component/ListOfAddress/ListOfAddress';
+import AddAddress from '../add-address/page';
 import { authHeader } from "../../../lib/auth-cookies";
 
 export default async function SelectAddress() {

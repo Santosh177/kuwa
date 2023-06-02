@@ -1,5 +1,6 @@
 'use client';
 import { useRouter,usePathname } from 'next/navigation';
+import Loader from '@/components/Loader/Loader';
 import AddressInfo from '../AddressInfo/AddressInfo';
 import { useAddressData } from "@/context/address";
 import SubmitBtn from '../SubmitBtn/SubmitBtn';
@@ -7,13 +8,15 @@ import styles from './list-of-address.module.scss'
 import { useEffect, useState } from 'react';
 
 
-export default function ListOfAddress({}) {
+export default function ListOfAddress({addressList}) {
   const router = useRouter();
   const pathName = usePathname();
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [selectedAdddressId, setSelectedAddressId] = useState(null);
+  const [ isLoading , setIsLoading] = useState(false)
 
   const onRemoveAddress = async(addressId) =>{
+    setIsLoading(true)
     const removeAddressResp  =  await fetch(`/api/delete-address`, {
       method: 'POST',
       headers:{
@@ -23,8 +26,7 @@ export default function ListOfAddress({}) {
       next: { revalidate: 0} 
     })
     const removeAddress = await removeAddressResp.json();
-
-    
+    setIsLoading(false)
     const filterAddressId = listOfAddress.filter((data,index)=> data.id != removeAddress.id);
     const isSelectedAddressId = removeAddress.id === selectedAddress.id;
     if(isSelectedAddressId){
@@ -63,11 +65,11 @@ export default function ListOfAddress({}) {
             <div className={styles.addressInfoContainer}>
                 {
                     listOfAddress.map((data,index)=>{
-                        const addressTxt = data.address +" " +data.apartment + " " +data.city + " " +data.country || "";
+                        const addressTxt = data.address +" " +data.apartment + " " +data.country || "";
                         const addressData = {
                             userName:data.firstName + " " + data.lastName,
                             addressTxt:addressTxt,
-                            phoneNo:data.phone || "",
+                            mobNumber:data.mobNumber || "",
                             id:data.id
                         }
                         const isSelected = (selectedAddress.id == data.id);
@@ -78,7 +80,8 @@ export default function ListOfAddress({}) {
                 }
             </div>
           </div>
-          <SubmitBtn btnName='Save & proceed' onClick={onSelectAddress} />
+          {listOfAddress && listOfAddress.length > 0 && <SubmitBtn btnName='Save & proceed' onClick={onSelectAddress} />}
+          <Loader isShow={isLoading} />
         </>
        
       )
