@@ -81,11 +81,11 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
            {(!isEdit && !isLogin) && <CreateAccountBox />}
             <div className={styles.userNameContainer}>
                 <div className={styles.nameField}>
-                    <Input type="text" fieldName="firstName" placeHolder="First name *"   value={values['firstName']} onInputChange={onChange} isDisabled={isEdit && values['firstName']} />
+                    <Input type="text" fieldName="firstName" placeHolder="First name *"   value={values['firstName']} onInputChange={onChange}  />
                     {errors.firstName && <span className={styles.errorMsg}>{errors.firstName}</span>}
                 </div>
                 <div className={styles.nameField}>
-                    <Input type="text" fieldName="lastName" placeHolder="Last name *"  value={values['lastName']} onInputChange={onChange} isDisabled={isEdit &&  values['lastName']} />
+                    <Input type="text" fieldName="lastName" placeHolder="Last name *"  value={values['lastName']} onInputChange={onChange} />
                     {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
                 </div>
             </div>
@@ -161,6 +161,43 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
     )
 }
 
+const getShippingAddressData = (data) => {
+  return(
+    {
+      "firstName": data.firstName,
+      "lastName": data.lastName,
+      "mobNumber": data.mobNumber,
+      "email": data.email,
+      "country": data.country,
+      "address": data.address,
+      "apartment": data.apartment,
+      "stateProvince":data.stateProvince ,
+      "sameAddressForBilling": data.sameAddressForBilling,
+      "billingAddress":data.billingAddress,
+      "isDefaultAddress": data.isDefaultAddress,
+      "isActive": data.isActive
+    }
+  )
+}
+
+const getBillingAddressData = (data) => {
+  console.log("biii",data)
+  return(
+    {
+      "firstName": data.firstName,
+      "lastName": data.lastName,
+      "mobNumber": data.mobNumber,
+      "email": data.email,
+      "country": data.country,
+      "address": data.address,
+      "apartment": data.apartment,
+      "stateProvince":data.stateProvince ,
+      "isDefaultAddress": data.isDefaultAddress,
+      "isActive": data.isActive
+    }
+  )
+}
+
 
 export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues}) {
      const {isLogin=false, userData={}} = useAuth();
@@ -175,14 +212,23 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
       useEffect(()=>{
         if(isEdit && formData && Object.keys(formData).length > 0){
-            const { address="", apartment="", country=""  , stateProvince=""} = formData || {}
-            const shippingAddressObject = {
-                'address':address,
-                'apartment':apartment,
-                'country':country,
-                'stateProvince':stateProvince
+          console.log("formData",formData)
+
+
+            
+            setShippingAddress(getShippingAddressData(formData['shippingAddress']));
+            setBillngAddress(getBillingAddressData(formData['billingAddress']));
+            setIsSameBillingAddress(formData['shippingAddress'].sameAddressForBilling || false)
+            const { firstName="", lastName="", email="", mobNumber="",orderUpdate=false } = formData['shippingAddress'] || {}
+            const userObject = {
+                'firstName':firstName,
+                'lastName':lastName,
+                'mobNumber':mobNumber,
+                'email':email,
+                'orderUpdate':orderUpdate
+    
             }
-            setShippingAddress(shippingAddressObject)
+            setPersonalInfo(userObject)
         }
       },[formData]);
       
@@ -196,6 +242,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
             'email':emailAddress
 
         }
+        if(!isEdit)
         setPersonalInfo(userObject)
       },[userData])
 
