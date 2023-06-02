@@ -28,7 +28,7 @@ export default function ListOfAddress({}) {
     const filterAddressId = listOfAddress.filter((data,index)=> data.id != removeAddress.id);
     const isSelectedAddressId = removeAddress.id === selectedAddress.id;
     if(isSelectedAddressId){
-      const defaultAddress = filterAddressId.find((data) => data.isDefault);
+      const defaultAddress = filterAddressId.find((data) => data.isDefaultAddress);
       if(defaultAddress){
         setSelectedAddress(defaultAddress)
       }else{

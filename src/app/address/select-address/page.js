@@ -19,7 +19,7 @@ export default async function SelectAddress() {
       return (
         <>
             <PageHeader headerName='Select Address' />
-            <ListOfAddress  addressList = {getAddress['billingAddresses'] || []}/>
+            <ListOfAddress  addressList = {getAddress['shippingAddress'] || []}/>
         </>
        
       )

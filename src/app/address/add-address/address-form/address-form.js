@@ -193,8 +193,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
             'firstName':firstName,
             'lastName':lastName,
             'mobNumber':mobNumber,
-            'email':emailAddress,
-            'orderUpdate':updateWhatsapp
+            'email':emailAddress
 
         }
         setPersonalInfo(userObject)
@@ -227,6 +226,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
                 }
                 if(isSameBillingAddress){
                     combineFormData['billingAddress'] ={...personalInfo,...shippingAddress}
+                    combineFormData['shippingAddress']['sameAddressForBilling'] = true;
                 }else{
                     combineFormData['billingAddress'] = {...personalInfo,...billngAddress}
                 }
