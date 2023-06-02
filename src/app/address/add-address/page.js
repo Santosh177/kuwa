@@ -1,6 +1,7 @@
 'use client';
 import { useRouter,useSearchParams } from 'next/navigation';
 import PageHeader from "@/components/PageHeader/PageHeader";
+import Loader from "@/components/Loader/Loader";
 import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import AddressForm from "./address-form/address-form";
 import SubmitBtn from "./components/SubmitBtn/SubmitBtn";
@@ -16,6 +17,7 @@ export default function AddAddress() {
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [ addressData, setAddressData] = useState({});
   const [ getFormValues , setGetFormValues] = useState(0);
+  const [ isLoading , setIsLoading] = useState(false);
 
 
     const onFormData = (formData) => {
@@ -29,6 +31,7 @@ export default function AddAddress() {
     const onGetFormValues = async(data) => {
       console.log("datadata",data)
       try {
+        setIsLoading(true)
         const res = await fetch('/api/save-address', {
           method: 'POST',
           headers: {
@@ -36,6 +39,7 @@ export default function AddAddress() {
           },
           body:JSON.stringify(data)
         })
+        setIsLoading(false)
         if (res.status === 200) {
           const saveAddress = await res.json()
           setSelectedAddress(saveAddress['shippingAddress']);
@@ -65,6 +69,7 @@ export default function AddAddress() {
               <AddressForm  getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>
               <SubmitBtn onSaveAddress={onSaveAddress}/>
           </div>
+          <Loader  isShow={isLoading}/>
         </>
       )
     }

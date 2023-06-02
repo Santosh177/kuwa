@@ -1,5 +1,5 @@
 'use client';
-
+import { useEffect, useState } from "react";
 import Input from "@/components/Input/Input";
 import CheckBox from "@/components/Checkbox/Checkbox";
 import PhoneNumberInput from "@/components/PhoneNumberInput/PhoneNumberInput";
@@ -7,7 +7,7 @@ import CreateAccountBox from "../components/CreateAccountBox/CreateAccountBox";
 import { useAuth } from '@/context/userDetail';
 import { useCountry } from '@/context/contryDetails';
 import styles from './address-form.module.scss';
-import { useEffect, useState } from "react";
+
 
 const validatePersonalForm = (formData) => {
     const errors = {};
@@ -66,15 +66,15 @@ const validateShippingAddressForm = (formData) => {
 const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
 
     const {isLogin=false, userData={}} = useAuth();
-    const onOrderUpdate = async(isOrderUpdate) => {
-      let formData = {
-        updateWhatsapp: isOrderUpdate
-      }
-      const res = await fetch('/api/profile-update', {
-        method: 'POST',
-        body:JSON.stringify(formData)
-      })
-    }
+    // const onOrderUpdate = async(isOrderUpdate) => {
+    //   let formData = {
+    //     updateWhatsapp: isOrderUpdate
+    //   }
+    //   const res = await fetch('/api/profile-update', {
+    //     method: 'POST',
+    //     body:JSON.stringify(formData)
+    //   })
+    // }
     return (
         <div className={styles.personalInfoForm}>
             <div className={styles.headerTxt}>Personal Info</div>
@@ -93,12 +93,11 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
             {errors.mobNumber && <span className={styles.errorMsg}>{errors.mobNumber}</span>}
             <div className={styles.orderUpdate} onClick={()=>{
               onChange(!values['orderUpdate'],'orderUpdate')
-              onOrderUpdate(!values['orderUpdate'])
           }}>
                 <CheckBox isChecked={values['orderUpdate']}/>
                 <div className={styles.txt}>Get order updates on WhatsApp</div>
             </div>
-            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange} isDisabled={isEdit && values['email']}   />
+            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange} isDisabled={isLogin || (isEdit && values['email'])}   />
             {errors.email && <span className={styles.errorMsg}>{errors.email}</span>}
         </div>
     )
