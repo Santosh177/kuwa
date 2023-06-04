@@ -51,7 +51,7 @@ export default  function Cart({cartData}) {
 
 
     const getData = async() => {
-        const getCartItem = await getCartItemDetails(data['products']);
+        const getCartItem = await getCartItemDetails(data['products'],data.currency);
         setCartItems(getCartItem)
     }
     

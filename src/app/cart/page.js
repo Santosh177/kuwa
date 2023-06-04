@@ -24,6 +24,7 @@ export default async function Cart() {
     getCartItems = []
   }
 
+  console.log("getCartItems,",getCartItems)
   const isNonEmptyCart = getCartItems && Object.keys(getCartItems).length > 0 ;
   
       return (

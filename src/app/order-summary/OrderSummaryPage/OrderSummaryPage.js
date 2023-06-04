@@ -58,7 +58,7 @@ export default function OrderSummaryPage({cartData}) {
 
 
 const getData = async() => {
-    const getCartItem = await getCartItemDetails(data['products']);
+    const getCartItem = await getCartItemDetails(data['products'],data.currency);
     setCartItems(getCartItem)
 }
 

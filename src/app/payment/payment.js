@@ -177,7 +177,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
 
   const getData = async() => {
-      const getCartItem = await getCartItemDetails(data['products']);
+      const getCartItem = await getCartItemDetails(data['products'],data.currency);
       setCartItems(getCartItem)
   }
 
