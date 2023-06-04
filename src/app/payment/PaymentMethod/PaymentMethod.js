@@ -19,7 +19,7 @@ const CheckBox = ({isChecked=false}) => {
 
 const CardOption = ({isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
   const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
-  const [ isShowCard , setIsShowCard] = useState(false)
+  const [ isShowCard , setIsShowCard] = useState(selectedPaymentMethod === "CHECKOUT_CARD");
   return(
     <div className={styles.creditCardOption}>
         <div className={styles.paymentTypeHeaderTxt}>
@@ -29,12 +29,11 @@ const CardOption = ({isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
             <div className={styles.paymentInfoWrapper} >
               <div className={styles.paymentInfoContainer} onClick={(e)=>{
                 if(isCheckoutCard){
-                  setIsShowCard(!isShowCard)
+                  setIsShowCard(true)
                   setSelectedPaymentMethod("CHECKOUT_CARD")
                 }else if(isTapCard){
                   setSelectedPaymentMethod("TAP")
                 }
-               
             } }>
                 <div className={styles.paymentInfo}>
                     <img className={styles.visa} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/visa.png'/>

@@ -82,7 +82,7 @@ export default function CheckoutFrames({onPayment}) {
     >
       <div  className={styles['checkout-frames-container']}>
         <div  className={styles['checkout-frame-details']}>
-        <div  className={styles['frames-card-number-container']}>
+        <div  className={styles['frames-card-number-container']} style={{width:'366px'}}>
           <CardNumber placeholder="Card number" style={{height:'48px'}} />
         </div>
         <div  className={styles['frames-card-details-container']}>
