@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { usePaymentPageData } from '@/context/payment';
 import { createCouponPayload } from '@/utils';
+import Loader from '@/components/Loader/Loader';
 import styles from './coupon-code.module.scss';
 
 const Input = ({onInputChange={},type="text",fieldName="",value="",placeHolder="",isError="",errorMsg="",isDisabled="",style={}}) => {
@@ -25,10 +26,12 @@ const Input = ({onInputChange={},type="text",fieldName="",value="",placeHolder="
 export default function CouponCode() {
      const {cartItems=[], setCouponCodeData , couponCodeData} = usePaymentPageData();
      const [couponCode , setCouponCode] = useState("");
+     const [isLoading , setIsLoading] = useState(false);
 
 
      const onCouponApply = async() => {
       if(!(Object.keys(couponCodeData).length>0)){
+        setIsLoading(true)
         const data = await createCouponPayload(cartItems);
           const couponPayload = {
             "couponCode": couponCode,
@@ -42,6 +45,7 @@ export default function CouponCode() {
             body:JSON.stringify(couponPayload)
           })
           const couponApiResp = await res.json();
+          setIsLoading(false)
           if(couponApiResp && couponApiResp.discount && couponApiResp.discount > 0){
             setCouponCodeData(couponApiResp);
           }else{
@@ -51,6 +55,7 @@ export default function CouponCode() {
      }
 
       return (
+        <>
         <div className={styles.couponCodeWrapper}>
             <div className={styles.headerTxt}>Discount code or Gift card</div>
             <div className={styles.couponCodeContainer}>
@@ -62,6 +67,8 @@ export default function CouponCode() {
             </div>
            {<div className={styles.couponMsg} style={{color:((couponCodeData.reason== "Applied Successfully" )?'green':'red')}}>{couponCodeData.couponApplied || ""}</div>}
         </div>
+        <Loader isShow={isLoading} />
+        </>
       )
     }
     
