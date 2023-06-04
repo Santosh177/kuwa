@@ -7,7 +7,7 @@ import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
-import PaymentFooterBtn from "@/components/PaymentFooterBtn/PaymentFooterBtn";
+import PaymentFooterBtn from "./components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails , createPayloadForCartItems , createPayloadForItems} from "@/utils";
 import { useRouter } from 'next/navigation';
 import { useAddressData } from "@/context/address";
@@ -82,7 +82,7 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
 }
 
 const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={},onPayment={}}) => {
-  console.log("priceDetailspriceDetails",priceDetails)
+  const { selectedPaymentMethod=""} = usePaymentPageData();
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
@@ -97,12 +97,13 @@ const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , on
               <div className={styles.paymentMethod}>
                 <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
               </div>
-              <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
+              <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed:{}}} isEnable={selectedPaymentMethod != ""} />
       </div>
   )
 }
 
 const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={}}) => {
+  const { selectedPaymentMethod=""} = usePaymentPageData();
   return(
     <div className={styles.orderSummary}>
     <div className={styles.couponCode}>
@@ -115,7 +116,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
       <div className={styles.headerTxt}>Price Details</div>
       <PriceDetails data={priceDetails}/>
     </div>
-    <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
+    <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed:{}}} isEnable={selectedPaymentMethod != ""} />
 </div>
   )
 }
