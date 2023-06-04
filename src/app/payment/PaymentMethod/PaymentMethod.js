@@ -53,25 +53,18 @@ const CardOption = ({isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
 }
 
 
-const PayWithEmi = ({ isTamara=false,isTabby=false,price=0,onPayment={}}) =>{
+const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price=0,onPayment={}}) =>{
   const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
-  const tamaraInstallment = 3;
-  const tamaraMinLimit = 100;
-  const tamaraMaxLimit = 2000;
-  const decimals = {
-    AED: 2,
-    SAR: 2,
-    KWD: 3,
-    BDH: 3,
-  };
-  const splittedPrice = (parseFloat(price) / tamaraInstallment).toFixed(decimals["AED"]);
-  const isShow = (parseFloat(price) > 0)&&(parseFloat(price) >= parseFloat(tamaraMinLimit)) && (parseFloat(price) <= parseFloat(tamaraMaxLimit));
+  const { maxLimit:tamaraMaxLimit,minLimit:tamaraMinLimit,installment:tamaraInstallment } = paymentMethodConfig && paymentMethodConfig['tamara'] || {};
 
+  const splittedPrice = (parseFloat(price) / tamaraInstallment).toFixed(2);
+  const isShow = (parseFloat(price) > 0)&&(parseFloat(price) >= parseFloat(tamaraMinLimit)) && (parseFloat(price) <= parseFloat(tamaraMaxLimit));
+  
   const tabbyInstallment = 4;
   const tabbyMinLimit = 100;
   const tabbyMaxLimit = 2000;
 
-  const splittedPriceTabby = (parseFloat(price) / tabbyInstallment).toFixed(decimals["AED"]);
+  const splittedPriceTabby = (parseFloat(price) / tabbyInstallment).toFixed(2);
   const isShowTabby = (parseFloat(price) > 0)&&(parseFloat(price) >= parseFloat(tabbyMinLimit)) && (parseFloat(price) <= parseFloat(tabbyMaxLimit));
   
 
@@ -82,7 +75,7 @@ const PayWithEmi = ({ isTamara=false,isTabby=false,price=0,onPayment={}}) =>{
         <div className={styles.txt}>Pay with Emi</div>
       </div>
       <div className={styles.paymentOptionsList}>
-          {(isTamara) && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("TAMARA")}>
+          {(isTamara && isShow) && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("TAMARA")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
                 <div className={styles.desc}>
@@ -92,7 +85,7 @@ const PayWithEmi = ({ isTamara=false,isTabby=false,price=0,onPayment={}}) =>{
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
           </div>}
-         {(isTabby) && <div className={styles.paymentOptionItem} onClick={()=>setSelectedPaymentMethod("TABBY")}>
+         {(isTabby && isShowTabby) && <div className={styles.paymentOptionItem} onClick={()=>setSelectedPaymentMethod("TABBY")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
                 <div className={styles.desc}>
@@ -159,7 +152,7 @@ export default  function PaymentMethod({paymentMethodConfig,price=0}) {
             <div className={styles.headerTxt}>Payment Method</div>
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
             {(isCheckoutCard || isTapCard) &&<CardOption isCheckoutCard={isCheckoutCard} isTapCard={isTapCard} />}
-            {(isTamara || isTabby) && <PayWithEmi price={price} isTamara={isTamara} isTabby={isTabby}  />}
+            {(isTamara || isTabby) && <PayWithEmi paymentMethodConfig={paymentMethodConfig} price={price} isTamara={isTamara} isTabby={isTabby}  />}
             {(isApplePay || isCod) && <OtherPaymentMethod isApplePay={isApplePay} isCod={isCod}  />}
         </div>
       )

@@ -15,7 +15,7 @@ import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
 import {getCartItem} from '@/services';
 
-const getActivePaymentMethod = (paymentModes) => {
+const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
       card_checkout: {
         isEnable: false,
@@ -25,7 +25,7 @@ const getActivePaymentMethod = (paymentModes) => {
       },
       tamara: {
         isEnable: false,
-        installment:"",
+        installment:3,
         minLimit:"",
         maxLimit:""
       },
@@ -56,6 +56,12 @@ const getActivePaymentMethod = (paymentModes) => {
         config['tamara']['paymentMode'] =  data.paymentMode;
         config['tamara']['paymentGateway'] =  data.paymentGateway;
         config['tamara']['isEnable'] =  true;
+        if (tamaraConfig && tamaraConfig.length > 0) {
+          const getMinLimit = tamaraConfig[0] && tamaraConfig[0]['min_limit'] && tamaraConfig[0]['min_limit']['amount'] || 0;
+          const getMaxLimit = tamaraConfig[0] && tamaraConfig[0]['max_limit'] && tamaraConfig[0]['max_limit']['amount'] || 0;
+          config['tamara']['minLimit'] = getMinLimit;
+          config['tamara']['maxLimit'] = getMaxLimit;
+      }
       }else if(data.paymentMode === "TABBY"){
         config['tabby']['paymentMode'] =  data.paymentMode;
         config['tabby']['paymentGateway'] =  data.paymentGateway;
@@ -114,7 +120,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
   )
 }
 
-export default function Payment({cartData,paymentModes}) {
+export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const router = useRouter();
   const {couponCodeData={}, selectedPaymentMethod=""} = usePaymentPageData();
   const countryList = useCountryList();
@@ -125,7 +131,7 @@ export default function Payment({cartData,paymentModes}) {
   const [ cartItems , setCartItems] = useState([]);
   const [ priceDetails , setPriceDetails] = useState({});
   const [ isLoader , setIsLoader] = useState(false);
-  const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes));
+  const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,tamaraConfig));
 
   console.log("paymentMethodConfigpaymentMethodConfig",paymentMethodConfig)
 
