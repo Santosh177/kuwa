@@ -3,15 +3,15 @@ import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import CheckoutFrames from '../components/CheckoutFrames/CheckoutFrames';
 import { usePaymentPageData } from '@/context/payment';
 import styles from './payment-method.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const CheckBox = ({isChecked=false}) => {
   return(
     <div className={styles['payment-options-checkbox']}>
       <div className={styles['checkbox-container']}>
-          <input type="checkbox" checked={isChecked}/>
-          <span className={styles.checkmark}></span>
+          {!isChecked?<span className={styles.checkmark}></span>:
+          <img className={styles.checked}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/check_uncheck.png' alt='check'/>}
         </div>
     </div>
   )
@@ -19,7 +19,14 @@ const CheckBox = ({isChecked=false}) => {
 
 const CardOption = ({isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
   const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
-  const [ isShowCard , setIsShowCard] = useState(selectedPaymentMethod === "CHECKOUT_CARD");
+  const [ isShowCard , setIsShowCard] = useState(false);
+
+  useEffect(()=>{
+    const isShowCard = (selectedPaymentMethod === "CHECKOUT_CARD" )
+    if(!isShowCard)
+    setIsShowCard(false);
+  },[selectedPaymentMethod])
+  
   return(
     <div className={styles.creditCardOption}>
         <div className={styles.paymentTypeHeaderTxt}>

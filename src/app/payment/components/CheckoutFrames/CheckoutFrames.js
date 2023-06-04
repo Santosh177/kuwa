@@ -16,8 +16,7 @@ export default function CheckoutFrames({onPayment}) {
 
       const PUBLIC_KEY = 'pk_sbox_y4kryfiio2emn57e2pdayxfpre5';
 
-      const cardNumber = "Card Number";
-      const expiryDate="Expiry (MM/YYYY)";
+
       const cvvTxt = "Security code";
       const placeHolderExpiryDate = "MM";
       const placeholderExpiryYY = "YY";
