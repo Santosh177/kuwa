@@ -36,7 +36,7 @@ export default async function PaymentPage() {
       next: { revalidate: 0} 
     })
     const paymentModeData = await getPaymentConfigData.json();
-    paymentModes = paymentModeData.find((data, index)=> data.countryId == 186).paymentModes;
+    paymentModes = paymentModeData.find((data, index)=> data.countryId == 222).paymentModes;
   } catch (error) {
     
   }

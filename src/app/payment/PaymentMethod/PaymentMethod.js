@@ -1,6 +1,7 @@
 'use client';
 import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import CheckoutFrames from '../components/CheckoutFrames/CheckoutFrames';
+import { usePaymentPageData } from '@/context/payment';
 import styles from './payment-method.module.scss';
 import { useState } from 'react';
 
@@ -16,10 +17,9 @@ const CheckBox = ({isChecked=false}) => {
   )
 }
 
-const CardOption = ({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayment={} , isCheckoutCard=false , isTapCard=false}) => {
-
+const CardOption = ({isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
+  const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
   const [ isShowCard , setIsShowCard] = useState(false)
-
   return(
     <div className={styles.creditCardOption}>
         <div className={styles.paymentTypeHeaderTxt}>
@@ -30,9 +30,9 @@ const CardOption = ({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayme
               <div className={styles.paymentInfoContainer} onClick={(e)=>{
                 if(isCheckoutCard){
                   setIsShowCard(!isShowCard)
-                  onSelectedPaymentMethod("CHECKOUT_CARD")
+                  setSelectedPaymentMethod("CHECKOUT_CARD")
                 }else if(isTapCard){
-                  onSelectedPaymentMethod("TAP")
+                  setSelectedPaymentMethod("TAP")
                 }
                
             } }>
@@ -53,8 +53,8 @@ const CardOption = ({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayme
 }
 
 
-const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}, isTamara=false,isTabby=false,price=0}) =>{
-
+const PayWithEmi = ({ isTamara=false,isTabby=false,price=0,onPayment={}}) =>{
+  const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
   const tamaraInstallment = 3;
   const tamaraMinLimit = 100;
   const tamaraMaxLimit = 2000;
@@ -82,7 +82,7 @@ const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}, isTama
         <div className={styles.txt}>Pay with Emi</div>
       </div>
       <div className={styles.paymentOptionsList}>
-          {(isTamara && isShow) && <div className={styles.paymentOptionItem} onClick={()=> onSelectedPaymentMethod("TAMARA")}>
+          {(isTamara) && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("TAMARA")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
                 <div className={styles.desc}>
@@ -92,7 +92,7 @@ const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}, isTama
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
           </div>}
-         {(isTabby && isShowTabby) && <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("TABBY")}>
+         {(isTabby) && <div className={styles.paymentOptionItem} onClick={()=>setSelectedPaymentMethod("TABBY")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
                 <div className={styles.desc}>
@@ -108,7 +108,8 @@ const PayWithEmi = ({selectedPaymentMethod="",onSelectedPaymentMethod={}, isTama
   )
 }
 
-const OtherPaymentMethod = ({selectedPaymentMethod="",onSelectedPaymentMethod={}}) => {
+const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
+  const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
   return(
   <div className={styles.payWithEmi}>
       <div className={styles.headerContainer}>
@@ -116,7 +117,7 @@ const OtherPaymentMethod = ({selectedPaymentMethod="",onSelectedPaymentMethod={}
         <div className={styles.txt}>Other payment option</div>
       </div>
       <div className={styles.paymentOptionsList}>
-          <div className={styles.paymentOptionItem} onClick={()=> onSelectedPaymentMethod("APPLE_PAY")}>
+          <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("APPLE_PAY")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/apple_pay.png' alt='logo'/>
                 <div className={styles.desc}>
@@ -125,7 +126,7 @@ const OtherPaymentMethod = ({selectedPaymentMethod="",onSelectedPaymentMethod={}
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'APPLE_PAY'}/>
           </div>
-          <div className={styles.paymentOptionItem} onClick={()=>onSelectedPaymentMethod("COD")}>
+          <div className={styles.paymentOptionItem} onClick={()=>setSelectedPaymentMethod("COD")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cash_on_delivery.png' alt='logo'/>
                 <div className={styles.desc}>
@@ -141,37 +142,25 @@ const OtherPaymentMethod = ({selectedPaymentMethod="",onSelectedPaymentMethod={}
 }
 
 
-const getPaymentOption = (paymentModes=[], data={}) => {
-  let paymentOptionStatus = false
-  for (const index in paymentModes) {
-    const { paymentMode = "", paymentGateway="" } = paymentModes[index] || {};
-    if(paymentMode == data.paymentMode && paymentGateway == data.paymentGateway){
-      paymentOptionStatus = true;
-      break;
-    }
-  }
-  return paymentOptionStatus;
-}
 
 
+export default  function PaymentMethod({paymentMethodConfig,price=0}) {
 
-export default  function PaymentMethod({selectedPaymentMethod="",onSelectedPaymentMethod={},onPayment={},paymentModes=[],price=0}) {
+    const isCheckoutCard = paymentMethodConfig['card_checkout']['isEnable'];
+    const isTapCard = paymentMethodConfig['card_tap']['isEnable'];
+    const isTamara =  paymentMethodConfig['tamara']['isEnable'];
+    const isTabby =  paymentMethodConfig['tabby']['isEnable'];
+    const isApplePay =  paymentMethodConfig['applePay']['isEnable'];
+    const isCod =  paymentMethodConfig['cod']['isEnable'];
 
-
-    const isCheckoutCard = getPaymentOption(paymentModes,{"paymentMode":"CARD","paymentGateway":"CHECKOUT"});
-    const isTapCard = getPaymentOption(paymentModes,{"paymentMode":"CARD","paymentGateway":"TAP"});
-    const isTamara =  getPaymentOption(paymentModes,{"paymentMode":"TAMARA","paymentGateway":"TAMARA"});
-    const isTabby =  getPaymentOption(paymentModes,{"paymentMode":"TABBY","paymentGateway":"TABBY"});
-    const isApplePayCheckout =  getPaymentOption(paymentModes,{"paymentMode":"APPLE_PAY","paymentGateway":"CHECKOUT"});
-    const isApplePayTap =  getPaymentOption(paymentModes,{"paymentMode":"APPLE_PAY","paymentGateway":"TAP"});
    
       return (
         <div className={styles.paymentMethodWrapper}>
             <div className={styles.headerTxt}>Payment Method</div>
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
-          {(isCheckoutCard || isTapCard) &&<CardOption isCheckoutCard={isCheckoutCard} isTapCard={isTapCard} selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod} onPayment={(data)=>onPayment(data)}/>}
-          { (isTamara || isTabby) && <PayWithEmi price={price} isTamara={isTamara} isTabby={isTabby} selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod}/>}
-            <OtherPaymentMethod isApplePayCheckout={isApplePayCheckout} isApplePayTap={isApplePayTap}  selectedPaymentMethod={selectedPaymentMethod} onSelectedPaymentMethod={onSelectedPaymentMethod} />
+            {(isCheckoutCard || isTapCard) &&<CardOption isCheckoutCard={isCheckoutCard} isTapCard={isTapCard} />}
+            {(isTamara || isTabby) && <PayWithEmi price={price} isTamara={isTamara} isTabby={isTabby}  />}
+            {(isApplePay || isCod) && <OtherPaymentMethod isApplePay={isApplePay} isCod={isCod}  />}
         </div>
       )
     }

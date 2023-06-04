@@ -11,14 +11,22 @@ export const PaymentPageContext = React.createContext({})
 export const PaymentPageProvider = ({ children,cartItemsResp }) => {
    
   const cartItems  = cartItemsResp && cartItemsResp['products'] || [];
-  const [ couponCodeData , setCouponCodeData] = useState({})
+  const [ couponCodeData , setCouponCodeData] = useState({});
+  const [ selectedPaymentMethod , setSelectedPaymentMethod] = useState({});
 
   console.log("cartItemsRespcartItemsResp",cartItems)
 
 
+  let data = {
+    cartItems,
+    couponCodeData,
+    selectedPaymentMethod,
+    setCouponCodeData,
+    setSelectedPaymentMethod
+  }
   
   
-  return <PaymentPageContext.Provider value={{cartItems,couponCodeData,setCouponCodeData}}>{children}</PaymentPageContext.Provider>
+  return <PaymentPageContext.Provider value={data}>{children}</PaymentPageContext.Provider>
 }
 
 
