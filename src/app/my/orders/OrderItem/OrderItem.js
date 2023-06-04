@@ -10,8 +10,6 @@ import styles from './order-item.module.scss';
 export default  function OrderItem({}) {
 
 
-
-
     const renderOrderStatus = (orderStatus) => {
         switch (orderStatus) {
             case "ORDER_IN_PROCESS":

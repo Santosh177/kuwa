@@ -18,7 +18,7 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={}}) => {
             <div className={styles.cartItemContainer}>
                 <img src={image}></img>
                 <div className={styles.quantityContainer}>
-                    <div className={styles.quantityBtn} onClick={()=>(qty > 0) && onUpdateItem({product:id,quantity:qty-1})}>-</div>
+                    <div className={styles.quantityBtn} onClick={()=>(qty > 1) && onUpdateItem({product:id,quantity:qty-1})}>-</div>
                     <span>{qty}</span>
                     <div className={styles.quantityBtn} onClick={()=>onUpdateItem({product:id,quantity:qty+1})}>+</div>
                 </div>

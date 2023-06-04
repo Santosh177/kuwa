@@ -156,30 +156,13 @@ const MyAccount = ({onBack={},onclose={}}) =>{
     )
 }
 
-const SideMenu = ({onclose={}}) => {
+const SideMenu = ({onclose={},sideMenuData=[]}) => {
     const {isLogin=false, userData={}} = useAuth();
     const [ key , setKey ] = useState("");
-    const [ sideMenuData , setSideMenuData] = useState([]);
     const [ childMenuData , setChildMenuData ] = useState([]);
     const onClick = (data) => {
             setKey(data);
             getProductTypesData(data.txt)
-    }
-
-    useEffect(()=>{
-        getSideMenuData()
-    },[])
-
-    const getSideMenuData = async() => {
-        const getSideMenuDataResp = await fetch('/api/side-menu', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            }
-          })
-          const getSideMenuData = await getSideMenuDataResp.json();
-          console.log("getSideMenuData",getSideMenuData)
-          setSideMenuData(getSideMenuData);
     }
 
 

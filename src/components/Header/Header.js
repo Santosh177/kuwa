@@ -51,7 +51,25 @@ const Header = () => {
     const [isLoading , setIsLoading] = useState(false);
     const [isShowCountry, setIsShowCountry] = useState(false);
     const [searchTxt, setSearchTxt] = useState("");
-    const inputBoxRef = useRef(null)
+    const [ sideMenuData , setSideMenuData] = useState([]);
+    const inputBoxRef = useRef(null);
+
+
+    useEffect(()=>{
+        getSideMenuData()
+    },[])
+
+    const getSideMenuData = async() => {
+        const getSideMenuDataResp = await fetch('/api/side-menu', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          })
+          const getSideMenuData = await getSideMenuDataResp.json();
+          console.log("getSideMenuData",getSideMenuData)
+          setSideMenuData(getSideMenuData);
+    }
  
 
     const handleClickOutside = (event) =>{
@@ -135,7 +153,7 @@ const Header = () => {
            </div>
 
         </div>
-        {isShowSideMenu&&<SideMenu  onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
+        {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
         </>
