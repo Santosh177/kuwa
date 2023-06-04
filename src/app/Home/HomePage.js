@@ -26,17 +26,16 @@ export default async function Home(homePageData) {
                 </div>
                 <div className={styles.mainContainer}>
                     <Header />
-                
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={bestSellings} />
                     <BrandMustTry data={brandUMustTry}/>
                     <SecondaryBanner data={secondryBanners}/>
                     {
-                    data.map((data,index)=>{
-                        return(
-                        <ProductSlider data={data} index={index} key={index}/>
-                        )
-                    })
+                        data.map((data,index)=>{
+                            return(
+                            <ProductSlider data={data} index={index} key={index}/>
+                            )
+                        })
                     }
                     <MedicalExpert />
                     <Footer />
