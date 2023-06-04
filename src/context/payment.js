@@ -12,7 +12,7 @@ export const PaymentPageProvider = ({ children,cartItemsResp }) => {
    
   const cartItems  = cartItemsResp && cartItemsResp['products'] || [];
   const [ couponCodeData , setCouponCodeData] = useState({});
-  const [ selectedPaymentMethod , setSelectedPaymentMethod] = useState({});
+  const [ selectedPaymentMethod , setSelectedPaymentMethod] = useState("");
 
   console.log("cartItemsRespcartItemsResp",cartItems)
 

@@ -136,7 +136,7 @@ const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
 
 
 
-export default  function PaymentMethod({paymentMethodConfig,price=0}) {
+export default  function PaymentMethod({paymentMethodConfig,price=0,onPayment={}}) {
 
     const isCheckoutCard = paymentMethodConfig['card_checkout']['isEnable'];
     const isTapCard = paymentMethodConfig['card_tap']['isEnable'];
@@ -150,7 +150,7 @@ export default  function PaymentMethod({paymentMethodConfig,price=0}) {
         <div className={styles.paymentMethodWrapper}>
             <div className={styles.headerTxt}>Payment Method</div>
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
-            {(isCheckoutCard || isTapCard) &&<CardOption isCheckoutCard={isCheckoutCard} isTapCard={isTapCard} />}
+            {(isCheckoutCard || isTapCard) &&<CardOption isCheckoutCard={isCheckoutCard} isTapCard={isTapCard} onPayment={onPayment} />}
             {(isTamara || isTabby) && <PayWithEmi paymentMethodConfig={paymentMethodConfig} price={price} isTamara={isTamara} isTabby={isTabby}  />}
             {(isApplePay || isCod) && <OtherPaymentMethod isApplePay={isApplePay} isCod={isCod}  />}
         </div>

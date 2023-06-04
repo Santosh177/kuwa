@@ -81,7 +81,7 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
 
 }
 
-const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}}) => {
+const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={},onPayment={}}) => {
   console.log("priceDetailspriceDetails",priceDetails)
   return(
     <div className={styles.orderSummaryDesktop}>
@@ -95,21 +95,21 @@ const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , on
               </div>
               </div>
               <div className={styles.paymentMethod}>
-                <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig}   />
+                <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
               </div>
               <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
       </div>
   )
 }
 
-const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}}) => {
+const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={}}) => {
   return(
     <div className={styles.orderSummary}>
     <div className={styles.couponCode}>
       <CouponCode />
     </div>
     <div className={styles.paymentMethod}>
-    <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig}  />
+    <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment} />
     </div>
     <div className={styles.priceDetails}>
       <div className={styles.headerTxt}>Price Details</div>
@@ -385,8 +385,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
       return (
         <>
-            <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} />
-            <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} />
+            <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} />
+            <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} />
             <Loader isShow={isLoader} />
         </>
       )
