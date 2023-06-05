@@ -66,8 +66,18 @@ const Header = () => {
               'Content-Type': 'application/json',
             }
           })
-          const getSideMenuData = await getSideMenuDataResp.json();
-          console.log("getSideMenuData",getSideMenuData)
+          let getSideMenuData = await getSideMenuDataResp.json();
+          let additionData = 
+            {
+                icon: "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/my_account.png",
+                id: 18,
+                img:null,
+                subTxt: "Edit profile, Manage address, My orders",
+                txt: "My Account",
+                type: "My Account",
+                typeId: null
+            }
+          getSideMenuData.push(additionData)
           setSideMenuData(getSideMenuData);
     }
  

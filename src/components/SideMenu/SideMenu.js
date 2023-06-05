@@ -150,7 +150,7 @@ const MyAccount = ({onBack={},onclose={}}) =>{
             <div className={styles.horizontalLine}></div>
             <div className={styles.item}>Manage address</div>
             <div className={styles.horizontalLine}></div>
-            <div className={styles.item}>My orders</div>
+            <div className={styles.item} onClick={()=>router.push('/my/orders')} >My orders</div>
         </div>
        
     )
@@ -204,7 +204,7 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
             default:
                 return(<>
                     <AccountInfo  onclose={onclose} />
-                    <MainMenuData data={sideMenuData} onClick={onClick}  />
+                        <MainMenuData data={sideMenuData} onClick={onClick}  />
                     <OtherInfo />
                     {isLogin && <LogOut />}
                 </>)
