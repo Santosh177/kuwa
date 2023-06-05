@@ -7,7 +7,7 @@ import Loader from '../Loader/Loader';
 import styles from './side-menu.module.scss';
 
 const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
-
+    const router = useRouter()
 
     return(
         <div className={styles.myAccountContainer}>
@@ -22,7 +22,7 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
                 data.map((data,index)=>{
                     return(
                         <>
-                            <div className={styles.item} key={index}>{data.name}</div>
+                            <div onClick={()=>router.push(`/category/${data.name}`)} className={styles.item} key={index}>{data.name}</div>
                             <div className={styles.horizontalLine}></div>
                         </>
                     )
@@ -162,7 +162,7 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
     const [ key , setKey ] = useState("");
     const [ childMenuData , setChildMenuData ] = useState([]);
     const onClick = (data) => {
-        if(data && data.redirectionLink){
+        if(data && data.redirectionLink && data.redirectionLink.includes('https')){
             router.push(data.redirectionLink)
         }else{
             setKey(data);

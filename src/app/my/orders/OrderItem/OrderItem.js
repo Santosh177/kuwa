@@ -14,7 +14,7 @@ export default  function OrderItem({data}) {
     const router = useRouter();
 
     
-    const { orderId="",productName="",productImg="",orderStatus=""  } = data || {};
+    const { orderId="",productName="",productImg="",orderStatus="",orderProductId=""  } = data || {};
 
     const renderOrderStatus = (orderStatus) => {
         switch (orderStatus) {
@@ -58,7 +58,7 @@ export default  function OrderItem({data}) {
 
     return (
       <>
-        <div className={styles.orderItem} onClick={()=>router.push(`/my/order/${orderId}`)}>
+        <div className={styles.orderItem} onClick={()=>router.push(`/my/order/${orderProductId}`)}>
             <div className={styles.orderItemImage}>
                 <img src={productImg} alt='product-img'/>
             </div>
