@@ -1,7 +1,7 @@
 'use client';
 import { useRef, useState, useEffect } from 'react';
 import { useRouter,usePathname } from 'next/navigation';
-
+import { useAuth } from '../../context/userDetail';
 import {  useCartItems } from '@/context/cartItems';
 import {useCountryList} from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
@@ -44,6 +44,7 @@ const SearchList = () =>{
 
 const Header = () => {
     const router = useRouter();
+    const {isLogin=false, userData={}} = useAuth();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
     const {cartItemCount = 0} = useCartItems();
     const countryList = useCountryList();
@@ -53,7 +54,6 @@ const Header = () => {
     const [searchTxt, setSearchTxt] = useState("");
     const [ sideMenuData , setSideMenuData] = useState([]);
     const inputBoxRef = useRef(null);
-
 
     useEffect(()=>{
         getSideMenuData()
@@ -77,7 +77,10 @@ const Header = () => {
                 type: "My Account",
                 typeId: null
             }
-          getSideMenuData.push(additionData)
+            if(isLogin){
+                getSideMenuData.push(additionData)
+            }
+        
           setSideMenuData(getSideMenuData);
     }
  

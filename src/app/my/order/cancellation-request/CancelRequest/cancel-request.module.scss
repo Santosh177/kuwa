@@ -86,3 +86,18 @@
     }
     
 }
+
+@media(min-width:990px){
+    .reasonCard{
+        max-width: 426px;
+        margin: 0 auto;
+        margin-top: 20px;
+        .reasonTxt{
+            text-align: center;
+        }
+    }
+    .headerTxt{
+        text-align: center;
+    }
+ 
+}
