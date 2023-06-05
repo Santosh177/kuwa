@@ -16,7 +16,7 @@ const AddressInfoCard = ({data}) => {
 
 
 
-export default async function OrderAddress({}) {
+export default async function OrderAddress({data}) {
 
 
     const shippingAddress = {

@@ -4,7 +4,9 @@ import OrderAddress from '../OrderAddress/OrderAddress';
 import PriceDetails from '@/components/PriceDetails/PriceDetails';
 import styles from './order-details.module.scss'
 
-export default async function OrderDetails({}) {
+export default async function OrderDetails({data}) {
+
+
 
 
 
@@ -13,7 +15,7 @@ export default async function OrderDetails({}) {
         <div className={styles.orderDetailsLeftContainer}>
             <OrderItem />
             <OrderDeliveryStatus />
-            <OrderAddress />
+            <OrderAddress data={data} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
             <PriceDetails />
