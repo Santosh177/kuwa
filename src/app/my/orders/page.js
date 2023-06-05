@@ -4,7 +4,7 @@ import { authHeader } from "../../../lib/auth-cookies";
 
 
 export default async function MyOrders({}) {
-  let listOfMyOrder = [
+  let listOfMyOrdser = [
     {
         "orderId": 2250,
         "productImage": "https://dcngmd8umaj1u.cloudfront.net/1_1684934586079.jpg",
@@ -258,9 +258,12 @@ export default async function MyOrders({}) {
         "expDelivery": null
     }
 ]
+
+let listOfMyOrder = []
   try {
     
     const customHeader = await authHeader();
+    console.log("customHeadercustomHeader",customHeader)
     const listOfMyOrderResp  =  await fetch('https://api.kuwa.bevaleo.dev/module/list-my-order', {
       method: 'GET',
       headers:{
@@ -268,7 +271,8 @@ export default async function MyOrders({}) {
       },
       next: { revalidate: 0} 
     })
-    //  listOfMyOrder = await listOfMyOrderResp.json();
+     listOfMyOrder = await listOfMyOrderResp.json();
+     console.log("listOfMyOrderlistOfMyOrder",listOfMyOrder)
     
   } catch (error) {
     

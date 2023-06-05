@@ -1,5 +1,13 @@
+.deliveryStatusContainer{
+    background: #F1FAF8;
+    padding-top: 1px;
+    padding-bottom: 12px;
+}
+
+
+
 .MainContainer{
-    width: 100%;
+    width: 77%;
     max-width: 600px;
     margin: 0 auto;
     padding: 0 16px;
@@ -38,7 +46,7 @@
     top: 50%;
     transition: 0.4s ease;
     transform: translateY(-50%);
-    left: 52px;
+    left: 38px;
   }
 }
 .StepStyle3{
@@ -60,21 +68,21 @@
     font-size: 14px;
     color: #f3e7f3;
     .stepIcon{
-        height: 24px;
-        width: 24px;
+        height: 12px;
+        width: 12px;
     }
 }
 
 
 .StepsLabelContainer{
     position: absolute;
-    top: 55px;
+    top: 45px;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 .StepLabel{
-    font-size: 14px;
+    font-size: 12px;
   color: #A0A0A0;
   width: max-content;
   text-align: center;
@@ -122,12 +130,12 @@
 
 @media(min-width:990px){
     .MainContainer{
-        max-width: 349px;
+        // max-width: 349px;
     }
     
     .StepStyle{
-        width: 40px;
-         height: 40px;
+        width: 24px;
+         height: 24px;
          border-radius: 50%;
          background-color: #E6E7E7;
          transition: 0.4s ease;
@@ -143,7 +151,7 @@
            top: 50%;
            transition: 0.4s ease;
            transform: translateY(-50%);
-           left: 52px;
+           left: 38px;
          }
        }
 }

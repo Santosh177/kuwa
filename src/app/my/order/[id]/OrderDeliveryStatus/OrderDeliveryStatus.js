@@ -27,6 +27,7 @@ const OrderDeliveryStatus = ({stepCount=2}) => {
 
 
     return(
+    <div className={styles.deliveryStatusContainer}>
     <div className={styles.MainContainer}>
       <div className={styles.StepContainer} >
         {steps.map(({ step, label,icon,icon_white, tickIcon }) => (
@@ -42,6 +43,7 @@ const OrderDeliveryStatus = ({stepCount=2}) => {
           </div>
         ))}
       </div>
+    </div>
     </div>
     )
 

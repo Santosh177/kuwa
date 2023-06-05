@@ -69,7 +69,7 @@ const MainMenuData = ({data,onClick}) =>{
                         if(data.key == "My Account" && !isLogin)
                         return
                         return(
-                            <div className={styles.sideMenuItemCard} onClick={()=>onClick({type:data.type,txt:data.txt})} key={index}>
+                            <div className={styles.sideMenuItemCard} onClick={()=>onClick({type:data.type,txt:data.txt,redirectionLink:data.redirectionLink || ""})} key={index}>
                             <div className={styles.sideMenuItem}>
                                 <img className={styles.icon} src={data.icon} alt=''/>
                                 <div className={styles.itemInfo}>
@@ -158,11 +158,17 @@ const MyAccount = ({onBack={},onclose={}}) =>{
 
 const SideMenu = ({onclose={},sideMenuData=[]}) => {
     const {isLogin=false, userData={}} = useAuth();
+    const router = useRouter();
     const [ key , setKey ] = useState("");
     const [ childMenuData , setChildMenuData ] = useState([]);
     const onClick = (data) => {
+        if(data && data.redirectionLink){
+            router.push(data.redirectionLink)
+        }else{
             setKey(data);
             getProductTypesData(data.txt)
+        }
+         
     }
 
 
