@@ -7,12 +7,14 @@ import AddressForm from "./address-form/address-form";
 import SubmitBtn from "./components/SubmitBtn/SubmitBtn";
 import styles from './page.module.scss';
 import { useState } from "react";
+import { useAuth } from '@/context/userDetail';
 import { useAddressData } from "@/context/address";
 
 
 export default function AddAddress() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { isLogin=false} = useAuth();
   const refererPath = searchParams.get('referer');
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [ addressData, setAddressData] = useState({});
@@ -30,6 +32,28 @@ export default function AddAddress() {
 
     const onGetFormValues = async(data) => {
       console.log("datadata",data)
+      if(isLogin){
+        onAddAddress(data)
+      }else{
+        const { firstName="" , lastName="" , mobNumber="" ,email="" } = data && data['shippingAddress']
+        const nonSignupUser = {
+            "email": email,
+            "firstName":firstName,
+            "lastName": lastName,
+            "mobNumber":mobNumber
+        }
+          const signUpResp = await fetch('/api/signup', {
+            method: 'POST',
+            body:JSON.stringify(nonSignupUser)
+          })
+          const signupRespData = await signUpResp.json();
+          console.log("signupRespData",signupRespData)
+          onAddAddress(data)
+      }
+     
+    }
+
+    const onAddAddress = async(data) =>{
       try {
         setIsLoading(true)
         const res = await fetch('/api/save-address', {

@@ -26,7 +26,7 @@ const getUser = async () => {
   const token = nextCookies.get('token');
   const user = nextCookies.get('userId');
   console.log("tokentoken",token)
-  if(token && token.value){
+  if((token && token.value) || (user && user.value)  ){
     try {
       const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${user.value}`, {
         method: 'GET',

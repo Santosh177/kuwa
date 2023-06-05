@@ -213,13 +213,13 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
     const onPayment = async(data) => {
       setIsLoader(true);
-      const userName = userData && userData['userName'] || "";
+      const userName = userData && userData['firstName'] || "";
       const getCartItems = await getCartItem();
       const cartItemsData = getCartItems && getCartItems['products'];
       const cartItemPayload = await createPayloadForCartItems(cartItemsData);
       const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
       const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['couponCode']}`;
-      const userId = getCartItems['customer'] || null;
+      const userId = getCartItems['customer'] || userData['id'] || null;
         let payload = {
           "cartId":getCartItems['id'] || "",
           "orderType": "one-time",
