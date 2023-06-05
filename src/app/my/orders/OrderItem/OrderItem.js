@@ -1,3 +1,6 @@
+
+'use client';
+import { useRouter } from 'next/navigation';
 import StarRating from '../StarRating/StarRating';
 import styles from './order-item.module.scss';
 
@@ -8,7 +11,7 @@ import styles from './order-item.module.scss';
 
 
 export default  function OrderItem({data}) {
-   
+    const router = useRouter();
 
     
     const { orderId="",productName="",productImg="",orderStatus=""  } = data || {};
@@ -55,7 +58,7 @@ export default  function OrderItem({data}) {
 
     return (
       <>
-        <div className={styles.orderItem}>
+        <div className={styles.orderItem} onClick={()=>router.push(`/my/order/${orderId}`)}>
             <div className={styles.orderItemImage}>
                 <img src={productImg} alt='product-img'/>
             </div>
