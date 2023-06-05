@@ -1,6 +1,7 @@
 'use client';
 import { usePaymentPageData } from '@/context/payment';
 import { useCountryList } from '@/context/countryList';
+import { useCountry } from '@/context/contryDetails';
 import { useAuth } from '@/context/userDetail';
 import Loader from '@/components/Loader/Loader';
 import CouponCode from "./components/CouponCode/CouponCode";
@@ -97,7 +98,7 @@ const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , on
               <div className={styles.paymentMethod}>
                 <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
               </div>
-              <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed:{}}} isEnable={selectedPaymentMethod != ""} />
+              <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
       </div>
   )
 }
@@ -116,7 +117,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
       <div className={styles.headerTxt}>Price Details</div>
       <PriceDetails data={priceDetails}/>
     </div>
-    <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed:{}}} isEnable={selectedPaymentMethod != ""} />
+    <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
 </div>
   )
 }
@@ -125,6 +126,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const router = useRouter();
   const {couponCodeData={}, selectedPaymentMethod=""} = usePaymentPageData();
   const countryList = useCountryList();
+  const { selectedCountry={} } = useCountry();
   const {isLogin=false, userData={}} = useAuth();
   const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
@@ -210,11 +212,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
 
     const onPayment = async(data) => {
-      console.log("userDatauserData",userData);
       setIsLoader(true);
-
       const userName = userData && userData['userName'] || "";
-    
       const getCartItems = await getCartItem();
       const cartItemsData = getCartItems && getCartItems['products'];
       const cartItemPayload = await createPayloadForCartItems(cartItemsData);
@@ -228,8 +227,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
           "shippingAddressId":selectedAddress && selectedAddress.id || "",
           "addressId": selectedAddress && selectedAddress.id || "",
-          "countryCode": "AE",
-          "countryId": 1,
+          "countryCode": selectedCountry.code || "",
+          "countryId": selectedCountry.id || "",
           "description": description,
           "finalAmount": priceDetails['totalAmount'],
           "totalAmount": priceDetails['totalAmount'],
