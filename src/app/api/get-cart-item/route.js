@@ -12,15 +12,15 @@ import { authHeader } from '../../../lib/auth-cookies';
 //   const data = await cartData.json();
 //   return NextResponse.json(data );
 // }
+export const dynamic = 'force-dynamic';
 export async function GET() {
 
   try {
     const customHeader = await authHeader();
-    console.log("authHeader",authHeader())
     const cartData =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
       method: 'GET',
       headers: customHeader,
-      next: { revalidate: 0} 
+      cache: 'no-store'
     })
     const data = await cartData.json();
     return NextResponse.json(data );
