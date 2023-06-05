@@ -148,7 +148,7 @@ const MyAccount = ({onBack={},onclose={}}) =>{
             </div>
             <div className={styles.item} onClick={()=>router.push('/my-account')}>Edit Profile</div>
             <div className={styles.horizontalLine}></div>
-            <div className={styles.item}>Manage address</div>
+            <div className={styles.item} onClick={()=>router.push('/address/manage-address')}>Manage address</div>
             <div className={styles.horizontalLine}></div>
             <div className={styles.item} onClick={()=>router.push('/my/orders')} >My orders</div>
         </div>

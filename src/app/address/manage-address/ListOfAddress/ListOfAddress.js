@@ -1,17 +1,21 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter,usePathname } from 'next/navigation';
+import Loader from '@/components/Loader/Loader';
 import AddressInfo from '../AddressInfo/AddressInfo';
 import { useAddressData } from "@/context/address";
+import SubmitBtn from '../../component/SubmitBtn/SubmitBtn';
 import styles from './list-of-address.module.scss'
 import { useEffect, useState } from 'react';
 
-
-export default function ListOfAddress({}) {
+export default function ListOfAddress({addressList}) {
   const router = useRouter();
-  const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
+  const pathName = usePathname();
+  const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [selectedAdddressId, setSelectedAddressId] = useState(null);
+  const [ isLoading , setIsLoading] = useState(false)
 
   const onRemoveAddress = async(addressId) =>{
+    setIsLoading(true)
     const removeAddressResp  =  await fetch(`/api/delete-address`, {
       method: 'POST',
       headers:{
@@ -21,18 +25,37 @@ export default function ListOfAddress({}) {
       next: { revalidate: 0} 
     })
     const removeAddress = await removeAddressResp.json();
-    console.log("removeAddress",removeAddress)
+    setIsLoading(false)
+    const filterAddressId = listOfAddress.filter((data,index)=> data.id != removeAddress.id);
+    const isSelectedAddressId = removeAddress.id === selectedAddress.id;
+    if(isSelectedAddressId){
+      const defaultAddress = filterAddressId.find((data) => data.isDefaultAddress);
+      if(defaultAddress){
+        setSelectedAddress(defaultAddress)
+      }else{
+        setSelectedAddress(filterAddressId[0])
+      }
+    }
+    if(filterAddressId && filterAddressId.length > 0){
+      setListOfAddress(filterAddressId);
+    }else{
+      router.replace('/address/add-address?referer=/address/manage-address')
+    }
+  
   }
 
-  const onSelectDefaultAddress = (data) =>{
-    
-   
-  
+  const onChangeAddress = (data) =>{
+    setSelectedAddress(data)
+    // router.push('/order-summary')
   }
 
 
   const onEditAddress = () => {
     
+  }
+
+  const onSelectAddress = () => {
+    router.push('/order-summary')
   }
  
 
@@ -42,25 +65,26 @@ export default function ListOfAddress({}) {
       return (
         <>
           <div className={styles.addressListWrapper}>
-            <div className={styles.addNewAddressTxt} onClick={()=> router.push('/address/add-address')}>+ Add new address</div>
+            <div className={styles.addNewAddressTxt} onClick={()=> router.push(`/address/add-address?referer=${pathName}`)}>+ Add new address</div>
             <div className={styles.addressInfoContainer}>
                 {
                     listOfAddress.map((data,index)=>{
-                        const addressTxt = data.address +" " +data.apartment + " " +data.city + " " +data.country || "";
+                        const addressTxt = data.address +" " +data.apartment + " " +data.country || "";
                         const addressData = {
                             userName:data.firstName + " " + data.lastName,
                             addressTxt:addressTxt,
-                            phoneNo:data.phone || "",
+                            mobNumber:data.mobNumber || "",
                             id:data.id
                         }
-                        const isSelected = data.isDefaultAddress;
+                        const isSelected =(selectedAddress.id)?(selectedAddress.id == data.id ):data.isDefaultAddress;
                         return(
-                            <AddressInfo  data={addressData} key={index} onSelectDefaultAddress={()=>onSelectDefaultAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
+                            <AddressInfo data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
                         )
                     })
                 }
             </div>
           </div>
+          <Loader isShow={isLoading} />
         </>
        
       )
