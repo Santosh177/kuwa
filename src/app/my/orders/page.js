@@ -283,7 +283,7 @@ export default async function MyOrders({}) {
         {
           listOfMyOrder.map((data,index)=>{
             return(
-              <OrderItemList />
+              <OrderItemList data={data}/>
             )
           })
         }

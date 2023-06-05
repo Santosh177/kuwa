@@ -7,20 +7,21 @@ import styles from './order-item-list.module.scss';
 
 
 
-export default function OrderItemList({}) {
+export default function OrderItemList({data}) {
 
 
 
- 
-
-
-
-
+  const orderItemData = { 
+    orderId:data.orderId,
+    productName:data.productName,
+    productImg:data.productImage,
+    orderStatus:data.orderStatus
+  }
 
 
     return (
       <div className={styles.orderItemList}>
-        <OrderItem />
+        <OrderItem data={orderItemData} />
       </div>
   
     )
