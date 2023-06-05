@@ -74,37 +74,41 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
   const isShowTabby = (parseFloat(price) > 0)&&(parseFloat(price) >= parseFloat(tabbyMinLimit)) && (parseFloat(price) <= parseFloat(tabbyMaxLimit));
   
 
-  return(
-    <div className={styles.payWithEmi}>
-      <div className={styles.headerContainer}>
-        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/paymentheaderimg.png' alt=''/>
-        <div className={styles.txt}>Pay with Emi</div>
-      </div>
-      <div className={styles.paymentOptionsList}>
-          {(isTamara && isShow) && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("TAMARA")}>
-              <div className={styles.paymentOptionInfo}>
-                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
-                <div className={styles.desc}>
-                   <div className={styles.txt}>Just pay AED {splittedPrice} now</div>
-                   <div className={styles.subTxt}>Rest in {tamaraInstallment} interest free payments of AED {splittedPrice}</div>
+  if((isTamara && isShow) && (isTabby && isShowTabby) ){
+    return(
+      <div className={styles.payWithEmi}>
+        <div className={styles.headerContainer}>
+          <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/paymentheaderimg.png' alt=''/>
+          <div className={styles.txt}>Pay with Emi</div>
+        </div>
+        <div className={styles.paymentOptionsList}>
+            {(isTamara && isShow) && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("TAMARA")}>
+                <div className={styles.paymentOptionInfo}>
+                  <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
+                  <div className={styles.desc}>
+                    <div className={styles.txt}>Just pay AED {splittedPrice} now</div>
+                    <div className={styles.subTxt}>Rest in {tamaraInstallment} interest free payments of AED {splittedPrice}</div>
+                  </div>
                 </div>
-              </div>
-              <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
-          </div>}
-         {(isTabby && isShowTabby) && <div className={styles.paymentOptionItem} onClick={()=>setSelectedPaymentMethod("TABBY")}>
-              <div className={styles.paymentOptionInfo}>
-                <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
-                <div className={styles.desc}>
-                   <div className={styles.txt}>Just pay AED {splittedPriceTabby} now</div>
-                   <div className={styles.subTxt}>Rest in {tabbyInstallment} interest free payments of AED {splittedPriceTabby}</div>
+                <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
+            </div>}
+          {(isTabby && isShowTabby) && <div className={styles.paymentOptionItem} onClick={()=>setSelectedPaymentMethod("TABBY")}>
+                <div className={styles.paymentOptionInfo}>
+                  <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
+                  <div className={styles.desc}>
+                    <div className={styles.txt}>Just pay AED {splittedPriceTabby} now</div>
+                    <div className={styles.subTxt}>Rest in {tabbyInstallment} interest free payments of AED {splittedPriceTabby}</div>
+                  </div>
                 </div>
-              </div>
-              <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>
-          </div>}
-         
+                <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>
+            </div>}
+          
+        </div>
       </div>
-    </div>
-  )
+    )
+  }else{
+    return null;
+  }
 }
 
 const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
