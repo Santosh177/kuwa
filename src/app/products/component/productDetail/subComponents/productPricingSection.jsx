@@ -13,7 +13,7 @@ const ProductPricingSection = ({ pricingSectionVariables }) => {
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
             </div>
             <div className={styles.pricingConatiner}>
-                <div className={styles.price}>{currency + ". " + finalPrice}</div>
+                <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>
                 <div className={styles.incriment}>
                     <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} />
                 </div>

@@ -5,8 +5,9 @@ import ProductImageSection from "./subComponents/productImageSection";
 import ProductPricingSection from "./subComponents/productPricingSection";
 import { useRouter } from 'next/navigation';
 import style from "./ProductDetail.module.scss"
+import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
 const ProductDeatil = ({ productData = {} }) => {
-    console.log(productData, "productDataproductDataproductData")
+    // console.log(productData, "productDataproductDataproductData")
     const { benefits = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {}
     const [noOfProduct, setNoOfProduct] = useState(1);
     const [selectedVarients, setselectedVarients] = useState("");
@@ -109,6 +110,9 @@ const ProductDeatil = ({ productData = {} }) => {
             <div className={style.productPricingContainer}>
                 <ProductImageSection allImages={allImages} />
                 <ProductPricingSection pricingSectionVariables={pricingSectionVariables} />
+            </div>
+            <div className={style.FrequntlyBoughtTogetherBox}>
+                <FrequntlyBoughtTogether productData={productData} />
             </div>
         </>
     )

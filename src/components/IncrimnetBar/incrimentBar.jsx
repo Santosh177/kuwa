@@ -4,7 +4,7 @@ import style  from "./incriment-bar.module.scss"
 
 const IncrimentBar = ({noOfProduct=0,setNoOfProduct={}}) =>{
     const handelOnclick = (action) =>{
-        if(action === "minus" &&  noOfProduct > 0 ){
+        if(action === "minus" &&  noOfProduct > 1 ){
             setNoOfProduct(noOfProduct - 1)
         }
         if(action === "plus"){
