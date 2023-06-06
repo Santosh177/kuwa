@@ -12,7 +12,13 @@ export default function ListOfAddress({addressList}) {
   const pathName = usePathname();
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [selectedAdddressId, setSelectedAddressId] = useState(null);
-  const [ isLoading , setIsLoading] = useState(false)
+  const [ isLoading , setIsLoading] = useState(false);
+
+  useEffect(()=>{
+    if(listOfAddress && listOfAddress.length == 0){
+      router.replace('/address/add-address?referer=/address/manage-address')
+    }
+  },[listOfAddress])
 
   const onRemoveAddress = async(addressId) =>{
     setIsLoading(true)
