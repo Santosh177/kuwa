@@ -13,6 +13,7 @@ import styles from './order-item.module.scss';
 export default  function OrderItem({data}) {
     const router = useRouter();
 
+    console.log("orderData",data)
     
     const { orderId="",productName="",productImg="",orderStatus="",orderProductId=""  } = data || {};
 
