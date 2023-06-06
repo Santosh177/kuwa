@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { authHeader } from '../../../lib/auth-cookies';
 
- 
+export const dynamic = 'force-dynamic'
 export async function GET() {
 
   const customHeader = await authHeader();

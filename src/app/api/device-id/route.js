@@ -4,7 +4,7 @@ import { generateDeviceId } from '../../../lib/deviceId';
 import { cookies } from 'next/headers';
 // import { setDeviceID } from '../../../lib/deviceId';
 
-
+export const dynamic = 'force-dynamic'
 export async function GET(request,res) {
     const getDeviceID = cookies().get("deviceID");
     if(!getDeviceID && !getDeviceID.value){

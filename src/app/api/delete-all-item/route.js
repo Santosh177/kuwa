@@ -1,7 +1,7 @@
 
 import { NextResponse } from 'next/server'
 import { authHeader } from '../../../lib/auth-cookies';
-
+export const dynamic = 'force-dynamic'
 export async function GET(request,res) {
     const customHeader = await authHeader();
     const deleteAllCartItemResp = await fetch(`https://api.kuwa.bevaleo.dev/api/v1/cart/all/product/`, {
