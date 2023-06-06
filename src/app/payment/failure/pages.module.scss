@@ -40,6 +40,11 @@
     .paymentFailureContainer{
         width: 50%;
         max-width: 343px;
+        img{
+            width: 128px;
+            height: 128px;
+            margin: 0 auto;
+        }
         .subTxt{
             margin: 0 auto;
             margin-top: 5px;
