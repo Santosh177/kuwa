@@ -67,7 +67,7 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
         config['tabby']['paymentMode'] =  data.paymentMode;
         config['tabby']['paymentGateway'] =  data.paymentGateway;
         config['tabby']['isEnable'] =  true;
-      }else if(data.paymentMode === "CARD" && data.paymentGateWay === "TAP"){
+      }else if(data.paymentMode === "CARD" && data.paymentGateway === "TAP"){
         config['card_tap']['paymentMode'] =  data.paymentMode;
         config['card_tap']['paymentGateway'] =  data.paymentGateway;
         config['card_tap']['isEnable'] =  true;
