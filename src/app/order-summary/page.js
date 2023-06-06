@@ -17,7 +17,7 @@ export default async function OrderSummary() {
       headers:{
         ...customHeader
       },
-      next: { revalidate: 0} 
+      cache: 'no-store'
     })
      getCartItems = await getCartItemResp.json();
      if(getCartItems && getCartItems.status == 404){

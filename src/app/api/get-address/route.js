@@ -8,7 +8,7 @@ export async function GET() {
   const getAddressResp =  await fetch(`https://api.kuwa.bevaleo.dev/module/address/`, {
     method: 'GET',
     headers: {...customHeader},
-    next: { revalidate: 0} 
+    cache: 'no-store'
   })
   const data = await getAddressResp.json();
   return NextResponse.json(data );

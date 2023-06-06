@@ -269,7 +269,7 @@ let listOfMyOrder = []
       headers:{
         ...customHeader
       },
-      next: { revalidate: 0} 
+      cache: 'no-store'
     })
      listOfMyOrder = await listOfMyOrderResp.json();
      console.log("listOfMyOrderlistOfMyOrder",listOfMyOrder)

@@ -8,7 +8,7 @@ export default async function Home({}) {
     'Content-Type': 'application/json',
     'country' : parseInt(countryIdFromCookie)
   },
-    next: { revalidate: 0} 
+  cache: 'no-store' 
   })
   const homePageDataResp = await homePageData.json();
 

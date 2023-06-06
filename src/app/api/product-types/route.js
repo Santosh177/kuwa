@@ -8,7 +8,7 @@ export async function POST(request,res) {
   const getProductTypes =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/product/types?super=${superType}`, {
     method: 'GET',
     headers: customHeader,
-    next: { revalidate: 0} 
+    cache: 'no-store'
   })
   const data = await getProductTypes.json();
   return NextResponse.json(data);

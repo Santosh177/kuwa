@@ -40,7 +40,7 @@ export const AddressProvider = ({ children, countryCode }) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      next: { revalidate: 0} 
+      cache: 'no-store'
     })
     const addressData = await getAddressResp.json();
     const addressList = addressData && addressData['shippingAddress'] && addressData['shippingAddress'];

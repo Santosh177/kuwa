@@ -28,7 +28,7 @@ export default function ListOfAddress({addressList}) {
         'Content-Type': 'application/json',
       },
       body:JSON.stringify({addressId:addressId}),
-      next: { revalidate: 0} 
+      cache: 'no-store'
     })
     const removeAddress = await removeAddressResp.json();
     setIsLoading(false)

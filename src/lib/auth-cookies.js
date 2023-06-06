@@ -80,15 +80,23 @@ export const authHeader = async() =>{
     )
   }else{
     const getDeviceID = cookies().get("deviceID");
+    const userId = user && user.value || ""
+  
     if(!getDeviceID && !getDeviceID){
         const deviceId = generateDeviceId();
         cookies().set('deviceID', deviceId);
     }
-    return({
+    let data = {
       'Content-Type': 'application/json',
       'country' : country && parseInt(country.value) || 7,
       'device':cookies().get("deviceID").value || ""
-    })
+    }
+
+    if(userId){
+      data['user'] = parseInt(user.value)
+    }
+    console.log("final Data",data)
+    return data;
   }
   
 }

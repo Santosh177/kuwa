@@ -18,7 +18,7 @@ export default async function PaymentPage() {
       headers:{
         ...customHeader
       },
-      next: { revalidate: 0} 
+      cache: 'no-store'
     })
      getCartItems = await getCartItemResp.json();
     
@@ -34,7 +34,7 @@ export default async function PaymentPage() {
       headers:{
         ...customHeader
       },
-      next: { revalidate: 0} 
+      cache: 'no-store'
     })
     const paymentModeData = await getPaymentConfigData.json();
     paymentModes = paymentModeData.find((data, index)=> data.countryId == customHeader.country).paymentModes;
@@ -49,7 +49,7 @@ export default async function PaymentPage() {
     console.log("padasd")
     const getTamaraPaymentResp  =  await fetch(`https://phoenix.bevaleo.dev/tamara/payment-types?countryCode=${countryCode}`, {
       method: 'GET',
-      next: { revalidate: 0} 
+      cache: 'no-store' 
     })
     console.log("getTamaraPaymentRespgetTamaraPaymentResp",getTamaraPaymentResp)
     const getTamaraPaymentConfigData = await getTamaraPaymentResp.json();

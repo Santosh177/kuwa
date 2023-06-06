@@ -29,7 +29,7 @@ export default function AddAddress() {
           'Content-Type': 'application/json',
         },
         body:JSON.stringify({id:editAddressid}),
-        next: { revalidate: 0} 
+        cache: 'no-store'
       })
       const editAddress = await editAddressResp.json();
       setAddressData(editAddress)
@@ -47,7 +47,7 @@ export default function AddAddress() {
           'Content-Type': 'application/json',
         },
         body:JSON.stringify(addressData),
-        next: { revalidate: 0} 
+        cache: 'no-store'
       })
       const updateAddress = await updateAddressResp.json();
       getAddress()
@@ -79,7 +79,7 @@ export default function AddAddress() {
           'Content-Type': 'application/json',
         },
         body:JSON.stringify(data),
-        next: { revalidate: 0} 
+        cache: 'no-store'
       })
       const updateAddress = await updateAddressResp.json();
       // setIsLoading(false)

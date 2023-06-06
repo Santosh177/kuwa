@@ -13,7 +13,7 @@ export default async function SelectAddress() {
     headers:{
       ...customHeader
     },
-    next: { revalidate: 0} 
+    cache: 'no-store'
   })
   const getAddress = await getAddressResp.json();
   console.log("getAddressgetAddress",getAddress)
