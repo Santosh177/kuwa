@@ -11,13 +11,17 @@ const getUser = async (data) => {
         }
       })
       const userData = await userLoginResp.json();
-      console.log("user Data",userData)
-      return {isLogin:true, userData:userData};
+      if(data && data.token){
+        return {isLogin:true, userData:userData};
+      }else{
+        return {isLogin:false, userData:userData};
+      }
      } catch (err) {
       return {isLogin:false,userData:null}
      }
 
 };
+
 
 const getCountryList = async() => {
   const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/country/', {
