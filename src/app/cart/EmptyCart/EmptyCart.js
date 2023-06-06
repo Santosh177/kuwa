@@ -1,12 +1,18 @@
 'use client'
 import React , {useRef,useState,useEffect} from 'react';
 import { useRouter } from 'next/navigation';
+import { useCartItems } from '@/context/cartItems';
 import EmptyCartAnimation from './empty_bag.json'
 import Lottie from "react-lottie";
 import styles from './empty-cart.module.scss';
 
-export default async function EmptyCart() {
+export default function EmptyCart() {
     const router = useRouter();
+    const {setCartItemCount={} } = useCartItems();
+
+    useEffect(()=>{
+        setCartItemCount(0)
+    },[])
     const defaultOptions = {
       loop: true,
       autoplay: true,
