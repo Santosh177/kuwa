@@ -2,11 +2,27 @@
 import PageHeader from '@/components/PageHeader/PageHeader';
 import { useRouter } from 'next/navigation';
 import styles from './pages.module.scss';
+import { useEffect } from 'react';
 
 export default function PaymentSuccess() {
 
 
-  const router = useRouter();
+    const router = useRouter();
+
+    useEffect(()=>{
+      deleteAllItem()
+    },[])
+
+    const deleteAllItem = async() =>{
+      const res = await fetch('/api/delete-all-item', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+
+      console.log("response",res)
+    }
   
       return (
         <>
