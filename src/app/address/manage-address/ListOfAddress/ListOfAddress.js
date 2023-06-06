@@ -15,10 +15,10 @@ export default function ListOfAddress({addressList}) {
   const [ isLoading , setIsLoading] = useState(false);
 
   useEffect(()=>{
-    if(listOfAddress && listOfAddress.length == 0){
+    if(addressList && addressList.length == 0){
       router.replace('/address/add-address?referer=/address/manage-address')
     }
-  },[listOfAddress])
+  },[addressList])
 
   const onRemoveAddress = async(addressId) =>{
     setIsLoading(true)
