@@ -1,0 +1,49 @@
+.orderDetails{
+    padding: 16px;
+    .needHelpTxt{
+        font-weight: 400;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 24px;
+        cursor: pointer;
+        span{
+            font-weight: 600;
+            font-size: 14px;
+            color: #CE4224;
+            margin-left: 3px;
+            cursor: pointer;
+        }
+    }
+
+    .cancelOrderBtn{
+        padding-top: 12px;
+        padding-bottom: 12px;
+        border: 1px solid #247A81;
+        border-radius: 24px;
+        text-align: center;
+        font-weight: 500;
+        font-size: 14px;
+        color: #247A81;
+        width: 55%;
+        margin: 0 auto;
+        margin-top: 25px;
+        cursor: pointer;
+    }
+}
+
+
+@media(min-width:990px){
+
+    .orderDetails{
+        display: flex;
+        justify-content: center;
+        gap: 28px;
+        .orderDetailsLeftContainer{
+            width: 396px
+        }
+        .orderDetailsRightContainer{
+            width: 346px;
+        }
+    }
+    
+}

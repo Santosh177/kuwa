@@ -79,6 +79,17 @@ const Header = () => {
             }
             if(isLogin){
                 getSideMenuData.push(additionData)
+            }else{
+                let findMyOrderData =    {
+                    icon: "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/truck.png",
+                    id: 18,
+                    img:null,
+                    subTxt: "Track your order here",
+                    txt: "Find My Order",
+                    type: "Find my order",
+                    typeId: null
+                }
+                getSideMenuData.push(findMyOrderData)
             }
         
           setSideMenuData(getSideMenuData);

@@ -1,0 +1,22 @@
+.findMyOrderInfo{
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    .findMyOrderIcon{
+        height: 52px;
+        width: 52px;
+    }
+    .orderDesc{
+        font-weight: 400;
+        font-size: 14px;
+        color: #A0A0A0;
+        margin-top: 10px;
+    }
+}
+
+@media(min-width:990px){
+    .findMyOrderInfo{
+        max-width: 340px;
+        margin: 0 auto;
+    }
+}

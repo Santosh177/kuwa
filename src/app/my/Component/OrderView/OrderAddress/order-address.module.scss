@@ -1,0 +1,25 @@
+.addressInfoCard{
+    background: #F9F9F9;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 8px;
+    .headerTitle{
+        font-weight: 500;
+        font-size: 14px;
+    }
+    .userName{
+        font-weight: 500;
+        font-size: 12px;
+        margin-top: 16px;
+    }
+    .addressInfo{
+        font-weight: 400;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    .phoneno{
+        font-weight: 400;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+}
