@@ -1,6 +1,6 @@
 
 import { NextResponse } from 'next/server'
-
+export const dynamic = 'force-dynamic'
 export async function POST(request,res) {
     const requestBody = await request.json();
     const placeOrder = await fetch('https://api.kuwa.bevaleo.dev/api/v1/place-order-without-payment', {
