@@ -9,16 +9,64 @@ import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 
-const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},index=0}) => {
+  const BACKGROUND_COLORS = [
+    {
+      "backgroundImage":"linear-gradient(180deg, #FCEEE0 0%, rgba(252, 238, 224, 0) 100%)",
+      "backgroundColor":"#FCEEE0"
+    },
+    {
+      "backgroundImage":"linear-gradient(180deg, #F2E9E7 0%, rgba(242, 233, 231, 0) 100%)",
+      "backgroundColor":"#F2E9E7"
+    },
+    {
+      "backgroundImage":"linear-gradient(180deg, #F1F4F9 0%, rgba(241, 244, 249, 0) 100%)",
+      "backgroundColor":"#F1F4F9"
+    },
+    {
+      "backgroundImage":"linear-gradient(180deg, #FBF4E6 0%, rgba(251, 244, 230, 0) 100%)",
+      "backgroundColor":"#FBF4E6"
+    },
+    {
+      "backgroundImage":"linear-gradient(180deg, #F6F3EF 0%, rgba(246, 243, 239, 0) 100%)",
+      "backgroundColor":"#F6F3EF"
+    },
+    {
+      "backgroundImage":"linear-gradient(180deg, #FFF3DE 0%, rgba(255, 243, 222, 0) 100%)",
+      "backgroundColor":"#FFF3DE"
+    },
+    {
+      "backgroundImage":"linear-gradient(180deg, #FEFBE2 0%, rgba(254, 251, 226, 0) 100%)",
+      "backgroundColor":"#FEFBE"
+    },
+    {
+      "backgroundImage":"linear-gradient(180deg, #F9E8E4 0%, rgba(249, 232, 228, 0) 100%)",
+      "backgroundColor":"#F9E8E4"
+    }
+  ]
+
+
+
+const createBackgroundColors = (totalRow= 14) => {
+   let data = [];
+   let tempCount = 0;
+    for(let i=0; i<=14; i++){
+      data.push(BACKGROUND_COLORS[tempCount]);
+      if(tempCount < 7){
+        tempCount=tempCount+1;
+      }else{
+        tempCount = 0
+      }
+    }
+    return(data)
+
+}
+
+const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},index=0,totalRow=14}) => {
   const router = useRouter();
   const { product=[],headerTitle= ""} = data || {};
   const [isLoading , setIsLoading] = useState(false);
-  const { setCartItemData={},setCartItemCount={} } = useCartItems()
-
-     
-
-
- 
+  const { setCartItemData={},setCartItemCount={} } = useCartItems();
+  const [ backgroundColors , setBackgroundColors] = useState(createBackgroundColors(totalRow));
   const [width, setWidth] = useState(0);
   const handleResize = () => setWidth(window.innerWidth);
   useEffect(() => {
@@ -70,9 +118,9 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
           
           
           <div className={styles.sliderDecoration} style={{flexDirection:(index % 2 == 0)?'row-reverse':'row'}}>
-            <div className={styles.sliderLine1} style={{backgroundColor:topColor}}></div><div className={styles.sliderLine2} style={{backgroundColor:topColor}}></div>
+            <div className={styles.sliderLine1} style={{background:backgroundColors[index].backgroundColor}}></div><div className={styles.sliderLine2} style={{background:backgroundColors[index].backgroundColor}}></div>
           </div>
-          <div className={styles.container} style={{backgroundImage:backgroundColor}}>
+          <div className={styles.container} style={{backgroundImage:backgroundColors[index].backgroundImage}}>
             <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
             <div className={styles.sliderContainer}>
             <Glider

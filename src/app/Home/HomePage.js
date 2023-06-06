@@ -23,6 +23,7 @@ export default async function Home(homePageData) {
             <div className={styles.homePageContainer}>
                 <div className={styles.mainBanner}>
                     <Banner />
+                    <img className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe'/>
                 </div>
                 <div className={styles.mainContainer}>
                     <Header />
@@ -31,9 +32,9 @@ export default async function Home(homePageData) {
                     <BrandMustTry data={brandUMustTry}/>
                     <SecondaryBanner data={secondryBanners}/>
                     {
-                        data.map((data,index)=>{
+                        data.map((product,index)=>{
                             return(
-                            <ProductSlider data={data} index={index} key={index}/>
+                            <ProductSlider data={product} index={index} key={index} totalRow={data.length || 1}/>
                             )
                         })
                     }
