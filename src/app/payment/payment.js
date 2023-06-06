@@ -136,7 +136,16 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [ isLoader , setIsLoader] = useState(false);
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,tamaraConfig));
 
-  console.log("paymentMethodConfigpaymentMethodConfig",paymentMethodConfig)
+
+  useEffect(()=>{
+    if(Object.keys(selectedAddress).length == 0){
+      const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
+        const findSelectedAddress = listOfAddress.find((data) => data.id == JSON.parse(getAddressIdFromLocalStorage));
+        setSelectedAddress(findSelectedAddress)
+    }
+
+  },[listOfAddress])
+
 
   useEffect(()=>{
     if(data && Object.keys(data).length > 0 ){

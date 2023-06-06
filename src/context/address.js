@@ -22,6 +22,13 @@ export const AddressProvider = ({ children, countryCode }) => {
   }
 
 
+ useEffect(()=>{
+    if(selectedAddress && selectedAddress.id){
+      localStorage.setItem("addressId",JSON.stringify(selectedAddress.id))
+    }
+
+ },[selectedAddress])
+
 
   useEffect(()=>{
       getAddress();
