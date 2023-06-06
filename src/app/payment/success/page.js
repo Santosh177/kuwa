@@ -1,13 +1,10 @@
 'use client'
 import PageHeader from '@/components/PageHeader/PageHeader';
-import { useRouter } from 'next/navigation';
 import styles from './pages.module.scss';
 import { useEffect } from 'react';
 
 export default function PaymentSuccess() {
 
-
-    const router = useRouter();
 
     useEffect(()=>{
       deleteAllItem()
@@ -20,18 +17,16 @@ export default function PaymentSuccess() {
           'Content-Type': 'application/json',
         }
       })
-
-      console.log("response",res)
     }
   
       return (
         <>
-        <PageHeader />
+        <PageHeader backButtonAction={()=>window.location.href = '/'} />
         <div className={styles.paymentSuceesContainer}>
           <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/success.png' alt=''/>
           <div className={styles.txt}>Order placed</div>
           <div className={styles.subTxt}>Thanks for your purchase! Confirmation email with details coming soon. Contact us if you have any questions.</div>
-          <div className={styles.btn} onClick={()=>router.push('/')}>Continue Shopping</div>
+          <div className={styles.btn} onClick={()=>window.location.href='/'}>Continue Shopping</div>
         </div>
         </>
       )

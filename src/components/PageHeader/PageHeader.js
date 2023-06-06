@@ -24,7 +24,6 @@ const PageHeader = ({headerName="",backButtonAction=""}) => {
                 <div className={styles.headerTxt}>{headerName}</div>
                 <img className={styles.kuwaLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/kuwa_logo.png' alt='kuwa-logo'/>
             </div>
-           
         </div>
     )
 }
