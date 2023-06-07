@@ -1,7 +1,7 @@
 import styles from './order-item.module.scss';
 
 
-export default  function OrderItem({product={},orderId=""}) {
+export default  function OrderItem({product={},orderId="",currency=""}) {
 
 
     console.log("product",product)
@@ -20,7 +20,7 @@ export default  function OrderItem({product={},orderId=""}) {
                         <div className={styles.orderItemName}>{product.name}</div>
                         <div className={styles.qty}>QTY : <span>{product.quantity}</span></div>
                     </div>
-                    <div className={styles.orderPrice}>AED {price}</div>
+                    <div className={styles.orderPrice}>{currency} {price}</div>
                 </div>
             </div>
         </div>

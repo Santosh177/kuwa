@@ -10,6 +10,7 @@ export default function OrderDetails({data}) {
 
   const router = useRouter()
 
+  console.log("datadata",data)
 
   const {address={} , product={}, orderId="" , price={} } = data || {};
   
@@ -21,23 +22,21 @@ export default function OrderDetails({data}) {
     totalAmount: price['total'],
     savedAmount:(price['total']- price['deliveryFee']),
     discountAmount:(price['discount']),
-    currency:"",
+    currency:price['currency'],
     deliveryFees:price['deliveryFee']
   }
 
-
-  console.log("http://localhost:3000/my/order/2801")
   return (
     <div className={styles.orderDetails}>
         <div className={styles.orderDetailsLeftContainer}>
-            <OrderItem  product={product} orderId={orderId}/>
+            <OrderItem  product={product} orderId={orderId} currency={price['currency']}/>
             <OrderDeliveryStatus />
             <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
             <PriceDetails data={priceDetailsData} />
-            <div className={styles.needHelpTxt}>Need help ? <span>Contact Us</span></div>
-            <div className={styles.cancelOrderBtn} onClick={()=>router.push('/my/order/cancellation-request')}>Cancel my order</div>
+            <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
+            <div className={styles.cancelOrderBtn} onClick={()=>router.push(`/my/order/cancellation-request/${product.productId}`)}>Cancel my order</div>
         </div>
       
         

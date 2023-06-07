@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react';
 import styles from './cancel-request.module.scss';
+import { useRouter, useParams,useSearchParams } from 'next/navigation';
 
 
 const CheckBox = ({ isChecked=false }) => {
@@ -25,12 +26,17 @@ const ReasonCard = ({data,onSelect,cancelReason}) => {
 
 export default  function CancelRequest({cancelReasonData=[]}) {
   const [ cancelReason , setCancelReason ] = useState("");
+  const params = useParams()
+  console.log("paramsparams",params)
 
 
   
   const onCancelRequest = async() => {
     if(cancelReason){
-      alert(cancelReason)
+      let data ={
+        productId: params.id,
+        cancelReason:cancelReason
+      }
       const updateCartItemResp = await fetch('/api/update-cart-item', {
         method: 'POST',
         headers: {
