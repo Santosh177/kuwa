@@ -1,29 +1,32 @@
+'use client'
+import { useRouter,usePathname } from 'next/navigation';
 import OrderItem from '../OrderItem/OrderItem';
 import OrderDeliveryStatus from '../OrderDeliveryStatus/OrderDeliveryStatus';
 import OrderAddress from '../OrderAddress/OrderAddress';
 import PriceDetails from '@/components/PriceDetails/PriceDetails';
 import styles from './order-details.module.scss'
 
-export default async function OrderDetails({data}) {
+export default function OrderDetails({data}) {
+
+  const router = useRouter()
 
 
-  const {address={} , product={}, orderId="" , price={} } = data || {}
+  const {address={} , product={}, orderId="" , price={} } = data || {};
+  
 
-
-
-
-  const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0} = data || {}
-
+  
   const priceDetailsData = {
-    cartItemCount : "",
-    subTotal:"",
-    totalAmount: "",
-    savedAmount:"",
-    discountAmount:"",
+    cartItemCount : product['quantity'],
+    subTotal:(price['price'] * product['quantity']),
+    totalAmount: price['total'],
+    savedAmount:(price['total']- price['deliveryFee']),
+    discountAmount:(price['discount']),
     currency:"",
-    deliveryFees:0
+    deliveryFees:price['deliveryFee']
   }
 
+
+  console.log("http://localhost:3000/my/order/2801")
   return (
     <div className={styles.orderDetails}>
         <div className={styles.orderDetailsLeftContainer}>
@@ -32,9 +35,9 @@ export default async function OrderDetails({data}) {
             <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
-            <PriceDetails />
+            <PriceDetails data={priceDetailsData} />
             <div className={styles.needHelpTxt}>Need help ? <span>Contact Us</span></div>
-            <div className={styles.cancelOrderBtn}>Cancel my order</div>
+            <div className={styles.cancelOrderBtn} onClick={()=>router.push('/my/order/cancellation-request')}>Cancel my order</div>
         </div>
       
         
