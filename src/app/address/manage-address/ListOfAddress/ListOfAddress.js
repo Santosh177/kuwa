@@ -8,6 +8,7 @@ import styles from './list-of-address.module.scss'
 import { useEffect, useState } from 'react';
 
 export default function ListOfAddress({allAddress,addressList}) {
+  console.log("allAddressallAddress",addressList)
   const router = useRouter();
   const pathName = usePathname();
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
@@ -74,23 +75,49 @@ export default function ListOfAddress({allAddress,addressList}) {
 
     data['shippingAddress']['isDefaultAddress'] = true;
     data['billingAddress']['isDefaultAddress'] = true;
+
+
+
+    let selectDefaultAddress = {
+      data:data,
+      shippingAddressId: data.shippingAddress.id
+    }
     
     try {
-      // setIsLoading(true)
+      setIsLoading(true)
       const updateAddressResp  =  await fetch(`/api/update-address`, {
         method: 'POST',
         headers:{
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify(data),
+        body:JSON.stringify(selectDefaultAddress),
         cache: 'no-store'
       })
-      // const updateAddress = await updateAddressResp.json();
-      // setIsLoading(false
+
+      const updateAddress = await updateAddressResp.json();
+    
+      getAddress()
      
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
     }
+  }
+
+
+  const getAddress = async() => {
+    const getAddressResp  =  await fetch('/api/get-address', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      cache: 'no-store'
+    })
+    const addressData = await getAddressResp.json();
+    const addressList = addressData && addressData['shippingAddress'] && addressData['shippingAddress'];
+    if(addressList && addressList.length > 0){
+      setListOfAddress(addressList);
+    }
+    setIsLoading(false)
   }
 
 

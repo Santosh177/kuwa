@@ -88,7 +88,7 @@ export default function AddAddress() {
       })
       // setIsLoading(false)
         const updateAddress = await updateAddressResp.json();
-       
+        getAddress()
         if(refererPath){
           router.replace(refererPath)
         }else{
@@ -107,6 +107,8 @@ export default function AddAddress() {
 
       setAddressData(formData)
     }
+
+
   
       return (
         <>

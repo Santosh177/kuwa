@@ -64,7 +64,7 @@ export default function ListOfAddress({addressList}) {
             <div className={styles.addNewAddressTxt} onClick={()=> router.push(`/address/add-address?referer=${pathName}`)}>+ Add new address</div>
             <div className={styles.addressInfoContainer}>
                 {
-                    addressList.map((data,index)=>{
+                    listOfAddress.map((data,index)=>{
                         const addressTxt = data.address +" " +data.apartment + " " +data.country || "";
                         const addressData = {
                             userName:data.firstName + " " + data.lastName,
@@ -80,7 +80,7 @@ export default function ListOfAddress({addressList}) {
                 }
             </div>
           </div>
-          {addressList && addressList.length > 0 && <SubmitBtn btnName='Save & proceed' onClick={onSelectAddress} />}
+          {listOfAddress && listOfAddress.length > 0 && <SubmitBtn btnName='Save & proceed' onClick={onSelectAddress} />}
           <Loader isShow={isLoading} />
         </>
        
