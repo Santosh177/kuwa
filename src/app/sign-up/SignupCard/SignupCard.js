@@ -1,5 +1,6 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter , useSearchParams} from 'next/navigation';
+
 import Input from "@/components/Input/Input";
 import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
 import Loader from '@/components/Loader/Loader';
@@ -76,10 +77,12 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
 
 export default function SignupCard() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [ formData , setFormData] = useState({});
     const [ errors, setErrors] = useState({});  
     const [isLoading , setIsLoading] = useState(false)
-
+    const refererPath = searchParams.get('referer');
+    
   
 
 
@@ -96,7 +99,12 @@ export default function SignupCard() {
               if(data && data.status_code && data.status_code == 400){
                   
               }else{
-                window.location.href = '/'
+                if(refererPath){
+                  window.location.href = refererPath;
+                }else{
+                  window.location.href = '/'
+                }
+                
               }
               setIsLoading(false);
           } catch (error) {
