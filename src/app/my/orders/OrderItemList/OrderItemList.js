@@ -13,11 +13,13 @@ export default function OrderItemList({data}) {
 
   const orderItemData = { 
     orderId:data.orderId,
+    productId:data.productId,
     productName:data.productName,
     productImg:data.productImage,
     orderStatus:data.orderStatus,
     orderProductId:data.orderProductId,
-    expDelivery:data.expDelivery
+    expDelivery:data.expDelivery,
+    rating:data.rating
   }
 
 

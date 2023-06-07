@@ -27,12 +27,12 @@ export default  function OrderItem({data}) {
 
     console.log("orderData",data)
     
-    const { orderId="",productName="",productImg="",orderStatus="",orderProductId="" , expDelivery="" } = data || {};
+    const { orderId="",productName="",productImg="",orderStatus="",orderProductId="" , expDelivery="",productId="",rating="" } = data || {};
 
 
     const updateRating = async(rating) =>{
         let data = {
-            productId:orderProductId,
+            productId:productId,
             rating: parseInt(rating) + 1
         }
         console.log("data",data)
@@ -45,6 +45,7 @@ export default  function OrderItem({data}) {
             cache: 'no-store'
           })
           const updateRatingData = await updateRatingResp.json();
+          router.refresh()
           console.log("updateRatingDataupdateRatingData",updateRatingData)
     }
 
@@ -75,9 +76,8 @@ export default  function OrderItem({data}) {
             case "FULFILLED":
                 return (
                     <div className={styles.orderInfoDelivered}>
-                        <div className={styles.ratingTxt}>Rate the product based on your experience.</div>
-                        {/* You have rated ! */}
-                        <StarRating onUpdateRating={updateRating} />
+                        <div className={styles.ratingTxt}>{(rating)?"You have rated !":"Rate the product based on your experience."}</div>
+                        <StarRating onUpdateRating={updateRating} rating={rating} />
                     </div>
                 
                 )

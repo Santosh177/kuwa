@@ -51,8 +51,11 @@ const RatingStars = ({onUpdateRating={},rating=0}) => {
     
 
     const changeGradeIndex = ( index ) => {
-        setGradeIndex(index);
-        onUpdateRating(index)
+        if(!rating){
+            setGradeIndex(index);
+            onUpdateRating(index)
+        }
+       
     }
 
   
