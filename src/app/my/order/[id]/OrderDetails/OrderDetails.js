@@ -12,6 +12,17 @@ export default async function OrderDetails({data}) {
 
 
 
+  const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0} = data || {}
+
+  const priceDetailsData = {
+    cartItemCount : "",
+    subTotal:"",
+    totalAmount: "",
+    savedAmount:"",
+    discountAmount:"",
+    currency:"",
+    deliveryFees:0
+  }
 
   return (
     <div className={styles.orderDetails}>

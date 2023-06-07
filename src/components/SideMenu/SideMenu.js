@@ -114,7 +114,7 @@ const LogOut = () =>{
             })
             setIsLoading(false)
             if (res.status === 200) {
-                router.refresh();
+                window.location.href = '/'
             } else {
               throw new Error(await res.text())
             }

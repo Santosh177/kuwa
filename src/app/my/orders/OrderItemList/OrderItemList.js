@@ -16,7 +16,8 @@ export default function OrderItemList({data}) {
     productName:data.productName,
     productImg:data.productImage,
     orderStatus:data.orderStatus,
-    orderProductId:data.orderProductId
+    orderProductId:data.orderProductId,
+    expDelivery:data.expDelivery
   }
 
 

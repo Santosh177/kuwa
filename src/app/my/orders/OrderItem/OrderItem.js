@@ -15,7 +15,7 @@ export default  function OrderItem({data}) {
 
     console.log("orderData",data)
     
-    const { orderId="",productName="",productImg="",orderStatus="",orderProductId=""  } = data || {};
+    const { orderId="",productName="",productImg="",orderStatus="",orderProductId="" , expDelivery="" } = data || {};
 
     const renderOrderStatus = (orderStatus) => {
         switch (orderStatus) {
@@ -36,9 +36,9 @@ export default  function OrderItem({data}) {
     const renderOrderInfo = (orderStatus) => {
         switch (orderStatus) {
             case "ORDER_IN_PROCESS":
-                return  <div className={styles.orderDeliveryTime}>Delivery expected by 24 April</div>
+                return  <div className={styles.orderDeliveryTime}>Delivery expected by {expDelivery}</div>
             case "ON_THE_WAY":
-                return   <div className={styles.orderDeliveryTime}>Delivery expected by 24 April</div>
+                return   <div className={styles.orderDeliveryTime}>Delivery expected by {expDelivery}</div>
             case "ORDER_DELIVERED":
                 return (
                     <div className={styles.orderInfoDelivered}>
@@ -50,7 +50,7 @@ export default  function OrderItem({data}) {
             case "ORDER_CANCELLED":
                 return <div className={styles.orderInfoCancelled}>Refund Status : (false) <span className={styles.pending}>Pending</span>?<span className={styles.settled}>Settled</span></div>
             default:
-                return <div className={styles.orderDeliveryTime}>Delivery expected by 24 April</div>
+                return <div className={styles.orderDeliveryTime}>Delivery expected by {expDelivery}</div>
         }
     }
 
