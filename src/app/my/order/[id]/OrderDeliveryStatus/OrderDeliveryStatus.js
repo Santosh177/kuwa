@@ -6,6 +6,11 @@ import styles from './order-delivery-status.module.scss';
 
 
 const OrderDeliveryStatus = ({stepCount=2}) => {
+
+
+  // SHIPPED
+  //FULFILLED
+   const orderStatus = "CREATED"
     const steps = [
         {
           label: 'Order Received',
@@ -34,7 +39,7 @@ const OrderDeliveryStatus = ({stepCount=2}) => {
           <div className={styles.StepWrapper} key={step}>
             <div className={[styles.StepStyle,(step==3)?styles.StepStyle3:"", (step<=stepCount)?styles.StepStyleActive:'' , (step + 1 <= stepCount)?styles.StepStyleActiveTracker:''].join(" ")}>
                 <div className={styles.StepCount}>
-                    {(step<stepCount) &&<img className={styles.stepIcon} src={(step<stepCount)?tickIcon:""} />}
+                    {(step<=stepCount) &&<img className={styles.stepIcon} src={(step<=stepCount)?tickIcon:""} />}
                 </div>
             </div>
             <div className={styles.StepsLabelContainer}>

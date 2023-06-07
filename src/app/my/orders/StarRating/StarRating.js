@@ -1,5 +1,5 @@
 'use client';
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import styles from './star-rating.scss';
 
 const Star = (props) => {
@@ -9,14 +9,13 @@ const Star = (props) => {
     }
 
     return (
-        <label className="star">
+        <label className="star" onClick={(e)=>{e.stopPropagation();changeGrade(e)}}>
             <input
                 type="radio"
                 name="rating"
                 id={props.grade}
                 value={props.index}
                 className="stars_radio-input"
-                onClick={changeGrade}
             />
             <svg 
                 width="21" 
@@ -35,18 +34,28 @@ const Star = (props) => {
     );
 }
 
-const RatingStars = () => {
+const RatingStars = ({onUpdateRating={},rating=0}) => {
     const [gradeIndex, setGradeIndex] = useState();
     const RATING = [1, 2, 3,4,5];
     const activeStar = {
         fill: '#D6B13E'
     };
 
+    useEffect(()=>{
+        if(rating)
+        {
+            setGradeIndex(rating - 1)
+        }
+
+    },[rating])
+    
+
     const changeGradeIndex = ( index ) => {
-        
         setGradeIndex(index);
+        onUpdateRating(index)
     }
 
+  
     console.log("gradeIndexgradeIndex",gradeIndex)
 
     return (
