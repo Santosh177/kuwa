@@ -7,13 +7,16 @@ import styles from './order-details.module.scss'
 export default async function OrderDetails({data}) {
 
 
+  const {address={} , product={}, orderId="" , price={} } = data || {}
+
+
 
 
 
   return (
     <div className={styles.orderDetails}>
         <div className={styles.orderDetailsLeftContainer}>
-            <OrderItem />
+            <OrderItem  product={product} orderId={orderId}/>
             <OrderDeliveryStatus />
             <OrderAddress data={data} />
         </div>
