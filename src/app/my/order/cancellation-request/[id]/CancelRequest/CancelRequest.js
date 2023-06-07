@@ -37,7 +37,7 @@ export default  function CancelRequest({cancelReasonData=[]}) {
         productId: params.id,
         cancelReason:cancelReason
       }
-      const updateCartItemResp = await fetch('/api/update-cart-item', {
+      const updateCartItemResp = await fetch('/api/order-cancellation', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

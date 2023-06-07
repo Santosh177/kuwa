@@ -76,7 +76,7 @@ const CategoriesData = [
     },
     {
         name:'Cart',
-        url:'/'
+        url:'/cart'
     },
     {
         name:'Terms of Service',
@@ -84,7 +84,7 @@ const CategoriesData = [
     },
     {
         name:'My Account',
-        url:'/'
+        url:'/my-account'
     },
     {
         name:'Shipping Policy',
@@ -92,7 +92,7 @@ const CategoriesData = [
     },
     {
         name:'Checkout',
-        url:'/'
+        url:'/payment'
     },
     {
         name:'Privacy Policy',

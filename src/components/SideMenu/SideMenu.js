@@ -88,13 +88,14 @@ const MainMenuData = ({data,onClick}) =>{
 
 
 const OtherInfo = () =>{
+    const router = useRouter();
     return(
         <div className={styles.OtherInfo}>
             {/* <div className={styles.txt}>Blog</div>
             <div className={styles.infoLine}> | </div> */}
-            <div className={styles.txt}>Contact Us</div>
+            <div className={styles.txt} onClick={()=>router.push('/contact-us')}>Contact Us</div>
             <div className={styles.infoLine}> | </div>
-            <div className={styles.txt}>FAQ</div>
+            <div className={styles.txt} onClick={()=>router.push('/terms-of-service')}>Terms of Service</div>
         </div>
     )
 }
