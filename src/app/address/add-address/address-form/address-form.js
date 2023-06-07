@@ -279,11 +279,13 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
                     combineFormData['billingAddress'] = {...billngAddress,...personalInfo,}
                 }
                 combineFormData['shippingAddress']['billingAddress'] = true;
-                combineFormData['shippingAddress']['isDefaultAddress'] = true;
                 combineFormData['shippingAddress']['isActive'] = true;
                 combineFormData['billingAddress']['shippingAddress'] = true;
-                combineFormData['billingAddress']['isDefaultAddress'] = true;
                 combineFormData['billingAddress']['isActive'] = true;
+                if(!isEdit){
+                  combineFormData['shippingAddress']['isDefaultAddress'] = true;
+                  combineFormData['billingAddress']['isDefaultAddress'] = true;
+                }
                 onGetFormValues(combineFormData);
 
         }else{
