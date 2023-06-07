@@ -16,11 +16,12 @@ export async function POST(request,res) {
         },
         body:JSON.stringify(requestBody)
       });
-      console.log("signUpResddp",signupResp)
-      const signupData = await signupResp.json();
-
-    console.log("signUpResp",signupData)
-
-   const data =  setTokenCookie(res, signupData.token, signupData.id)
-    return NextResponse.json({"data":"ssss"})
+    console.log("signUpResddp",signupResp)
+    const signupData = await signupResp.json();
+    if(signupData && signupData.token){
+      const data =  setTokenCookie(res, signupData.token, signupData.id)
+      return NextResponse.json({"status_code":200, "status_msg":"success",data:data})
+    }else{
+      return NextResponse.json({"status_code":400, "status_msg":"success"})
+    }
 }

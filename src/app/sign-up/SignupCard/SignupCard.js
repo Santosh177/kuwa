@@ -92,12 +92,13 @@ export default function SignupCard() {
                 method: 'POST',
                 body:JSON.stringify(formData)
               })
-              setIsLoading(false)
-            if (res.status === 200) {
-              window.location.href = '/'
-            } else {
-              throw new Error(await res.text())
-            }
+              const data = await res.json();
+              if(data && data.status_code && data.status_code == 400){
+                  
+              }else{
+                window.location.href = '/'
+              }
+              setIsLoading(false);
           } catch (error) {
             console.error('An unexpected error happened occurred:', error)
           }

@@ -162,7 +162,7 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
     const [ key , setKey ] = useState("");
     const [ childMenuData , setChildMenuData ] = useState([]);
     const onClick = (data) => {
-        if(data && data.redirectionLink && data.redirectionLink.includes('https')){
+        if(data && data.redirectionLink){
             router.push(data.redirectionLink)
         }else{
             setKey(data);

@@ -87,7 +87,8 @@ const Header = () => {
                     subTxt: "Track your order here",
                     txt: "Find My Order",
                     type: "Find my order",
-                    typeId: null
+                    typeId: null,
+                    redirectionLink:'my/order/find-order'
                 }
                 getSideMenuData.push(findMyOrderData)
             }
