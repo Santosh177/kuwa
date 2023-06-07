@@ -26,8 +26,8 @@ const ReasonCard = ({data,onSelect,cancelReason}) => {
 
 export default  function CancelRequest({cancelReasonData=[]}) {
   const [ cancelReason , setCancelReason ] = useState("");
-  const params = useParams()
-  console.log("paramsparams",params)
+  const params = useParams();
+  const router = useRouter();
 
 
   
@@ -44,8 +44,9 @@ export default  function CancelRequest({cancelReasonData=[]}) {
         },
         body:JSON.stringify(data)
       })
-    const updateCartItemData = await updateCartItemResp.json();
-    return updateCartItemData;
+    // const updateCartItemData = await updateCartItemResp.json();
+    router.replace('/my/order/cancellation-confirmed')
+    // return updateCartItemData;
     }
   }
 
