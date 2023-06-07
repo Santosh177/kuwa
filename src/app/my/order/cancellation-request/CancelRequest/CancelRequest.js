@@ -30,7 +30,6 @@ export default  function CancelRequest({cancelReasonData=[]}) {
   
   const onCancelRequest = async() => {
     if(cancelReason){
-      alert(cancelReason)
       const updateCartItemResp = await fetch('/api/update-cart-item', {
         method: 'POST',
         headers: {
