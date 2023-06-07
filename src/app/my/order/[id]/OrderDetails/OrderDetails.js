@@ -18,7 +18,7 @@ export default async function OrderDetails({data}) {
         <div className={styles.orderDetailsLeftContainer}>
             <OrderItem  product={product} orderId={orderId}/>
             <OrderDeliveryStatus />
-            <OrderAddress data={data} />
+            <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
             <PriceDetails />

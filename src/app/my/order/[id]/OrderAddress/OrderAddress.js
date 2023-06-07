@@ -1,3 +1,4 @@
+'use client';
 import styles from './order-address.module.scss';
 
 
@@ -16,26 +17,25 @@ const AddressInfoCard = ({data}) => {
 
 
 
-export default async function OrderAddress({data}) {
-
-
-    const shippingAddress = {
+export default function OrderAddress({address}) {
+    const {shippingAddress={}, billingAddress={} } = address || {}
+    const shippingAddressData = {
         headerTitle:"Shipping Address",
-        userName:"Karif Daoud",
-        address:"12th Floor Yes Business Centre Al Barsha – Dubai United Arab Emirates",
-        phoneNo:"971-8996689"
+        userName:shippingAddress['firstName'],
+        address: shippingAddress['address'] +" "+ shippingAddress['apartment'] + " " + shippingAddress['country'],
+        phoneNo:shippingAddress['mobNumber']
     }
-    const billingAddress = {
+    const billingAddressData     = {
         headerTitle:"Billing Address",
-        userName:"Karif Daoud",
-        address:"12th Floor Yes Business Centre Al Barsha – Dubai United Arab Emirates",
-        phoneNo:"971-8996689"
+        userName:billingAddress['firstName'],
+        address:billingAddress['address'] +" "+ billingAddress['apartment'] + " " + billingAddress['country'],
+        phoneNo:billingAddress['mobNumber']
     }
 
   return (
     <>
-        <AddressInfoCard  data={shippingAddress}/>
-        <AddressInfoCard  data={billingAddress}/>
+        <AddressInfoCard  data={shippingAddressData}/>
+        <AddressInfoCard  data={billingAddressData}/>
     </>
 
   )
