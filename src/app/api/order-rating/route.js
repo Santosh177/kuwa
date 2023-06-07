@@ -14,6 +14,8 @@ export async function POST(request,res) {
         },
         body:JSON.stringify(rating)
       });
-      const ratingData = await ratingResp.json();
-    return NextResponse.json({status:"SUCCESS",data:ratingData})
+
+      // const ratingData = await ratingResp.json();
+      // console.log("ratingDataratingData",ratingData)
+    return NextResponse.json({status:"SUCCESS"})
 }

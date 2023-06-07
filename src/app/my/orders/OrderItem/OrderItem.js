@@ -77,7 +77,7 @@ export default  function OrderItem({data}) {
                     <div className={styles.orderInfoDelivered}>
                         <div className={styles.ratingTxt}>Rate the product based on your experience.</div>
                         {/* You have rated ! */}
-                        <StarRating onUpdateRating={updateRating} rating={2} />
+                        <StarRating onUpdateRating={updateRating} />
                     </div>
                 
                 )

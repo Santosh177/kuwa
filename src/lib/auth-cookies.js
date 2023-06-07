@@ -16,11 +16,15 @@ export function setTokenCookie(res, token,userId) {
     path: '/',
     sameSite: 'lax',
   })
-  cookies().set('token', token);
-  cookies().set('userId',userId)
-	const response = NextResponse.next()
-  response.cookies.set('token', token)
-  response.cookies.set('userId', userId)
+  const response = NextResponse.next()
+  if(token){
+    cookies().set('token', token);
+    response.cookies.set('token', token)
+  }
+  if(userId){
+    cookies().set('userId',userId)
+    response.cookies.set('userId', userId)
+  }
 }
 
 export function setCountryCookie(res, countryId) {

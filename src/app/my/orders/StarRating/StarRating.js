@@ -4,12 +4,12 @@ import styles from './star-rating.scss';
 
 const Star = (props) => {
 
-    const changeGrade = (e) => {
-        props.changeGradeIndex(e.target.value);
+    const changeGrade = (rating) => {
+        props.changeGradeIndex(rating);
     }
 
     return (
-        <label className="star" onClick={(e)=>{e.stopPropagation();changeGrade(e)}}>
+        <label className="star" onClick={(e)=>{e.stopPropagation();changeGrade(props.index)}}>
             <input
                 type="radio"
                 name="rating"
