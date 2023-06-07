@@ -13,6 +13,7 @@ export default function OrderDetails({data}) {
   console.log("datadata",data)
 
   const {address={} , product={}, orderId="" , price={} } = data || {};
+  const orderStatus = product['status']
   
 
   
@@ -30,13 +31,13 @@ export default function OrderDetails({data}) {
     <div className={styles.orderDetails}>
         <div className={styles.orderDetailsLeftContainer}>
             <OrderItem  product={product} orderId={orderId} currency={price['currency']}/>
-            <OrderDeliveryStatus />
+            <OrderDeliveryStatus  orderStatus={orderStatus}/>
             <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
             <PriceDetails data={priceDetailsData} />
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
-            <div className={styles.cancelOrderBtn} onClick={()=>router.push(`/my/order/cancellation-request/${product.productId}`)}>Cancel my order</div>
+            {orderStatus ==="CREATED" && <div className={styles.cancelOrderBtn} onClick={()=>router.push(`/my/order/cancellation-request/${product.productId}`)}>Cancel my order</div>}
         </div>
       
         

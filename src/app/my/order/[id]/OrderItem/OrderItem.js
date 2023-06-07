@@ -4,9 +4,7 @@ import styles from './order-item.module.scss';
 export default  function OrderItem({product={},orderId="",currency=""}) {
 
 
-    console.log("product",product)
 
-    const price = (product.price * product.quantity)
 
   return (
         <div className={styles.orderItemWrapper}>
@@ -20,7 +18,7 @@ export default  function OrderItem({product={},orderId="",currency=""}) {
                         <div className={styles.orderItemName}>{product.name}</div>
                         <div className={styles.qty}>QTY : <span>{product.quantity}</span></div>
                     </div>
-                    <div className={styles.orderPrice}>{currency} {price}</div>
+                    <div className={styles.orderPrice}>{currency} {product.price}</div>
                 </div>
             </div>
         </div>

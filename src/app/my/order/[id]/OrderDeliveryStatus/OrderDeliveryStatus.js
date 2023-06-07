@@ -1,16 +1,26 @@
 
+import { useEffect, useState } from 'react';
 import styles from './order-delivery-status.module.scss';
 
 
 
 
 
-const OrderDeliveryStatus = ({stepCount=2}) => {
+const OrderDeliveryStatus = ({orderStatus=""}) => {
 
+    const [stepCount,setStepCount] = useState(1);
 
+    useEffect(()=>{
+      if(orderStatus === "SHIPPED"){
+        setStepCount(2)
+      }else if(orderStatus === "FULFILLED"){
+        setStepCount(3)
+      }
+
+    },[orderStatus])
   // SHIPPED
   //FULFILLED
-   const orderStatus = "CREATED"
+  //  const orderStatus = "CREATED"
     const steps = [
         {
           label: 'Order Received',
