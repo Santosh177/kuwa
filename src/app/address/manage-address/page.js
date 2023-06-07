@@ -24,7 +24,7 @@ export default async function SelectAddress() {
       return (
         <>
             <PageHeader headerName='Manage Address' />
-            <ListOfAddress  addressList = {getAddress['shippingAddress'] || []}/>
+            <ListOfAddress allAddress={getAddress}  addressList = {getAddress['shippingAddress'] || []}/>
         </>
        
       )

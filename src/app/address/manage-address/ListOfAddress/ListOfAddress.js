@@ -7,7 +7,7 @@ import SubmitBtn from '../../component/SubmitBtn/SubmitBtn';
 import styles from './list-of-address.module.scss'
 import { useEffect, useState } from 'react';
 
-export default function ListOfAddress({addressList}) {
+export default function ListOfAddress({allAddress,addressList}) {
   const router = useRouter();
   const pathName = usePathname();
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
@@ -60,11 +60,38 @@ export default function ListOfAddress({addressList}) {
     
   }
 
-  const onSelectAddress = () => {
-    router.push('/order-summary')
-  }
+
  
 
+  const onSelectDefaultAddress = async(defaultAddress) => {
+
+    const shippingAddress = allAddress['shippingAddress'].find(shippingData => shippingData.id == defaultAddress.id);
+    const billingAddress = allAddress['billingAddresses'].find(billingData => billingData.id == shippingAddress.asoBillingAddress );
+    let data = {
+      shippingAddress:shippingAddress,
+      billingAddress: billingAddress
+    }
+
+    data['shippingAddress']['isDefaultAddress'] = true;
+    data['billingAddress']['isDefaultAddress'] = true;
+    
+    try {
+      // setIsLoading(true)
+      const updateAddressResp  =  await fetch(`/api/update-address`, {
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(data),
+        cache: 'no-store'
+      })
+      // const updateAddress = await updateAddressResp.json();
+      // setIsLoading(false
+     
+    } catch (error) {
+      console.error('An unexpected error happened occurred:', error)
+    }
+  }
 
 
   
@@ -84,7 +111,7 @@ export default function ListOfAddress({addressList}) {
                         }
                         const isSelected =(selectedAddress.id)?(selectedAddress.id == data.id ):data.isDefaultAddress;
                         return(
-                            <AddressInfo data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
+                            <AddressInfo onSelectDefaultAddress={onSelectDefaultAddress} data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
                         )
                     })
                 }

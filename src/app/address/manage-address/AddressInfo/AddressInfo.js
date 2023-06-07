@@ -15,7 +15,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectDefaultAdd
   const pathName = usePathname();
   console.log("PathBane",pathName)
 
-  const { userName="",addressTxt="", phoneNo="",id="" } = data || {}
+  const { userName="",addressTxt="", mobNumber="",id="" } = data || {}
 
   
       return (
@@ -43,7 +43,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectDefaultAdd
                 
             </div>
             <div className={styles.addressDetail}>{addressTxt}</div>
-            <div className={styles.phoneNo}>Phone no : {phoneNo}</div>
+            <div className={styles.phoneNo}>Phone no : {mobNumber}</div>
             <div className={styles.delivereHere}>
                 <CheckBox isChecked={isSelected}/>
                 <div className={styles.txt}>Default address</div>
