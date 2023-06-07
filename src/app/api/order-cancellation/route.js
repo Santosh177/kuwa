@@ -14,7 +14,7 @@ export async function POST(request,res) {
     }
 
     console.log("customHeadercustomHeader",customHeader)
-    const cancellationResp = await fetch(`https://api.kuwa.bevaleo.dev/api/v1/private/orders/${productId}/status`, {
+    const cancellationResp = await fetch(`https://api.kuwa.bevaleo.dev/api/v1/orders/${productId}/status`, {
         method: 'PUT',
         headers: customHeader,
         body:JSON.stringify(data)

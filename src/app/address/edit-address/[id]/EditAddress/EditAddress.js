@@ -71,6 +71,11 @@ export default function AddAddress() {
 
   const onGetFormValues = async(data) => {
     console.log("datadata",data)
+
+    let editAddressData = {
+      data:data,
+      shippingAddressId: data.shippingAddress.id
+    }
     try {
       // setIsLoading(true)
       const updateAddressResp  =  await fetch(`/api/update-address`, {
@@ -78,25 +83,17 @@ export default function AddAddress() {
         headers:{
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify(data),
+        body:JSON.stringify(editAddressData),
         cache: 'no-store'
       })
-      const updateAddress = await updateAddressResp.json();
       // setIsLoading(false)
-      console.log("updateAddressupdateAddress",updateAddress)
-      if (updateAddress.status === 200) {
-        const updateAddress = await updateAddress.json()
-        setSelectedAddress(saveAddress['shippingAddress']);
-        setListOfAddress(currentState => [...currentState, saveAddress['shippingAddress']])
+        const updateAddress = await updateAddressResp.json();
+       
         if(refererPath){
           router.replace(refererPath)
         }else{
           router.replace('/order-summary')
         }
-        
-      } else {
-        // throw new Error(await res.text())
-      }
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
     }
