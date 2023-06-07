@@ -73,7 +73,7 @@ export default  function Cart({cartData}) {
       }
        
       const priceDetailsData = {
-        cartItemCount: cartItems && cartItems.length,
+        cartItemCount: cartData && cartData.quantity,
         subTotal: subtotal,
         totalAmount: finalAmount,
         savedAmount: total - subtotal,
