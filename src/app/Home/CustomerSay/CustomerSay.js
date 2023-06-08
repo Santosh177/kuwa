@@ -44,9 +44,8 @@ const CustomerSay = () => {
               slidesToScroll={2}
               hasDots={true}
               draggable
-              gap={20}
               exactWidth={true}
-              itemWidth={450}
+              itemWidth={432}
               iconLeft={
                 <img style={{width:48,height:48}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/left_arrow.png' alt='left-icon'/>
               }

@@ -4,10 +4,10 @@
     .customerSayCard{
         background: rgba(64, 184, 240, 0.1);
         border-radius: 32px;
-        padding-top: 20px;
-        padding-bottom: 20px;
-        padding-right: 15px;
-        padding-left: 15px;
+        padding-top: 30px;
+        padding-bottom: 24px;
+        padding-right: 35px;
+        padding-left: 35px;
         text-align: center;
         display: flex;
         .stars{
@@ -28,7 +28,7 @@
         .name{
             font-weight: 600;
             font-size: 12px;
-            margin-top: 8px;
+            margin-top: 16px;
         }
 
         .leftsymbol{
@@ -46,5 +46,8 @@
 
     }
 }
+
+
+
 
 
