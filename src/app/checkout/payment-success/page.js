@@ -11,8 +11,12 @@ export default async function PaymentSuccess(req,res) {
           },
         })
         const checkoutData = await checkoutResp.json();
-        const orderId = checkoutData && checkoutData.order_id || "";
-        redirect(`/payment/success?orderId=${orderId}`);
+        if(checkoutData && checkoutData.status_code && checkoutData.status_code == 200){
+          const orderId = checkoutData && checkoutData.order_id || "";
+          redirect(`/payment/success?orderId=${orderId}`);
+        }else{
+          redirect(`/payment/failure`);
+        }
     }
     
 
