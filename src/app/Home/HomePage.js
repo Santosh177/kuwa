@@ -32,8 +32,8 @@ export default async function Home(homePageData) {
                     <Header />
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={bestSellings} />
-                    <BrandMustTry data={brandUMustTry}/>
                     <SecondaryBanner data={secondryBanners}/>
+                    <BrandMustTry data={brandUMustTry}/>
                     {
                         data.map((product,index)=>{
                             return(
