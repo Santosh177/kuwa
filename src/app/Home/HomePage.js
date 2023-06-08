@@ -9,6 +9,7 @@ import MedicalExpert from './MedicalExpert/MedicalExpert';
 // import CustomerSay from './CustomerSay/CustomerSay';
 import Footer from '@/components/Footer/Footer';
 import Loader from '@/components/Loader/Loader';
+import VideoBanner from './VideoBanner/VideoBanner';
 import styles from './home-page.module.scss';
 
 export default async function Home(homePageData) {
@@ -23,7 +24,8 @@ export default async function Home(homePageData) {
         <div className={styles.homePageWrapper}>
             <div className={styles.homePageContainer}>
                 <div className={styles.mainBanner}>
-                    <Banner />
+                    {/* <Banner /> */}
+                    <VideoBanner />
                     <img className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe'/>
                 </div>
                 <div className={styles.mainContainer}>
