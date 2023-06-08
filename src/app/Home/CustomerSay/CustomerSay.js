@@ -35,13 +35,18 @@ const CustomerSay = () => {
       return () => window.removeEventListener('resize', handleResize);
     }, [width]);
     return(
-       <div>
+       <div className={styles.customerSayWrapper}>
         <Glider
+
+             className={styles.customerSayWrapperSlider}
               hasArrows={(width>990)}
-              slidesToShow={1}
-              slidesToScroll={1}
-              hasDots={(width>990)}
+              slidesToShow={2}
+              slidesToScroll={2}
+              hasDots={true}
               draggable
+              gap={20}
+              exactWidth={true}
+              itemWidth={450}
               iconLeft={
                 <img style={{width:48,height:48}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/left_arrow.png' alt='left-icon'/>
               }
@@ -50,10 +55,10 @@ const CustomerSay = () => {
               }
             >
 
-<CustomerSayCard />
-<CustomerSayCard />
-<CustomerSayCard />
-<CustomerSayCard />
+          <CustomerSayCard />
+          <CustomerSayCard />
+          <CustomerSayCard />
+          <CustomerSayCard />
                 
                
             </Glider>
