@@ -374,8 +374,14 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               const placeOrder = await placeOrderResp.json();
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
+              const orderId =placeOrder && placeOrder.order_id
               if(placeOrder && placeOrder.status_code == 200){
-                router.push('/payment/success')
+                if(orderId){
+                  router.push(`/payment/success?orderId=${orderId}`)
+                }else{
+                  router.push(`/payment/success`)
+                }
+               
               }
         }
     }
