@@ -14,13 +14,18 @@ export async function POST(request,res) {
         headers:customHeader,
         body:JSON.stringify(requestBody)
       });
+
+      try {
+        const signupData = await signupResp.json();
+        if(signupData && signupData.token || signupData.id){
+          const data =  setTokenCookie(res, signupData.token, signupData.id)
+          return NextResponse.json({"status_code":200, "status_msg":"success",data:data})
+        }else{
+          return NextResponse.json({"status_code":400, "status_msg":"success",data:signupData})
+        }
+      } catch (error) {
+        return NextResponse.json({"status_code":400, "status_msg":"success",data:null})
+      }
  
-    const signupData = await signupResp.json();
-    console.log("signupData",signupData);
-    if(signupData && signupData.token || signupData.id){
-      const data =  setTokenCookie(res, signupData.token, signupData.id)
-      return NextResponse.json({"status_code":200, "status_msg":"success",data:data})
-    }else{
-      return NextResponse.json({"status_code":400, "status_msg":"success",data:signupData})
-    }
+   
 }

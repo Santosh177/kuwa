@@ -97,7 +97,8 @@ export default function SignupCard() {
               })
               const data = await res.json();
               if(data && data.status_code && data.status_code == 400){
-                  
+                setErrors({email:'This email address already exists. Please try logging in'})
+                setIsLoading(false)
               }else{
                 if(refererPath){
                   window.location.href = refererPath;
