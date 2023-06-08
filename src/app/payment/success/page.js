@@ -28,7 +28,7 @@ export default function PaymentSuccess() {
         <div className={styles.paymentSuceesContainer}>
           <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/success.png' alt=''/>
           <div className={styles.txt}>Order placed</div>
-          <div className={styles.orderId}>Order ID : #{orderId}</div>
+          {orderId && <div className={styles.orderId}>Order ID : #{orderId}</div>}
           <div className={styles.subTxt}>Thanks for your purchase! Confirmation email with details coming soon. Contact us if you have any questions.</div>
           <div className={styles.btn} onClick={()=>window.location.href='/'}>Continue Shopping</div>
         </div>
