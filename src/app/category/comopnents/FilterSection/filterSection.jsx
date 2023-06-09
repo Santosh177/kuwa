@@ -16,8 +16,8 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    // const singleSelect = [{ cat: "sort", options: ["new arivals", "popular", "Price Low to high", "Price High to Low"] }]
-    const singleSelect = [{ cat: "sort", options: [1, 2, 3, 4] }]
+    const singleSelect = [{ cat: "sort", options: ["new arivals", "popular", "Price Low to high", "Price High to Low"] }]
+    // const singleSelect = [{ cat: "sort", options: [1, 2, 3, 4] }]
     const multiSelect = superCollection
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [selectedSingle, setSelectedSingle] = useState("");
@@ -61,7 +61,6 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData }) => {
         <div className={style.filterSectionContainer}>
             {singleSelect.map((item) => {
                 const { cat = '', options = [] } = item || {}
-                console.log(item,"itemitemitemitem")
                 const [isCollapse, setIsCollapse] = useState(true)
                 return (
                     <div className={style.filterSectionCategory}>
@@ -124,10 +123,8 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const multiSelect = superCollection;
-    // const singleSelect = ["new arivals", "popular", "Price Low to high", "Price high to low"]
-    const singleSelect = [1, 2, 3, 4]
-
-    // const multiSelect = [{ cat: 'health goals', options: ["All health goals", "collagen", "digestion", "Beauty & Skin", "Focus & Energy"] }, { cat: 'goals', options: ["sff goals", "sdfsdf", "digessdfsdtion", " & Skin", "& Energy"] }]
+    const singleSelect = ["new arivals", "popular", "Price Low to high", "Price high to low"]
+    // const singleSelect = [1, 2, 3, 4]
     const [selectedCatogries, setSelectedCatogries] = useState([]);
     const [selectedTab, setSelectedTab] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -237,7 +234,6 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                     </div>
                     {singleSelect.map((item) => {
                         const image = item === selectedSingle ? checkIamge : uncheckImage;
-                        console.log(item,"itemitemitemitem")
                         return (
                             <div className={style.optionsTxt} onClick={()=>setSelectedSingle(item)}>
                                 <div className={style.tickBox}><img src={image} alt="check box" /></div>

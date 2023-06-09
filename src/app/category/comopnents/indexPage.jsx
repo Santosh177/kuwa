@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
-import CategoryHeader from "./CatgoryHeader/CatgoryHeader";
 import FilterSection from "./FilterSection/filterSection";
 import ProductSection from "./productSection/productSection";
 import style from "./indexPage.module.scss"
+import Loader from "@/components/Loader/Loader";
 const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 
@@ -14,11 +14,10 @@ const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 const MainCategory = ({ responseData }) => {
     const [slectedFilter, setSelectedFilter] = useState("NOT_SELCTED");
     const [selectedOptionsHead, setSelectedOptionsHead] = useState({});
-    const [resposneValue,setResponseValue] = useState([])
-    const handelSelectedCat = (cat, ele) => {
-        // console.log(cat, ele, "cat,elecat,ele")
-    }
+    const [resposneValue,setResponseValue] = useState([]);
+    const [isLoding,setIsLOading] = useState(false);
     const fetchData = async () => {
+        setIsLOading(true)
         const { category = "", sort = "" } = selectedOptionsHead || {};
         let query = ""
         if (sort && category) {
@@ -28,11 +27,7 @@ const MainCategory = ({ responseData }) => {
         } else if (!sort && category) {
             query = `category=${category}`
         };
-        let url = `https://api.kuwa.bevaleo.dev/module/product/`
-        if (query) {
-            url = `https://api.kuwa.bevaleo.dev/module/product/?${query}`
-        };
-        const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${url}`, {
+        const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${query}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,6 +35,7 @@ const MainCategory = ({ responseData }) => {
         })
         const getProductData = await getProduct.json();
         setResponseValue(getProductData)
+        setIsLOading(false)
     }
     useEffect(() => {
         fetchData()
@@ -61,10 +57,11 @@ const MainCategory = ({ responseData }) => {
                 </div>
             </div>}
             {<div className={style.productAndFilter}>
-                <FilterSection setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} slectedFilter={slectedFilter} handelSelectedCat={handelSelectedCat} responseData={responseData} />
+                <FilterSection setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} slectedFilter={slectedFilter} responseData={responseData} />
                 {isHide && <ProductSection resposneValue={resposneValue}  />}
             </div >}
             {isHide && <Footer />}
+            <Loader  isShow={isLoding} />
         </div>
     )
 }
