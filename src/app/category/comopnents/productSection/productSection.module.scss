@@ -1,0 +1,14 @@
+.productSectionContainer{
+    margin-top:20px;
+    margin-bottom:50px;
+
+    .allProduct{
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        .product{
+            margin-top: 60px;
+        }
+    }
+}
