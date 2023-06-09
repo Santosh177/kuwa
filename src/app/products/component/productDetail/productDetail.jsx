@@ -7,8 +7,7 @@ import { useRouter } from 'next/navigation';
 import style from "./ProductDetail.module.scss"
 import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
 const ProductDeatil = ({ productData = {} }) => {
-    // console.log(productData, "productDataproductDataproductData")
-    const { benefits = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {}
+    const { benefits = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
     const [selectedVarients, setselectedVarients] = useState("");
     const [selctedVrientsData, setSelectedVrientsData] = useState({});
@@ -29,20 +28,25 @@ const ProductDeatil = ({ productData = {} }) => {
     }, [])
     useEffect(() => {
         if (selectedVarients) {
-            const selectedVarientsData = variants.filter((item) => item?.price?.varientId === selectedVarients);
-            const { id, quantity, price = {}, image = "" } = selectedVarientsData || {};
-            const { varientId = '', retailPrice = 0, finalPrice = 0, discount = 0 } = price || {};
+            const selectedVarientsData = variants.filter((item) => item?.pricings[0]?.variantId === selectedVarients);
+            const { id = '', image = '', name = '', productId = '', quantity = '' } = selectedVarientsData[0].variants || {}
+            const { varientId = '', retailPrice = 0, finalPrice = 0, discount = 0 } = selectedVarientsData[0]?.pricings[0] || {};
             setSelectedVrientsData(selectedVarientsData)
             setFinalPrice(finalPrice);
             setRetailPrice(retailPrice);
             setDiscount(discount);
-            setAllImages([image, ...allImages]);
+            if (!allImages.includes(image)) {
+                setAllImages([image, ...allImages]);
+            }
         }
     }, [selectedVarients])
     const payload = {
         "product": id,
         "quantity": noOfProduct,
+        "isVariant":selectedVarients ? true : false,
+        "variantId": selectedVarients
     }
+    console.log(payload,"payload")
     const addToCart = async (payload) => {
         try {
             const res = await fetch('/api/add-to-cart', {
@@ -106,15 +110,15 @@ const ProductDeatil = ({ productData = {} }) => {
     };
 
     return (
-        <>
+        <div className={style.productPricingContainerOuter}>
             <div className={style.productPricingContainer}>
                 <ProductImageSection allImages={allImages} />
                 <ProductPricingSection pricingSectionVariables={pricingSectionVariables} />
             </div>
-            <div className={style.FrequntlyBoughtTogetherBox}>
+            {/* <div className={style.FrequntlyBoughtTogetherBox}>
                 <FrequntlyBoughtTogether productData={productData} />
-            </div>
-        </>
+            </div> */}
+        </div>
     )
 }
 

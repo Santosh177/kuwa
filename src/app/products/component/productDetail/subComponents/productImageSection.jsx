@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import styles from './ProductImageSection.module.scss'
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
+import ImageSlider from "@/components/ImageSlider/imageSlider";
 
 const ProductImageSection = ({ allImages }) => {
     // const images = ["https://valeo-qa-media.s3.ap-south-1.amazonaws.com/Tribulus-333x235_1675403245987.png", "https://valeo-qa-media.s3.ap-south-1.amazonaws.com/IV-December-Blog-Horizontal_1675403171780.jpg", "https://valeo-qa-media.s3.ap-south-1.amazonaws.com/LoveYourKidney_1675403171457.png"]
@@ -12,7 +13,7 @@ const ProductImageSection = ({ allImages }) => {
         return (
             <div className={styles.imageSectionContainer}>
                 <div className={styles.isDesktop}>
-                    <Glider
+                    {/* <Glider
                         hasArrows
                         slidesToShow={"auto"}
                         slidesToScroll={1}
@@ -39,7 +40,8 @@ const ProductImageSection = ({ allImages }) => {
                             </>
                         })}
 
-                    </Glider>
+                    </Glider> */}
+                    <ImageSlider images = {images}/>
                 </div>
                 <div className={styles.isMobile}>
                     <Glider
@@ -52,7 +54,6 @@ const ProductImageSection = ({ allImages }) => {
                     >
                         {images.map((item, i) => {
                             const { imageUrl = "" } = item || {};
-                            console.log(imageUrl, "imageUrlimageUrl")
                             return <>
                                 <div className={styles.imageSection}>
                                     <div style={{display:"flex",justifyContent:"center",alignItems : "center"}} className={styles.imageContainer}>

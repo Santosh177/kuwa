@@ -24,7 +24,7 @@ const ProductReview = ({ productData }) => {
     const handelOnCLick = () => {
         setCurrentQueue(splitAndPush(reviews, currentQueue))
     }
-
+    const isShowMore = reviews && reviews.length > 3;
     if (currentQueue && currentQueue.length > 0) {
         return (
             <div className={style.reviewsContainerOuter}>
@@ -40,10 +40,10 @@ const ProductReview = ({ productData }) => {
                         })
                     }
                 </div>
-                <div className={style.seeMore} onClick={() => handelOnCLick()}>
+                {isShowMore && <div className={style.seeMore} onClick={() => handelOnCLick()}>
                     <span>See More</span>
                     <img src="https://d25uasl7utydze.cloudfront.net/kuwa/arrow-down.svg" alt="arrow Down" />
-                </div>
+                </div>}
             </div>
         )
     } else {

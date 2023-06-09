@@ -1,19 +1,17 @@
 "use client"
-
-
 import React from "react";
 import style from "./productVarients.module.scss"
-
 const Varients = ({ setselectedVarients, variants,selectedVarients,currency }) => {
     return (
         <div className={style.varientsContainer} >
             {variants.map((item) => {
-                const { id, quantity, price = {} } = item || {};
-                const { varientId, retailPrice, finalPrice, discount } = price || {}
+                const { variants, pricings = {} } = item || {};
+                const {id='',image='',name='',productId='',quantity=''} = variants || {}
+                const {countryId='',discount='',finalPrice='',retailPrice='',variantId=NaN} = pricings[0] || {}
                 return (
-                    <div className={[style.VarientBox, ((selectedVarients === varientId)?  style.variantsSelcted : "")].join(" ")} onClick={()=>setselectedVarients(varientId)}>
+                    <div className={[style.VarientBox, ((selectedVarients === variantId)?  style.variantsSelcted : "")].join(" ")} onClick={()=> setselectedVarients(variantId)}>
                         <div>
-                            <div className={style.quantity}>{quantity}</div>
+                            <div className={style.quantity}>{name}</div>
                             {discount > 0 ? <div className={style.discount}>Extra {discount} {currency} off</div> :<></>}
                         </div>
                     </div>

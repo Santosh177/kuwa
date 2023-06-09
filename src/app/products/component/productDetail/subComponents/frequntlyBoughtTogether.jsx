@@ -9,13 +9,14 @@ const rectangularCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/Rectangular
 
 
 const FrequntlyBoughtTogether = ({ productData = {} }) => {
-    // console.log(productData,"productDataproductDataproductDataproductDataproductData");
     const [slectedId, setSelectedId] = useState([]);
     const [idQunatity, setIdQunatity] = useState({});
     const [totalPrice, setTotalPrice] = useState(0);
-    const data = [{ id: "1", heding: "AADAR Endure Capsule For Premature Ejaculation (60 Capsules)", price: 60.01, image: "https://cdn.shopify.com/s/files/1/0630/0234/5731/products/1_5_2840ea48-db27-47a0-b901-5026bb09d3ae.jpg?v=1673263418" },
+    const suggestedSupplemnts = [{ id: "1", heding: "AADAR Endure Capsule For Premature Ejaculation (60 Capsules)", price: 60.01, image: "https://cdn.shopify.com/s/files/1/0630/0234/5731/products/1_5_2840ea48-db27-47a0-b901-5026bb09d3ae.jpg?v=1673263418" },
     { id: "2", heding: "AADAR Straight Up Capsule For Strength In Men (60 Capsules)", price: 34.01, image: "https://cdn.shopify.com/s/files/1/0630/0234/5731/products/3_4_cee923f9-1687-46dc-974b-07ce278eccce.jpg?v=1673263419" }
     ]
+    const [data,setData] = useState(suggestedSupplemnts);
+    
     const { } = productData || {}
 
     const handelIncriments = (noOfProduct, id, price) => {
@@ -42,7 +43,21 @@ const FrequntlyBoughtTogether = ({ productData = {} }) => {
             setSelectedId([id, ...slectedId])
         }
     }
-
+    const firstTimeCall = ()=>{
+        if(data && data.length > 0 ){
+            let selectedId =[];
+            let totalPrice = 0
+            data.map((item)=>{
+                selectedId.push(item.id);
+                totalPrice = totalPrice + parseFloat(item.price)
+            });
+            setTotalPrice(totalPrice)
+            setSelectedId(selectedId)
+        }
+    }
+    useEffect(()=>{
+        firstTimeCall();
+    },[data])
     const setPrice = (id, operation, quantity) => {
         data.map((item) => {
             if (id === item.id) {

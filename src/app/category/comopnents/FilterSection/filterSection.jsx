@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react"
 import style from "./filterSection.module.scss"
 import PageHeader from "@/components/PageHeader/PageHeader";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 
 
@@ -10,22 +11,52 @@ const uncheckImage = "https://d25uasl7utydze.cloudfront.net/kuwa/check_uncheck.s
 const colapseImage = "https://d25uasl7utydze.cloudfront.net/kuwa/collapse.svg"
 const rectangularUnCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/Group%2041782%20(1).svg"
 const rectangularCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/RectangularSelcted.svg";
-
-const FilterSectionDesktop = ({ handelSelectedCat, responseData }) => {
-    const { sort = {}, superCollection = {} } = responseData || {}
-    // const singleSelect = [sort]
+const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData }) => {
+    const { sort = {}, superCollection = {} } = responseData || {};
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const singleSelect = [{ cat: "sort", options: ["new arivals", "popular", "Price Low to high", "Price High to Low"] }]
+    // const singleSelect = [{ cat: "sort", options: [1, 2, 3, 4] }]
     const multiSelect = superCollection
     const [selectedOptions, setSelectedOptions] = useState([]);
-    const [selectedSingle, setSelectedSingle] = useState("")
+    const [selectedSingle, setSelectedSingle] = useState("");
+    const addQuryPrams = (type,data)=>{
+        const current = new URLSearchParams(searchParams);
+        if(type === "sort"){
+            current.set(type, data);
+        }else{
+            current.set(type, data.join(","));
+        }
+        const search = current.toString();
+        const query = search ? `?${search}` : "";
+        router.push(`${pathname}${query}`);
+    }
     const onClickSelection = (option) => {
         if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(option)) {
             const filteredData = selectedOptions.filter((item) => item !== option);
-            setSelectedOptions(filteredData)
+            setSelectedOptions(filteredData);
+            addQuryPrams("category",filteredData) 
         } else {
             setSelectedOptions([...selectedOptions, option]);
+            addQuryPrams("category",[...selectedOptions, option])
         }
     }
+    useEffect(()=>{
+        if(selectedSingle){
+            addQuryPrams("sort",selectedSingle)
+        }
+    },[selectedSingle]);
+    useEffect(()=>{
+        const category = searchParams.get("category");
+        category && setSelectedOptions(category.split(","));
+        const sort = searchParams.get("sort");
+        sort && setSelectedSingle(sort);
+    },[]);
+
+    useEffect(()=>{
+        setSelectedOptionsHead({sort: selectedSingle,category : selectedOptions.join(",")})
+    },[selectedOptions,selectedSingle])
     return (
         <div className={style.filterSectionContainer}>
             {singleSelect.map((item) => {
@@ -39,7 +70,6 @@ const FilterSectionDesktop = ({ handelSelectedCat, responseData }) => {
                         </div>
                         {isCollapse && <div className={style.options}>
                             {options.map((ele) => {
-                                // const { id = "" } = ele || {};
                                 const image = ele === selectedSingle ? checkIamge : uncheckImage;
                                 return (
                                     <div className={style.optionsTxt} onClick={() => setSelectedSingle(ele)}>
@@ -66,12 +96,12 @@ const FilterSectionDesktop = ({ handelSelectedCat, responseData }) => {
                                 {category && category.length > 0 ? category.map((ele) => {
                                     const { id = "", collectionName = "" } = ele || {};
                                     let isOptionSelected = false
-                                    if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(id)) {
+                                    if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(collectionName)) {
                                         isOptionSelected = true
                                     }
                                     const image = isOptionSelected ? rectangularCheck : rectangularUnCheck;
                                     return (
-                                        <div className={style.optionsTxt} onClick={() => onClickSelection(id)} >
+                                        <div className={style.optionsTxt} onClick={() => onClickSelection(collectionName)} >
                                             <div className={style.tickBox}><img src={image} alt="check box" /></div>
                                             <div className={style.elements}>{collectionName}</div>
                                         </div>
@@ -87,12 +117,14 @@ const FilterSectionDesktop = ({ handelSelectedCat, responseData }) => {
         </div>
     )
 }
-const FilterSectionMobile = ({ handelSelectedCat, responseData, slectedFilter, setSelectedFilter }) => {
-    const { sort = {}, superCollection = {} } = responseData || {}
-    // const singleSelect = [sort]
-    const multiSelect = superCollection
+const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilter, setSelectedFilter }) => {
+    const { sort = {}, superCollection = {} } = responseData || {};
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const multiSelect = superCollection;
     const singleSelect = ["new arivals", "popular", "Price Low to high", "Price high to low"]
-    // const multiSelect = [{ cat: 'health goals', options: ["All health goals", "collagen", "digestion", "Beauty & Skin", "Focus & Energy"] }, { cat: 'goals', options: ["sff goals", "sdfsdf", "digessdfsdtion", " & Skin", "& Energy"] }]
+    // const singleSelect = [1, 2, 3, 4]
     const [selectedCatogries, setSelectedCatogries] = useState([]);
     const [selectedTab, setSelectedTab] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -106,14 +138,42 @@ const FilterSectionMobile = ({ handelSelectedCat, responseData, slectedFilter, s
         setSelectedCatogries(options);
         setSelectedTab(cat)
     };
+    const addQuryPrams = (type,data)=>{
+        const current = new URLSearchParams(searchParams);
+        if(type === "sort"){
+            current.set(type, data);
+        }else{
+            current.set(type, data.join(","));
+        }
+        const search = current.toString();
+        const query = search ? `?${search}` : "";
+        router.push(`${pathname}${query}`);
+    }
     const onClickSelection = (option) => {
         if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(option)) {
             const filteredData = selectedOptions.filter((item) => item !== option);
-            setSelectedOptions(filteredData)
+            setSelectedOptions(filteredData);
+            addQuryPrams("category",filteredData) 
         } else {
             setSelectedOptions([...selectedOptions, option]);
+            addQuryPrams("category",[...selectedOptions, option])
         }
     }
+    useEffect(()=>{
+        if(selectedSingle){
+            addQuryPrams("sort",selectedSingle)
+        }
+    },[selectedSingle]);
+    useEffect(()=>{
+        const category = searchParams.get("category");
+        category && setSelectedOptions(category.split(","));
+        const sort = searchParams.get("sort");
+        sort && setSelectedSingle(sort);
+    },[]);
+
+    useEffect(()=>{
+        setSelectedOptionsHead({sort: selectedSingle,category : selectedOptions.join(",")})
+    },[selectedOptions,selectedSingle])
     const handelApply = () => {
         setSelectedFilter("NOT_SELCTED")
     }
@@ -139,13 +199,13 @@ const FilterSectionMobile = ({ handelSelectedCat, responseData, slectedFilter, s
                             {selectedCatogries.map((item) => {
                                 const { id = "", collectionName = "" } = item || {};
                                 let isOptionSelected = false
-                                if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(id)) {
+                                if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(collectionName)) {
                                     isOptionSelected = true
                                 }
                                 const image = isOptionSelected ? rectangularCheck : rectangularUnCheck;
                                 if (collectionName) {
                                     return (
-                                        <div className={style.optionsTxt} onClick={() => onClickSelection(id)} >
+                                        <div className={style.optionsTxt} onClick={() => onClickSelection(collectionName)} >
                                             <div className={style.tickBox}><img src={image} alt="check box" /></div>
                                             <div className={style.elements}>{collectionName}</div>
                                         </div>
@@ -188,14 +248,14 @@ const FilterSectionMobile = ({ handelSelectedCat, responseData, slectedFilter, s
         return <></>
     }
 }
-const FilterSection = ({ handelSelectedCat, responseData, slectedFilter, setSelectedFilter }) => {
+const FilterSection = ({ setSelectedOptionsHead, responseData, slectedFilter, setSelectedFilter }) => {
     return (
         <div className={style.filterOuterContainer}>
             <div className={style.isDekstop}>
-                <FilterSectionDesktop responseData={responseData} />
+                <FilterSectionDesktop responseData={responseData} setSelectedOptionsHead={setSelectedOptionsHead}  />
             </div>
             <div className={style.isMobile}>
-                <FilterSectionMobile slectedFilter={slectedFilter} setSelectedFilter={setSelectedFilter} responseData={responseData} />
+                <FilterSectionMobile slectedFilter={slectedFilter} setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} responseData={responseData} />
             </div>
         </div>
     )

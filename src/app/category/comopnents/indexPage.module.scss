@@ -3,7 +3,13 @@
         display: none;
     }
 
-    .productAndFilter {}
+    .productAndFilter {
+        max-width: 1060px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+    }
 }
 
 @media(max-width:990px) {
@@ -13,11 +19,13 @@
             margin-left: 16px;
             margin-top: 14px;
             margin-bottom: 14px;
+
             .FilterTabOption {
                 display: flex;
                 align-items: center;
                 gap: 16px;
-                img{
+
+                img {
                     width: 13px;
                     height: 13px;
                 }
