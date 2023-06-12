@@ -1,14 +1,14 @@
 .paymentSuceesContainer{
-    display: flex;
+   display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
     width: 90%;
     margin: 0 auto;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -100%);
+    left: 0;
+    right: 0;
+    margin-top: 29px;
     img{
         width: 70px;
         height: 70px;
