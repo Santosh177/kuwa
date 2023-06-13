@@ -120,7 +120,7 @@ const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
         <div className={styles.txt}>Other payment option</div>
       </div>
       <div className={styles.paymentOptionsList}>
-          <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("APPLE_PAY")}>
+         {isApplePay && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("APPLE_PAY")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/apple_pay.png' alt='logo'/>
                 <div className={styles.desc}>
@@ -128,7 +128,7 @@ const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
                 </div>
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'APPLE_PAY'}/>
-          </div>
+          </div>}
           <div className={styles.paymentOptionItem} onClick={()=>setSelectedPaymentMethod("COD")}>
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cash_on_delivery.png' alt='logo'/>
