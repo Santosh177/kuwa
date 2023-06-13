@@ -113,6 +113,9 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
 
 const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
   const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
+
+
+
   return(
   <div className={styles.payWithEmi}>
       <div className={styles.headerContainer}>
