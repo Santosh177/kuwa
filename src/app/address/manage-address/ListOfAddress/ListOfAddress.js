@@ -7,7 +7,8 @@ import SubmitBtn from '../../component/SubmitBtn/SubmitBtn';
 import styles from './list-of-address.module.scss'
 import { useEffect, useState } from 'react';
 
-export default function ListOfAddress({addressList}) {
+export default function ListOfAddress({allAddress,addressList}) {
+  console.log("allAddressallAddress",addressList)
   const router = useRouter();
   const pathName = usePathname();
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
@@ -60,11 +61,64 @@ export default function ListOfAddress({addressList}) {
     
   }
 
-  const onSelectAddress = () => {
-    router.push('/order-summary')
-  }
+
  
 
+  const onSelectDefaultAddress = async(defaultAddress) => {
+
+    const shippingAddress = allAddress['shippingAddress'].find(shippingData => shippingData.id == defaultAddress.id);
+    const billingAddress = allAddress['billingAddresses'].find(billingData => billingData.id == shippingAddress.asoBillingAddress );
+    let data = {
+      shippingAddress:shippingAddress,
+      billingAddress: billingAddress
+    }
+
+    data['shippingAddress']['isDefaultAddress'] = true;
+    data['billingAddress']['isDefaultAddress'] = true;
+
+
+
+    let selectDefaultAddress = {
+      data:data,
+      shippingAddressId: data.shippingAddress.id
+    }
+    
+    try {
+      setIsLoading(true)
+      const updateAddressResp  =  await fetch(`/api/update-address`, {
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(selectDefaultAddress),
+        cache: 'no-store'
+      })
+
+      const updateAddress = await updateAddressResp.json();
+    
+      getAddress()
+     
+    } catch (error) {
+      console.error('An unexpected error happened occurred:', error)
+    }
+  }
+
+
+  const getAddress = async() => {
+    const getAddressResp  =  await fetch('/api/get-address', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      cache: 'no-store'
+    })
+    const addressData = await getAddressResp.json();
+    const addressList = addressData && addressData['shippingAddress'] && addressData['shippingAddress'];
+    if(addressList && addressList.length > 0){
+      setListOfAddress(addressList);
+    }
+    setIsLoading(false)
+  }
 
 
   
@@ -84,7 +138,7 @@ export default function ListOfAddress({addressList}) {
                         }
                         const isSelected =(selectedAddress.id)?(selectedAddress.id == data.id ):data.isDefaultAddress;
                         return(
-                            <AddressInfo data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
+                            <AddressInfo onSelectDefaultAddress={onSelectDefaultAddress} data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
                         )
                     })
                 }

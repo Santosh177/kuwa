@@ -20,7 +20,7 @@ const SecondaryBanner = ({data}) => {
         </div>
        <div className={styles.secondaryBannerDesktop}>
                 {
-                    data.map((data,index)=> <img src={data.image} alt={index} key={index}/>)
+                    data.map((data,index)=> <img style={{cursor:'pointer'}} onClick={()=> router.push(data.redirectionLink)} src={data.image} alt={index} key={index}/>)
                 }
        </div>
        </>

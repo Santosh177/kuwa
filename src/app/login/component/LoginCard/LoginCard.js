@@ -76,7 +76,7 @@ export default function Login() {
                   {errors.userEmail && <span className={styles.errorMsg}>{errors.userEmail}</span>}
               </div>
               <div>
-                  <input className={styles.inputBox} type='passord' onChange={onPasswordChange} value={password} placeholder='Password' />
+                  <input className={styles.inputBox} type='password' onChange={onPasswordChange} value={password} placeholder='Password' />
                   {errors.password && <span className={styles.errorMsg}>{errors.password}</span>}
               </div>
               <div className={styles.loginBtn} onClick={onLogin}>Login</div>

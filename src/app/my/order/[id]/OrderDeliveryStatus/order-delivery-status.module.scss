@@ -2,8 +2,14 @@
     background: #F1FAF8;
     padding-top: 1px;
     padding-bottom: 12px;
+    margin-top: 12px;
 }
 
+.headerTxt{
+    font-weight: 500;
+    font-size: 16px;
+    margin-left: 12px;
+}
 
 
 .MainContainer{
@@ -89,6 +95,27 @@
   @media (max-width: 600px) {
     font-size: 16px;
   }
+}
+
+.cancelledOrderContainer{
+    background: #FDF9F8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 17px;
+    padding-bottom: 17px;
+    margin-top: 16px;
+    margin-bottom: 24px;
+    gap: 8px;
+    .crossIcon{
+        height: 24px;
+        width: 24px;
+    }
+
+    .txt{
+        font-weight: 500;
+        font-size: 12px;
+    }
 }
 
 

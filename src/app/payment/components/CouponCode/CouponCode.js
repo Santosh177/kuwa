@@ -30,7 +30,7 @@ export default function CouponCode() {
 
 
      const onCouponApply = async() => {
-      if(!(Object.keys(couponCodeData).length>0)){
+      if(!(Object.keys(couponCodeData).length>0) || couponCodeData.discount ==0 ){
         setIsLoading(true)
         const data = await createCouponPayload(cartItems);
           const couponPayload = {
@@ -60,7 +60,7 @@ export default function CouponCode() {
             <div className={styles.headerTxt}>Discount code or Gift card</div>
             <div className={styles.couponCodeContainer}>
                 <div style={{width:'100%',position:'relative'}}>
-                  <Input type="text" fieldName="couponCode" placeHolder="Enter coupon code" value={couponCode} onInputChange={(e)=>{setCouponCode(e.target.value)}}  isDisabled={(couponCodeData.reason== "Applied Successfully" )}/>
+                  <Input  type="text" fieldName="couponCode" placeHolder="Enter coupon code" value={couponCode} onInputChange={(e)=>{setCouponCode(e.target.value)}}  isDisabled={(couponCodeData.reason== "Applied Successfully" )}/>
                   {Object.keys(couponCodeData).length>0 && <img onClick={()=>{setCouponCodeData("");setCouponCode("")}} className={styles.removeIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon.png' alt='close'/>}
                 </div>
                 <div className={styles.applyBtn} onClick={onCouponApply}> Apply</div>

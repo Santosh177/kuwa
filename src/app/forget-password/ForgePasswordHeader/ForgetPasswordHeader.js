@@ -1,0 +1,24 @@
+'use client';
+import { useRouter } from 'next/navigation';
+import styles from './forget-password-header.module.scss';
+
+
+export default function ForgetPasswordHeader() {
+
+  const router = useRouter()
+ 
+  
+      return (
+        <>
+        <div className={styles.headerWrapper}>
+            <div className={styles.headerContainer}>
+                <img className={styles.backArrow} onClick={()=>router.back()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow_signup.png' alt='back-arrow'/>
+                <div className={styles.kuwaLogo}>
+                  <img src='https://d25uasl7utydze.cloudfront.net/kuwa/kuwa_logo_login.png' alt='kuwa-logo'/>
+                </div>
+            </div>
+          </div>
+        </>
+      )
+    }
+    

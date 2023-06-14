@@ -50,9 +50,12 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
  
   paymentModes.map((data,index)=>{
       if(data && data.paymentMode === "APPLE_PAY"){
+        console.log("&& window && window.ApplePaySession;", window && window.ApplePaySession)
         config['applePay']['paymentMode'] =  data.paymentMode;
         config['applePay']['paymentGateway'] =  data.paymentGateway;
-        config['applePay']['isEnable'] =  true;
+        if(window && window.ApplePaySession){
+          config['applePay']['isEnable'] =  true;
+        }
       }else if(data.paymentMode === "TAMARA"){
         config['tamara']['paymentMode'] =  data.paymentMode;
         config['tamara']['paymentGateway'] =  data.paymentGateway;
@@ -67,7 +70,7 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
         config['tabby']['paymentMode'] =  data.paymentMode;
         config['tabby']['paymentGateway'] =  data.paymentGateway;
         config['tabby']['isEnable'] =  true;
-      }else if(data.paymentMode === "CARD" && data.paymentGateWay === "TAP"){
+      }else if(data.paymentMode === "CARD" && data.paymentGateway === "TAP"){
         config['card_tap']['paymentMode'] =  data.paymentMode;
         config['card_tap']['paymentGateway'] =  data.paymentGateway;
         config['card_tap']['isEnable'] =  true;
@@ -123,6 +126,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
 }
 
 export default function Payment({cartData,paymentModes,tamaraConfig}) {
+  console.log("paymentModes",paymentModes)
   const router = useRouter();
   const {couponCodeData={}, selectedPaymentMethod=""} = usePaymentPageData();
   const countryList = useCountryList();
@@ -135,7 +139,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [ priceDetails , setPriceDetails] = useState({});
   const [ isLoader , setIsLoader] = useState(false);
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,tamaraConfig));
-
+  let appleSession;
 
   useEffect(()=>{
     if(Object.keys(selectedAddress).length == 0){
@@ -208,7 +212,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
     
     const priceDetailsData = {
-      cartItemCount: cartItems && cartItems.length,
+      cartItemCount: cartData && cartData.quantity,
       subTotal: subtotal,
       totalAmount: finalAmount,
       savedAmount: total - subtotal,
@@ -374,9 +378,77 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               const placeOrder = await placeOrderResp.json();
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
+              const orderId =placeOrder && placeOrder.order_id
               if(placeOrder && placeOrder.status_code == 200){
-                router.push('/payment/success')
+                if(orderId){
+                  router.push(`/payment/success?orderId=${orderId}`)
+                }else{
+                  router.push(`/payment/success`)
+                }
+               
               }
+        }else if(selectedPaymentMethod == "APPLE_PAY"){
+            // const applePaySupportednetworks = "visa, mastercard, amex";
+            // let request = {
+            //   merchantCapabilities: ['supports3DS'],
+            //   supportedNetworks: applePaySupportednetworks.split(", "),
+            //   countryCode: selectedCountry.code || "",
+            //   currencyCode:  selectedCountry.currency || "",
+            //   total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount'] },
+            // };
+            // appleSession = new ApplePaySession(3, request);
+            // appleSession.begin();
+            // appleSession.onvalidatemerchant = async (event) => {
+            //   const appleValidationURL = event && event.validationURL;
+            //   const validateData = {"apple_url":appleValidationURL,"merchant_name":'checkout'};
+            //   console.log("validateDatavalidateData",validateData)
+            //   const validateSessionResp  =  await fetch('/api/validate-apple-pay', {
+            //     method: 'POST',
+            //     headers: {
+            //       'Content-Type': 'application/json',
+            //     },
+            //     body:JSON.stringify(validateData)
+            //   })
+            //   const validateSessionData = await validateSessionResp.json();
+            //   console.log("validateSessionData",validateSessionData)
+            //   const getValidateSession = get(validateSessionData, 'data.session_response');
+            //   if (getValidateSession) {
+            //     appleSession.completeMerchantValidation(getValidateSession);
+            //   }
+            //   appleSession.onpaymentauthorized = async (event) => {
+            //     const appleToken = get(event, 'payment.token');
+            //     console.log("appleToken",appleToken)
+            //       const decryptAppleTokenResp  =  await fetch('/api/decrypt-apple-token', {
+            //         method: 'POST',
+            //         headers: {
+            //           'Content-Type': 'application/json',
+            //         },
+            //         body:JSON.stringify(appleToken)
+            //       })
+            //       const decryptAppleToken = await decryptAppleTokenResp.json();
+            //       console.log("decryptAppleToken",decryptAppleToken)
+            //       const getCheckoutToken = get(decryptAppleToken, 'data.token_response');
+            //       if (getCheckoutToken) {
+            //         payload['token'] = getCheckoutToken.token;
+            //         payload['paymentMode'] = "APPLE_PAY";
+            //         console.log("FInalRESPpayload",payload)
+            //           const placeOrderResp  =  await fetch('/api/checkout-place-order', {
+            //               method: 'POST',
+            //               headers: {
+            //                 'Content-Type': 'application/json',
+            //               },
+            //               body:JSON.stringify(payload)
+            //           })
+                
+            //           const placeOrder = await placeOrderResp.json();
+            //           console.log("placeOrderplaceOrder",placeOrder)
+            //           setIsLoader(false);
+            //           if(placeOrder && placeOrder.status_code == 200){
+            //             router.push(placeOrder.redirect_link)
+            //           }
+            //       }
+            //   }
+            // }
         }
     }
 
@@ -384,7 +456,72 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     const onProceed = () => {
       if(selectedPaymentMethod =="CHECKOUT_CARD"){
         Frames.submitCard()
-      }else if(selectedPaymentMethod){
+      }else if(selectedPaymentMethod === "APPLE_PAY"){
+        const applePaySupportednetworks = "visa, mastercard, amex";
+        let request = {
+          merchantCapabilities: ['supports3DS'],
+          supportedNetworks: applePaySupportednetworks.split(", "),
+          countryCode: selectedCountry.code || "",
+          currencyCode:  selectedCountry.currency || "",
+          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount'] },
+        };
+        appleSession = new ApplePaySession(3, request);
+        appleSession.begin();
+        appleSession.onvalidatemerchant = async (event) => {
+          const appleValidationURL = event && event.validationURL;
+          // alert("va"+JSON.stringify(appleValidationURL))
+          const validateData = {"apple_url":appleValidationURL,"merchant_name":'checkout'};
+          console.log("validateDatavalidateData",validateData)
+          const validateSessionResp  =  await fetch('/api/validate-apple-pay-session', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(validateData)
+          })
+          const validateSessionData = await validateSessionResp.json();
+          alert("valdidation"+JSON.stringify(validateSessionData))
+          console.log("validateSessionData",validateSessionData)
+          const getValidateSession = get(validateSessionData, 'data.session_response');
+          if (getValidateSession) {
+            appleSession.completeMerchantValidation(getValidateSession);
+          }
+          appleSession.onpaymentauthorized = async (event) => {
+            const appleToken = get(event, 'payment.token');
+            console.log("appleToken",appleToken)
+              const decryptAppleTokenResp  =  await fetch('/api/decrypt-apple-token', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(appleToken)
+              })
+              const decryptAppleToken = await decryptAppleTokenResp.json();
+              console.log("decryptAppleToken",decryptAppleToken)
+              const getCheckoutToken = get(decryptAppleToken, 'data.token_response');
+              if (getCheckoutToken) {
+                payload['token'] = getCheckoutToken.token;
+                payload['paymentMode'] = "APPLE_PAY";
+                console.log("FInalRESPpayload",payload)
+                  const placeOrderResp  =  await fetch('/api/checkout-place-order', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body:JSON.stringify(payload)
+                  })
+            
+                  const placeOrder = await placeOrderResp.json();
+                  console.log("placeOrderplaceOrder",placeOrder)
+                  setIsLoader(false);
+                  if(placeOrder && placeOrder.status_code == 200){
+                    router.push(placeOrder.redirect_link)
+                  }
+              }
+          }
+        }
+      }
+      else if(selectedPaymentMethod){
         onPayment()
       }
 

@@ -52,12 +52,26 @@
     
 }
 
+@media(max-width:990px){
+    .paymentFooterbtn{
+        .paymentFooterBtnContainer{
+            .btn{
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+        }
+    }
+  
+}
+
 @media(min-width:990px){
     .paymentFooterbtn{
         .paymentFooterBtnContainer{
             margin: 0 auto;
-            width: 30%;
+            // width: 30%;
             align-items: center;
+            justify-content: center;
+            gap: 80px;
             .paymentInfo{
                 // width: 40%;
                 flex: inherit;
@@ -80,9 +94,10 @@
                 display: none;
             }
             .btn{
-                width: 52%;
                 padding-top: 12px;
                 padding-bottom: 12px;
+                padding-left: 72px;
+                padding-right: 72px;
                 flex: inherit;
                 font-size: 18px;
                 cursor: pointer;

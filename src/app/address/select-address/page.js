@@ -8,7 +8,7 @@ export default async function SelectAddress() {
 
   const customHeader = await authHeader();
   console.log("customHeader",customHeader)
-  const getAddressResp  =  await fetch(`https://api.kuwa.bevaleo.dev/module/address/${customHeader.user}`, {
+  const getAddressResp  =  await fetch(`https://api.kuwa.bevaleo.dev/module/address/`, {
     method: 'GET',
     headers:{
       ...customHeader
@@ -16,6 +16,7 @@ export default async function SelectAddress() {
     cache: 'no-store'
   })
   const getAddress = await getAddressResp.json();
+
   console.log("getAddressgetAddress",getAddress)
       return (
         <>

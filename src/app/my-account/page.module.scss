@@ -1,4 +1,6 @@
 .headerWrapper{
+    background-color: #247A81;
+.headerContainer{
     background-image: url('https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/loginHeader.png');
     height: 132px;
     background-repeat: no-repeat, repeat;
@@ -7,8 +9,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    // z-index: -1;
-    margin-bottom: 40px;
+    max-width: 420px;
+    margin: 0 auto;
 
     .backArrow{
         height: 24px;
@@ -16,6 +18,7 @@
         position: absolute;
         left: 16px;
         top: 32px;
+        cursor: pointer;
     }
 
 
@@ -34,7 +37,6 @@
             text-align: center;
         }
     }
-
     .personalProfile{
         height: 80px;
         width: 80px;
@@ -43,6 +45,14 @@
     }
 
     
+}
+
+}
+@media (min-width:550px){
+    // .headerWrapper{
+    //     max-width: 400px;
+    //     margin: 0 auto;
+    // }
 }
 
 @media (min-width:550px){

@@ -36,8 +36,11 @@ const getUser = async () => {
         }
       })
       const userData = await userLoginResp.json();
-      console.log("user Data",userData)
-      return {isLogin:true, userData:userData};
+      if(token && token.value){
+        return {isLogin:true, userData:userData};
+      }else{
+        return {isLogin:false, userData:userData};
+      }
      } catch (err) {
       return {isLogin:false,userData:null}
      }

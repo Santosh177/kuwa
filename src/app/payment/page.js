@@ -38,6 +38,7 @@ export default async function PaymentPage() {
     })
     const paymentModeData = await getPaymentConfigData.json();
     paymentModes = paymentModeData.find((data, index)=> data.countryId == customHeader.country).paymentModes;
+    console.log("paymentModes",paymentModes)
   } catch (error) {
     
   }

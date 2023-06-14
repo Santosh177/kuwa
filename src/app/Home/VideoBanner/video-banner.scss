@@ -10,13 +10,26 @@
     bottom: 0;
     z-index: -1;
   }
+  #mobileScreen{
+    display: none;
+  }
+  #video-banner-wrapper{
+    height: 100vh;
+    position: relative;
+  }
   
   
   
-  @media (max-width: 750px) {
-      #background-video { display: none; }
-      body {
-        background: url("https://assets.codepen.io/6093409/river.jpg") no-repeat;
-        background-size: cover;
-      }
+  @media (max-width: 769px) {
+
+  
+    #mobileScreen{
+      display: unset !important;
+    }
+
+    #desktopScreen{
+      display: none;
+    }
+
+    
   }

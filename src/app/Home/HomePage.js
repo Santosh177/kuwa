@@ -6,8 +6,10 @@ import BrandMustTry from './BrandMustTry/BrandMustTry';
 import SecondaryBanner from './SecondaryBanner/SecondaryBanner';
 import ProductSlider from '@/components/ProductSlider/ProductSlider';
 import MedicalExpert from './MedicalExpert/MedicalExpert';
+// import CustomerSay from './CustomerSay/CustomerSay';
 import Footer from '@/components/Footer/Footer';
 import Loader from '@/components/Loader/Loader';
+import VideoBanner from './VideoBanner/VideoBanner';
 import styles from './home-page.module.scss';
 
 export default async function Home(homePageData) {
@@ -22,15 +24,16 @@ export default async function Home(homePageData) {
         <div className={styles.homePageWrapper}>
             <div className={styles.homePageContainer}>
                 <div className={styles.mainBanner}>
-                    <Banner />
+                    {/* <Banner /> */}
+                    <VideoBanner />
                     <img className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe'/>
                 </div>
                 <div className={styles.mainContainer}>
                     <Header />
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={bestSellings} />
-                    <BrandMustTry data={brandUMustTry}/>
                     <SecondaryBanner data={secondryBanners}/>
+                    <BrandMustTry data={brandUMustTry}/>
                     {
                         data.map((product,index)=>{
                             return(
@@ -39,6 +42,7 @@ export default async function Home(homePageData) {
                         })
                     }
                     <MedicalExpert />
+                    {/* <CustomerSay /> */}
                     <Footer />
                     <Loader />
                     </div>

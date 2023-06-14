@@ -73,7 +73,7 @@ export default  function Cart({cartData}) {
       }
        
       const priceDetailsData = {
-        cartItemCount: cartItems && cartItems.length,
+        cartItemCount: cartData && cartData.quantity,
         subTotal: subtotal,
         totalAmount: finalAmount,
         savedAmount: total - subtotal,
@@ -138,6 +138,7 @@ export default  function Cart({cartData}) {
      
   
 
+    const totalPrice =(priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+priceDetails.totalAmount :""
  
       return (
         <>
@@ -160,7 +161,7 @@ export default  function Cart({cartData}) {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
+          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={totalPrice} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
         </>
       )

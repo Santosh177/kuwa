@@ -175,7 +175,8 @@ const getShippingAddressData = (data) => {
       "sameAddressForBilling": data.sameAddressForBilling,
       "billingAddress":data.billingAddress,
       "isDefaultAddress": data.isDefaultAddress,
-      "isActive": data.isActive
+      "isActive": data.isActive,
+      "id":data.id
     }
   )
 }
@@ -269,20 +270,22 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         const validationBillingErrors = validateBillingAddressForm(billngAddress);
         if (addressValidation()) {
                 let combineFormData = {
-                    "shippingAddress":{...personalInfo,...shippingAddress},
+                    "shippingAddress":{...shippingAddress,...personalInfo},
                 }
                 if(isSameBillingAddress){
-                    combineFormData['billingAddress'] ={...personalInfo,...shippingAddress}
+                    combineFormData['billingAddress'] ={...shippingAddress,...personalInfo,}
                     combineFormData['shippingAddress']['sameAddressForBilling'] = true;
                 }else{
-                    combineFormData['billingAddress'] = {...personalInfo,...billngAddress}
+                    combineFormData['billingAddress'] = {...billngAddress,...personalInfo,}
                 }
                 combineFormData['shippingAddress']['billingAddress'] = true;
-                combineFormData['shippingAddress']['isDefaultAddress'] = true;
                 combineFormData['shippingAddress']['isActive'] = true;
                 combineFormData['billingAddress']['shippingAddress'] = true;
-                combineFormData['billingAddress']['isDefaultAddress'] = true;
                 combineFormData['billingAddress']['isActive'] = true;
+                if(!isEdit){
+                  combineFormData['shippingAddress']['isDefaultAddress'] = true;
+                  combineFormData['billingAddress']['isDefaultAddress'] = true;
+                }
                 onGetFormValues(combineFormData);
 
         }else{

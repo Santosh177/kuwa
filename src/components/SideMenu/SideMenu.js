@@ -88,13 +88,14 @@ const MainMenuData = ({data,onClick}) =>{
 
 
 const OtherInfo = () =>{
+    const router = useRouter();
     return(
         <div className={styles.OtherInfo}>
             {/* <div className={styles.txt}>Blog</div>
             <div className={styles.infoLine}> | </div> */}
-            <div className={styles.txt}>Contact Us</div>
+            <div className={styles.txt} onClick={()=>router.push('/contact-us')}>Contact Us</div>
             <div className={styles.infoLine}> | </div>
-            <div className={styles.txt}>FAQ</div>
+            <div className={styles.txt} onClick={()=>router.push('/terms-of-service')}>Terms of Service</div>
         </div>
     )
 }
@@ -114,7 +115,7 @@ const LogOut = () =>{
             })
             setIsLoading(false)
             if (res.status === 200) {
-                router.refresh();
+                window.location.href = '/'
             } else {
               throw new Error(await res.text())
             }
@@ -162,7 +163,7 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
     const [ key , setKey ] = useState("");
     const [ childMenuData , setChildMenuData ] = useState([]);
     const onClick = (data) => {
-        if(data && data.redirectionLink && data.redirectionLink.includes('https')){
+        if(data && data.redirectionLink){
             router.push(data.redirectionLink)
         }else{
             setKey(data);
