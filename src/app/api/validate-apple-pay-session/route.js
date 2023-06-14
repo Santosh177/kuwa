@@ -5,11 +5,15 @@ export const dynamic = 'force-dynamic'
 export async function POST(request,res) {
     const requestBody = await request.json();
     console.log("requestBodyrequestBody",requestBody)
-    const applePaySessionResp = await fetch('https://api.kuwa.bevaleo.dev/payment/apple-pay/validate-session/', {
+    const applePaySessionResp = await fetch('https://api.kuwa.bevaleo.dev/applepay/validate-session', {
         method: 'POST',
-        body:JSON.stringify(requestBody)
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(requestBody),
       });
     const applePaySessionData = await applePaySessionResp.json();
+    console.log("applePaySessionDataapplePaySessionData",applePaySessionData)
     return NextResponse.json(applePaySessionData)
 }
 
