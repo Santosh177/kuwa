@@ -25,7 +25,7 @@ export default async function Home(homePageData) {
             <div className={styles.homePageContainer}>
                 <div className={styles.mainBanner}>
                    {bannerImage.type === "VIDEO" ?
-                    (<VideoBanner mobileImage={bannerImage.mobileVideo} desktopImage={bannerImage.desktopVideo} videoRedirection={bannerImage.videoRedirectionLink} />
+                    (<VideoBanner videoImage={bannerImage.mobileVideo} videoDesktopImage={bannerImage.desktopVideo} videoRedirection={bannerImage.videoRedirectionLink} />
       ) : (
         <Banner mobileImage={bannerImage.mobileImage} desktopImage={bannerImage.desktopImage} imageRedirection={bannerImage.imageRedirectionLink} />
       )}
