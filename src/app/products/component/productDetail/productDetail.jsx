@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import style from "./ProductDetail.module.scss"
 import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
 const ProductDeatil = ({ productData = {} }) => {
-    const { benefits = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
+    const { benefits = "",frequentlyBoughtTogether="", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
     const [selectedVarients, setselectedVarients] = useState("");
     const [selctedVrientsData, setSelectedVrientsData] = useState({});
@@ -46,7 +46,6 @@ const ProductDeatil = ({ productData = {} }) => {
         "isVariant":selectedVarients ? true : false,
         "variantId": selectedVarients
     }
-    console.log(payload,"payload")
     const addToCart = async (payload) => {
         try {
             const res = await fetch('/api/add-to-cart', {
@@ -115,9 +114,9 @@ const ProductDeatil = ({ productData = {} }) => {
                 <ProductImageSection allImages={allImages} />
                 <ProductPricingSection pricingSectionVariables={pricingSectionVariables} />
             </div>
-            {/* <div className={style.FrequntlyBoughtTogetherBox}>
-                <FrequntlyBoughtTogether productData={productData} />
-            </div> */}
+            {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>
+                <FrequntlyBoughtTogether currency={currency} productData={frequentlyBoughtTogether} />
+            </div>}
         </div>
     )
 }
