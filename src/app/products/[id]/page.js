@@ -7,25 +7,27 @@ import Footer from "@/components/Footer/Footer"
 import Header from "@/components/Header/Header"
 import style from "./page.module.scss"
 import { authHeader } from "@/lib/auth-cookies"
+import RelatedProducts from "../component/RelatedProducts/reletedProducts"
 
 export default async function AllProduct(req) {
-  const productID = req && req.params && req.params.id  || "";
+  const productID = req && req.params && req.params.id || "";
   const customHeader = await authHeader();
   const res = await fetch(`https://api.kuwa.bevaleo.dev/module/product-page/${productID}`, {
-    headers: {...customHeader},
+    headers: { ...customHeader },
   });
   const productData = await res.json();
   return (
     <div className={style.productDetailContainerPage}>
-      <Header/>
+      <Header />
       {/* <div className={style.routeDetail} >Home / men's performance / product</div> */}
-      <ProductDeatil productData={productData}/>
+      <ProductDeatil productData={productData} />
       <div className={style.allDetailDisciptionContainer}>
-        <ProductDiscription productData={productData}/>
+        <ProductDiscription productData={productData} />
       </div>
-        <ProductFaq productData={productData} />
-        <ProductReview productData={productData} />
-      <Footer/>
+      <ProductFaq productData={productData} />
+      <ProductReview productData={productData} />
+      <RelatedProducts productData={productData} />
+      <Footer />
     </div>
   )
 }
