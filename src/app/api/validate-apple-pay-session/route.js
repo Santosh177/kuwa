@@ -4,8 +4,7 @@ import { authHeader } from '../../../lib/auth-cookies';
 export const dynamic = 'force-dynamic'
 export async function POST(request,res) {
     const requestBody = await request.json();
-    console.log("requestBodyrequestBody",requestBody)
-    const applePaySessionResp = await fetch('https://api.kuwa.bevaleo.dev/applepay/validate-session', {
+    const applePaySessionResp = await fetch('https://api.bevaleo.dev/api/v1/kuwa/apple-pay/validate-session/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
