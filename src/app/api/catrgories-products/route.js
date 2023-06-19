@@ -11,6 +11,7 @@ export async function GET(req)  {
   if(query && query[1]){
     finalUrl = `${apiUrl}?${query[1]}`
   }
+  console.log(finalUrl,"finalUrlfinalUrlfinalUrlfinalUrl")
   const getProductResp =  await fetch(finalUrl, {
     method: 'GET',
     headers: {...customHeader},
