@@ -137,7 +137,11 @@ const Header = () => {
 
     return(
         <>
-     
+        <div className={styles.mainHeader}>
+     <div className={styles.topHeader}>
+        <p>Get Flat 20% Use Coupon</p>
+        <button>RAMADAN20 </button>
+     </div>
         <div className={styles.header}>
            <div className={styles.headerWrapper}>
                 <div className={styles.headerIcon}>
@@ -181,6 +185,7 @@ const Header = () => {
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
+        </div>
         </>
     )
 

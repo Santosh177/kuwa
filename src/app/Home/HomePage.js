@@ -11,6 +11,7 @@ import Footer from '@/components/Footer/Footer';
 import Loader from '@/components/Loader/Loader';
 import VideoBanner from './VideoBanner/VideoBanner';
 import styles from './home-page.module.scss';
+import Carousel from './Carousel/Carousel';
 
 export default async function Home(homePageData) {
     console.log("homePageData",homePageData)
@@ -34,6 +35,7 @@ export default async function Home(homePageData) {
                 </div>
                 <div className={styles.mainContainer}>
                     <Header />
+                    <Carousel/>
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={bestSellings} />
                     <SecondaryBanner data={secondryBanners}/>
