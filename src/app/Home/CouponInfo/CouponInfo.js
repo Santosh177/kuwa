@@ -1,13 +1,22 @@
-import React from 'react';
+'use client'
+import React,{useState} from 'react';
+import { useRouter} from 'next/navigation';
 import styles from './CouponInfo.module.scss'
 
-const CouponInfo = () => {
+export default function  CouponInfo({bannerText,buttonText,redirectionLink})  {
+  const router = useRouter();
+  
   return (
-    <div className={styles.coupon}>
-    <p>Get Flat 20% Use Coupon</p>
-    <button>RAMADAN20 </button>
+    <div className={styles.coupon} onClick={()=>router.push(redirectionLink)}>
+    <p>{bannerText}</p>
+    <button >{buttonText} </button>
  </div>
   )
 }
 
-export default CouponInfo
+
+
+
+
+
+
