@@ -17,7 +17,7 @@ import Carousel from './Carousel/Carousel';
 export default async function Home(homePageData) {
     console.log("homePageData",homePageData)
     const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[],bestSellings=[],bannerImage={},primaryBanner=[],couponBanner={}} = homePageData.homePageData || {};
-
+//   console.log("coupon banner",couponBanner)
 
     console.log("Bannerimage",bannerImage)
 
@@ -36,7 +36,7 @@ export default async function Home(homePageData) {
                 </div>
                 <div className={styles.mainContainer}>
                    
-                    <Header bannerText={couponBanner.bannerText} buttonText={couponBanner.buttonText} redirectionLink={couponBanner.redirectionLink} />
+                    <Header couponBanner={couponBanner} />
                     <Carousel data={primaryBanner}/>
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={bestSellings} />

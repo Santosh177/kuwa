@@ -44,7 +44,7 @@ const SearchList = () =>{
 }
 
 
-const Header = ({bannerText,buttonText,redirectionLink}) => {
+const Header = ({couponBanner}) => {
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
@@ -141,7 +141,7 @@ const Header = ({bannerText,buttonText,redirectionLink}) => {
     return(
         <>
         
-    <CouponInfo bannerText={bannerText} buttonText={buttonText} redirectionLink={redirectionLink}/>
+    <CouponInfo couponBanner={couponBanner}/>
         <div className={styles.header}>
            <div className={styles.headerWrapper}>
                 <div className={styles.headerIcon}>

@@ -15,9 +15,15 @@ export default async function AllProduct(req) {
     headers: {...customHeader},
   });
   const productData = await res.json();
+
+  const data = await fetch('https://api.kuwa.bevaleo.dev/module/home-page')
+  const response = await data.json();
+ 
+ const couponBanner = response.couponBanner;
+ 
   return (
     <div className={style.productDetailContainerPage}>
-      <Header/>
+      <Header couponBanner={couponBanner}/>
       {/* <div className={style.routeDetail} >Home / men's performance / product</div> */}
       <ProductDeatil productData={productData}/>
       <div className={style.allDetailDisciptionContainer}>
@@ -29,3 +35,5 @@ export default async function AllProduct(req) {
     </div>
   )
 }
+
+
