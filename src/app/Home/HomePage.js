@@ -1,4 +1,5 @@
 import Banner from './Banner/Banner';
+
 import Header from '@/components/Header/Header';
 import AssuredInfo from './AssuredInfo/AssuredInfo';
 import BestSellingProduct from './BestSellingProduct/BestSellingProduct';
@@ -34,6 +35,7 @@ export default async function Home(homePageData) {
                     <img className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe'/>
                 </div>
                 <div className={styles.mainContainer}>
+                   
                     <Header />
                     <Carousel/>
                     <AssuredInfo assuredInfo={kuwaUsps} />

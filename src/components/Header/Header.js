@@ -10,6 +10,8 @@ import CountryList from '../CountryList/CountryList';
 import SearchCard from '@/app/search/SearchCard/SearchCard';
 import Loader from '../Loader/Loader';
 import styles from './header.module.scss';
+import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
+
 
 const SearchList = () =>{
     return(
@@ -54,6 +56,7 @@ const Header = () => {
     const [searchTxt, setSearchTxt] = useState("");
     const [ sideMenuData , setSideMenuData] = useState([]);
     const inputBoxRef = useRef(null);
+
 
     useEffect(()=>{
         getSideMenuData()
@@ -137,11 +140,8 @@ const Header = () => {
 
     return(
         <>
-        <div className={styles.mainHeader}>
-     <div className={styles.topHeader}>
-        <p>Get Flat 20% Use Coupon</p>
-        <button>RAMADAN20 </button>
-     </div>
+        
+    <CouponInfo/>
         <div className={styles.header}>
            <div className={styles.headerWrapper}>
                 <div className={styles.headerIcon}>
@@ -185,7 +185,7 @@ const Header = () => {
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
-        </div>
+      
         </>
     )
 

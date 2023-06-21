@@ -41,7 +41,7 @@ export default  function FindMyOrder({setShowOrderInfo}) {
         <Loader isShow={isLoading} /> 
       ) : (
         orderList.map((data, index) => {
-          return <OrderItemList data={data} />;
+          return <OrderItemList key={index} data={data} />;
         })
       )}
     </>

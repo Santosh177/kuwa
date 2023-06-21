@@ -1,31 +1,5 @@
-.topHeader{
-    height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color:#07141A;
-    color: #FFFFFF;
-    font-family: 'Work Sans';
-font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height: 14px;
 
-}
-.topHeader button{
-    height: 26px;
-    width: 113px;
-    border: 1px solid #FFFFFF;
-border-radius: 8px;
-background: #07141A;
-color: #FFFFFF;
-margin-left: 10px;
-}
-.mainHeader{
-    position: sticky;
-    top:0px;
-    z-index: 1234;
-}
+
 
 .header{
 
@@ -34,9 +8,9 @@ margin-left: 10px;
     display: flex;
     align-items: center;
     width: 100%;
-    // position: sticky;
-    // top: 0px;
-    // z-index: 999;
+    position: sticky;
+    top: 48px;
+    z-index: 999;
 .headerWrapper{
 
     display: flex;
