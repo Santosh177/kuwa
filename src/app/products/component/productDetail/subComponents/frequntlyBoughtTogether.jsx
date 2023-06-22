@@ -86,12 +86,6 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
                 ids.push(key)
             }
         }
-        // const payload = {
-        //     "product": id,
-        //     "quantity": noOfProduct,
-        //     "isVariant":false,
-        //     "variantId": ""
-        // }
     }
     if(data && data.length>0){
         return (

@@ -14,7 +14,8 @@ const ProductDeatil = ({ productData = {} }) => {
     const [retailPrice, setRetailPrice] = useState(0);
     const [finalPrice, setFinalPrice] = useState(0);
     const [discount, setDiscount] = useState(0);
-    const [allImages, setAllImages] = useState([])
+    const [allImages, setAllImages] = useState([]);
+    const [haveAdress,setHaveAddress] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -65,9 +66,24 @@ const ProductDeatil = ({ productData = {} }) => {
             setErrorMsg(error.message)
         }
     }
+    const getAddress = async() => {
+        const getAddressResp  =  await fetch('/api/get-address', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        const addressData = await getAddressResp.json();
+        const haveAddress = addressData && addressData['shippingAddress'] && addressData['shippingAddress'] .length > 0;
+        if(haveAddress){
+          setHaveAddress(haveAddress);
+        }
+      }
+      useEffect(()=>{
+        getAddress()
+      },[])
     const handelAddToCart = async () => {
         const response = await addToCart(payload);
-        console.log(response, "responseresponse")
         if (response === 200) {
             setNoOfProduct(1);
             router.push('/cart')
@@ -75,10 +91,13 @@ const ProductDeatil = ({ productData = {} }) => {
     }
     const handelBuyNow = async () => {
         const response = await addToCart(payload)
-        console.log(response, "responseresponse")
         if (response === 200) {
             setNoOfProduct(1);
-            router.push('/order-summary')
+            if(haveAdress){
+                router.push('/order-summary')
+            }else{
+                router.push('/address/add-address');
+            }
         }
     }
     const handelShareOption = (action) => {
