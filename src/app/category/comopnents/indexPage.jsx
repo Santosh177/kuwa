@@ -33,8 +33,10 @@ const MainCategory = ({ responseData }) => {
                 'Content-Type': 'application/json',
             }
         })
-        const getProductData = await getProduct.json();
-        setResponseValue(getProductData)
+        if(getProduct){
+            const getProductData = await getProduct.json();
+            setResponseValue(getProductData);
+        }
         setIsLOading(false)
     }
     useEffect(() => {
