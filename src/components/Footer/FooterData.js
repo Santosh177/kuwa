@@ -90,10 +90,10 @@ const CategoriesData = [
         name:'Shipping Policy',
         url:'/shipping-policy'
     },
-    {
-        name:'Checkout',
-        url:'/payment'
-    },
+    // {
+    //     name:'Checkout',
+    //     url:'/payment'
+    // },
     {
         name:'Privacy Policy',
         url:'/privacy-policy'
