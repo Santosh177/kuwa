@@ -16,7 +16,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const singleSelect = [{ cat: "sort", options: ["new arivals", "popular", "Price Low to high", "Price High to Low"] }]
+    const singleSelect = [{ cat: "sort", options: ["new arivals", "Price Low to high", "Price High to Low"] }]
     // const singleSelect = [{ cat: "sort", options: [1, 2, 3, 4] }]
     const multiSelect = superCollection
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -123,7 +123,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const multiSelect = superCollection;
-    const singleSelect = ["new arivals", "popular", "Price Low to high", "Price high to low"]
+    const singleSelect = ["new arivals", "Price Low to high", "Price high to low"]
     // const singleSelect = [1, 2, 3, 4]
     const [selectedCatogries, setSelectedCatogries] = useState([]);
     const [selectedTab, setSelectedTab] = useState("");
