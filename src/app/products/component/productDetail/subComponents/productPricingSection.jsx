@@ -8,10 +8,10 @@ const ProductPricingSection = ({ pricingSectionVariables }) => {
     return (
         <div className={styles.pricingSectionContainer}>
             <div className={styles.title}>{title}</div>
-            <div className={styles.reviewContainer}>
+            {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
-            </div>
+            </div>}
             <div className={styles.pricingConatiner}>
                 <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>
                 <div className={styles.incriment}>

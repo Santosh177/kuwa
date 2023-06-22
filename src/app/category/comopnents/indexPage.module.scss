@@ -10,6 +10,17 @@
         // justify-content: center;
         gap: 50px;
     }
+    .filterContainer{
+        position: relative;
+    }
+    .dot{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #CE4224;
+        position: absolute;
+        right: 0;
+    }
 }
 
 @media(max-width:990px) {

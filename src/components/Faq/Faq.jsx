@@ -24,7 +24,6 @@ const Faq = ({faqs=[]}) => {
         return null
     return(
         <>
-            {faqs && faqs.length > 0 && <div className={style.faqHeaderTxt} ></div>}
             <div className={style.faqWrapper}>
                 {
                     faqs.map((data,index)=>{

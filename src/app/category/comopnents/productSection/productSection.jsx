@@ -4,7 +4,6 @@ import React from "react"
 import style from "./productSection.module.scss"
 import ProductCard from "@/components/ProductCard/ProductCard"
 const ProductSection = ({ resposneValue = [] }) => {
-    console.log(resposneValue, "resposneValue")
     if (resposneValue && resposneValue.length > 0) {
         return (
             <div className={style.productSectionContainer}>

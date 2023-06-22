@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 95%;
     gap: 10px;
 
     .image {
@@ -11,6 +11,7 @@
         border-radius: 10px;
         max-width: 342px;
         max-height: 342px;
+        
     }
 
     .right-arrow {
@@ -22,6 +23,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 36px;
+            height: 36px;
+        }
     }
 
     .left-arrow {
@@ -33,6 +43,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 36px;
+        }
     }
 
     .all-slides {
