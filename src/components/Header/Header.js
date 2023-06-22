@@ -10,6 +10,8 @@ import CountryList from '../CountryList/CountryList';
 import SearchCard from '@/app/search/SearchCard/SearchCard';
 import Loader from '../Loader/Loader';
 import styles from './header.module.scss';
+import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
+
 
 const SearchList = () =>{
     return(
@@ -42,7 +44,7 @@ const SearchList = () =>{
 }
 
 
-const Header = () => {
+const Header = ({couponBanner}) => {
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
@@ -54,6 +56,7 @@ const Header = () => {
     const [searchTxt, setSearchTxt] = useState("");
     const [ sideMenuData , setSideMenuData] = useState([]);
     const inputBoxRef = useRef(null);
+
 
     useEffect(()=>{
         getSideMenuData()
@@ -137,7 +140,8 @@ const Header = () => {
 
     return(
         <>
-     
+        
+    <CouponInfo couponBanner={couponBanner}/>
         <div className={styles.header}>
            <div className={styles.headerWrapper}>
                 <div className={styles.headerIcon}>
@@ -181,6 +185,7 @@ const Header = () => {
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
+      
         </>
     )
 

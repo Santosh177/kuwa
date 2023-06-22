@@ -1,14 +1,26 @@
 'use client';
 import { useState } from 'react';
 import styles from './find-my-order.module.scss';
+import OrderItemList from '../../orders/OrderItemList/OrderItemList';
+import Loader from '@/components/Loader/Loader';
 
-export default  function FindMyOrder({}) {
 
-    const [ searchOrderId , setSearchOrderId ] = useState("")
+export default  function FindMyOrder({setShowOrderInfo}) {
 
+    const [ searchOrderId , setSearchOrderId ] = useState("");
+    const [orderList,setOrderList] = useState([])
+    const [isLoading, setIsLoading] = useState(false);
+  
 
     console.log("searchOrderIdsearchOrderId",searchOrderId)
-  
+   const getOrderList=async()=>{
+    setIsLoading(true);
+    const data = await fetch(`https://api.kuwa.bevaleo.dev/module/find-my-order/${searchOrderId}`)
+   const res = await data.json()
+    setOrderList(res)
+    setIsLoading(false);
+    setShowOrderInfo(false);
+   }
 
   return (
     <>
@@ -20,9 +32,19 @@ export default  function FindMyOrder({}) {
                 <input type='text' placeholder='Order ID' className={styles.orderIdInput} value={searchOrderId} onChange={(e)=>setSearchOrderId(e.target.value)} /> 
                 {searchOrderId && <img onClick={()=>setSearchOrderId("")} className={styles.crossIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_find_my_order.png' alt='cross_icon'/>}
             </div>
-            <div className={styles.findMyorderBtn}>Find my order</div>
+            <div className={styles.findMyorderBtn} onClick={getOrderList}>Find my order</div>
+            
         </div>
     </div>
+ 
+    {isLoading ? (
+        <Loader isShow={isLoading} /> 
+      ) : (
+        orderList.map((data, index) => {
+          return <OrderItemList key={index} data={data} />;
+        })
+      )}
     </>
   )
 }
+

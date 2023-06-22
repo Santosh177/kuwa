@@ -2,8 +2,12 @@ import PageHeader from '@/components/PageHeader/PageHeader';
 import OrderItemList from './OrderItemList/OrderItemList';
 import { authHeader } from "../../../lib/auth-cookies";
 
+import EmptyOrder from './EmptyOrders/EmptyOrders';
+
 
 export default async function MyOrders({}) {
+
+    
   let listOfMyOrdser = [
     {
         "orderId": 2250,
@@ -278,19 +282,23 @@ let listOfMyOrder = []
     
   }
 
-  
+  const isNonEmptyOrder = listOfMyOrder.length > 0 ;
 
   return (
     <>
-      <PageHeader headerName="My Orders" />
+      
+  <PageHeader headerName="My Orders" />
 
-        {
-          listOfMyOrder.map((data,index)=>{
-            return(
-              <OrderItemList data={data}/>
-            )
-          })
-        }
+  {isNonEmptyOrder ? (
+    listOfMyOrder.map((data, index) => (
+      <OrderItemList data={data} key={index} />
+    ))
+  ) : (
+    <EmptyOrder />
+  )}
+
+
+         
     </>
 
   )

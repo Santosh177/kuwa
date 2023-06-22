@@ -26,6 +26,7 @@ export default function OrderItemList({data}) {
     return (
       <div className={styles.orderItemList}>
         <OrderItem data={orderItemData} />
+        
       </div>
   
     )

@@ -1,4 +1,5 @@
 'use client';
+import React, { useState } from 'react';
 import PageHeader from '@/components/PageHeader/PageHeader';
 import FindMyOrder from './FindMyOrder/FindMyOrder';
 import FindMyOrderInfo from './FindMyOrderInfo/FindMyOrderInfo';
@@ -7,7 +8,7 @@ import styles from './page.module.scss';
 
 
 export default function MyOrders({}) {
-
+  const [showOrderInfo, setShowOrderInfo] = useState(true);
 
 
 
@@ -16,10 +17,11 @@ export default function MyOrders({}) {
   return (
     <>
       <PageHeader headerName="Find My Order" />
-      <FindMyOrder />
-      <div className={styles.headerTxt}>OrderDetails</div>
-      <FindMyOrderInfo />
-      <OrderDetails />
+      <FindMyOrder setShowOrderInfo={setShowOrderInfo}/>
+      
+     {showOrderInfo && <><div className={styles.headerTxt}>OrderDetails</div>
+      <FindMyOrderInfo /></>}
+      {/* <OrderDetails /> */}
       
     </>
 
