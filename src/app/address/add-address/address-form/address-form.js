@@ -97,8 +97,8 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
                 <CheckBox isChecked={values['orderUpdate']}/>
                 <div className={styles.txt}>Get order updates on WhatsApp</div>
             </div>
-            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange} isDisabled={isLogin || (isEdit && values['email'])}   />
-            {errors.email && <span className={styles.errorMsg}>{errors.email}</span>}
+            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange} isDisabled={isLogin || (isEdit && values['email'])} />
+            {errors.email && <span className={styles.errorMsg}>{errors.email} </span>}
         </div>
     )
 }
@@ -200,7 +200,7 @@ const getBillingAddressData = (data) => {
 }
 
 
-export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues}) {
+export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues,error}) {
      const {isLogin=false, userData={}} = useAuth();
      const { selectedCountry={} } = useCountry();
       const [ isSameBillingAddress, setIsSameBillingAddress ] = useState(true);
@@ -210,7 +210,16 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const [personalInfoErrors, setPersonalInfoErrors] = useState({});
       const [shippingAddressErrors, setShippingAddressErrors] = useState({});
       const [billingAddressErrors, setBillingAddressErrors] = useState({});
+ 
+  console.log("personalInfoErrors",personalInfoErrors)
 
+
+  useEffect(()=>{
+
+    if(Object.keys(error).length > 0){
+      setPersonalInfoErrors(error)
+    }
+  },[error])
       useEffect(()=>{
         if(isEdit && formData && Object.keys(formData).length > 0){
           console.log("formData",formData)
@@ -266,6 +275,8 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       useEffect(()=>{
       if(getFormValues){
         const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
+        console.log("validationPersonalInfoErrors",validationPersonalInfoErrors)
+        console.log("personalInfo",personalInfo)
         const validationShippingErrors = validateShippingAddressForm(shippingAddress);
         const validationBillingErrors = validateBillingAddressForm(billngAddress);
         if (addressValidation()) {
