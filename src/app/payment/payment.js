@@ -388,6 +388,22 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
                
               }
         }else if(selectedPaymentMethod == "APPLE_PAY"){
+          payload['token'] = data.token;
+          payload['paymentMode'] = "APPLE_PAY";
+            const placeOrderResp  =  await fetch('/api/apple-pay-place-order', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(payload)
+            })
+      
+            const placeOrder = await placeOrderResp.json();
+            setIsLoader(false);
+            if(placeOrder && placeOrder.status_code == 200){
+              appleSession.completePayment(ApplePaySession.STATUS_SUCCESS);
+              router.push(`/payment/success?orderId=${placeOrder.order_id}`)
+            }
             // const applePaySupportednetworks = "visa, mastercard, amex";
             // let request = {
             //   merchantCapabilities: ['supports3DS'],
@@ -480,15 +496,13 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             body:JSON.stringify(validateData)
           })
           const validateSessionData = await validateSessionResp.json();
-          alert("valdidation"+JSON.stringify(validateSessionData))
           console.log("validateSessionData",validateSessionData)
-          const getValidateSession = get(validateSessionData, 'data.session_response');
+          const getValidateSession = validateSessionData['session_response'];
           if (getValidateSession) {
             appleSession.completeMerchantValidation(getValidateSession);
           }
           appleSession.onpaymentauthorized = async (event) => {
-            const appleToken = get(event, 'payment.token');
-            console.log("appleToken",appleToken)
+            const appleToken = event.payment.token;
               const decryptAppleTokenResp  =  await fetch('/api/decrypt-apple-token', {
                 method: 'POST',
                 headers: {
@@ -497,26 +511,13 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
                 body:JSON.stringify(appleToken)
               })
               const decryptAppleToken = await decryptAppleTokenResp.json();
-              console.log("decryptAppleToken",decryptAppleToken)
-              const getCheckoutToken = get(decryptAppleToken, 'data.token_response');
+              const getCheckoutToken = decryptAppleToken.token_response;
               if (getCheckoutToken) {
-                payload['token'] = getCheckoutToken.token;
-                payload['paymentMode'] = "APPLE_PAY";
-                console.log("FInalRESPpayload",payload)
-                  const placeOrderResp  =  await fetch('/api/checkout-place-order', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                      body:JSON.stringify(payload)
-                  })
-            
-                  const placeOrder = await placeOrderResp.json();
-                  console.log("placeOrderplaceOrder",placeOrder)
-                  setIsLoader(false);
-                  if(placeOrder && placeOrder.status_code == 200){
-                    router.push(placeOrder.redirect_link)
-                  }
+                let data = {
+                  token: getCheckoutToken.token
+                } 
+                onPayment(data)
+               
               }
           }
         }

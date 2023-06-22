@@ -7,14 +7,15 @@ import { useRouter } from 'next/navigation';
 import style from "./ProductDetail.module.scss"
 import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
 const ProductDeatil = ({ productData = {} }) => {
-    const { benefits = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
+    const { benefits = "",frequentlyBoughtTogether="", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
     const [selectedVarients, setselectedVarients] = useState("");
     const [selctedVrientsData, setSelectedVrientsData] = useState({});
     const [retailPrice, setRetailPrice] = useState(0);
     const [finalPrice, setFinalPrice] = useState(0);
     const [discount, setDiscount] = useState(0);
-    const [allImages, setAllImages] = useState([])
+    const [allImages, setAllImages] = useState([]);
+    const [haveAdress,setHaveAddress] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -46,7 +47,6 @@ const ProductDeatil = ({ productData = {} }) => {
         "isVariant":selectedVarients ? true : false,
         "variantId": selectedVarients
     }
-    console.log(payload,"payload")
     const addToCart = async (payload) => {
         try {
             const res = await fetch('/api/add-to-cart', {
@@ -66,9 +66,24 @@ const ProductDeatil = ({ productData = {} }) => {
             setErrorMsg(error.message)
         }
     }
+    const getAddress = async() => {
+        const getAddressResp  =  await fetch('/api/get-address', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        const addressData = await getAddressResp.json();
+        const haveAddress = addressData && addressData['shippingAddress'] && addressData['shippingAddress'] .length > 0;
+        if(haveAddress){
+          setHaveAddress(haveAddress);
+        }
+      }
+      useEffect(()=>{
+        getAddress()
+      },[])
     const handelAddToCart = async () => {
         const response = await addToCart(payload);
-        console.log(response, "responseresponse")
         if (response === 200) {
             setNoOfProduct(1);
             router.push('/cart')
@@ -76,10 +91,13 @@ const ProductDeatil = ({ productData = {} }) => {
     }
     const handelBuyNow = async () => {
         const response = await addToCart(payload)
-        console.log(response, "responseresponse")
         if (response === 200) {
             setNoOfProduct(1);
-            router.push('/order-summary')
+            if(haveAdress){
+                router.push('/order-summary')
+            }else{
+                router.push('/address/add-address');
+            }
         }
     }
     const handelShareOption = (action) => {
@@ -115,9 +133,9 @@ const ProductDeatil = ({ productData = {} }) => {
                 <ProductImageSection allImages={allImages} />
                 <ProductPricingSection pricingSectionVariables={pricingSectionVariables} />
             </div>
-            {/* <div className={style.FrequntlyBoughtTogetherBox}>
-                <FrequntlyBoughtTogether productData={productData} />
-            </div> */}
+            {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>
+                <FrequntlyBoughtTogether currency={currency} productData={frequentlyBoughtTogether} />
+            </div>}
         </div>
     )
 }
