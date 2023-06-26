@@ -9,8 +9,8 @@ export default function  CouponInfo({couponBanner})  {
   
   return (
     <div className={styles.coupon} onClick={()=>router.push(couponBanner.redirectionLink)}>
-    <p>{couponBanner.bannerText}</p>
-    <button >{couponBanner.buttonText} </button>
+    <p>{couponBanner === undefined ? null : couponBanner.bannerText}</p>
+    <button >{couponBanner === undefined ? null : couponBanner.buttonText} </button>
  </div>
   )
 }

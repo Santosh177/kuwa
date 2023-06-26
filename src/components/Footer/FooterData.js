@@ -60,7 +60,7 @@ const CategoriesData = [
         url:'/'
     },
     {
-        name:'Refund Policy',
+        name:'Refund policy',
         url:'/'
     },
     {
@@ -72,7 +72,7 @@ const CategoriesData = [
  const UsefulLinks = [
     {
         name:'Refund Policy',
-        url:'/'
+        url:'/refund-policy'
     },
     {
         name:'Cart',
@@ -121,11 +121,12 @@ const ContactInfo = [
     },
     {
         name:'Call us at +971 4 416-444',
-        img:'https://d25uasl7utydze.cloudfront.net/kuwa/mail.png'
+        img:'https://d25uasl7utydze.cloudfront.net/kuwa/_phone.png'
+        
     },
     {
         name:'support@getkuwa.com',
-        img:'https://d25uasl7utydze.cloudfront.net/kuwa/_phone.png'
+        img:'https://d25uasl7utydze.cloudfront.net/kuwa/mail.png'
     }
 ]
 
