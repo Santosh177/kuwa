@@ -15,7 +15,9 @@ const PriceDetails = ({data}) => {
     console.log("discountAmountdiscountAmount",discountAmount)
 
     return(
+        <div><b>Price Details</b>
        <div className={styles.priceDetailsWrapper}>
+       
             <div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Price ({cartItemCount} items)</div>
                 <div className={styles.rowItemRightText}>{ currency +" " + subTotal }</div>
@@ -33,6 +35,7 @@ const PriceDetails = ({data}) => {
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>Total Amount</div>
                 <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + totalAmount}</div>
             </div>
+       </div>
        </div>
     )
 

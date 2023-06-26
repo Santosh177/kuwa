@@ -216,7 +216,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
   useEffect(()=>{
 
-    if(Object.keys(error).length > 0){
+    if(error && Object.keys(error).length > 0){
       setPersonalInfoErrors(error)
     }
   },[error])

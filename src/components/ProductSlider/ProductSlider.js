@@ -161,6 +161,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
                 
                
             </Glider>
+          
             </div>
           </div>
           <Loader isShow={isLoading} />

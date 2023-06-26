@@ -62,7 +62,7 @@ If you are shipping an item over AED 100, you should consider using a trackable 
 export default function RefundPolicy() {
     return (
         <div>
-            <PageHeader headerName="Terms Of Service" />
+            <PageHeader headerName="Refund Policy" />
             <div style={{padding: "16px", margin: 'auto', marginTop: "30px", fontSize: "12px", fontWeight: 400}} dangerouslySetInnerHTML={{ __html: refundPolicy }}></div>
         </div>
     );

@@ -51,18 +51,18 @@ const CategoriesData = [
         name:'Focus & Energy',
         url:'/'
     },
-    {
-        name:'Terms of service',
-        url:'/'
-    },
+    // {
+    //     name:'Terms of service',
+    //     url:'/'
+    // },
     {
         name:'Proteins',
         url:'/'
     },
-    {
-        name:'Refund policy',
-        url:'/'
-    },
+    // {
+    //     name:'Refund policy',
+    //     url:'/'
+    // },
     {
         name:'Weight Management',
         url:'/'
