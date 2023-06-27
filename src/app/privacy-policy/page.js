@@ -138,7 +138,7 @@ export default function PrivacyPolicy() {
     return (
         <div>
             <PageHeader headerName="Terms Of Service" />
-            <div style={{padding:"16px",margin:'auto',marginTop:"30px",fontSize:"12px",fontWeight:400}} dangerouslySetInnerHTML={{ __html: privacyPolicy }}></div>
+            <div style={{padding:"16px",margin:'auto',marginTop:"30px",fontSize:"12px",fontWeight:400,maxWidth:"1070px"}} dangerouslySetInnerHTML={{ __html: privacyPolicy }}></div>
         </div>
     )
 }

@@ -63,7 +63,7 @@ export default function RefundPolicy() {
     return (
         <div>
             <PageHeader headerName="Refund Policy" />
-            <div style={{padding: "16px", margin: 'auto', marginTop: "30px", fontSize: "12px", fontWeight: 400}} dangerouslySetInnerHTML={{ __html: refundPolicy }}></div>
+            <div style={{padding: "16px", margin: 'auto', marginTop: "30px", fontSize: "12px", fontWeight: 400,maxWidth:"1070px"}} dangerouslySetInnerHTML={{ __html: refundPolicy }}></div>
         </div>
     );
 }

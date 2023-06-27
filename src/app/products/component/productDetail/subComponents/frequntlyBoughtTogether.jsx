@@ -1,21 +1,16 @@
 "use client"
-
 import react, { useEffect, useState } from "react";
 import style from "./FrequntlyBoughtTogether.module.scss"
-
-
+import { useRouter } from 'next/navigation';
 const rectangularUnCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/Group%2041782%20(1).svg"
 const rectangularCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/RectangularSelcted.svg";
-
 
 const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
     const [slectedId, setSelectedId] = useState([]);
     const [idQunatity, setIdQunatity] = useState({});
     const [totalPrice, setTotalPrice] = useState(0);
-    // let suggestedSupplemnts = [{ id: "1", heding: "AADAR Endure Capsule For Premature Ejaculation (60 Capsules)", price: 60.01, image: "https://cdn.shopify.com/s/files/1/0630/0234/5731/products/1_5_2840ea48-db27-47a0-b901-5026bb09d3ae.jpg?v=1673263418" },
-    // { id: "2", heding: "AADAR Straight Up Capsule For Strength In Men (60 Capsules)", price: 34.01, image: "https://cdn.shopify.com/s/files/1/0630/0234/5731/products/3_4_cee923f9-1687-46dc-974b-07ce278eccce.jpg?v=1673263419" }
-    // ]
     const [data,setData] = useState([]);
+    const router = useRouter();
     useEffect(()=>{
         let suggestedSupplemnts= []
         if(productData && productData.length > 0 ){
@@ -23,16 +18,16 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
                 const {id="",image="",name="",price="",seoUrl="",title=""} = item || {};
                 const {discount="",finalPrice="",retailPrice=""} = price || {};
                 const finalItem = {id:id,heding:name,price:finalPrice,image:image};
-                suggestedSupplemnts.push(finalItem)
+                suggestedSupplemnts.push(finalItem);
             })
         }
-        setData(suggestedSupplemnts)
+        setData(suggestedSupplemnts);
     },[])
-    const { } = productData || {}
+    const { } = productData || {};
 
-    const handelIncriments = (noOfProduct, id, price) => {
+    const handelIncriments = (noOfProduct, id, price,) => {
         let idQunatitytemp = idQunatity;
-        idQunatitytemp[id] = { noOfProduct: noOfProduct, price: price }
+        idQunatitytemp[id] = {noOfProduct: noOfProduct, price: price };
         setIdQunatity(idQunatitytemp);
     }
     const handelSelctedId = (id, price) => {
@@ -42,14 +37,28 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
                 quantity = idQunatity[key].noOfProduct
             }
         }
-        if (slectedId && slectedId.length > 0 && slectedId.includes(id)) {
-            const filteredData = slectedId.filter((item) => item !== id);
+        let isSelcted = false;
+        if(slectedId && slectedId.length > 0){
+            for (let i in slectedId){
+                if(slectedId[i].id === id){
+                    isSelcted = slectedId[i].id === id;
+                    break;
+                }
+            }
+        }
+        if (slectedId && slectedId.length > 0 && isSelcted) {
+            const filteredData = slectedId.filter((item) => item.id !== id);
+            let finalfiltred = [];
+            filteredData.map((item)=>{
+                const {id=""} =item || {}
+                finalfiltred.push({id:id,quantity:quantity})
+            })
             setPrice(id, "sub", quantity);
-            setSelectedId(filteredData);
-            handelIncriments(1, id, price);
+            setSelectedId(finalfiltred);
+            handelIncriments(1, id, price,quantity);
         } else {
             setPrice(id, "add", quantity);
-            setSelectedId([id, ...slectedId])
+            setSelectedId([{id:id,quantity:quantity}, ...slectedId])
         }
     }
     const firstTimeCall = ()=>{
@@ -57,7 +66,7 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
             let selectedId =[];
             let totalPrice = 0
             data.map((item)=>{
-                selectedId.push(item.id);
+                selectedId.push({id: item.id, quantity : 1});
                 totalPrice = totalPrice + parseFloat(item.price)
             });
             setTotalPrice(totalPrice)
@@ -78,13 +87,67 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
             }
         })
     }
-
-    const addToCart = () =>{
-        if(totalPrice !== 0.00){
-            let ids =[]
-            for (let key in idQunatity){
-                ids.push(key)
+    const getqunatity = (idQunatity,id)=>{
+        let value ="";
+        for (let key in idQunatity){
+            if(key == id){
+                value = idQunatity[key].noOfProduct;
             }
+        }
+        return value;
+    }
+    const addToCartAPI = async (payload) => {
+        try {
+            const res = await fetch('/api/add-to-cart-multi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            })
+            if (res.status === 200) {
+                return res.status
+            } else {
+                throw new Error(await res.text())
+            }
+        } catch (error) {
+            console.error('An unexpected error happened occurred:', error)
+            setErrorMsg(error.message)
+        }
+    }
+    // const getAddress = async () => {
+    //     const getAddressResp = await fetch('/api/get-address', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     })
+    //     const addressData = await getAddressResp.json();
+    //     const haveAddress = addressData && addressData['shippingAddress'] && addressData['shippingAddress'].length > 0;
+    //     if (haveAddress) {
+    //         setHaveAddress(haveAddress);
+    //     }
+    // }
+    // useEffect(()=>{
+    //     getAddress()
+    // })
+
+    const addToCart = async() =>{
+        const payload =[];
+        if(totalPrice > 0){
+            slectedId.map((item)=>{
+                const qutanity = getqunatity(idQunatity,item.id);
+                if(qutanity && qutanity>1){
+                    payload.push({id : item.id,quantity:qutanity})
+                }else{
+                    payload.push(item)
+                }
+            })
+            const response = await addToCartAPI(payload);
+            if(response){
+                router.push('/cart')
+            }
+            console.log(response,"response")
         }
     }
     if(data && data.length>0){
@@ -108,7 +171,14 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
                                 
                             }
                         }
-                        const isSelcted = slectedId && slectedId.length > 0 && slectedId.includes(item.id)
+                        let isSelcted = false;
+                        for (let i in slectedId){
+                            const {id=""} = slectedId[i];
+                            if(id === item.id){
+                                isSelcted = id === item.id;
+                                break;
+                            }
+                        }
                         let checkUncheck = isSelcted ? rectangularCheck : rectangularUnCheck;
                         return (
                             <div className={style.checklist}>

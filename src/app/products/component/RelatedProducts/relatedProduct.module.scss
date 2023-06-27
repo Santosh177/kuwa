@@ -1,16 +1,12 @@
 .relatedProductContiner {
     background: linear-gradient(180deg, #F4FCF3 0%, rgba(241, 244, 249, 0) 100%, rgba(244, 252, 243, 0) 100%);
     padding: 20px;
-    .relatedProduct{
+
+    .relatedProduct {
         max-width: 1100px;
         width: 100%;
         margin: auto;
-        .allProducts{
-            margin-top: 50px;
-            display: flex;
-            gap: 30px;
-            overflow: auto;
-        }
+
         .card {}
 
         .relatatedTxt {
@@ -19,19 +15,86 @@
             color: #07141A;
         }
 
+        .productContainer {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+
+            .leftArrow {
+                border-radius: 50%;
+                background: #FFFFFF;
+                box-shadow: 0px 6px 7px rgba(173, 173, 173, 0.16);
+                cursor: pointer;
+                user-select: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    width: 46px;
+                    height: 36px;
+                }
+            }
+
+            .allProducts {
+                margin-top: 50px;
+                display: flex;
+                gap: 30px;
+                overflow: auto;
+                scroll-behavior: smooth;
+            }
+
+            .rightArrow {
+                border-radius: 50%;
+                background: #FFFFFF;
+                box-shadow: 0px 6px 7px rgba(173, 173, 173, 0.16);
+                cursor: pointer;
+                user-select: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    width: 46px;
+                    height: 36px;
+                }
+            }
+        }
+
     }
 }
-@media(max-width:990px){
+
+@media(max-width:990px) {
     .relatedProductContiner {
-        .relatedProduct{
-            .allProducts{
-                margin-top: 22px;
+        .relatedProduct {
+            .productContainer {
+                .leftArrow{
+                    display: none;
+                }
+                .allProducts {
+                    margin-top: 22px;
+                }
+
+                .relatatedTxt {
+                    font-weight: 600;
+                    font-size: 18px;
+                }
+                .rightArrow{
+                    display: none; 
+                }
             }
-            .relatatedTxt {
-                font-weight: 600;
-font-size: 18px;
-            }
-    
+
         }
     }
 }
