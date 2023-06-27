@@ -37,9 +37,9 @@ const validateForm = (formData) => {
 
 
 export default function ForgetPassword() {
-
+  const router = useRouter();
     const [ email , setEmail ] = useState("")
- 
+    // const [text,setText] = useState("")
     const onInputChange =(e)=>{
         setEmail(e.target.value)
     }
@@ -54,7 +54,7 @@ export default function ForgetPassword() {
                 <Input lassName={styles.inputBox} type='email'  value={email || ""} placeHolder='Email ID (ex. abc@gmail.com)' onInputChange={(e)=>onInputChange(e)}  />
             </div>
             <div className={styles.successMsg}>A link has been sent to your mail ID. If not found check spam folder.</div>
-            <div className={styles.forgetPasswordBtn}>Send link</div>
+            <div className={styles.forgetPasswordBtn}  onClick={()=>router.push('/reset-password')}>Send link</div>
          </div>
         </>
         

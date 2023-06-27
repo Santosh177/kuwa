@@ -33,7 +33,7 @@ const validateForm = (formData) => {
 
 
 const SignupForm = ({setFormData={},formData={},errors={}}) => {
-
+  
   const onInputChange = (event, labelId) =>{
     if(labelId === 'mobNumber'){
       setFormData(inputs => ({ ...inputs, [labelId]: event}));
@@ -43,6 +43,7 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
 
     
   }
+ 
 
   
     return (
@@ -66,7 +67,12 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
                 {errors.email && <span className={styles.errorMsg}>{errors.email}</span>}
             </div>
             <div>
-                <Input className={styles.inputBox} type='password'  value={formData.password || ""} placeHolder='Set password' onInputChange={(e)=>onInputChange(e,'password')} />
+                <Input className={styles.inputBox}  type='password' value={formData.password || ""} placeHolder='Set password' onInputChange={(e)=>onInputChange(e,'password')}
+                icon={{
+                  eyeClosed: 'https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/eye_closed+(1).png',
+                  eyeOpen: 'https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/eye_open.png'
+                }}
+                />
                 {errors.password && <span className={styles.errorMsg}>{errors.password}</span>}
             </div>
         </div>

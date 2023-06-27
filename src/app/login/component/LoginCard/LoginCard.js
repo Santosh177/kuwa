@@ -26,6 +26,11 @@ export default function Login() {
     const [ password , setPassword ] = useState("");
     const [ errors, setErrors] = useState({});
     const [isLoading, setIsLoading]= useState(false)  
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+    const togglePasswordVisibility = () => {
+      setIsPasswordVisible(!isPasswordVisible);
+    };
    
 
     const onLogin = async() =>{
@@ -76,8 +81,20 @@ export default function Login() {
                   {errors.userEmail && <span className={styles.errorMsg}>{errors.userEmail}</span>}
               </div>
               <div>
-                  <input className={styles.inputBox} type='password' onChange={onPasswordChange} value={password} placeholder='Password' />
+                  <input className={styles.inputBox} type={isPasswordVisible ? 'text' : 'password'} onChange={onPasswordChange} value={password} placeholder='Password' 
+                  />
+                   <img
+                className={styles.eyeIcon}
+                src={
+                  isPasswordVisible
+                    ? 'https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/eye_open.png'
+                    : 'https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/eye_closed+(1).png'
+                }
+                alt="Toggle Password Visibility"
+                onClick={togglePasswordVisibility}
+              />
                   {errors.password && <span className={styles.errorMsg}>{errors.password}</span>}
+                  <div className={styles.forgetPassword} onClick={()=>router.push('/forget-password')}>Forgot Password ?</div>
               </div>
               <div className={styles.loginBtn} onClick={onLogin}>Login</div>
           </div>

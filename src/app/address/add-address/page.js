@@ -20,6 +20,7 @@ export default function AddAddress() {
   const [ addressData, setAddressData] = useState({});
   const [ getFormValues , setGetFormValues] = useState(0);
   const [ isLoading , setIsLoading] = useState(false);
+  const [error,setError] = useState({})
 
 
     const onFormData = (formData) => {
@@ -48,7 +49,8 @@ export default function AddAddress() {
           })
           const signupRespData = await signUpResp.json();
           console.log("signupRespData",signupRespData)
-          onAddAddress(data)
+          signupRespData.status_code=== 200 ? 
+          onAddAddress(data) : setError({email:signupRespData.data.message})
       }
      
     }
@@ -75,7 +77,7 @@ export default function AddAddress() {
           }
           
         } else {
-          // throw new Error(await res.text())
+          throw new Error(await res.text())
         }
       } catch (error) {
         console.error('An unexpected error happened occurred:', error)
@@ -90,7 +92,7 @@ export default function AddAddress() {
           <PageHeader headerName="Add Address" />
          {!refererPath && <PageStepTracker stepCount={1} />}
           <div className={styles.addAddressWrapper}> 
-              <AddressForm  getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>
+              <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>
               <SubmitBtn onSaveAddress={onSaveAddress}/>
           </div>
           <Loader  isShow={isLoading}/>
