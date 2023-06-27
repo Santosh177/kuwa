@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import style from "./ProductDetail.module.scss"
 import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
 const ProductDeatil = ({ productData = {} }) => {
-    const { benefits = "",frequentlyBoughtTogether="", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
+    const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
     const [selectedVarients, setselectedVarients] = useState("");
     const [selctedVrientsData, setSelectedVrientsData] = useState({});
@@ -15,7 +15,7 @@ const ProductDeatil = ({ productData = {} }) => {
     const [finalPrice, setFinalPrice] = useState(0);
     const [discount, setDiscount] = useState(0);
     const [allImages, setAllImages] = useState([]);
-    const [haveAdress,setHaveAddress] = useState(false)
+    const [haveAdress, setHaveAddress] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -44,7 +44,7 @@ const ProductDeatil = ({ productData = {} }) => {
     const payload = {
         "product": id,
         "quantity": noOfProduct,
-        "isVariant":selectedVarients ? true : false,
+        "isVariant": selectedVarients ? true : false,
         "variantId": selectedVarients
     }
     const addToCart = async (payload) => {
@@ -66,22 +66,22 @@ const ProductDeatil = ({ productData = {} }) => {
             setErrorMsg(error.message)
         }
     }
-    const getAddress = async() => {
-        const getAddressResp  =  await fetch('/api/get-address', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+    const getAddress = async () => {
+        const getAddressResp = await fetch('/api/get-address', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
         const addressData = await getAddressResp.json();
-        const haveAddress = addressData && addressData['shippingAddress'] && addressData['shippingAddress'] .length > 0;
-        if(haveAddress){
-          setHaveAddress(haveAddress);
+        const haveAddress = addressData && addressData['shippingAddress'] && addressData['shippingAddress'].length > 0;
+        if (haveAddress) {
+            setHaveAddress(haveAddress);
         }
-      }
-      useEffect(()=>{
+    }
+    useEffect(() => {
         getAddress()
-      },[])
+    }, [])
     const handelAddToCart = async () => {
         const response = await addToCart(payload);
         if (response === 200) {
@@ -93,9 +93,9 @@ const ProductDeatil = ({ productData = {} }) => {
         const response = await addToCart(payload)
         if (response === 200) {
             setNoOfProduct(1);
-            if(haveAdress){
+            if (haveAdress) {
                 router.push('/order-summary')
-            }else{
+            } else {
                 router.push('/address/add-address');
             }
         }
@@ -126,9 +126,23 @@ const ProductDeatil = ({ productData = {} }) => {
         setNoOfProduct: setNoOfProduct,
         noOfProduct: noOfProduct
     };
+    const handelRoute = (type) => {
+        if (type === "home") {
+            router.push('/')
+        } else if (type === "cat") {
 
+        }else if (type === "product") {
+
+        }
+    }
+    console.log(productData,"productDataproductData")
     return (
         <div className={style.productPricingContainerOuter}>
+            <div className={style.routeSection}>
+                <span onClick={() => handelRoute("home")}>Home</span> / 
+                {/* <span onClick={() => handelRoute("cat")} ></span> / */}
+                <span onClick={() => handelRoute("product")}> {name}</span>
+            </div>
             <div className={style.productPricingContainer}>
                 <ProductImageSection allImages={allImages} />
                 <ProductPricingSection pricingSectionVariables={pricingSectionVariables} />

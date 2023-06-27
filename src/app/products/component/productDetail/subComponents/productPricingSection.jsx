@@ -24,13 +24,13 @@ const ProductPricingSection = ({ pricingSectionVariables }) => {
                 <div className={styles.addToCart} onClick={() => handelAddToCart()} ><span>Add to Cart</span></div>
                 <div className={styles.buyNow} onClick={() => handelBuyNow()} ><span>Buy Now</span></div>
             </div>
-            <div className={styles.shareConatiner}>
+            {/* <div className={styles.shareConatiner}>
                 <div className={styles.Share} >Share:</div>
                 <div className={styles.shareLogo}>
                     <img onClick={() => handelShareOption("WhatsApp")} src="https://d25uasl7utydze.cloudfront.net/kuwa/whatsapp.svg" alt="whatsapp" />
                     <img onClick={() => handelShareOption("FaceBook")} src="https://d25uasl7utydze.cloudfront.net/kuwa/facebook%20(1).svg" alt="facebook" />
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
