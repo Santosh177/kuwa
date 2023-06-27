@@ -134,7 +134,7 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
 
     const addToCart = async() =>{
         const payload =[];
-        if(totalPrice !== 0.00){
+        if(totalPrice > 0){
             slectedId.map((item)=>{
                 const qutanity = getqunatity(idQunatity,item.id);
                 if(qutanity && qutanity>1){
