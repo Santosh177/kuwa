@@ -14,8 +14,8 @@ const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 const MainCategory = ({ responseData, couponBanner }) => {
     const [slectedFilter, setSelectedFilter] = useState("NOT_SELCTED");
     const [selectedOptionsHead, setSelectedOptionsHead] = useState({});
-    const [resposneValue,setResponseValue] = useState([]);
-    const [isLoding,setIsLOading] = useState(false);
+    const [resposneValue, setResponseValue] = useState([]);
+    const [isLoding, setIsLOading] = useState(false);
     const fetchData = async () => {
         setIsLOading(true)
         const { category = "", sort = "" } = selectedOptionsHead || {};
@@ -33,7 +33,7 @@ const MainCategory = ({ responseData, couponBanner }) => {
                 'Content-Type': 'application/json',
             }
         })
-        if(getProduct){
+        if (getProduct) {
             const getProductData = await getProduct.json();
             setResponseValue(getProductData);
         }
@@ -43,27 +43,46 @@ const MainCategory = ({ responseData, couponBanner }) => {
         fetchData()
     }, [selectedOptionsHead])
     const isHide = slectedFilter === "NOT_SELCTED" || slectedFilter === "Sort By";
+    let isShowDotForCat = false;
+    if (selectedOptionsHead.category) {
+        const value = (selectedOptionsHead.category).split(",")
+        isShowDotForCat = value.length > 0
+    }
+    let isShowDotForSort = false;
+    if (selectedOptionsHead && selectedOptionsHead.sort) {
+        const value = selectedOptionsHead.sort
+        isShowDotForSort = value.length > 4
+    }
+    console.log(selectedOptionsHead.sort, "slectedFilter");
+    console.log(isShowDotForSort, "slectedFilter");
+
     return (
         <div className={style.CategoryIndexPage}>
             {isHide && <Header couponBanner={couponBanner} />}
             {isHide && <div className={style.FilterTabOptionMobile} >
                 <div className={style.FilterTabOption}>
-                    <div className={style.filter} onClick={() => setSelectedFilter("Filter")} >
-                        <img src={filterDataImg} alt="" />
-                        <span>Filter</span>
+                    <div className={style.filterContainer} onClick={() => setSelectedFilter("Filter")} >
+                        {isShowDotForCat && <div className={style.dot}></div>}
+                        <div className={style.filter}>
+                            <img src={filterDataImg} alt="" />
+                            <span>Filter</span>
+                        </div>
                     </div>
-                    <div className={style.sortBy} onClick={() => setSelectedFilter("Sort By")}>
-                        <img src={sortByImg} alt="" />
-                        <div>Sort By</div>
+                    <div className={style.filterContainer}>
+                        {isShowDotForSort && <div className={style.dot}></div>}
+                        <div className={style.sortBy} onClick={() => setSelectedFilter("Sort By")}>
+                            <img src={sortByImg} alt="" />
+                            <div>Sort By</div>
+                        </div>
                     </div>
                 </div>
             </div>}
             {<div className={style.productAndFilter}>
                 <FilterSection setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} slectedFilter={slectedFilter} responseData={responseData} />
-                {isHide && <ProductSection resposneValue={resposneValue}  />}
+                {isHide && <ProductSection resposneValue={resposneValue} />}
             </div >}
             {isHide && <Footer />}
-            <Loader  isShow={isLoding} />
+            <Loader isShow={isLoding} />
         </div>
     )
 }

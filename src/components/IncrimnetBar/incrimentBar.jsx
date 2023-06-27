@@ -13,7 +13,7 @@ const IncrimentBar = ({noOfProduct=0,setNoOfProduct={}}) =>{
     }
     return(
         <div className={style.incrimentBarContainer}>
-            <div className={[style.plus,(noOfProduct === 0 ? style.lightMinus : "")].join(" ")} onClick={()=>handelOnclick("minus")} > - </div>
+            <div className={[style.plus,(noOfProduct === 0 ? style.lightMinus : "")].join(" ")} onClick={()=>handelOnclick("minus")} ><span> - </span></div>
             <div className={style.number} >{noOfProduct}</div>
             <div className={style.plus} onClick={()=>handelOnclick("plus")} > + </div>
         </div>

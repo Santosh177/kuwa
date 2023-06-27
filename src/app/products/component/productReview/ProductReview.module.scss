@@ -45,6 +45,13 @@
 
 @media(max-width:960px) {
     .reviewsContainerOuter {
+        padding-left: 16px;
+        padding-right: 16px;
+        .review {
+            font-size: 16px;
+            text-align: start;
+            margin-bottom: 10px;
+        }
         .reviewsContainer {
             justify-content: center;
         }

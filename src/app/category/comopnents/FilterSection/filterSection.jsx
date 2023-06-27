@@ -235,7 +235,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                     {singleSelect.map((item) => {
                         const image = item === selectedSingle ? checkIamge : uncheckImage;
                         return (
-                            <div className={style.optionsTxt} onClick={()=>setSelectedSingle(item)}>
+                            <div className={style.optionsTxt} onClick={()=>{setSelectedSingle(item);setSelectedFilter("NOT_SELCTED");}}>
                                 <div className={style.tickBox}><img src={image} alt="check box" /></div>
                                 <div className={style.elements}>{item}</div>
                             </div>
