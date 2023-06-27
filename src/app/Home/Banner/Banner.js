@@ -1,17 +1,26 @@
+'use client';
+import React ,{useState,useEffect} from 'react'
+import { useRouter} from 'next/navigation';
 import styles from './banner.module.scss';
-export default function Banner() {
+export default function Banner({mobileImage,desktopImage,imageRedirection}) {
 
+  const router = useRouter();
+  
 
+ 
 
 
   return (
     <>
-      <div className={styles.mobBanner}>
-        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top_banner_mobile.png" alt="top-banner"/>
+     <div className='' onClick={()=>router.push(imageRedirection)}>
+     <div className={styles.mobBanner}>
+        <img src={mobileImage} alt="top-banner"/>
       </div>
       <div className={styles.desktopBanner}>
-        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top_banner_desktop.png" alt="top-banner"/>
+        <img src={desktopImage} alt="top-banner"/>
       </div>
+     </div>
+    
     </>
 
   )

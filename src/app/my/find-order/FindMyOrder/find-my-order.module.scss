@@ -3,13 +3,13 @@
 
     .orderStatusTxt{
         font-weight: 500;
-        font-size: 14px;
+        font-size: 18px;
         text-align: center;
     }
 
     .subTxt{
         font-weight: 400;
-        font-size: 12px;
+        font-size: 14px;
         text-align: center;
         margin-top: 10px;
         color: #A0A0A0;
@@ -17,6 +17,11 @@
             font-weight: 500;
         }
 
+    }
+    .orderIdContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .orderIdSearchContainer{
@@ -61,6 +66,12 @@
         
         }
     }
+}
+.error{
+    // margin-left: 610px;
+    color:#CE4224;
+    padding-top:10px;
+    font-size: 14px;
 }
 
 @media(min-width:990px){

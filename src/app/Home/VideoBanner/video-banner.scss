@@ -16,6 +16,7 @@
   #video-banner-wrapper{
     height: 100vh;
     position: relative;
+    cursor: pointer;
   }
   
   
@@ -25,10 +26,12 @@
   
     #mobileScreen{
       display: unset !important;
+     
     }
 
     #desktopScreen{
       display: none;
+      
     }
 
     

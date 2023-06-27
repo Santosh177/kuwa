@@ -51,18 +51,18 @@ const CategoriesData = [
         name:'Focus & Energy',
         url:'/'
     },
-    {
-        name:'Terms of service',
-        url:'/'
-    },
+    // {
+    //     name:'Terms of service',
+    //     url:'/'
+    // },
     {
         name:'Proteins',
         url:'/'
     },
-    {
-        name:'Refund Policy',
-        url:'/'
-    },
+    // {
+    //     name:'Refund policy',
+    //     url:'/'
+    // },
     {
         name:'Weight Management',
         url:'/'
@@ -72,7 +72,7 @@ const CategoriesData = [
  const UsefulLinks = [
     {
         name:'Refund Policy',
-        url:'/'
+        url:'/refund-policy'
     },
     {
         name:'Cart',
@@ -90,10 +90,7 @@ const CategoriesData = [
         name:'Shipping Policy',
         url:'/shipping-policy'
     },
-    {
-        name:'Checkout',
-        url:'/payment'
-    },
+  
     {
         name:'Privacy Policy',
         url:'/privacy-policy'
@@ -107,20 +104,14 @@ const CategoriesData = [
 const SocialIcons = [
     {
         icon:"https://d25uasl7utydze.cloudfront.net/kuwa/facebook.png",
-        url:"/"
+        url:"https://www.facebook.com/get.kuwa"
     },
-    {
-        icon:"https://d25uasl7utydze.cloudfront.net/kuwa/linkedin.png",
-        url:"/"
-    },
+  
     {
         icon:"https://d25uasl7utydze.cloudfront.net/kuwa/mail-social.png",
-        url:"/"
+        url:"mailto:support@getkuwa.com"
     },
-    {
-        icon:"https://d25uasl7utydze.cloudfront.net/kuwa/twitter.png",
-        url:"/"
-    }
+   
 ]
 
 const ContactInfo = [
@@ -130,11 +121,12 @@ const ContactInfo = [
     },
     {
         name:'Call us at +971 4 416-444',
-        img:'https://d25uasl7utydze.cloudfront.net/kuwa/mail.png'
+        img:'https://d25uasl7utydze.cloudfront.net/kuwa/_phone.png'
+        
     },
     {
         name:'support@getkuwa.com',
-        img:'https://d25uasl7utydze.cloudfront.net/kuwa/_phone.png'
+        img:'https://d25uasl7utydze.cloudfront.net/kuwa/mail.png'
     }
 ]
 

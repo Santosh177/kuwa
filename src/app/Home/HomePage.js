@@ -1,4 +1,5 @@
 import Banner from './Banner/Banner';
+
 import Header from '@/components/Header/Header';
 import AssuredInfo from './AssuredInfo/AssuredInfo';
 import BestSellingProduct from './BestSellingProduct/BestSellingProduct';
@@ -11,25 +12,32 @@ import Footer from '@/components/Footer/Footer';
 import Loader from '@/components/Loader/Loader';
 import VideoBanner from './VideoBanner/VideoBanner';
 import styles from './home-page.module.scss';
+import Carousel from './Carousel/Carousel';
 
 export default async function Home(homePageData) {
-    // console.log("homePageData",homePageData)
-    const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[],bestSellings=[] } = homePageData.homePageData || {};
+    console.log("homePageData",homePageData)
+    const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[],bestSellings=[],bannerImage={},primaryBanner=[],couponBanner={}} = homePageData.homePageData || {};
+//   console.log("coupon banner",couponBanner)
 
-
-    
+    console.log("Bannerimage",bannerImage)
 
     return(
 
         <div className={styles.homePageWrapper}>
             <div className={styles.homePageContainer}>
                 <div className={styles.mainBanner}>
-                    {/* <Banner /> */}
-                    <VideoBanner />
+                   {bannerImage.type === "VIDEO" ?
+                    (<VideoBanner videoImage={bannerImage.mobileVideo} videoDesktopImage={bannerImage.desktopVideo} videoRedirection={bannerImage.videoRedirectionLink} />
+      ) : (
+        <Banner mobileImage={bannerImage.mobileImage} desktopImage={bannerImage.desktopImage} imageRedirection={bannerImage.imageRedirectionLink} />
+      )}
+                
                     <img className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe'/>
                 </div>
                 <div className={styles.mainContainer}>
-                    <Header />
+                   
+                    <Header couponBanner={couponBanner} />
+                    <Carousel data={primaryBanner}/>
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={bestSellings} />
                     <SecondaryBanner data={secondryBanners}/>

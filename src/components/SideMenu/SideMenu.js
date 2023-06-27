@@ -37,7 +37,7 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
 const AccountInfo = ({onclose}) => {
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
-    const userName = userData && userData.userName || "";
+    const userName = userData && userData.firstName || "";
     const onRedirect = () => {
         if(!isLogin){
             router.push('/login')
