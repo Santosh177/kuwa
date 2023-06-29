@@ -36,7 +36,7 @@ const Input = ({onInputChange={},type="text",fieldName="",value="",placeHolder="
           onClick={togglePasswordVisibility}
         >
           <img 
-            src={showPassword ? icon.eyeOpen : icon.eyeClosed}
+            src={showPassword ? 'https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/eye_open.png': 'https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/eye_closed+(1).png'}
             alt="Toggle password visibility"
           />
         </div>

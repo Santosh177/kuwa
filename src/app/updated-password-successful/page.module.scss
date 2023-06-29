@@ -1,0 +1,71 @@
+.passwordSuceesContainer{
+    display: flex;
+     flex-direction: column;
+     justify-content: center;
+     text-align: center;
+     width: 22%;
+     margin: auto auto;
+     position: absolute;
+     left: 0;
+     right: 0;
+     margin-top: 200px;
+     img{
+         width: 70px;
+         height: 70px;
+         margin: 0 auto;
+     }
+     .txt{
+         font-weight: 600;
+         font-size: 18px;
+         margin-top: 8px;
+     }
+    
+     .subTxt{
+         font-weight: 400;
+         font-size: 14px;
+         color: #A0A0A0;
+         margin-top: 5px;
+     }
+     .btn{
+         background: #247A81;
+         border-radius: 24px;
+         padding-top: 12px;
+         padding-bottom: 12px;
+         color: #FFF;
+         margin-top: 24px;
+         cursor: pointer;
+     }
+ }
+ 
+ @media (min-width:990px){
+     .paymentSuceesContainer{
+         width: 22%;
+         max-width: 343px;
+         img{
+             width: 128px;
+             height: 128px;
+             margin: 0 auto;
+         }
+         .subTxt{
+             margin: 0 auto;
+             margin-top: 5px;
+         }
+     }
+ }
+
+ @media (max-width:990px){
+    .paymentSuceesContainer{
+        width:50%;
+        // max-width: 200px;
+        margin-top: 20px;
+        .txt{
+            width:125px;
+        }
+        .subTxt{
+
+        }
+        .btn{
+
+        }
+    }
+ }

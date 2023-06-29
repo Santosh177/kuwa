@@ -15,7 +15,8 @@ const PriceDetails = ({data}) => {
     console.log("discountAmountdiscountAmount",discountAmount)
 
     return(
-        <div><b>Price Details</b>
+        <div className={styles.header}>
+            <div classname={styles.headerTxt} >Price Details</div>
        <div className={styles.priceDetailsWrapper}>
        
             <div className={styles.rowItemContainer}>

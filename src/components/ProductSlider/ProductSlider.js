@@ -68,11 +68,14 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
   const { setCartItemData={},setCartItemCount={} } = useCartItems();
   const [ backgroundColors , setBackgroundColors] = useState(createBackgroundColors(totalRow));
   const [width, setWidth] = useState(0);
+  const [isArrowVisible, setIsArrowVisible] = useState(false);
   const handleResize = () => setWidth(window.innerWidth);
   useEffect(() => {
+    setWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
+  
 
   const onAddToCart = async(data) =>{
     try {
