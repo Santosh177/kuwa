@@ -32,7 +32,7 @@
         text-align: center;
         color: #FFFFFF;
         cursor: pointer;
-        margin-top: 16px;
+        margin-top: 28px;
     }
     .successMsg{
         font-weight: 500;
@@ -41,6 +41,14 @@
         width: 80%;
         margin: 0 auto;
         margin-top: 16px;
+    }
+    .errorMsg{
+        color:#CE4224;
+        font-weight: 500;
+        font-size: 12px;
+        text-align: left;
+        margin-top: -10px;
+        
     }
 }
 

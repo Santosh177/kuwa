@@ -154,7 +154,7 @@ export default  function Cart({cartData}) {
               }
             </div>
             <div className={styles.priceDetailsContainer}>
-              <div className={styles.headerTxt}>Price Details</div>
+              {/* <div className={styles.headerTxt}>Price Details</div> */}
               <div className={styles.priceInfo}>
                 <PriceDetailsInfo data={priceDetails} />
               </div>

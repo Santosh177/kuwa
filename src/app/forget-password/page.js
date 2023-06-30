@@ -39,9 +39,41 @@ const validateForm = (formData) => {
 export default function ForgetPassword() {
   const router = useRouter();
     const [ email , setEmail ] = useState("")
+    const [isEmailSent, setIsEmailSent] = useState(false);
     // const [text,setText] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMsg,setErrorMsg] = useState("");
+    const [successMsg,setSuccessMsg] = useState("")
     const onInputChange =(e)=>{
         setEmail(e.target.value)
+    }
+    const sendEmail=async()=>{
+      setIsLoading(true);
+      try {
+        const res = await fetch('/api/get-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }), 
+        });
+        setIsLoading(false);
+        const response = await res.json();
+        console.log("hbhjjs",response)
+        if(response.statusCode === 200){
+          setIsEmailSent(true);
+          setSuccessMsg('A link has been sent to your mail ID. If not found check spam folder.')
+          setErrorMsg("")
+        }
+        else{
+          setErrorMsg('please enter a valid Email')
+          setSuccessMsg("")
+        }
+        
+      }catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
     }
 
       return (
@@ -53,8 +85,11 @@ export default function ForgetPassword() {
             <div className={styles.emailInputBoxContainer}>
                 <Input lassName={styles.inputBox} type='email'  value={email || ""} placeHolder='Email ID (ex. abc@gmail.com)' onInputChange={(e)=>onInputChange(e)}  />
             </div>
-            <div className={styles.successMsg}>A link has been sent to your mail ID. If not found check spam folder.</div>
-            <div className={styles.forgetPasswordBtn}  onClick={()=>router.push('/reset-password')}>Send link</div>
+            <div className={styles.successMsg}>{successMsg}</div>
+            <div className={styles.errorMsg}>{errorMsg}</div>
+            <div className={styles.forgetPasswordBtn}  onClick={sendEmail}>
+            {isLoading ? <Loader isShow={isLoading}  /> : ''}
+            Send link </div>
          </div>
         </>
         
