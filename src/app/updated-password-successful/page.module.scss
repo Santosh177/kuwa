@@ -38,10 +38,10 @@
  }
  
  @media (min-width:990px){
-     .paymentSuceesContainer{
+     .passwordSuceesContainer{
          width: 22%;
-         max-width: 343px;
-         img{
+         max-width: 370px;
+         .img{
              width: 128px;
              height: 128px;
              margin: 0 auto;
@@ -54,18 +54,11 @@
  }
 
  @media (max-width:990px){
-    .paymentSuceesContainer{
-        width:50%;
-        // max-width: 200px;
-        margin-top: 20px;
-        .txt{
-            width:125px;
-        }
-        .subTxt{
-
-        }
-        .btn{
-
-        }
+    .passwordSuceesContainer{
+        width:50% ;
+    //    margin: 0 auto;
+        max-width: 300px;
+        margin-top: 200px;
+       
     }
  }
