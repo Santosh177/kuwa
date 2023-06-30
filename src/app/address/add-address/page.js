@@ -15,7 +15,7 @@ export default function AddAddress() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isLogin=false} = useAuth();
-  // const refererPath = searchParams.get('referer');
+  const refererPath = searchParams.get('referer');
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [ addressData, setAddressData] = useState({});
   const [ getFormValues , setGetFormValues] = useState(0);
