@@ -139,7 +139,7 @@ const onProceed = () => {
               
             </div>
             <div className={styles.priceDetails}>
-              <div className={styles.headerTxt}>Price Details</div>
+              {/* <div className={styles.headerTxt}>Price Details</div> */}
               <div className={styles.priceDetailsContainer}>
                 <PriceDetails data={priceDetails} />
               </div>

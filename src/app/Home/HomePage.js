@@ -7,7 +7,7 @@ import BrandMustTry from './BrandMustTry/BrandMustTry';
 import SecondaryBanner from './SecondaryBanner/SecondaryBanner';
 import ProductSlider from '@/components/ProductSlider/ProductSlider';
 import MedicalExpert from './MedicalExpert/MedicalExpert';
-// import CustomerSay from './CustomerSay/CustomerSay';
+import CustomerSay from './CustomerSay/CustomerSay';
 import Footer from '@/components/Footer/Footer';
 import Loader from '@/components/Loader/Loader';
 import VideoBanner from './VideoBanner/VideoBanner';
@@ -50,7 +50,7 @@ export default async function Home(homePageData) {
                         })
                     }
                     <MedicalExpert />
-                    {/* <CustomerSay /> */}
+                    <CustomerSay />
                     <Footer />
                     <Loader />
                     </div>
