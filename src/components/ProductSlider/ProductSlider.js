@@ -134,7 +134,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
               draggable
               gap={20}
               exactWidth={true}
-              itemWidth={(width>990)?204:307}
+              itemWidth={(width>990)?204:138}
               iconLeft={
                 <img style={{width:48,height:48}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/left_arrow.png' alt='left-icon'/>
               }
