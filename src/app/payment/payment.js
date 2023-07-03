@@ -94,7 +94,7 @@ const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , on
                   <CouponCode />
                 </div>
                 <div className={styles.priceDetails}>
-                <div className={styles.headerTxt}>Price Details</div>
+                {/* <div className={styles.headerTxt}>Price Details</div> */}
                 <PriceDetails data={priceDetails} />
               </div>
               </div>
