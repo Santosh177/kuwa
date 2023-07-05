@@ -251,7 +251,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 const FilterSection = ({ setSelectedOptionsHead, responseData, slectedFilter, setSelectedFilter }) => {
     return (
         <div className={style.filterOuterContainer}>
-            <div className={style.isDekstop}>
+            <div className={style.isDekstop} style={{marginTop:'60px'}}>
                 <FilterSectionDesktop responseData={responseData} setSelectedOptionsHead={setSelectedOptionsHead}  />
             </div>
             <div className={style.isMobile}>

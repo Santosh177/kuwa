@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 import ProductImageSection from "./subComponents/productImageSection";
 import ProductPricingSection from "./subComponents/productPricingSection";
 import { useRouter } from 'next/navigation';
+import {getCartItem} from '@/services';
 import style from "./ProductDetail.module.scss"
 import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
+import Loader from '@/components/Loader/Loader';
 const ProductDeatil = ({ productData = {} }) => {
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
@@ -15,10 +17,13 @@ const ProductDeatil = ({ productData = {} }) => {
     const [finalPrice, setFinalPrice] = useState(0);
     const [discount, setDiscount] = useState(0);
     const [allImages, setAllImages] = useState([]);
-    const [haveAdress, setHaveAddress] = useState(false)
+    const [haveAdress, setHaveAddress] = useState(false);
+    const [ isAddedToCart , setIsAddedToCart ] = useState(false);
+    const [ isLoading , setIsLoading] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
+        setIsLoading(true)
         const { productPriceAmount = 0, productPriceType = "", productPriceSpecialAmount = 0 } = price || {};
         setFinalPrice(productPriceSpecialAmount);
         setRetailPrice(productPriceAmount);
@@ -80,14 +85,57 @@ const ProductDeatil = ({ productData = {} }) => {
         }
     }
     useEffect(() => {
-        getAddress()
+        getAddress();
+        getCartItems();
     }, [])
+
+    useEffect(()=>{
+        console.log("noOfProductnoOfProduct",noOfProduct)
+        // setIsAddedToCart(false)
+    },[noOfProduct])
     const handelAddToCart = async () => {
+        setIsLoading(true)
         const response = await addToCart(payload);
         if (response === 200) {
-            setNoOfProduct(1);
-            router.push('/cart')
+            // setNoOfProduct(1);
+           const data = await getCartItems();
+           console.log("datadata",data)
+           
+            // router.push('/cart')
+            // window.location.href = "/cart"
         }
+    }
+
+
+    const getCartItems = async() => {
+  
+        const getCartItems = await getCartItem();
+        setIsLoading(false)
+        const cartItemsData = getCartItems && getCartItems['products'] || [];
+        let cartItems = cartItemsData.map((data)=> {
+            if(data.id == id){
+                return data;
+            }
+        })
+        setIsLoading(false)
+
+        console.log("cartItems",cartItems)
+        if(cartItems && cartItems.length > 0){
+            setNoOfProduct(cartItems[0].quantity);
+            setIsAddedToCart(cartItems.length>0)
+            // return ({isItemAddedToCart: cartItems.length>0 , data:cartItems[0]})
+        }else{
+            
+        }
+    }
+
+    const onChangeItemQty = () => {
+        setIsAddedToCart(false)
+    }
+
+
+    const handelViewCart = () => {
+        window.location.href = "/cart";
     }
     const handelBuyNow = async () => {
         const response = await addToCart(payload)
@@ -124,6 +172,7 @@ const ProductDeatil = ({ productData = {} }) => {
         handelBuyNow: handelBuyNow,
         handelShareOption: handelShareOption,
         setNoOfProduct: setNoOfProduct,
+        handelViewCart: handelViewCart,
         noOfProduct: noOfProduct
     };
     const handelRoute = (type) => {
@@ -145,11 +194,12 @@ const ProductDeatil = ({ productData = {} }) => {
             </div>
             <div className={style.productPricingContainer}>
                 <ProductImageSection allImages={allImages} />
-                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} />
+                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangeItemQty} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>
                 <FrequntlyBoughtTogether currency={currency} productData={frequentlyBoughtTogether} />
             </div>}
+            <Loader isShow={isLoading} />
         </div>
     )
 }

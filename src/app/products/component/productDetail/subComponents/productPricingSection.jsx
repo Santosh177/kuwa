@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import styles from './ProductPricingSection.module.scss'
 import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
 import Varients from "./productVarients";
-const ProductPricingSection = ({ pricingSectionVariables }) => {
-    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 } = pricingSectionVariables;
+const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
+    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={}} = pricingSectionVariables;
     return (
         <div className={styles.pricingSectionContainer}>
             <div className={styles.title}>{title}</div>
@@ -15,13 +15,16 @@ const ProductPricingSection = ({ pricingSectionVariables }) => {
             <div className={styles.pricingConatiner}>
                 <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>
                 <div className={styles.incriment}>
-                    <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} />
+                    <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} />
                 </div>
             </div>
             {<div className={styles.packOf}>Pack of</div>}
-            <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} />
+            <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} onResetViewCartState={onResetViewCartState}/>
             <div className={styles.addToCartContainer}>
+               {
+                isAddedToCart?<div className={styles.addToCart} onClick={() => handelViewCart()} ><span>View Cart</span></div>:
                 <div className={styles.addToCart} onClick={() => handelAddToCart()} ><span>Add to Cart</span></div>
+               }
                 <div className={styles.buyNow} onClick={() => handelBuyNow()} ><span>Buy Now</span></div>
             </div>
             {/* <div className={styles.shareConatiner}>
