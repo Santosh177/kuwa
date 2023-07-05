@@ -27,6 +27,7 @@ export default function Login() {
     const [ errors, setErrors] = useState({});
     const [isLoading, setIsLoading]= useState(false)  
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [ loginFailureTxt , setLoginFailureTxt] = useState("");
 
     const togglePasswordVisibility = () => {
       setIsPasswordVisible(!isPasswordVisible);
@@ -37,6 +38,7 @@ export default function Login() {
       const validationErrors = validateForm({userEmail:userEmail,password:password });
       if (Object.keys(validationErrors).length === 0) {
         try {
+          setErrors(validationErrors);
           setIsLoading(true)
           const res = await fetch('/api/login', {
             method: 'POST',
@@ -49,9 +51,11 @@ export default function Login() {
             })
           })
           setIsLoading(false)
-          if (res.status === 200) {
-            window.location.href = '/'
-          } else {
+          const loginResp = await res.json();
+          if(loginResp && loginResp.status && loginResp.status === 'SUCCESS'){
+              window.location.href = '/'
+          }else {
+              setLoginFailureTxt('Wrong email or password. Try again or click Forgot password to reset it')
           }
         } catch (error) {
           console.error('An unexpected error happened occurred:', error)
@@ -66,7 +70,7 @@ export default function Login() {
         setUserEmail(e.target.value)
     }
     const onPasswordChange = (e) => {
-        setPassword(e.target.value)
+        setPassword(e.target.value);
     }
   
 
@@ -80,7 +84,7 @@ export default function Login() {
                   <input className={styles.inputBox} type='email' onChange={onEmailChange} value={userEmail} placeholder='Email ID (ex. abc@gmail.com)' />
                   {errors.userEmail && <span className={styles.errorMsg}>{errors.userEmail}</span>}
               </div>
-              <div>
+              <div className={styles.loginPasswordInput}>
                   <input className={styles.inputBox} type={isPasswordVisible ? 'text' : 'password'} onChange={onPasswordChange} value={password} placeholder='Password' 
                   />
                    <img
@@ -94,8 +98,10 @@ export default function Login() {
                 onClick={togglePasswordVisibility}
               />
                   {errors.password && <span className={styles.errorMsg}>{errors.password}</span>}
+                  <div className={styles.loginFailureTxt}>{loginFailureTxt}</div>
                   <div className={styles.forgetPassword} onClick={()=>router.push('/forget-password')}>Forgot Password ?</div>
               </div>
+             
               <div className={styles.loginBtn} onClick={onLogin}>Login</div>
           </div>
            

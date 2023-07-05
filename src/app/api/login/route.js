@@ -11,8 +11,17 @@ export async function POST(request,res) {
         },
         body:JSON.stringify(requestBody)
       });
-      const loginData = await loginResp.json();
 
-    setTokenCookie(res, loginData.token , loginData.id)
-    return NextResponse.json({status:"SUCCESS"})
+      
+      console.log("loginResploginResp",loginResp)
+      if(loginResp && loginResp.status && loginResp.status === 401){
+        return NextResponse.json({status:"FAILURE"})
+      }else{
+        const loginData = await loginResp.json();
+
+        console.log("loginDatata",loginData)
+        setTokenCookie(res, loginData.token , loginData.id)
+        return NextResponse.json({status:"SUCCESS"})
+      }
+     
 }
