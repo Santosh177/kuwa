@@ -20,6 +20,16 @@ export default  function Home(homePageData) {
     useEffect(() => {
         const elem = document.getElementById("homePage");
         elem.addEventListener('scroll', onScroll);
+        try {
+            const isCheckViewBanner = sessionStorage.getItem("isViewedBanner");
+            if(isCheckViewBanner){
+                const mainContainer = document.getElementById('main-container');
+                mainContainer.scrollIntoView()
+            }
+        } catch (error) {
+            
+        }
+        
     },[]);
 
     const onScroll = () => {
@@ -29,7 +39,8 @@ export default  function Home(homePageData) {
             if(yscroll < -60){
                 mainContainer.style.overflow = 'auto'
             }else{
-                mainContainer.style.overflow = 'hidden'
+                mainContainer.style.overflow = 'hidden';
+                sessionStorage.setItem('isViewedBanner',true)
             }
         } catch (error) {
             
