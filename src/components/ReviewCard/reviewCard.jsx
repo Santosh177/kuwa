@@ -28,7 +28,7 @@ const ReviewCard = ({item}) => {
                         <span>Verified Customer</span>
                     </div>
                 </div>
-                <div className={style.like}><img src="https://d25uasl7utydze.cloudfront.net/kuwa/heart.svg" alt="heart" /><span>Like ({numberOfHeart})</span></div>
+                {/* <div className={style.like}><img src="https://d25uasl7utydze.cloudfront.net/kuwa/heart.svg" alt="heart" /><span>Like ({numberOfHeart})</span></div> */}
             </div>
         </div>
     )
