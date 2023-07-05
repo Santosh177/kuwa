@@ -36,7 +36,7 @@ export default  function Home(homePageData) {
         try {
             const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
             const mainContainer = document.getElementById('main-container');
-            if(yscroll < -60){
+            if(yscroll < -70){
                 mainContainer.style.overflow = 'auto'
             }else{
                 mainContainer.style.overflow = 'hidden';
