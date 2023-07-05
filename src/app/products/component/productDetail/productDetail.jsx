@@ -120,8 +120,8 @@ const ProductDeatil = ({ productData = {} }) => {
         setIsLoading(false)
 
         console.log("cartItems",cartItems)
-        if(cartItems && cartItems.length > 0){
-            setNoOfProduct(cartItems[0].quantity);
+        if(cartItems && cartItems.length > 0 && cartItems[0]){
+            setNoOfProduct(cartItems[0] && cartItems[0].quantity);
             setIsAddedToCart(cartItems.length>0)
             // return ({isItemAddedToCart: cartItems.length>0 , data:cartItems[0]})
         }else{
