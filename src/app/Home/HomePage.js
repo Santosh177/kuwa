@@ -1,3 +1,4 @@
+'use client';
 import Banner from './Banner/Banner';
 import Header from '@/components/Header/Header';
 import AssuredInfo from './AssuredInfo/AssuredInfo';
@@ -12,28 +13,43 @@ import Loader from '@/components/Loader/Loader';
 import VideoBanner from './VideoBanner/VideoBanner';
 import styles from './home-page.module.scss';
 import Carousel from './Carousel/Carousel';
+import { useEffect, useState } from 'react';
 
-export default async function Home(homePageData) {
-    console.log("homePageData",homePageData)
+export default  function Home(homePageData) {
     const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[],bestSellings=[],bannerImage={},primaryBanner=[],couponBanner={}} = homePageData.homePageData || {};
-//   console.log("coupon banner",couponBanner)
+    useEffect(() => {
+        const elem = document.getElementById("homePage");
+        elem.addEventListener('scroll', onScroll);
+    },[]);
 
-    console.log("Bannerimage",bannerImage)
+    const onScroll = () => {
+        try {
+            const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
+            const mainContainer = document.getElementById('main-container');
+            if(yscroll < -60){
+                mainContainer.style.overflow = 'auto'
+            }else{
+                mainContainer.style.overflow = 'hidden'
+            }
+        } catch (error) {
+            
+        }
+    }
 
     return(
 
         <div className={styles.homePageWrapper}>
-            <div className={styles.homePageContainer}>
+            <div className={styles.homePageContainer} id="homePage">
                 <div className={styles.mainBanner}>
                    {bannerImage.type === "VIDEO" ?
                     (<VideoBanner videoImage={bannerImage.mobileVideo} videoDesktopImage={bannerImage.desktopVideo} videoRedirection={bannerImage.videoRedirectionLink} />
-      ) : (
-        <Banner mobileImage={bannerImage.mobileImage} desktopImage={bannerImage.desktopImage} imageRedirection={bannerImage.imageRedirectionLink} />
-      )}
+                    ) : (
+                        <Banner mobileImage={bannerImage.mobileImage} desktopImage={bannerImage.desktopImage} imageRedirection={bannerImage.imageRedirectionLink} />
+                    )}
                 
-                    <img className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe'/>
+                    <img id="scoll-image" className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe'/>
                 </div>
-                <div className={styles.mainContainer}>
+                <div className={styles.mainContainer} id="main-container">
                    
                     <Header couponBanner={couponBanner} />
                     <Carousel data={primaryBanner}/>

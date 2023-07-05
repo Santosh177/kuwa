@@ -20,7 +20,6 @@ export default function Banner({mobileImage,desktopImage,imageRedirection}) {
         <img src={desktopImage} alt="top-banner"/>
       </div>
      </div>
-    
     </>
 
   )

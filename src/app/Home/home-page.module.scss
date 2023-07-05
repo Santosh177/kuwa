@@ -1,9 +1,10 @@
 .homePageContainer {
   scroll-snap-type:  y mandatory;
-  scroll-snap-points-y: repeat(100vh);
+  scroll-snap-align: start;
   // flex-basis: 50%;
   height: 100vh;
   overflow-y: scroll;
+  scroll-behavior: auto;
 }
 
 .mainContainer{
@@ -11,7 +12,7 @@
   // margin-top: -5px;
   height: 100vh;
   position: relative;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   margin-top: -1px;
 
 }
