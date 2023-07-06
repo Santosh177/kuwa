@@ -46,6 +46,16 @@ const ProductDeatil = ({ productData = {} }) => {
             // if (!allImages.includes(image)) {
                 setAllImages([image]);
             // }
+        }else{
+            const { productPriceAmount = 0, productPriceType = "", productPriceSpecialAmount = 0 } = price || {};
+            setFinalPrice(productPriceSpecialAmount);
+            setRetailPrice(productPriceAmount);
+            if (productPriceAmount > productPriceSpecialAmount) {
+                setDiscount(productPriceAmount - productPriceSpecialAmount);
+            }
+            let bulkImage = [];
+            images.map((data)=> bulkImage.push(data.imageUrl))
+            setAllImages(bulkImage)
         }
     }, [selectedVarients])
     const payload = {

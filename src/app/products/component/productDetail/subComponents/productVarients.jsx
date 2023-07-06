@@ -10,10 +10,13 @@ const Varients = ({ setselectedVarients, variants,selectedVarients,currency, onR
                 const {countryId='',discount='',finalPrice='',retailPrice='',variantId=NaN} = pricings[0] || {}
                 return (
                     <div className={[style.VarientBox, ((selectedVarients === variantId)?  style.variantsSelcted : "")].join(" ")} onClick={()=>
-                    
                     {
                         onResetViewCartState(true)
-                        setselectedVarients(variantId)
+                        if(selectedVarients === variantId){
+                            setselectedVarients("")
+                        }else{
+                            setselectedVarients(variantId)
+                        }
                     }}>
                         <div>
                             <div className={style.quantity}>{name}</div>
