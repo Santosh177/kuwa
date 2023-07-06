@@ -30,7 +30,9 @@ const ProductDeatil = ({ productData = {} }) => {
         if (productPriceAmount > productPriceSpecialAmount) {
             setDiscount(productPriceAmount - productPriceSpecialAmount);
         }
-        setAllImages(images)
+        let bulkImage = [];
+        images.map((data)=> bulkImage.push(data.imageUrl))
+        setAllImages(bulkImage)
     }, [])
     useEffect(() => {
         if (selectedVarients) {
@@ -41,9 +43,9 @@ const ProductDeatil = ({ productData = {} }) => {
             setFinalPrice(finalPrice);
             setRetailPrice(retailPrice);
             setDiscount(discount);
-            if (!allImages.includes(image)) {
-                setAllImages([image, ...allImages]);
-            }
+            // if (!allImages.includes(image)) {
+                setAllImages([image]);
+            // }
         }
     }, [selectedVarients])
     const payload = {
