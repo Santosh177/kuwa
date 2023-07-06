@@ -57,7 +57,7 @@ const ProductImageSection = ({ allImages }) => {
                             return <>
                                 <div className={styles.imageSection}>
                                     <div style={{display:"flex",justifyContent:"center",alignItems : "center"}} className={styles.imageContainer}>
-                                        <img style={{maxWidth : "278px",width:"100%"}} src={'https://dcngmd8umaj1u.cloudfront.net/super-vitaminn-B_1684936837824.jpg'} alt={"productImage"} />
+                                        <img style={{maxWidth : "278px",width:"100%"}} src={item} alt={"productImage"} />
                                     </div>
                                 </div>
                             </>
