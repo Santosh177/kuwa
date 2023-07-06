@@ -1,11 +1,15 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./image-slider.scss"
 
 const ImageSlider = ({ images }) => {
     const [current, setCurrent] = useState(0);
     const length = images.length;
 
+
+    useEffect(()=>{
+        setCurrent(0)
+    },[images])
     const nextSlide = () => {
         setCurrent(current === length - 1 ? 0 : current + 1);
     };
