@@ -63,11 +63,11 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
             {errors.mobNumber && <span className={styles.errorMsg}>{errors.mobNumber}</span>}
             </div>
             <div>
-                <Input lassName={styles.inputBox} type='email'  value={formData.email || ""} placeHolder='Email ID (ex. abc@gmail.com)' onInputChange={(e)=>onInputChange(e,'email')}  />
+                <Input autoComplete='off' lassName={styles.inputBox} type='email'  value={formData.email || ""} placeHolder='Email ID (ex. abc@gmail.com)' onInputChange={(e)=>onInputChange(e,'email')}  />
                 {errors.email && <span className={styles.errorMsg}>{errors.email}</span>}
             </div>
             <div>
-                <Input className={styles.inputBox}  type='password' value={formData.password || ""} placeHolder='Set password' onInputChange={(e)=>onInputChange(e,'password')}
+                <Input autoComplete='off' className={styles.inputBox}  type='password' value={formData.password || ""} placeHolder='Set password' onInputChange={(e)=>onInputChange(e,'password')}
                 icon={{
                   eyeClosed: 'https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/eye_closed+(1).png',
                   eyeOpen: 'https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/eye_open.png'

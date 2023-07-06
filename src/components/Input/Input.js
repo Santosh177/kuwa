@@ -26,7 +26,7 @@ const Input = ({onInputChange={},type="text",fieldName="",value="",placeHolder="
     return(
         <div className={styles.inputWrapper} style={...style}>
             <div className={styles.inputContainer}>
-                <input  type={type === 'password' && showPassword ? 'text' : type} id={fieldName} name={fieldName} autoComplete='off'  value={value} onChange={(e)=>onInputChange(e,fieldName)}  disabled={isDisabled}/>
+                <input autoComplete='off'  type={type === 'password' && showPassword ? 'text' : type} id={fieldName} name={fieldName} autoComplete='off'  value={value} onChange={(e)=>onInputChange(e,fieldName)}  disabled={isDisabled}/>
                 <label className={styles.placeholderText}>
                     <div className={styles.text}>{placeHolder}</div>
                 </label>

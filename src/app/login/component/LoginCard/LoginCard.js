@@ -81,11 +81,11 @@ export default function Login() {
           <div className={styles.descTxt}>Create or login to enjoy exclusive benefits.</div>
           <div className={styles.loginInputContainer}>
               <div>
-                  <input className={styles.inputBox} type='email' onChange={onEmailChange} value={userEmail} placeholder='Email ID (ex. abc@gmail.com)' />
+                  <input autocomplete="off" autoComplete='off' className={styles.inputBox} type='email' onChange={onEmailChange} value={userEmail} placeholder='Email ID (ex. abc@gmail.com)' />
                   {errors.userEmail && <span className={styles.errorMsg}>{errors.userEmail}</span>}
               </div>
               <div className={styles.loginPasswordInput}>
-                  <input className={styles.inputBox} type={isPasswordVisible ? 'text' : 'password'} onChange={onPasswordChange} value={password} placeholder='Password' 
+                  <input autocomplete="off" autoComplete='off' className={styles.inputBox} type={isPasswordVisible ? 'text' : 'password'} onChange={onPasswordChange} value={password} placeholder='Password' 
                   />
                    <img
                 className={styles.eyeIcon}
