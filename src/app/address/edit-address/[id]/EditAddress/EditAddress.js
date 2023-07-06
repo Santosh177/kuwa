@@ -5,6 +5,7 @@ import { useAddressData } from "@/context/address";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import AddressForm from "../../../add-address/address-form/address-form";
 import SubmitBtn from "../../../component/SubmitBtn/SubmitBtn";
+import styles from './edit-address.module.scss';
 
 
 export default function AddAddress() {
@@ -112,7 +113,7 @@ export default function AddAddress() {
   
       return (
         <>
-          <div > 
+          <div className={styles.editAddressWrapper}> 
               <AddressForm getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={(formData)=>onFormData(formData)} formData={addressData} isEdit={true}/>
               <SubmitBtn  btnName="Update Address" onClick={onUpdateAddress}/>
           </div>
