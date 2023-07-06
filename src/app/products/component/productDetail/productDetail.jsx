@@ -135,6 +135,11 @@ const ProductDeatil = ({ productData = {} }) => {
         if(cartItems && cartItems.length > 0 && cartItems[0]){
             setNoOfProduct(cartItems[0] && cartItems[0].quantity);
             setIsAddedToCart(cartItems.length>0)
+            if(cartItems && cartItems[0]['variants'] && cartItems[0]['variants']['variants']){
+                const variantId = cartItems && cartItems[0]['variants'] && cartItems[0]['variants']['variants']['id'];
+                setselectedVarients(variantId)
+
+            }
             // return ({isItemAddedToCart: cartItems.length>0 , data:cartItems[0]})
         }else{
             
@@ -145,6 +150,10 @@ const ProductDeatil = ({ productData = {} }) => {
         setIsAddedToCart(false)
     }
 
+    const onChangePackOf = () =>{
+        setIsAddedToCart(false)
+        setNoOfProduct(1)
+    }
 
     const handelViewCart = () => {
         window.location.href = "/cart";
@@ -206,7 +215,7 @@ const ProductDeatil = ({ productData = {} }) => {
             </div>
             <div className={style.productPricingContainer}>
                 <ProductImageSection allImages={allImages} />
-                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangeItemQty} />
+                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>
                 <FrequntlyBoughtTogether currency={currency} productData={frequentlyBoughtTogether} />
