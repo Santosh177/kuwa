@@ -3,15 +3,9 @@ import React from "react";
 import style from "./ReviewCard.module.scss"
 
 const ReviewCard = ({item}) => {
-    const getRandomInteger = (min, max) => {
-        var randomDecimal = Math.random();
-        var randomInteger = Math.floor(randomDecimal * (max - min) + min);
-        return randomInteger;
-    }
-    const { reviewBody = "", headLine = "", customerName = "Ralph Edwards", id = "" } = item || {}
-    const randomNum =getRandomInteger(2,5)
-    const numberOfStar = new Array(randomNum).fill("");
-    const numberOfHeart =getRandomInteger(5,25);
+  
+    const { reviewBody = "", headLine = "", customerName = "", id = "" } = item || {}
+    const numberOfStar = [];
     return (
         <div className={style.reviewCardConatiner}>
             <div className={style.reviewStarConatiner}>

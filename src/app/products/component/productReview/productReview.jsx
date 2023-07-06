@@ -24,7 +24,8 @@ const ProductReview = ({ productData }) => {
     const handelOnCLick = () => {
         setCurrentQueue(splitAndPush(reviews, currentQueue))
     }
-    const isShowMore = reviews && reviews.length > 3;
+    const totalReviews  = productData && productData.reviews && productData.reviews.length || 0;
+    const isShowMore = (reviews && reviews.length > 3 && currentQueue.length < totalReviews );
     if (currentQueue && currentQueue.length > 0) {
         return (
             <div className={style.reviewsContainerOuter}>
