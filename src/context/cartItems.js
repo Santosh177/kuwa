@@ -19,11 +19,19 @@ export const CartItemProvider = ({ children, countryCode }) => {
       getCartItems();
   },[])
 
+  useEffect(()=>{
+    if(cartItemsData){
+      if(cartItemsData && cartItemsData.quantity){
+        setCartItemCount(cartItemsData.quantity)
+      }
+    }
+  },[cartItemsData])
+
   const getCartItems = async() => {
     try {
       const getCartItems = await getCartItem();
       const cartItems  = getCartItems && getCartItems['products'] || [];
-      setCartItemData(cartItems)
+      setCartItemData(getCartItems)
       if(getCartItems && getCartItems.quantity){
         setCartItemCount(getCartItems.quantity)
       }

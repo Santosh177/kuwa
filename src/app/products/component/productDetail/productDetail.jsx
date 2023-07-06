@@ -8,9 +8,11 @@ import {getCartItem} from '@/services';
 import style from "./ProductDetail.module.scss"
 import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
 import Loader from '@/components/Loader/Loader';
+import { useCartItems } from '@/context/cartItems';
 const ProductDeatil = ({ productData = {} }) => {
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
+    const { setCartItemData={},setCartItemCount={} } = useCartItems();
     const [selectedVarients, setselectedVarients] = useState("");
     const [selctedVrientsData, setSelectedVrientsData] = useState({});
     const [retailPrice, setRetailPrice] = useState(0);
@@ -124,6 +126,7 @@ const ProductDeatil = ({ productData = {} }) => {
         const getCartItems = await getCartItem();
         setIsLoading(false)
         const cartItemsData = getCartItems && getCartItems['products'] || [];
+        setCartItemData(getCartItems)
         let cartItems = cartItemsData.map((data)=> {
             if(data.id == id){
                 return data;
