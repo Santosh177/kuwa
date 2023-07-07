@@ -1,20 +1,20 @@
 import styles from './searchCard.module.scss';
+import { useRouter,usePathname } from 'next/navigation';
 
 
 
-
-export default function SearchCard() {
+export default function SearchCard({searchData={}}) {
+    const router = useRouter();
+    const { productImage="", productName="", id="" } = searchData || {};
 
     return (
-        <div className={styles.searchCard}>
-            <div className={styles.productContainer}>
-                <div className={styles.productImage}>
-                    <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png'  alt='product-iamge'/>
+        <div className={styles.searchCard} onClick={()=>router.push(`/products/${id}`)} id="search-container">
+            <div className={styles.productContainer} id="search-container">
+                <div className={styles.productImage} id="search-container">
+                    <img src={productImage}  alt='product-iamge' id="search-container"/>
                 </div>
-                <div className={styles.productName}>Korean Marine Collagen Peptides, 200 Gms</div>
-
+                <div className={styles.productName} id="search-container">{productName}</div>
             </div>
-          
         </div>
     )
 }

@@ -13,32 +13,19 @@ import styles from './header.module.scss';
 import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
 
 
-const SearchList = () =>{
+const SearchList = ({searchData=[]}) =>{
+
+    const searchDataCount = searchData && searchData.length || 0;
     return(
         <div className={styles.searchListWrapper}>
-                <div className={styles.resultFound}>15 Results found</div>
-                {/* <div> */}
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-
-                {/* </div> */}
-       
+                <div className={styles.resultFound}>{searchDataCount} Results found</div>
+                    {
+                        searchData.map((data, index)=>{
+                            return(
+                                <SearchCard searchData = {data}/>
+                            )
+                        })
+                    }
             </div>
     )
 }
@@ -53,7 +40,9 @@ const Header = ({couponBanner}) => {
     const {selectedCountry={},setSelectedCountry={}} = useCountry();
     const [isLoading , setIsLoading] = useState(false);
     const [isShowCountry, setIsShowCountry] = useState(false);
-    const [searchTxt, setSearchTxt] = useState("");
+    const [ searchTxt, setSearchTxt] = useState("");
+    const [isShowSearchList , setIsShowSearchList] = useState(false)
+    const [ searchData , setSearchData] = useState([])
     const [ sideMenuData , setSideMenuData] = useState([]);
     const inputBoxRef = useRef(null);
 
@@ -101,8 +90,9 @@ const Header = ({couponBanner}) => {
  
 
     const handleClickOutside = (event) =>{
-        if (inputBoxRef.current && !inputBoxRef.current.contains(event.target)) {
+        if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && event.target.id !='search-container') {
             setSearchTxt("")
+            setIsShowSearchList(false)
         }
     }
     useEffect(() => {
@@ -138,6 +128,35 @@ const Header = ({couponBanner}) => {
         setIsShowCountry(false)
     }
 
+    const onSearch = async(searchValue) => {
+        setSearchTxt(searchValue);
+        setIsShowSearchList(true);
+        console.log("customHeadercustomHeader",selectedCountry)
+        const countryId = selectedCountry && selectedCountry.id || "";
+        const searchApiResp = await fetch(`https://api.kuwa.bevaleo.dev/module/search/product/?key=${searchValue}&country=${countryId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          })
+        const searchApiData = await searchApiResp.json();
+        let searchData = []
+        if(searchApiData && searchApiData.length > 0 ){
+            searchApiData.map((data,index)=>{
+                const productData = {
+                    productImage : data.productImage && data.productImage.productImageUrl || "",
+                    productName: data.productDescription && data.productDescription.name || "",
+                    id: data.id || ""
+                }
+                searchData.push(productData);
+                setSearchData(searchData)
+            })
+        }else{
+            searchData.push([])
+            setSearchData([])
+        }
+    }
+
     return(
         <>
         
@@ -166,10 +185,11 @@ const Header = ({couponBanner}) => {
                     </div>
                     <div>
                     <div className={styles.searchInputWrapper}  >
-                        <input ref={inputBoxRef} className={styles.searchInput} style={(searchTxt)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchTxt} onChange={(e)=>setSearchTxt(e.target.value)} placeholder='Search by product name' type='text' />
+                        <input ref={inputBoxRef} className={styles.searchInput} style={(searchTxt)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchTxt} onChange={(e)=>
+                            onSearch(e.target.value)} placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
-                    {searchTxt && <SearchList />}
+                    {(searchTxt && isShowSearchList) && <SearchList searchData={searchData} />}
                     </div>
                    
                    
