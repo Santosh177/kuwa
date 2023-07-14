@@ -35,7 +35,7 @@ export const createPayloadForCartItems = async(cartData) => {
                 "itemType": "Supplement",
                 "price": data.finalPrice || "",
                 "orderType": "one-time",
-                "IsVariants": true,
+                "isVariant": true,
                 "variantId":data.variants.variants.id,
                 "subscriptionDetail": null
             })
@@ -47,7 +47,7 @@ export const createPayloadForCartItems = async(cartData) => {
               "itemType": "Supplement",
               "price": data.finalPrice || "",
               "orderType": "one-time",
-              "IsVariants": false,
+              "isVariant": false,
               "subscriptionDetail": null
           })
           }
