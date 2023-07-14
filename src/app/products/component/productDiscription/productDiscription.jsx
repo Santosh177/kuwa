@@ -27,7 +27,7 @@ const ProductDiscription = ({ productData}) => {
     return (
         <div className={style.productDiscriptionContainer}>
             <div className={style.tabSectionContainer}>
-                <div className={[style.tabs,(selectedTab === "discription" && style.bottomBorder)].join(" ")} onClick={() => handelOnclick("discription")}>Description</div>
+                <div className={[style.tabs,(selectedTab === "discription" && style.bottomBorder)].join(" ") } onClick={() => handelOnclick("discription")}>Description</div>
                 <div className={[style.tabs,(selectedTab === "ingridents" && style.bottomBorder)].join(" ")} onClick={() => handelOnclick("ingridents")} >Ingredients & Dosage</div>
                 <div className={[style.tabs,(selectedTab === "benfits" && style.bottomBorder)].join(" ")} onClick={() => handelOnclick("benfits")} >Benefits</div>
             </div>

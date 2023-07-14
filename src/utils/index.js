@@ -28,14 +28,29 @@ export const createPayloadForCartItems = async(cartData) => {
     
       if(cartData && cartData.length > 0){
         cartData.map((data,index)=>{
+          if(data.variants && data.variants.variants.id){
             cartItems.push({
                 "quantity": data.quantity || 1,
                 "itemId": data.id || "",
                 "itemType": "Supplement",
                 "price": data.finalPrice || "",
                 "orderType": "one-time",
+                "IsVariants": true,
+                "variantId":data.variants.variants.id,
                 "subscriptionDetail": null
             })
+          }
+          else{
+            cartItems.push({
+              "quantity": data.quantity || 1,
+              "itemId": data.id || "",
+              "itemType": "Supplement",
+              "price": data.finalPrice || "",
+              "orderType": "one-time",
+              "IsVariants": false,
+              "subscriptionDetail": null
+          })
+          }
         })
       }
       return cartItems; 
@@ -89,7 +104,11 @@ export const createCouponPayload = async(cartItems) => {
   if(cartItems && cartItems.length > 0){
      cartItems.map((item,index)=>{
       console.log("itemitem",item)
-        supplements.push({"id":item.id,"quantity":item.quantity})
+      if(item.variants && item.variants.variants.id){
+      supplements.push({"id":item.id,"quantity":item.quantity ,"isVariant":true,"variantId":item.variants.variants.id})
+      }
+      else
+      supplements.push({"id":item.id,"quantity":item.quantity , "isVariant":false})
      })
   }
   return supplements; 

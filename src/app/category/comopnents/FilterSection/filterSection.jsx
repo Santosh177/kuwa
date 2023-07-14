@@ -42,6 +42,15 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData }) => {
             addQuryPrams("category",[...selectedOptions, option])
         }
     }
+    const onClickSort = (option) =>{
+        if (selectedSingle === option) {
+            setSelectedSingle("");
+            addQuryPrams("sort", "");
+          } else {
+            setSelectedSingle(option);
+            addQuryPrams("sort", option);
+          }
+    }
     useEffect(()=>{
         if(selectedSingle){
             addQuryPrams("sort",selectedSingle)
@@ -72,7 +81,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData }) => {
                             {options.map((ele) => {
                                 const image = ele === selectedSingle ? checkIamge : uncheckImage;
                                 return (
-                                    <div className={style.optionsTxt} onClick={() => setSelectedSingle(ele)}>
+                                    <div className={style.optionsTxt} onClick={() => onClickSort(ele)}>
                                         <div className={style.tickBox}><img src={image} alt="check box" /></div>
                                         <div className={style.elements}>{ele}</div>
                                     </div>

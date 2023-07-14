@@ -27,8 +27,7 @@ export default function CouponCode() {
      const {cartItems=[], setCouponCodeData , couponCodeData} = usePaymentPageData();
      const [couponCode , setCouponCode] = useState("");
      const [isLoading , setIsLoading] = useState(false);
-
-
+    
      const onCouponApply = async() => {
       if(!(Object.keys(couponCodeData).length>0) || couponCodeData.discount ==0 ){
         setIsLoading(true)
