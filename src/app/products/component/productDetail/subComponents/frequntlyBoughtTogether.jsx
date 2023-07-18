@@ -4,12 +4,14 @@ import style from "./FrequntlyBoughtTogether.module.scss"
 import { useRouter } from 'next/navigation';
 const rectangularUnCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/Group%2041782%20(1).svg"
 const rectangularCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/RectangularSelcted.svg";
+import Loader from "@/components/Loader/Loader";
 
 const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
     const [slectedId, setSelectedId] = useState([]);
     const [idQunatity, setIdQunatity] = useState({});
     const [totalPrice, setTotalPrice] = useState(0);
     const [data,setData] = useState([]);
+    const [isLoading, setLoading] = useState(false);
     const router = useRouter();
     useEffect(()=>{
         let suggestedSupplemnts= []
@@ -97,6 +99,8 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
         return value;
     }
     const addToCartAPI = async (payload) => {
+        setLoading(true);
+        console.log("payload",payload)
         try {
             const res = await fetch('/api/add-to-cart-multi', {
                 method: 'POST',
@@ -106,11 +110,13 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
                 body: JSON.stringify(payload)
             })
             if (res.status === 200) {
+                setLoading(false);
                 return res.status
             } else {
                 throw new Error(await res.text())
             }
         } catch (error) {
+            setLoading(false)
             console.error('An unexpected error happened occurred:', error)
             setErrorMsg(error.message)
         }
@@ -138,9 +144,9 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
             slectedId.map((item)=>{
                 const qutanity = getqunatity(idQunatity,item.id);
                 if(qutanity && qutanity>1){
-                    payload.push({id : item.id,quantity:qutanity})
+                    payload.push({product : item.id,quantity:qutanity})
                 }else{
-                    payload.push(item)
+                    payload.push({product : item.id,quantity:item.quantity})
                 }
             })
             const response = await addToCartAPI(payload);
@@ -193,6 +199,7 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
                     <div className={style.totalPrice} ><span className={style.txt}>Total price :</span><span className={style.price} >{currency + " "+totalPrice}</span></div>
                     <div onClick={()=>addToCart()} className={[style.buttonAddToCart, (totalPrice == 0.00 ? style.opacityLow : "")].join(" ")} ><span>Add to Cart</span></div>
                 </div>
+                <Loader isShow={isLoading} />
             </div>
         )
     }else{
