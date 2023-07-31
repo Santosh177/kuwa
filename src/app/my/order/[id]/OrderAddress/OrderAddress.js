@@ -19,18 +19,28 @@ const AddressInfoCard = ({data}) => {
 
 export default function OrderAddress({address}) {
     const {shippingAddress={}, billingAddress={} } = address || {}
-    const shippingAddressData = {
-        headerTitle:"Shipping Address",
-        userName:shippingAddress['firstName'],
-        address: shippingAddress['address'] +" "+ shippingAddress['apartment'] + " " + shippingAddress['country'],
-        phoneNo:shippingAddress['mobNumber']
+    let  shippingAddressData= {};
+    let billingAddressData= {};
+    if(shippingAddress && Object.keys(shippingAddress).length > 0){
+        shippingAddressData = {
+            headerTitle:"Shipping Address",
+            userName:shippingAddress['firstName'] || "",
+            address: shippingAddress['address'] +" "+ shippingAddress['apartment'] + " " + shippingAddress['country'] || "",
+            phoneNo:shippingAddress['mobNumber'] || ""
+        }
     }
-    const billingAddressData     = {
-        headerTitle:"Billing Address",
-        userName:billingAddress['firstName'],
-        address:billingAddress['address'] +" "+ billingAddress['apartment'] + " " + billingAddress['country'],
-        phoneNo:billingAddress['mobNumber']
+
+
+    if(billingAddress && Object.keys(billingAddress).length > 0){
+        billingAddressData     = {
+            headerTitle:"Billing Address",
+            userName:billingAddress['firstName'],
+            address:billingAddress['address'] +" "+ billingAddress['apartment'] + " " + billingAddress['country'],
+            phoneNo:billingAddress['mobNumber']
+        }
     }
+   
+    
 
   return (
     <>
