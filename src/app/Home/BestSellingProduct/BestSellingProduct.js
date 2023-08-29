@@ -1,4 +1,5 @@
 import ProductSlider from './ProductSlider/ProductSlider';
+import './best-selling-product.module.scss'
 
 
 
