@@ -3,44 +3,46 @@ import styles from './assured-info.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 import ScrollContainer from 'react-indiana-drag-scroll';
+import Marquee from "react-fast-marquee";
 
-{/* <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/assuredInfo.png' alt='logo'></img> */}
+{/* <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/assuredInfo.png' alt='logo'></img> */ }
 
 
-const AssuredInfoCard = ({data={}}) => {
-    return(
-       
+const AssuredInfoCard = ({ data = {} }) => {
+    return (
+
         <div className={styles.assuredInfoCard}>
             <div className={styles.assuredCard}>
-                    <div className={styles.assuredIcon}>
+                <div className={styles.assuredIcon}>
                     <img src={data.icon} alt='logo'></img>
-                    </div>
-                    <div className={styles.assuredTxt}>{data.text}</div>
-                    <div className={styles.assuredSubTxt}>{data.subText}</div>
+                </div>
+                <div className={styles.assuredTxt}>{data.text}</div>
+                <div className={styles.assuredSubTxt}>{data.subText}</div>
             </div>
         </div>
-        
-     
+
+
     )
 }
 
 
 
 
-const AssuredInfo = ({assuredInfo=[]}) => {
+const AssuredInfo = ({ assuredInfo = [] }) => {
 
-    return(
+    return (
 
         <div className={styles.assuredInfoWrapper}>
-           <ScrollContainer>
-             
-            {
-                assuredInfo.map((data,index)=><AssuredInfoCard key={index} data={data} />)
-            }
-       
-        </ScrollContainer>
+            <ScrollContainer style={{ display: "flex", width: "100%", overflow: "auto" }} horizontal={true}
+                className={styles.assuredIfoContainer}>
+                <Marquee pauseOnHover={true} pauseOnClick={true} speed={50} gradient={false}>
+                    {
+                        assuredInfo.map((data, index) => <AssuredInfoCard key={index} data={data} />)
+                    }
+                </Marquee>
+            </ScrollContainer>
         </div>
-           
+
 
     )
 
@@ -51,4 +53,3 @@ const AssuredInfo = ({assuredInfo=[]}) => {
 
 export default AssuredInfo;
 
-  
