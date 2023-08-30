@@ -52,7 +52,7 @@
 .assuredInfoWrapper{
     padding-right: 16px;
     margin-top: 24px;
-    padding-left: 60px;
+    padding-left: 16px;
     overflow: scroll;
     .assuredIfoContainer{
         display: flex;
@@ -74,12 +74,12 @@
         overflow: scroll;
         .assuredIfoContainer{
             display: flex;
-        gap: 60px!important;
-        
-       
-        justify-content: center;
+        gap: 60px;
+         justify-content: center;
         }
-        
+        .assuredCard{
+            margin-left: 0px;
+        }
     
     }
 }

@@ -1,4 +1,5 @@
 'use client'
+import React,{useState,useEffect} from 'react';
 import styles from './assured-info.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
@@ -29,27 +30,44 @@ const AssuredInfoCard = ({ data = {} }) => {
 
 
 const AssuredInfo = ({ assuredInfo = [] }) => {
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth > 990);
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth > 990);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+    
     return (
-
         <div className={styles.assuredInfoWrapper}>
-            <ScrollContainer style={{ display: "flex", width: "100%", overflow: "auto" }} horizontal={true}
-                className={styles.assuredIfoContainer}>
-                <Marquee pauseOnHover={true} pauseOnClick={true} speed={50} gradient={false}>
-                    {
-                        assuredInfo.map((data, index) => <AssuredInfoCard key={index} data={data} />)
-                    }
-                </Marquee>
-            </ScrollContainer>
+            {isDesktop ? (
+                <div className={styles.assuredIfoContainer}>
+                    {assuredInfo.map((data, index) => (
+                        <AssuredInfoCard key={index} data={data} />
+                    ))}
+                </div>
+            ) : (
+                <div className={styles.assuredInfoWrapper}>
+                    <ScrollContainer
+                        style={{ display: 'flex', width: '100%', overflow: 'auto' }}
+                        horizontal={true}
+                        className={styles.assuredIfoContainer}
+                    >
+                        <Marquee pauseOnHover={true} pauseOnClick={true} speed={100} gradient={false}>
+                            {assuredInfo.map((data, index) => (
+                                <AssuredInfoCard key={index} data={data} />
+                            ))}
+                        </Marquee>
+                    </ScrollContainer>
+                </div>
+            )}
         </div>
-
-
-    )
-
-
-
-}
-
-
-export default AssuredInfo;
-
+    );
+    }
+     export default AssuredInfo;                     
