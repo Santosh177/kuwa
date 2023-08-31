@@ -22,6 +22,7 @@
         padding-left: 38px;
         width: max-content;
         min-width: 207px;
+        margin-left: 100px;
         
         .assuredIcon{
             position: absolute;
@@ -49,12 +50,17 @@
 
 }
 .assuredInfoWrapper{
-    display: flex;
-    gap: 60px;
-    overflow: scroll;
     padding-right: 16px;
     margin-top: 24px;
-    padding-left: 60px;
+    padding-left: 16px;
+    overflow: scroll;
+    .assuredIfoContainer{
+        display: flex;
+        gap: 60px!important;
+        
+       
+    }
+   
 
 }
 
@@ -62,13 +68,18 @@
 
 @media(min-width:990px){
     .assuredInfoWrapper{
-        display: flex;
-        gap: 60px;
-        overflow: scroll;
         padding-right: 16px;
         margin-top: 24px;
         padding-left: 60px;
-        justify-content: center;
+        overflow: scroll;
+        .assuredIfoContainer{
+            display: flex;
+        gap: 60px;
+         justify-content: center;
+        }
+        .assuredCard{
+            margin-left: 0px;
+        }
     
     }
 }
