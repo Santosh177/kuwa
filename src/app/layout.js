@@ -5,14 +5,16 @@ import { CartItemProvider } from "@/context/cartItems";
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
 import { getUserDetails } from '../lib/auth';
-import { getTokenCookie , getCountryCookie} from '../lib/auth-cookies';
+import { getTokenCookie, getCountryCookie } from '../lib/auth-cookies';
 import { cookies } from 'next/headers';
 import { CountryListProvider } from "@/context/countryList";
 // import { Work_Sans } from 'next/font/google';
 
-const workSans = Work_Sans({ weight: ['400','500','600', '700'],
-style: ['normal', 'italic'],
-subsets: ['latin'],})
+const workSans = Work_Sans({
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+})
 
 
 export const metadata = {
@@ -24,13 +26,13 @@ export const metadata = {
 
 
 const getUser = async () => {
-  const nextCookies = cookies(); 
+  const nextCookies = cookies();
   const token = nextCookies.get('token');
   const user = nextCookies.get('userId');
-  console.log("tokentoken",token)
-  if((token && token.value) || (user && user.value)  ){
+  console.log("tokentoken", token)
+  if ((token && token.value) || (user && user.value)) {
     try {
-      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${user.value}`, {
+      const userLoginResp = await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${user.value}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -38,45 +40,45 @@ const getUser = async () => {
         }
       })
       const userData = await userLoginResp.json();
-      if(token && token.value){
-        return {isLogin:true, userData:userData};
-      }else{
-        return {isLogin:false, userData:userData};
+      if (token && token.value) {
+        return { isLogin: true, userData: userData };
+      } else {
+        return { isLogin: false, userData: userData };
       }
-     } catch (err) {
-      return {isLogin:false,userData:null}
-     }
-  }else{
-    return {isLogin:false,userData:null}
+    } catch (err) {
+      return { isLogin: false, userData: null }
+    }
+  } else {
+    return { isLogin: false, userData: null }
   }
 
 };
 
-const getCountryList = async() => {
-  const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/country/', {
+const getCountryList = async () => {
+  const getCountryListResp = await fetch('https://api.kuwa.bevaleo.dev/api/v1/country/', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
   const countryListData = await getCountryListResp.json();
-  if(countryListData && countryListData.length > 0){
-      return countryListData;
+  if (countryListData && countryListData.length > 0) {
+    return countryListData;
   }
 }
 
 export default async function RootLayout({ children }) {
   const userData = await getUser();
   const countryList = await getCountryList();
-  const { isLogin= false, } = userData || {}
+  const { isLogin = false, } = userData || {}
   let selectedCountryData = {};
-  if(isLogin){
-    const filteredCountry = countryList.find((data,index)=>data.id == userData.userData.country)
+  if (isLogin) {
+    const filteredCountry = countryList.find((data, index) => data.id == userData.userData.country)
     selectedCountryData = filteredCountry;
-  }else{
+  } else {
     const countryIdFromCookie = getCountryCookie();
-    if(countryIdFromCookie){
-      const filteredCountry = countryList.find((data,index)=>data.id == countryIdFromCookie)
+    if (countryIdFromCookie) {
+      const filteredCountry = countryList.find((data, index) => data.id == countryIdFromCookie)
       selectedCountryData = filteredCountry;
     }
   }
@@ -85,26 +87,48 @@ export default async function RootLayout({ children }) {
 
 
 
-  
+
 
 
   return (
     <html lang="en">
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
       <body className={workSans.className}>
-      <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
-      <CountryListProvider countryList={countryList}>
-        <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
-          <AuthProvider authData={userData}>
-            <CartItemProvider>
-            <AddressProvider >
-            {children}
-            </AddressProvider> 
-            </CartItemProvider>       
-          </AuthProvider>
-        </CountryProvider>
-      </CountryListProvider>
+        <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
+        <script src="https://cdn.tamara.co/widget/tamara-widget.min.js"></script>
+        <script src="https://cdn.tamara.co/widget/tamara-widget.min.js"></script>
+
+        <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
+        <script type="text/javascript">
+{/* 
+       if(window){
+ window.tamaraAsyncCallback = function () {
+  // The init method is optional. You can ignore this one and pass value as attributes (In next step)
+  window.TamaraWidget.init({
+    lang: "en",
+    publicKey: "7d7456c2-22f1-4ab2-8597-d7226d5469f0"
+  })
+
+  // This one will call immediately when page loaded. You can move out and call it later when you want
+}
+       } */}
+       
+      </script>
+
+        {/* <script type="text/javascript" src="https://checkout.tabby.ai/tabby-product-page-snippet-cci.js" async></script> */}
+        <CountryListProvider countryList={countryList}>
+          <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
+            <AuthProvider authData={userData}>
+              <CartItemProvider>
+                <AddressProvider >
+                  {children}
+                </AddressProvider>
+              </CartItemProvider>
+            </AuthProvider>
+          </CountryProvider>
+        </CountryListProvider>
       </body>
+    
     </html>
   )
 }

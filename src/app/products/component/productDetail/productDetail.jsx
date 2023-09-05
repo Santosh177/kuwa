@@ -121,6 +121,18 @@ const ProductDeatil = ({ productData = {} }) => {
     }
 
 
+
+// useEffect(() => {
+
+//     new window.TabbyProductPageSnippetCCI({
+//       selector: '#tabbyDetail',
+//       lang:    'en', // 'ar'
+//       currency: currency, // 'SAR, AED, KWD, BHD'
+//       price: finalPrice,
+//     });
+
+//     }, []);
+
     const getCartItems = async() => {
   
         const getCartItems = await getCartItem();
@@ -208,6 +220,49 @@ const ProductDeatil = ({ productData = {} }) => {
 
         }
     }
+    useEffect(()=>{
+
+        loadTamaraScript();
+        if(window){
+            
+    window.onload = function () {
+        window.tamaraAsyncCallback = function () {
+          window.TamaraProductWidget.init({
+            lang: "en",
+            publicKey: "7d7456c2-22f1-4ab2-8597-d7226d5469f0"
+          })
+          window.TamaraProductWidget.render()
+        };
+      }
+        }
+    },[])
+ 
+
+      // useEffect(() => {
+    const loadTamaraScript = () => {
+        let tamaraScript = document.createElement("script");
+        tamaraScript.setAttribute("src", "https://cdn.tamara.co/widget/product-widget.min.js");
+        document.body.appendChild(tamaraScript);
+      }
+
+    // console.log("object",loadTamaraScript);
+
+//   }, [])
+
+try {
+    
+    new TabbyPromo({
+        selector: '#tabbyDetail', // required, content of tabby Promo Snippet will be placed in element with that selector.
+        currency: currency, // 'SAR, AED, KWD, BHD'
+        price: finalPrice, // required, price or the product. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
+        lang: 'en', // 'ar'
+        source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
+      // required, store Public Key which identifies your account when communicating with tabby.
+      });
+} catch (error) {
+    
+}
+
     console.log(productData,"productDataproductData")
     return (
         <div className={style.productPricingContainerOuter}>

@@ -1,0 +1,33 @@
+.categories-main {
+    margin-top: 100px;
+
+    .categories-cont {
+        width: 85%;
+        margin: auto auto;
+
+        .select-cat-div {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 40px;
+
+            .cat-txt {
+                color: #07141A;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            .select-cat {
+                display: inline-flex;
+                padding: 8px 16px;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                border-radius: 8px;
+                background: #F7FCFB;
+            }
+        }
+    }
+}
