@@ -93,6 +93,7 @@ export default async function RootLayout({ children }) {
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
+      <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
           <AuthProvider authData={userData}>

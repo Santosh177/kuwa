@@ -208,6 +208,18 @@ const ProductDeatil = ({ productData = {} }) => {
 
         }
     }
+    try{
+        new TabbyPromo({
+            selector: '#tabbyDetail', // required, content of tabby Promo Snippet will be placed in element with that selector.
+            currency: currency, // 'SAR, AED, KWD, BHD'
+            price: finalPrice, // required, price or the product. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
+            lang: 'en', // 'ar'
+            source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
+          // required, store Public Key which identifies your account when communicating with tabby.
+          });
+    }catch(error){
+       console.log("Error occurs while fetching tabby",error)
+    }
     console.log(productData,"productDataproductData")
     return (
         <div className={style.productPricingContainerOuter}>
