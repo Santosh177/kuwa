@@ -20,7 +20,7 @@
      font-size: 20px;
   }
 .bestSellingProductSlider{
-  margin-top: 74px;
+  margin-top: -8px;
   position: relative;
   .sliderTopDecoration{
     position: relative;
@@ -32,8 +32,8 @@
   }
   .sliderTopDecorationMob{
     display: block;
-    position: absolute;
-    top: -67px;
+    position: relative;
+    bottom: -10px;
     z-index: -1;
     img{
       width: 100%;
@@ -43,8 +43,8 @@
   }
 
   .sliderBottomDecorationMob{
-    position: absolute;
-    bottom: -58px;
+    // position: position;
+    // bottom: -58px;
     z-index: -1;
     display: block;
     img{
