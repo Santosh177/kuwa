@@ -1,7 +1,9 @@
+"use client"
 // import React, { useState } from "react";
 // import share from "../assets/svg/share.svg";
 // import { getStringDateMonth } from "../../../utils";
 import "./ArticleCard.scss";
+import { useRouter } from 'next/navigation';
 // import { useState } from "react";
 // import SharePopUp from "../../../components/SharePopUp/SharePopUp.jsx";
 // import {trackShareBlogBtn} from "../../../analytics/index";
@@ -11,8 +13,14 @@ const ArticleCard = ({ articleData = [], isArabic = false }) => {
 
     //   const [isShowShare, setIsShowShare] = useState(false);
     //   const [shareLink, setShareLink] = useState('')
+    const router = useRouter()
     const minToReadTxt = (isArabic) ? "دقائق قراءة" : "min read";
      articleData=[{},{},{},{},{},{}]
+     function handleCard(){
+        {console.log("router");
+        router.push('/author-details')}
+        return ;
+    }
     return (
         <>
             <div id="health_article_container" className="main">
@@ -34,7 +42,9 @@ const ArticleCard = ({ articleData = [], isArabic = false }) => {
                             }
                         };
                         return (
-                            <div id={`article card ${value.healthHubCategory}`} className="card-item" key={index}>
+                            <div id={`article card ${value.healthHubCategory}`} className="card-item" key={index}
+                            onClick={()=>handleCard()}
+                            >
                                 <div className="article-img"
                                 //  onClick={() => handelOnclick()}
                                  >

@@ -41,7 +41,11 @@ import "glider-js/glider.min.css";
     {
       "backgroundImage":"linear-gradient(180deg, #F9E8E4 0%, rgba(249, 232, 228, 0) 100%)",
       "backgroundColor":"#F9E8E4"
-    }
+    },
+    {
+      "backgroundImage":"linear-gradient(180deg, #F4FCF3 0%, rgba(241, 244, 249, 0.00) 100%, rgba(244, 252, 243, 0.00) 100%)",
+      "background": "linear-gradient(180deg, #F4FCF3 0%, rgba(241, 244, 249, 0.00) 100%, rgba(244, 252, 243, 0.00) 100%)",
+    },
   ]
 
 
@@ -63,7 +67,7 @@ const createBackgroundColors = (totalRow= 14) => {
 
 const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},index=0,totalRow=14}) => {
   const router = useRouter();
-  const { product=[],headerTitle= ""} = data || {};
+  const { product=[],headerTitle= "Related Products"} = data || {};
   const [isLoading , setIsLoading] = useState(false);
   const { setCartItemData={},setCartItemCount={} } = useCartItems();
   const [ backgroundColors , setBackgroundColors] = useState(createBackgroundColors(totalRow));

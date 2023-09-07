@@ -17,11 +17,41 @@
         font-style: normal;
         font-weight: 600;
         line-height: normal;
-       text-align: center;
+        text-align: center;
         margin-top: 24px;
     }
-    .img-box{
+
+    .img-box {
         text-align: center;
         margin-top: 25px;
+    }
+}
+
+@media screen and (max-width:769px) {
+    .banner-main {
+        padding-top: 8px;
+
+        .route-txt {
+            padding-left: 16px;
+            color: #858585;
+            font-size: 12px;
+
+        }
+
+        .heading {
+            color: #07141A;
+            // font-family: Work Sans;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .img-box {
+            text-align: center;
+            margin-top: 13px;
+        }
     }
 }
