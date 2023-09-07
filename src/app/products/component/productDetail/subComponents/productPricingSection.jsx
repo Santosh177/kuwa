@@ -34,7 +34,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                     <img onClick={() => handelShareOption("FaceBook")} src="https://d25uasl7utydze.cloudfront.net/kuwa/facebook%20(1).svg" alt="facebook" />
                 </div>
             </div> */}
-             <div id="tabbyDetail" style={{margin:"24px auto"}} ></div>
+             <div id="tabbyDetail" className={styles.tabbyDetailMain}></div>
         </div>
     )
 }
