@@ -11,7 +11,7 @@ export default function SearchCard({searchData={}}) {
         <div className={styles.searchCard} onClick={()=>router.push(`/products/${id}`)} id="search-container">
             <div className={styles.productContainer} id="search-container">
                 <div className={styles.productImage} id="search-container">
-                    <img src={productImage}  alt='product-iamge' id="search-container"/>
+                    <img src={productImage}  alt='product-image' id="search-container"/>
                 </div>
                 <div className={styles.productName} id="search-container">{productName}</div>
             </div>
