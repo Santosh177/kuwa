@@ -18,7 +18,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                     <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} />
                 </div>
             </div>
-            {<div className={styles.packOf}>Pack of</div>}
+            {variants.length>0 ? <div className={styles.packOf}>Pack of</div>:""}  
             <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} onResetViewCartState={onResetViewCartState}/>
             <div className={styles.addToCartContainer}>
                {

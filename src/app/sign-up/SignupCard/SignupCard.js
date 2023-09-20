@@ -15,8 +15,8 @@ const validateForm = (formData) => {
   if (!formData.lastName) {
     errors.lastName = 'Last name is required.';
   }
-  if(!formData.mobNumber){
-    errors.mobNumber = "Mobile number is required";
+  if(!formData.mobileNumber){
+    errors.mobileNumber = "Mobile number is required";
   }
   if(!formData.email){
     errors.email = "Email is required";
@@ -35,7 +35,7 @@ const validateForm = (formData) => {
 const SignupForm = ({setFormData={},formData={},errors={}}) => {
   
   const onInputChange = (event, labelId) =>{
-    if(labelId === 'mobNumber'){
+    if(labelId === 'mobileNumber'){
       setFormData(inputs => ({ ...inputs, [labelId]: event}));
     }else{
       setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
@@ -55,12 +55,12 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
                 </div>
                 <div className={styles.inputContain}>
                     <Input type="text" id="lname" name="fname" placeHolder='Last name *'  value={formData.lastName || ""} onInputChange={(e)=>onInputChange(e,'lastName')}  />
-                    {errors.firstName && <span className={styles.errorMsg}>{errors.lastName}</span>}
+                    {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
                 </div>
             </div>
             <div>
-            <PhoneNumberInput type="text" fieldName="mobNumber"   value={formData.mobNumber || ""} onInputChange={onInputChange} />
-            {errors.mobNumber && <span className={styles.errorMsg}>{errors.mobNumber}</span>}
+            <PhoneNumberInput type="text" fieldName="mobileNumber"   value={formData.mobNumber || ""} onInputChange={onInputChange} />
+            {errors.mobileNumber && <span className={styles.errorMsg}>{errors.mobileNumber}</span>}
             </div>
             <div>
                 <Input autoComplete='off' lassName={styles.inputBox} type='email'  value={formData.email || ""} placeHolder='Email ID (ex. abc@gmail.com)' onInputChange={(e)=>onInputChange(e,'email')}  />
