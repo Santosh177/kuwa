@@ -245,7 +245,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "description": description,
           "finalAmount": priceDetails['totalAmount'],
           "totalAmount": priceDetails['totalAmount'],
-          "currency": "AED",
+          "currency": selectedCountry.currency || "",
           "orderSource": "WEBSITE",
           "orderCategory": "CART",
           "couponApplied": isCouponApplied || false,
