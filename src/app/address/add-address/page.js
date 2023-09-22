@@ -41,7 +41,7 @@ export default function AddAddress() {
             "email": email,
             "firstName":firstName,
             "lastName": lastName,
-            "mobNumber":mobNumber
+            "mobileNumber":mobNumber
         }
           const signUpResp = await fetch('/api/signup', {
             method: 'POST',
