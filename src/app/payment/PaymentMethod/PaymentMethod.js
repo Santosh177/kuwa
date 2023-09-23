@@ -87,7 +87,7 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
                   <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
                   <div className={styles.desc}>
                     <div className={styles.txt}>Just pay AED {splittedPrice} now</div>
-                    <div className={styles.subTxt}>Rest in {tamaraInstallment} interest free payments of AED {splittedPrice}</div>
+                    <div className={styles.subTxt}>Rest in {tamaraInstallment - 1} interest free payments of AED {splittedPrice}</div>
                   </div>
                 </div>
                 <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
@@ -97,7 +97,7 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
                   <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
                   <div className={styles.desc}>
                     <div className={styles.txt}>Just pay AED {splittedPriceTabby} now</div>
-                    <div className={styles.subTxt}>Rest in {tabbyInstallment} interest free payments of AED {splittedPriceTabby}</div>
+                    <div className={styles.subTxt}>Rest in {tabbyInstallment - 1} interest free payments of AED {splittedPriceTabby}</div>
                   </div>
                 </div>
                 <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>
