@@ -5,6 +5,13 @@ import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
 import Varients from "./productVarients";
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={}} = pricingSectionVariables;
+
+    useEffect(()=>{
+        if(window && window.TamaraProductWidget){
+            window.TamaraProductWidget.render()
+        }
+    },[window.TamaraProductWidget,finalPrice,currency])
+
     return (
         <div className={styles.pricingSectionContainer}>
             <div className={styles.title}>{title}</div>
@@ -35,6 +42,19 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 </div>
             </div> */}
              <div id="tabbyDetail" className={styles.tabbyDetailMain}></div>
+             <div
+                className="tamara-product-widget"
+                data-lang="en"
+                data-price={finalPrice}
+                data-currency={currency}
+                data-payment-type="installment"
+                data-disable-installment="false"
+                data-disable-paylater="false"
+                data-installment-minimum-amount="99"
+                data-installment-maximum-amount="3000"
+                data-installment-available-amount="99"
+                data-pay-later-max-amount="0"
+                />
         </div>
     )
 }

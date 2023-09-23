@@ -127,19 +127,15 @@ const ProductDeatil = ({ productData = {} }) => {
         setIsLoading(false)
         const cartItemsData = getCartItems && getCartItems['products'] || [];
         setCartItemData(getCartItems)
-        let cartItems = cartItemsData.map((data)=> {
-            if(data.id == id){
-                return data;
-            }
-        })
+        let cartItems = cartItemsData.find((data) => data.id == id)
         setIsLoading(false)
 
         console.log("cartItems",cartItems)
-        if(cartItems && cartItems.length > 0 && cartItems[0]){
-            setNoOfProduct(cartItems[0] && cartItems[0].quantity);
-            setIsAddedToCart(cartItems.length>0)
-            if(cartItems && cartItems[0]['variants'] && cartItems[0]['variants']['variants']){
-                const variantId = cartItems && cartItems[0]['variants'] && cartItems[0]['variants']['variants']['id'];
+        if(cartItems){
+            setNoOfProduct(cartItems && cartItems.quantity);
+            setIsAddedToCart(cartItems)
+            if(cartItems && cartItems['variants'] && cartItems['variants']['variants']){
+                const variantId = cartItems && cartItems['variants'] && cartItems['variants']['variants']['id'];
                 setselectedVarients(variantId)
 
             }
