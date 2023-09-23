@@ -8,6 +8,7 @@ import { getUserDetails } from '../lib/auth';
 import { getTokenCookie , getCountryCookie} from '../lib/auth-cookies';
 import { cookies } from 'next/headers';
 import { CountryListProvider } from "@/context/countryList";
+import Script from 'next/script'
 // import { Work_Sans } from 'next/font/google';
 
 const workSans = Work_Sans({ weight: ['400','500','600', '700'],
@@ -85,15 +86,14 @@ export default async function RootLayout({ children }) {
 
 
 
-  
-
-
   return (
     <html lang="en">
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
+      <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />
+      <Script src="/tamara-script.js" strategy="lazyOnload" />
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
           <AuthProvider authData={userData}>

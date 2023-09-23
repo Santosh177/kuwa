@@ -55,7 +55,7 @@ const ProductImageSection = ({ allImages }) => {
                         {images.map((item, i) => {
                             const { imageUrl = "" } = item || {};
                             return <>
-                                <div className={styles.imageSection}>
+                                <div className={styles.imageSection} key={i}>
                                     <div style={{display:"flex",justifyContent:"center",alignItems : "center"}} className={styles.imageContainer}>
                                         <img style={{maxWidth : "278px",width:"100%"}} src={item} alt={"productImage"} />
                                     </div>
