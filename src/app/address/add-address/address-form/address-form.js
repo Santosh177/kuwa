@@ -63,7 +63,7 @@ const validateShippingAddressForm = (formData) => {
   };
 
 
-const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
+const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={}}) => {
 
     const {isLogin=false, userData={}} = useAuth();
     // const onOrderUpdate = async(isOrderUpdate) => {
@@ -89,7 +89,7 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
                     {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
                 </div>
             </div>
-            <PhoneNumberInput type="text" fieldName="mobNumber"  value={values['mobNumber']} onInputChange={onChange} />
+            <PhoneNumberInput countryCode={countryCode} type="text" fieldName="mobNumber"  value={values['mobNumber']} onInputChange={onChange} />
             {errors.mobNumber && <span className={styles.errorMsg}>{errors.mobNumber}</span>}
             <div className={styles.orderUpdate} onClick={()=>{
               onChange(!values['orderUpdate'],'orderUpdate')
@@ -203,6 +203,7 @@ const getBillingAddressData = (data) => {
 export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues,error}) {
      const {isLogin=false, userData={}} = useAuth();
      const { selectedCountry={} } = useCountry();
+      const countryCode = selectedCountry && selectedCountry.code || "";
       const [ isSameBillingAddress, setIsSameBillingAddress ] = useState(true);
       const [ personalInfo, setPersonalInfo ] = useState({});
       const [ shippingAddress, setShippingAddress ] = useState ({country:selectedCountry.name});
@@ -357,7 +358,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       return (
         <>
           <div className={styles.addressForm}> 
-            <PersonalInfoFrom onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} />
+            <PersonalInfoFrom countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} />
             <div className={styles.addressContainer}>
                 <ShippingAddressForm onChange={onShippingAddress} values={shippingAddress} errors={shippingAddressErrors} />
                 <div className={styles.selectBillingAddressBtn} onClick={()=> onSelectBillngAddress()}>
