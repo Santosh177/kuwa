@@ -82,6 +82,22 @@
         }
     
     }
+    .assuredInfoDesktop{
+        display: block;
+    }
+    .assuredInfoMobile{
+        display: none !important; 
+    }
+}
+
+
+@media (max-width:990px){
+    .assuredInfoMobile{
+        display: block ;
+    }
+    .assuredInfoDesktop{
+        display: none !important; 
+    }
 }
 
 

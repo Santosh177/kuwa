@@ -30,30 +30,30 @@ const AssuredInfoCard = ({ data = {} }) => {
 
 
 const AssuredInfo = ({ assuredInfo = [] }) => {
-    const [isDesktop, setIsDesktop] = useState(window.innerWidth > 990);
+    // const [isDesktop, setIsDesktop] = useState(0 > 990);
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsDesktop(window.innerWidth > 990);
-        };
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         setIsDesktop(window.innerWidth > 990);
+    //     };
 
-        window.addEventListener('resize', handleResize);
+    //     window.addEventListener('resize', handleResize);
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+    //     return () => {
+    //         window.removeEventListener('resize', handleResize);
+    //     };
+    // }, []);
     
     return (
         <div className={styles.assuredInfoWrapper}>
-            {isDesktop ? (
-                <div className={styles.assuredIfoContainer}>
+   
+                <div className={[styles.assuredIfoContainer,styles.assuredInfoDesktop].join(" ")}>
                     {assuredInfo.map((data, index) => (
                         <AssuredInfoCard key={index} data={data} />
                     ))}
                 </div>
-            ) : (
-                <div className={styles.assuredInfoWrapper}>
+       
+                <div className={[styles.assuredIfoContainer,styles.assuredInfoMobile].join(" ")}>
                     <ScrollContainer
                         style={{ display: 'flex', width: '100%', overflow: 'auto' }}
                         horizontal={true}
@@ -66,7 +66,6 @@ const AssuredInfo = ({ assuredInfo = [] }) => {
                         </Marquee>
                     </ScrollContainer>
                 </div>
-            )}
         </div>
     );
     }
