@@ -10,16 +10,17 @@ export async function POST(request,res) {
 
     let data = {
         "status":"CANCELED",
-        "cancelReason":cancelReason
+        "cancelReason":cancelReason,
+        "product":productId
     }
 
-    console.log("customHeadercustomHeader",customHeader)
-    const cancellationResp = await fetch(`https://api.kuwa.bevaleo.dev/api/v1/orders/${productId}/status`, {
+
+
+    const cancellationResp = await fetch(`https://api.kuwa.bevaleo.dev/api/v1/orders/status`, {
         method: 'PUT',
         headers: customHeader,
-        body:JSON.stringify(data)
+        body:JSON.stringify([data])
       });
       const cancellationRespData = await cancellationResp.json();
-      console.log("cancellationRespData",cancellationRespData)
     return NextResponse.json({status:"SUCCESS"})
 }
