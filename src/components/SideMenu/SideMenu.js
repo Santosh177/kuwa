@@ -187,7 +187,7 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
           console.log("getProductTypeData",getProductTypeData);
           getProductTypeData['list'].map((data,index)=>{
             const {description={} , id="" } = data || {}
-            childMenuData.push({name:description.name,id:id})
+            childMenuData.push({name:description && description.name,id:id})
           })
           setChildMenuData(childMenuData)
     }
