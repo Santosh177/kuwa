@@ -31,7 +31,7 @@ const SearchList = ({searchData=[]}) =>{
 }
 
 
-const Header = ({couponBanner}) => {
+const Header = ({couponBanner={}}) => {
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);

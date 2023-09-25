@@ -10,12 +10,9 @@ const Category = async() => {
       headers: {...customHeader},
     })
     const responseData = await res.json();
-    const data = await fetch('https://api.kuwa.bevaleo.dev/module/home-page');
-    const response = await data.json();
-    console.log("gupta",response)
     return (
         <div>
-            <MainCategory couponBanner={response.couponBanner} responseData ={responseData}/>
+            <MainCategory  responseData ={responseData}/>
         </div>
       
     )
