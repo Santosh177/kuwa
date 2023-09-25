@@ -74,7 +74,7 @@ export default function ListOfAddress({addressList}) {
                         }
                         const isSelected =(selectedAddress.id)?(selectedAddress.id == data.id ):data.isDefaultAddress;
                         return(
-                            <AddressInfo data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
+                            <AddressInfo showRemoveBtn={listOfAddress.length > 1} data={addressData} key={index} onSelectAddress={()=>onChangeAddress(data)} isSelected={isSelected} onRemoveAddress={()=>onRemoveAddress(data.id)} onEditAddress={()=>onEditAddress()} />
                         )
                     })
                 }
