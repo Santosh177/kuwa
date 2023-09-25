@@ -10,7 +10,6 @@ const Category = async() => {
       headers: {...customHeader},
     })
     const responseData = await res.json();
-
     return (
         <div>
             <MainCategory  responseData ={responseData}/>

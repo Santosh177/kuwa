@@ -20,14 +20,14 @@ export default async function AllProduct(req) {
 
   console.log("productDataproductData",productData)
 
-  const data = await fetch('https://api.kuwa.bevaleo.dev/module/home-page')
-  const response = await data.json();
+//   const data = await fetch('https://api.kuwa.bevaleo.dev/module/home-page')
+//   const response = await data.json();
  
- const couponBanner = response.couponBanner;
+//  const couponBanner = response.couponBanner;
  
   return (
     <div className={style.productDetailContainerPage}>
-      <Header couponBanner={couponBanner}/>
+      <Header couponBanner={{}}/>
       {/* <div className={style.routeDetail} >Home / men's performance / product</div> */}
       <ProductDeatil productData={productData} />
       <div className={style.allDetailDisciptionContainer}>

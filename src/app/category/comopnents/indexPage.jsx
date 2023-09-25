@@ -11,7 +11,7 @@ const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 
 
-const MainCategory = ({ responseData, }) => {
+const MainCategory = ({ responseData }) => {
     const [slectedFilter, setSelectedFilter] = useState("NOT_SELCTED");
     const [selectedOptionsHead, setSelectedOptionsHead] = useState({});
     const [resposneValue, setResponseValue] = useState([]);
@@ -58,7 +58,7 @@ const MainCategory = ({ responseData, }) => {
 
     return (
         <div className={style.CategoryIndexPage}>
-            {isHide && <Header couponBanner={{}} />}
+            {isHide && <Header  />}
             {isHide && <div className={style.FilterTabOptionMobile} >
                 <div className={style.FilterTabOption}>
                     <div className={style.filterContainer} onClick={() => setSelectedFilter("Filter")} >
