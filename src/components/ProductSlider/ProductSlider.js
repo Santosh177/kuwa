@@ -145,6 +145,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
 
               {
                 product.map((data,index)=>{
+                  console.log("datadata",data)
                   const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
                   const cardData = {
                     productName:data && data.name || "",
@@ -154,7 +155,8 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
                     discount:discount,
                     discountType:discountType,
                     image:data.image || "",
-                    id: data.id || ""
+                    id: data.id || "",
+                    seoUrl:data.seoUrl || ""
                   }
                   return(
                     <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} key={index}/>

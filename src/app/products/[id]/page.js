@@ -13,7 +13,7 @@ export default async function AllProduct(req) {
   const productID = req && req.params && req.params.id || "";
   const customHeader = await authHeader();
   console.log("customHeader",customHeader)
-  const res = await fetch(`https://api.kuwa.bevaleo.dev/module/product-page/${productID}`, {
+  const res = await fetch(`https://api.kuwa.bevaleo.dev/module/product-page/seo/${productID}`, {
     headers: { ...customHeader },
   });
   const productData = await res.json();

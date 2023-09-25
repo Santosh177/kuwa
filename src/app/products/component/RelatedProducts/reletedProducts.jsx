@@ -44,7 +44,8 @@ const RelatedProducts = ({ productData = {} }) => {
                                     discount: discount,
                                     discountType: discountType,
                                     image: image || "",
-                                    id: id || ""
+                                    id: id || "",
+                                    seoUrl:seoUrl || ""
                                 }
                                 return (
                                     <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: id, quantity: 1 })} />
