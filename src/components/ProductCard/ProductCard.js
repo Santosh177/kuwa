@@ -5,10 +5,11 @@ import styles from './product-card.module.scss';
 
 const ProductCard = ({cardData,addToCart={}}) => {
     const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id=""  } = cardData || {}
+    console.log("cardDatacardData",cardData)
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id="" , seoUrl="" } = cardData || {}
   
     return(
-        <div className={styles.productCardItem} onClick={()=>router.push(`/products/`+id)}>
+        <div className={styles.productCardItem} onClick={()=>router.push(`/products/`+seoUrl)}>
             <div className={styles.productCardWrapper}>
                 <div className={styles.productImgWrapper}>
                     <div className={styles.productImgContainer}>

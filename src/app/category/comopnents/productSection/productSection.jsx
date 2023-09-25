@@ -34,7 +34,8 @@ const ProductSection = ({ resposneValue = [] }) => {
                             discount: discount,
                             discountType: discountType,
                             image: image || "",
-                            id: id || ""
+                            id: id || "",
+                            seoUrl:seoUrl || ""
                         }
                         return (
                             <div className={style.product}>
