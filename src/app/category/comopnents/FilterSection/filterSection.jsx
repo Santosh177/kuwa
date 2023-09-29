@@ -16,7 +16,8 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const singleSelect = [{ cat: "sort", options: ["new arivals", "Price Low to high", "Price High to Low"] }]
+    // const singleSelect = [{ cat: "sort", options: ["new arivals", "Price Low to high", "Price High to Low"] }]
+    const singleSelect = [{ cat: {name:"sort", value:"sort_by"}, options: [{name:"New Arivals",value:"new_arrivals"},{name:"Price Low to high",value:"price_low_to_high"},{name:"Price High to Low",value:"price_high_to_low"}] }]
     // const singleSelect = [{ cat: "sort", options: [1, 2, 3, 4] }]
     const multiSelect = superCollection
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -43,12 +44,12 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData }) => {
         }
     }
     const onClickSort = (option) =>{
-        if (selectedSingle === option) {
+        if (selectedSingle === option.value) {
             setSelectedSingle("");
             addQuryPrams("sort", "");
           } else {
-            setSelectedSingle(option);
-            addQuryPrams("sort", option);
+            setSelectedSingle(option.value);
+            addQuryPrams("sort", option.value);
           }
     }
     useEffect(()=>{
@@ -74,16 +75,16 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData }) => {
                 return (
                     <div className={style.filterSectionCategory}>
                         <div className={style.Txt} onClick={() => setIsCollapse(!isCollapse)}>
-                            <div className={style.cat} >{cat}</div>
+                            <div className={style.cat} >{cat.name}</div>
                             <div className={style.arrrow}><img src={colapseImage} alt="collapse image" /></div>
                         </div>
                         {isCollapse && <div className={style.options}>
                             {options.map((ele) => {
-                                const image = ele === selectedSingle ? checkIamge : uncheckImage;
+                                const image = ele.value === selectedSingle ? checkIamge : uncheckImage;
                                 return (
                                     <div className={style.optionsTxt} onClick={() => onClickSort(ele)}>
                                         <div className={style.tickBox}><img src={image} alt="check box" /></div>
-                                        <div className={style.elements}>{ele}</div>
+                                        <div className={style.elements}>{ele.name}</div>
                                     </div>
                                 )
                             })}
