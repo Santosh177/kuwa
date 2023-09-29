@@ -5,6 +5,7 @@ import Input from "@/components/Input/Input";
 import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
 import Loader from '@/components/Loader/Loader';
 import styles from './sign-up-card.module.scss';
+import { useCountry } from '@/context/contryDetails';
 import { useState } from 'react';
 
 const validateForm = (formData) => {
@@ -33,7 +34,8 @@ const validateForm = (formData) => {
 
 
 const SignupForm = ({setFormData={},formData={},errors={}}) => {
-  
+  const { selectedCountry={} } = useCountry();
+  const countryCode = selectedCountry && selectedCountry.code || "";
   const onInputChange = (event, labelId) =>{
     if(labelId === 'mobileNumber'){
       setFormData(inputs => ({ ...inputs, [labelId]: "+"+event}));
@@ -59,7 +61,7 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
                 </div>
             </div>
             <div>
-            <PhoneNumberInput type="text" fieldName="mobileNumber"   value={formData.mobNumber || ""} onInputChange={onInputChange} />
+            <PhoneNumberInput countryCode={countryCode} type="text" fieldName="mobileNumber"   value={formData.mobNumber || ""} onInputChange={onInputChange} />
             {errors.mobileNumber && <span className={styles.errorMsg}>{errors.mobileNumber}</span>}
             </div>
             <div>

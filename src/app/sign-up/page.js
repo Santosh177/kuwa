@@ -1,15 +1,16 @@
-'use client';
 import { useRouter } from 'next/navigation';
 import SignUpHeader from './SignupHeader/SignUpHeader';
 import SignupCard from './SignupCard/SignupCard';
-
-
-export default function SignupPage() {
-
-  const router = useRouter();
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation'
+export default async function SignupPage() {
 
 
    
+  const token = cookies().get('token');
+  if(token && token.value){
+    redirect("/")
+  }
 
   
       return (

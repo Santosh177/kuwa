@@ -11,13 +11,15 @@ const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 
 
-const MainCategory = ({ responseData }) => {
+const MainCategory = () => {
     const [slectedFilter, setSelectedFilter] = useState("NOT_SELCTED");
     const [selectedOptionsHead, setSelectedOptionsHead] = useState({});
     const [resposneValue, setResponseValue] = useState([]);
     const [isLoding, setIsLOading] = useState(false);
+    const [isLodingProduct, setIsLoadingProduct] = useState(false);
+    const [responseData , setResponseData] = useState({})
     const fetchData = async () => {
-        setIsLOading(true)
+        setIsLoadingProduct(true)
         const { category = "", sort = "" } = selectedOptionsHead || {};
         let query = ""
         if (sort && category) {
@@ -33,15 +35,39 @@ const MainCategory = ({ responseData }) => {
                 'Content-Type': 'application/json',
             }
         })
+     
         if (getProduct) {
             const getProductData = await getProduct.json();
             setResponseValue(getProductData);
         }
+        setIsLoadingProduct(false)
+    }
+
+
+    const fetchFilterData = async() =>{
+        setIsLOading(true)
+        const getFilterData = await fetch(`/api/category-filter`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        if(responseData && Object.keys(responseData).length == 0){
+            const getFilterDataResp = await getFilterData.json();
+            setResponseData(getFilterDataResp);
+        }
         setIsLOading(false)
     }
+  
     useEffect(() => {
-        fetchData()
-    }, [selectedOptionsHead])
+            fetchFilterData()
+    }, [])
+
+    useEffect(()=>{
+        if(selectedOptionsHead &&  ((selectedOptionsHead.sort != "") || (selectedOptionsHead.category != ""))){
+            fetchData()
+        }
+    },[selectedOptionsHead])
     const isHide = slectedFilter === "NOT_SELCTED" || slectedFilter === "Sort By";
     let isShowDotForCat = false;
     if (selectedOptionsHead.category) {
@@ -78,11 +104,12 @@ const MainCategory = ({ responseData }) => {
                 </div>
             </div>}
             {<div className={style.productAndFilter}>
-                <FilterSection setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} slectedFilter={slectedFilter} responseData={responseData} />
+                {<FilterSection setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} slectedFilter={slectedFilter} responseData={responseData} />}
                 {isHide && <ProductSection resposneValue={resposneValue} />}
             </div >}
-            {isHide && <Footer />}
+            {isHide && responseData &&Object.keys(responseData).length > 0  && <Footer />}
             <Loader isShow={isLoding} />
+            <Loader isShow={isLodingProduct} />
         </div>
     )
 }
