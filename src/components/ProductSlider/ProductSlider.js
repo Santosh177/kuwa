@@ -145,7 +145,6 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
 
               {
                 product.map((data,index)=>{
-                  console.log("datadata",data)
                   const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
                   const cardData = {
                     productName:data && data.name || "",

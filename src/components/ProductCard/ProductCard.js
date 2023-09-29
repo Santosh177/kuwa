@@ -5,7 +5,6 @@ import styles from './product-card.module.scss';
 
 const ProductCard = ({cardData,addToCart={}}) => {
     const router = useRouter();
-    console.log("cardDatacardData",cardData)
     const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id="" , seoUrl="" } = cardData || {}
   
     return(

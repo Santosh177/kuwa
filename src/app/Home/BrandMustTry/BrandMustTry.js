@@ -14,7 +14,6 @@ const BrandMustTry = ({data={}}) => {
 
               {
                 data.map((data,index)=>{
-                    console.log("brand",data)
                     
                    const btnStyle={
                         background:data.color
