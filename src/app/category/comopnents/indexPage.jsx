@@ -21,9 +21,9 @@ const MainCategory = ({ responseData }) => {
         const { category = "", sort = "" } = selectedOptionsHead || {};
         let query = ""
         if (sort && category) {
-            query = `sort=${sort}&category=${category}`
+            query = `sort_by=${sort}&category=${category}`
         } else if (sort && !category) {
-            query = `sort=${sort}`
+            query = `sort_by=${sort}`
         } else if (!sort && category) {
             query = `category=${category}`
         };
