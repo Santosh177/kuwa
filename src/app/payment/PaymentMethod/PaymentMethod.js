@@ -4,6 +4,7 @@ import CheckoutFrames from '../components/CheckoutFrames/CheckoutFrames';
 import { usePaymentPageData } from '@/context/payment';
 import styles from './payment-method.module.scss';
 import { useEffect, useState } from 'react';
+import { useCountry } from '@/context/contryDetails';
 
 
 const CheckBox = ({isChecked=false}) => {
@@ -61,6 +62,8 @@ const CardOption = ({isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
 
 const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price=0,onPayment={}}) =>{
   const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
+  const { selectedCountry={} } = useCountry();
+  const currency =  selectedCountry.currency || ""
   const { maxLimit:tamaraMaxLimit,minLimit:tamaraMinLimit,installment:tamaraInstallment } = paymentMethodConfig && paymentMethodConfig['tamara'] || {};
 
   const splittedPrice = (parseFloat(price) / tamaraInstallment).toFixed(2);
@@ -86,8 +89,8 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
                 <div className={styles.paymentOptionInfo}>
                   <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
                   <div className={styles.desc}>
-                    <div className={styles.txt}>Just pay AED {splittedPrice} now</div>
-                    <div className={styles.subTxt}>Rest in {tamaraInstallment - 1} interest free payments of AED {splittedPrice}</div>
+                    <div className={styles.txt}>Just pay {currency} {splittedPrice} now</div>
+                    <div className={styles.subTxt}>Rest in {tamaraInstallment - 1} interest free payments of {currency} {splittedPrice}</div>
                   </div>
                 </div>
                 <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
@@ -96,8 +99,8 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
                 <div className={styles.paymentOptionInfo}>
                   <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
                   <div className={styles.desc}>
-                    <div className={styles.txt}>Just pay AED {splittedPriceTabby} now</div>
-                    <div className={styles.subTxt}>Rest in {tabbyInstallment - 1} interest free payments of AED {splittedPriceTabby}</div>
+                    <div className={styles.txt}>Just pay  {currency} {splittedPriceTabby} now</div>
+                    <div className={styles.subTxt}>Rest in {tabbyInstallment - 1} interest free payments of {currency} {splittedPriceTabby}</div>
                   </div>
                 </div>
                 <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>

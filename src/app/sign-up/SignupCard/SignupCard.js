@@ -36,7 +36,7 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
   
   const onInputChange = (event, labelId) =>{
     if(labelId === 'mobileNumber'){
-      setFormData(inputs => ({ ...inputs, [labelId]: event}));
+      setFormData(inputs => ({ ...inputs, [labelId]: "+"+event}));
     }else{
       setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
     }
