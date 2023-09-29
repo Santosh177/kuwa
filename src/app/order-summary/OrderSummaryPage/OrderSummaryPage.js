@@ -99,7 +99,6 @@ const refreshData = () => {
 
  
 const onUpdateItem = async(data) => {
-  console.log("datadata",data)
   setIsLoading(true)
   const cartItem = await updateCartItem(data);
   refreshData()

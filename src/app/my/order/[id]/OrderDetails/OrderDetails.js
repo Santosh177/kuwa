@@ -10,7 +10,6 @@ export default function OrderDetails({data}) {
 
   const router = useRouter()
 
-  console.log("datadata",data)
 
   const {address={} , product={}, orderId="" , price={},parentOrderId="" } = data || {};
   const orderStatus = product['status']

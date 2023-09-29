@@ -7,7 +7,6 @@ export async function GET() {
       cache: 'no-store'
     })
     const data = await sideMenuResp.json();
-    console.log("sidemneudatadata",data)
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(JSON.stringify(error));

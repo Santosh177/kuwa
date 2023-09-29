@@ -32,7 +32,6 @@ export default function AddAddress() {
     }
 
     const onGetFormValues = async(data) => {
-      console.log("datadata",data)
       if(isLogin){
         onAddAddress(data)
       }else{

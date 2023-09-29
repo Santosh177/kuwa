@@ -113,7 +113,6 @@ const ProductDeatil = ({ productData = {} }) => {
         if (response === 200) {
             // setNoOfProduct(1);
            const data = await getCartItems();
-           console.log("datadata",data)
            
             // router.push('/cart')
             // window.location.href = "/cart"

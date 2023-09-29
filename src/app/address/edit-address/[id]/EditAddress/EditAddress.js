@@ -71,7 +71,6 @@ export default function AddAddress() {
 
 
   const onGetFormValues = async(data) => {
-    console.log("datadata",data)
 
     let editAddressData = {
       data:data,

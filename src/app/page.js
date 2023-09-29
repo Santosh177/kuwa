@@ -13,7 +13,6 @@ export default async function Home({}) {
   })
  
   const homePageDataResp = await homePageData.json();
- console.log("homePageData", homePageDataResp);
 
 
   return (
