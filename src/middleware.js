@@ -24,7 +24,7 @@ const getUser = async (data) => {
 
 
 const getCountryList = async() => {
-  const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/country/', {
+  const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/active/countries/', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
