@@ -261,11 +261,11 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 const FilterSection = ({ setSelectedOptionsHead, responseData, slectedFilter, setSelectedFilter }) => {
     return (
         <div className={style.filterOuterContainer}>
-            <div className={style.isDekstop} style={{marginTop:'60px'}}>
-                <FilterSectionDesktop responseData={responseData} setSelectedOptionsHead={setSelectedOptionsHead}  />
+            <div className={style.isDekstop} style={{marginTop:'60px',width:'235px'}}>
+            {responseData &&Object.keys(responseData).length > 0 &&  <FilterSectionDesktop responseData={responseData} setSelectedOptionsHead={setSelectedOptionsHead}  />}
             </div>
             <div className={style.isMobile}>
-                <FilterSectionMobile slectedFilter={slectedFilter} setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} responseData={responseData} />
+               {responseData &&Object.keys(responseData).length > 0 &&  <FilterSectionMobile slectedFilter={slectedFilter} setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} responseData={responseData} />}
             </div>
         </div>
     )

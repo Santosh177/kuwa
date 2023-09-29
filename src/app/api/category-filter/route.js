@@ -1,0 +1,15 @@
+import { NextResponse } from 'next/server';
+import { authHeader } from '../../../lib/auth-cookies';
+
+export const dynamic = 'force-dynamic'
+export async function GET() {
+
+  const customHeader = await authHeader();
+  const categoryFilterResp =  await fetch(`https://api.kuwa.bevaleo.dev/module/product/side-bar`, {
+    method: 'GET',
+    headers: {...customHeader},
+    cache: 'no-store'
+  })
+  const data = await categoryFilterResp.json();
+  return NextResponse.json(data );
+}
