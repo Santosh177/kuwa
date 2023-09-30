@@ -180,13 +180,14 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         });
       });
     }else{
-      setPriceDetails((prevState) => {
-        return({
-          ...prevState,
-          totalAmount:total,
-          discountAmount: 0
-        });
-      });
+      calculatePriceDetails()
+      // setPriceDetails((prevState) => {
+      //   return({
+      //     ...prevState,
+      //     totalAmount:total,
+      //     discountAmount: 0
+      //   });
+      // });
     }
   }
 
