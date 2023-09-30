@@ -56,8 +56,7 @@ const getUser = async () => {
 const getCountryList = async() => {
   const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/active/countries/', {
     method: 'GET',
-    cache: 'force-cache' ,
-    next: { revalidate: 30 } ,
+    next: { revalidate: 300 } ,
     headers: {
       'Content-Type': 'application/json',
     },
