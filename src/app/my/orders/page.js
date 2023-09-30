@@ -268,7 +268,7 @@ let listOfMyOrder = []
     
     const customHeader = await authHeader();
     console.log("customHeadercustomHeader",customHeader)
-    const listOfMyOrderResp  =  await fetch('https://api.kuwa.bevaleo.dev/module/list-my-order', {
+    const listOfMyOrderResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/list-my-order`, {
       method: 'GET',
       headers:{
         ...customHeader

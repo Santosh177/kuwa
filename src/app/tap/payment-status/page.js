@@ -5,7 +5,7 @@ export default async function PaymentStatus(req,res) {
     const tapId = req && req.searchParams && req.searchParams['tap_id'] || null;
     let tapPaymentStatusData = ""
     if(tapId){
-        const tapPaymentStatusResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/tap/payment-status-inquiry?chargeId=${tapId}`, {
+        const tapPaymentStatusResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tap/payment-status-inquiry?chargeId=${tapId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

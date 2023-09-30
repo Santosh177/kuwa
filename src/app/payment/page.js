@@ -13,7 +13,7 @@ export default async function PaymentPage() {
   try {
     
     const customHeader = await authHeader();
-    const getCartItemResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
+    const getCartItemResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/cart`, {
       method: 'GET',
       headers:{
         ...customHeader
@@ -29,7 +29,7 @@ export default async function PaymentPage() {
 
   try {
     const customHeader = await authHeader();
-    const getPaymentConfigData  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/payment-config', {
+    const getPaymentConfigData  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/payment-config`, {
       method: 'GET',
       headers:{
         ...customHeader

@@ -22,7 +22,7 @@ export default function Search() {
         setSearchTxt(searchValue);
         console.log("customHeadercustomHeader",selectedCountry)
         const countryId = selectedCountry && selectedCountry.id || "";
-        const searchApiResp = await fetch(`https://api.kuwa.bevaleo.dev/module/search/product/?key=${searchValue}&country=${countryId}`, {
+        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchValue}&country=${countryId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',

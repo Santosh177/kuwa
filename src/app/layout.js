@@ -31,7 +31,7 @@ const getUser = async () => {
   console.log("tokentoken",token)
   if((token && token.value) || (user && user.value)  ){
     try {
-      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${user.value}`, {
+      const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${user.value}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const getUser = async () => {
 };
 
 const getCountryList = async() => {
-  const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/active/countries/', {
+  const getCountryListResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/active/countries/`, {
     method: 'GET',
     next: { revalidate: 300 } ,
     headers: {

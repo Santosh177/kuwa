@@ -12,7 +12,7 @@ export default function  CouponInfo()  {
   },[])
 
   const getCouponData = async() =>{
-    const getCouponResp = await fetch(`https://api.kuwa.bevaleo.dev/cms/coupon-banner`, {
+    const getCouponResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/cms/coupon-banner`, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',

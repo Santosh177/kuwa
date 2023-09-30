@@ -3,7 +3,7 @@ import { getCountryCookie} from '../lib/auth-cookies';
 export default async function Home({}) {
   
   const countryIdFromCookie = getCountryCookie();
-  const homePageData  =  await fetch(`https://api.kuwa.bevaleo.dev/module/home-page`, {
+  const homePageData  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/home-page`, {
     method: 'GET',
     headers:{
     'Content-Type': 'application/json',

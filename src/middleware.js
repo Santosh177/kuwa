@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const getUser = async (data) => {
 
     try {
-      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${data.userId}`, {
+      const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${data.userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ const getUser = async (data) => {
 
 
 const getCountryList = async() => {
-  const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/active/countries/', {
+  const getCountryListResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/active/countries/`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
