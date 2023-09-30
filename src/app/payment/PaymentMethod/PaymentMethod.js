@@ -70,7 +70,7 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
   const isShow = (parseFloat(price) > 0)&&(parseFloat(price) >= parseFloat(tamaraMinLimit)) && (parseFloat(price) <= parseFloat(tamaraMaxLimit));
   
   const tabbyInstallment = 4;
-  const tabbyMinLimit = 100;
+  const tabbyMinLimit = 10;
   const tabbyMaxLimit = 2000;
 
   const splittedPriceTabby = (parseFloat(price) / tabbyInstallment).toFixed(2);
