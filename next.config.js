@@ -22,7 +22,7 @@ const {
     console.log(`isDev:${isDev}  isProd:${isProd}   isStaging:${isStaging}`)
   
     const env = {
-      BACKEND_END_POINT_URL: isDev?"https://api.kuwa.bevaleo.dev":(isStaging)?'https://api.kuwa.bevaleo.dev/stage':(isPreProd)?"https://api.kuwa.bevaleo.dev/pre-prod":(isProd)?"https://api.kuwa.bevaleo.dev/prod":"https://api.kuwa.bevaleo.dev/ass"
+      BACKEND_END_POINT_URL: isDev?"https://api.kuwa.bevaleo.dev":(isStaging)?'https://api.kuwa.bevaleo.dev':(isPreProd)?"https://api.kuwa.bevaleo.dev/pre-prod":(isProd)?"https://api.kuwa.bevaleo.dev/prod":"https://api.kuwa.bevaleo.dev/ass"
     }
   
     // const headers = [
