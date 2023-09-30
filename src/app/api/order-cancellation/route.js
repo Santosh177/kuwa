@@ -16,7 +16,7 @@ export async function POST(request,res) {
 
 
 
-    const cancellationResp = await fetch(`https://api.kuwa.bevaleo.dev/api/v1/orders/status`, {
+    const cancellationResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/orders/status`, {
         method: 'PUT',
         headers: customHeader,
         body:JSON.stringify([data])

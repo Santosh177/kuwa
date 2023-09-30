@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 export async function GET() {
 
   const customHeader = await authHeader();
-  const categoryFilterResp =  await fetch(`https://api.kuwa.bevaleo.dev/module/product/side-bar`, {
+  const categoryFilterResp =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/product/side-bar`, {
     method: 'GET',
     headers: {...customHeader},
     cache: 'no-store'

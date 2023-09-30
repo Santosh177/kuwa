@@ -7,7 +7,7 @@ export async function POST(request,res) {
     const productId = requestBody.productId;
     const rating = parseInt(requestBody.rating)
     console.log("request Body",requestBody)
-    const ratingResp = await fetch(`https://api.kuwa.bevaleo.dev/module/product/rating/${productId}`, {
+    const ratingResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/product/rating/${productId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

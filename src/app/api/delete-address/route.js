@@ -7,11 +7,8 @@ export const dynamic = 'force-dynamic'
 export async function POST(request,res) {
     const requestBody = await request.json();
     const customHeader = await authHeader();
-    console.log("requestBodyrequestBody",requestBody)
     const addressId = requestBody && requestBody.addressId;
-    console.log("addressIdaddressIdaddressId",addressId)
-    console.log(`https://api.kuwa.bevaleo.dev/module/address/shipping/${addressId}`)
-    const deleteAddressResp = await fetch(`https://api.kuwa.bevaleo.dev/module/address/shipping/${addressId}`, {
+    const deleteAddressResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/address/shipping/${addressId}`, {
         method: 'PATCH',
         headers: {
           ...customHeader

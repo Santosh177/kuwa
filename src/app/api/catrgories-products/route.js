@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export async function GET(req)  {
   const customHeader = await authHeader();
   const query = req.url.split("?paramsofCat=")
-  const apiUrl = `https://api.kuwa.bevaleo.dev/module/product/`;
+  const apiUrl = `${process.env.BACKEND_END_POINT_URL}/module/product/`;
   let finalUrl = apiUrl;
   if(query && query[1]){
     finalUrl = `${apiUrl}?${query[1]}`

@@ -21,7 +21,7 @@ export async function POST(request,res) {
   };
 
   try {
-    const response = await fetch(`https://api.kuwa.bevaleo.dev/reset`, requestOptions);
+    const response = await fetch(`${process.env.BACKEND_END_POINT_URL}/reset`, requestOptions);
     const data = await response.json();
     console.log("passwordData",data); 
     return NextResponse.json(data)

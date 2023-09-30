@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(request,res) {
     const requestBody = await request.json();
     const customHeader = await authHeader();
-    const updateCartItem = await fetch('https://api.kuwa.bevaleo.dev/api/v1/update/cart', {
+    const updateCartItem = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/update/cart`, {
         method: 'PATCH',
         headers: customHeader,
         body:JSON.stringify(requestBody)

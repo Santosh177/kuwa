@@ -7,7 +7,7 @@ export async function POST(request,res) {
     const requestBody = await request.json();
     const customHeader = await authHeader();
     const cartItemId = requestBody && requestBody.cartItemId;
-    const deleteCartItemResp = await fetch(`https://api.kuwa.bevaleo.dev/api/v1/cart/product/${cartItemId}`, {
+    const deleteCartItemResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/cart/product/${cartItemId}`, {
         method: 'DELETE',
         headers: {
           ...customHeader

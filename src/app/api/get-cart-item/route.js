@@ -17,7 +17,7 @@ export async function GET() {
 
   try {
     const customHeader = await authHeader();
-    const cartData =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
+    const cartData =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/cart`, {
       method: 'GET',
       headers: customHeader,
       cache: 'no-store'
