@@ -32,13 +32,17 @@ export default function Search() {
         let searchData = []
         if(searchApiData && searchApiData.length > 0 ){
             searchApiData.map((data,index)=>{
-                const productData = {
-                    productImage : data.productImage && data.productImage.productImageUrl || "",
-                    productName: data.productDescription && data.productDescription.name || "",
-                    id: data.id || ""
+                const sData = data['product'] || {}
+                if(sData){
+                    const productData = {
+                        productImage : sData.productImage && sData.productImage.productImageUrl || "",
+                        productName: sData.productDescription && sData.productDescription.name || "",
+                        id: sData.id || "",
+                        seoUrl: data.seoUrl || ""
+                    }
+                    searchData.push(productData);
+                    setSearchData(searchData)
                 }
-                searchData.push(productData);
-                setSearchData(searchData)
             })
         }else{
             searchData.push([])
@@ -47,6 +51,7 @@ export default function Search() {
     }
 
     const searchDataCount = searchData && searchData.length || 0;
+    console.log("searchDatasearchData",searchData)
 
     return (
         <>
@@ -66,6 +71,7 @@ export default function Search() {
 
                 {
                         searchData.map((data, index)=>{
+                            console.log("searchDatasearchData",data)
                             return(
                                 <SearchCard searchData = {data}/>
                             )

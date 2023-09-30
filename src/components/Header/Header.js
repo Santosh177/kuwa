@@ -149,7 +149,8 @@ const Header = ({couponBanner={}}) => {
                     const productData = {
                         productImage : sData.productImage && sData.productImage.productImageUrl || "",
                         productName: sData.productDescription && sData.productDescription.name || "",
-                        id: sData.id || ""
+                        id: sData.id || "",
+                        seoUrl: data.seoUrl || ""
                     }
                     searchData.push(productData);
                     setSearchData(searchData)
