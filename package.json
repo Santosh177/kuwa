@@ -5,6 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "qa-build":"NODE_ENV=qa next build",
+    "qa-start":"NODE_ENV=qa next start",
+    "pre-prod-build":"NODE_ENV=pre-prod next build",
+    "pre-prod-start":"NODE_ENV=pre-prod next start",
     "start": "next start",
     "lint": "next lint"
   },
