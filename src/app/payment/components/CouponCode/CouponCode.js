@@ -56,7 +56,7 @@ export default function CouponCode() {
       return (
         <>
         <div className={styles.couponCodeWrapper}>
-            <div className={styles.headerTxt}>Discount code or Gift card</div>
+            <div className={styles.headerTxt}>Discount Code or Gift Card</div>
             <div className={styles.couponCodeContainer}>
                 <div style={{width:'100%',position:'relative'}}>
                   <Input  type="text" fieldName="couponCode" placeHolder="Enter coupon code" value={couponCode} onInputChange={(e)=>{setCouponCode(e.target.value)}}  isDisabled={(couponCodeData.reason== "Applied Successfully" )}/>

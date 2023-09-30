@@ -161,7 +161,7 @@ export default  function Cart({cartData}) {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={totalPrice} onProceed={onProceed} />
+          <PaymentFooterBtn btnName="Proceed To Checkout" totalPrice={totalPrice} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
         </>
       )

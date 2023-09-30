@@ -101,7 +101,7 @@ const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , on
               <div className={styles.paymentMethod}>
                 <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
               </div>
-              <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+              <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
       </div>
   )
 }
@@ -120,7 +120,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
       {/* <div className={styles.headerTxt}>Price Details</div> */}
       <PriceDetails data={priceDetails}/>
     </div>
-    <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+    <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
 </div>
   )
 }

@@ -32,7 +32,7 @@ const CardOption = ({isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
     <div className={styles.creditCardOption}>
         <div className={styles.paymentTypeHeaderTxt}>
                 <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/paymentheaderimg.png' alt=''/>
-                <div className={styles.txt}>Pay with Credit or Debit card</div>
+                <div className={styles.txt}>Pay with Credit card or Debit card</div>
             </div>
             <div className={styles.paymentInfoWrapper} >
               <div className={styles.paymentInfoContainer} onClick={(e)=>{
@@ -82,7 +82,7 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
       <div className={styles.payWithEmi}>
         <div className={styles.headerContainer}>
           <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/paymentheaderimg.png' alt=''/>
-          <div className={styles.txt}>Pay with Emi</div>
+          <div className={styles.txt}>Pay with EMI</div>
         </div>
         <div className={styles.paymentOptionsList}>
             {(isTamara && isShow) && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("TAMARA")}>
@@ -123,7 +123,7 @@ const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
   <div className={styles.payWithEmi}>
       <div className={styles.headerContainer}>
         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/paymentheaderimg.png' alt=''/>
-        <div className={styles.txt}>Other payment option</div>
+        <div className={styles.txt}>Other Payment Options</div>
       </div>
       <div className={styles.paymentOptionsList}>
          {isApplePay && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("APPLE_PAY")}>
@@ -139,7 +139,7 @@ const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cash_on_delivery.png' alt='logo'/>
                 <div className={styles.desc}>
-                   <div className={styles.txt}>Cash on delivery</div>
+                   <div className={styles.txt}>Cash On Delivery</div>
                    <div className={styles.subTxt}>Pay when you receive your order</div>
                 </div>
               </div>
@@ -165,7 +165,7 @@ export default  function PaymentMethod({paymentMethodConfig,price=0,onPayment={}
    
       return (
         <div className={styles.paymentMethodWrapper}>
-            <div className={styles.headerTxt}>Payment Method</div>
+            <div className={styles.headerTxt}>Payment Methods</div>
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
             {(isCheckoutCard || isTapCard) &&<CardOption isCheckoutCard={isCheckoutCard} isTapCard={isTapCard} onPayment={onPayment} />}
             {(isTamara || isTabby) && <PayWithEmi paymentMethodConfig={paymentMethodConfig} price={price} isTamara={isTamara} isTabby={isTabby}  />}

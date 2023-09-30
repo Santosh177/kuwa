@@ -125,7 +125,7 @@ const onProceed = () => {
         <>
           <div className={styles.orderSummary}>
             <div className={styles.addressAndProductDetails}> 
-              <div className={[styles.headerTxt,styles.addressTxt].join(" ")}>Address & product details</div>
+              <div className={[styles.headerTxt,styles.addressTxt].join(" ")}>Address & Product Details</div>
               <DeliveryAddress />
 
               {
@@ -144,7 +144,7 @@ const onProceed = () => {
               </div>
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed to next"  totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
+          <PaymentFooterBtn btnName="Proceed To Next"  totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
         </>
       )
