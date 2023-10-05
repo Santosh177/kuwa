@@ -28,7 +28,7 @@ export const CountryProvider = ({ children, countryCode,selectedCountryData , co
   useEffect(()=>{
     if(selectedCountryData && Object.keys(selectedCountryData).length == 0){
          const data = getTimezoneOffset();
-         const timeZoneCountry = countryList.find((data,index)=>data.id == 6)
+         const timeZoneCountry = countryList.find((data,index)=>data.id == 8)
          setSelectedCountry(timeZoneCountry)
          updateCountryData(timeZoneCountry);
     }

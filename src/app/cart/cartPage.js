@@ -18,7 +18,7 @@ export default  function Cart({cartData}) {
     const router = useRouter();
     const countryList = useCountryList();
     const {setCartItemCount={} } = useCartItems();
-    const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
+    const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH")
     const [ data , setData ] = useState(cartData);
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
