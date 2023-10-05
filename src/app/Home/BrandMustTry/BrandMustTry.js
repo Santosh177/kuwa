@@ -9,7 +9,7 @@ const BrandMustTry = ({data={}}) => {
     const router = useRouter();
     return(
         <>
-        <div className={styles.headerTxt}>Brand You Must Try</div>
+        {data && data.length>0 &&<div className={styles.headerTxt}>Brand You Must Try</div>}
         <div className={styles.brandMustTry}>
 
               {

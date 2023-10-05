@@ -46,7 +46,7 @@ export default async function PaymentPage() {
 
   try {
     const customHeader = await authHeader();
-    const countryCode = 'AE';
+    const countryCode = 'BH';
     console.log("padasd")
     const getTamaraPaymentResp  =  await fetch(`https://phoenix.bevaleo.dev/tamara/payment-types?countryCode=${countryCode}`, {
       method: 'GET',

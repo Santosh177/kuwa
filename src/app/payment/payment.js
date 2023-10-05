@@ -132,7 +132,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const countryList = useCountryList();
   const { selectedCountry={} } = useCountry();
   const {isLogin=false, userData={}} = useAuth();
-  const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
+  console.log("countryListcountryList",countryList)
+  const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {}
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   const [ data, setData] = useState(cartData);
   const [ cartItems , setCartItems] = useState([]);
@@ -296,7 +297,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               let tamaraPayload = {
                 "paymentMode":"TAMARA",
                 "paymentType":"PAY_BY_INSTALMENTS",
-                "locale":"en_AE",
+                "locale":"en_BH",
                 "installments":3,
                 "items": items
               }

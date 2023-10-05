@@ -19,7 +19,7 @@ export default function OrderSummaryPage({cartData}) {
   const router = useRouter();
   const countryList = useCountryList();
   const {setCartItemCount={} } = useCartItems();
-  const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
+  const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH")
   const { listOfAddress=[], selectedAddress ={},setSelectedAddress={},setListOfAddress={}} = useAddressData();
   const [ data , setData ] = useState(cartData);
   const [ cartItems , setCartItems ] = useState([]);
