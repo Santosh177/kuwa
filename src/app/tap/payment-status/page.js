@@ -12,11 +12,11 @@ export default async function PaymentStatus(req,res) {
           },
         })
          tapPaymentStatusData = await tapPaymentStatusResp.json();
-        // if(tapPaymentStatusData && tapPaymentStatusData.status_code && tapPaymentStatusData.status_code == 500){
-        //     redirect("/payment/failure");
-        // }else{
-        //     redirect("/payment/success");
-        // }
+        if(tapPaymentStatusData && tapPaymentStatusData.status_code && tapPaymentStatusData.status_code == 500){
+            redirect("/payment/failure");
+        }else{
+            redirect("/payment/success");
+        }
     }
 
       return (
