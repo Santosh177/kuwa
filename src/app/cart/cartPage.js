@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
 import { useCountryList } from '@/context/countryList';
+import { useCountry } from '@/context/contryDetails';
 import { useCartItems } from '@/context/cartItems';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
@@ -18,7 +19,8 @@ export default  function Cart({cartData}) {
     const router = useRouter();
     const countryList = useCountryList();
     const {setCartItemCount={} } = useCartItems();
-    const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH")
+    const { selectedCountry={} } = useCountry();
+    const deliveryFeesConfig = selectedCountry;
     const [ data , setData ] = useState(cartData);
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
