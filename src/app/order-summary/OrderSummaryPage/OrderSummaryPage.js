@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useCountryList } from '@/context/countryList';
 import { useCartItems } from '@/context/cartItems';
+import { useCountry } from '@/context/contryDetails';
 import DeliveryAddress from "../DeliveryAddress/DeliveryAddress";
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
@@ -19,7 +20,8 @@ export default function OrderSummaryPage({cartData}) {
   const router = useRouter();
   const countryList = useCountryList();
   const {setCartItemCount={} } = useCartItems();
-  const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH")
+  const { selectedCountry={} } = useCountry();
+  const deliveryFeesConfig = selectedCountry;
   const { listOfAddress=[], selectedAddress ={},setSelectedAddress={},setListOfAddress={}} = useAddressData();
   const [ data , setData ] = useState(cartData);
   const [ cartItems , setCartItems ] = useState([]);
