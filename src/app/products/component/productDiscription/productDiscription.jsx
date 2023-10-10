@@ -32,7 +32,7 @@ const ProductDiscription = ({ productData}) => {
                 <div className={[style.tabs,(selectedTab === "benfits" && style.bottomBorder)].join(" ")} onClick={() => handelOnclick("benfits")} >Benefits</div>
             </div>
             <div className={style.selectedTabData}>
-                <div dangerouslySetInnerHTML={{ __html: selectedTabData}}></div>
+                <div dangerouslySetInnerHTML={{ __html: selectedTabData && selectedTabData.replace(/&lt;br&gt;/g, '')}}></div>
             </div>
         </div>
     )
