@@ -21,7 +21,7 @@ export async function POST(request,res) {
 
         console.log("loginDatata",loginData)
         setTokenCookie(res, loginData.token , loginData.id)
-        return NextResponse.json({status:"SUCCESS"})
+        return NextResponse.json({status:"SUCCESS",data:loginData})
       }
      
 }
