@@ -65,6 +65,23 @@ export const getCartItem = async() =>{
     return getCartItemData;
 }
 
+export const getTamaraPaymentTypes = async() =>{
+  const countryCode = 'BH';
+  const getTamaraPaymentTypes = await fetch(`https://phoenix.bevaleo.dev/tamara/payment-types?countryCode=${countryCode}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    try {
+      const getTamaraPaymentData = await getTamaraPaymentTypes.json();
+      return getTamaraPaymentData;
+    } catch (error) {
+      return {};
+    }
+}
+
+
 
 
 
