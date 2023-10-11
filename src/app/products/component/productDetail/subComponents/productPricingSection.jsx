@@ -27,6 +27,8 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         }
     },[window && window.TamaraProductWidget,finalPrice,currency,tamaraConfig])
 
+    const tamaraMinAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].min_limit && tamaraConfig[0].min_limit.amount:0
+    const tamaraMaxAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].max_limit && tamaraConfig[0].max_limit.amount:0
 
     return (
         <div className={styles.pricingSectionContainer}>
@@ -67,9 +69,9 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 data-payment-type="installment"
                 data-disable-installment="false"
                 data-disable-paylater="false"
-                data-installment-minimum-amount="99"
-                data-installment-maximum-amount="3000"
-                data-installment-available-amount="99"
+                data-installment-minimum-amount= {tamaraMinAmount}
+                data-installment-maximum-amount= {tamaraMaxAmount}
+                data-installment-available-amount={tamaraMinAmount}
                 />
                                
         </div>
