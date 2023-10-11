@@ -7,6 +7,15 @@ const TOKEN_NAME = 'token'
 
 export const MAX_AGE = 60 * 60 * 8 // 8 hours
 
+const DOMAIN_CONFIG = {
+  "development":'localhost',
+  "qa":'kuwa.bevaleo.dev',
+  'pre-prod':'preprod.kuwa.bevaleo.dev',
+  'prod':'getkuwa.com'
+}
+
+const env = process.env.NODE_ENV;
+
 export function setTokenCookie(res, token,userId) {
   const response = NextResponse.next()
   if(token){
@@ -15,7 +24,7 @@ export function setTokenCookie(res, token,userId) {
       value: token,
       httpOnly: true,
       secure:true,
-      domain:'kuwa.bevaleo.dev',
+      domain: DOMAIN_CONFIG[env],
       path: '/',
     })
   }
@@ -25,7 +34,7 @@ export function setTokenCookie(res, token,userId) {
       value: userId,
       httpOnly: true,
       secure:true,
-      domain:'kuwa.bevaleo.dev',
+      domain:DOMAIN_CONFIG[env],
       path: '/',
     })
   }
