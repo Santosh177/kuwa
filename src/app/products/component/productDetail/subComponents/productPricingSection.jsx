@@ -10,7 +10,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         if(window && window.TamaraProductWidget){
             window.TamaraProductWidget.render()
         }
-    },[window.TamaraProductWidget,finalPrice,currency])
+    },[window && window.TamaraProductWidget,finalPrice,currency])
 
     return (
         <div className={styles.pricingSectionContainer}>
@@ -47,14 +47,15 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 data-lang="en"
                 data-price={finalPrice}
                 data-currency={currency}
+                data-number-of-installments="3"
                 data-payment-type="installment"
                 data-disable-installment="false"
                 data-disable-paylater="false"
                 data-installment-minimum-amount="99"
                 data-installment-maximum-amount="3000"
                 data-installment-available-amount="99"
-                data-pay-later-max-amount="0"
                 />
+                               
         </div>
     )
 }
