@@ -3,14 +3,30 @@ import React, { useEffect, useState } from "react";
 import styles from './ProductPricingSection.module.scss'
 import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
 import Varients from "./productVarients";
+import { getTamaraPaymentTypes } from '@/services';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={}} = pricingSectionVariables;
 
+    const [tamaraConfig, setTamaraConfig] = useState({});
+
     useEffect(()=>{
-        if(window && window.TamaraProductWidget){
+        getTamaraConfig()
+    },[])
+
+    const getTamaraConfig = async() => {
+        const tamaraPaymentConfig = await getTamaraPaymentTypes();
+        if(tamaraPaymentConfig && Object.keys(tamaraPaymentConfig).length > 0){
+            setTamaraConfig(tamaraPaymentConfig)
+        }
+        
+    }
+
+    useEffect(()=>{
+        if(window && window.TamaraProductWidget && Object.keys(tamaraConfig).length > 0 ){
             window.TamaraProductWidget.render()
         }
-    },[window && window.TamaraProductWidget,finalPrice,currency])
+    },[window && window.TamaraProductWidget,finalPrice,currency,tamaraConfig])
+
 
     return (
         <div className={styles.pricingSectionContainer}>
