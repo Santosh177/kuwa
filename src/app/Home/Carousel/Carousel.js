@@ -4,6 +4,7 @@ import React from 'react';
 import Glider from 'react-glider';
 import 'glider-js/glider.min.css';
 import { useRouter } from 'next/navigation';
+import './carousel.scss'
 
 import styles from './Carsoul.module.scss'
 
@@ -14,15 +15,16 @@ const Carousel = ({ data }) => {
   return (
     <>
       <div className={styles.carouselContainer} >
-        <Glider className={styles.Glider}
+        <Glider 
+          className="home-banner-glider"
           draggable
           arrows
-          dots="#dots"
+          dots="#dots-home-banner"
           slidesToShow={1}
-          slidesToScroll={1}
+          slidesToScroll={'auto'}
           hasDots={true}
           scrollLock={true}
-
+          
 
         >
          
@@ -39,7 +41,7 @@ const Carousel = ({ data }) => {
             
         </Glider>
 
-        <div id="dots" ></div>
+        <div id="dots-home-banner" ></div>
       </div>
 
     </>
