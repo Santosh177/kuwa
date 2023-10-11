@@ -8,22 +8,26 @@ const TOKEN_NAME = 'token'
 export const MAX_AGE = 60 * 60 * 8 // 8 hours
 
 export function setTokenCookie(res, token,userId) {
-  const cookie = serialize(TOKEN_NAME, token, {
-    maxAge: MAX_AGE,
-    expires: new Date(Date.now() + MAX_AGE * 1000),
-    httpOnly: true,
-    // secure: process.env.NODE_ENV === 'production',
-    path: '/',
-    sameSite: 'lax',
-  })
   const response = NextResponse.next()
   if(token){
-    cookies().set('token', token);
-    response.cookies.set('token', token)
+    cookies().set({
+      name: 'token',
+      value: token,
+      httpOnly: true,
+      secure:true,
+      domain:'kuwa.bevaleo.dev',
+      path: '/',
+    })
   }
   if(userId){
-    cookies().set('userId',userId)
-    response.cookies.set('userId', userId)
+    cookies().set({
+      name: 'userId',
+      value: userId,
+      httpOnly: true,
+      secure:true,
+      domain:'kuwa.bevaleo.dev',
+      path: '/',
+    })
   }
 }
 
