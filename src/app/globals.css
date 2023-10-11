@@ -62,6 +62,19 @@ a {
   display: none;
 }
 
+@media(max-width:990px){
+  .glider-track {
+    gap: 12px;
+  }
+  .glider-dot{
+    width: 6px !important; 
+    height: 6px !important;
+  }
+  #dots-home-banner{
+    margin-top: -24px;
+    margin-bottom: 14px;
+   }
+}
 @media(min-width:990px){
   .glider-track {
     /* gap: 2%; */
