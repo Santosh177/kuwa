@@ -3,14 +3,32 @@ import React, { useEffect, useState } from "react";
 import styles from './ProductPricingSection.module.scss'
 import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
 import Varients from "./productVarients";
+import { getTamaraPaymentTypes } from '@/services';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={}} = pricingSectionVariables;
 
+    const [tamaraConfig, setTamaraConfig] = useState({});
+
     useEffect(()=>{
-        if(window && window.TamaraProductWidget){
+        getTamaraConfig()
+    },[])
+
+    const getTamaraConfig = async() => {
+        const tamaraPaymentConfig = await getTamaraPaymentTypes();
+        if(tamaraPaymentConfig && Object.keys(tamaraPaymentConfig).length > 0){
+            setTamaraConfig(tamaraPaymentConfig)
+        }
+        
+    }
+
+    useEffect(()=>{
+        if(window && window.TamaraProductWidget && Object.keys(tamaraConfig).length > 0 ){
             window.TamaraProductWidget.render()
         }
-    },[window.TamaraProductWidget,finalPrice,currency])
+    },[window && window.TamaraProductWidget,finalPrice,currency,tamaraConfig])
+
+    const tamaraMinAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].min_limit && tamaraConfig[0].min_limit.amount:0
+    const tamaraMaxAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].max_limit && tamaraConfig[0].max_limit.amount:0
 
     return (
         <div className={styles.pricingSectionContainer}>
@@ -47,14 +65,15 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 data-lang="en"
                 data-price={finalPrice}
                 data-currency={currency}
+                data-number-of-installments="3"
                 data-payment-type="installment"
                 data-disable-installment="false"
                 data-disable-paylater="false"
-                data-installment-minimum-amount="99"
-                data-installment-maximum-amount="3000"
-                data-installment-available-amount="99"
-                data-pay-later-max-amount="0"
+                data-installment-minimum-amount= {tamaraMinAmount}
+                data-installment-maximum-amount= {tamaraMaxAmount}
+                data-installment-available-amount={tamaraMinAmount}
                 />
+                               
         </div>
     )
 }

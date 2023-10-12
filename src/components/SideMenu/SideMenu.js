@@ -9,6 +9,10 @@ import styles from './side-menu.module.scss';
 const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
     const router = useRouter()
 
+
+    
+ 
+
     return(
         <div className={styles.myAccountContainer}>
             <div className={styles.myAccount}>
@@ -20,9 +24,11 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
             </div>
             {
                 data.map((data,index)=>{
+                    if(!data.name)
+                        return
                     return(
                         <>
-                            <div onClick={()=>router.push(`/category/${data.name}`)} className={styles.item} key={index}>{data.name}</div>
+                            <div onClick={()=>router.push(`/collections?category=${data.name}`)} className={styles.item} key={index}>{data.name}</div>
                             <div className={styles.horizontalLine}></div>
                         </>
                     )

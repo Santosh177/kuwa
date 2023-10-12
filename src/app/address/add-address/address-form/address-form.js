@@ -146,7 +146,7 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
                 {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
             </div>
             <Input type="text" fieldName="apartment" placeHolder="Appartment name, Floor, Room no, City*" value={values['apartment']} onInputChange={onChange}  />
-            {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
+            {errors.apartment && <span className={styles.errorMsg}>{errors.apartment}</span>}
             <div className={styles.countryContainer}>
                 <div className={styles.countryInfoField}>
                     <Input type="text" fieldName="country" placeHolder="Country *"  value={values['country']} onInputChange={onChange} isDisabled={true} />
