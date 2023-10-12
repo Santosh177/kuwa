@@ -58,7 +58,7 @@ export default function Search() {
   
         {/* // <div className={styles.searchWrapper}> */}
             <div className={styles.searchInputBox}>
-                <input className={styles.searchInput} type="text" value={searchTxt}onChange={(e)=>
+                <input className={styles.searchInput} autoFocus type="text" value={searchTxt}onChange={(e)=>
                             onSearch(e.target.value)} />
                 <img className={styles.backArrow} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow_search.png" alt="back-arrow" onClick={()=>router.back()}/>
                 {searchTxt !="" && <img className={styles.crossIcon} src=" https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_search.png" alt="back-arrow" onClick={()=>setSearchTxt("")}/>}
