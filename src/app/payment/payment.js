@@ -176,7 +176,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       setPriceDetails((prevState) => {
         return({
           ...prevState,
-          totalAmount:totalAmount - couponDiscountAmount,
+          totalAmount:totalAmount,
+          finalAmount:totalAmount - couponDiscountAmount,
           discountAmount: couponDiscountAmount
         });
       });
@@ -217,6 +218,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       cartItemCount: cartData && cartData.quantity,
       subTotal: subtotal,
       totalAmount: finalAmount,
+      finalAmount: finalAmount,
       savedAmount: total - subtotal,
       discountAmount:total - subtotal,
       currency:currency,
@@ -245,7 +247,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "countryCode": selectedCountry.code || "",
           "countryId": selectedCountry.id || "",
           "description": description,
-          "finalAmount": priceDetails['totalAmount'],
+          "finalAmount": priceDetails['finalAmount'],
           "totalAmount": priceDetails['totalAmount'],
           "currency": selectedCountry.currency || "",
           "orderSource": "WEBSITE",
@@ -259,7 +261,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "deliveryCharges":priceDetails['deliveryFees'],
           "cartItems": cartItemPayload
         }
-        if(priceDetails['totalAmount'] == 0){
+        if(priceDetails['finalAmount'] == 0){
           payload['paymentMode'] = "100%";
               const placeOrderResp  =  await fetch('/api/place-order-without-payment', {
                   method: 'POST',
