@@ -19,7 +19,7 @@ const BrandMustTry = ({data={}}) => {
                         background:data.color
                     }
                     return(
-                        <div className={styles.item} onClick={()=>router.push(`/collections?category=${data.brandName}`)}>
+                        <div className={styles.item} onClick={()=>window.location.href = `/collections?category=${data.brandName}`} >
                             <img className={styles.brandImg} src={data.image} alt='brand'/>
                             <div className={styles.btn}  style={btnStyle}>
                                 <div className={styles.txt} dangerouslySetInnerHTML={{ __html: data.offer}}></div>
