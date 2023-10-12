@@ -28,7 +28,7 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
                         return
                     return(
                         <>
-                            <div onClick={()=>router.push(`/category/${data.name}`)} className={styles.item} key={index}>{data.name}</div>
+                            <div onClick={()=>router.push(`/collections?category=${data.name}`)} className={styles.item} key={index}>{data.name}</div>
                             <div className={styles.horizontalLine}></div>
                         </>
                     )
