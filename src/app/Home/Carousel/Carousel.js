@@ -12,6 +12,33 @@ import styles from './Carsoul.module.scss'
 const Carousel = ({ data }) => {
   // console.log("primaryBanner",primaryBanner)
   const router = useRouter();
+  const MAX = data && data.length ;
+  const intervalRef = React.useRef(null);
+  const callbackRef = React.useCallback((glider) => {
+    if (glider) {
+      if (!intervalRef.current  && MAX > 1) {
+        intervalRef.current = setInterval(() => {
+          let index = glider.page;
+          if (index < MAX - 1) {
+            index += 1;
+          } else {
+            index = 0;
+          }
+          glider.scrollItem(index, false);
+        }, 6000);
+      }
+    }
+  }, []);
+
+  React.useEffect(
+    () => () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    },
+    []
+  );
+
   return (
     <>
       <div className={styles.carouselContainer} >
@@ -24,7 +51,7 @@ const Carousel = ({ data }) => {
           slidesToScroll={'auto'}
           hasDots={true}
           scrollLock={true}
-          
+          ref={callbackRef}
 
         >
          

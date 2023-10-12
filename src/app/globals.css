@@ -64,7 +64,7 @@ a {
 
 @media(max-width:990px){
   .glider-track {
-    gap: 12px;
+    gap: 8px;
   }
   .glider-dot{
     width: 6px !important; 
