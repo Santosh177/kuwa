@@ -13,6 +13,43 @@ export default function PaymentSuccess() {
       deleteAllItem()
     },[])
 
+
+    useEffect(()=>{
+      getListOfOrder();
+    },[])
+
+    const getListOfOrder = async() =>{
+      const listOfMyOrderResp  =  await fetch(`/api/list-of-orders`, {
+        method: 'GET',
+      })
+      const listOfMyOrder = await listOfMyOrderResp.json();
+      if(listOfMyOrder && listOfMyOrder.length > 0){
+        const isFirstOrder = listOfMyOrder.length >1;
+        if(!isFirstOrder){
+          const listOfOrder = listOfMyOrder[0];
+          const track = {
+            productId: listOfOrder.productId,
+            productName: listOfOrder.productName,
+            orderId:listOfOrder.orderId,
+            orderProductId:listOfOrder.orderProductId
+         }
+          window.clevertap.event.push("kuwa_order_confirmed_first_purchase", track);
+        }else{
+          const isFirstOrder = listOfMyOrder.length >1;
+          if(!isFirstOrder){
+            const listOfOrder = listOfMyOrder[listOfMyOrder.length - 1];
+            const track = {
+              productId: listOfOrder.productId,
+              productName: listOfOrder.productName,
+              orderId:listOfOrder.orderId,
+              orderProductId:listOfOrder.orderProductId
+           }
+            window.clevertap.event.push("kuwa_order_confirmed", track);
+        }
+      }
+    }
+  }
+
     const deleteAllItem = async() =>{
       const res = await fetch('/api/delete-all-item', {
         method: 'GET',
