@@ -15,7 +15,7 @@ export async function POST(request,res) {
       
       console.log("loginResploginResp",loginResp)
       if(loginResp && loginResp.status && loginResp.status === 401){
-        return NextResponse.json({status:"FAILURE"})
+        return NextResponse.json({status:loginResp})
       }else{
         const loginData = await loginResp.json();
 
