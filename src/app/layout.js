@@ -87,6 +87,7 @@ export default async function RootLayout({ children }) {
 
 
 
+
   return (
     <html lang="en">
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
@@ -95,6 +96,8 @@ export default async function RootLayout({ children }) {
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />
       <Script src="/tamara-script.js" strategy="lazyOnload" />
+      <Script src="/clevertap-stage.js" strategy="lazyOnload" />
+      
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
           <AuthProvider authData={userData}>

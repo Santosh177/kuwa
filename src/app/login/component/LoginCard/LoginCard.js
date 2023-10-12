@@ -32,6 +32,43 @@ export default function Login() {
     const togglePasswordVisibility = () => {
       setIsPasswordVisible(!isPasswordVisible);
     };
+
+    const getUserData = async({userId,token}) =>{
+
+        try {
+          const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${userId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token,
+            }
+          })
+          const userData = await userLoginResp.json();
+          console.log("userDatauserData",userData)
+          const name = userData.firstName+ ' ' +userData.lastName;
+          const userId = userData && userData && userData.id || null
+          const phone = userData.mobNumber ;
+          const email = userData.emailAddress;
+          const countryName = selectedCountry && selectedCountry.name ||  ""
+          if(userId){
+            window.clevertap.onUserLogin.push({
+              "Site": {
+                "Name": name,            // String
+                "Identity": userId,              // String or number
+                "Email": email,         // Email address of the user
+                "Phone": phone, 
+                "Country":countryName,
+                "MSG-email": true,                // Disable email notifications
+                "MSG-push": true,                  // Enable push notifications
+                "MSG-sms": true,                   // Enable sms notifications
+                "MSG-whatsapp": true,              // Enable WhatsApp notifications
+              }
+             })
+          }
+         } catch (err) {
+         }
+    
+    }
    
 
     const onLogin = async() =>{
@@ -52,6 +89,8 @@ export default function Login() {
           })
           setIsLoading(false)
           const loginResp = await res.json();
+          const data = await getUserData({userId:loginResp.data.id, token:loginResp.data.token});
+
           if(loginResp && loginResp.status && loginResp.status === 'SUCCESS'){
               window.location.href = '/'
           }else {

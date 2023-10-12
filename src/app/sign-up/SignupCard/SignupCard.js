@@ -86,11 +86,13 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
 export default function SignupCard() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { selectedCountry={} } = useCountry();
     const [ formData , setFormData] = useState({});
     const [ errors, setErrors] = useState({});  
     const [isLoading , setIsLoading] = useState(false)
     const refererPath = searchParams.get('referer');
     
+    console.log("useCountry",selectedCountry)
   
 
 
@@ -104,6 +106,29 @@ export default function SignupCard() {
                 body:JSON.stringify(formData)
               })
               const data = await res.json();
+              if(data && data.status_code && data.status_code == 200){
+                const name = formData.firstName+ ' ' +formData.lastName;
+                const userId = data && data.data && data.data.id || null
+                const phone = formData.mobileNumber ;
+                const email = formData.email;
+                const countryName = selectedCountry && selectedCountry.name ||  ""
+                if(userId){
+                  window.clevertap.onUserLogin.push({
+                    "Site": {
+                      "Name": name,            // String
+                      "Identity": userId,              // String or number
+                      "Email": email,         // Email address of the user
+                      "Phone": phone, 
+                      "Country":countryName,
+                      "MSG-email": true,                // Disable email notifications
+                      "MSG-push": true,                  // Enable push notifications
+                      "MSG-sms": true,                   // Enable sms notifications
+                      "MSG-whatsapp": true,              // Enable WhatsApp notifications
+                    },
+                    "cart_items": []
+                   })
+                }
+              }
               if(data && data.status_code && data.status_code == 400){
                 setErrors({email:'This email address already exists. Please try logging in'})
                 setIsLoading(false)
