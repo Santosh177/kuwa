@@ -50,7 +50,7 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
  
   paymentModes.map((data,index)=>{
       if(data && data.paymentMode === "APPLE_PAY"){
-        console.log("&& window && window.ApplePaySession;", window && window.ApplePaySession)
+        // console.log("&& window && window.ApplePaySession;", window && window.ApplePaySession)
         config['applePay']['paymentMode'] =  data.paymentMode;
         config['applePay']['paymentGateway'] =  data.paymentGateway;
         if(window && window.ApplePaySession){
@@ -133,6 +133,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const { selectedCountry={} } = useCountry();
   const {isLogin=false, userData={}} = useAuth();
   console.log("countryListcountryList",countryList)
+  console.log("selectedCountryselectedCountry",selectedCountry)
   const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {}
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   const [ data, setData] = useState(cartData);
@@ -227,6 +228,14 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     setPriceDetails(priceDetailsData)
   }
 
+  const calculateVatPercentage = async (total) => {
+    if (selectedCountry && selectedCountry) {
+      const vatPercentage = selectedCountry.vat;
+      const vatAmount = (total * vatPercentage) / 100;
+      return parseFloat(vatAmount.toFixed(2));
+    }
+  }
+
 
     const onPayment = async(data) => {
       setIsLoader(true);
@@ -237,6 +246,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
       const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['coupon']}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
+      const taxAmount = await calculateVatPercentage(priceDetails['finalAmount'])
         let payload = {
           "cartId":getCartItems['id'] || "",
           "orderType": "one-time",
@@ -256,7 +266,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "couponCode": couponCodeData['coupon'] || "",
           "discount": priceDetails['discountAmount'],
           "paymentType": "Regular",
-          "taxAmount": 0,
+          "taxAmount": taxAmount,
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
           "cartItems": cartItemPayload
