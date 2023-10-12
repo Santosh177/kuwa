@@ -18,7 +18,8 @@ export default async function PaymentStatus(req,res) {
         }else if(tapPaymentStatusData && tapPaymentStatusData.status_code && tapPaymentStatusData.status_code == 400){
             redirect ("/payment")
         }else if(tapPaymentStatusData && tapPaymentStatusData.status_code && (tapPaymentStatusData.status_code == 200 || tapPaymentStatusData.status_code == 200)){
-            redirect("/payment/success");
+          const orderId = tapPaymentStatusData.order_id;
+          redirect(`/payment/success?orderId=${orderId}`);
         }
         else{
             redirect("/payment/failure");
