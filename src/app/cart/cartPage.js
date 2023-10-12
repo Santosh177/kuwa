@@ -51,6 +51,30 @@ export default  function Cart({cartData}) {
         }
     },[data]);
 
+    useEffect(() => {
+      if ( cartData && cartData.products && cartData.products.length > 0) {
+          let trackData = []
+          cartData.products.map((item) => {
+              const productId = item && item.id || "";
+              const productName = item && item.description && item.description.name || "";
+              const qty = item && item.quantity || 1;
+              const track = {
+                  productId: productId,
+                  productName: productName,
+                  quantity: qty,
+              }
+              trackData.push(track)
+          })
+          try {
+              if (clevertap) {
+                  window.clevertap.setMultiValuesForKey("cart_items", trackData);
+              }
+          } catch (error) {
+              console.log(error, "not work for older user")
+          }
+      }
+  }, [cartData,window.clevertap]);
+
 
     const getData = async() => {
         const getCartItem = await getCartItemDetails(data['products'],data.currency);
