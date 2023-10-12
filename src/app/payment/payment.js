@@ -233,7 +233,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const cartItemsData = getCartItems && getCartItems['products'];
       const cartItemPayload = await createPayloadForCartItems(cartItemsData);
       const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
-      const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['couponCode']}`;
+      const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['coupon']}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
         let payload = {
           "cartId":getCartItems['id'] || "",
@@ -251,7 +251,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "orderSource": "WEBSITE",
           "orderCategory": "CART",
           "couponApplied": isCouponApplied || false,
-          "couponCode": couponCodeData['couponCode'] || "",
+          "couponCode": couponCodeData['coupon'] || "",
           "discount": priceDetails['discountAmount'],
           "paymentType": "Regular",
           "taxAmount": 0,
