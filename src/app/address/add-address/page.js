@@ -9,11 +9,13 @@ import styles from './page.module.scss';
 import { useState } from "react";
 import { useAuth } from '@/context/userDetail';
 import { useAddressData } from "@/context/address";
+import { useCountry } from '@/context/contryDetails';
 
 
 export default function AddAddress() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { selectedCountry={} } = useCountry();
   const { isLogin=false} = useAuth();
   const refererPath = searchParams.get('referer');
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
@@ -48,6 +50,29 @@ export default function AddAddress() {
           })
           const signupRespData = await signUpResp.json();
           console.log("signupRespData",signupRespData)
+          if(signupRespData &&   signupRespData.status_code &&   signupRespData.status_code == 200 && signupRespData.data){
+            const name = signupRespData.data.firstName+ ' ' +signupRespData.data.lastName;
+            const userId = signupRespData && signupRespData.data&& signupRespData.data.id || null
+            const phone = signupRespData.data.mobileNumber ;
+            const email = signupRespData.data.email;
+            const countryName = selectedCountry && selectedCountry.name ||  ""
+            if(userId){
+              window.clevertap.onUserLogin.push({
+                "Site": {
+                  "Name": name,            // String
+                  "Identity": userId,              // String or number
+                  "Email": email,         // Email address of the user
+                  "Phone": phone, 
+                  "Country":countryName,
+                  "MSG-email": true,                // Disable email notifications
+                  "MSG-push": true,                  // Enable push notifications
+                  "MSG-sms": true,                   // Enable sms notifications
+                  "MSG-whatsapp": true,              // Enable WhatsApp notifications
+                },
+                "cart_items": []
+               })
+            }
+          }
           signupRespData.status_code=== 200 ? 
           onAddAddress(data) : setError({email:signupRespData.data.message})
       }
