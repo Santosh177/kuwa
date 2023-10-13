@@ -234,10 +234,10 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     setPriceDetails(priceDetailsData)
   }
 
-  const calculateVatPercentage = async (total) => {
+  const calculateVatPercentage = async (subTotal) => {
     if (selectedCountry && selectedCountry) {
       const vatPercentage = selectedCountry.vat;
-      const vatAmount = (total * vatPercentage) / 100;
+      const vatAmount = subTotal-(((subTotal)* (100)) / (100 + (vatPercentage)))
       return parseFloat(vatAmount.toFixed(2));
     }
   }
@@ -252,7 +252,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
       const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['coupon']}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
-      const taxAmount = await calculateVatPercentage(priceDetails['finalAmount'])
+      const taxAmount = await calculateVatPercentage(priceDetails['subTotal'])
         let payload = {
           "cartId":getCartItems['id'] || "",
           "orderType": "one-time",
