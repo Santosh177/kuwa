@@ -116,11 +116,11 @@ const SocialIcons = [
 
 const ContactInfo = [
     {
-        name:'Getkuwa, Valeo wellbeing Technologies DMCC, 1JLT-Nook-178 One JLT Plot No: DMCC-EZ1- 1AB, Jumeirah Lakes Towers, Dubai, UAE',
+        name:'Kuwa Supplements, Valeo Wellbeing Technologies DMCC 1JLT-Nook-178 One JLT Plot No: DMCC-EZ1-1AB, Jumeirah Lakes Towers, Dubai, UAE',
         img: "https://d25uasl7utydze.cloudfront.net/kuwa/location.png"
     },
     {
-        name:'Call us at +971 4 416-444',
+        name:'Call us at +971-585-44-8626',
         img:'https://d25uasl7utydze.cloudfront.net/kuwa/_phone.png'
         
     },
