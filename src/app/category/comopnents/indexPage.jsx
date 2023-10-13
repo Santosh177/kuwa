@@ -37,7 +37,18 @@ const MainCategory = () => {
                         category: category.split(','),
                         sort:sort
                     })
-                }else{
+                }else if(category){
+                    setParamsData({
+                        category: category.split(','),
+                        sort:""
+                    })
+                }else if(sort){
+                    setParamsData({
+                        category: [],
+                        sort:sort
+                    })
+                }
+                else{
                     setParamsData({
                         category: [],
                         sort:""
