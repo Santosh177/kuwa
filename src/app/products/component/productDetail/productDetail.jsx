@@ -24,6 +24,17 @@ const ProductDeatil = ({ productData = {} }) => {
     const [ isLoading , setIsLoading] = useState(false)
     const router = useRouter()
 
+    useEffect(()=>{
+
+        if(variants && variants.length > 0){
+            const variantId = variants[0] && variants[0]['variants'] && variants[0]['variants']['id'];
+            console.log("variantIdvariantId",variantId)
+            if(variantId){
+                setselectedVarients(variantId)
+            }
+        }
+    },[variants])
+
     useEffect(() => {
         setIsLoading(true)
         const { productPriceAmount = 0, productPriceType = "", productPriceSpecialAmount = 0 } = price || {};
