@@ -171,14 +171,15 @@ const MainCategory = () => {
     },[selectedOptionsHead])
     const isHide = slectedFilter === "NOT_SELCTED" || slectedFilter === "Sort By";
     let isShowDotForCat = false;
-    if (selectedOptionsHead.category) {
-        const value = (selectedOptionsHead.category).split(",")
-        isShowDotForCat = value.length > 0
+    if (paramsData && paramsData['category'] && paramsData['category'].length > 0) {
+        // const value = (selectedOptionsHead.category).split(",")
+        isShowDotForCat = true
     }
     let isShowDotForSort = false;
-    if (selectedOptionsHead && selectedOptionsHead.sort) {
-        const value = selectedOptionsHead.sort
-        isShowDotForSort = value.length > 4
+    if (paramsData && paramsData['sort']) {
+        // const value = selectedOptionsHead.sort
+        isShowDotForSort = true
+        
     }
     console.log(selectedOptionsHead.sort, "slectedFilter");
     console.log(isShowDotForSort, "slectedFilter");

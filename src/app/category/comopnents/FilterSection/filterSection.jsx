@@ -156,13 +156,14 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
         </div>
     )
 }
-const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilter, setSelectedFilter }) => {
+const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilter, setSelectedFilter , paramsData , setParamsData}) => {
     const { sort = {}, superCollection = {} } = responseData || {};
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const multiSelect = superCollection;
-    const singleSelect = ["new arivals", "Price Low to high", "Price high to low"]
+    // const singleSelect = ["new arivals", "Price Low to high", "Price high to low"]
+    const singleSelect = [{name:"New Arivals",value:"new_arrivals"},{name:"Price Low to high",value:"price_low_to_high"},{name:"Price High to Low",value:"price_high_to_low"}]
     // const singleSelect = [1, 2, 3, 4]
     const [selectedCatogries, setSelectedCatogries] = useState([]);
     const [selectedTab, setSelectedTab] = useState("");
@@ -189,29 +190,63 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         router.push(`${pathname}${query}`);
     }
     const onClickSelection = (option) => {
-        if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(option)) {
-            const filteredData = selectedOptions.filter((item) => item !== option);
-            setSelectedOptions(filteredData);
+        // if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(option)) {
+        //     const filteredData = selectedOptions.filter((item) => item !== option);
+        //     setSelectedOptions(filteredData);
+        //     addQuryPrams("category",filteredData) 
+        // } else {
+        //     setSelectedOptions([...selectedOptions, option]);
+        //     addQuryPrams("category",[...selectedOptions, option])
+        // }
+        if(paramsData && paramsData['category'] && paramsData['category'].length>0 && paramsData['category'].includes(option)){
+            const filteredData = paramsData['category'].filter((item) => item !== option);
             addQuryPrams("category",filteredData) 
-        } else {
-            setSelectedOptions([...selectedOptions, option]);
-            addQuryPrams("category",[...selectedOptions, option])
+            setParamsData((prevObject)=>({...prevObject,category:filteredData}))
+        }else{
+            if(paramsData && paramsData['category'] ){
+                addQuryPrams("category",[...paramsData['category'], option])
+                setParamsData((prevObject)=>({...prevObject,category:[...prevObject['category'],option]}))
+            }else{
+                addQuryPrams("category",[option])
+                setParamsData((prevObject)=>({...prevObject,category:[option]}))
+            }
+           
         }
+    }
+    const onClickSort = (option) =>{
+        // if (selectedSingle === option.value) {
+        //     setSelectedSingle("");
+        //     addQuryPrams("sort", "");
+        //   } else {
+        //     setSelectedSingle(option.value);
+        //     addQuryPrams("sort", option.value);
+        //   }
+
+
+        //   if(paramsData && Object.keys(paramsData).length>0){
+            if(paramsData && paramsData['sort'] && paramsData['sort'] === option.value ){
+                addQuryPrams("sort", "");
+                setParamsData((prevObject)=>({...prevObject,sort:""}))
+            }else{
+                addQuryPrams("sort", option.value);
+                setParamsData((prevObject)=>({...prevObject,sort:option.value}))
+            }
+        //   }
     }
     useEffect(()=>{
         if(selectedSingle){
-            addQuryPrams("sort",selectedSingle)
+            // addQuryPrams("sort",selectedSingle)
         }
     },[selectedSingle]);
     useEffect(()=>{
-        const category = searchParams.get("category");
-        category && setSelectedOptions(category.split(","));
-        const sort = searchParams.get("sort");
-        sort && setSelectedSingle(sort);
+        // const category = searchParams.get("category");
+        // category && setSelectedOptions(category.split(","));
+        // const sort = searchParams.get("sort");
+        // sort && setSelectedSingle(sort);
     },[]);
 
     useEffect(()=>{
-        setSelectedOptionsHead({sort: selectedSingle,category : selectedOptions.join(",")})
+        // setSelectedOptionsHead({sort: selectedSingle,category : selectedOptions.join(",")})
     },[selectedOptions,selectedSingle])
     const handelApply = () => {
         setSelectedFilter("NOT_SELCTED")
@@ -238,7 +273,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                             {selectedCatogries.map((item) => {
                                 const { id = "", collectionName = "" } = item || {};
                                 let isOptionSelected = false
-                                if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(collectionName)) {
+                                if (paramsData && paramsData['category'] && paramsData['category'].length > 0 && paramsData['category'].includes(collectionName)){
                                     isOptionSelected = true
                                 }
                                 const image = isOptionSelected ? rectangularCheck : rectangularUnCheck;
@@ -272,11 +307,11 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                         <div className={style.cross} onClick={()=>setSelectedFilter("NOT_SELCTED")} ><img src="https://d25uasl7utydze.cloudfront.net/kuwa/X.svg" alt="cross" /></div>
                     </div>
                     {singleSelect.map((item) => {
-                        const image = item === selectedSingle ? checkIamge : uncheckImage;
+                        const image = item.value === (paramsData && paramsData['sort']) ? checkIamge : uncheckImage;
                         return (
-                            <div className={style.optionsTxt} onClick={()=>{setSelectedSingle(item);setSelectedFilter("NOT_SELCTED");}}>
+                            <div className={style.optionsTxt} onClick={()=>{onClickSort(item);setSelectedFilter("NOT_SELCTED");}}>
                                 <div className={style.tickBox}><img src={image} alt="check box" /></div>
-                                <div className={style.elements}>{item}</div>
+                                <div className={style.elements}>{item.name}</div>
                             </div>
                         )
                     })}
@@ -294,7 +329,7 @@ const FilterSection = ({ setSelectedOptionsHead, responseData, slectedFilter, se
             {responseData &&Object.keys(responseData).length > 0 &&  <FilterSectionDesktop paramsData={paramsData} setParamsData={setParamsData} responseData={responseData} setSelectedOptionsHead={setSelectedOptionsHead}  />}
             </div>
             <div className={style.isMobile}>
-               {responseData &&Object.keys(responseData).length > 0 &&  <FilterSectionMobile slectedFilter={slectedFilter} setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} responseData={responseData} />}
+               {responseData &&Object.keys(responseData).length > 0 &&  <FilterSectionMobile paramsData={paramsData} setParamsData={setParamsData} slectedFilter={slectedFilter} setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} responseData={responseData} />}
             </div>
         </div>
     )
