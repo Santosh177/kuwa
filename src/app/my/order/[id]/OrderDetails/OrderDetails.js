@@ -36,7 +36,7 @@ export default function OrderDetails({data}) {
         <div className={styles.orderDetailsRightContainer}>
             <PriceDetails data={priceDetailsData} isHidePriceDetails={true} />
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
-            {orderStatus ==="CREATED" && <div className={styles.cancelOrderBtn} onClick={()=>router.push(`/my/order/cancellation-request/${product.productId}`)}>Cancel my order</div>}
+            {orderStatus ==="CREATED" && <div className={styles.cancelOrderBtn} onClick={()=>window.location.href = `/my/order/cancellation-request/${product.productId}`}>Cancel my order</div>}
         </div>
       
         
