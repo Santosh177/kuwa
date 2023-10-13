@@ -162,7 +162,7 @@ const Header = ({couponBanner={}}) => {
 
     const handleClickOutside = (event) =>{
         if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && event.target.id !='search-container') {
-            setSearchTxt("")
+            setSearchQuery("")
             setIsShowSearchList(false)
         }
     }
@@ -267,7 +267,7 @@ const Header = ({couponBanner={}}) => {
                     </div>
                     <div>
                     <div className={styles.searchInputWrapper}  >
-                        <input ref={inputBoxRef} className={styles.searchInput} style={(searchTxt)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchQuery} onChange={(e)=>
+                        <input ref={inputBoxRef} className={styles.searchInput} style={(searchQuery)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchQuery} onChange={(e)=>
                             onSearch(e.target.value)} placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
