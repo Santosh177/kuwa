@@ -31,7 +31,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
         }
         const search = current.toString();
         const query = search ? `?${search}` : "";
-        router.push(`${pathname}${query}`);
+        router.replace(`${pathname}${query}`);
     }
     const onClickSelection = (option) => {
         // if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(option)) {
