@@ -53,9 +53,15 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
         // console.log("&& window && window.ApplePaySession;", window && window.ApplePaySession)
         config['applePay']['paymentMode'] =  data.paymentMode;
         config['applePay']['paymentGateway'] =  data.paymentGateway;
-        if(window && window.ApplePaySession){
-          config['applePay']['isEnable'] =  true;
+        try {
+          if(window && window.ApplePaySession){
+            config['applePay']['isEnable'] =  true;
+          }
+        } catch (error) {
+          
         }
+
+        
       }else if(data.paymentMode === "TAMARA"){
         config['tamara']['paymentMode'] =  data.paymentMode;
         config['tamara']['paymentGateway'] =  data.paymentGateway;
@@ -284,7 +290,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
               if(placeOrder && placeOrder.status_code == 200){
-                router.push('/payment/success')
+                // router.push('/payment/success')
+                window.location.href = '/payment/success'
               }
         }
         if(selectedPaymentMethod == "CHECKOUT_CARD"){
@@ -302,7 +309,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
               if(placeOrder && placeOrder.status_code == 200){
-                router.push(placeOrder.redirect_link)
+                // router.push(placeOrder.redirect_link)
+                window.location.href = placeOrder.redirect_link
               }
         }else if(selectedPaymentMethod == "TAMARA"){
               let items = await createPayloadForItems(cartItemsData);
@@ -327,7 +335,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             console.log("placeOrderplaceOrder",placeOrder)
             setIsLoader(false);
             if(placeOrder && placeOrder.status_code == 200){
-              router.push(placeOrder.redirect_link)
+              // router.push(placeOrder.redirect_link)
+              window.location.href = placeOrder.redirect_link
             }
 
         }else if(selectedPaymentMethod == "TABBY"){
@@ -353,7 +362,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
               if(placeOrder && placeOrder.status_code == 200){
-                router.push(placeOrder.redirect_link)
+                // router.push(placeOrder.redirect_link)
+                window.location.href = placeOrder.redirect_link
               }
 
         }else if(selectedPaymentMethod == "TAP"){
@@ -378,7 +388,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
               if(placeOrder && placeOrder.status_code == 200){
-                router.push(placeOrder.redirect_link)
+                // router.push(placeOrder.redirect_link)
+                window.location.href = placeOrder.redirect_link
               }
         }else if(selectedPaymentMethod == "COD"){
             payload['paymentMode'] = "COD";
@@ -395,9 +406,11 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               const orderId =placeOrder && placeOrder.order_id
               if(placeOrder && placeOrder.status_code == 200){
                 if(orderId){
-                  router.push(`/payment/success?orderId=${orderId}`)
+                  // router.replace(`/payment/success?orderId=${orderId}`)
+                  window.location.href = `/payment/success?orderId=${orderId}`
                 }else{
-                  router.push(`/payment/success`)
+                  window.location.href = `/payment/success`
+                  // router.replace(`/payment/success`)
                 }
                
               }
@@ -416,7 +429,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             setIsLoader(false);
             if(placeOrder && placeOrder.status_code == 200){
               appleSession.completePayment(ApplePaySession.STATUS_SUCCESS);
-              router.push(`/payment/success?orderId=${placeOrder.order_id}`)
+              // router.push(`/payment/success?orderId=${placeOrder.order_id}`)
+              window.location.href = `/payment/success?orderId=${placeOrder.order_id}`
             }
             // const applePaySupportednetworks = "visa, mastercard, amex";
             // let request = {

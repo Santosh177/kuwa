@@ -3,10 +3,10 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import Payment from "./payment";
 import { authHeader } from "../../lib/auth-cookies";
+import { redirect } from 'next/navigation';
 import styles from './pages.module.scss';
 
 export default async function PaymentPage() {
-  console.log("PaymentPagePaymentPage",PaymentPage)
   let getCartItems = [];
   let paymentModes = [];
   let tamaraConfig = [];
@@ -25,6 +25,13 @@ export default async function PaymentPage() {
   } catch (error) {
     
   }
+
+
+  console.log("getCartItemsgetCartItems++++",getCartItems)
+
+    if((getCartItems && getCartItems.length == 0 ) || (getCartItems.status == 404)){
+      redirect(`/`);
+    }
   
 
   try {
@@ -63,6 +70,11 @@ export default async function PaymentPage() {
   
   
 
+  // console.log("getCartItemsgetCartItems++++",getCartItems)
+
+  //   if((getCartItems && getCartItems.length == 0 ) || (getCartItems.status == 404)){
+  //     redirect(`/`);
+  //   }
 
  
       return (
