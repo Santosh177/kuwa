@@ -7,7 +7,7 @@ import FilterSection from "./FilterSection/filterSection";
 import ProductSection from "./productSection/productSection";
 import style from "./indexPage.module.scss"
 import Loader from "@/components/Loader/Loader";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 

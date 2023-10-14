@@ -4,13 +4,13 @@ import styles from './footer.module.scss';
 
 
 
-const Categories = () => (
+const Categories = ({headerTitle,data=[]}) => (
     <div className={styles.categoriesWrapper}>
-       <h3 className={styles.footerHeaderTxt}>Categories</h3>
+       <h3 className={styles.footerHeaderTxt}>{headerTitle}</h3>
        <ul className={styles.categoriesList}>
        {
-        FooterData['CategoriesData'].map((data,index)=>
-        <li className={styles.categoryItem} key={index}><a href='/'>{data.name}</a></li>
+        data.map((data,index)=>
+        <li className={styles.categoryItem} key={index}><a href={data.url}>{data.name}</a></li>
             )
        }
          </ul>
@@ -73,7 +73,8 @@ const Footer = () => {
         <>
             <div className={styles.footerWrapper}>
                 <div className={styles.footerContainer}>
-                    <Categories/>
+                    <Categories headerTitle={"HEALTH GOALS"} data={FooterData['HealthGoal']} />
+                    <Categories headerTitle={"BRANDS"} data={FooterData['Brands']} />
                     <UsefulLinks />
                     <ContactInfo />
                 </div>

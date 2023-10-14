@@ -9,8 +9,9 @@ export async function GET(req)  {
   const apiUrl = `${process.env.BACKEND_END_POINT_URL}/module/product/`;
   let finalUrl = apiUrl;
   if(query && query[1]){
-    finalUrl = `${apiUrl}?${decodeURIComponent(query[1])}`
+    finalUrl = `${apiUrl}?${encodeURIComponent(query[1])}`
   }
+
   const getProductResp =  await fetch(finalUrl, {
     method: 'GET',
     headers: {...customHeader},
