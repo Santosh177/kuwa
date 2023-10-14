@@ -61,7 +61,7 @@ const SocialIcon = () => (
 
 const CopyRightInfo = () => (
     <div className={styles.copyRightInfoWrapper}>
-        <div className={styles.copyRightTxt}>Copyright 2023 © Feel Valeo</div>
+        <div className={styles.copyRightTxt}>Copyright 2023 © GetKuwa</div>
         <img className={styles.copyRightCardImg} src='https://d25uasl7utydze.cloudfront.net/kuwa/card-info.png' alt='card-info' />
     </div>
 )
