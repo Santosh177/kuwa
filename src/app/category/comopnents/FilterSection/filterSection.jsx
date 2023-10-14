@@ -190,7 +190,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         }
         const search = current.toString();
         const query = search ? `?${search}` : "";
-        router.push(`${pathname}${query}`);
+        router.replace(`${pathname}${query}`);
     }
 
     const onClickSelection = (option) =>{

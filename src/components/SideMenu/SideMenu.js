@@ -99,9 +99,9 @@ const OtherInfo = () =>{
         <div className={styles.OtherInfo}>
             {/* <div className={styles.txt}>Blog</div>
             <div className={styles.infoLine}> | </div> */}
-            <div className={styles.txt} onClick={()=>router.push('/contact-us')}>Contact Us</div>
+            <div className={styles.txt} onClick={()=>window.location.href='/contact-us'}>Contact Us</div>
             <div className={styles.infoLine}> | </div>
-            <div className={styles.txt} onClick={()=>router.push('/terms-of-service')}>Terms of Service</div>
+            <div className={styles.txt} onClick={()=>window.location.href='/terms-of-service'}>Terms of Service</div>
         </div>
     )
 }
