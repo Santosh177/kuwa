@@ -1,24 +1,27 @@
 import HomePage from "./Home/HomePage";
 import { getCountryCookie} from '../lib/auth-cookies';
+import Loader from "@/components/Loader/Loader";
 export default async function Home({}) {
   
   const countryIdFromCookie = getCountryCookie();
-  const homePageData  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/home-page`, {
-    method: 'GET',
-    headers:{
-    'Content-Type': 'application/json',
-    'country' : parseInt(countryIdFromCookie)
-  },
-  cache: 'no-store' 
-  })
+  let homePageDataResp = {}
+  if(countryIdFromCookie){
+     const homePageData  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/home-page`, {
+      method: 'GET',
+      headers:{
+      'Content-Type': 'application/json',
+      'country' : countryIdFromCookie
+    },
+    cache: 'no-store' 
+    })
+     homePageDataResp = await homePageData.json();
+  }
  
-  const homePageDataResp = await homePageData.json();
 
 
   return (
     <>
-   
-      <HomePage homePageData={homePageDataResp}/>
+      {(homePageDataResp && Object.keys(homePageDataResp).length> 0)?<HomePage homePageData={homePageDataResp}/>: <Loader  isShow={true}/>}
     </>
 
   )
