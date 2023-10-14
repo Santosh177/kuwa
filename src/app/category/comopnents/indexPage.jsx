@@ -101,11 +101,12 @@ const MainCategory = () => {
         const { category = "", sort = "" } = paramsData || {};
         let query = ""
         if (sort && category) {
-            query = `sort_by=${sort}&category=${category}`
+            query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category)}`
         } else if (sort && !category) {
-            query = `sort_by=${sort}`
+            query = `sort_by=${encodeURIComponent(sort)}`
         } else if (!sort && category && category.length > 0) {
-            query = `category=${category.join(',')}`
+            const categoryJoin = category.join(',')
+            query = `category=${encodeURIComponent(categoryJoin)}`
         };
         const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${query}`, {
             method: 'GET',
@@ -135,11 +136,11 @@ const MainCategory = () => {
         const { category = "", sort = "" } = selectedOptionsHead || {};
         let query = ""
         if (sort && category) {
-            query = `sort_by=${sort}&category=${category}`
+            query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category)}`
         } else if (sort && !category) {
-            query = `sort_by=${sort}`
+            query = `sort_by=${encodeURIComponent(sort)}`
         } else if (!sort && category) {
-            query = `category=${category}`
+            query = `category=${encodeURIComponent(category)}`
         };
         const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${query}`, {
             method: 'GET',
