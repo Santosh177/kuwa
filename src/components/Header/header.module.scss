@@ -15,15 +15,17 @@
 
     display: flex;
     align-items: center;
-    padding-left: 18px;
+    // padding-left: 18px;
     justify-content: space-between;
     width: 100%;
-    padding-right: 16px;
+    // padding-right: 16px;
+    width: 98%;
+    margin: 0 auto;
 
     .headerIcon{
         display: flex;
         flex-direction: row;
-        gap: 16px;
+        gap: 13px;
         align-items: center;
         .menuIcon{
             height: 24px;
@@ -49,7 +51,7 @@
     .headerInfo{
         display: flex;
         flex-direction: row;
-        gap: 16px;
+        gap: 10px;
         align-items: center;
     }
    
