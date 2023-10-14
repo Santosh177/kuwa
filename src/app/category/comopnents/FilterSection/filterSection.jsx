@@ -168,7 +168,10 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
     const [selectedCatogries, setSelectedCatogries] = useState([]);
     const [selectedTab, setSelectedTab] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
-    const [selectedSingle,setSelectedSingle] = useState("")
+    const [selectedSingle,setSelectedSingle] = useState("");
+    const [selectedCollection, setSelectedSelection] = useState([]);
+
+    
     useEffect(() => {
         setSelectedTab(multiSelect[0].superCollectionName);
         setSelectedCatogries(multiSelect[0].category)
@@ -189,7 +192,30 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         const query = search ? `?${search}` : "";
         router.push(`${pathname}${query}`);
     }
-    const onClickSelection = (option) => {
+
+    const onClickSelection = (option) =>{
+        console.log("optionoption",option)
+
+        if(selectedCollection && selectedCollection.includes(option)){
+            const filteredData = selectedCollection.filter((item) => item !== option);
+            setSelectedSelection(filteredData)
+        }else{
+            setSelectedSelection(current => [...current, option]);
+        }
+
+    }
+
+    useEffect(()=>{
+        console.log("paramsDataparamsData",paramsData)
+        if(paramsData && paramsData['category'] && paramsData['category'].length > 0){
+            setSelectedSelection(paramsData['category'])
+        }
+
+    },[paramsData])
+
+    console.log("selectedCollectionselectedCollection",selectedCollection)
+    const onClickSelection1 = (option) => {
+        console.log("option",option)
         // if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(option)) {
         //     const filteredData = selectedOptions.filter((item) => item !== option);
         //     setSelectedOptions(filteredData);
@@ -250,6 +276,14 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
     },[selectedOptions,selectedSingle])
     const handelApply = () => {
         setSelectedFilter("NOT_SELCTED")
+        addQuryPrams("category",selectedCollection) 
+        setParamsData((prevObject)=>({...prevObject,category:selectedCollection}))
+    }
+    const handelCancel = () => {
+        setSelectedFilter("NOT_SELCTED")
+        if(paramsData && paramsData['category'] && paramsData['category'].length > 0){
+            setSelectedSelection(paramsData['category'])
+        }
     }
     if (slectedFilter === "Filter") {
         return (
@@ -273,7 +307,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                             {selectedCatogries.map((item) => {
                                 const { id = "", collectionName = "" } = item || {};
                                 let isOptionSelected = false
-                                if (paramsData && paramsData['category'] && paramsData['category'].length > 0 && paramsData['category'].includes(collectionName)){
+                                if (selectedCollection && selectedCollection.length > 0 && selectedCollection.includes(collectionName)){
                                     isOptionSelected = true
                                 }
                                 const image = isOptionSelected ? rectangularCheck : rectangularUnCheck;
@@ -292,7 +326,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                         </div>
                     </div>
                     <div className={style.footerButton} >
-                        <div onClick={() => setSelectedFilter("NOT_SELCTED")} className={style.cancel}><span>cancel</span></div>
+                        <div onClick={() => handelCancel()} className={style.cancel}><span>cancel</span></div>
                         <div onClick={() => handelApply()} className={style.filterApply}><span>ApplyFilter</span></div>
                     </div>
                 </div>
