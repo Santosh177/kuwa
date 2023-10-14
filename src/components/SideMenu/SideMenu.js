@@ -52,10 +52,10 @@ const AccountInfo = ({onclose}) => {
     return(
         <div className={styles.accountInfoWrapper}>
             <img className={styles.profileIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/profile.png' alt='profile-icon'></img>
-            <div className={styles.profileInfo} onClick={onRedirect}>
+            <div className={styles.profileInfo}>
                 <div className={styles.infoTxt}>Hi there,</div>
                 {(isLogin)?<div className={styles.userName}>{userName}</div>:
-                <div className={styles.notLoginTxt}>Sign Up / Login</div>}
+                <div className={styles.notLoginTxt}><span onClick={()=>router.push('/sign-up')}>Sign Up</span> / <span onClick={()=>router.push('/login')}>Login</span></div>}
             </div>
             <img className={styles.closeIcon} onClick={onclose} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
         </div>
