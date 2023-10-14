@@ -105,7 +105,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
                     <div className={style.filterSectionCategory}>
                         <div className={style.Txt} onClick={() => setIsCollapse(!isCollapse)}>
                             <div className={style.cat} >{cat.name}</div>
-                            <div className={style.arrrow}><img src={colapseImage} alt="collapse image" /></div>
+                            <div className={style.arrrow}><img src={colapseImage} alt="collapse image" style={(!isCollapse)?{WebkitTransform:'rotate(180deg)'}:{}}/></div>
                         </div>
                         {isCollapse && <div className={style.options}>
                             {options.map((ele) => {
@@ -129,7 +129,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
                         <div className={style.filterSectionCategory}>
                             <div className={style.Txt} onClick={() => setIsCollapse(!isCollapse)}>
                                 <div className={style.cat} >{superCollectionName}</div>
-                                <div className={style.arrrow}><img src={colapseImage} alt="collapse image" /></div>
+                                <div className={style.arrrow}><img src={colapseImage} alt="collapse image" style={(!isCollapse)?{WebkitTransform:'rotate(180deg)'}:{}} /></div>
                             </div>
                             {isCollapse && <div className={style.options}>
                                 {category && category.length > 0 ? category.map((ele) => {
