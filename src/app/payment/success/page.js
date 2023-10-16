@@ -10,7 +10,11 @@ export default function PaymentSuccess() {
   const orderId = searchParams.get('orderId')
 
     useEffect(()=>{
-      deleteAllItem()
+      deleteAllItem();
+      if(window && window.clevertap){
+        window.clevertap.setMultiValuesForKey("cart_items", []);
+      }
+      
     },[])
 
 

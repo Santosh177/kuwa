@@ -62,7 +62,8 @@ export default function Login() {
                 "MSG-push": true,                  // Enable push notifications
                 "MSG-sms": true,                   // Enable sms notifications
                 "MSG-whatsapp": true,              // Enable WhatsApp notifications
-              }
+              },
+              "cart_items": []
              })
           }
          } catch (err) {
