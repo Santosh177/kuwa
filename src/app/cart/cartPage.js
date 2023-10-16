@@ -58,10 +58,17 @@ export default  function Cart({cartData}) {
               const productId = item && item.id || "";
               const productName = item && item.description && item.description.name || "";
               const qty = item && item.quantity || 1;
-              const track = {
+              let variantId = null;
+              let track = {
                   productId: productId,
                   productName: productName,
                   quantity: qty,
+              }
+              if(item && item.variants && item.variants.variants){
+                 variantId = item.variants.variants.id;
+              }
+              if(variantId){
+                track['variantId'] = variantId;
               }
               trackData.push(track)
           })
