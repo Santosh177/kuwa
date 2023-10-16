@@ -121,7 +121,16 @@ const LogOut = () =>{
             })
             setIsLoading(false)
             if (res.status === 200) {
-                window.location.href = '/'
+                window.location.href = '/';
+                try {
+                    if(window && window.clevertap){
+                        window && window.clevertap && window.clevertap.logout && window.clevertap.logout();
+                        window && window.clevertap && window.clevertap.clear && window.clevertap.clear();
+                    }
+                   
+                } catch (error) {
+                    console.log(error,"error")
+                }
             } else {
               throw new Error(await res.text())
             }
