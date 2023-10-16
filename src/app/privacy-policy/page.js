@@ -128,7 +128,7 @@ Re: Privacy Compliance Officer : ankur@feelvaleo.com
 Kuwa Supplements, Valeo Wellbeing Technologies DMCC1JLT-Nook-178 One JLT Plot No: DMCC-EZ1-
 1AB, Jumeirah Lakes Towers, Dubai, UAE
 <br></br>
-+971-585-44-8626
++971 58 562 3240
 <br></br>
 `
 

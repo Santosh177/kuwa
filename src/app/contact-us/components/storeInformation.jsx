@@ -14,7 +14,7 @@ const StoreInformation = () => {
             </div>
             <div className={style.report}>
                 <div className={style.reportImg} ><img src="https://d25uasl7utydze.cloudfront.net/kuwa/report_send%20(1).svg" alt="report" /></div>
-                <div className={style.reportText}>Email: <span> support@getkuwa.com</span><br /> Contact Number: <span>+971-585-44-8626</span> </div>
+                <div className={style.reportText}>Email: <span> support@getkuwa.com</span><br /> Contact Number: <span>+971 58 562 3240</span> </div>
             </div>
             <div className={style.clock}>
                 <div className={style.clockImg}><img src="https://d25uasl7utydze.cloudfront.net/kuwa/clock.svg" alt="report" /></div>

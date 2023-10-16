@@ -120,7 +120,7 @@ const ContactInfo = [
         img: "https://d25uasl7utydze.cloudfront.net/kuwa/location.png"
     },
     {
-        name:'Call us at +971-585-44-8626',
+        name:'Call us at +971 58 562 3240',
         img:'https://d25uasl7utydze.cloudfront.net/kuwa/_phone.png'
         
     },
