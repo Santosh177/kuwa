@@ -53,6 +53,7 @@
         flex-direction: row;
         gap: 10px;
         align-items: center;
+        padding: 10px;
     }
    
     .countryInfo{
@@ -215,5 +216,16 @@
   
     .topHeader button {
       margin-top: 10px;
+    }
+  }
+
+  @media(max-width:290px){
+    .header{
+        .headerWrapper{
+            .headerInfo{
+                gap: 5px;
+                padding: 10px;
+            }
+        }
     }
   }
