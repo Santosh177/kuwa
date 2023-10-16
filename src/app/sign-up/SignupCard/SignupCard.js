@@ -127,6 +127,12 @@ export default function SignupCard() {
                     },
                     "cart_items": []
                    })
+                   window.clevertap.event.push("kuwa_user_signup_success", {
+                    "Country":countryName,
+                    "Email":email,
+                    "Name": name,
+                    "Phone": phone
+                  });
                 }
               }
               if(data && data.status_code && data.status_code == 400){
