@@ -6,6 +6,7 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import AddressForm from "../../../add-address/address-form/address-form";
 import SubmitBtn from "../../../component/SubmitBtn/SubmitBtn";
 import styles from './edit-address.module.scss';
+import Loader from "@/components/Loader/Loader";
 
 
 export default function AddAddress() {
@@ -17,7 +18,9 @@ export default function AddAddress() {
   const editAddressid = params.id;
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={},setListOfAddress={} } = useAddressData();
   const [ addressData, setAddressData] = useState({});
-  const [ getFormValues , setGetFormValues] = useState(0)
+  const [ getFormValues , setGetFormValues] = useState(0);
+  const [isUpdateSuccess,setIsUpdateSuccess] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(()=>{
     getEditAddress ();
@@ -77,7 +80,8 @@ export default function AddAddress() {
       shippingAddressId: data.shippingAddress.id
     }
     try {
-      // setIsLoading(true)
+      setIsLoading(true)
+  
       const updateAddressResp  =  await fetch(`/api/update-address`, {
         method: 'POST',
         headers:{
@@ -86,10 +90,11 @@ export default function AddAddress() {
         body:JSON.stringify(editAddressData),
         cache: 'no-store'
       })
-      // setIsLoading(false)
+      setIsLoading(false)
         const updateAddress = await updateAddressResp.json();
         getAddress()
         if(refererPath){
+          setIsUpdateSuccess(true)
           router.replace(refererPath)
         }else{
           router.replace('/order-summary')
@@ -114,7 +119,8 @@ export default function AddAddress() {
         <>
           <div className={styles.editAddressWrapper}> 
               <AddressForm getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={(formData)=>onFormData(formData)} formData={addressData} isEdit={true}/>
-              <SubmitBtn  btnName="Update Address" onClick={onUpdateAddress}/>
+              <SubmitBtn isUpdateSuccess={isUpdateSuccess}  btnName="Update Address" onClick={onUpdateAddress}/>
+              <Loader  isShow={isLoading}/>
           </div>
         </>
       )
