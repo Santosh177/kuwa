@@ -4,7 +4,7 @@ import { authHeader } from '../../../lib/auth-cookies';
 export const dynamic = 'force-dynamic'
 export async function POST(request,res) {
     const requestBody = await request.json();
-    const applePaySessionResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/kuwa/apple-pay/validate-session/`, {
+    const applePaySessionResp = await fetch(`${process.env.BACKEND_END_DJANGO_API_URL}/api/v1/kuwa/apple-pay/validate-session/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

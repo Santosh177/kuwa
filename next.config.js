@@ -22,7 +22,8 @@ const {
     console.log(`isDev:${isDev}  isProd:${isProd}   isStaging:${isStaging}`)
   
     const env = {
-      BACKEND_END_POINT_URL: isDev?"https://api.kuwa.bevaleo.dev":(isStaging)?'https://api.kuwa.bevaleo.dev':(isPreProd)?"https://falcon.getkuwa.com":(isProd)?"https://falcon.getkuwa.com":"https://api.kuwa.bevaleo.dev"
+      BACKEND_END_POINT_URL: isDev?"https://api.kuwa.bevaleo.dev":(isStaging)?'https://api.kuwa.bevaleo.dev':(isPreProd)?"https://falcon.getkuwa.com":(isProd)?"https://falcon.getkuwa.com":"https://api.kuwa.bevaleo.dev",
+      BACKEND_END_DJANGO_API_URL:isDev?"https://api.bevaleo.dev":(isStaging)?'https://api.bevaleo.dev':(isPreProd)?"https://bevaleo.me":(isProd)?"https://bevaleo.me":"https://api.bevaleo.dev",
     }
   
     // const headers = [

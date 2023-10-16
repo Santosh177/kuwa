@@ -55,16 +55,16 @@ export default async function PaymentPage() {
     const customHeader = await authHeader();
     const countryCode = 'BH';
     console.log("padasd")
-    const getTamaraPaymentResp  =  await fetch(`https://phoenix.bevaleo.dev/tamara/payment-types?countryCode=${countryCode}`, {
+    const getTamaraPaymentResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/payment-types?countryCode=${countryCode}`, {
       method: 'GET',
       cache: 'no-store' 
     })
     console.log("getTamaraPaymentRespgetTamaraPaymentResp",getTamaraPaymentResp)
     const getTamaraPaymentConfigData = await getTamaraPaymentResp.json();
     console.log("getTamaraPaymentConfigData",getTamaraPaymentConfigData);
-    tamaraConfig = getTamaraPaymentConfigData;
+    tamaraConfig = getTamaraPaymentConfigData || [];
   } catch (error) {
-    
+
   }
 
   
