@@ -86,7 +86,7 @@ export default async function RootLayout({ children }) {
 
   const isProd = (process.env.NODE_ENV === 'pre-prod') || (process.env.NODE_ENV === 'prod')
 
-
+console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
 
   return (
     <html lang="en">
@@ -96,7 +96,7 @@ export default async function RootLayout({ children }) {
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />
       <Script src="/tamara-script.js" strategy="lazyOnload" />
-      <Script src={isProd?"/clevertap-prod.js":"/clevertap-stage.js"} strategy="lazyOnload" />
+      <Script src={process.env.CLEVER_TAP_FILE_CONFIG} strategy="lazyOnload" />
       
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>

@@ -9,9 +9,13 @@
     "qa-start":"NODE_ENV=qa next start",
     "pre-prod-build":"NODE_ENV=pre-prod next build",
     "pre-prod-start":"NODE_ENV=pre-prod next start",
+    "prod-build":"NODE_ENV=pre-prod next build",
+    "prod-start":"NODE_ENV=pre-prod next start",
     "start": "next start",
     "lint": "next lint",
-    "start-cmd":"NODE_ENV=pre-prod pm2 start npm --name app1 -- run start -- -p 3000"
+    "start-cmd-qa":"NODE_ENV=qa pm2 start npm --name app1 -- run start -- -p 3000",
+    "start-cmd-pre-prod":"NODE_ENV=pre-prod pm2 start npm --name app1 -- run start -- -p 3000",
+    "start-cmd":"NODE_ENV=prod pm2 start npm --name app1 -- run start -- -p 3000"
   },
   "dependencies": {
     "cookie": "^0.5.0",
