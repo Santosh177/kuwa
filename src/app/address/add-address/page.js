@@ -95,9 +95,11 @@ export default function AddAddress() {
           setSelectedAddress(saveAddress['shippingAddress']);
           setListOfAddress(currentState => [...currentState, saveAddress['shippingAddress']])
           if(refererPath){
-            router.replace(refererPath)
+            // router.replace(refererPath)
+            window.location.replace(refererPath)
           }else{
-            router.replace('/order-summary')
+            window.location.replace('/order-summary')
+            // router.replace('/order-summary')
           }
           
         } else {
