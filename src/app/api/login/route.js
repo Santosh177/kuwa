@@ -17,14 +17,20 @@ export async function POST(request,res) {
 
       
       console.log("loginResploginResp",loginResp)
-      if(loginResp && loginResp.status && loginResp.status === 401){
-        return NextResponse.json({status:loginResp})
-      }else{
-        const loginData = await loginResp.json();
-
-        console.log("loginDatata",loginData)
-        setTokenCookie(res, loginData.token , loginData.id)
-        return NextResponse.json({status:"SUCCESS",data:loginData})
+      try {
+        if(loginResp && loginResp.status && loginResp.status === 401){
+          return NextResponse.json({status:loginResp})
+        }else if(loginResp && loginResp.status && loginResp.status === 200){
+          const loginData = await loginResp.json();
+  
+          setTokenCookie(res, loginData.token , loginData.id)
+          return NextResponse.json({status:"SUCCESS",data:loginData})
+        }else{
+          return NextResponse.json({status:"FAILURE",data:null})
+        }
+      } catch (error) {
+        return NextResponse.json({status:"FAILURE",data:null})
       }
+      
      
 }
