@@ -6,7 +6,7 @@ export async function POST(request,res) {
     const requestBody = await request.json();
     const customHeader = await authHeader();
     console.log("requestBody",requestBody)
-    const updateProfileResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${customHeader.user}`, {
+    const updateProfileResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer-update/${customHeader.user}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -25,7 +25,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         if(window && window.TamaraProductWidget && Object.keys(tamaraConfig).length > 0 ){
             window.TamaraProductWidget.render()
         }
-    },[window && window.TamaraProductWidget,finalPrice,currency,tamaraConfig])
+    },[(typeof window !== "undefined") && window && window.TamaraProductWidget,finalPrice,currency,tamaraConfig])
 
     const tamaraMinAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].min_limit && tamaraConfig[0].min_limit.amount:0
     const tamaraMaxAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].max_limit && tamaraConfig[0].max_limit.amount:0
