@@ -38,9 +38,9 @@ const validateShippingAddressForm = (formData) => {
     if(!formData.country){
       errors.country = "Country is required";
     }
-    if(!formData.stateProvince){
-      errors.stateProvince = "State Province is required";
-    }
+    // if(!formData.stateProvince){
+      // errors.stateProvince = "State Province is required";
+    // }
     return errors;
   };
 
@@ -56,9 +56,9 @@ const validateShippingAddressForm = (formData) => {
     if(!formData.country){
       errors.country = "Country is required";
     }
-    if(!formData.stateProvince){
-      errors.stateProvince = "State Province is required";
-    }
+    // if(!formData.stateProvince){
+    //   errors.stateProvince = "State Province is required";
+    // }
     return errors;
   };
 
@@ -124,8 +124,8 @@ const ShippingAddressForm = ({onChange={},values={},errors={}}) => {
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
                 <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="stateProvince" placeHolder="State Province*"  value={values['stateProvince']} onInputChange={onChange}   />
-                    {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>}
+                    <Input type="text" fieldName="stateProvince" placeHolder="State Province"  value={values['stateProvince']} onInputChange={onChange}   />
+                    {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
                 </div>
             </div>
         </div>
@@ -153,8 +153,8 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
                 <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="stateProvince" placeHolder="State Province*"  value={values['stateProvince']} onInputChange={onChange}   />
-                    {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>}
+                    <Input type="text" fieldName="stateProvince" placeHolder="State Province"  value={values['stateProvince']} onInputChange={onChange}   />
+                    {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
                 </div>
             </div>
         </div>

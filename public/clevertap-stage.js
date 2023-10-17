@@ -1,5 +1,4 @@
      var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
-     console.log("FILEEEEprocess.env.NODE_ENVprocess.env.NODE_ENV",process.env.NODE_ENV)
  // replace with the CLEVERTAP_ACCOUNT_ID with the actual ACCOUNT ID value from your Dashboard -> Settings page
 clevertap.account.push({"id": "TEST-K97-775-696Z"});
 clevertap.privacy.push({optOut: false}); //set the flag to true, if the user of the device opts out of sharing their data
