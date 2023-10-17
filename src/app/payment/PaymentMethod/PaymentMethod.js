@@ -77,7 +77,7 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
   const isShowTabby = (parseFloat(price) > 0)&&(parseFloat(price) >= parseFloat(tabbyMinLimit)) && (parseFloat(price) <= parseFloat(tabbyMaxLimit));
   
 
-  if((isTamara && isShow) && (isTabby && isShowTabby) ){
+  if((isTamara && isShow) || (isTabby && isShowTabby) ){
     return(
       <div className={styles.payWithEmi}>
         <div className={styles.headerContainer}>
