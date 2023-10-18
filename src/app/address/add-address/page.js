@@ -71,6 +71,13 @@ export default function AddAddress() {
                 },
                 "cart_items": []
                })
+               
+               window.clevertap.event.push("kuwa_user_add_address_signup_success", {
+                "Country":countryName,
+                "Email":email,
+                "Name": name,
+                "Phone": phone
+              });
             }
           }
           signupRespData.status_code=== 200 ? 
