@@ -4,10 +4,15 @@ import { authHeader } from "../../../lib/auth-cookies";
 
 import EmptyOrder from './EmptyOrders/EmptyOrders';
 
-
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation'
 export default async function MyOrders({}) {
 
-    
+    const token = cookies().get('token');
+    if(token && token.value){
+    }else{
+        redirect("/sign-up?referer=/my/orders")
+    }
   let listOfMyOrdser = [
     {
         "orderId": 2250,
