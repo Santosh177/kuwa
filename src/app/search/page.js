@@ -37,14 +37,13 @@ export default function Search() {
           if(searchApiData && searchApiData.length > 0 ){
               searchData = []
               searchApiData.map((data,index)=>{
-                  const sData = data['product'] || {}
-                  if(sData){
-                      const productData = {
-                          productImage : sData.productImage && sData.productImage.productImageUrl || "",
-                          productName: sData.productDescription && sData.productDescription.name || "",
-                          id: sData.id || "",
-                          seoUrl: data.seoUrl || ""
-                      }
+                  if(data && Object.keys(data).length > 0){
+                    const productData = {
+                      productImage : data.productImageUrl || "",
+                      productName: data.name || "",
+                      id: data.id || "",
+                      seoUrl: data.seoUrl || ""
+                  }
                       searchData.push(productData);
                       setSearchData(searchData)
                   }
