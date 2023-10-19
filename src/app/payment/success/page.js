@@ -39,8 +39,8 @@ export default function PaymentSuccess() {
          }
           window.clevertap.event.push("kuwa_order_confirmed_first_purchase", track);
         }else{
-          const isFirstOrder = listOfMyOrder.length >1;
-          if(!isFirstOrder){
+          // const isFirstOrder = listOfMyOrder.length >1;
+          // if(!isFirstOrder){
             const listOfOrder = listOfMyOrder[listOfMyOrder.length - 1];
             const track = {
               productId: listOfOrder.productId,
@@ -49,7 +49,7 @@ export default function PaymentSuccess() {
               orderProductId:listOfOrder.orderProductId
            }
             window.clevertap.event.push("kuwa_order_confirmed", track);
-        }
+        // }
       }
     }
   }
