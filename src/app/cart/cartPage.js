@@ -80,7 +80,7 @@ export default  function Cart({cartData}) {
               console.log(error, "not work for older user")
           }
       }
-  }, [cartData,window.clevertap]);
+  }, [cartData,(typeof window !== "undefined") && window.clevertap]);
 
 
     const getData = async() => {
