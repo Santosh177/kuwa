@@ -179,7 +179,8 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
     const [ childMenuData , setChildMenuData ] = useState([]);
     const onClick = (data) => {
         if(data && data.redirectionLink){
-            router.push(data.redirectionLink)
+            // router.push(data.redirectionLink)
+            window.location.href = data.redirectionLink
         }else{
             setKey(data);
             getProductTypesData(data.txt)
