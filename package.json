@@ -9,7 +9,7 @@
     "qa-start":"NODE_ENV=qa next start",
     "pre-prod-build":"NODE_ENV=pre-prod next build",
     "pre-prod-start":"NODE_ENV=pre-prod next start",
-    "prod-build":"NODE_ENV=pre-prod next build",
+    "prod-build":"NODE_ENV=prod next build",
     "prod-start":"NODE_ENV=pre-prod next start",
     "start": "next start",
     "lint": "next lint",
