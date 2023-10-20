@@ -101,7 +101,12 @@ const MainCategory = () => {
         const { category = "", sort = "" } = paramsData || {};
         let query = ""
         if (sort && category) {
-            query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category)}`
+            if(category && category.length > 0){
+                query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category)}`
+            }else{
+                query = `sort_by=${encodeURIComponent(sort)}`
+            }
+            
         } else if (sort && !category) {
             query = `sort_by=${encodeURIComponent(sort)}`
         } else if (!sort && category && category.length > 0) {
