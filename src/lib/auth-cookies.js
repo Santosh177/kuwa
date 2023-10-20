@@ -22,6 +22,7 @@ export function setTokenCookie(res, token,userId) {
     cookies().set({
       name: 'token',
       value: token,
+      expires:new Date(253402300000000),
       httpOnly: true,
       secure:true,
       domain: DOMAIN_CONFIG[env],
@@ -33,6 +34,7 @@ export function setTokenCookie(res, token,userId) {
       name: 'userId',
       value: userId,
       httpOnly: true,
+      expires:new Date(253402300000000),
       secure:true,
       domain:DOMAIN_CONFIG[env],
       path: '/',
@@ -42,7 +44,15 @@ export function setTokenCookie(res, token,userId) {
 
 export function setCountryCookie(res, countryId) {
   console.log("countryIdcountryId",countryId)
-  cookies().set('countryId', countryId);
+  cookies().set({
+    name: 'countryId',
+    value: countryId,
+    httpOnly: true,
+    expires:new Date(253402300000000),
+    secure:true,
+    domain:DOMAIN_CONFIG[env],
+    path: '/',
+  })
 	const response = NextResponse.next()
   response.cookies.set('countryId', countryId)
 }
@@ -101,7 +111,15 @@ export const authHeader = async() =>{
   
     if(!getDeviceID && !getDeviceID){
         const deviceId = generateDeviceId();
-        cookies().set('deviceID', deviceId);
+        cookies().set({
+          name: 'deviceID',
+          value: deviceId,
+          httpOnly: true,
+          expires:new Date(253402300000000),
+          secure:true,
+          domain:DOMAIN_CONFIG[env],
+          path: '/',
+        })
     }
     let data = {
       'Content-Type': 'application/json',
