@@ -10,12 +10,12 @@ import { useRouter } from 'next/navigation';
 // import React, { useState } from 'react';
 
 const ArticleCard = ({ articleData = [], isArabic = false }) => {
-
+  console.log("articleDataccc",articleData)
     //   const [isShowShare, setIsShowShare] = useState(false);
     //   const [shareLink, setShareLink] = useState('')
     const router = useRouter()
     const minToReadTxt = (isArabic) ? "دقائق قراءة" : "min read";
-     articleData=[{},{},{},{},{},{}]
+    //  articleData=[{},{},{},{},{},{}]
      function handleCard(){
         {console.log("router");
         router.push('/author-details')}
@@ -25,7 +25,8 @@ const ArticleCard = ({ articleData = [], isArabic = false }) => {
         <>
             <div id="health_article_container" className="main">
                 <div id="health_article_cards_div" className="cards">
-                    {articleData.map((value, index) => {
+                    {articleData && articleData.length>0 && articleData.map((value, index) => {
+                        console.log("value",value)
                         const sharevalue = isArabic ? `/ar/health-hub/article-page/${value.seoUrl}` : `/health-hub/article-page/${value.seoUrl}`;
                         const handelOnclick = () => {
                             if (value && value.seoUrl) {
@@ -81,30 +82,23 @@ const ArticleCard = ({ articleData = [], isArabic = false }) => {
                                          >
                                             <div id={`article card ${value.healthHubCategory}`} className={`${(isArabic && "categoryName-ar")} categoryName`}>
                                                 {(isArabic) ? value.healthHubCategoryArabic : value.healthHubCategory}
-                                                "hello brother"
                                             </div>
                                             <div id={`article card ${value.articleNameEnglish}`} className={`${(isArabic && "article-head-ar")} article-head`}>
-                                                {/* {(isArabic) ? value.articleNameArabic : value.articleNameEnglish}
-                                                 */}
-                                                 
-                                                    "nutritionlist"
-                                                 
+                                                {(isArabic) ? value.articleNameArabic : value.articleNameEnglish}  
                                             </div>
                                             <div id={`article card ${value.healthHubCategory} description`} className={`${(isArabic && "article-cont-ar")} article-cont`}>
                                                 {(isArabic) ? value.articleDescriptionArabic : value.articleDescriptionEnglish}
-                                                "hii i am abhishek kumar"
                                             </div>
                                             <div id={`article card ${value.healthHubCategory} category`} className="category-content">
                                                 <div id={`article card ${value.healthHubCategory} created`} className="created">
-                                                    {/* {getStringDateMonth(value.createdAt)} */}
-                                                    "hello"
+                                                    {getStringDateMonth(value.createdAt)}
                                                 </div>
                                                 <div className="dot">
                                                     <div className="circle"></div>
                                                 </div>
                                                 <div id={`article card ${value.healthHubCategory} time`} className="time-read">
                                                     {value.timeToRead + " " + `${minToReadTxt}`}
-                                                    {/* "hello" */}
+
                                                 </div>
                                             </div>
                                         </div>
