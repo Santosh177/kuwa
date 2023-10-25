@@ -4,19 +4,26 @@ import { redirect } from 'next/navigation';
 export default async function PaymentStatus(req,res) {
     const tapId = req && req.searchParams && req.searchParams['tap_id'] || null;
     let tapPaymentStatusData = ""
+    console.log("tap payment status")
     if(tapId){
-        const tapPaymentStatusResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/tap/payment-status-inquiry?chargeId=${tapId}`, {
+        const tapPaymentStatusResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tap/payment-status-inquiry?chargeId=${tapId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
         })
          tapPaymentStatusData = await tapPaymentStatusResp.json();
-        // if(tapPaymentStatusData && tapPaymentStatusData.status_code && tapPaymentStatusData.status_code == 500){
-        //     redirect("/payment/failure");
-        // }else{
-        //     redirect("/payment/success");
-        // }
+        if(tapPaymentStatusData && tapPaymentStatusData.status_code && tapPaymentStatusData.status_code == 500){
+            redirect("/payment/failure");
+        }else if(tapPaymentStatusData && tapPaymentStatusData.status_code && tapPaymentStatusData.status_code == 400){
+            redirect ("/payment")
+        }else if(tapPaymentStatusData && tapPaymentStatusData.status_code && (tapPaymentStatusData.status_code == 200 || tapPaymentStatusData.status_code == 200)){
+          const orderId = tapPaymentStatusData.order_id;
+          redirect(`/payment/success?orderId=${orderId}`);
+        }
+        else{
+            redirect("/payment/failure");
+        }
     }
 
       return (

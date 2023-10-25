@@ -6,7 +6,7 @@ export default async function PaymentSuccess(req,res) {
         const tamraSideOrderId = req && req.searchParams && req.searchParams.orderId || "";
 
         if(tamraSideOrderId){
-                const getOrderIdResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/tamara/order-id?transactionReference=${tamraSideOrderId}`, {
+                const getOrderIdResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/order-id?transactionReference=${tamraSideOrderId}`, {
                   method: 'GET',
                   headers: {
                     'Content-Type': 'application/json',

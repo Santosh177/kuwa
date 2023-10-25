@@ -9,25 +9,40 @@ import style from "./page.module.scss"
 import { authHeader } from "@/lib/auth-cookies"
 import RelatedProducts from "../component/RelatedProducts/reletedProducts"
 
+
+export async function generateMetadata({ params, searchParams }) {
+  const productID = params.id;
+
+  const customHeader = await authHeader();
+  const product = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/product-page/seo/${productID}`, {
+    headers: { ...customHeader },
+  });
+  const productData = await product.json();
+
+  const seoTitle = productData && productData.seo && productData.seo.metaTitle || "";
+  const seoDescription = productData && productData.seo && productData.seo.metaDescription || "";
+
+  return {
+    title: seoTitle || "",
+    description:seoDescription || ""
+  };
+}
+
 export default async function AllProduct(req) {
   const productID = req && req.params && req.params.id || "";
   const customHeader = await authHeader();
   console.log("customHeader",customHeader)
-  const res = await fetch(`https://api.kuwa.bevaleo.dev/module/product-page/${productID}`, {
+  const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/product-page/seo/${productID}`, {
     headers: { ...customHeader },
   });
   const productData = await res.json();
 
-  console.log("productDataproductData",productData)
+  // console.log("productDataproductData",productData)
 
-  const data = await fetch('https://api.kuwa.bevaleo.dev/module/home-page')
-  const response = await data.json();
- 
- const couponBanner = response.couponBanner;
- 
+
   return (
     <div className={style.productDetailContainerPage}>
-      <Header couponBanner={couponBanner}/>
+      <Header couponBanner={{}}/>
       {/* <div className={style.routeDetail} >Home / men's performance / product</div> */}
       <ProductDeatil productData={productData} />
       <div className={style.allDetailDisciptionContainer}>

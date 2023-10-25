@@ -34,11 +34,12 @@ const ProductSection = ({ resposneValue = [] }) => {
                             discount: discount,
                             discountType: discountType,
                             image: image || "",
-                            id: id || ""
+                            id: id || "",
+                            seoUrl:seoUrl || ""
                         }
                         return (
                             <div className={style.product}>
-                                <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: id, quantity: 1 })} />
+                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: id, quantity: 1 })} />
                             </div>
                         )
                     })}

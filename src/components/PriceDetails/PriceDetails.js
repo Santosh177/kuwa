@@ -8,7 +8,7 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
     )
 }
 
-const PriceDetails = ({data}) => {
+const PriceDetails = ({data,isHidePriceDetails=false}) => {
 
     const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0} = data || {}
 
@@ -23,6 +23,7 @@ const PriceDetails = ({data}) => {
                 <div className={styles.rowItemLeftText}>Price ({cartItemCount} items)</div>
                 <div className={styles.rowItemRightText}>{ currency +" " + subTotal }</div>
             </div>
+           {!isHidePriceDetails && <>
             {discountAmount > 0 &&<div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Discount</div>
                 <div  className={[styles.rowItemLeftText,styles.discountAmount].join(" ")}>- {currency + " "+ discountAmount} </div>
@@ -36,6 +37,8 @@ const PriceDetails = ({data}) => {
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>Total Amount</div>
                 <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + totalAmount}</div>
             </div>
+            </>}
+           
        </div>
        </div>
     )

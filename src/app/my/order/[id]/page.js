@@ -17,7 +17,7 @@ export default async function MyOrderDetails(req) {
   try {
     
     const customHeader = await authHeader();
-    const orderDetailsResp  =  await fetch(`https://api.kuwa.bevaleo.dev/module/detail-order/${orderId}`, {
+    const orderDetailsResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/detail-order/${orderId}`, {
       method: 'GET',
       headers:{
         ...customHeader

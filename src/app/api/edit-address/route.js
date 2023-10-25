@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(request,res) {
     const requestBody = await request.json();
     const customHeader = await authHeader();
-    const editAddressResp = await fetch(`https://api.kuwa.bevaleo.dev/module/addresses/${requestBody.id}`, {
+    const editAddressResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/addresses/${requestBody.id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

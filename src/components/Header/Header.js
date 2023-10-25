@@ -31,7 +31,7 @@ const SearchList = ({searchData=[]}) =>{
 }
 
 
-const Header = ({couponBanner}) => {
+const Header = ({couponBanner={}}) => {
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
@@ -46,6 +46,75 @@ const Header = ({couponBanner}) => {
     const [ searchData , setSearchData] = useState([])
     const [ sideMenuData , setSideMenuData] = useState([]);
     const inputBoxRef = useRef(null);
+
+    const [searchQuery, setSearchQuery] = useState('');
+  const [apiData, setApiData] = useState(null);
+
+  console.log("searchDatasearchData",searchData)
+  useEffect(() => {
+    let timer;
+
+    const makeApiCall = async () => {
+      try {
+        const countryId = selectedCountry && selectedCountry.id || "";
+        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchQuery}&country=${countryId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          })
+        const searchApiData = await searchApiResp.json();
+        let searchData = []
+        if(searchApiData && searchApiData.length > 0 ){
+            searchData = []
+            searchApiData.map((data,index)=>{
+                if(data && Object.keys(data).length > 0){
+                    const productData = {
+                        productImage : data.productImageUrl || "",
+                        productName: data.name || "",
+                        id: data.id || "",
+                        seoUrl: data.seoUrl || ""
+                    }
+                    searchData.push(productData);
+                    setSearchData(searchData)
+                }
+               
+            })
+
+        }else{
+            searchData.push([])
+            setSearchData([])
+        }
+        // Process the API response here
+        // setApiData(response.data);
+      } catch (error) {
+        console.error('API request failed:', error);
+      }
+    };
+
+    if (searchQuery) {
+      // Clear the previous timer if it exists
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      // Set a new timer to make the API call after a delay (e.g., 500 milliseconds)
+      timer = setTimeout(makeApiCall, 500);
+    }
+
+    // Cleanup the timer when the component unmounts
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [searchQuery]);
+
+  const onSearch = (event) => {
+
+    setIsShowSearchList(true);
+    setSearchQuery(event);
+  };
 
 
     useEffect(()=>{
@@ -92,7 +161,7 @@ const Header = ({couponBanner}) => {
 
     const handleClickOutside = (event) =>{
         if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && event.target.id !='search-container') {
-            setSearchTxt("")
+            setSearchQuery("")
             setIsShowSearchList(false)
         }
     }
@@ -129,13 +198,16 @@ const Header = ({couponBanner}) => {
         setIsShowCountry(false)
     }
 
-    const onSearch = async(searchValue) => {
+    const onSearcha = async(searchValue) => {
         setSearchTxt(searchValue);
+        	
         setIsShowSearchList(true);
         console.log("customHeadercustomHeader",selectedCountry)
         const countryId = selectedCountry && selectedCountry.id || "";
-        const searchApiResp = await fetch(`https://api.kuwa.bevaleo.dev/module/search/product/?key=${searchValue}&country=${countryId}`, {
+        const abortController = new AbortController();
+        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchValue}&country=${countryId}`, {
             method: 'GET',
+            signal: abortController.signal,
             headers: {
               'Content-Type': 'application/json',
             }
@@ -143,15 +215,23 @@ const Header = ({couponBanner}) => {
         const searchApiData = await searchApiResp.json();
         let searchData = []
         if(searchApiData && searchApiData.length > 0 ){
+            searchData = []
             searchApiData.map((data,index)=>{
-                const productData = {
-                    productImage : data.productImage && data.productImage.productImageUrl || "",
-                    productName: data.productDescription && data.productDescription.name || "",
-                    id: data.id || ""
+                const sData = data['product'] || {}
+                if(sData){
+                    const productData = {
+                        productImage : sData.productImage && sData.productImage.productImageUrl || "",
+                        productName: sData.productDescription && sData.productDescription.name || "",
+                        id: sData.id || "",
+                        seoUrl: data.seoUrl || ""
+                    }
+                    searchData.push(productData);
+                    setSearchData(searchData)
                 }
-                searchData.push(productData);
-                setSearchData(searchData)
+               
             })
+
+        abortController.abort();
         }else{
             searchData.push([])
             setSearchData([])
@@ -186,11 +266,11 @@ const Header = ({couponBanner}) => {
                     </div>
                     <div>
                     <div className={styles.searchInputWrapper}  >
-                        <input ref={inputBoxRef} className={styles.searchInput} style={(searchTxt)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchTxt} onChange={(e)=>
+                        <input ref={inputBoxRef} className={styles.searchInput} style={(searchQuery)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchQuery} onChange={(e)=>
                             onSearch(e.target.value)} placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
-                    {(searchTxt && isShowSearchList) && <SearchList searchData={searchData} />}
+                    {(searchQuery && isShowSearchList) && <SearchList searchData={searchData} />}
                     </div>
                    
                    

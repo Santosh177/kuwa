@@ -10,9 +10,8 @@ export default function OrderDetails({data}) {
 
   const router = useRouter()
 
-  console.log("datadata",data)
 
-  const {address={} , product={}, orderId="" , price={} } = data || {};
+  const {address={} , product={}, orderId="" , price={},parentOrderId="" } = data || {};
   const orderStatus = product['status']
   
 
@@ -30,14 +29,14 @@ export default function OrderDetails({data}) {
   return (
     <div className={styles.orderDetails}>
         <div className={styles.orderDetailsLeftContainer}>
-            <OrderItem  product={product} orderId={orderId} currency={price['currency']}/>
+            <OrderItem  product={product} orderId={parentOrderId} currency={price['currency']}/>
             <OrderDeliveryStatus  orderStatus={orderStatus}/>
             <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
-            <PriceDetails data={priceDetailsData} />
+            <PriceDetails data={priceDetailsData} isHidePriceDetails={true} />
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
-            {orderStatus ==="CREATED" && <div className={styles.cancelOrderBtn} onClick={()=>router.push(`/my/order/cancellation-request/${product.productId}`)}>Cancel my order</div>}
+            {orderStatus.toLocaleUpperCase() ==="CREATED" && <div className={styles.cancelOrderBtn} onClick={()=>window.location.href = `/my/order/cancellation-request/${product.productId}`}>Cancel my order</div>}
         </div>
       
         

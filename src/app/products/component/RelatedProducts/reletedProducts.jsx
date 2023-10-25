@@ -29,7 +29,7 @@ const RelatedProducts = ({ productData = {} }) => {
                 <div className={style.relatedProduct}>
                     <div className={style.relatatedTxt}>Related Products</div>
                     <div className={style.productContainer}>
-                        <div class={style.leftArrow} onClick={()=>handelArrow(-220)}>
+                        <div className={style.leftArrow} onClick={()=>handelArrow(-220)}>
                             <img src="https://d25uasl7utydze.cloudfront.net/kuwa/right%20arrow.png" alt="" />
                         </div>
                         <div ref={leftArrow} className={style.allProducts}>
@@ -44,7 +44,8 @@ const RelatedProducts = ({ productData = {} }) => {
                                     discount: discount,
                                     discountType: discountType,
                                     image: image || "",
-                                    id: id || ""
+                                    id: id || "",
+                                    seoUrl:seoUrl || ""
                                 }
                                 return (
                                     <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: id, quantity: 1 })} />

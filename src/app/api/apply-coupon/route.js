@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(request,res) {
     const requestBody = await request.json();
     const customHeader = await authHeader();
-    const applyCouponResp = await fetch('https://api.kuwa.bevaleo.dev/apply-coupon-cart', {
+    const applyCouponResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/apply-coupon-cart`, {
         method: 'POST',
         headers: {...customHeader},
         body:JSON.stringify(requestBody)

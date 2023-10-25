@@ -9,6 +9,10 @@ import styles from './side-menu.module.scss';
 const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
     const router = useRouter()
 
+
+    
+ 
+
     return(
         <div className={styles.myAccountContainer}>
             <div className={styles.myAccount}>
@@ -20,9 +24,11 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
             </div>
             {
                 data.map((data,index)=>{
+                    if(!data.name)
+                        return
                     return(
                         <>
-                            <div onClick={()=>router.push(`/category/${data.name}`)} className={styles.item} key={index}>{data.name}</div>
+                            <div onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data.name)}`} className={styles.item} key={index}>{data.name}</div>
                             <div className={styles.horizontalLine}></div>
                         </>
                     )
@@ -46,10 +52,10 @@ const AccountInfo = ({onclose}) => {
     return(
         <div className={styles.accountInfoWrapper}>
             <img className={styles.profileIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/profile.png' alt='profile-icon'></img>
-            <div className={styles.profileInfo} onClick={onRedirect}>
+            <div className={styles.profileInfo}>
                 <div className={styles.infoTxt}>Hi there,</div>
                 {(isLogin)?<div className={styles.userName}>{userName}</div>:
-                <div className={styles.notLoginTxt}>Sign Up / Login</div>}
+                <div className={styles.notLoginTxt}><span onClick={()=>router.push('/sign-up')}>Sign Up</span> / <span onClick={()=>router.push('/login')}>Login</span></div>}
             </div>
             <img className={styles.closeIcon} onClick={onclose} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
         </div>
@@ -91,11 +97,11 @@ const OtherInfo = () =>{
     const router = useRouter();
     return(
         <div className={styles.OtherInfo}>
-            <div className={styles.txt} onClick={()=>router.push('/blog')}>Blog</div>
+            {/* <div className={styles.txt}>Blog</div>
+            <div className={styles.infoLine}> | </div> */}
+            <div className={styles.txt} onClick={()=>window.location.href='/contact-us'}>Contact Us</div>
             <div className={styles.infoLine}> | </div>
-            <div className={styles.txt} onClick={()=>router.push('/contact-us')}>Contact Us</div>
-            <div className={styles.infoLine}> | </div>
-            <div className={styles.txt} onClick={()=>router.push('/terms-of-service')}>Terms of Service</div>
+            <div className={styles.txt} onClick={()=>window.location.href='/terms-of-service'}>Terms of Service</div>
         </div>
     )
 }
@@ -115,7 +121,16 @@ const LogOut = () =>{
             })
             setIsLoading(false)
             if (res.status === 200) {
-                window.location.href = '/'
+                window.location.href = '/';
+                try {
+                    if(window && window.clevertap){
+                        window && window.clevertap && window.clevertap.logout && window.clevertap.logout();
+                        window && window.clevertap && window.clevertap.clear && window.clevertap.clear();
+                    }
+                   
+                } catch (error) {
+                    console.log(error,"error")
+                }
             } else {
               throw new Error(await res.text())
             }
@@ -164,7 +179,8 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
     const [ childMenuData , setChildMenuData ] = useState([]);
     const onClick = (data) => {
         if(data && data.redirectionLink){
-            router.push(data.redirectionLink)
+            // router.push(data.redirectionLink)
+            window.location.href = data.redirectionLink
         }else{
             setKey(data);
             getProductTypesData(data.txt)
@@ -187,7 +203,7 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
           console.log("getProductTypeData",getProductTypeData);
           getProductTypeData['list'].map((data,index)=>{
             const {description={} , id="" } = data || {}
-            childMenuData.push({name:description.name,id:id})
+            childMenuData.push({name:description && description.name,id:id})
           })
           setChildMenuData(childMenuData)
     }

@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useCountryList } from '@/context/countryList';
 import { useCartItems } from '@/context/cartItems';
+import { useCountry } from '@/context/contryDetails';
 import DeliveryAddress from "../DeliveryAddress/DeliveryAddress";
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
@@ -19,7 +20,8 @@ export default function OrderSummaryPage({cartData}) {
   const router = useRouter();
   const countryList = useCountryList();
   const {setCartItemCount={} } = useCartItems();
-  const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
+  const { selectedCountry={} } = useCountry();
+  const deliveryFeesConfig = selectedCountry;
   const { listOfAddress=[], selectedAddress ={},setSelectedAddress={},setListOfAddress={}} = useAddressData();
   const [ data , setData ] = useState(cartData);
   const [ cartItems , setCartItems ] = useState([]);
@@ -99,7 +101,6 @@ const refreshData = () => {
 
  
 const onUpdateItem = async(data) => {
-  console.log("datadata",data)
   setIsLoading(true)
   const cartItem = await updateCartItem(data);
   refreshData()
@@ -126,7 +127,7 @@ const onProceed = () => {
         <>
           <div className={styles.orderSummary}>
             <div className={styles.addressAndProductDetails}> 
-              <div className={[styles.headerTxt,styles.addressTxt].join(" ")}>Address & product details</div>
+              <div className={[styles.headerTxt,styles.addressTxt].join(" ")}>Address & Product Details</div>
               <DeliveryAddress />
 
               {
@@ -145,7 +146,7 @@ const onProceed = () => {
               </div>
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed to next"  totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
+          <PaymentFooterBtn btnName="Proceed To Next"  totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
         </>
       )

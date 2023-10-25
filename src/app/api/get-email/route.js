@@ -18,7 +18,7 @@ export async function POST(request,res) {
   };
 
   try {
-    const response = await fetch(`https://api.kuwa.bevaleo.dev/send-email?email=${email}`, requestOptions);
+    const response = await fetch(`${process.env.BACKEND_END_POINT_URL}/send-email?email=${email}`, requestOptions);
     const data = await response.json();
     console.log("emailData",data); 
     return NextResponse.json(data)

@@ -158,7 +158,8 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
                     discount:discount,
                     discountType:discountType,
                     image:data.image || "",
-                    id: data.id || ""
+                    id: data.id || "",
+                    seoUrl:data.seoUrl || ""
                   }
                   return(
                     <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} key={index}/>

@@ -3,17 +3,17 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import Payment from "./payment";
 import { authHeader } from "../../lib/auth-cookies";
+import { redirect } from 'next/navigation';
 import styles from './pages.module.scss';
 
 export default async function PaymentPage() {
-  console.log("PaymentPagePaymentPage",PaymentPage)
   let getCartItems = [];
   let paymentModes = [];
   let tamaraConfig = [];
   try {
     
     const customHeader = await authHeader();
-    const getCartItemResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
+    const getCartItemResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/cart`, {
       method: 'GET',
       headers:{
         ...customHeader
@@ -25,11 +25,18 @@ export default async function PaymentPage() {
   } catch (error) {
     
   }
+
+
+  console.log("getCartItemsgetCartItems++++",getCartItems)
+
+    if((getCartItems && getCartItems.length == 0 ) || (getCartItems.status == 404)){
+      redirect(`/`);
+    }
   
 
   try {
     const customHeader = await authHeader();
-    const getPaymentConfigData  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/payment-config', {
+    const getPaymentConfigData  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/payment-config`, {
       method: 'GET',
       headers:{
         ...customHeader
@@ -46,23 +53,28 @@ export default async function PaymentPage() {
 
   try {
     const customHeader = await authHeader();
-    const countryCode = 'AE';
+    const countryCode = 'BH';
     console.log("padasd")
-    const getTamaraPaymentResp  =  await fetch(`https://phoenix.bevaleo.dev/tamara/payment-types?countryCode=${countryCode}`, {
+    const getTamaraPaymentResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/payment-types?countryCode=${countryCode}`, {
       method: 'GET',
       cache: 'no-store' 
     })
     console.log("getTamaraPaymentRespgetTamaraPaymentResp",getTamaraPaymentResp)
     const getTamaraPaymentConfigData = await getTamaraPaymentResp.json();
     console.log("getTamaraPaymentConfigData",getTamaraPaymentConfigData);
-    tamaraConfig = getTamaraPaymentConfigData;
+    tamaraConfig = getTamaraPaymentConfigData || [];
   } catch (error) {
-    
+
   }
 
   
   
 
+  // console.log("getCartItemsgetCartItems++++",getCartItems)
+
+  //   if((getCartItems && getCartItems.length == 0 ) || (getCartItems.status == 404)){
+  //     redirect(`/`);
+  //   }
 
  
       return (

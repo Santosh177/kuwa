@@ -8,7 +8,7 @@ export async function POST(request,res) {
 
     console.log("customHeader",customHeader)
     console.log("requestBodyrequestBody",requestBody)
-    const addToCartResp = await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart/', {
+    const addToCartResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/cart/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

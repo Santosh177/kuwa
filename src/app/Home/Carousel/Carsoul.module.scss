@@ -1,5 +1,5 @@
 .carouselContainer {
-    margin: 20px 95px;
+    // margin: 20px 95px;
    
   
   }
@@ -14,9 +14,9 @@
     position: relative;
     
     width: 100%;
-    height: 537px;
-    border-radius: 10px;
-    
+    // height: 537px;
+    // border-radius: 10px;
+    margin-top: -2px;
        
     object-fit: contain;
     
@@ -24,20 +24,36 @@
 
   @media (max-width: 768px) {
     .carouselContainer {
-      margin: 10px;
+      // margin: 10px;
       
       
     }
-    .Glider{
+    .Gliderr{
+      z-index: 99;
+      // z-index: -1;
         // margin-bottom: -5vh;
+        .glider-track{
+          gap: 30px;
+        }
     }
    
   
     .carouselSlide img {
-      height: 30vh;
+      // height: 30vh;
+      height: 100%;
+      border-radius: 0px !important;
+      margin-top: -2px;
+    }
+    .dots-slider{
+      margin-top: -10px;
+    }
+    #dots{
+      margin-top: -10px;
     }
   }
  
   
   
-  
+  #dots{
+    margin-top: -10px;
+  }

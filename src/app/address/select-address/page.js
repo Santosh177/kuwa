@@ -8,7 +8,7 @@ export default async function SelectAddress() {
 
   const customHeader = await authHeader();
   console.log("customHeader",customHeader)
-  const getAddressResp  =  await fetch(`https://api.kuwa.bevaleo.dev/module/address/`, {
+  const getAddressResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/address/`, {
     method: 'GET',
     headers:{
       ...customHeader

@@ -116,11 +116,11 @@ const SocialIcons = [
 
 const ContactInfo = [
     {
-        name:'Getkuwa, Valeo wellbeing Technologies DMCC, 1JLT-Nook-178 One JLT Plot No: DMCC-EZ1- 1AB, Jumeirah Lakes Towers, Dubai, UAE',
+        name:'Kuwa Supplements, Valeo Wellbeing Technologies DMCC 1JLT-Nook-178 One JLT Plot No: DMCC-EZ1-1AB, Jumeirah Lakes Towers, Dubai, UAE',
         img: "https://d25uasl7utydze.cloudfront.net/kuwa/location.png"
     },
     {
-        name:'Call us at +971 4 416-444',
+        name:'Call us at +971 58 562 3240',
         img:'https://d25uasl7utydze.cloudfront.net/kuwa/_phone.png'
         
     },
@@ -130,5 +130,102 @@ const ContactInfo = [
     }
 ]
 
+const HealthGoal = [
+    {
+        name:'Beauty & Skin',
+        url:'/collections?category=Beauty%20%26%20Skin'
+    },
+    {
+        name:'Bones',
+        url:'/collections?category=Bones'
+    },
+    {
+        name:'Cholesterol',
+        url:'/collections?category=Cholesterol'
+    },
+    {
+        name:'Diabetes',
+        url:'/collections?category=Diabetes'
+    },
+    {
+        name:'Digestion',
+        url:'/collections?category=Digestion'
+    },
+    {
+        name:'Focus & Energy',
+        url:'/collections?category=Focus%20%26%20Energy'
+    },
+    {
+        name:'Immunity',
+        url:'/collections?category=Immunity'
+    },
+    {
+        name:'Melts',
+        url:'/collections?category=Melts'
+    },
+    {
+        name:"Men's Performance",
+        url:'/collections?category=Men%27s%20Performance'
+    },
+    {
+        name:"Multivitamin",
+        url:'/collections?category=Multivitamin'
+    },
+    {
+        name:'Proteins',
+        url:'/collections?category=Proteins'
+    },
+    {
+        name:'Weight Management',
+        url:'/collections?category=Weight%20Management'
+    }
+]
 
-export default {CategoriesData,UsefulLinks,ContactInfo,SocialIcons}
+const Brands = [
+    {
+        name:'Herbal Max',
+        url:'/collections?category=Herbal%20Max'
+    },
+    {
+        name:'PRIME',
+        url:'/collections?category=Prime'
+    },
+    {
+        name:'Vedapure',
+        url:'/collections?category=Vedapure'
+    },
+    {
+        name:'Aadar',
+        url:'/collections?category=Aadar'
+    },
+    {
+        name:'Mamaearth',
+        url:'/collections?category=Mamaearth'
+    },
+    {
+        name:'Ultimate',
+        url:'/collections?category=Ultimate'
+    },
+    {
+        name:"Nature's Truth",
+        url:'/collections?category=Nature%27s%20Truth'
+    },
+    {
+        name:'Power Gummies',
+        url:'/collections?category=Power%20Gummies'
+    },
+    {
+        name:'Dabur',
+        url:'/collections?category=Dabur'
+    },
+    {
+        name:'EVOGEN',
+        url:'/collections?category=Evogen'
+    },
+    {
+        name:'O.R.S',
+        url:'/collections?category=O.R.S'
+    }
+]
+
+export default {CategoriesData,HealthGoal,Brands,UsefulLinks,ContactInfo,SocialIcons}

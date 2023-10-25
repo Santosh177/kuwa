@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 export default async function PaymentSuccess(req,res) {
     const paymentId = req && req.searchParams && req.searchParams['payment_id'] || null;
     if(paymentId){
-        const tabbyPaymentResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/tabby/callback?paymentId=${paymentId}`, {
+        const tabbyPaymentResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tabby/callback?paymentId=${paymentId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

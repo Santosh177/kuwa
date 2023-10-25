@@ -5,6 +5,7 @@ import Input from "@/components/Input/Input";
 import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
 import Loader from '@/components/Loader/Loader';
 import styles from './sign-up-card.module.scss';
+import { useCountry } from '@/context/contryDetails';
 import { useState } from 'react';
 
 const validateForm = (formData) => {
@@ -15,8 +16,8 @@ const validateForm = (formData) => {
   if (!formData.lastName) {
     errors.lastName = 'Last name is required.';
   }
-  if(!formData.mobNumber){
-    errors.mobNumber = "Mobile number is required";
+  if(!formData.mobileNumber){
+    errors.mobileNumber = "Mobile number is required";
   }
   if(!formData.email){
     errors.email = "Email is required";
@@ -33,10 +34,11 @@ const validateForm = (formData) => {
 
 
 const SignupForm = ({setFormData={},formData={},errors={}}) => {
-  
+  const { selectedCountry={} } = useCountry();
+  const countryCode = selectedCountry && selectedCountry.code || "";
   const onInputChange = (event, labelId) =>{
-    if(labelId === 'mobNumber'){
-      setFormData(inputs => ({ ...inputs, [labelId]: event}));
+    if(labelId === 'mobileNumber'){
+      setFormData(inputs => ({ ...inputs, [labelId]: "+"+event}));
     }else{
       setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
     }
@@ -55,12 +57,12 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
                 </div>
                 <div className={styles.inputContain}>
                     <Input type="text" id="lname" name="fname" placeHolder='Last name *'  value={formData.lastName || ""} onInputChange={(e)=>onInputChange(e,'lastName')}  />
-                    {errors.firstName && <span className={styles.errorMsg}>{errors.lastName}</span>}
+                    {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
                 </div>
             </div>
             <div>
-            <PhoneNumberInput type="text" fieldName="mobNumber"   value={formData.mobNumber || ""} onInputChange={onInputChange} />
-            {errors.mobNumber && <span className={styles.errorMsg}>{errors.mobNumber}</span>}
+            <PhoneNumberInput countryCode={countryCode} type="text" fieldName="mobileNumber"   value={formData.mobNumber || ""} onInputChange={onInputChange} />
+            {errors.mobileNumber && <span className={styles.errorMsg}>{errors.mobileNumber}</span>}
             </div>
             <div>
                 <Input autoComplete='off' lassName={styles.inputBox} type='email'  value={formData.email || ""} placeHolder='Email ID (ex. abc@gmail.com)' onInputChange={(e)=>onInputChange(e,'email')}  />
@@ -84,11 +86,13 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
 export default function SignupCard() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { selectedCountry={} } = useCountry();
     const [ formData , setFormData] = useState({});
     const [ errors, setErrors] = useState({});  
     const [isLoading , setIsLoading] = useState(false)
     const refererPath = searchParams.get('referer');
     
+    console.log("useCountry",selectedCountry)
   
 
 
@@ -102,6 +106,35 @@ export default function SignupCard() {
                 body:JSON.stringify(formData)
               })
               const data = await res.json();
+              if(data && data.status_code && data.status_code == 200){
+                const name = formData.firstName+ ' ' +formData.lastName;
+                const userId = data && data.data && data.data.id || null
+                const phone = formData.mobileNumber ;
+                const email = formData.email;
+                const countryName = selectedCountry && selectedCountry.name ||  ""
+                if(userId){
+                  window.clevertap.onUserLogin.push({
+                    "Site": {
+                      "Name": name,            // String
+                      "Identity": userId,              // String or number
+                      "Email": email,         // Email address of the user
+                      "Phone": phone, 
+                      "Country":countryName,
+                      "MSG-email": true,                // Disable email notifications
+                      "MSG-push": true,                  // Enable push notifications
+                      "MSG-sms": true,                   // Enable sms notifications
+                      "MSG-whatsapp": true,              // Enable WhatsApp notifications
+                    },
+                    "cart_items": []
+                   })
+                   window.clevertap.event.push("kuwa_user_signup_success", {
+                    "Country":countryName,
+                    "Email":email,
+                    "Name": name,
+                    "Phone": phone
+                  });
+                }
+              }
               if(data && data.status_code && data.status_code == 400){
                 setErrors({email:'This email address already exists. Please try logging in'})
                 setIsLoading(false)
