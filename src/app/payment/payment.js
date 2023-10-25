@@ -50,12 +50,18 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
  
   paymentModes.map((data,index)=>{
       if(data && data.paymentMode === "APPLE_PAY"){
-        console.log("&& window && window.ApplePaySession;", window && window.ApplePaySession)
+        // console.log("&& window && window.ApplePaySession;", window && window.ApplePaySession)
         config['applePay']['paymentMode'] =  data.paymentMode;
         config['applePay']['paymentGateway'] =  data.paymentGateway;
-        if(window && window.ApplePaySession){
-          config['applePay']['isEnable'] =  true;
+        try {
+          if(window && window.ApplePaySession){
+            config['applePay']['isEnable'] =  true;
+          }
+        } catch (error) {
+          
         }
+
+        
       }else if(data.paymentMode === "TAMARA"){
         config['tamara']['paymentMode'] =  data.paymentMode;
         config['tamara']['paymentGateway'] =  data.paymentGateway;
@@ -101,7 +107,7 @@ const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , on
               <div className={styles.paymentMethod}>
                 <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
               </div>
-              <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+              <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
       </div>
   )
 }
@@ -120,7 +126,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
       {/* <div className={styles.headerTxt}>Price Details</div> */}
       <PriceDetails data={priceDetails}/>
     </div>
-    <PaymentFooterBtn btnName="Proceed to pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+    <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
 </div>
   )
 }
@@ -132,7 +138,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const countryList = useCountryList();
   const { selectedCountry={} } = useCountry();
   const {isLogin=false, userData={}} = useAuth();
-  const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
+  console.log("countryListcountryList",countryList)
+  console.log("selectedCountryselectedCountry",selectedCountry)
+  const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {}
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   const [ data, setData] = useState(cartData);
   const [ cartItems , setCartItems] = useState([]);
@@ -176,17 +184,19 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         return({
           ...prevState,
           totalAmount:totalAmount - couponDiscountAmount,
+          finalPayloadTotalAmount:totalAmount,
           discountAmount: couponDiscountAmount
         });
       });
     }else{
-      setPriceDetails((prevState) => {
-        return({
-          ...prevState,
-          totalAmount:total,
-          discountAmount: 0
-        });
-      });
+      calculatePriceDetails()
+      // setPriceDetails((prevState) => {
+      //   return({
+      //     ...prevState,
+      //     totalAmount:total,
+      //     discountAmount: 0
+      //   });
+      // });
     }
   }
 
@@ -215,12 +225,21 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       cartItemCount: cartData && cartData.quantity,
       subTotal: subtotal,
       totalAmount: finalAmount,
+      finalPayloadTotalAmount:finalAmount,
       savedAmount: total - subtotal,
       discountAmount:total - subtotal,
       currency:currency,
       deliveryFees: (total < minThreshold) ? deliveryFeesConfig.deliveryFee : 0
     }
     setPriceDetails(priceDetailsData)
+  }
+
+  const calculateVatPercentage = async (subTotal) => {
+    if (selectedCountry && selectedCountry) {
+      const vatPercentage = selectedCountry.vat;
+      const vatAmount = subTotal-(((subTotal)* (100)) / (100 + (vatPercentage)))
+      return parseFloat(vatAmount.toFixed(2));
+    }
   }
 
 
@@ -231,8 +250,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const cartItemsData = getCartItems && getCartItems['products'];
       const cartItemPayload = await createPayloadForCartItems(cartItemsData);
       const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
-      const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['couponCode']}`;
+      const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['coupon']}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
+      const taxAmount = await calculateVatPercentage(priceDetails['subTotal'])
         let payload = {
           "cartId":getCartItems['id'] || "",
           "orderType": "one-time",
@@ -244,15 +264,15 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "countryId": selectedCountry.id || "",
           "description": description,
           "finalAmount": priceDetails['totalAmount'],
-          "totalAmount": priceDetails['totalAmount'],
-          "currency": "AED",
+          "totalAmount": priceDetails['finalPayloadTotalAmount'],
+          "currency": selectedCountry.currency || "",
           "orderSource": "WEBSITE",
           "orderCategory": "CART",
           "couponApplied": isCouponApplied || false,
-          "couponCode": couponCodeData['couponCode'] || "",
+          "couponCode": couponCodeData['coupon'] || "",
           "discount": priceDetails['discountAmount'],
           "paymentType": "Regular",
-          "taxAmount": 0,
+          "taxAmount": taxAmount,
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
           "cartItems": cartItemPayload
@@ -270,7 +290,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
               if(placeOrder && placeOrder.status_code == 200){
-                router.push('/payment/success')
+                // router.push('/payment/success')
+                window.location.href = '/payment/success'
               }
         }
         if(selectedPaymentMethod == "CHECKOUT_CARD"){
@@ -288,14 +309,15 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
               if(placeOrder && placeOrder.status_code == 200){
-                router.push(placeOrder.redirect_link)
+                // router.push(placeOrder.redirect_link)
+                window.location.href = placeOrder.redirect_link
               }
         }else if(selectedPaymentMethod == "TAMARA"){
               let items = await createPayloadForItems(cartItemsData);
               let tamaraPayload = {
                 "paymentMode":"TAMARA",
                 "paymentType":"PAY_BY_INSTALMENTS",
-                "locale":"en_AE",
+                "locale":"en_BH",
                 "installments":3,
                 "items": items
               }
@@ -313,7 +335,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             console.log("placeOrderplaceOrder",placeOrder)
             setIsLoader(false);
             if(placeOrder && placeOrder.status_code == 200){
-              router.push(placeOrder.redirect_link)
+              // router.push(placeOrder.redirect_link)
+              window.location.href = placeOrder.redirect_link
             }
 
         }else if(selectedPaymentMethod == "TABBY"){
@@ -339,7 +362,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
               if(placeOrder && placeOrder.status_code == 200){
-                router.push(placeOrder.redirect_link)
+                // router.push(placeOrder.redirect_link)
+                window.location.href = placeOrder.redirect_link
               }
 
         }else if(selectedPaymentMethod == "TAP"){
@@ -364,7 +388,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
               if(placeOrder && placeOrder.status_code == 200){
-                router.push(placeOrder.redirect_link)
+                // router.push(placeOrder.redirect_link)
+                window.location.href = placeOrder.redirect_link
               }
         }else if(selectedPaymentMethod == "COD"){
             payload['paymentMode'] = "COD";
@@ -381,9 +406,11 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               const orderId =placeOrder && placeOrder.order_id
               if(placeOrder && placeOrder.status_code == 200){
                 if(orderId){
-                  router.push(`/payment/success?orderId=${orderId}`)
+                  // router.replace(`/payment/success?orderId=${orderId}`)
+                  window.location.href = `/payment/success?orderId=${orderId}`
                 }else{
-                  router.push(`/payment/success`)
+                  window.location.href = `/payment/success`
+                  // router.replace(`/payment/success`)
                 }
                
               }
@@ -402,7 +429,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             setIsLoader(false);
             if(placeOrder && placeOrder.status_code == 200){
               appleSession.completePayment(ApplePaySession.STATUS_SUCCESS);
-              router.push(`/payment/success?orderId=${placeOrder.order_id}`)
+              // router.push(`/payment/success?orderId=${placeOrder.order_id}`)
+              window.location.href = `/payment/success?orderId=${placeOrder.order_id}`
             }
             // const applePaySupportednetworks = "visa, mastercard, amex";
             // let request = {

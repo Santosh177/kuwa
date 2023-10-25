@@ -6,6 +6,7 @@ import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
 import Loader from '@/components/Loader/Loader';
 import styles from './page.module.scss';
 import { useState } from 'react';
+import { useCountry } from '@/context/contryDetails';
 
 const validateForm = (formData) => {
   const errors = {};
@@ -44,6 +45,7 @@ export default function ForgetPassword() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg,setErrorMsg] = useState("");
     const [successMsg,setSuccessMsg] = useState("")
+    const { selectedCountry={} } = useCountry();
     const onInputChange =(e)=>{
         setEmail(e.target.value)
     }
@@ -59,8 +61,12 @@ export default function ForgetPassword() {
         });
         setIsLoading(false);
         const response = await res.json();
-        console.log("hbhjjs",response)
+        const countryName = selectedCountry && selectedCountry.name || "";
         if(response.statusCode === 200){
+          window.clevertap.event.push("kuwa_password_reset", {
+            "Country":countryName,
+            "Email":email,
+          });
           setIsEmailSent(true);
           setSuccessMsg('A link has been sent to your mail ID. If not found check spam folder.')
           setErrorMsg("")

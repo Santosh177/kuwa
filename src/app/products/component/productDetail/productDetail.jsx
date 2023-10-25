@@ -24,6 +24,17 @@ const ProductDeatil = ({ productData = {} }) => {
     const [ isLoading , setIsLoading] = useState(false)
     const router = useRouter()
 
+    useEffect(()=>{
+
+        if(variants && variants.length > 0){
+            const variantId = variants[0] && variants[0]['variants'] && variants[0]['variants']['id'];
+            console.log("variantIdvariantId",variantId)
+            if(variantId){
+                setselectedVarients(variantId)
+            }
+        }
+    },[variants])
+
     useEffect(() => {
         setIsLoading(true)
         const { productPriceAmount = 0, productPriceType = "", productPriceSpecialAmount = 0 } = price || {};
@@ -113,7 +124,6 @@ const ProductDeatil = ({ productData = {} }) => {
         if (response === 200) {
             // setNoOfProduct(1);
            const data = await getCartItems();
-           console.log("datadata",data)
            
             // router.push('/cart')
             // window.location.href = "/cart"
@@ -139,19 +149,15 @@ const ProductDeatil = ({ productData = {} }) => {
         setIsLoading(false)
         const cartItemsData = getCartItems && getCartItems['products'] || [];
         setCartItemData(getCartItems)
-        let cartItems = cartItemsData.map((data)=> {
-            if(data.id == id){
-                return data;
-            }
-        })
+        let cartItems = cartItemsData.find((data) => data.id == id)
         setIsLoading(false)
 
         console.log("cartItems",cartItems)
-        if(cartItems && cartItems.length > 0 && cartItems[0]){
-            setNoOfProduct(cartItems[0] && cartItems[0].quantity);
-            setIsAddedToCart(cartItems.length>0)
-            if(cartItems && cartItems[0]['variants'] && cartItems[0]['variants']['variants']){
-                const variantId = cartItems && cartItems[0]['variants'] && cartItems[0]['variants']['variants']['id'];
+        if(cartItems){
+            setNoOfProduct(cartItems && cartItems.quantity);
+            setIsAddedToCart(cartItems)
+            if(cartItems && cartItems['variants'] && cartItems['variants']['variants']){
+                const variantId = cartItems && cartItems['variants'] && cartItems['variants']['variants']['id'];
                 setselectedVarients(variantId)
 
             }
@@ -220,49 +226,24 @@ const ProductDeatil = ({ productData = {} }) => {
 
         }
     }
-    useEffect(()=>{
-
-        loadTamaraScript();
-        if(window){
-            
-    window.onload = function () {
-        window.tamaraAsyncCallback = function () {
-          window.TamaraProductWidget.init({
-            lang: "en",
-            publicKey: "7d7456c2-22f1-4ab2-8597-d7226d5469f0"
-          })
-          window.TamaraProductWidget.render()
-        };
-      }
+    try{
+        const tabbyMinLimit = 10;
+        const tabbyMaxLimit = 2000;
+        const isShowTabby = (finalPrice > tabbyMinLimit) && (finalPrice < tabbyMaxLimit)
+        if(isShowTabby){
+            new TabbyPromo({
+                selector: '#tabbyDetail', // required, content of tabby Promo Snippet will be placed in element with that selector.
+                currency: currency, // 'SAR, AED, KWD, BHD'
+                price: finalPrice, // required, price or the product. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
+                lang: 'en', // 'ar'
+                source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
+              // required, store Public Key which identifies your account when communicating with tabby.
+              });
         }
-    },[])
- 
-
-      // useEffect(() => {
-    const loadTamaraScript = () => {
-        let tamaraScript = document.createElement("script");
-        tamaraScript.setAttribute("src", "https://cdn.tamara.co/widget/product-widget.min.js");
-        document.body.appendChild(tamaraScript);
-      }
-
-    // console.log("object",loadTamaraScript);
-
-//   }, [])
-
-try {
-    
-    new TabbyPromo({
-        selector: '#tabbyDetail', // required, content of tabby Promo Snippet will be placed in element with that selector.
-        currency: currency, // 'SAR, AED, KWD, BHD'
-        price: finalPrice, // required, price or the product. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
-        lang: 'en', // 'ar'
-        source: 'product', // Optional, snippet placement; `product` for product page and `cart` for cart page.
-      // required, store Public Key which identifies your account when communicating with tabby.
-      });
-} catch (error) {
-    
-}
-
+       
+    }catch(error){
+       console.log("Error occurs while fetching tabby",error)
+    }
     console.log(productData,"productDataproductData")
     return (
         <div className={style.productPricingContainerOuter}>

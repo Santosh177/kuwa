@@ -8,8 +8,14 @@ export const addToCart = async(data) =>{
         },
         body:JSON.stringify(data)
       })
-    const addToCartRespData = await addToCartResp.json();
-    return addToCartRespData;
+      try {   
+        const addToCartRespData = await addToCartResp.json();
+        return addToCartRespData;
+        
+      } catch (error) {
+        return {}
+      }
+ 
 }
 
 export const updateCartItem = async(data) =>{
@@ -20,8 +26,14 @@ export const updateCartItem = async(data) =>{
         },
         body:JSON.stringify(data)
       })
-    const updateCartItemData = await updateCartItemResp.json();
-    return updateCartItemData;
+
+    try {
+      const updateCartItemData = await updateCartItemResp.json();
+      return updateCartItemData;
+    } catch (error) {
+      return {}
+    }
+
 }
 
 
@@ -33,8 +45,13 @@ export const deleteCartItem = async(data) =>{
         },
         body:JSON.stringify(data)
       })
-    const deleteCartItemData = await deleteCartItemResp.json();
-    return deleteCartItemData;
+      try {
+        const deleteCartItemData = await deleteCartItemResp.json();
+        return deleteCartItemData;
+      } catch (error) {
+        return {}
+      }
+    
 }
 
 export const getCartItem = async() =>{
@@ -47,6 +64,23 @@ export const getCartItem = async() =>{
     const getCartItemData = await getCartItemResp.json();
     return getCartItemData;
 }
+
+export const getTamaraPaymentTypes = async() =>{
+  const countryCode = 'BH';
+  const getTamaraPaymentTypes = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/payment-types?countryCode=${countryCode}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    try {
+      const getTamaraPaymentData = await getTamaraPaymentTypes.json();
+      return getTamaraPaymentData;
+    } catch (error) {
+      return [];
+    }
+}
+
 
 
 

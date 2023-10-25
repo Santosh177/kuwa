@@ -7,29 +7,52 @@ const TOKEN_NAME = 'token'
 
 export const MAX_AGE = 60 * 60 * 8 // 8 hours
 
+const DOMAIN_CONFIG = {
+  "development":'localhost',
+  "qa":'kuwa.bevaleo.dev',
+  'pre-prod':'preprod.kuwa.bevaleo.dev',
+  'prod':'getkuwa.com'
+}
+
+const env = process.env.NODE_ENV;
+
 export function setTokenCookie(res, token,userId) {
-  const cookie = serialize(TOKEN_NAME, token, {
-    maxAge: MAX_AGE,
-    expires: new Date(Date.now() + MAX_AGE * 1000),
-    httpOnly: true,
-    // secure: process.env.NODE_ENV === 'production',
-    path: '/',
-    sameSite: 'lax',
-  })
   const response = NextResponse.next()
   if(token){
-    cookies().set('token', token);
-    response.cookies.set('token', token)
+    cookies().set({
+      name: 'token',
+      value: token,
+      expires:new Date(253402300000000),
+      httpOnly: true,
+      secure:true,
+      domain: DOMAIN_CONFIG[env],
+      path: '/',
+    })
   }
   if(userId){
-    cookies().set('userId',userId)
-    response.cookies.set('userId', userId)
+    cookies().set({
+      name: 'userId',
+      value: userId,
+      httpOnly: true,
+      expires:new Date(253402300000000),
+      secure:true,
+      domain:DOMAIN_CONFIG[env],
+      path: '/',
+    })
   }
 }
 
 export function setCountryCookie(res, countryId) {
   console.log("countryIdcountryId",countryId)
-  cookies().set('countryId', countryId);
+  cookies().set({
+    name: 'countryId',
+    value: countryId,
+    httpOnly: true,
+    expires:new Date(253402300000000),
+    secure:true,
+    domain:DOMAIN_CONFIG[env],
+    path: '/',
+  })
 	const response = NextResponse.next()
   response.cookies.set('countryId', countryId)
 }
@@ -88,7 +111,15 @@ export const authHeader = async() =>{
   
     if(!getDeviceID && !getDeviceID){
         const deviceId = generateDeviceId();
-        cookies().set('deviceID', deviceId);
+        cookies().set({
+          name: 'deviceID',
+          value: deviceId,
+          httpOnly: true,
+          expires:new Date(253402300000000),
+          secure:true,
+          domain:DOMAIN_CONFIG[env],
+          path: '/',
+        })
     }
     let data = {
       'Content-Type': 'application/json',

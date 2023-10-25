@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation';
 import { useCountryList } from '@/context/countryList';
+import { useCountry } from '@/context/contryDetails';
 import { useCartItems } from '@/context/cartItems';
 import CartItemCard from "@/components/CartItemCard/CartItemCard"
 import PriceDetailsInfo from "@/components/PriceDetails/PriceDetails";
@@ -18,7 +19,8 @@ export default  function Cart({cartData}) {
     const router = useRouter();
     const countryList = useCountryList();
     const {setCartItemCount={} } = useCartItems();
-    const deliveryFeesConfig = countryList.find((data) => data.code == "AE" || data.code == "AF")
+    const { selectedCountry={} } = useCountry();
+    const deliveryFeesConfig = selectedCountry;
     const [ data , setData ] = useState(cartData);
     const [ cartItems , setCartItems ] = useState([]);
     const [ priceDetails , setPriceDetails ] = useState({});
@@ -48,6 +50,37 @@ export default  function Cart({cartData}) {
                 
         }
     },[data]);
+
+    useEffect(() => {
+      if ( cartData && cartData.products && cartData.products.length > 0) {
+          let trackData = []
+          cartData.products.map((item) => {
+              const productId = item && item.id || "";
+              const productName = item && item.description && item.description.name || "";
+              const qty = item && item.quantity || 1;
+              let variantId = null;
+              let track = {
+                  productId: productId,
+                  productName: productName,
+                  quantity: qty,
+              }
+              if(item && item.variants && item.variants.variants){
+                 variantId = item.variants.variants.id;
+              }
+              if(variantId){
+                track['variantId'] = variantId;
+              }
+              trackData.push(track)
+          })
+          try {
+              if (clevertap) {
+                  window.clevertap.setMultiValuesForKey("cart_items", trackData);
+              }
+          } catch (error) {
+              console.log(error, "not work for older user")
+          }
+      }
+  }, [cartData,(typeof window !== "undefined") && window.clevertap]);
 
 
     const getData = async() => {
@@ -161,7 +194,7 @@ export default  function Cart({cartData}) {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed to checkout" totalPrice={totalPrice} onProceed={onProceed} />
+          <PaymentFooterBtn btnName="Proceed To Checkout" totalPrice={totalPrice} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
         </>
       )

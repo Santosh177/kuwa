@@ -11,7 +11,7 @@ export async function POST(request,res) {
         country:parseInt(requestBody.countryId)
     }
     if(customHeader && customHeader.user){
-        const updateProfileResp = await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/country/${customHeader.user}?country=${parseInt(requestBody.countryId)}`, {
+        const updateProfileResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/country/${customHeader.user}?country=${parseInt(requestBody.countryId)}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',

@@ -45,11 +45,11 @@ We shall not be liable to you or to any third-party for any modification, price 
 <br></br>
 <b>SECTION 5 – RIGHT TO CANCEL YOUR PURCHASE</b>
 <br></br>
-If a product you have purchased on getkuwa.com isn’t your solution, you can return it within 72 hours from the time of your online purchase. Please call us first at +971-585-44-8626.
+If a product you have purchased on getkuwa.com isn’t your solution, you can return it within 72 hours from the time of your online purchase. Please call us first at +971 58 562 3240.
 <br></br>
 Products to be returned must be in their original packaging along with the original price tags, labels and invoices. Please note that the conditions for requesting return/refund depends on the type of product. Products such medicines, vitamins, personal care items and baby care products, temperature-sensitive items are prohibited for returns/refund. Please note that requests that do not meet Valeo supplements Return and Refund Policy are not eligible for return/refund.
 <br></br>
-All returns need pre-authorization by calling us at +971-585-44-8626, or to notify us by e-mail to our e-mail address, support@getkuwa.com, and must be received within 3 days of invoicing in unused, unopened condition.
+All returns need pre-authorization by calling us at +971 58 562 3240, or to notify us by e-mail to our e-mail address, support@getkuwa.com, and must be received within 3 days of invoicing in unused, unopened condition.
 <br></br>
 A re-stocking fee will apply to unauthorized returns and specialty items. Please call us for complete details and return address.
 <br></br>

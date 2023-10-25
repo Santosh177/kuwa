@@ -13,3 +13,17 @@
         }
     }
 }
+
+@media (max-width:990px){
+    .productSectionContainer{
+        .allProduct{
+            justify-content: center;
+            .product{
+                width: 45%;
+                .productCardItem{
+                    width: 100% !important;
+                }
+            }
+        }
+    }
+}

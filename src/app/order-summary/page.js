@@ -12,7 +12,7 @@ export default async function OrderSummary() {
   try {
     const customHeader = await authHeader();
     console.log("CART Cuuuuh",customHeader)
-    const getCartItemResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/cart', {
+    const getCartItemResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/cart`, {
       method: 'GET',
       headers:{
         ...customHeader

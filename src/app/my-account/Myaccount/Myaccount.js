@@ -72,6 +72,7 @@ export default function SignupCard() {
     const [ formData , setFormData] = useState({});
     const [ errors, setErrors] = useState({});  
     const [isLoading, setIsLoading] = useState(false);
+    const [isUpdateSuccess, setIsUpdateSuccess] = useState(false)
  
 
     useEffect(()=>{
@@ -97,7 +98,9 @@ export default function SignupCard() {
                 method: 'POST',
                 body:JSON.stringify(formData)
               })
+              setIsLoading(false);
             if (res.status === 200) {
+              setIsUpdateSuccess(true)
               window.location.href = '/'
             } else {
               throw new Error(await res.text())
@@ -118,6 +121,7 @@ export default function SignupCard() {
           <div className={styles.signUpTxt}>Personal Info</div>
             <SignupForm setFormData={setFormData} formData={formData} errors={errors}/>
             <div className={styles.createAccountBtn} onClick={onSignup}>Save details</div>
+           {isUpdateSuccess && <div className={styles.updateMsg}>Updated Successfully!</div>}
           </div>
           <Loader isShow={isLoading} />
         </>

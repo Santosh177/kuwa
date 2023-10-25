@@ -10,7 +10,7 @@ const CheckBox = ({ isChecked=false }) => {
       </div>
     );
   };
-export default function AddressInfo({data={},isSelected=false,onSelectAddress={},onEditAddress={},onRemoveAddress={}}) {
+export default function AddressInfo({data={},isSelected=false,onSelectAddress={},onEditAddress={},onRemoveAddress={}, showRemoveBtn=true}) {
   const router = useRouter();
   const pathName = usePathname();
   console.log("PathBane",pathName)
@@ -32,13 +32,13 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                         <div className={styles.actionTxt}>Edit</div>
                     </div>
-                    <div className={styles.action} onClick={(e)=>{
+                    {showRemoveBtn &&<div className={styles.action} onClick={(e)=>{
                      e.stopPropagation();
                       onRemoveAddress()
                       }}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                         <div className={styles.actionTxt}>Remove</div>
-                    </div>
+                    </div>}
                 </div>
                 
             </div>

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const getUser = async (data) => {
 
     try {
-      const userLoginResp  =  await fetch(`https://api.kuwa.bevaleo.dev/api/v1/customer/${data.userId}`, {
+      const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${data.userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ const getUser = async (data) => {
 
 
 const getCountryList = async() => {
-  const getCountryListResp  =  await fetch('https://api.kuwa.bevaleo.dev/api/v1/country/', {
+  const getCountryListResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/active/countries/`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export async function middleware(req) {
   let userData = {};
   let countryList = {};
   const response  = NextResponse.next()
-  if((token && token.value && userId && userId.value) && (!countryId || !countryId.value)){
+  if((token && token.value && userId && userId.value)){
     userData = await getUser({token:token.value , userId:userId.value});
     countryList = await getCountryList();
     if(userData && userData.isLogin){
@@ -56,4 +56,17 @@ export async function middleware(req) {
   }
 
   return response;
+}
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
 }

@@ -45,7 +45,7 @@
             .allProducts {
                 margin-top: 50px;
                 display: flex;
-                gap: 30px;
+                gap: 14px;
                 overflow: auto;
                 scroll-behavior: smooth;
             }
@@ -84,6 +84,7 @@
                 }
                 .allProducts {
                     margin-top: 22px;
+                    padding-bottom: 15px;
                 }
 
                 .relatatedTxt {
@@ -95,6 +96,15 @@
                 }
             }
 
+        }
+    }
+}
+@media(min-width:990px){
+    .relatedProductContiner{
+        .productContainer{
+            .allProducts{
+                padding-bottom: 29px;
+            }
         }
     }
 }

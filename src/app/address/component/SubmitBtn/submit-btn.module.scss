@@ -5,8 +5,16 @@
     padding-bottom: 16px;
     text-align: center;
     color: #FFFF;
-    margin-top: 28px;
+    margin-top: 8px;
 }
+.updateTxt{
+    text-align: center;
+    margin-bottom: 6px;
+    font-size: 10px;
+    color: #257a81;
+    margin-top: 10px;
+}
+
 
 @media(min-width: 990px){
     .submitBtnWrapper{
@@ -22,6 +30,7 @@
         align-items: center;
         cursor: pointer;
         margin-left: -16px;
+        flex-direction: column;
         .submitBtn{
             margin-top: unset !important;
             padding-top: 12px;

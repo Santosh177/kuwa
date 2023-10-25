@@ -5,7 +5,7 @@ import style from "./ProductReview.module.scss"
 
 const splitAndPush = (intialProduct, currentQueue) => {
     let finalResult = []
-    if (intialProduct.length > 0 && intialProduct.length >= currentQueue.length) {
+    if (intialProduct && intialProduct.length > 0 && intialProduct.length >= currentQueue.length) {
         const intialIndex = currentQueue.length
         for (let i = intialIndex; i < intialIndex + 3; i++) {
             if(intialProduct[i]){

@@ -38,9 +38,9 @@ const validateShippingAddressForm = (formData) => {
     if(!formData.country){
       errors.country = "Country is required";
     }
-    if(!formData.stateProvince){
-      errors.stateProvince = "State Province is required";
-    }
+    // if(!formData.stateProvince){
+      // errors.stateProvince = "State Province is required";
+    // }
     return errors;
   };
 
@@ -56,14 +56,14 @@ const validateShippingAddressForm = (formData) => {
     if(!formData.country){
       errors.country = "Country is required";
     }
-    if(!formData.stateProvince){
-      errors.stateProvince = "State Province is required";
-    }
+    // if(!formData.stateProvince){
+    //   errors.stateProvince = "State Province is required";
+    // }
     return errors;
   };
 
 
-const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
+const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={}}) => {
 
     const {isLogin=false, userData={}} = useAuth();
     // const onOrderUpdate = async(isOrderUpdate) => {
@@ -89,7 +89,7 @@ const PersonalInfoFrom = ({onChange={},values={},isEdit,errors={}}) => {
                     {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
                 </div>
             </div>
-            <PhoneNumberInput type="text" fieldName="mobNumber"  value={values['mobNumber']} onInputChange={onChange} />
+            <PhoneNumberInput countryCode={countryCode} type="text" fieldName="mobNumber"  value={values['mobNumber']} onInputChange={onChange} />
             {errors.mobNumber && <span className={styles.errorMsg}>{errors.mobNumber}</span>}
             <div className={styles.orderUpdate} onClick={()=>{
               onChange(!values['orderUpdate'],'orderUpdate')
@@ -124,8 +124,8 @@ const ShippingAddressForm = ({onChange={},values={},errors={}}) => {
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
                 <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="stateProvince" placeHolder="State Province*"  value={values['stateProvince']} onInputChange={onChange}   />
-                    {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>}
+                    <Input type="text" fieldName="stateProvince" placeHolder="State Province"  value={values['stateProvince']} onInputChange={onChange}   />
+                    {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
                 </div>
             </div>
         </div>
@@ -146,15 +146,15 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
                 {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
             </div>
             <Input type="text" fieldName="apartment" placeHolder="Appartment name, Floor, Room no, City*" value={values['apartment']} onInputChange={onChange}  />
-            {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
+            {errors.apartment && <span className={styles.errorMsg}>{errors.apartment}</span>}
             <div className={styles.countryContainer}>
                 <div className={styles.countryInfoField}>
                     <Input type="text" fieldName="country" placeHolder="Country *"  value={values['country']} onInputChange={onChange} isDisabled={true} />
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
                 <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="stateProvince" placeHolder="State Province*"  value={values['stateProvince']} onInputChange={onChange}   />
-                    {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>}
+                    <Input type="text" fieldName="stateProvince" placeHolder="State Province"  value={values['stateProvince']} onInputChange={onChange}   />
+                    {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
                 </div>
             </div>
         </div>
@@ -203,6 +203,7 @@ const getBillingAddressData = (data) => {
 export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues,error}) {
      const {isLogin=false, userData={}} = useAuth();
      const { selectedCountry={} } = useCountry();
+      const countryCode = selectedCountry && selectedCountry.code || "";
       const [ isSameBillingAddress, setIsSameBillingAddress ] = useState(true);
       const [ personalInfo, setPersonalInfo ] = useState({});
       const [ shippingAddress, setShippingAddress ] = useState ({country:selectedCountry.name});
@@ -313,7 +314,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const onPersonalInfo = (e,fieldName) => {
         let value = ""
         if(fieldName === 'mobNumber'){
-            value = e;
+            value = "+"+e;
         }else if(fieldName === 'orderUpdate'){
             value = e;
         }
@@ -326,7 +327,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const onShippingAddress = (e,fieldName) => {
         let value = ""
         if(fieldName === 'mobNumber'){
-            value = e
+            value = "+"+e
         }else{
             value = e.target.value;
         }
@@ -336,7 +337,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const onBillngAddress = (e,fieldName) => {
         let value = ""
         if(fieldName === 'mobNumber'){
-            value = e
+            value = "+"+e
         }else{
             value = e.target.value;
         }
@@ -357,7 +358,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       return (
         <>
           <div className={styles.addressForm}> 
-            <PersonalInfoFrom onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} />
+            <PersonalInfoFrom countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} />
             <div className={styles.addressContainer}>
                 <ShippingAddressForm onChange={onShippingAddress} values={shippingAddress} errors={shippingAddressErrors} />
                 <div className={styles.selectBillingAddressBtn} onClick={()=> onSelectBillngAddress()}>

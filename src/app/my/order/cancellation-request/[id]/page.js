@@ -5,7 +5,7 @@ import { authHeader } from "../../../../../lib/auth-cookies";
 export default async function CancellationRequest({}) {
 
   const customHeader = await authHeader();
-  const cancelReasonResp =  await fetch('https://api.kuwa.bevaleo.dev/module/cancel-reason', {
+  const cancelReasonResp =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/cancel-reason`, {
     method: 'GET',
     cache: 'no-store'
   })

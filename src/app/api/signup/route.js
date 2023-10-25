@@ -9,7 +9,7 @@ export async function POST(request,res) {
     console.log("requestBody",requestBody)
     const customHeader = await authHeader();
     console.log("customHeadercustomHeader",customHeader)
-    const signupResp = await fetch('https://api.kuwa.bevaleo.dev/api/v1/customer/register', {
+    const signupResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/register`, {
         method: 'POST',
         headers:customHeader,
         body:JSON.stringify(requestBody)
@@ -19,7 +19,7 @@ export async function POST(request,res) {
         const signupData = await signupResp.json();
         if(signupData && signupData.token || signupData.id){
           const data =  setTokenCookie(res, signupData.token, signupData.id)
-          return NextResponse.json({"status_code":200, "status_msg":"success",data:data})
+          return NextResponse.json({"status_code":200, "status_msg":"success",data:signupData})
         }else{
           return NextResponse.json({"status_code":400, "status_msg":"success",data:signupData})
         }

@@ -26,13 +26,13 @@ onChange={(e,value) => handleInput(e,value, "phone-no")} */}
 // }}
 
 
-const PhoneNumberInput = ({onInputChange={},type="text",fieldName="",value="",placeHolder="phoneNumber *",isError="",errorMsg="",isDisabled="",style={}}) => {
+const PhoneNumberInput = ({ countryCode="ae", onInputChange={},type="text",fieldName="",value="",placeHolder="phoneNumber *",isError="",errorMsg="",isDisabled="",style={}}) => {
 
 
     return(
         <div className={styles.inputWrapper} style={...style}>
            <PhoneInput
-                    country={'ae'}
+                    country={countryCode.toLowerCase()}
                     value={value}
                     onChange={phone => onInputChange(phone,fieldName)}
                     placeholder='fieldName'
