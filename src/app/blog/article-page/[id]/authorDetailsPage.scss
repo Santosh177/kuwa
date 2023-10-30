@@ -1,0 +1,173 @@
+.article-main {
+    width: 100%;
+    margin-top: 34px;
+
+    .article-cont {
+        width: 438px;
+        margin: auto auto;
+
+        .article-category {
+            display: inline-flex;
+            padding: 2px 8px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            border-radius: 4px;
+            background: #F1FAF8;
+            color: #247A81;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        .article-ask-ques {
+            color: #07141A;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin: 8px 0px;
+        }
+
+        .author-desc {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            .author-desc-cont {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                    flex-shrink: 0;
+                    object-fit: cover;
+                    border-radius: 6px;
+                }
+
+                .author-title {
+                    color: #07141A;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+
+                .dot {
+                    color: #ADADAD;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+
+                .published-dob {
+                    color: #ADADAD;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+            }
+        }
+
+        .article-desc {
+            color: #07141A;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin: 12px 0px;
+        }
+
+        .article-author-img {
+            width: 90%;
+            max-width: 438px;
+            height: 228px;
+            object-fit: cover;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width:769px) {
+    .article-main {
+        width: 100%;
+
+        .article-cont {
+            max-width: 292px;
+            margin: auto auto;
+        }
+    }
+}
+
+@media screen and (max-width:426px) {
+    .article-main {
+        width: 100%;
+        margin-top: 20px;
+
+        .article-cont {
+            width: 90%;
+            max-width: 343px;
+
+            .article-category {
+                font-size: 10px;
+            }
+
+            .article-ask-ques {
+                font-size: 16px;
+            }
+
+            .author-desc {
+              
+
+                .author-desc-cont {
+                  
+
+                    img {
+                      
+                    }
+
+                    .author-title {
+                       font-size: 10px;
+                    }
+
+                    .dot {
+                      
+                    }
+
+                    .published-dob {
+                        font-size: 10px;
+                    }
+                }
+            }
+
+            .article-desc {
+                font-size: 12px;
+            }
+
+            .article-author-img {
+                width: 90%;
+                max-width: 343px;
+                height: 171px;
+                object-fit: cover;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 8px;
+                }
+            }
+        }
+    }
+}

@@ -1,8 +1,7 @@
 "use client"
 import React from 'react'
 import "./blogcategories.scss"
-function CategoriesModal({setIsShowModal}) {
-    let arr=[1,2,3,4,5,6,7,8,9,10]
+function CategoriesModal({setIsLoading,setArticleData,categoriesList,setIsShowModal}) {
    function hideCategotiesModal(){
     setIsShowModal(false)
     }
@@ -13,9 +12,25 @@ function CategoriesModal({setIsShowModal}) {
       }
       e.stopPropagation();
     }
-    function hanlleCategoryData(categoryname){
+    const  hanlleCategoryData=async(item)=>{
+      try{
+        setIsLoading(true)
+        const seoName = item.seoUrl
+        const categoryDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/article-category/${seoName}`);
+        const categoryData = await categoryDataRes.json();
+        const { healthHub=[] } = categoryData || {};
+        if (healthHub && healthHub.length>0){
+          setArticleData([...healthHub].slice(0,4))
+        }else{
+          setArticleData([]);
+        }
+        hideCategotiesModal();
+        setIsLoading(false)
 
-      hideCategotiesModal();
+      }catch(error){
+      console.log("Error while fetching article details ",error)
+        setIsLoading(false)
+      }
     }
   return (
     <div className='CategoriesModal-main' onClick={(e)=>hideCategotiesModalOutside(e)}>
@@ -25,11 +40,11 @@ function CategoriesModal({setIsShowModal}) {
           <div className='list-item-cont'>
           <ul>
             {
-                arr.map((item,index)=>{
+              categoriesList && categoriesList.length>0 &&  categoriesList.map((item,index)=>{
                     return(
                         <li
                         onClick={()=>hanlleCategoryData(item)}
-                        >Beauty & skin</li>
+                      >{item.categoryNameEnglish}</li>
                     )
                 })
             }
