@@ -6,10 +6,11 @@ import PageStepTracker from "@/components/PageStepTracker/PageStepTracker";
 import AddressForm from "./address-form/address-form";
 import SubmitBtn from "./components/SubmitBtn/SubmitBtn";
 import styles from './page.module.scss';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from '@/context/userDetail';
 import { useAddressData } from "@/context/address";
 import { useCountry } from '@/context/contryDetails';
+import { addCleverTapCountryEvents } from '@/analytics';
 
 
 export default function AddAddress() {
@@ -23,6 +24,7 @@ export default function AddAddress() {
   const [ getFormValues , setGetFormValues] = useState(0);
   const [ isLoading , setIsLoading] = useState(false);
   const [error,setError] = useState({})
+  const countryName = selectedCountry && selectedCountry.name || ""
 
 
     const onFormData = (formData) => {
@@ -31,6 +33,7 @@ export default function AddAddress() {
 
     const onSaveAddress = () => {
       setGetFormValues(getFormValues => getFormValues + 1)
+      addCleverTapCountryEvents("kuwa_add_address_save_and_proceed",countryName);
     }
 
     const onGetFormValues = async(data) => {
@@ -117,7 +120,9 @@ export default function AddAddress() {
       }
     }
 
-    
+    useEffect(()=>{
+      addCleverTapCountryEvents("kuwa_add_address_landing",countryName)
+    },[])
 
   
       return (

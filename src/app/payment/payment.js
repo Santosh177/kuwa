@@ -15,6 +15,7 @@ import { useAddressData } from "@/context/address";
 import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
 import {getCartItem} from '@/services';
+import { addCleverTapCountryEvents } from '@/analytics';
 
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
@@ -146,9 +147,10 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [ cartItems , setCartItems] = useState([]);
   const [ priceDetails , setPriceDetails] = useState({});
   const [ isLoader , setIsLoader] = useState(false);
+  const countryName = selectedCountry && selectedCountry.name || ""
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,tamaraConfig));
   let appleSession;
-
+  
   useEffect(()=>{
     if(Object.keys(selectedAddress).length == 0){
       const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
@@ -212,6 +214,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
 
   },[cartItems]);
+  useEffect(() => {
+    addCleverTapCountryEvents("kuwa_payments_landing", countryName)
+  }, [])
 
   const calculatePriceDetails = () => {
     const { total=0, subtotal=0, currency = "" } = data || {};
@@ -553,10 +558,10 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       else if(selectedPaymentMethod){
         onPayment()
       }
-
+      addCleverTapCountryEvents("kuwa_payments_proceed_to_pay",countryName);
     }
 
- 
+
 
       return (
         <>

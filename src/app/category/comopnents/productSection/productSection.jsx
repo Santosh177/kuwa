@@ -5,15 +5,20 @@ import style from "./productSection.module.scss"
 import ProductCard from "@/components/ProductCard/ProductCard"
 import Loader from "@/components/Loader/Loader"
 import { addToCart } from "@/services"
+import { addCleverTapCountryEvents } from "@/analytics"
 
 
 const ProductSection = ({ resposneValue = [] }) => {
     const [isLodaing, setIsLoading] = useState(false);
+    const { selectedCountry = {} } = useCountry();
+    const countryName = selectedCountry && selectedCountry.name || ""
+    
     const onAddToCart = async (data) => {
         try {
             setIsLoading(true)
             const res = await addToCart(data);
             setIsLoading(false)
+            addCleverTapCountryEvents("kuwa_add_to_cart_landing",countryName)
             window.location.href = '/cart';
         } catch (error) {
             console.error('An unexpected error happened occurred:', error)

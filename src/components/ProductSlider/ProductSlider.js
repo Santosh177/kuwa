@@ -8,6 +8,7 @@ import ProductCard from '@/components/ProductCard/ProductCard';
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
+import { addCleverTapCountryEvents } from '@/analytics';
 
   const BACKGROUND_COLORS = [
     {
@@ -69,6 +70,8 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
   const [ backgroundColors , setBackgroundColors] = useState(createBackgroundColors(totalRow));
   const [width, setWidth] = useState(0);
   const [isArrowVisible, setIsArrowVisible] = useState(false);
+  const { selectedCountry = {} } = useCountry();
+  const countryName = selectedCountry && selectedCountry.name || ""
   const handleResize = () => setWidth(window.innerWidth);
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -82,6 +85,7 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
       setIsLoading(true)
       const res = await addToCart(data);
       setIsLoading(false)
+      addCleverTapCountryEvents("kuwa_add_to_cart_landing",countryName)
       window.location.href = '/cart'
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)

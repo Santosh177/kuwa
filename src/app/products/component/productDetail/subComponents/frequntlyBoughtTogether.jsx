@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 const rectangularUnCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/Group%2041782%20(1).svg"
 const rectangularCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/RectangularSelcted.svg";
 import Loader from "@/components/Loader/Loader";
+import { addCleverTapCountryEvents } from "@/analytics";
+import { useCountry } from "@/context/contryDetails";
 
 const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
     const [slectedId, setSelectedId] = useState([]);
@@ -13,6 +15,8 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
     const [data,setData] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const router = useRouter();
+    const { selectedCountry = {} } = useCountry();
+    const countryName = selectedCountry && selectedCountry.name || "";
     useEffect(()=>{
         let suggestedSupplemnts= []
         if(productData && productData.length > 0 ){
@@ -152,6 +156,7 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
             const response = await addToCartAPI(payload);
             if(response){
                 router.push('/cart')
+                addCleverTapCountryEvents("kuwa_add_to_cart_landing",countryName)
             }
             console.log(response,"response")
         }

@@ -13,6 +13,7 @@ import { getCartItemDetails } from "@/utils";
 import Loader from "@/components/Loader/Loader";
 import { deleteCartItem , updateCartItem } from '@/services';
 import styles from './cart-page.module.scss';
+import { addCleverTapCountryEvents } from "@/analytics";
 
 
 export default  function Cart({cartData}) {
@@ -26,6 +27,7 @@ export default  function Cart({cartData}) {
     const [ priceDetails , setPriceDetails ] = useState({});
     const [ haveAddress, setHaveAddress] = useState(false);
     const [ isLoading , setIsLoading ] = useState(false);
+    const countryName = selectedCountry && selectedCountry.name || ""
 
     useEffect(()=>{
       setData(cartData);
@@ -149,6 +151,7 @@ export default  function Cart({cartData}) {
       }else{
         router.push('/address/add-address');
       }
+      addCleverTapCountryEvents("kuwa_add_to_cart_checkout",countryName)
     }
 
       

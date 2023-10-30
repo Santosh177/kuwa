@@ -13,6 +13,7 @@ import {getCartItemDetails} from "@/utils";
 import Loader from '@/components/Loader/Loader';
 import { useEffect, useState } from "react";
 import { updateCartItem ,deleteCartItem} from '@/services';
+import { addCleverTapCountryEvents } from '@/analytics';
 
 
 export default function OrderSummaryPage({cartData}) {
@@ -27,6 +28,7 @@ export default function OrderSummaryPage({cartData}) {
   const [ cartItems , setCartItems ] = useState([]);
   const [ priceDetails , setPriceDetails ] = useState({});
   const [isLoading, setIsLoading] = useState(false)  
+  const countryName = selectedCountry && selectedCountry.name || ""
 
 
   useEffect(()=>{
@@ -71,6 +73,10 @@ useEffect(()=>{
   }
 
 },[cartItems]);
+  useEffect(() => {
+    addCleverTapCountryEvents("kuwa_order_summary_landing", countryName);
+  }, [])
+
 
 const calculatePriceDetails = () => {
   const { total=0, subtotal=0, currency = "" } = data || {};
@@ -120,9 +126,10 @@ const onDeleteItem = async (data) => {
  
 const onProceed = () => {
     router.push('/payment');
+  addCleverTapCountryEvents("kuwa_order_summary_proceed_next",countryName)
  
 }
-  
+
       return (
         <>
           <div className={styles.orderSummary}>
