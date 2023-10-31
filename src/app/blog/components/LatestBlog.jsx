@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ArticleCard from './ArticleCard'
 import "./latestBlog.scss";
 import Loader from '@/components/Loader/Loader';
-function LatestBlog() {
+function LatestBlog({ countryId }) {
     // let style={
     //     color:"#07141A",
     //     fontSize:"24px",
@@ -16,7 +16,7 @@ function LatestBlog() {
     const getLatestBlogData = async () => {
         try {
             setIsLoading(true);
-            const getLatestBlogRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/latest?country=1`, {
+            const getLatestBlogRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/latest?country=${countryId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

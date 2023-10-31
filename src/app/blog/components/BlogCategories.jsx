@@ -5,7 +5,7 @@ import "./blogCategories.scss"
 import CategoriesModal from './CategoriesModal'
 import Loader from '@/components/Loader/Loader'
 
-function BlogCategories() {
+function BlogCategories({countryId}) {
     const [isShowModal, setIsShowModal] = useState(false);
     const [articleData, setArticleData] = useState([]);
     const [categoriesList, setCategoriesList] = useState([]);
@@ -14,7 +14,7 @@ function BlogCategories() {
     const getTrendingData = async () => {
         try {
             setIsLoading(true);
-            const getTrendingDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/trending?country=1`, {
+            const getTrendingDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/trending?country=${countryId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ function BlogCategories() {
     }
     const getCategoriesList = async () => {
         try {
-            const getCategoriesDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub-category?country=1`, {
+            const getCategoriesDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub-category?country=${countryId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -8,9 +8,12 @@ import RelatedProducts from '@/app/products/component/RelatedProducts/reletedPro
 import PageHeader from '@/components/PageHeader/PageHeader'
 import Footer from '@/components/Footer/Footer'
 import Loader from '@/components/Loader/Loader'
+import { useCountry } from '@/context/contryDetails'
 function AuthorDetailsPage() {
   const [articleData,setArticleData]=useState({});
   const [isLoading, setIsLoading] = useState(false)
+  const { selectedCountry = {} } = useCountry();
+  const countryId = selectedCountry && selectedCountry.id || ""
   const search=window.location.href;
   let seoName = search.split("/");
   seoName = seoName[seoName.length-1];
@@ -18,7 +21,7 @@ function AuthorDetailsPage() {
   const getArticleData=async()=>{
     try{
       setIsLoading(true);
-      const articleDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/${seoName}?countryId=1`);
+      const articleDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/${seoName}?countryId=${countryId}`);
       const articleData = await articleDataRes.json()||{};
       if (Object.keys(articleData) && Object.keys(articleData).length>0){
         setArticleData({ ...articleData });
@@ -36,7 +39,7 @@ function AuthorDetailsPage() {
   const { first_name="", last_name="" } = author||{};
   let relatedProduct=[];
   if (suggestedSupplements && suggestedSupplements.length>0){
-    console.log("hii","hello")
+
     let itemProduct={
       id:"",
       image:"",
