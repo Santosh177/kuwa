@@ -91,11 +91,15 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
-      <script type="text/javascript" src={"/clevertap-prod.js"} async />
+      {/* <script type="text/javascript" src={"/clevertap-prod.js"} async /> */}
+      <Script type="text/javascript" src={"/clevertap-prod.js"} strategy="beforeInteractive"></Script>
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />
       <Script src="/tamara-script.js" strategy="lazyOnload" />
-   
+      <Script type="text/javascript" src="/meta-pixel-code.js" strategy="lazyOnload" />
+      <noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
+/></noscript>
     
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>

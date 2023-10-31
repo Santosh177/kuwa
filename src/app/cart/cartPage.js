@@ -73,7 +73,7 @@ export default  function Cart({cartData}) {
               trackData.push(track)
           })
           try {
-              if (clevertap) {
+              if (window.clevertap) {
                   window.clevertap.setMultiValuesForKey("cart_items", trackData);
               }
           } catch (error) {
