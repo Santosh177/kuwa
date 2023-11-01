@@ -4,8 +4,6 @@ import { useRouter } from 'next/navigation';
 
 
 const ArticleCard = ({ articleData = []}) => {
-    //   const [isShowShare, setIsShowShare] = useState(false);
-    //   const [shareLink, setShareLink] = useState('')
     const router = useRouter()
      function handleCard(seoUrl){
          window.location.href = `/blog/article-page/${seoUrl}`
@@ -21,14 +19,12 @@ const ArticleCard = ({ articleData = []}) => {
                             onClick={()=>handleCard(value.seoUrl)}
                             >
                                 <div className="article-img"
-                                //  onClick={() => handelOnclick()}
                                  >
                                     <img id={`article card ${value.healthHubCategory} img`} src={`${value.primaryImage}`} alt="article-image" />
                                 </div>
                                 <div id={`article card ${value.healthHubCategory} content_details`} className="article-content">
                                     <div id={`article card ${value.healthHubCategory} info`} className="article-info">
                                         <div id={`article card ${value.healthHubCategory} content`} className="card-container"
-                                        //  onClick={() => handelOnclick()}
                                          >
                                             <div id={`article card ${value.healthHubCategory}`} className={`categoryName`}>
                                                 { value.healthHubCategory}
@@ -45,8 +41,6 @@ const ArticleCard = ({ articleData = []}) => {
                                                     <div className="circle"></div>
                                                 </div>
                                                 <div id={`article card ${value.healthHubCategory} created`} className="created">
-                                                    {/* {getStringDateMonth(value.createdAt)}
-                                                     */}
                                                     {value.createdAt && value.createdAt.split("T")[0].split("-").reverse().join("-")}
                                                 </div>
        

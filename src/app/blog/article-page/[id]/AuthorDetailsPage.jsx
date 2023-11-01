@@ -1,9 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-// import RelatedProductsCard from './RelatedProductsCard'
 import "./authorDetailsPage.scss"
-import ProductSlider from '@/components/ProductSlider/ProductSlider'
-import { useSearchParams } from 'next/navigation'
 import RelatedProducts from '@/app/products/component/RelatedProducts/reletedProducts'
 import PageHeader from '@/components/PageHeader/PageHeader'
 import Footer from '@/components/Footer/Footer'
@@ -17,7 +14,6 @@ function AuthorDetailsPage() {
   const search=window.location.href;
   let seoName = search.split("/");
   seoName = seoName[seoName.length-1];
-  console.log("search", search, seoName)
   const getArticleData=async()=>{
     try{
       setIsLoading(true);
@@ -71,9 +67,6 @@ function AuthorDetailsPage() {
 
     })
   }
-  console.log("relatesdProduct", suggestedSupplements)
-  const product={};
-  const data=[1,2,3]
   return (
     <>
       <PageHeader/>
@@ -102,7 +95,6 @@ function AuthorDetailsPage() {
           </div>
         </div>
       </div>
-      {/* <ProductSlider data={product} index="9" totalRow={data.length || 1} /> */}
       {relatedProduct && relatedProduct.length>0 &&  <RelatedProducts productData={{relatedProduct:[...relatedProduct]}}/>}
       <Footer/>
       <Loader isShow={isLoading} />

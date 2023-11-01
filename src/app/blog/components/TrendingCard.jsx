@@ -63,14 +63,12 @@ const TrendingCard = ({ articleData = [], isArabic = false }) => {
                                             </div>
                                             <div id={`article card ${value.healthHubCategory} category`} className="category-content">
                                                 <div id={`article card ${value.healthHubCategory} created`} className="created">
-                                                    {/* {getStringDateMonth(value.createdAt)} */}
                                                     by {value.author && value.author.first_name + " " + value.author && value.author.last_name}
                                                 </div>
                                                 <div className="dot">
                                                     <div className="circle"></div>
                                                 </div>
                                                 <div id={`article card ${value.healthHubCategory} time`} className="time-read">
-                                                    {/* {value.timeToRead + " " + `${minToReadTxt}`} */}
                                                     {value.createdAt && value.createdAt.split("T")[0].split("-").reverse().join("-")}
                                                 </div>
                                             </div>
