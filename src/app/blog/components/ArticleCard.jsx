@@ -1,5 +1,5 @@
 "use client"
-import "./ArticleCard.scss";
+import "./articleCard.scss";
 import { useRouter } from 'next/navigation';
 
 

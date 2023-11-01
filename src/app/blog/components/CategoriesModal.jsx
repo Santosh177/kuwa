@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import "./blogcategories.scss"
+import "./blogCategories.scss"
 function CategoriesModal({setIsLoading,setArticleData,categoriesList,setIsShowModal}) {
    function hideCategotiesModal(){
     setIsShowModal(false)
