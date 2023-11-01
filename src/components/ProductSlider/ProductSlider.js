@@ -80,13 +80,13 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
   
-
+let trackData={};
   const onAddToCart = async(data) =>{
     try {
       setIsLoading(true)
       const res = await addToCart(data);
       setIsLoading(false)
-      addCleverTapCountryEvents("kuwa_add_to_cart_landing",countryName)
+      addedToCartweb(trackData)
       window.location.href = '/cart'
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
@@ -161,6 +161,15 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
                     image:data.image || "",
                     id: data.id || "",
                     seoUrl:data.seoUrl || ""
+                  }
+                  trackData = {
+                    "product Name": data && data.name || "",
+                    "quantity": 1,
+                    "product Id":data.id || "",
+                    "Page Name": window.location.pathname,
+                    "country": selectedCountry.name,
+                    "countryId": selectedCountry.id,
+                    "currency": selectedCountry.currency
                   }
                   return(
                     <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({product:data.id,quantity:1})} key={index}/>

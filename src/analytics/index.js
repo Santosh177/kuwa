@@ -33,9 +33,9 @@ const CleverTapPushEvent = async (eventName = '', data = {}, isProduct = false) 
     }
 }
 //commonn event 
-export const trackUSerClcikWeb = (data = {}) => CleverTapPushEvent("user_view-web", data);
 
-export const trackLandingPage = (data = {}) => CleverTapPushEvent("landing_view-web", data);
+export const trackLandingPage = (data = {}) => CleverTapPushEvent("kuwa_home_page_landing", data);
+export const addedToCartweb = (data = {}) => CleverTapPushEvent("kuwa_add_to_cart_landing", data);
 
 export const trackLandingPageProd = (data = {}) => CleverTapPushEvent("test_prod_view-web", data);
 export const trackLandingPageForSND = (data = {}) => CleverTapPushEvent("snd_micro_page", data);

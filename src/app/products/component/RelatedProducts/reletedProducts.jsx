@@ -14,12 +14,13 @@ const RelatedProducts = ({ productData = {} }) => {
     const leftArrow = useRef(null);
     const { selectedCountry = {} } = useCountry();
     const countryName = selectedCountry && selectedCountry.name || ""
+    let trackData={}
     const onAddToCart = async (data) => {
         try {
             setIsLoading(true)
             const res = await addToCart(data);
             setIsLoading(false)
-            addCleverTapCountryEvents("kuwa_add_to_cart_landing",countryName)
+            addedToCartweb(trackData)
             window.location.href = '/cart';
         } catch (error) {
             console.error('An unexpected error happened occurred:', error)
@@ -51,6 +52,15 @@ const RelatedProducts = ({ productData = {} }) => {
                                     image: image || "",
                                     id: id || "",
                                     seoUrl:seoUrl || ""
+                                }
+                                trackData = {
+                                    "product Name": name,
+                                    "quantity": 1,
+                                    "product Id": id,
+                                    "Page Name": window.location.pathname,
+                                    "country": selectedCountry.name,
+                                    "countryId": selectedCountry.id,
+                                    "currency": selectedCountry.currency
                                 }
                                 return (
                                     <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: id, quantity: 1 })} />

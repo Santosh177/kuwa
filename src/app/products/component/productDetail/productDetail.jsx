@@ -9,7 +9,7 @@ import style from "./ProductDetail.module.scss"
 import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
 import Loader from '@/components/Loader/Loader';
 import { useCartItems } from '@/context/cartItems';
-import { addCleverTapCountryEvents } from "@/analytics";
+import { addCleverTapCountryEvents, addedToCartweb } from "@/analytics";
 import { useCountry } from "@/context/contryDetails";
 const ProductDeatil = ({ productData = {} }) => {
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
@@ -80,6 +80,18 @@ const ProductDeatil = ({ productData = {} }) => {
         "isVariant": selectedVarients ? true : false,
         "variantId": selectedVarients
     }
+    trackData = {
+        "product Name": name,
+        "quantity": noOfProduct,
+        "product Id": id,
+        "isVariant": selectedVarients ? true : false,
+        "variantId": selectedVarients,
+        "Page Name": window.location.pathname,
+        "country": selectedCountry.name,
+        "countryId": selectedCountry.id,
+        "currency": selectedCountry.currency
+    }
+    
     const addToCart = async (payload) => {
         try {
             const res = await fetch('/api/add-to-cart', {
@@ -127,7 +139,7 @@ const ProductDeatil = ({ productData = {} }) => {
         if (response === 200) {
             // setNoOfProduct(1);
            const data = await getCartItems();
-            addCleverTapCountryEvents("kuwa_add_to_cart_landing",countryName)
+            addedToCartweb(trackData)
            
             // router.push('/cart')
             // window.location.href = "/cart"
@@ -180,7 +192,7 @@ const ProductDeatil = ({ productData = {} }) => {
             } else {
                 router.push('/address/add-address');
             }
-            addCleverTapCountryEvents("kuwa_add_to_cart_landing", countryName)
+            addedToCartweb(trackData)
         }
     }
     const handelShareOption = (action) => {

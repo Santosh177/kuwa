@@ -14,13 +14,18 @@ import VideoBanner from './VideoBanner/VideoBanner';
 import styles from './home-page.module.scss';
 import Carousel from './Carousel/Carousel';
 import { useEffect, useState } from 'react';
-import {addCleverTapCountryEvents} from "../../analytics/index"
+import {addCleverTapCountryEvents, trackLandingPage} from "../../analytics/index"
 import { useCountry } from '@/context/contryDetails';
 
 export default  function Home(homePageData) {
     const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[],bestSellings=[],bannerImage={},primaryBanner=[],couponBanner={}} = homePageData.homePageData || {};
     const { selectedCountry = {} } = useCountry();
-    const countryName = selectedCountry && selectedCountry.name || ""
+    const { name = "", id="", currency="" } = selectedCountry||{}
+    const trackData={
+        "country": name,
+        "countryId":id,
+        "currency": currency
+    }
     useEffect(() => {
         const elem = document.getElementById("homePage");
         elem.addEventListener('scroll', onScroll);
@@ -36,7 +41,7 @@ export default  function Home(homePageData) {
         
     },[]);
     useEffect(()=>{
-        addCleverTapCountryEvents("kuwa_home_page_landing",countryName)
+        trackLandingPage("kuwa_home_page_landing",trackData)
     },[])
 
     const onScroll = () => {

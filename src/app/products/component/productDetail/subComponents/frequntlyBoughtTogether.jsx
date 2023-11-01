@@ -30,6 +30,8 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
         setData(suggestedSupplemnts);
     },[])
     const { } = productData || {};
+    let trackData={}
+  
 
     const handelIncriments = (noOfProduct, id, price,) => {
         let idQunatitytemp = idQunatity;
@@ -153,10 +155,17 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
                     payload.push({product : item.id,quantity:item.quantity})
                 }
             })
+            trackData = {
+                "productList":[...payload],
+                "Page Name": window.location.pathname,
+                "country": selectedCountry.name,
+                "countryId": selectedCountry.id,
+                "currency": selectedCountry.currency
+            }
             const response = await addToCartAPI(payload);
             if(response){
                 router.push('/cart')
-                addCleverTapCountryEvents("kuwa_add_to_cart_landing",countryName)
+                addedToCartweb(trackData)
             }
             console.log(response,"response")
         }
