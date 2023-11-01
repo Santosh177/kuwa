@@ -4,12 +4,6 @@ import ArticleCard from './ArticleCard'
 import "./latestBlog.scss";
 import Loader from '@/components/Loader/Loader';
 function LatestBlog({ countryId }) {
-    // let style={
-    //     color:"#07141A",
-    //     fontSize:"24px",
-    //     fontWeight:500,
-    //     margin:"32px auto",
-    //     textAlign:"center",
     const [articleData, setArticleData] = useState()
     const [isLoading, setIsLoading] = useState(false)
 

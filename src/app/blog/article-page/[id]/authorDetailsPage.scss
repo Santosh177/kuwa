@@ -80,10 +80,20 @@
             font-weight: 400;
             line-height: normal;
             margin: 12px 0px;
+
+            p {
+                img {
+                    width: 100%;
+                    max-width: 438px;
+                    height: 228px;
+                    object-fit: cover;
+
+                }
+            }
         }
 
         .article-author-img {
-            width: 90%;
+            width: 100%;
             max-width: 438px;
             height: 228px;
             object-fit: cover;
@@ -128,22 +138,18 @@
             }
 
             .author-desc {
-              
+
 
                 .author-desc-cont {
-                  
 
-                    img {
-                      
-                    }
+
+                    img {}
 
                     .author-title {
-                       font-size: 10px;
+                        font-size: 10px;
                     }
 
-                    .dot {
-                      
-                    }
+                    .dot {}
 
                     .published-dob {
                         font-size: 10px;
@@ -153,10 +159,21 @@
 
             .article-desc {
                 font-size: 12px;
+
+                p {
+                    img {
+                        width: 100%;
+                        max-width: 343px;
+                        height: 171px;
+                        object-fit: cover;
+
+                    }
+                }
+
             }
 
             .article-author-img {
-                width: 90%;
+                width: 100%;
                 max-width: 343px;
                 height: 171px;
                 object-fit: cover;

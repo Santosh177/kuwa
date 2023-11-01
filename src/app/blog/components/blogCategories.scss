@@ -73,9 +73,10 @@
     }
 }
 
-@media screen and (max-width:331px) {
+@media screen and (max-width:425px) {
     .categories-main {
         .categories-cont {
+            width: 90%;
             .select-cat-div {
 
                 .select-cat {

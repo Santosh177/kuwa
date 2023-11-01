@@ -1,7 +1,6 @@
 .trending-main {
     margin-top: 40px;
-    // margin-left: 87px;
-    // margin-right: 86px;
+ 
 
     .cards {
         display: flex;
@@ -14,27 +13,23 @@
         padding: 10px 0px;
 
         .card-item {
-            width: 409px;
-            height: 124px;
+            width: 450px;
+            min-height: 124px;
             flex-shrink: 0;
             border-radius: 8px;
             background: #FFF;
             display: flex;
             box-shadow: 0px 6px 7px 0px rgba(173, 173, 173, 0.16);
-            // flex-direction: column;
-
             .article-img {
-
-                // width: 100%;
-                // height: 290px;
                 width: 124px;
-                height: 124px;
+                // height: 124px;
+                min-height: 100%;
                 flex-shrink: 0;
                 border-radius: 8px 0px 0px 8px;
 
                 img {
                     width: 100%;
-                    height: 124px;
+                    height: 100%;
                     border-radius: 8px 0px 0px 8px;
                 }
             }
@@ -43,15 +38,10 @@
                 width: 100%;
                 display: flex;
                 flex-direction: column;
-                // background-color: #f1f4f7;
                 justify-content: space-between;
                 border-radius: 0px 8px 8px 0px;
 
                 .article-info {
-                    // margin-top: 16px;
-                    // margin-left: 41px;
-                    // margin-right: 41px;
-                    // margin-bottom: 16px;
                     margin: 8px 12px 8px 12px;
                 }
 
@@ -61,7 +51,6 @@
 
                     .auth-profile {
                         display: flex;
-                        // width: 60%;
 
                         img {
                             height: 31px;
@@ -87,17 +76,6 @@
                     width: 100%;
 
                     .categoryName {
-                        // opacity: 0.9;
-                        // font-family: Poppins;
-                        // font-size: 12px;
-                        // font-weight: 600;
-                        // text-align: left;
-                        // color: #247A81;
-                        // margin-top: 8px;
-                        // padding: 2px 8px;
-                        // text-align: center;
-                        // border-radius: 4px;
-                        // background: #F1FAF8;
                         color: #247A81;
                         font-family: Work Sans;
                         font-size: 10px;
@@ -110,17 +88,8 @@
                     }
 
                     .article-head {
-                        // font-family: Poppins;
-                        // font-size: 16px;
-                        // font-weight: bold;
-                        // line-height: 1.5;
-                        // letter-spacing: normal;
-                        // text-align: left;
-                        // color: #32445b;
-                        // margin-top: 8px;
-                        // margin-bottom: 8px;
+                        word-break: break-word;
                         color: #07141A;
-                        // font-family: Work Sans;
                         font-size: 16px;
                         font-style: normal;
                         font-weight: 600;
@@ -133,7 +102,6 @@
 
                     .article-cont {
                         color: #07141A;
-                        // font-family: Work Sans;
                         font-size: 10px;
                         font-style: normal;
                         font-weight: 300;
@@ -153,7 +121,8 @@
 
                     .category-content {
                         width: 100%;
-                        height: 17px;
+                        // height: 17px;
+                        margin-bottom: 5px;
                         display: flex;
                         gap: 8px;
                         margin-top: 9px;
@@ -172,13 +141,7 @@
                         }
 
                         .created {
-                            // font-family: Poppins;
-                            // font-size: 12px;
-                            // font-weight: 600;
-                            // text-align: left;
-                            // color: #98A1AC;
                             color: #07141A;
-                            // font-family: Work Sans;
                             font-size: 10px;
                             font-style: normal;
                             font-weight: 400;
@@ -187,13 +150,7 @@
                         }
 
                         .time-read {
-                            // font-family: Poppins;
-                            // font-size: 12px;
-                            // font-weight: 600;
-                            // text-align: left;
-                            // color: #98A1AC;
                             color: #ADADAD;
-                            // font-family: Work Sans;
                             font-size: 10px;
                             font-style: normal;
                             font-weight: 400;
@@ -213,9 +170,6 @@
 
 @media (max-width:768px) {
     .trending-main {
-
-        // margin-left: 28px;
-        // margin-right: 28px;
         width: 100%;
 
         .cards {
@@ -227,11 +181,9 @@
 
             .card-item {
                 display: flex;
-                // flex-direction: column;
                 width: 100%;
                 border-radius: 8px;
                 background: #FFF;
-                /* card background */
                 border-radius: 8px;
                 box-shadow: 0px 6px 7px 0px rgba(173, 173, 173, 0.16);
 
@@ -244,7 +196,6 @@
                         width: 106px;
                         height: 100%;
                         object-fit: contain;
-                        // height: 160px;
                         object-fit: cover;
                         border-radius: 8px 0px 0px 8px;
                     }
@@ -269,7 +220,7 @@
                     }
 
                     .article-head {
-                        font-size: 14px;
+                        font-size: 14px !important;
                     }
 
                     .article-head-ar {
@@ -304,13 +255,11 @@
                         .created {
                             font-weight: 500;
                             font-size: 10px;
-                            // padding-top:3px;
                         }
 
                         .time-read {
                             font-weight: 500;
                             font-size: 10px;
-                            // padding-top:3px;
                         }
                     }
                 }
@@ -330,7 +279,6 @@
     .prev-btn {
         cursor: pointer;
         color: #D6D6D6;
-        // font-family: Work Sans;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -341,7 +289,6 @@
     .next-btn {
         cursor: pointer;
         color: #07141A;
-        // font-family: Work Sans;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -361,7 +308,6 @@
 
         span {
             color: #07141A;
-            // font-family: Work Sans;
             font-size: 16px;
             font-style: normal;
             font-weight: 400;
@@ -404,7 +350,6 @@
 
             span {
                 color: #07141A;
-                // font-family: Work Sans;
                 font-size: 16px;
                 font-style: normal;
                 font-weight: 400;

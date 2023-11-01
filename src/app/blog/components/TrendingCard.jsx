@@ -1,28 +1,14 @@
 "use client"
-// import React, { useState } from "react";
-// import share from "../assets/svg/share.svg";
-// import { getStringDateMonth } from "../../../utils";
 import { useEffect, useState } from "react";
 import "./trendingCard.scss";
-// import { useRouter } from "next/router";
 import { useRouter } from 'next/navigation';
-// import { useState } from "react";
-// import SharePopUp from "../../../components/SharePopUp/SharePopUp.jsx";
-// import {trackShareBlogBtn} from "../../../analytics/index";
-// import React, { useState } from 'react';
-
 const TrendingCard = ({ articleData = [], isArabic = false }) => {
-
-    //   const [isShowShare, setIsShowShare] = useState(false);
-    //   const [shareLink, setShareLink] = useState('')
     const [pageNo, setPageNo] = useState(1);
-    const [paginationNo, setPaginationNo] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+    const [paginationNo, setPaginationNo] = useState();
     const [paginationData, setPaginationData] = useState([]);
     const router = useRouter()
-    const minToReadTxt = (isArabic) ? "دقائق قراءة" : "min read";
     useEffect(() => {
         setPaginationData([...articleData.slice(0, 4)]);
-        // console.log("hello", Math.ceil(articleData.length / 4))
     }, [])
     function nextHandleClick() {
         if (pageNo < Math.ceil(articleData.length / 4)) {
@@ -48,9 +34,7 @@ const TrendingCard = ({ articleData = [], isArabic = false }) => {
     }
     console.log("paginationData", paginationData, articleData)
     function handleCard(item) {
-        // {console.log("router");
         window.location.href = `/blog/article-page/${item.seoUrl}`
-        // router.push(`/blog/article-page/${item.seoUrl}`)}
         return;
     }
     return (
@@ -58,33 +42,16 @@ const TrendingCard = ({ articleData = [], isArabic = false }) => {
             <div id="health_article_container" className="trending-main">
                 <div id="health_article_cards_div" className="cards">
                     {articleData && articleData.length > 0 && articleData.map((value, index) => {
-                        // const sharevalue = isArabic ? `/ar/health-hub/article-page/${value.seoUrl}` : `/health-hub/article-page/${value.seoUrl}`;
-                        // const handelOnclick = () => {
-                        //     if (value && value.seoUrl) {
-                        //         window.location.href = isArabic
-                        //             ? `/ar/health-hub/article-page/${value.seoUrl}`
-                        //             : `/health-hub/article-page/${value.seoUrl}`;
-                        //     }
-                        // };
-                        // const handleAuthor = (authorId) => {
-                        //     if (authorId) {
-                        //         window.location.href = isArabic
-                        //             ? `/ar/health-hub/author-profile/${authorId}`
-                        //             : `/health-hub/author-profile/${authorId}`;
-                        //     }
-                        // };
                         return (
                             <div id={`article card ${value.healthHubCategory}`} className="card-item" key={index}
                                 onClick={() => handleCard(value)}>
                                 <div className="article-img"
-                                //  onClick={() => handelOnclick()}
                                 >
                                     <img id={`article card ${value.healthHubCategory} img`} src={`${value.primaryImage}`} alt="article-image" />
                                 </div>
                                 <div id={`article card ${value.healthHubCategory} content_details`} className="article-content">
                                     <div id={`article card ${value.healthHubCategory} info`} className="article-info">
                                         <div id={`article card ${value.healthHubCategory} content`} className="card-container"
-                                        //  onClick={() => handelOnclick()}
                                         >
                                             <div id={`article card ${value.healthHubCategory}`} className={`${(isArabic && "categoryName-ar")} categoryName`}>
                                                 {(isArabic) ? value.healthHubCategoryArabic : value.healthHubCategory}
@@ -104,25 +71,12 @@ const TrendingCard = ({ articleData = [], isArabic = false }) => {
                                                 </div>
                                                 <div id={`article card ${value.healthHubCategory} time`} className="time-read">
                                                     {/* {value.timeToRead + " " + `${minToReadTxt}`} */}
-                                                    {/* "hello" */}
                                                     {value.createdAt && value.createdAt.split("T")[0].split("-").reverse().join("-")}
                                                 </div>
                                             </div>
                                             <div id={`article card ${value.healthHubCategory} description`} className={`${(isArabic && "article-cont-ar")} article-cont`}>
                                                 {(isArabic) ? value.articleDescriptionArabic : value.articleDescriptionEnglish}
                                             </div>
-                                            {/* <div id={`article card ${value.healthHubCategory} category`} className="category-content">
-                                                <div id={`article card ${value.healthHubCategory} created`} className="created">
-                                                    {/* {getStringDateMonth(value.createdAt)} */}
-                                            {/* </div>
-                                                <div className="dot">
-                                                    <div className="circle"></div>
-                                                </div>
-                                                <div id={`article card ${value.healthHubCategory} time`} className="time-read">
-                                                    {value.timeToRead + " " + `${minToReadTxt}`}
-                                                  
-                                                </div>
-                                            </div> */}
                                         </div>
                                     </div>
                                 </div>
@@ -131,9 +85,6 @@ const TrendingCard = ({ articleData = [], isArabic = false }) => {
                     })}
                 </div>
             </div>
-            {/* {isShowShare &&  */}
-            {/* <SharePopUp shareLink={shareLink} setIsShare={setIsShowShare} isArabic={isArabic} /> */}
-            {/* } */}
             <div className="pagination-main">
                 {articleData && articleData.length > 0 && <div className="prev-btn " onClick={() => prevHandleClick()}
                     style={{ disabled: pageNo == 1 ? true : false, color: pageNo == 1 ? "#D6D6D6" : "#07141A" }}
