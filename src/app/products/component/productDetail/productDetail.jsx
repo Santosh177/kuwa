@@ -80,7 +80,7 @@ const ProductDeatil = ({ productData = {} }) => {
         "isVariant": selectedVarients ? true : false,
         "variantId": selectedVarients
     }
-    trackData = {
+   const trackData = {
         "product Name": name,
         "quantity": noOfProduct,
         "product Id": id,

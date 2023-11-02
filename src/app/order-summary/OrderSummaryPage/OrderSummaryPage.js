@@ -13,7 +13,7 @@ import {getCartItemDetails} from "@/utils";
 import Loader from '@/components/Loader/Loader';
 import { useEffect, useState } from "react";
 import { updateCartItem ,deleteCartItem} from '@/services';
-import { addCleverTapCountryEvents } from '@/analytics';
+import {  trackOrderSummaryLandingPage, trackOrderSummaryProceedToNext } from '@/analytics';
 
 
 export default function OrderSummaryPage({cartData}) {
@@ -74,7 +74,14 @@ useEffect(()=>{
 
 },[cartItems]);
   useEffect(() => {
-    addCleverTapCountryEvents("kuwa_order_summary_landing", countryName);
+    const trackData={
+      "Page Name": window.location.pathname,
+      "country": selectedCountry.name,
+      "countryId": selectedCountry.id,
+      "currency": selectedCountry.currency,
+      "data":"Order Summary Page"
+    }
+    trackOrderSummaryLandingPage(trackData);
   }, [])
 
 
@@ -125,9 +132,19 @@ const onDeleteItem = async (data) => {
 
  
 const onProceed = () => {
+  const trackData = {
+    "Page Name": window.location.pathname,
+    "country": selectedCountry.name,
+    "countryId": selectedCountry.id,
+    "currency": selectedCountry.currency,
+    "Total Amount":data.total,
+    "quantity": data.quantity,
+    "products": data.products,
+
+  }
+  trackOrderSummaryProceedToNext(trackData)
     router.push('/payment');
-  addCleverTapCountryEvents("kuwa_order_summary_proceed_next",countryName)
- 
+
 }
 
       return (

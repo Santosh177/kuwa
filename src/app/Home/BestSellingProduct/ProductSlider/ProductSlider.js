@@ -7,8 +7,8 @@ import { addToCart } from '@/services'
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
-import { addCleverTapCountryEvents } from '@/analytics';
 import { useCountry } from '@/context/contryDetails';
+import analyticHooks from '@/hooks/analyticHooks';
 
 const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyle = {} }) => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
-let trackData={};
+  let trackData = {};
   const onAddToCart = async (data) => {
     try {
       setIsLoading(true);
@@ -72,12 +72,12 @@ let trackData={};
                   discountType: discountType,
                   image: data.image || "",
                   id: data.id || "",
-                  seoUrl:data.seoUrl || ""
+                  seoUrl: data.seoUrl || ""
                 }
                 trackData = {
-                  "product Name": name,
+                  "product Name": data && data.name,
                   "quantity": 1,
-                  "product Id": id,
+                  "product Id": data.id,
                   "Page Name": window.location.pathname,
                   "country": selectedCountry.name,
                   "countryId": selectedCountry.id,

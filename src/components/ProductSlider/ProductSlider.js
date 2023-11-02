@@ -8,7 +8,6 @@ import ProductCard from '@/components/ProductCard/ProductCard';
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
-import { addCleverTapCountryEvents } from '@/analytics';
 import { useCountry } from '@/context/contryDetails';
 
   const BACKGROUND_COLORS = [

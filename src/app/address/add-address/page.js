@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from '@/context/userDetail';
 import { useAddressData } from "@/context/address";
 import { useCountry } from '@/context/contryDetails';
-import { addCleverTapCountryEvents } from '@/analytics';
+import {  trackAddressLandingPage, trackSaveAddressAndProceed } from '@/analytics';
 
 
 export default function AddAddress() {
@@ -33,7 +33,6 @@ export default function AddAddress() {
 
     const onSaveAddress = () => {
       setGetFormValues(getFormValues => getFormValues + 1)
-      addCleverTapCountryEvents("kuwa_add_address_save_and_proceed",countryName);
     }
 
     const onGetFormValues = async(data) => {
@@ -90,6 +89,14 @@ export default function AddAddress() {
     }
 
     const onAddAddress = async(data) =>{
+      const trackData = {
+        "Page Name": window.location.pathname,
+        "country": selectedCountry.name,
+        "countryId": selectedCountry.id,
+        "currency": selectedCountry.currency,
+        "shippingAddress": data["shippingAddress"]
+      }
+      trackSaveAddressAndProceed(trackData)
       try {
         setIsLoading(true)
         const res = await fetch('/api/save-address', {
@@ -121,7 +128,14 @@ export default function AddAddress() {
     }
 
     useEffect(()=>{
-      addCleverTapCountryEvents("kuwa_add_address_landing",countryName)
+      const trackData = {
+        "Page Name": window.location.pathname,
+        "country": selectedCountry.name,
+        "countryId": selectedCountry.id,
+        "currency": selectedCountry.currency,
+        "data": "Address Landing Page"
+      }
+      trackAddressLandingPage(trackData);
     },[])
 
   

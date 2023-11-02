@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 const rectangularUnCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/Group%2041782%20(1).svg"
 const rectangularCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/RectangularSelcted.svg";
 import Loader from "@/components/Loader/Loader";
-import { addCleverTapCountryEvents } from "@/analytics";
 import { useCountry } from "@/context/contryDetails";
 
 const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {

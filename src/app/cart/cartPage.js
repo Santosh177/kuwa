@@ -13,9 +13,6 @@ import { getCartItemDetails } from "@/utils";
 import Loader from "@/components/Loader/Loader";
 import { deleteCartItem , updateCartItem } from '@/services';
 import styles from './cart-page.module.scss';
-import { addCleverTapCountryEvents } from "@/analytics";
-
-
 export default  function Cart({cartData}) {
     const router = useRouter();
     const countryList = useCountryList();
@@ -143,7 +140,36 @@ export default  function Cart({cartData}) {
       }
     }
       
-
+  let trackData = []
+  function trcakcData() {
+    if (cartData && cartData.products && cartData.products.length > 0) {
+      cartData.products.map((item) => {
+        const productId = item && item.id || "";
+        const productName = item && item.description && item.description.name || "";
+        const qty = item && item.quantity || 1;
+        let variantId = null;
+        let track = {
+          productId: productId,
+          productName: productName,
+          quantity: qty,
+        }
+        if (item && item.variants && item.variants.variants) {
+          variantId = item.variants.variants.id;
+        }
+        if (variantId) {
+          track['variantId'] = variantId;
+        }
+        trackData.push(track)
+      })
+      try {
+        if (clevertap) {
+          window.clevertap.setMultiValuesForKey("kuwa_add_to_cart_checkout", trackData);
+        }
+      } catch (error) {
+        console.log(error, "not work for older user")
+      }
+    }
+  }
 
     const onProceed = () => {
       if(haveAddress){
@@ -151,7 +177,7 @@ export default  function Cart({cartData}) {
       }else{
         router.push('/address/add-address');
       }
-      addCleverTapCountryEvents("kuwa_add_to_cart_checkout",countryName)
+      trcakcData();
     }
 
       

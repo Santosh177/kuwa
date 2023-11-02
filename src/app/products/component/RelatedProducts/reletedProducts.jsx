@@ -4,7 +4,6 @@ import style from './relatedProduct.module.scss'
 import ProductCard from "@/components/ProductCard/ProductCard"
 import Loader from "@/components/Loader/Loader"
 import { addToCart } from "@/services"
-import { addCleverTapCountryEvents } from "@/analytics"
 import { useCountry } from "@/context/contryDetails"
 
 
