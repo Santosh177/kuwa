@@ -13,7 +13,7 @@ import {getCartItemDetails} from "@/utils";
 import Loader from '@/components/Loader/Loader';
 import { useEffect, useState } from "react";
 import { updateCartItem ,deleteCartItem} from '@/services';
-import {  trackOrderSummaryLandingPage, trackOrderSummaryProceedToNext } from '@/analytics';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
 
 export default function OrderSummaryPage({cartData}) {
@@ -28,8 +28,7 @@ export default function OrderSummaryPage({cartData}) {
   const [ cartItems , setCartItems ] = useState([]);
   const [ priceDetails , setPriceDetails ] = useState({});
   const [isLoading, setIsLoading] = useState(false)  
-  const countryName = selectedCountry && selectedCountry.name || ""
-
+  const clevertapEvent = useCleverTapEvents();
 
   useEffect(()=>{
     setData(cartData);
@@ -74,14 +73,7 @@ useEffect(()=>{
 
 },[cartItems]);
   useEffect(() => {
-    const trackData={
-      "Page Name": window.location.pathname,
-      "country": selectedCountry.name,
-      "countryId": selectedCountry.id,
-      "currency": selectedCountry.currency,
-      "data":"Order Summary Page"
-    }
-    trackOrderSummaryLandingPage(trackData);
+    clevertapEvent.onCleverTapEvent("kuwa_order_summary_landing"); 
   }, [])
 
 
@@ -134,15 +126,13 @@ const onDeleteItem = async (data) => {
 const onProceed = () => {
   const trackData = {
     "Page Name": window.location.pathname,
-    "country": selectedCountry.name,
-    "countryId": selectedCountry.id,
-    "currency": selectedCountry.currency,
     "Total Amount":data.total,
     "quantity": data.quantity,
     "products": data.products,
 
   }
-  trackOrderSummaryProceedToNext(trackData)
+
+  clevertapEvent.onCleverTapEvent("kuwa_order_summary_proceed_next", trackData);  
     router.push('/payment');
 
 }

@@ -7,17 +7,15 @@ import { addToCart } from '@/services'
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
-import { useCountry } from '@/context/contryDetails';
-import analyticHooks from '@/hooks/analyticHooks';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
 const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyle = {} }) => {
   const router = useRouter();
   const { product = [], headerTitle = "" } = data || {};
   const [isLoading, setIsLoading] = useState(false);
   const [width, setWidth] = useState(0);
-  const { selectedCountry = {} } = useCountry();
-  const countryName = selectedCountry && selectedCountry.name || ""
   const handleResize = () => setWidth(window.innerWidth);
+  const clevertapEvent = useCleverTapEvents();
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -28,7 +26,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
       setIsLoading(true);
       const res = await addToCart(data);
       setIsLoading(false);
-      addedToCartweb(trackData);
+      clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing", trackData);
       window.location.href = '/cart';
     } catch (error) {
       console.error('An unexpected error happened occurred:', error);
@@ -79,9 +77,6 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
                   "quantity": 1,
                   "product Id": data.id,
                   "Page Name": window.location.pathname,
-                  "country": selectedCountry.name,
-                  "countryId": selectedCountry.id,
-                  "currency": selectedCountry.currency
                 }
                 return (
                   <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1 })} />

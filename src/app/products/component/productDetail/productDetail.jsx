@@ -9,8 +9,7 @@ import style from "./ProductDetail.module.scss"
 import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
 import Loader from '@/components/Loader/Loader';
 import { useCartItems } from '@/context/cartItems';
-import { addCleverTapCountryEvents, addedToCartweb } from "@/analytics";
-import { useCountry } from "@/context/contryDetails";
+import useCleverTapEvents from "@/hooks/useCleverTapEvents";
 const ProductDeatil = ({ productData = {} }) => {
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
@@ -25,8 +24,7 @@ const ProductDeatil = ({ productData = {} }) => {
     const [ isAddedToCart , setIsAddedToCart ] = useState(false);
     const [ isLoading , setIsLoading] = useState(false)
     const router = useRouter()
-    const { selectedCountry = {} } = useCountry();
-    const countryName = selectedCountry && selectedCountry.name || ""
+    const clevertapEvent = useCleverTapEvents();
     useEffect(()=>{
 
         if(variants && variants.length > 0){
@@ -87,9 +85,6 @@ const ProductDeatil = ({ productData = {} }) => {
         "isVariant": selectedVarients ? true : false,
         "variantId": selectedVarients,
         "Page Name": window.location.pathname,
-        "country": selectedCountry.name,
-        "countryId": selectedCountry.id,
-        "currency": selectedCountry.currency
     }
     
     const addToCart = async (payload) => {
@@ -139,8 +134,7 @@ const ProductDeatil = ({ productData = {} }) => {
         if (response === 200) {
             // setNoOfProduct(1);
            const data = await getCartItems();
-            addedToCartweb(trackData)
-           
+            clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing",trackData);
             // router.push('/cart')
             // window.location.href = "/cart"
         }
@@ -185,6 +179,7 @@ const ProductDeatil = ({ productData = {} }) => {
     }
     const handelBuyNow = async () => {
         const response = await addToCart(payload)
+        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing", trackData);
         if (response === 200) {
             setNoOfProduct(1);
             if (haveAdress) {
@@ -192,7 +187,6 @@ const ProductDeatil = ({ productData = {} }) => {
             } else {
                 router.push('/address/add-address');
             }
-            addedToCartweb(trackData)
         }
     }
     const handelShareOption = (action) => {

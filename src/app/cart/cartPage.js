@@ -13,6 +13,7 @@ import { getCartItemDetails } from "@/utils";
 import Loader from "@/components/Loader/Loader";
 import { deleteCartItem , updateCartItem } from '@/services';
 import styles from './cart-page.module.scss';
+import useCleverTapEvents from "@/hooks/useCleverTapEvents";
 export default  function Cart({cartData}) {
     const router = useRouter();
     const countryList = useCountryList();
@@ -24,7 +25,8 @@ export default  function Cart({cartData}) {
     const [ priceDetails , setPriceDetails ] = useState({});
     const [ haveAddress, setHaveAddress] = useState(false);
     const [ isLoading , setIsLoading ] = useState(false);
-    const countryName = selectedCountry && selectedCountry.name || ""
+    const clevertapEvent = useCleverTapEvents();
+
 
     useEffect(()=>{
       setData(cartData);
@@ -161,13 +163,7 @@ export default  function Cart({cartData}) {
         }
         trackData.push(track)
       })
-      try {
-        if (clevertap) {
-          window.clevertap.setMultiValuesForKey("kuwa_add_to_cart_checkout", trackData);
-        }
-      } catch (error) {
-        console.log(error, "not work for older user")
-      }
+        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_checkout",trackData);  
     }
   }
 

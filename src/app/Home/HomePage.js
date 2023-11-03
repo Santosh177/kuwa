@@ -14,20 +14,12 @@ import VideoBanner from './VideoBanner/VideoBanner';
 import styles from './home-page.module.scss';
 import Carousel from './Carousel/Carousel';
 import { useEffect, useState } from 'react';
-import { addCleverTapCountryEvents, trackLandingPage } from "../../analytics/index"
-import { useCountry } from '@/context/contryDetails';
-import useAnalytic from '@/hooks/analyticHooks';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
 
 export default function Home(homePageData) {
     const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {} } = homePageData.homePageData || {};
-    const { selectedCountry = {} } = useCountry();
-    const { name = "", id = "", currency = "" } = selectedCountry || {}
-    const trackData = {
-        "country": name,
-        "countryId": id,
-        "currency": currency
-    }
+    const clevertapEvent=useCleverTapEvents();
     useEffect(() => {
         const elem = document.getElementById("homePage");
         elem.addEventListener('scroll', onScroll);
@@ -43,9 +35,9 @@ export default function Home(homePageData) {
 
     }, []);
     useEffect(() => {
-        trackLandingPage("kuwa_home_page_landing", trackData)
+        clevertapEvent.onCleverTapEvent("kuwa_home_page_landing");
     }, [])
-    
+
     const onScroll = () => {
         try {
             const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
