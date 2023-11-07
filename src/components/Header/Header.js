@@ -43,6 +43,7 @@ const Header = ({couponBanner={}}) => {
     const [isShowSearchList , setIsShowSearchList] = useState(false)
     const [ searchData , setSearchData] = useState([])
     const [ sideMenuData , setSideMenuData] = useState([]);
+    const [isOpenProfileInfo, setIsOpenProfileInfo] = useState(false)
     const inputBoxRef = useRef(null);
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -271,8 +272,21 @@ const Header = ({couponBanner={}}) => {
                     </div>
                     {(searchQuery && isShowSearchList) && <SearchList searchData={searchData} />}
                     </>
-                    {!isLogin &&<div className={styles.profileIcon} onClick={()=>router.push('/login')}>
+                    {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img>
+                    </div>}
+                    {
+                        isLogin && <div className={styles.profileIcon} onClick={()=>setIsOpenProfileInfo(!isOpenProfileInfo)}>
+                                <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile.png" alt='profile-icon'></img>
+                                <img style={(isOpenProfileInfo)?{}:{transform:'rotate(178deg)'}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/dropdown+(1).png' alt='arrow-icon'></img>
+                              
+                        </div>
+                    }
+
+                   {isOpenProfileInfo && <div className={styles.profileInfoContainer}>
+                        <div className={styles.profileInfo} onClick={()=>window.location.href='/my-account'}>Edit Profile</div>
+                        <div className={styles.profileInfo} onClick={()=>window.location.href='/address/manage-address'}>Manage Address</div>
+                        <div className={styles.profileInfo} onClick={()=>window.location.href='/my/orders'}>my Orders</div>
                     </div>}
                     
                    
