@@ -54,6 +54,14 @@
         gap: 10px;
         align-items: center;
         padding: 10px;
+
+        .profileIcon{
+            cursor: pointer;
+            img{
+                height: 24px;
+                width: 24px;
+            }
+        }
     }
    
     .countryInfo{
@@ -157,6 +165,9 @@
             width: 80%;
             margin: 0 auto;
             max-width: 1070px;
+            .headerInfo{
+                gap: 24px;
+            }
             .searchInputWrapper{
                 position: relative;
                 display: flex;

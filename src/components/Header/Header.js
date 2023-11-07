@@ -11,8 +11,6 @@ import SearchCard from '@/app/search/SearchCard/SearchCard';
 import Loader from '../Loader/Loader';
 import styles from './header.module.scss';
 import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
-
-
 const SearchList = ({searchData=[]}) =>{
 
     const searchDataCount = searchData && searchData.length || 0;
@@ -261,17 +259,22 @@ const Header = ({couponBanner={}}) => {
                         <div className={styles.countryTxt}>{selectedCountry.shortName}</div>
                         <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown_icon_country.png' alt='drop-down-icon'/>
                     </div>
-                    <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
+                    {/* <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/search.png" alt='search-icon'></img>
-                    </div>
-                    <div>
+                    </div> */}
+                   
+                    <>
                     <div className={styles.searchInputWrapper}  >
                         <input ref={inputBoxRef} className={styles.searchInput} style={(searchQuery)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchQuery} onChange={(e)=>
                             onSearch(e.target.value)} placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
                     {(searchQuery && isShowSearchList) && <SearchList searchData={searchData} />}
-                    </div>
+                    </>
+                    {!isLogin &&<div className={styles.profileIcon} onClick={()=>router.push('/login')}>
+                        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img>
+                    </div>}
+                    
                    
                    
                     <div className={styles.cartIcon} onClick={()=>router.push('/cart')}>
