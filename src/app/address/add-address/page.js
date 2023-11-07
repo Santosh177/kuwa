@@ -90,7 +90,6 @@ export default function AddAddress() {
 
     const onAddAddress = async(data) =>{
       const trackData = {
-        "Page Name": window.location.pathname,
         "shippingAddress": data["shippingAddress"]
       }
       clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",trackData);  

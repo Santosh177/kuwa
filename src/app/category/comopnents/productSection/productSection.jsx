@@ -44,7 +44,6 @@ const ProductSection = ({ resposneValue = [] }) => {
                             "product Name": name,
                             "quantity": 1,
                             "product Id": id,
-                            "Page Name": window.location.pathname,
                         }
                         return (
                             <div className={style.product}>

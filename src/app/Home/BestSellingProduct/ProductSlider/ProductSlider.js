@@ -76,7 +76,6 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
                   "product Name": data && data.name,
                   "quantity": 1,
                   "product Id": data.id,
-                  "Page Name": window.location.pathname,
                 }
                 return (
                   <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1 })} />

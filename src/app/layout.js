@@ -91,7 +91,7 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
-      <script type="text/javascript" src={"/clevertap-prod.js"} async />
+      <script type="text/javascript" src={"/clevertap-stage.js"} async />
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />
       <Script src="/tamara-script.js" strategy="lazyOnload" />

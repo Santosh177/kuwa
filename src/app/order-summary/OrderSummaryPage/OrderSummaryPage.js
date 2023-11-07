@@ -125,7 +125,6 @@ const onDeleteItem = async (data) => {
  
 const onProceed = () => {
   const trackData = {
-    "Page Name": window.location.pathname,
     "Total Amount":data.total,
     "quantity": data.quantity,
     "products": data.products,

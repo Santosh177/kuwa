@@ -155,7 +155,6 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
             })
             trackData = {
                 "productList":[...payload],
-                "Page Name": window.location.pathname,
             }
             const response = await addToCartAPI(payload);
             if(response){

@@ -84,7 +84,6 @@ const ProductDeatil = ({ productData = {} }) => {
         "product Id": id,
         "isVariant": selectedVarients ? true : false,
         "variantId": selectedVarients,
-        "Page Name": window.location.pathname,
     }
     
     const addToCart = async (payload) => {

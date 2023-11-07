@@ -55,7 +55,6 @@ const RelatedProducts = ({ productData = {} }) => {
                                     "product Name": name,
                                     "quantity": 1,
                                     "product Id": id,
-                                    "Page Name": window.location.pathname,
                                 }
                                 return (
                                     <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: id, quantity: 1 })} />

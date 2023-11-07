@@ -284,7 +284,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         }
       const trackData = {
         'Order Amount': payload['finalAmount'],
-        "Page Name": window.location.pathname,
       }
       if (payload && payload['couponCode']) {
         trackData['Promo Code'] = payload['couponCode'] || '';
