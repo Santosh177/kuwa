@@ -7,6 +7,7 @@
     padding-top: 32px;
     margin: 0 auto;
     margin-top: -26px;
+    position: relative;
     .signUpTxt{
         font-weight: 500;
         font-size: 16px;
@@ -132,6 +133,18 @@
         border: 1px solid red;
     }
 }
+.personalProfile{
+    height: 80px;
+    width: 80px;
+    position: absolute;
+    /* bottom: -43px; */
+    /* background: red; */
+    z-index: 999999999;
+    top: -30px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
 
 .errorMsg{
     font-size: 12px;
@@ -153,6 +166,14 @@
         .descTxt{
             text-align: center;
             margin-top: 5px;
+        }
+    }
+}
+
+@media (min-width:990px){
+    .signUpCardWrapper{
+        .signUpTxt{
+            margin-top: 20px;
         }
     }
 }

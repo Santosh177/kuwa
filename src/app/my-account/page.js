@@ -16,7 +16,7 @@ const SignUpHeader =()=> {
             <div className={styles.headerWrap}>
               <img className={styles.backArrow} onClick={()=>router.back()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow_signup.png' alt='back-arrow'/>
               <div className={styles.headerContainer}>
-                  <img className={styles.personalProfile} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/personal_profile.png' alt='personal-profile'/>
+                  {/* <img className={styles.personalProfile} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/personal_profile.png' alt='personal-profile'/> */}
               </div>
             </div>
         </div>
