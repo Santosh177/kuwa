@@ -14,55 +14,60 @@ import VideoBanner from './VideoBanner/VideoBanner';
 import styles from './home-page.module.scss';
 import Carousel from './Carousel/Carousel';
 import { useEffect, useState } from 'react';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
-export default  function Home(homePageData) {
-    const {kuwaUsps=[],data=[],brandUMustTry=[],secondryBanners=[],bestSellings=[],bannerImage={},primaryBanner=[],couponBanner={}} = homePageData.homePageData || {};
+
+export default function Home(homePageData) {
+    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {} } = homePageData.homePageData || {};
+    const clevertapEvent=useCleverTapEvents();
     useEffect(() => {
         const elem = document.getElementById("homePage");
         elem.addEventListener('scroll', onScroll);
         try {
             const isCheckViewBanner = sessionStorage.getItem("isViewedBanner");
-            if(isCheckViewBanner){
+            if (isCheckViewBanner) {
                 const mainContainer = document.getElementById('main-container');
                 mainContainer.scrollIntoView()
             }
         } catch (error) {
-            
+
         }
-        
-    },[]);
+
+    }, []);
+    useEffect(() => {
+        clevertapEvent.onCleverTapEvent("kuwa_home_page_landing");
+    }, [])
 
     const onScroll = () => {
         try {
             const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
             const mainContainer = document.getElementById('main-container');
-            if(yscroll < -70){
+            if (yscroll < -70) {
                 mainContainer.style.overflow = 'auto'
-            }else{
+            } else {
                 mainContainer.style.overflow = 'hidden';
-                sessionStorage.setItem('isViewedBanner',true)
+                sessionStorage.setItem('isViewedBanner', true)
             }
         } catch (error) {
-            
+
         }
     }
 
-    return(
+    return (
 
         <div className={styles.homePageWrapper}>
             <div className={styles.homePageContainer} id="homePage">
                 <div className={styles.mainBanner}>
-             
-                   {bannerImage.type === "VIDEO" ?
-                    (<VideoBanner videoImage={bannerImage.mobileVideo} videoDesktopImage={bannerImage.desktopVideo} videoRedirection={bannerImage.videoRedirectionLink} />
-                    ) : (
-                        <Banner mobileImage={bannerImage.mobileImage} desktopImage={bannerImage.desktopImage} imageRedirection={bannerImage.imageRedirectionLink} />
-                    )}
-                
-                    <img id="scoll-image" className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe'/>
+                    {bannerImage.type === "VIDEO" ?
+                        (<VideoBanner videoImage={bannerImage.mobileVideo} videoDesktopImage={bannerImage.desktopVideo} videoRedirection={bannerImage.videoRedirectionLink} />
+                        ) : (
+                            <Banner mobileImage={bannerImage.mobileImage} desktopImage={bannerImage.desktopImage} imageRedirection={bannerImage.imageRedirectionLink} />
+                        )}
+
+                    <img id="scoll-image" className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe' />
                 </div>
                 <div className={styles.mainContainer} id="main-container">
-                   
+
                     <Header couponBanner={couponBanner} />
                     {/* <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
                         <input  className={styles.searchInput}  value={""}  placeholder='Search by product name' type='text' />
@@ -71,12 +76,12 @@ export default  function Home(homePageData) {
                     <Carousel data={primaryBanner}/>
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={bestSellings} />
-                    <SecondaryBanner data={secondryBanners}/>
-                    <BrandMustTry data={brandUMustTry}/>
+                    <SecondaryBanner data={secondryBanners} />
+                    <BrandMustTry data={brandUMustTry} />
                     {
-                        data.map((product,index)=>{
-                            return(
-                            <ProductSlider data={product} index={index} key={index} totalRow={data.length || 1}/>
+                        data.map((product, index) => {
+                            return (
+                                <ProductSlider data={product} index={index} key={index} totalRow={data.length || 1} />
                             )
                         })
                     }
@@ -84,10 +89,10 @@ export default  function Home(homePageData) {
                     {/* <CustomerSay /> */}
                     <Footer />
                     <Loader />
-                    </div>
+                </div>
             </div>
         </div>
-      
+
     )
 }
 

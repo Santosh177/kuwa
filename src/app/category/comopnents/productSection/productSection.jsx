@@ -9,11 +9,14 @@ import { addToCart } from "@/services"
 
 const ProductSection = ({ resposneValue = [] }) => {
     const [isLodaing, setIsLoading] = useState(false);
+    
+    let trackData={};
     const onAddToCart = async (data) => {
         try {
             setIsLoading(true)
             const res = await addToCart(data);
             setIsLoading(false)
+            clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing", trackData);
             window.location.href = '/cart';
         } catch (error) {
             console.error('An unexpected error happened occurred:', error)
@@ -36,6 +39,11 @@ const ProductSection = ({ resposneValue = [] }) => {
                             image: image || "",
                             id: id || "",
                             seoUrl:seoUrl || ""
+                        }
+                         trackData = {
+                            "product Name": name,
+                            "quantity": 1,
+                            "product Id": id,
                         }
                         return (
                             <div className={style.product}>

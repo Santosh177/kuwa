@@ -7,6 +7,7 @@ import { addToCart } from '@/services'
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
 const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyle = {} }) => {
   const router = useRouter();
@@ -14,16 +15,18 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
   const [isLoading, setIsLoading] = useState(false);
   const [width, setWidth] = useState(0);
   const handleResize = () => setWidth(window.innerWidth);
+  const clevertapEvent = useCleverTapEvents();
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
-
+  let trackData = {};
   const onAddToCart = async (data) => {
     try {
       setIsLoading(true);
       const res = await addToCart(data);
       setIsLoading(false);
+      clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing", trackData);
       window.location.href = '/cart';
     } catch (error) {
       console.error('An unexpected error happened occurred:', error);
@@ -67,7 +70,12 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
                   discountType: discountType,
                   image: data.image || "",
                   id: data.id || "",
-                  seoUrl:data.seoUrl || ""
+                  seoUrl: data.seoUrl || ""
+                }
+                trackData = {
+                  "product Name": data && data.name,
+                  "quantity": 1,
+                  "product Id": data.id,
                 }
                 return (
                   <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1 })} />

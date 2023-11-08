@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 const rectangularUnCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/Group%2041782%20(1).svg"
 const rectangularCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/RectangularSelcted.svg";
 import Loader from "@/components/Loader/Loader";
+import useCleverTapEvents from "@/hooks/useCleverTapEvents";
 
 const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
     const [slectedId, setSelectedId] = useState([]);
@@ -13,6 +14,7 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
     const [data,setData] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const router = useRouter();
+    const clevertapEvent = useCleverTapEvents();
     useEffect(()=>{
         let suggestedSupplemnts= []
         if(productData && productData.length > 0 ){
@@ -26,6 +28,8 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
         setData(suggestedSupplemnts);
     },[])
     const { } = productData || {};
+    let trackData={}
+  
 
     const handelIncriments = (noOfProduct, id, price,) => {
         let idQunatitytemp = idQunatity;
@@ -149,9 +153,13 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
                     payload.push({product : item.id,quantity:item.quantity})
                 }
             })
+            trackData = {
+                "productList":[...payload],
+            }
             const response = await addToCartAPI(payload);
             if(response){
                 router.push('/cart')
+                clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing", trackData); 
             }
             console.log(response,"response")
         }
