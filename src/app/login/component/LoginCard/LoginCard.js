@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import styles from './login-card.module.scss';
 import { useState } from 'react';
 import Loader from '@/components/Loader/Loader';
+import { useCountry } from '@/context/contryDetails';
 const validateForm = (formData) => {
   const errors = {};
   if(!formData.userEmail){
@@ -28,19 +29,21 @@ export default function Login() {
     const [isLoading, setIsLoading]= useState(false)  
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [ loginFailureTxt , setLoginFailureTxt] = useState("");
+    const { selectedCountry={} } = useCountry();
 
     const togglePasswordVisibility = () => {
       setIsPasswordVisible(!isPasswordVisible);
     };
 
-    const getUserData = async({userId,token}) =>{
+    const getUserData = async(data) =>{
+      console.log("datadata",data)
 
         try {
-          const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${userId}`, {
+          const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${data.userId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + token,
+              Authorization: 'Bearer ' + data.token,
             }
           })
           const userData = await userLoginResp.json();
@@ -50,6 +53,7 @@ export default function Login() {
           const phone = userData.mobNumber ;
           const email = userData.emailAddress;
           const countryName = selectedCountry && selectedCountry.name ||  ""
+          setIsLoading(false)
           if(userId){
             window.clevertap.onUserLogin.push({
               "Site": {
@@ -65,6 +69,7 @@ export default function Login() {
               },
               "cart_items": []
              })
+             window.location.href = '/'
           }
          } catch (err) {
          }
@@ -88,12 +93,13 @@ export default function Login() {
                 'password':password
             })
           })
-          setIsLoading(false)
+          // setIsLoading(false)
           const loginResp = await res.json();
          
           if(loginResp && loginResp.status && loginResp.status === 'SUCCESS'){
               const data = await getUserData({userId:loginResp.data.id, token:loginResp.data.token});
-              window.location.href = '/'
+              
+              // window.location.href = '/'
           }else {
               setLoginFailureTxt('Wrong email or password. Try again or click Forgot password to reset it')
           }
