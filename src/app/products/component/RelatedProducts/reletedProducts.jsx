@@ -4,17 +4,21 @@ import style from './relatedProduct.module.scss'
 import ProductCard from "@/components/ProductCard/ProductCard"
 import Loader from "@/components/Loader/Loader"
 import { addToCart } from "@/services"
+import useCleverTapEvents from "@/hooks/useCleverTapEvents"
 
 
 const RelatedProducts = ({ productData = {} }) => {
     const { relatedProduct = [] } = productData || {};
     const [isLodaing, setIsLoading] = useState(false);
     const leftArrow = useRef(null);
+    const clevertapEvent = useCleverTapEvents();
+    let trackData={}
     const onAddToCart = async (data) => {
         try {
             setIsLoading(true)
             const res = await addToCart(data);
             setIsLoading(false)
+            clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing",trackData);  
             window.location.href = '/cart';
         } catch (error) {
             console.error('An unexpected error happened occurred:', error)
@@ -46,6 +50,11 @@ const RelatedProducts = ({ productData = {} }) => {
                                     image: image || "",
                                     id: id || "",
                                     seoUrl:seoUrl || ""
+                                }
+                                trackData = {
+                                    "product Name": name,
+                                    "quantity": 1,
+                                    "product Id": id,
                                 }
                                 return (
                                     <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: id, quantity: 1 })} />

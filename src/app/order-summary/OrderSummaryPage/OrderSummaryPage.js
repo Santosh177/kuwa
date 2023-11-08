@@ -13,6 +13,7 @@ import {getCartItemDetails} from "@/utils";
 import Loader from '@/components/Loader/Loader';
 import { useEffect, useState } from "react";
 import { updateCartItem ,deleteCartItem} from '@/services';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
 
 export default function OrderSummaryPage({cartData}) {
@@ -27,7 +28,7 @@ export default function OrderSummaryPage({cartData}) {
   const [ cartItems , setCartItems ] = useState([]);
   const [ priceDetails , setPriceDetails ] = useState({});
   const [isLoading, setIsLoading] = useState(false)  
-
+  const clevertapEvent = useCleverTapEvents();
 
   useEffect(()=>{
     setData(cartData);
@@ -71,6 +72,10 @@ useEffect(()=>{
   }
 
 },[cartItems]);
+  useEffect(() => {
+    clevertapEvent.onCleverTapEvent("kuwa_order_summary_landing"); 
+  }, [])
+
 
 const calculatePriceDetails = () => {
   const { total=0, subtotal=0, currency = "" } = data || {};
@@ -119,10 +124,18 @@ const onDeleteItem = async (data) => {
 
  
 const onProceed = () => {
+  const trackData = {
+    "Total Amount":data.total,
+    "quantity": data.quantity,
+    "products": data.products,
+
+  }
+
+  clevertapEvent.onCleverTapEvent("kuwa_order_summary_proceed_next", trackData);  
     router.push('/payment');
- 
+
 }
-  
+
       return (
         <>
           <div className={styles.orderSummary}>
