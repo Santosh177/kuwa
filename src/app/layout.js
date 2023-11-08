@@ -92,7 +92,7 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
       <script type="text/javascript" src={"/clevertap-stage.js"} async />
-      {/* <Script type="text/javascript" src={"/clevertap-stage.js"} strategy="beforeInteractive"></Script> */}
+      <script type="text/javascript" src={"https://d2r1yp2w7bby2u.cloudfront.net/js/clevertap.min.js"} async></script>
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />
       <Script src="/tamara-script.js" strategy="lazyOnload" />
