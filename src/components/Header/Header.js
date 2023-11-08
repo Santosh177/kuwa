@@ -45,9 +45,19 @@ const Header = ({couponBanner={}}) => {
     const [ sideMenuData , setSideMenuData] = useState([]);
     const [isOpenProfileInfo, setIsOpenProfileInfo] = useState(false)
     const inputBoxRef = useRef(null);
+    const dropDownOptionsRef = useRef(null);
+    const dropDownOptionsProfileRef = useRef(null);
 
     const [searchQuery, setSearchQuery] = useState('');
   const [apiData, setApiData] = useState(null);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", (e) => {
+      if (dropDownOptionsRef && dropDownOptionsRef.current && !dropDownOptionsRef.current.contains(e.target) && dropDownOptionsProfileRef && dropDownOptionsProfileRef.current && !dropDownOptionsProfileRef.current.contains(e.target)) {
+        setIsOpenProfileInfo(false)
+      }
+    });
+  }, [])
 
   console.log("searchDatasearchData",searchData)
   useEffect(() => {
@@ -276,15 +286,15 @@ const Header = ({couponBanner={}}) => {
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img>
                     </div>}
                     {
-                        isLogin && <div className={styles.profileIcon} onClick={()=>setIsOpenProfileInfo(!isOpenProfileInfo)}>
+                        isLogin && <div className={styles.profileIcon} ref={dropDownOptionsRef} onClick={()=>setIsOpenProfileInfo(!isOpenProfileInfo)}>
                                 <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile.png" alt='profile-icon'></img>
                                 <img style={(isOpenProfileInfo)?{}:{transform:'rotate(178deg)'}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/dropdown+(1).png' alt='arrow-icon'></img>
                               
                         </div>
                     }
 
-                   {isOpenProfileInfo && <div className={styles.profileInfoContainer}>
-                        <div className={styles.profileInfo} onClick={()=>window.location.href='/my-account'}>Edit Profile</div>
+                   {isOpenProfileInfo && <div className={styles.profileInfoContainer} ref={dropDownOptionsProfileRef} >
+                        <div className={styles.profileInfo} onClick={(e)=>{e.preventDefault();window.location.href='/my-account'}}>Edit Profile</div>
                         <div className={styles.profileInfo} onClick={()=>window.location.href='/address/manage-address'}>Manage Address</div>
                         <div className={styles.profileInfo} onClick={()=>window.location.href='/my/orders'}>my Orders</div>
                     </div>}
@@ -303,7 +313,12 @@ const Header = ({couponBanner={}}) => {
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
-      
+        <div className={styles.searchInputContainer}>
+                        <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
+                            <input  className={styles.searchInput}  value={""}  placeholder='Search by product name' type='text' />
+                            <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
+                        </div>
+                    </div>
         </>
     )
 
