@@ -118,6 +118,7 @@ export default function SignupCard() {
       return (
         <>
          <div className={styles.signUpCardWrapper}>
+         <img className={styles.personalProfile} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/personal_profile.png' alt='personal-profile'/>
           <div className={styles.signUpTxt}>Personal Info</div>
             <SignupForm setFormData={setFormData} formData={formData} errors={errors}/>
             <div className={styles.createAccountBtn} onClick={onSignup}>Save details</div>

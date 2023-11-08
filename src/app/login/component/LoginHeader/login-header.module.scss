@@ -7,6 +7,8 @@ background-color: #247A81;
     position: absolute;
     top: 50px;
     cursor: pointer;
+    left: 16px;
+    z-index: 9999999;
 }
 
 .headerWrap{
@@ -55,4 +57,12 @@ background-color: #247A81;
     //     max-width: 400px;
     //     margin: 0 auto;
     // }
+}
+
+@media (max-width:990px){
+    .headerWrapper{
+        z-index: -1;
+        background-color: #247A81;
+        position: relative;
+    }
 }

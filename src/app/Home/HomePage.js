@@ -69,7 +69,11 @@ export default function Home(homePageData) {
                 <div className={styles.mainContainer} id="main-container">
 
                     <Header couponBanner={couponBanner} />
-                    <Carousel data={primaryBanner} />
+                    {/* <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
+                        <input  className={styles.searchInput}  value={""}  placeholder='Search by product name' type='text' />
+                        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
+                    </div> */}
+                    <Carousel data={primaryBanner}/>
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <BestSellingProduct data={bestSellings} />
                     <SecondaryBanner data={secondryBanners} />
