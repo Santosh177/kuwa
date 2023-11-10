@@ -133,7 +133,7 @@ const ProductDeatil = ({ productData = {} }) => {
         if (response === 200) {
             // setNoOfProduct(1);
            const data = await getCartItems();
-            clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing",trackData);
+            clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData);
             // router.push('/cart')
             // window.location.href = "/cart"
         }
@@ -178,7 +178,7 @@ const ProductDeatil = ({ productData = {} }) => {
     }
     const handelBuyNow = async () => {
         const response = await addToCart(payload)
-        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing", trackData);
+        clevertapEvent.onCleverTapEvent("kuwa_buy_now", trackData);
         if (response === 200) {
             setNoOfProduct(1);
             if (haveAdress) {
