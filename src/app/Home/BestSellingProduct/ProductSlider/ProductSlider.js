@@ -26,7 +26,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
       setIsLoading(true);
       const res = await addToCart(data);
       setIsLoading(false);
-      clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing", trackData);
+      clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", trackData);
       window.location.href = '/cart';
     } catch (error) {
       console.error('An unexpected error happened occurred:', error);

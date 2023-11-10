@@ -159,7 +159,7 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
             const response = await addToCartAPI(payload);
             if(response){
                 router.push('/cart')
-                clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_landing", trackData); 
+                clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", trackData); 
             }
             console.log(response,"response")
         }
