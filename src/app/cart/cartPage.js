@@ -200,6 +200,7 @@ export default  function Cart({cartData}) {
  
       return (
         <>
+          <script type="text/javascript" src="/fresh-chat.js" async></script>
           <div className={styles.cartPage}>
             <div className={styles.cartItemsContainer}>
               <div className={[styles.headerTxt,styles.cartHeaderTxt].join(" ")}> Cart Items </div>

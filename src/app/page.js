@@ -1,6 +1,7 @@
 import HomePage from "./Home/HomePage";
 import { getCountryCookie} from '../lib/auth-cookies';
 import Loader from "@/components/Loader/Loader";
+import Head from "next/head";
 export default async function Home({}) {
   
   const countryIdFromCookie = getCountryCookie();
@@ -21,6 +22,7 @@ export default async function Home({}) {
 
   return (
     <>
+      <script type="text/javascript" src="/fresh-chat.js" async></script>
       {(homePageDataResp && Object.keys(homePageDataResp).length> 0)?<HomePage homePageData={homePageDataResp}/>: <Loader  isShow={true}/>}
     </>
 

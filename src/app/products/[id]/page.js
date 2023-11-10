@@ -41,18 +41,21 @@ export default async function AllProduct(req) {
 
 
   return (
-    <div className={style.productDetailContainerPage}>
-      <Header couponBanner={{}}/>
-      {/* <div className={style.routeDetail} >Home / men's performance / product</div> */}
-      <ProductDeatil productData={productData} />
-      <div className={style.allDetailDisciptionContainer}>
-        <ProductDiscription productData={productData} />
+    <>
+      <script type="text/javascript" src="/fresh-chat.js" async></script>
+      <div className={style.productDetailContainerPage}>
+        <Header couponBanner={{}}/>
+        {/* <div className={style.routeDetail} >Home / men's performance / product</div> */}
+        <ProductDeatil productData={productData} />
+        <div className={style.allDetailDisciptionContainer}>
+          <ProductDiscription productData={productData} />
+        </div>
+        <ProductFaq productData={productData} />
+        <ProductReview productData={productData} />
+        <RelatedProducts productData={productData} />
+        <Footer />
       </div>
-      <ProductFaq productData={productData} />
-      <ProductReview productData={productData} />
-      <RelatedProducts productData={productData} />
-      <Footer />
-    </div>
+    </>
   )
 }
 
