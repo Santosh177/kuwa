@@ -37,6 +37,9 @@ export default function PaymentSuccess() {
             orderId:listOfOrder.orderId,
             orderProductId:listOfOrder.orderProductId
          }
+         if(window && window.clevertap){
+          window.clevertap.setMultiValuesForKey("cart_items", []);
+        }
           window.clevertap.event.push("kuwa_order_confirmed_first_purchase", track);
         }else{
           // const isFirstOrder = listOfMyOrder.length >1;
@@ -48,6 +51,9 @@ export default function PaymentSuccess() {
               orderId:listOfOrder.orderId,
               orderProductId:listOfOrder.orderProductId
            }
+           if(window && window.clevertap){
+            window.clevertap.setMultiValuesForKey("cart_items", []);
+          }
             window.clevertap.event.push("kuwa_order_confirmed", track);
         // }
       }
