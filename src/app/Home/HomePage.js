@@ -15,10 +15,12 @@ import styles from './home-page.module.scss';
 import Carousel from './Carousel/Carousel';
 import { useEffect, useState } from 'react';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { useCountry } from '@/context/contryDetails';
 
 
 export default function Home(homePageData) {
     const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {} } = homePageData.homePageData || {};
+    const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
     useEffect(() => {
         const elem = document.getElementById("homePage");
@@ -36,6 +38,12 @@ export default function Home(homePageData) {
     }, []);
     useEffect(() => {
         clevertapEvent.onCleverTapEvent("kuwa_home_page_landing");
+        if(selectedCountry.id===8){
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-9ZH5J03SH9');
+        }
     }, [])
 
     const onScroll = () => {
