@@ -39,7 +39,7 @@ export default async function AllProduct(req) {
     const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/product-page/seo/${productID}`, {
       headers: { ...customHeader },
     });
-    //  productData = await res.json();
+     productData = await res.json();
    } catch (error) {
     
    }
