@@ -11,11 +11,11 @@ import SearchCard from '@/app/search/SearchCard/SearchCard';
 import Loader from '../Loader/Loader';
 import styles from './header.module.scss';
 import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
-const SearchList = ({searchData=[]}) =>{
+const SearchList = ({searchData=[], isLogin=false}) =>{
 
     const searchDataCount = searchData && searchData.length || 0;
     return(
-        <div className={styles.searchListWrapper}>
+        <div className={styles.searchListWrapper} style={(isLogin)?{left:'-23px'}:{left:'13px'}}>
                 <div className={styles.resultFound}>{searchDataCount} Results found</div>
                     {
                         searchData.map((data, index)=>{
@@ -280,7 +280,7 @@ const Header = ({couponBanner={}}) => {
                             onSearch(e.target.value)} placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
-                    {(searchQuery && isShowSearchList) && <SearchList searchData={searchData} />}
+                    {(searchQuery && isShowSearchList) && <SearchList isLogin={isLogin} searchData={searchData} />}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img>
