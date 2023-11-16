@@ -38,12 +38,17 @@ export default function Home(homePageData) {
     }, []);
     useEffect(() => {
         clevertapEvent.onCleverTapEvent("kuwa_home_page_landing");
-        if(selectedCountry.id===8){
+        try {
             window.dataLayer = window.dataLayer || [];
             function gtag() { dataLayer.push(arguments); }
             gtag('js', new Date());
-            gtag('config', 'G-9ZH5J03SH9');
+            gtag('config', 'G-9ZH5J03SH9'); 
+        } catch (error) {
+            
         }
+        // if(selectedCountry.id===8){
+        
+        // }
     }, [])
 
     const onScroll = () => {
