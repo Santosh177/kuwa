@@ -96,11 +96,14 @@ export default function Login() {
           // setIsLoading(false)
           const loginResp = await res.json();
          
+
+          console.log("loginResploginResp",loginResp)
           if(loginResp && loginResp.status && loginResp.status === 'SUCCESS'){
               const data = await getUserData({userId:loginResp.data.id, token:loginResp.data.token});
               
               // window.location.href = '/'
           }else {
+              setIsLoading(false)
               setLoginFailureTxt('Wrong email or password. Try again or click Forgot password to reset it')
           }
         } catch (error) {
