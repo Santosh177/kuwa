@@ -1,0 +1,30 @@
+.backToHomepage{
+
+    background-color: #247A81;
+    color: #FFFFFF;
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 24px;
+    margin-top: 13px;
+    cursor: pointer;
+}
+
+
+.pageNotFoundWrapper{
+    max-width: 340px;
+    margin: 0 auto;
+    text-align: center;
+
+    .pageNotFoundErrorTxtOne{
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .pageNotFoundErrorTxtTwo{
+        color: #ADADAD;
+        font-size: 14px;
+        font-weight: 400;
+        margin-top: 5px;
+    }
+}
