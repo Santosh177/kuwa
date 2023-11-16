@@ -40,23 +40,20 @@ export default async function AllProduct(req) {
   const customHeader = await authHeader();
   console.log("customHeader",customHeader)
   let productData = {}
-
    try {
     const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/product-page/seo/${productID}`, {
       headers: { ...customHeader },
     });
-    //  productData = await res.json();
+     productData = await res.json();
    } catch (error) {
-    
    }
-  // console.log("productDataproductData",productData)
 
 
   return (
     <div className={style.productDetailContainerPage}>
 
       {/* <div className={style.routeDetail} >Home / men's performance / product</div> */}
-      {productData && Object.keys(productData).length>0?
+      {productData && Object.keys(productData).length>0&&
       <>
         <Header couponBanner={{}}/>
         <ProductDeatil productData={productData} />
@@ -67,7 +64,8 @@ export default async function AllProduct(req) {
         <ProductReview productData={productData} />
         <RelatedProducts productData={productData} />
         <Footer />
-      </>:<PageNotFound productID={productID}/>}
+      </>}
+      {(productData && Object.keys(productData).length == 0 && customHeader && Object.keys(customHeader).length !=0 )&& <PageNotFound productID={productID}/>}
     </div>
   )
 }
