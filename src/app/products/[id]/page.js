@@ -15,10 +15,16 @@ export async function generateMetadata({ params, searchParams }) {
   const productID = params.id;
 
   const customHeader = await authHeader();
-  const product = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/product-page/seo/${productID}`, {
-    headers: { ...customHeader },
-  });
-  const productData = await product.json();
+  let productData ={}
+  try {
+    const product = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/product-page/seo/${productID}`, {
+      headers: { ...customHeader },
+    });
+     productData = await product.json();
+  } catch (error) {
+    
+  }
+ 
 
   const seoTitle = productData && productData.seo && productData.seo.metaTitle || "";
   const seoDescription = productData && productData.seo && productData.seo.metaDescription || "";
@@ -39,7 +45,7 @@ export default async function AllProduct(req) {
     const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/product-page/seo/${productID}`, {
       headers: { ...customHeader },
     });
-     productData = await res.json();
+    //  productData = await res.json();
    } catch (error) {
     
    }
