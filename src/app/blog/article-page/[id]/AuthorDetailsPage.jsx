@@ -17,7 +17,7 @@ function AuthorDetailsPage() {
   const getArticleData=async()=>{
     try{
       setIsLoading(true);
-      const articleDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/${seoName}?countryId=${countryId}`);
+      const articleDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/${seoName}`);
       const articleData = await articleDataRes.json()||{};
       if (Object.keys(articleData) && Object.keys(articleData).length>0){
         setArticleData({ ...articleData });

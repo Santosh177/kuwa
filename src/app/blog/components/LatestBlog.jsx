@@ -10,7 +10,7 @@ function LatestBlog({ countryId }) {
     const getLatestBlogData = async () => {
         try {
             setIsLoading(true);
-            const getLatestBlogRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/latest?country=${countryId}`, {
+            const getLatestBlogRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/latest`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

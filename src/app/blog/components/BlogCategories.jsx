@@ -14,7 +14,7 @@ function BlogCategories({countryId}) {
     const getTrendingData = async () => {
         try {
             setIsLoading(true);
-            const getTrendingDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/trending?country=${countryId}`, {
+            const getTrendingDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub/trending`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ function BlogCategories({countryId}) {
     }
     const getCategoriesList = async () => {
         try {
-            const getCategoriesDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub-category?country=${countryId}`, {
+            const getCategoriesDataRes = await fetch(`${process.env.BACKEND_END_POINT_URL}/health-hub-category`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
