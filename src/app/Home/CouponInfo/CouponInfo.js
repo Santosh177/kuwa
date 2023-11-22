@@ -27,7 +27,7 @@ export default function  CouponInfo()  {
 
   
   return (
-    <div className={styles.coupon} onClick={()=>window.location.href = couponBanner.redirectionLink}>
+    <div className={styles.coupon} onClick={()=>window.location.href = couponBanner.redirectionLink} id='coupon-container'>
     <p>{couponBanner === undefined ? null : couponBanner.bannerText}</p>
     {
       couponBanner === undefined ? null : <button >{couponBanner === undefined ? null : couponBanner.buttonText} </button>
