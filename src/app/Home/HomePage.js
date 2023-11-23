@@ -17,6 +17,8 @@ import { useEffect, useState } from 'react';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { useCountry } from '@/context/contryDetails';
 
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
     const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {} } = homePageData.homePageData || {};
@@ -66,11 +68,13 @@ export default function Home(homePageData) {
         }
     }
 
+    console.log("isSafari",isSafari)
+
     return (
 
         <div className={styles.homePageWrapper}>
-            <div className={styles.homePageContainer} id="homePage">
-                <div className={styles.mainBanner}>
+            <div className={(isSafariOniOS)?{}:styles.homePageContainer} id="homePage">
+                <div className={styles.mainBanner} style={(isSafariOniOS)?{}:{scrollSnapAlign:'start'}}>
                     {bannerImage.type === "VIDEO" ?
                         (<VideoBanner videoImage={bannerImage.mobileVideo} videoDesktopImage={bannerImage.desktopVideo} videoRedirection={bannerImage.videoRedirectionLink} />
                         ) : (
@@ -79,7 +83,7 @@ export default function Home(homePageData) {
 
                     <img id="scoll-image" className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe' />
                 </div>
-                <div className={styles.mainContainer} id="main-container">
+                <div className={styles.mainContainer} id="main-container" style={(isSafariOniOS)?{}:{height:'100vh',scrollSnapAlign:'start'}}>
 
                     <Header couponBanner={couponBanner} />
                     {/* <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
