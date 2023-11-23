@@ -252,7 +252,7 @@ const Header = ({couponBanner={}}) => {
       try {
         const elem = document.getElementById("homePage");
         if(elem){
-          elem.addEventListener('scroll', onScroll);
+          // elem.addEventListener('scroll', onScroll);
         }
       } catch (error) {
         
