@@ -127,7 +127,7 @@ const onProceed = () => {
   const trackData = {
     "Total Amount":data.total,
     "quantity": data.quantity,
-    "products": data.products,
+    // "products": data.products,
 
   }
 

@@ -89,10 +89,8 @@ export default function AddAddress() {
     }
 
     const onAddAddress = async(data) =>{
-      const trackData = {
-        "shippingAddress": data["shippingAddress"]
-      }
-      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",trackData);  
+   
+      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});  
       try {
         setIsLoading(true)
         const res = await fetch('/api/save-address', {
