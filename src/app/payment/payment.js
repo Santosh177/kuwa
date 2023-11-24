@@ -433,7 +433,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               if(placeOrder && placeOrder.status_code == 200){
                 if(orderId){
                   // router.replace(`/payment/success?orderId=${orderId}`)
-                  window.location.href = `/payment/success?orderId=${orderId}`
+                  window.location.href = `/payment/success?orderId=${orderId}&couponDiscount=${priceDetails['discountAmount']}&totalPurchaseValue=${priceDetails['totalAmount']}`
                 }else{
                   window.location.href = `/payment/success`
                   // router.replace(`/payment/success`)

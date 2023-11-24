@@ -13,7 +13,9 @@ export default async function PaymentSuccess(req,res) {
         const tabbyPaymentData = await tabbyPaymentResp.json();
         if(tabbyPaymentData && tabbyPaymentData.status_code && tabbyPaymentData.status_code == 200){
           const orderId = tabbyPaymentData && tabbyPaymentData.order_id || "";
-          redirect(`/payment/success?orderId=${orderId}`);
+          const  totalPurchaseValue = tabbyPaymentData?.total || "";
+          const couponDiscount =tabbyPaymentData?.discount || "";
+          redirect(`/payment/success?orderId=${orderId}&totalPurchaseValue=${totalPurchaseValue}&couponDiscount=${couponDiscount}`);
         }else{
           redirect(`/payment/failure`);
         }

@@ -19,7 +19,10 @@ export default async function PaymentStatus(req,res) {
             redirect ("/payment")
         }else if(tapPaymentStatusData && tapPaymentStatusData.status_code && (tapPaymentStatusData.status_code == 200 || tapPaymentStatusData.status_code == 200)){
           const orderId = tapPaymentStatusData.order_id;
-          redirect(`/payment/success?orderId=${orderId}`);
+          const  totalPurchaseValue = tapPaymentStatusData?.total;
+          const couponDiscount = tapPaymentStatusData?.discount;
+          console.log("tapPaymentStatusData",tapPaymentStatusData)
+          redirect(`/payment/success?orderId=${orderId}&totalPurchaseValue=${totalPurchaseValue}&couponDiscount=${couponDiscount}`);
         }
         else{
             redirect("/payment/failure");
