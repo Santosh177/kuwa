@@ -13,7 +13,9 @@ export default async function PaymentSuccess(req,res) {
         const checkoutData = await checkoutResp.json();
         if(checkoutData && checkoutData.status_code && checkoutData.status_code == 200){
           const orderId = checkoutData && checkoutData.order_id || "";
-          redirect(`/payment/success?orderId=${orderId}`);
+          const  totalPurchaseValue = checkoutData?.total || "";
+          const couponDiscount =checkoutData?.discount || "";
+          redirect(`/payment/success?orderId=${orderId}&totalPurchaseValue=${totalPurchaseValue}&couponDiscount=${couponDiscount}`);
         }else{
           redirect(`/payment/failure`);
         }
