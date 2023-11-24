@@ -81,7 +81,7 @@ function AuthorDetailsPage() {
               <img src={primaryImage} alt="" />
               <span className='author-title'>by {first_name} {last_name}</span>
               <span className='dot'>&#x2022;</span>
-              <span className='published-dob'>{createdAt && createdAt.split("T")[0].split("-").reverse().join("-")}</span>
+              <span className='published-dob'>{createdAt && createdAt.split("T")[0].split("-").reverse().join("/")}</span>
             </div>
           </div>
           <div className='article-desc'>

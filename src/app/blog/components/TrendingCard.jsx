@@ -69,7 +69,7 @@ const TrendingCard = ({ articleData = [], isArabic = false }) => {
                                                     <div className="circle"></div>
                                                 </div>
                                                 <div id={`article card ${value.healthHubCategory} time`} className="time-read">
-                                                    {value.createdAt && value.createdAt.split("T")[0].split("-").reverse().join("-")}
+                                                    {value.createdAt && value.createdAt.split("T")[0].split("-").reverse().join("/")}
                                                 </div>
                                             </div>
                                             <div id={`article card ${value.healthHubCategory} description`} className={`${(isArabic && "article-cont-ar")} article-cont`}>

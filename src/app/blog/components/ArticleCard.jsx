@@ -41,7 +41,7 @@ const ArticleCard = ({ articleData = []}) => {
                                                     <div className="circle"></div>
                                                 </div>
                                                 <div id={`article card ${value.healthHubCategory} created`} className="created">
-                                                    {value.createdAt && value.createdAt.split("T")[0].split("-").reverse().join("-")}
+                                                    {value.createdAt && value.createdAt.split("T")[0].split("-").reverse().join("/")}
                                                 </div>
        
                                             </div>

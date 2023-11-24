@@ -8,12 +8,12 @@
         flex-wrap: wrap;
         align-items: center;
         gap: 32px;
-        max-width: 80%;
+        width: 100%;
         margin: auto auto;
         padding: 10px 0px;
 
         .card-item {
-            width: 450px;
+            width: 400px;
             height: 132px;
             flex-shrink: 0;
             border-radius: 8px;
