@@ -32,7 +32,7 @@ function AuthorDetailsPage() {
     getArticleData();
   },[])
   const { healthHubCategory = "", articleNameEnglish = "", articleDescriptionEnglish = "", articleContentEnglish = "", primaryImage = "", author = {}, createdAt = "", suggestedSupplements=[] }=articleData||{};
-  const { first_name="", last_name="" } = author||{};
+  const { first_name = "", last_name = "", userName="" } = author||{};
   let relatedProduct=[];
   if (suggestedSupplements && suggestedSupplements.length>0){
 
@@ -79,7 +79,7 @@ function AuthorDetailsPage() {
           <div className='author-desc'>
             <div className='author-desc-cont'>
               <img src={primaryImage} alt="" />
-              <span className='author-title'>by {first_name} {last_name}</span>
+              <span className='author-title'>by {userName}</span>
               <span className='dot'>&#x2022;</span>
               <span className='published-dob'>{createdAt && createdAt.split("T")[0].split("-").reverse().join("/")}</span>
             </div>

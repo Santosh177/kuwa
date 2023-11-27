@@ -63,7 +63,7 @@ const TrendingCard = ({ articleData = [], isArabic = false }) => {
                                             </div>
                                             <div id={`article card ${value.healthHubCategory} category`} className="category-content">
                                                 <div id={`article card ${value.healthHubCategory} created`} className="created">
-                                                    by {value.author && value.author.first_name + " " + value.author && value.author.last_name}
+                                                    by {value.author && value.author.userName}
                                                 </div>
                                                 <div className="dot">
                                                     <div className="circle"></div>

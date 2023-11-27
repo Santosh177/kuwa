@@ -36,7 +36,7 @@ const ArticleCard = ({ articleData = []}) => {
                                                 { value.articleDescriptionEnglish}
                                             </div>
                                             <div id={`article card ${value.healthHubCategory} category`} className="category-content">
-                                                <div className="author-name" id="author-name">by {value.author && value.author.first_name + " " + value.author && value.author.last_name}</div>
+                                                <div className="author-name" id="author-name">by {value.author && value.author.userName}</div>
                                                 <div className="dot">
                                                     <div className="circle"></div>
                                                 </div>
