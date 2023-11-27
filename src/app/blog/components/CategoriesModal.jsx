@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import "./blogCategories.scss"
-function CategoriesModal({setIsLoading,setArticleData,categoriesList,setIsShowModal}) {
+function CategoriesModal({ paginationData = [],setPaginationData,setIsLoading,setArticleData,categoriesList,setIsShowModal}) {
    function hideCategotiesModal(){
     setIsShowModal(false)
     }
@@ -20,9 +20,11 @@ function CategoriesModal({setIsLoading,setArticleData,categoriesList,setIsShowMo
         const categoryData = await categoryDataRes.json();
         const { healthHub=[] } = categoryData || {};
         if (healthHub && healthHub.length>0){
-          setArticleData([...healthHub].slice(0,4))
+          setPaginationData([...healthHub].slice(0,4));
+          setArticleData([...healthHub])
         }else{
           setArticleData([]);
+          setPaginationData([]);
         }
         hideCategotiesModal();
         setIsLoading(false)

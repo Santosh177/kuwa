@@ -9,7 +9,8 @@ function BlogCategories({countryId}) {
     const [isShowModal, setIsShowModal] = useState(false);
     const [articleData, setArticleData] = useState([]);
     const [categoriesList, setCategoriesList] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+    const [paginationData, setPaginationData] = useState([]);
 
     const getTrendingData = async () => {
         try {
@@ -22,7 +23,8 @@ function BlogCategories({countryId}) {
             })
             const getTrendingData = await getTrendingDataRes.json();
             if (getTrendingData && getTrendingData.length > 0) {
-                setArticleData([...getTrendingData].slice(0, 4));
+                setPaginationData([...getTrendingData].slice(0, 4));
+                setArticleData([...getTrendingData])
             }
             setIsLoading(false);
 
@@ -41,7 +43,11 @@ function BlogCategories({countryId}) {
             })
             const getCategoriesData = await getCategoriesDataRes.json();
             if (getCategoriesData && getCategoriesData.length > 0) {
-                setCategoriesList([...getCategoriesData])
+                let activeCategories=[]
+                 activeCategories=getCategoriesData.filter((item,index)=>{
+                    return item.status ==="Active";
+                })
+                setCategoriesList([...activeCategories])
             }
 
         } catch (error) {
@@ -65,9 +71,9 @@ function BlogCategories({countryId}) {
                         <span>Select categories</span> <img id='down-arrow' src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/dropdown.svg' />
                     </div>
                 </div>
-                <TrendingCard articleData={articleData} />
+                <TrendingCard paginationData={paginationData} setPaginationData={setPaginationData} articleData={articleData} />
                 {
-                    isShowModal ? <CategoriesModal setIsLoading={setIsLoading} setArticleData={setArticleData} categoriesList={categoriesList} setIsShowModal={setIsShowModal} /> : ""
+                    isShowModal ? <CategoriesModal paginationData={paginationData} setPaginationData={setPaginationData} setIsLoading={setIsLoading} setArticleData={setArticleData} categoriesList={categoriesList} setIsShowModal={setIsShowModal} /> : ""
                 }
                 <Loader isShow={isLoading} />
             </div>

@@ -2,10 +2,9 @@
 import { useEffect, useState } from "react";
 import "./trendingCard.scss";
 import { useRouter } from 'next/navigation';
-const TrendingCard = ({ articleData = [], isArabic = false }) => {
+const TrendingCard = ({ paginationData = [], setPaginationData,articleData = [], isArabic = false }) => {
     const [pageNo, setPageNo] = useState(1);
     const [paginationNo, setPaginationNo] = useState();
-    const [paginationData, setPaginationData] = useState([]);
     const router = useRouter()
     useEffect(() => {
         setPaginationData([...articleData.slice(0, 4)]);
@@ -41,7 +40,7 @@ const TrendingCard = ({ articleData = [], isArabic = false }) => {
         <>
             <div id="health_article_container" className="trending-main">
                 <div id="health_article_cards_div" className="cards">
-                    {articleData && articleData.length > 0 && articleData.map((value, index) => {
+                    {paginationData && paginationData.length > 0 && paginationData.map((value, index) => {
                         return (
                             <div id={`article card ${value.healthHubCategory}`} className="card-item" key={index}
                                 onClick={() => handleCard(value)}>
