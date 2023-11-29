@@ -1,0 +1,18 @@
+.latest-blog-main{
+   .heading{
+    color: #07141A;
+    font-size: 24px;
+    font-weight: 500;
+    margin: 32px auto;
+    text-align:center,
+   }
+}
+@media screen and (max-width:769px) {
+    .latest-blog-main{
+        .heading{
+        font-size: 18px;
+        margin-top: 40px;
+        margin-bottom: 14px;
+        }
+     }
+}

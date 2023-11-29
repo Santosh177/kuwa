@@ -1,0 +1,73 @@
+.banner-main {
+    padding-top: 40px;
+    background-image: url(https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/blog_main_bg_720.png);
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .route-txt {
+        padding-left: 219px;
+        color: #858585;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+    }
+
+    .heading {
+        color: #07141A;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        text-align: center;
+        margin-top: 24px;
+    }
+
+    .img-box {
+        text-align: center;
+        margin-top: 25px;
+
+        img {
+            width: 284.133px;
+            height: 305.24px;
+            object-fit: cover;
+        }
+    }
+}
+
+@media screen and (max-width:769px) {
+    .banner-main {
+        padding-top: 8px;
+
+        .route-txt {
+            padding-left: 16px;
+            color: #858585;
+            font-size: 12px;
+
+        }
+
+        .heading {
+            color: #07141A;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            text-align: center;
+            margin-top: 16px;
+            width: 90%;
+            max-width: 230px;
+            margin: auto auto;
+        }
+
+        .img-box {
+            text-align: center;
+            margin-top: 13px;
+
+            img {
+                width: 175px;
+                height: 188px;
+            }
+        }
+    }
+}

@@ -5,15 +5,17 @@ import { CartItemProvider } from "@/context/cartItems";
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
 import { getUserDetails } from '../lib/auth';
-import { getTokenCookie , getCountryCookie} from '../lib/auth-cookies';
+import { getTokenCookie, getCountryCookie } from '../lib/auth-cookies';
 import { cookies } from 'next/headers';
 import { CountryListProvider } from "@/context/countryList";
 import Script from 'next/script'
 // import { Work_Sans } from 'next/font/google';
 
-const workSans = Work_Sans({ weight: ['400','500','600', '700'],
-style: ['normal', 'italic'],
-subsets: ['latin'],})
+const workSans = Work_Sans({
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+})
 
 
 export const metadata = {
@@ -23,11 +25,11 @@ export const metadata = {
 
 
 const getUser = async () => {
-  const nextCookies = cookies(); 
+  const nextCookies = cookies();
   const token = nextCookies.get('token');
   const user = nextCookies.get('userId');
-  console.log("tokentoken",token)
-  if((token && token.value) || (user && user.value)  ){
+  console.log("tokentoken", token)
+  if ((token && token.value) || (user && user.value)) {
     try {
       const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${user.value}`, {
         method: 'GET',
@@ -37,16 +39,16 @@ const getUser = async () => {
         }
       })
       const userData = await userLoginResp.json();
-      if(token && token.value){
-        return {isLogin:true, userData:userData};
-      }else{
-        return {isLogin:false, userData:userData};
+      if (token && token.value) {
+        return { isLogin: true, userData: userData };
+      } else {
+        return { isLogin: false, userData: userData };
       }
-     } catch (err) {
-      return {isLogin:false,userData:null}
-     }
-  }else{
-    return {isLogin:false,userData:null}
+    } catch (err) {
+      return { isLogin: false, userData: null }
+    }
+  } else {
+    return { isLogin: false, userData: null }
   }
 
 };
@@ -60,23 +62,23 @@ const getCountryList = async() => {
     },
   })
   const countryListData = await getCountryListResp.json();
-  if(countryListData && countryListData.length > 0){
-      return countryListData;
+  if (countryListData && countryListData.length > 0) {
+    return countryListData;
   }
 }
 
 export default async function RootLayout({ children }) {
   const userData = await getUser();
   const countryList = await getCountryList();
-  const { isLogin= false, } = userData || {}
+  const { isLogin = false, } = userData || {}
   let selectedCountryData = {};
-  if(isLogin){
-    const filteredCountry = countryList.find((data,index)=>data.id == userData.userData.country)
+  if (isLogin) {
+    const filteredCountry = countryList.find((data, index) => data.id == userData.userData.country)
     selectedCountryData = filteredCountry;
-  }else{
+  } else {
     const countryIdFromCookie = getCountryCookie();
-    if(countryIdFromCookie){
-      const filteredCountry = countryList.find((data,index)=>data.id == countryIdFromCookie)
+    if (countryIdFromCookie) {
+      const filteredCountry = countryList.find((data, index) => data.id == countryIdFromCookie)
       selectedCountryData = filteredCountry;
     }
   }
@@ -115,6 +117,7 @@ src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
         </CountryProvider>
       </CountryListProvider>
       </body>
+    
     </html>
   )
 }
