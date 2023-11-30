@@ -49,7 +49,7 @@ export default function PaymentSuccess() {
         }else{
           // const isFirstOrder = listOfMyOrder.length >1;
           // if(!isFirstOrder){
-            const listOfOrder = listOfMyOrder[listOfMyOrder.length - 1];
+            const listOfOrder = listOfMyOrder[0];
             const track = {
               productId: listOfOrder.productId,
               productName: listOfOrder.productName,
