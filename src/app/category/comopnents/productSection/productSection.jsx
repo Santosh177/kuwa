@@ -5,11 +5,11 @@ import style from "./productSection.module.scss"
 import ProductCard from "@/components/ProductCard/ProductCard"
 import Loader from "@/components/Loader/Loader"
 import { addToCart } from "@/services"
-
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
 const ProductSection = ({ resposneValue = [] }) => {
     const [isLodaing, setIsLoading] = useState(false);
-    
+    const clevertapEvent = useCleverTapEvents();
     let trackData={};
     const onAddToCart = async (data) => {
         try {
