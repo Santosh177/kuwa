@@ -13,6 +13,7 @@ export default function PaymentSuccess() {
   const orderId = searchParams.get('orderId')
   const totalPurchaseValue = searchParams.get('totalPurchaseValue')
   const couponDiscount = searchParams.get('couponDiscount')
+  
 
     useEffect(()=>{
       deleteAllItem();
@@ -81,7 +82,11 @@ export default function PaymentSuccess() {
           <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/success.png' alt=''/>
           <div className={styles.txt}>Order placed</div>
           {orderId && <div className={styles.orderId}>Order ID : #{orderId}</div>}
-          {totalPurchaseValue && <div className={styles.totalPurchaseValue}>Total Purchase Value :{totalPurchaseValue} {currency} </div>}
+          {totalPurchaseValue && <div className={styles.totalPurchaseValue}>
+            <div>Total Purchase Value :</div>
+            <div>{parseFloat(totalPurchaseValue).toFixed(2)}</div>
+            <div>{currency}</div>
+             </div>}
           {/* {couponDiscount && <div className={styles.couponDiscount}>Coupon Discount:{couponDiscount}</div>} */}
           <div className={styles.subTxt}>Thanks for your purchase! Confirmation email with details coming soon. Contact us if you have any questions.</div>
           <div className={styles.btn} onClick={()=>window.location.href='/'}>Continue Shopping</div>
