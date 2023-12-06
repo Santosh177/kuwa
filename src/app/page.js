@@ -6,7 +6,9 @@ export default async function Home({}) {
   
   const countryIdFromCookie = getCountryCookie();
   let homePageDataResp = {}
-  if(countryIdFromCookie){
+  console.log("countryIdFromCookiecountryIdFromCookie",countryIdFromCookie)
+  // if(8){
+    if(countryIdFromCookie){
      const homePageData  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/home-page`, {
       method: 'GET',
       headers:{
@@ -16,7 +18,8 @@ export default async function Home({}) {
     cache: 'no-store' 
     })
      homePageDataResp = await homePageData.json();
-  }
+  // }
+    }
  
 
 

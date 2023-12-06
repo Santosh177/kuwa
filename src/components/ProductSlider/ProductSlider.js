@@ -42,7 +42,7 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
     {
       "backgroundImage":"linear-gradient(180deg, #F9E8E4 0%, rgba(249, 232, 228, 0) 100%)",
       "backgroundColor":"#F9E8E4"
-    }
+    },
   ]
 
 

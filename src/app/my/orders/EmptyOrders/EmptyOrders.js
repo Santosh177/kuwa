@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import EmptyOrderAnimation from './empty_bag.json'
 import Lottie from "react-lottie";
 import styles from './empty-order.module.scss';
-console.log("santo",EmptyOrderAnimation)
 
 
 export default function EmptyOrder(){

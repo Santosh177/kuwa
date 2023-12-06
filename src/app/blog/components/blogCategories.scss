@@ -1,0 +1,184 @@
+.categories-main {
+    margin-top: 100px;
+
+    .categories-cont {
+        max-width: 850px;
+        width: 85%;
+        margin: auto auto;
+        padding-left: 3px;
+
+        .select-cat-div {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 40px;
+
+            .cat-txt {
+                color: #07141A;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            .select-cat {
+                display: inline-flex;
+                padding: 8px 16px;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                border-radius: 8px;
+                background: #F7FCFB;
+                color: #07141A;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 24px;
+                cursor: pointer;
+
+                #down-arrow {
+                    padding-bottom: 10px;
+                    font-size: 20px;
+                    color: #247A81;
+                    font-weight: 600;
+                    margin-bottom: -10px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:769px) {
+    .categories-main {
+        margin-top: 40px;
+
+        .categories-cont {
+            width: 85%;
+            margin: auto auto;
+            padding-left: 0px;
+
+            .select-cat-div {
+                margin-bottom: 34px;
+                gap: 16px;
+
+                .cat-txt {
+                    color: #07141A;
+                    font-size: 16px;
+
+                }
+
+                .select-cat {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:425px) {
+    .categories-main {
+        .categories-cont {
+            width: 90%;
+            .select-cat-div {
+
+                .select-cat {
+                    min-width: 175px;
+                    span{
+                        font-size: 13px;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+.CategoriesModal-main {
+    position: absolute;
+    top: 100px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    // backdrop-filter: blur(2.5px);
+    background: rgba(7, 20, 26, 0.40);
+
+    backdrop-filter: blur(4px);
+
+    display: grid;
+    place-items: center;
+
+    .CategoriesModal {
+        position: relative;
+        width: 350px;
+        height: 411px;
+        flex-shrink: 0;
+        border-radius: 8px;
+        background: #FFF;
+        margin-top: 100px;
+
+        .cat-txt {
+            color: #07141A;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .cross-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            color: #A0A0A0;
+            font-weight: 600;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .list-item-cont {
+            overflow-y: scroll;
+            max-height: 340px;
+            margin-top: 24px;
+            padding: 0px 28px;
+        }
+
+        ul {
+            list-style: none;
+            text-align: center;
+            color: #07141A;
+            // font-family: Work Sans;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            text-transform: capitalize;
+
+            li {
+                padding: 16px 0px;
+                border-bottom: 0.4px solid #E6E7E7;
+                cursor: pointer;
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width:769px) {
+    .CategoriesModal-main {
+
+        .CategoriesModal {
+            width: 256px;
+            height: 348px;
+
+            .list-item-cont {
+                max-height: 280px;
+                padding: 0px 0px;
+            }
+        }
+    }
+}

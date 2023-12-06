@@ -15,10 +15,14 @@ import styles from './home-page.module.scss';
 import Carousel from './Carousel/Carousel';
 import { useEffect, useState } from 'react';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { useCountry } from '@/context/contryDetails';
 
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
     const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {} } = homePageData.homePageData || {};
+    const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
     useEffect(() => {
         const elem = document.getElementById("homePage");
@@ -36,6 +40,17 @@ export default function Home(homePageData) {
     }, []);
     useEffect(() => {
         clevertapEvent.onCleverTapEvent("kuwa_home_page_landing");
+        try {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-9ZH5J03SH9'); 
+        } catch (error) {
+            
+        }
+        // if(selectedCountry.id===8){
+        
+        // }
     }, [])
 
     const onScroll = () => {
@@ -53,20 +68,22 @@ export default function Home(homePageData) {
         }
     }
 
+    console.log("isSafari",isSafari)
+
     return (
 
         <div className={styles.homePageWrapper}>
-            <div className={styles.homePageContainer} id="homePage">
-                <div className={styles.mainBanner}>
+            <div className={(isSafariOniOS)?{}:styles.homePageContainer} id="homePage">
+                <div className={styles.mainBanner} style={(isSafariOniOS)?{}:{scrollSnapAlign:'start'}}>
                     {bannerImage.type === "VIDEO" ?
                         (<VideoBanner videoImage={bannerImage.mobileVideo} videoDesktopImage={bannerImage.desktopVideo} videoRedirection={bannerImage.videoRedirectionLink} />
                         ) : (
-                            <Banner mobileImage={bannerImage.mobileImage} desktopImage={bannerImage.desktopImage} imageRedirection={bannerImage.imageRedirectionLink} />
+                            <Banner bannerBackground={bannerImage.colorHexCode} mobileImage={bannerImage.mobileImage} desktopImage={bannerImage.desktopImage} imageRedirection={bannerImage.imageRedirectionLink} />
                         )}
 
                     <img id="scoll-image" className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe' />
                 </div>
-                <div className={styles.mainContainer} id="main-container">
+                <div className={styles.mainContainer} id="main-container" style={(isSafariOniOS)?{}:{height:'100vh',scrollSnapAlign:'start'}}>
 
                     <Header couponBanner={couponBanner} />
                     {/* <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >

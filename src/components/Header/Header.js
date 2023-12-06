@@ -11,11 +11,11 @@ import SearchCard from '@/app/search/SearchCard/SearchCard';
 import Loader from '../Loader/Loader';
 import styles from './header.module.scss';
 import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
-const SearchList = ({searchData=[]}) =>{
+const SearchList = ({searchData=[], isLogin=false}) =>{
 
     const searchDataCount = searchData && searchData.length || 0;
     return(
-        <div className={styles.searchListWrapper}>
+        <div className={styles.searchListWrapper} style={(isLogin)?{left:'-23px'}:{left:'13px'}}>
                 <div className={styles.resultFound}>{searchDataCount} Results found</div>
                     {
                         searchData.map((data, index)=>{
@@ -44,6 +44,7 @@ const Header = ({couponBanner={}}) => {
     const [ searchData , setSearchData] = useState([])
     const [ sideMenuData , setSideMenuData] = useState([]);
     const [isOpenProfileInfo, setIsOpenProfileInfo] = useState(false)
+    const [isTopHeaderFixed, setIsTopHeaderFixed] = useState(false)
     const inputBoxRef = useRef(null);
     const dropDownOptionsRef = useRef(null);
     const dropDownOptionsProfileRef = useRef(null);
@@ -247,12 +248,47 @@ const Header = ({couponBanner={}}) => {
         }
     }
 
+    useEffect(() => {
+      try {
+        const elem = document.getElementById("homePage");
+        if(elem){
+          // elem.addEventListener('scroll', onScroll);
+        }
+      } catch (error) {
+        
+      }
+    
+     
+
+  }, []);
+
+  const onScroll = () => {
+    try {
+            const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
+            const topHeaderContainer = document.getElementById('top-header-container');
+            const couponContainer = document.getElementById('coupon-container');
+            if(topHeaderContainer || couponContainer ){
+              if(yscroll < -80 ){
+                topHeaderContainer.style.position = 'fixed';
+                couponContainer.style.position = 'fixed';
+              }else{
+                topHeaderContainer.style.position = 'sticky'
+                couponContainer.style.position = 'sticky';
+              }
+            }
+      
+
+    } catch (error) {
+
+    }
+}
+
     return(
         <>
         
-    <CouponInfo couponBanner={couponBanner}/>
-        <div className={styles.header}>
-           <div className={styles.headerWrapper}>
+        <CouponInfo couponBanner={couponBanner}/>
+        <div className={styles.header} id='top-header-container' >
+           <div className={styles.headerWrapper} id='top-header' >
                 <div className={styles.headerIcon}>
                     <div className={styles.menuIcon} onClick={onOpenSideMenu}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/menu.png' alt='menu-icon'/>
@@ -280,7 +316,7 @@ const Header = ({couponBanner={}}) => {
                             onSearch(e.target.value)} placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
-                    {(searchQuery && isShowSearchList) && <SearchList searchData={searchData} />}
+                    {(searchQuery && isShowSearchList) && <SearchList isLogin={isLogin} searchData={searchData} />}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img>

@@ -140,6 +140,18 @@ const ProductDeatil = ({ productData = {} }) => {
     }
 
 
+
+// useEffect(() => {
+
+//     new window.TabbyProductPageSnippetCCI({
+//       selector: '#tabbyDetail',
+//       lang:    'en', // 'ar'
+//       currency: currency, // 'SAR, AED, KWD, BHD'
+//       price: finalPrice,
+//     });
+
+//     }, []);
+
     const getCartItems = async() => {
   
         const getCartItems = await getCartItem();

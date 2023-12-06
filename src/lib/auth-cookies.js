@@ -91,6 +91,9 @@ export function getCountryCookie() {
 
 }
 export const authHeader = async() =>{
+  try {
+    
+
   const token = cookies().get('token')
   const user = cookies().get('userId');
   const country = cookies().get('countryId');
@@ -133,6 +136,9 @@ export const authHeader = async() =>{
     console.log("final Data",data)
     return data;
   }
+} catch (error) {
+    return {}
+}
   
 }
 
