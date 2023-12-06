@@ -50,6 +50,9 @@ export default async function AllProduct(req) {
 
 
   return (
+    <>
+       <script type="text/javascript" src="/fresh-chat.js" async></script>
+
     <div className={style.productDetailContainerPage}>
 
       {/* <div className={style.routeDetail} >Home / men's performance / product</div> */}
@@ -67,6 +70,7 @@ export default async function AllProduct(req) {
       </>}
       {(productData && Object.keys(productData).length == 0 && customHeader && Object.keys(customHeader).length !=0 )&& <PageNotFound productID={productID}/>}
     </div>
+    </>
   )
 }
 
