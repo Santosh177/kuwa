@@ -1,0 +1,64 @@
+.socialMediaContainer{
+    // display: flex;
+    width:346px;
+    .mediaSection{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap:13px;
+      
+        .iconDiv{
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap:16px;
+            color: #247A81;
+                font-size: 12px;
+                font-weight: 400;
+             
+                border-radius: 16px;
+                background: #F7FCFB;
+            .whatsAppDiv{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width:140px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                .whatsAppIcon{
+                    width:24px;
+                    height:24px;
+                }
+                .whatsAppTxt{
+                  
+                }
+            }
+            .mailDiv{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width:187px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                .mailIcon{
+                    width:24px;
+                    height:24px;
+                }
+            }
+        }
+        .iconContainer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap:40px;
+            .icon{
+                width: 32px;
+                height: 32px;
+            }
+
+        }
+    }
+
+}

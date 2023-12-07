@@ -4,6 +4,10 @@ import PageHeader from '@/components/PageHeader/PageHeader';
 import styles from './pages.module.scss';
 import { useEffect } from 'react';
 import { useCountry } from '@/context/contryDetails';
+import SocialMedia from './social-media/SocialMedia';
+import { useAddressData } from "@/context/address";
+import DeliveryAddress from './delivery-address/DeliveryAddress';
+import AccountDetails from './account-details/AccountDetails';
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
@@ -78,6 +82,8 @@ export default function PaymentSuccess() {
       return (
         <>
         <PageHeader backButtonAction={()=>window.location.href = '/'} />
+        <div className={styles.thankYouPage}>
+          <div className={styles.leftSection}>
         <div className={styles.paymentSuceesContainer}>
           <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/success.png' alt=''/>
           <div className={styles.txt}>Order placed</div>
@@ -89,9 +95,19 @@ export default function PaymentSuccess() {
              </div>}
           {/* {couponDiscount && <div className={styles.couponDiscount}>Coupon Discount:{couponDiscount}</div>} */}
           <div className={styles.subTxt}>Thanks for your purchase! Confirmation email with details coming soon. Contact us if you have any questions.</div>
-          <div className={styles.btn} onClick={()=>window.location.href='/'}>Continue Shopping</div>
+          {/* <div className={styles.btn} onClick={()=>window.location.href='/'}>Continue Shopping</div> */}
         </div>
+        <AccountDetails/>
+        </div>
+        <SocialMedia/>
+        </div>
+        <DeliveryAddress useAddressData={useAddressData}/>
+       
+         
+        
+        
         </>
+        
       )
     }
     

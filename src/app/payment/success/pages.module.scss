@@ -1,30 +1,30 @@
+
+@media(min-width:990px){
+    .thankYouPage{
 .paymentSuceesContainer{
+
+
    display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    width: 90%;
-    margin: 0 auto;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin-top: 29px;
+    width:396px;
     img{
-        width: 70px;
-        height: 70px;
+        width: 42px;
+        height: 42px;
         margin: 0 auto;
     }
     .txt{
         font-weight: 600;
-        font-size: 18px;
+        font-size: 16px;
         margin-top: 8px;
     }
     .orderId{
-        font-weight: 600;
+        font-weight: 500;
         font-size: 14px;
-        color: #A0A0A0;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        color: #247A81;
+        margin-top: 4px;
+        // margin-bottom: 10px;
     }
     .totalPurchaseValue{
         display: flex;
@@ -33,15 +33,15 @@
         gap:4px;
         font-weight: 600;
         font-size: 14px;
-        color: #A0A0A0;
-        margin-top: 10px;
-        margin-bottom: 10px; 
+        color: #247A81;
+        margin-top: 4px;
     }
     .subTxt{
         font-weight: 400;
-        font-size: 14px;
+        font-size: 12px;
         color: #A0A0A0;
         margin-top: 5px;
+        margin-bottom: 16px;
     }
     .btn{
         background: #247A81;
@@ -51,6 +51,8 @@
         color: #FFF;
         margin-top: 24px;
         cursor: pointer;
+    }
+}
     }
 }
 
@@ -68,4 +70,62 @@
             margin-top: 5px;
         }
     }
+}
+
+@media (max-width:990px){
+    .thankYouPage{
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        margin-top: 25px;
+        flex-direction: column;
+        width: 90%;
+        padding-bottom: 100px;
+        .headerTxt{
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .addressTxt{
+            display: none;
+        }
+        .priceDetails{
+            margin-top: 32px;
+        }
+        
+        .priceDetailsContainer{
+            // margin-top: 16px;
+        }
+    }
+}
+
+@media (min-width:990px){
+    .thankYouPage{
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        margin-top: 40px;
+        .leftSection{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+        .headerTxt{
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .addressAndProductDetails{
+            width: 396px;
+        }
+    
+        .priceDetails{
+            width: 346px;
+            max-width: 346px;
+        }
+        .priceDetailsContainer{
+            // margin-top: 16px;
+        }
+    }
+}
 }
