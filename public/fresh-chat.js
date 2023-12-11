@@ -9,5 +9,6 @@
   initFreshChat():((e=i.createElement("script")).id=t,e.async=!0,
   e.src="https://feelvaleo-371220369404109218.freshchat.com/js/widget.js",e.onload=initFreshChat,i.head.appendChild(e))}
   function initiateCall(){initialize(document,"Freshchat-js-sdk")}
-  window.addEventListener?window.addEventListener("load",initiateCall,!1):
-  window.attachEvent("load",initiateCall,!1);
+  initiateCall()
+
+
