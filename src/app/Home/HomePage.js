@@ -39,7 +39,10 @@ export default function Home(homePageData) {
 
     }, []);
     useEffect(() => {
-        clevertapEvent.onCleverTapEvent("kuwa_home_page_landing");
+        setTimeout(()=>{
+            clevertapEvent.onCleverTapEvent("kuwa_home_page_landing");
+        },2000)
+       
         try {
             window.dataLayer = window.dataLayer || [];
             function gtag() { dataLayer.push(arguments); }
