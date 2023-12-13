@@ -18,7 +18,7 @@ const CheckBox = ({isChecked=false}) => {
   )
 }
 
-const CardOption = ({isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
+const CardOption = ({cardConfig={},isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
   const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
   const [ isShowCard , setIsShowCard] = useState(false);
 
@@ -50,7 +50,7 @@ const CardOption = ({isCheckoutCard=false , isTapCard=false,onPayment={}}) => {
                   <CheckBox isChecked={selectedPaymentMethod === "CHECKOUT_CARD" || selectedPaymentMethod==="TAP"} />
               </div>
                 {isShowCard && 
-                <><CheckoutFrames onPayment={(data)=>onPayment(data)}/>
+                <><CheckoutFrames publicKey ={cardConfig.publicKey || ""} onPayment={(data)=>onPayment(data)}/>
                 <div className={styles.security}><img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/security.png' alt='safe' /> <span>Safe & Secured</span></div>
                 </>
                 }
@@ -162,12 +162,13 @@ export default  function PaymentMethod({paymentMethodConfig,price=0,onPayment={}
     const isApplePay =  paymentMethodConfig['applePay']['isEnable'];
     const isCod =  paymentMethodConfig['cod']['isEnable'];
 
+
    
       return (
         <div className={styles.paymentMethodWrapper}>
             <div className={styles.headerTxt}>Payment Methods</div>
             <div className={styles.headerSubTxt}>Shop with confidence knowing all transactions are securely encrypted for your protection.</div>
-            {(isCheckoutCard || isTapCard) &&<CardOption isCheckoutCard={isCheckoutCard} isTapCard={isTapCard} onPayment={onPayment} />}
+            {(isCheckoutCard || isTapCard) &&<CardOption cardConfig={paymentMethodConfig['card_checkout']}  isCheckoutCard={isCheckoutCard} isTapCard={isTapCard} onPayment={onPayment} />}
             {(isTamara || isTabby) && <PayWithEmi paymentMethodConfig={paymentMethodConfig} price={price} isTamara={isTamara} isTabby={isTabby}  />}
             {(isApplePay || isCod) && <OtherPaymentMethod isApplePay={isApplePay} isCod={isCod}  />}
         </div>

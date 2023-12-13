@@ -3,7 +3,7 @@ import React,{useState,useEffect} from 'react';
 import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import styles from './checkout-frames.module.scss';
 
-export default function CheckoutFrames({onPayment}) {
+export default function CheckoutFrames({onPayment,publicKey=""}) {
       const [isDomReady , setDomReady ] = useState(false);
       const [isLoading, setIsLoading] = useState(false);
       const [isCardNumValid ,setIsCardNumValid ]= useState(false);
@@ -27,7 +27,7 @@ export default function CheckoutFrames({onPayment}) {
              <Frames
         config={{
             debug: true,
-            publicKey: PUBLIC_KEY,
+            publicKey: publicKey,
             localization: {
                 cardNumberPlaceholder: 'Card number',
                 expiryMonthPlaceholder: `${placeHolderExpiryDate}    `,
