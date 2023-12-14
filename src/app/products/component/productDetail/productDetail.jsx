@@ -34,7 +34,6 @@ const ProductDeatil = ({ productData = {} }) => {
     const [ isLoading , setIsLoading] = useState(false)
     const router = useRouter()
     const clevertapEvent = useCleverTapEvents();
-    const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {}
     useEffect(()=>{
 
         if(variants && variants.length > 0){
@@ -222,6 +221,8 @@ const ProductDeatil = ({ productData = {} }) => {
         }
     }
     const onHandleApplePay = () => {
+        console.log("userDatauserData",userData)
+        const deliveryFeesConfig = countryList.find((data) => data.code == selectedCountry.code) || {}
         const productPrice = parseInt(finalPrice) * parseInt(noOfProduct);
         const minThreshold = deliveryFeesConfig.minThreshold || 0;
         let totalAmount = productPrice;
@@ -243,14 +244,10 @@ const ProductDeatil = ({ productData = {} }) => {
           "requiredBillingContactFields": [
               "postalAddress",
               "name",
-              "phone",
-              "email",
           ],
           "requiredShippingContactFields": [
               "postalAddress",
               "name",
-              "phone",
-              "email"
           ],
           "lineItems": [
               {
@@ -259,6 +256,13 @@ const ProductDeatil = ({ productData = {} }) => {
               }
           ],
         };
+        if(!isLogin){
+            request["requiredBillingContactFields"].push('phone')
+            request["requiredBillingContactFields"].push('email')
+            request["requiredShippingContactFields"].push('phone')
+            request["requiredShippingContactFields"].push('email')
+        }
+        console.log("requestrequest",request)
         appleSession = new ApplePaySession(3, request);
         appleSession.begin();
         appleSession.onshippingmethodselected = function (event) {
@@ -362,11 +366,11 @@ const ProductDeatil = ({ productData = {} }) => {
 
     const placeApplePayOrderFlow = async({applePayData={},token=""}) =>{
         console.log("applePayData",applePayData)
-        const isLogin = false;
+        // const isLogin = false;
         const dialCodeForSelectedCountry = getDialCode(selectedCountry.code)
         const { givenName="", familyName = "" , phoneNumber="",emailAddress="" } =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
         if(isLogin){
-
+            onAddAddress({applePayData:applePayData,token:token})
         }else{
             const nonSignupUserPayload = {"email":emailAddress,"firstName":givenName,"lastName":familyName,"mobileNumber":dialCodeForSelectedCountry+phoneNumber};
             const signUpResp = await fetch('/api/signup', {
@@ -405,7 +409,7 @@ const ProductDeatil = ({ productData = {} }) => {
                   });
                 }
               }
-              if(signupRespData && signupRespData.status_code == 200){
+              if((signupRespData && signupRespData.status_code == 200) || (signupRespData && signupRespData.status_code == 400)){
                 onAddAddress({applePayData:applePayData,token:token})
               }
         }
@@ -455,6 +459,7 @@ const ProductDeatil = ({ productData = {} }) => {
         console.log("selectedVarients",selectedVarients)
         console.log("saveAddressResp",saveAddressResp)
         const {billingAddress={} , shippingAddress={} } = saveAddressResp || {}
+        const deliveryFeesConfig = countryList.find((data) => data.code == selectedCountry.code) || {}
         const cartItemsData = getCartItems && getCartItems['products'];
         const userName = name || "";
         console.log("cartItemsData",cartItemsData)
