@@ -11,7 +11,7 @@ import PriceDetailsContainer from './price-details-Container/PriceDetailsContain
 import AccountDetails from './account-details/AccountDetails';
 import ProductCard from './product-card/ProductCard';
 import SuccessPopUp from './successPopUp/SuccessPopUp';
-import moment from 'moment' 
+
 import { useAuth } from '@/context/userDetail';
 
 export default function PaymentSuccess() {
@@ -35,7 +35,7 @@ export default function PaymentSuccess() {
   const {orderCreatedAt=" "} =  orderDetailsData || {};
 const orderCreateDate = orderCreatedAt?.split(" ");
 console.log("orderCreateDate",orderCreateDate)
-  const orderCreate =moment(orderCreateDate[0]).format("MMM DD") + " " +  moment(orderCreateDate[1], "HH:mm:ss.S").format("h:mm A");;
+
 
  
 
