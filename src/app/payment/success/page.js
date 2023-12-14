@@ -56,9 +56,7 @@ console.log("orderCreateDate",orderCreateDate)
       getOrderDetails();
     
     },[])
-    // useEffect(()=>{
-    //   window.fcWidget.hide()
-    // },[])
+   
    
 
     const getOrderDetails = async()=>{

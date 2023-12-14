@@ -24,34 +24,34 @@ const AccountDetails = ({setIsSuccessPopup}) => {
 
 
 const handleCreateAccount = async () => {
-  // if (!password || password.length < 8) {
-  //   setPasswordError("Passwords need to be a min. of 8 characters");
-  //   return;
-  // }
-  // if (password !== repeatNewPassword) {
-  //   setPasswordError("Passwords do not match");
-  //   return;
-  // }
+  if (!password || password.length < 8) {
+    setPasswordError("Passwords need to be a min. of 8 characters");
+    return;
+  }
+  if (password !== repeatNewPassword) {
+    setPasswordError("Passwords do not match");
+    return;
+  }
   const payload = {
     "username": email,
     "password": password
   };
   try {
-    // const response = await fetch('/api/guest-login', {
-    //   method: 'PATCH',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(payload),
-    // });
+    const response = await fetch('/api/guest-login', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
 
-    // if (!response.ok) {
-    //   console.error(`Failed to update password. Status: ${response.status}`);
-    //   return;
-    // }
+    if (!response.ok) {
+      console.error(`Failed to update password. Status: ${response.status}`);
+      return;
+    }
 
-    // const responseData = await response.json();
-    // console.log("guestResponse",responseData)
+    const responseData = await response.json();
+    console.log("guestResponse",responseData)
 
     setIsSuccessPopup(true);
     window.clevertap.onUserLogin.push({
