@@ -11,10 +11,16 @@ import Loader from '@/components/Loader/Loader';
 import { useCartItems } from '@/context/cartItems';
 import useCleverTapEvents from "@/hooks/useCleverTapEvents";
 import { useCountryList } from '@/context/countryList';
+import { useAuth } from '@/context/userDetail';
+import { useCountry } from '@/context/contryDetails';
+import { createPayloadForCartItems } from "@/utils";
 const ProductDeatil = ({ productData = {} }) => {
+    let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
     const countryList = useCountryList();
+    const { selectedCountry={} } = useCountry();
+    const {isLogin=false, userData={}} = useAuth();
     const { setCartItemData={},setCartItemCount={} } = useCartItems();
     const [selectedVarients, setselectedVarients] = useState("");
     const [selctedVrientsData, setSelectedVrientsData] = useState({});
@@ -252,7 +258,7 @@ const ProductDeatil = ({ productData = {} }) => {
             devliveryFees =  deliveryFeesConfig.deliveryFee;
             totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
         }
-        let appleSession;
+      
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
@@ -344,7 +350,7 @@ const ProductDeatil = ({ productData = {} }) => {
                   token: getCheckoutToken.token
                 } 
                 handelAddToCart();
-                placeApplePayOrderFlow(applePayData)
+                placeApplePayOrderFlow({applePayData:applePayData,token:getCheckoutToken.token})
 
                
               }
@@ -352,7 +358,7 @@ const ProductDeatil = ({ productData = {} }) => {
         }
     }
 
-    const placeApplePayOrderFlow = async(applePayData) =>{
+    const placeApplePayOrderFlow = async({applePayData={},token=""}) =>{
         console.log("applePayData",applePayData)
         const isLogin = false;
         const { givenName="", familyName = "" , phoneNumber="",emailAddress="" } =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
@@ -397,21 +403,21 @@ const ProductDeatil = ({ productData = {} }) => {
                 }
               }
               if(signupRespData && signupRespData.status_code == 200){
-                onAddAddress(applePayData)
+                onAddAddress({applePayData:applePayData,token:token})
               }
         }
     }
 
-    const onAddAddress = async(applePayData) =>{
+    const onAddAddress = async({applePayData={},token=""}) =>{
         const { givenName="", familyName = "" , phoneNumber="",emailAddress="" ,addressLines=[],subLocality="",locality="",postalCode="",country=""} =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
         clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});
         const address = addressLines.toLocaleString()+" "+subLocality + " " +locality+ " " + postalCode;
         const apartment = locality;
-        const shippingAddressPayload =  {"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
-        const billingAddressPayload ={"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"shippingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const billingAddressPayload =  {"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const shippingAddressPayload ={"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"shippingAddress":true,"isActive":true,"isDefaultAddress":true}
         const addressPayload = {
-            shippingAddress:shippingAddressPayload,
-            billingAddress: billingAddressPayload
+            shippingAddress:billingAddressPayload,
+            billingAddress: shippingAddressPayload
         }
         try {
           const res = await fetch('/api/save-address', {
@@ -422,9 +428,9 @@ const ProductDeatil = ({ productData = {} }) => {
             body:JSON.stringify(addressPayload)
           })
           if (res.status === 200) {
-            const saveAddress = await res.json()
-            console.log("SAVEEE",saveAddress)
-            onPayment()
+            const saveAddressResp = await res.json()
+            console.log("SAVEEE",saveAddressResp)
+            onPayment({saveAddressResp:saveAddressResp,name:givenName+" "+familyName,token:token})
           } else {
             console.log("ERROR")
           }
@@ -432,32 +438,86 @@ const ProductDeatil = ({ productData = {} }) => {
           console.error('An unexpected error happened occurred:', error)
         }
       }
-
-    const onPayment = ()=>{
+      const calculateVatPercentage = async (subTotal) => {
+        if (selectedCountry && selectedCountry) {
+          const vatPercentage = selectedCountry.vat;
+          const vatAmount = subTotal-(((subTotal)* (100)) / (100 + (vatPercentage)))
+          return parseFloat(vatAmount.toFixed(2));
+        }
+      }
+    const onPayment = async({saveAddressResp={},name="",token=""})=>{
+        const getCartItems = await getCartItem();
+        console.log("getCartItems",getCartItems)
+        console.log("selectedVarients",selectedVarients)
+        console.log("saveAddressResp",saveAddressResp)
+        const {billingAddress={} , shippingAddress={} } = saveAddressResp || {}
+        const cartItemsData = getCartItems && getCartItems['products'];
+        const userName = name || "";
+        console.log("cartItemsData",cartItemsData)
+        console.log("id",id)
+        const finalSelectedItems = cartItemsData.filter((data)=>data.id == id);
+        console.log("finalSelectedItems",finalSelectedItems)
+        const cartItemPayload = await createPayloadForCartItems(finalSelectedItems);
+        const description = `${userName + ",MULTIPLE_ITEM," + ""}`;
+        const userId = getCartItems['customer'] || userData['id'] || null;
+        const productPrice = parseInt(finalPrice) * parseInt(noOfProduct);
+        const minThreshold = deliveryFeesConfig.minThreshold || 0;
+        let totalAmount = productPrice
+        let devliveryFees = 0
+        const productName = name;
+        if(productPrice < minThreshold){
+            devliveryFees =  deliveryFeesConfig.deliveryFee;
+            totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
+        }
+        const taxAmount = await calculateVatPercentage(productPrice)
         let payload = {
             "cartId":getCartItems['id'] || "",
             "orderType": "one-time",
             "userId": userId || "",
-            "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
-            "shippingAddressId":selectedAddress && selectedAddress.id || "",
-            "addressId": selectedAddress && selectedAddress.id || "",
+            "billingAddressId":billingAddress && billingAddress.id || "",
+            "shippingAddressId":shippingAddress && shippingAddress.id || "",
+            "addressId": shippingAddress && shippingAddress.id || "",
             "countryCode": selectedCountry.code || "",
             "countryId": selectedCountry.id || "",
             "description": description,
-            "finalAmount": priceDetails['totalAmount'],
-            "totalAmount": priceDetails['finalPayloadTotalAmount'],
+            "finalAmount": totalAmount,
+            "totalAmount": totalAmount,
             "currency": selectedCountry.currency || "",
             "orderSource": "WEBSITE",
             "orderCategory": "CART",
-            "couponApplied": isCouponApplied || false,
-            "couponCode": couponCodeData['coupon'] || "",
-            "discount": priceDetails['discountAmount'],
+            "couponApplied":  false,
+            "couponCode":  "",
+            "discount": 0,
             "paymentType": "Regular",
             "taxAmount": taxAmount,
             "shippingAmount": 0,
-            "deliveryCharges":priceDetails['deliveryFees'],
+            "deliveryCharges":devliveryFees,
             "cartItems": cartItemPayload
           }
+
+          payload['token'] = token;
+          payload['paymentMode'] = "APPLE_PAY";
+        //   trackData['Payment Type'] = 'Apple pay' || ''
+        //   clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData);
+        console.log("payloadpayload",payload) 
+            const placeOrderResp  =  await fetch('/api/apple-pay-place-order', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(payload)
+            })
+      
+            const placeOrder = await placeOrderResp.json();
+            console.log("placeOrderResp",placeOrder)
+            // setIsLoader(false);
+            if(placeOrder && placeOrder.status_code == 200){
+              appleSession.completePayment(ApplePaySession.STATUS_SUCCESS);
+              // router.push(`/payment/success?orderId=${placeOrder.order_id}`)
+              window.location.href = `/payment/success?orderId=${placeOrder.order_id}`
+            }
+
+        //   console.log("payloadpayload",payload)
     }
 
     try{
