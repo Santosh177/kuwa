@@ -10,9 +10,11 @@ import FrequntlyBoughtTogether from "./subComponents/frequntlyBoughtTogether";
 import Loader from '@/components/Loader/Loader';
 import { useCartItems } from '@/context/cartItems';
 import useCleverTapEvents from "@/hooks/useCleverTapEvents";
+import { useCountryList } from '@/context/countryList';
 const ProductDeatil = ({ productData = {} }) => {
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
+    const countryList = useCountryList();
     const { setCartItemData={},setCartItemCount={} } = useCartItems();
     const [selectedVarients, setselectedVarients] = useState("");
     const [selctedVrientsData, setSelectedVrientsData] = useState({});
@@ -25,6 +27,7 @@ const ProductDeatil = ({ productData = {} }) => {
     const [ isLoading , setIsLoading] = useState(false)
     const router = useRouter()
     const clevertapEvent = useCleverTapEvents();
+    const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {}
     useEffect(()=>{
 
         if(variants && variants.length > 0){
@@ -87,6 +90,7 @@ const ProductDeatil = ({ productData = {} }) => {
     }
     
     const addToCart = async (payload) => {
+        console.log("addToCartaddToCart",payload)
         try {
             const res = await fetch('/api/add-to-cart', {
                 method: 'POST',
@@ -129,6 +133,7 @@ const ProductDeatil = ({ productData = {} }) => {
     },[noOfProduct])
     const handelAddToCart = async () => {
         setIsLoading(true)
+        console.log("handelAddToCart")
         const response = await addToCart(payload);
         if (response === 200) {
             // setNoOfProduct(1);
@@ -225,6 +230,7 @@ const ProductDeatil = ({ productData = {} }) => {
         handelShareOption: handelShareOption,
         setNoOfProduct: setNoOfProduct,
         handelViewCart: handelViewCart,
+        onHandleApplePay:onHandleApplePay,
         noOfProduct: noOfProduct
     };
     const handelRoute = (type) => {
@@ -236,6 +242,224 @@ const ProductDeatil = ({ productData = {} }) => {
 
         }
     }
+    const onHandleApplePay = () => {
+        const productPrice = parseInt(finalPrice) * parseInt(noOfProduct);
+        const minThreshold = deliveryFeesConfig.minThreshold || 0;
+        let totalAmount = productPrice
+        let devliveryFees = 0
+        const productName = name;
+        if(productPrice < minThreshold){
+            devliveryFees =  deliveryFeesConfig.deliveryFee;
+            totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
+        }
+        let appleSession;
+        const applePaySupportednetworks = "visa, mastercard, amex";
+        let request = {
+          merchantCapabilities: ['supports3DS'],
+          supportedNetworks: applePaySupportednetworks.split(", "),
+          countryCode: "AE" || "",
+          currencyCode:  "AED" || "",
+          total: { label: "For " + productName, amount: totalAmount },
+          "shippingType": "shipping",
+          "requiredBillingContactFields": [
+              "postalAddress",
+              "name",
+              "phone",
+              "email"
+          ],
+          "requiredShippingContactFields": [
+              "postalAddress",
+              "name",
+              "phone",
+              "email"
+          ],
+          "lineItems": [
+              {
+                  "label": "Shipping",
+                  "amount": devliveryFees
+              }
+          ],
+        };
+        appleSession = new ApplePaySession(3, request);
+        appleSession.begin();
+        appleSession.onshippingmethodselected = function (event) {
+            console.log("eventevent",event)
+            var newTotal = {
+                type: 'final',
+                label: "config.shop.shop_name",
+                amount: 500
+            }
+            var newLineItems = [
+                {
+                type: 'final',
+                label: 'Subtotal',
+                amount: 500
+                },
+                {
+                type: 'final',
+                label: "event.shippingMethod.label,",
+                amount: 500
+                }
+            ]
+            appleSession.completeShippingMethodSelection(
+                ApplePaySession.STATUS_SUCCESS,
+                newTotal,
+                newLineItems
+            )
+        }
+        appleSession.onvalidatemerchant = async (event) => {
+          const appleValidationURL = event && event.validationURL;
+          // alert("va"+JSON.stringify(appleValidationURL))
+          const validateData = {"apple_url":appleValidationURL,"merchant_name":'checkout'};
+          console.log("validateDatavalidateData",validateData)
+          const validateSessionResp  =  await fetch('/api/validate-apple-pay-session', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(validateData)
+          })
+          const validateSessionData = await validateSessionResp.json();
+          console.log("validateSessionData",validateSessionData)
+          const getValidateSession = validateSessionData['session_response'];
+          if (getValidateSession) {
+            appleSession.completeMerchantValidation(getValidateSession);
+          }
+          appleSession.onpaymentauthorized = async (event) => {
+              console.log("payment TOkenn",event)
+              const appleToken = event.payment.token;
+              const applePayData = event;
+              const decryptAppleTokenResp  =  await fetch('/api/decrypt-apple-token', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(appleToken)
+              })
+              const decryptAppleToken = await decryptAppleTokenResp.json();
+              const getCheckoutToken = decryptAppleToken.token_response;
+              console.log("getCheckoutToken",getCheckoutToken)
+              if (getCheckoutToken) {
+                let data = {
+                  token: getCheckoutToken.token
+                } 
+                handelAddToCart();
+                placeApplePayOrderFlow(applePayData)
+
+               
+              }
+          }
+        }
+    }
+
+    const placeApplePayOrderFlow = async(applePayData) =>{
+        console.log("applePayData",applePayData)
+        const isLogin = false;
+        const { givenName="", familyName = "" , phoneNumber="",emailAddress="" } =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
+        if(isLogin){
+
+        }else{
+            const nonSignupUserPayload = {"email":emailAddress,"firstName":givenName,"lastName":familyName,"mobileNumber":phoneNumber};
+            const signUpResp = await fetch('/api/signup', {
+                method: 'POST',
+                body:JSON.stringify(nonSignupUserPayload)
+              })
+              const signupRespData = await signUpResp.json();
+              console.log("signupRespData",signupRespData)
+              if(signupRespData &&   signupRespData.status_code &&   signupRespData.status_code == 200 && signupRespData.data){
+                const name = signupRespData.data.firstName+ ' ' +signupRespData.data.lastName;
+                const userId = signupRespData && signupRespData.data&& signupRespData.data.id || null
+                const phone = signupRespData.data.mobileNumber ;
+                const email = signupRespData.data.email;
+                const countryName = selectedCountry && selectedCountry.name ||  ""
+                if(userId){
+                  window.clevertap.onUserLogin.push({
+                    "Site": {
+                      "Name": name,            // String
+                      "Identity": userId,              // String or number
+                      "Email": email,         // Email address of the user
+                      "Phone": phone, 
+                      "Country":countryName,
+                      "MSG-email": true,                // Disable email notifications
+                      "MSG-push": true,                  // Enable push notifications
+                      "MSG-sms": true,                   // Enable sms notifications
+                      "MSG-whatsapp": true,              // Enable WhatsApp notifications
+                    },
+                    "cart_items": []
+                   })
+                   
+                   window.clevertap.event.push("kuwa_user_add_address_signup_success", {
+                    "Country":countryName,
+                    "Email":email,
+                    "Name": name,
+                    "Phone": phone
+                  });
+                }
+              }
+              if(signupRespData && signupRespData.status_code == 200){
+                onAddAddress(applePayData)
+              }
+        }
+    }
+
+    const onAddAddress = async(applePayData) =>{
+        const { givenName="", familyName = "" , phoneNumber="",emailAddress="" ,addressLines=[],subLocality="",locality="",postalCode="",country=""} =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
+        clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});
+        const address = addressLines.toLocaleString()+" "+subLocality + " " +locality+ " " + postalCode;
+        const apartment = locality;
+        const shippingAddressPayload =  {"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const billingAddressPayload ={"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"shippingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const addressPayload = {
+            shippingAddress:shippingAddressPayload,
+            billingAddress: billingAddressPayload
+        }
+        try {
+          const res = await fetch('/api/save-address', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(addressPayload)
+          })
+          if (res.status === 200) {
+            const saveAddress = await res.json()
+            console.log("SAVEEE",saveAddress)
+            onPayment()
+          } else {
+            console.log("ERROR")
+          }
+        } catch (error) {
+          console.error('An unexpected error happened occurred:', error)
+        }
+      }
+
+    const onPayment = ()=>{
+        let payload = {
+            "cartId":getCartItems['id'] || "",
+            "orderType": "one-time",
+            "userId": userId || "",
+            "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
+            "shippingAddressId":selectedAddress && selectedAddress.id || "",
+            "addressId": selectedAddress && selectedAddress.id || "",
+            "countryCode": selectedCountry.code || "",
+            "countryId": selectedCountry.id || "",
+            "description": description,
+            "finalAmount": priceDetails['totalAmount'],
+            "totalAmount": priceDetails['finalPayloadTotalAmount'],
+            "currency": selectedCountry.currency || "",
+            "orderSource": "WEBSITE",
+            "orderCategory": "CART",
+            "couponApplied": isCouponApplied || false,
+            "couponCode": couponCodeData['coupon'] || "",
+            "discount": priceDetails['discountAmount'],
+            "paymentType": "Regular",
+            "taxAmount": taxAmount,
+            "shippingAmount": 0,
+            "deliveryCharges":priceDetails['deliveryFees'],
+            "cartItems": cartItemPayload
+          }
+    }
+
     try{
         const tabbyMinLimit = 10;
         const tabbyMaxLimit = 2000;

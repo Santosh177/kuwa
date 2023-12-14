@@ -5,9 +5,13 @@ import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
 import Varients from "./productVarients";
 import { getTamaraPaymentTypes } from '@/services';
 import { useCountryList } from '@/context/countryList';
+import { useCountry } from '@/context/contryDetails';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
-    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={}} = pricingSectionVariables;
+    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={}} = pricingSectionVariables;
     const countryList = useCountryList();
+    const { selectedCountry={} } = useCountry();
+    const clevertapEvent = useCleverTapEvents();
     const [tamaraConfig, setTamaraConfig] = useState({});
     const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {}
     useEffect(()=>{
@@ -115,6 +119,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
           appleSession.onpaymentauthorized = async (event) => {
               console.log("payment TOkenn",event)
               const appleToken = event.payment.token;
+              const applePayData = event;
               const decryptAppleTokenResp  =  await fetch('/api/decrypt-apple-token', {
                 method: 'POST',
                 headers: {
@@ -129,10 +134,120 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 let data = {
                   token: getCheckoutToken.token
                 } 
+                placeApplePayOrderFlow(applePayData)
+
                
               }
           }
         }
+    }
+
+    const placeApplePayOrderFlow = async(applePayData) =>{
+        console.log("applePayData",applePayData)
+        const isLogin = false;
+        const { givenName="", familyName = "" , phoneNumber="",emailAddress="" } =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
+        if(isLogin){
+
+        }else{
+            const nonSignupUserPayload = {"email":emailAddress,"firstName":givenName,"lastName":familyName,"mobileNumber":phoneNumber};
+            const signUpResp = await fetch('/api/signup', {
+                method: 'POST',
+                body:JSON.stringify(nonSignupUserPayload)
+              })
+              const signupRespData = await signUpResp.json();
+              console.log("signupRespData",signupRespData)
+              if(signupRespData &&   signupRespData.status_code &&   signupRespData.status_code == 200 && signupRespData.data){
+                const name = signupRespData.data.firstName+ ' ' +signupRespData.data.lastName;
+                const userId = signupRespData && signupRespData.data&& signupRespData.data.id || null
+                const phone = signupRespData.data.mobileNumber ;
+                const email = signupRespData.data.email;
+                const countryName = selectedCountry && selectedCountry.name ||  ""
+                if(userId){
+                  window.clevertap.onUserLogin.push({
+                    "Site": {
+                      "Name": name,            // String
+                      "Identity": userId,              // String or number
+                      "Email": email,         // Email address of the user
+                      "Phone": phone, 
+                      "Country":countryName,
+                      "MSG-email": true,                // Disable email notifications
+                      "MSG-push": true,                  // Enable push notifications
+                      "MSG-sms": true,                   // Enable sms notifications
+                      "MSG-whatsapp": true,              // Enable WhatsApp notifications
+                    },
+                    "cart_items": []
+                   })
+                   
+                   window.clevertap.event.push("kuwa_user_add_address_signup_success", {
+                    "Country":countryName,
+                    "Email":email,
+                    "Name": name,
+                    "Phone": phone
+                  });
+                }
+              }
+              if(signupRespData && signupRespData.status_code == 200){
+                onAddAddress(applePayData)
+              }
+        }
+    }
+
+    const onAddAddress = async(applePayData) =>{
+        const { givenName="", familyName = "" , phoneNumber="",emailAddress="" ,addressLines=[],subLocality="",locality="",postalCode="",country=""} =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
+        clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});
+        const address = addressLines.toLocaleString()+" "+subLocality + " " +locality+ " " + postalCode;
+        const apartment = locality;
+        const shippingAddressPayload =  {"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const billingAddressPayload ={"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"shippingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const addressPayload = {
+            shippingAddress:shippingAddressPayload,
+            billingAddress: billingAddressPayload
+        }
+        try {
+          const res = await fetch('/api/save-address', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(addressPayload)
+          })
+          if (res.status === 200) {
+            const saveAddress = await res.json()
+            console.log("SAVEEE",saveAddress)
+            // onPayment()
+          } else {
+            console.log("ERROR")
+          }
+        } catch (error) {
+          console.error('An unexpected error happened occurred:', error)
+        }
+      }
+
+    const onPayment = ()=>{
+        let payload = {
+            "cartId":getCartItems['id'] || "",
+            "orderType": "one-time",
+            "userId": userId || "",
+            "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
+            "shippingAddressId":selectedAddress && selectedAddress.id || "",
+            "addressId": selectedAddress && selectedAddress.id || "",
+            "countryCode": selectedCountry.code || "",
+            "countryId": selectedCountry.id || "",
+            "description": description,
+            "finalAmount": priceDetails['totalAmount'],
+            "totalAmount": priceDetails['finalPayloadTotalAmount'],
+            "currency": selectedCountry.currency || "",
+            "orderSource": "WEBSITE",
+            "orderCategory": "CART",
+            "couponApplied": isCouponApplied || false,
+            "couponCode": couponCodeData['coupon'] || "",
+            "discount": priceDetails['discountAmount'],
+            "paymentType": "Regular",
+            "taxAmount": taxAmount,
+            "shippingAmount": 0,
+            "deliveryCharges":priceDetails['deliveryFees'],
+            "cartItems": cartItemPayload
+          }
     }
 
     const tamaraMinAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].min_limit && tamaraConfig[0].min_limit.amount:0
@@ -161,7 +276,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 <div className={styles.buyNow} onClick={() => handelBuyNow()} ><span>Buy Now</span></div>
             </div>
 
-            <div style={{marginTop:'24px',cursor:'pointer'}} onClick={()=>onApplePay()}>
+            <div style={{marginTop:'24px',cursor:'pointer'}} onClick={()=>onHandleApplePay()}>
                <img style={{width:'100%'}} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/default.png" alt="apple-pay"></img>
             </div>
             {/* <div className={styles.shareConatiner}>
