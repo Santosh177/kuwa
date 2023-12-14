@@ -416,13 +416,14 @@ const ProductDeatil = ({ productData = {} }) => {
     }
 
     const onAddAddress = async({applePayData={},token=""}) =>{
+        const countryName = selectedCountry && selectedCountry.name ||  ""
         const dialCodeForSelectedCountry = getDialCode(selectedCountry.code)
         const { givenName="", familyName = "" , phoneNumber="",emailAddress="" ,addressLines=[],subLocality="",locality="",postalCode="",country=""} =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
         clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});
         const address = addressLines.toLocaleString()+" "+subLocality + " " +locality+ " " + postalCode;
         const apartment = locality;
-        const billingAddressPayload =  {"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":dialCodeForSelectedCountry+phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
-        const shippingAddressPayload ={"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":dialCodeForSelectedCountry+phoneNumber,"email":emailAddress,"shippingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const billingAddressPayload =  {"country":countryName,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":dialCodeForSelectedCountry+phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const shippingAddressPayload ={"country":countryName,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":dialCodeForSelectedCountry+phoneNumber,"email":emailAddress,"shippingAddress":true,"isActive":true,"isDefaultAddress":true}
         const addressPayload = {
             shippingAddress:billingAddressPayload,
             billingAddress: shippingAddressPayload
@@ -521,6 +522,11 @@ const ProductDeatil = ({ productData = {} }) => {
             console.log("placeOrderResp",placeOrder)
             // setIsLoader(false);
             if(placeOrder && placeOrder.status_code == 200){
+            const countryName = selectedCountry && selectedCountry.name ||  ""
+            window.clevertap.event.push("kuwa_applepay", {
+                    "Country":countryName,
+                    "productName":name
+                });
               appleSession.completePayment(ApplePaySession.STATUS_SUCCESS);
               // router.push(`/payment/success?orderId=${placeOrder.order_id}`)
               window.location.href = `/payment/success?orderId=${placeOrder.order_id}`
