@@ -13,13 +13,14 @@ import useCleverTapEvents from "@/hooks/useCleverTapEvents";
 import { useCountryList } from '@/context/countryList';
 import { useAuth } from '@/context/userDetail';
 import { useCountry } from '@/context/contryDetails';
-import { createPayloadForCartItems } from "@/utils";
+import { createPayloadForCartItems,getDialCode } from "@/utils";
 const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
+  
     const {isLogin=false, userData={}} = useAuth();
     const { setCartItemData={},setCartItemCount={} } = useCartItems();
     const [selectedVarients, setselectedVarients] = useState("");
@@ -220,38 +221,10 @@ const ProductDeatil = ({ productData = {} }) => {
 
         }
     }
-    const pricingSectionVariables = {
-        currency: currency,
-        name: name,
-        numberOfProductReview: numberOfProductReview,
-        title: title,
-        variants: variants,
-        setselectedVarients: setselectedVarients,
-        selectedVarients: selectedVarients,
-        retailPrice: retailPrice,
-        finalPrice: finalPrice,
-        discount: discount,
-        handelAddToCart: handelAddToCart,
-        handelBuyNow: handelBuyNow,
-        handelShareOption: handelShareOption,
-        setNoOfProduct: setNoOfProduct,
-        handelViewCart: handelViewCart,
-        onHandleApplePay:onHandleApplePay,
-        noOfProduct: noOfProduct
-    };
-    const handelRoute = (type) => {
-        if (type === "home") {
-            router.push('/')
-        } else if (type === "cat") {
-
-        }else if (type === "product") {
-
-        }
-    }
     const onHandleApplePay = () => {
         const productPrice = parseInt(finalPrice) * parseInt(noOfProduct);
         const minThreshold = deliveryFeesConfig.minThreshold || 0;
-        let totalAmount = productPrice
+        let totalAmount = productPrice;
         let devliveryFees = 0
         const productName = name;
         if(productPrice < minThreshold){
@@ -263,15 +236,15 @@ const ProductDeatil = ({ productData = {} }) => {
         let request = {
           merchantCapabilities: ['supports3DS'],
           supportedNetworks: applePaySupportednetworks.split(", "),
-          countryCode: "AE" || "",
-          currencyCode:  "AED" || "",
+          countryCode: selectedCountry.code || "",
+          currencyCode:  selectedCountry.currency || "",
           total: { label: "For " + productName, amount: totalAmount },
           "shippingType": "shipping",
           "requiredBillingContactFields": [
               "postalAddress",
               "name",
               "phone",
-              "email"
+              "email",
           ],
           "requiredShippingContactFields": [
               "postalAddress",
@@ -357,15 +330,45 @@ const ProductDeatil = ({ productData = {} }) => {
           }
         }
     }
+    const pricingSectionVariables = {
+        currency: currency,
+        name: name,
+        numberOfProductReview: numberOfProductReview,
+        title: title,
+        variants: variants,
+        setselectedVarients: setselectedVarients,
+        selectedVarients: selectedVarients,
+        retailPrice: retailPrice,
+        finalPrice: finalPrice,
+        discount: discount,
+        handelAddToCart: handelAddToCart,
+        handelBuyNow: handelBuyNow,
+        handelShareOption: handelShareOption,
+        setNoOfProduct: setNoOfProduct,
+        handelViewCart: handelViewCart,
+        onHandleApplePay:onHandleApplePay,
+        noOfProduct: noOfProduct
+    };
+    const handelRoute = (type) => {
+        if (type === "home") {
+            router.push('/')
+        } else if (type === "cat") {
+
+        }else if (type === "product") {
+
+        }
+    }
+   
 
     const placeApplePayOrderFlow = async({applePayData={},token=""}) =>{
         console.log("applePayData",applePayData)
         const isLogin = false;
+        const dialCodeForSelectedCountry = getDialCode(selectedCountry.code)
         const { givenName="", familyName = "" , phoneNumber="",emailAddress="" } =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
         if(isLogin){
 
         }else{
-            const nonSignupUserPayload = {"email":emailAddress,"firstName":givenName,"lastName":familyName,"mobileNumber":phoneNumber};
+            const nonSignupUserPayload = {"email":emailAddress,"firstName":givenName,"lastName":familyName,"mobileNumber":dialCodeForSelectedCountry+phoneNumber};
             const signUpResp = await fetch('/api/signup', {
                 method: 'POST',
                 body:JSON.stringify(nonSignupUserPayload)
@@ -409,12 +412,13 @@ const ProductDeatil = ({ productData = {} }) => {
     }
 
     const onAddAddress = async({applePayData={},token=""}) =>{
+        const dialCodeForSelectedCountry = getDialCode(selectedCountry.code)
         const { givenName="", familyName = "" , phoneNumber="",emailAddress="" ,addressLines=[],subLocality="",locality="",postalCode="",country=""} =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
         clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});
         const address = addressLines.toLocaleString()+" "+subLocality + " " +locality+ " " + postalCode;
         const apartment = locality;
-        const billingAddressPayload =  {"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
-        const shippingAddressPayload ={"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":phoneNumber,"email":emailAddress,"shippingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const billingAddressPayload =  {"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":dialCodeForSelectedCountry+phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
+        const shippingAddressPayload ={"country":country,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":dialCodeForSelectedCountry+phoneNumber,"email":emailAddress,"shippingAddress":true,"isActive":true,"isDefaultAddress":true}
         const addressPayload = {
             shippingAddress:billingAddressPayload,
             billingAddress: shippingAddressPayload

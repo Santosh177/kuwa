@@ -125,4 +125,30 @@ export const authHeader = async() =>{
   )
 }
 
+export const getDialCode =(code)=> {
+  let dialCodeData = {
+    "SA":{
+      "dialCode":"+966"
+    },
+    "KW":{
+      "dialCode":"+965"
+    },
+    "BH":{
+      "dialCode":"+973"
+    },
+    "OM":{
+      "dialCode":"+968"
+    },
+    "QA":{
+      "dialCode":"+974"
+    },
+    "AE":{
+      "dialCode":"+971"
+    }
+
+  }
+  return dialCodeData[code]['dialCode'];
+
+}
+
 
