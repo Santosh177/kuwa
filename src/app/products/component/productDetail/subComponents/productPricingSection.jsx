@@ -4,11 +4,12 @@ import styles from './ProductPricingSection.module.scss'
 import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
 import Varients from "./productVarients";
 import { getTamaraPaymentTypes } from '@/services';
+import { useCountryList } from '@/context/countryList';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={}} = pricingSectionVariables;
-
+    const countryList = useCountryList();
     const [tamaraConfig, setTamaraConfig] = useState({});
-
+    const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {}
     useEffect(()=>{
         getTamaraConfig()
     },[])
@@ -29,18 +30,29 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
 
 
     const onApplePay = () => {
-     
+        const productPrice = parseInt(finalPrice) * parseInt(noOfProduct);
+        const minThreshold = deliveryFeesConfig.minThreshold || 0;
+        let totalAmount = productPrice
+        let devliveryFees = 0
+        const productName = name;
+        if(productPrice < minThreshold){
+            devliveryFees =  deliveryFeesConfig.deliveryFee;
+            totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
+        }
+        let appleSession;
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
           supportedNetworks: applePaySupportednetworks.split(", "),
           countryCode: "AE" || "",
           currencyCode:  "AED" || "",
-          total: { label: "For " + "Multiple_Package", amount: 500 },
+          total: { label: "For " + productName, amount: totalAmount },
           "shippingType": "shipping",
           "requiredBillingContactFields": [
               "postalAddress",
-              "name"
+              "name",
+              "phone",
+              "email"
           ],
           "requiredShippingContactFields": [
               "postalAddress",
@@ -50,12 +62,8 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
           ],
           "lineItems": [
               {
-                  "label": "Sales Tax",
-                  "amount": "0.00"
-              },
-              {
                   "label": "Shipping",
-                  "amount": "0.00"
+                  "amount": devliveryFees
               }
           ],
         };
