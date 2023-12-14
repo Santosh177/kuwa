@@ -1,4 +1,4 @@
-@media(min-width:990px){
+
     .accountContainer{
         display: flex;
         flex-direction: column;
@@ -52,7 +52,10 @@
            
             
             .inputEmail{
-                width:287px;
+                width:365px;
+                .guestEmail{
+
+                }
                 // height:34px;
             }
             .inputPassword{
@@ -60,6 +63,14 @@
                 justify-content: center;
                 align-items: center;
                 gap:7px;
+                width:365px;
+                .guestPassword{
+                   
+                }
+            }
+            .passwordError{
+                color:#ce4224;
+                font-size: 14px;
             }
             .btn{
                 font-size: 14px;
@@ -73,4 +84,28 @@
             }
         }
     }
-}
+
+    @media(max-width:990px){
+        .accountContainer{
+            width:343px;
+            .headerTxt{
+                font-size: 12px;
+            }
+            .container{
+                .icon{
+                span{
+                    font-size: 8px;
+                }
+            }
+            }
+            .personalDetails{
+              .inputEmail{
+                width:287px;
+              } 
+              .inputPassword{
+                width:289px;
+              } 
+            }
+           
+        }
+    }

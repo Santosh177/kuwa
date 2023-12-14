@@ -3,6 +3,7 @@ import styles from './price-details.module.scss';
 
 
 const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
+    console.log("bsba",currency)
     return(
         <div className={styles.amountSavedInfo}>You saved : {currency +" " + savedAmount}</div>
     )
@@ -32,7 +33,7 @@ const PriceDetails = ({data,isHidePriceDetails=false}) => {
                 <div className={styles.rowItemLeftText}>Delivery Fee</div>
                 <div className={[styles.rowItemRightText,styles.freeDeliveryTxt].join(" ")}>{(deliveryFees>0)?"+ "+currency + " "+ deliveryFees:"Free"}</div>
             </div>
-            {discountAmount> 0 &&  <AmountSavedInfo savedAmount={discountAmount}/>}
+            {discountAmount> 0 &&  <AmountSavedInfo savedAmount={discountAmount} currency={currency}/>}
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>Total Amount</div>
                 <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + totalAmount}</div>
