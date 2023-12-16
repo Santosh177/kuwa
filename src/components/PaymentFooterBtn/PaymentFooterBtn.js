@@ -16,7 +16,7 @@ export default function PatmentFooterBtn({btnName="",totalPrice="",onProceed={},
                   { window && window.ApplePaySession &&<div  className={styles.applePayContainer} style={{cursor:'pointer',height:'48px',}} onClick={()=>onHandleApplePay()}>
                     <img style={{height:'100%',width:'100%'}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/default.png' alt='apple-pay' />
                   </div>}
-                  <div className={styles.btn} onClick={()=>onProceed()}>{btnName}</div>
+                  <div className={styles.btn} style={window && window.ApplePaySession ?{}:{}} onClick={()=>onProceed()}>{btnName}</div>
                 </div>
             </div>
         </div>
