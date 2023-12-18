@@ -43,7 +43,8 @@
             // flex: 0.5;
             font-size: 14px;
             cursor: pointer;
-            width: 45%;
+            width: 48%;
+            height: 48px;
         }
         .paymentInfo{
             display: flex;
@@ -56,7 +57,7 @@
     flex-direction: row;
     justify-content: space-between;
     .applePayContainer{
-        width: '48%'
+        width: 48%
     }
         }
     }
@@ -69,6 +70,13 @@
             .btn{
                 // padding-right: 12px;
                 // padding-left: 12px;
+                
+            }
+            .applePayImg{
+                width:100%
+            }
+            .btnTwo{
+                width: 96%;
             }
         }
     }

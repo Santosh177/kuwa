@@ -30,6 +30,8 @@ export default  function Cart({cartData}) {
     const [ isLoading , setIsLoading ] = useState(false);
     const clevertapEvent = useCleverTapEvents();
     const {isLogin=false, userData={}} = useAuth();
+    const [isApplePaySession , setIsApplePaySession] = useState(false)
+     let appleSession;
 
 
     useEffect(()=>{
@@ -44,6 +46,9 @@ export default  function Cart({cartData}) {
 
     useEffect(()=>{
       getAddress()
+      if(window && window.ApplePaySession){
+        setIsApplePaySession(true)
+      }
     },[])
 
 
@@ -465,7 +470,7 @@ export default  function Cart({cartData}) {
  
       return (
         <>
-          <script type="text/javascript" src="/fresh-chat.js" async></script>
+          {/* <script type="text/javascript" src="/fresh-chat.js" async></script> */}
           <div className={styles.cartPage}>
             <div className={styles.cartItemsContainer}>
               <div className={[styles.headerTxt,styles.cartHeaderTxt].join(" ")}> Cart Items </div>
@@ -485,7 +490,7 @@ export default  function Cart({cartData}) {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed To Checkout" totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} />
+          <PaymentFooterBtn isApplePaySession={isApplePaySession} btnName="Proceed To Checkout" totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
         </>
       )
