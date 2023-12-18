@@ -133,7 +133,7 @@ let trackData={};
               hasArrows={(width>990)}
               slidesToShow={4.5}
               slidesToScroll={4}
-              hasDots={(width>990)}
+              hasDots={false}
               draggable
               gap={20}
               exactWidth={true}
