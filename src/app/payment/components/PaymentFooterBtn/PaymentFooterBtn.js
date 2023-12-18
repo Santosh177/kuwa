@@ -1,10 +1,10 @@
 
 import { useEffect } from 'react';
 import styles from './payment-footer-btn.module.scss';
+import { usePaymentPageData } from '@/context/payment';
 
-export default function PatmentFooterBtn({btnName="",totalPrice="",onProceed={}, isEnable = false}) {
-
-
+export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false}) {
+  const isApplePay =  paymentMethodConfig['applePay']['isEnable'];
   useEffect(()=>{
     try {
       if(window && window.fcWidget){
@@ -25,10 +25,10 @@ export default function PatmentFooterBtn({btnName="",totalPrice="",onProceed={},
                     <div className={styles.subTxt}>View price details</div>
                 </div>
                 <div className={styles.paymentBtn}>
-                  <div className={styles.applePayBtn}>
+                 {isApplePay && <div className={styles.applePayBtn} onClick={()=>{onProceed("APPLE_PAY")}}>
                     <div>Pay with</div>
                     <img className={styles.appleLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/image+122.png' alt='apple-pay'/>
-                  </div>
+                  </div>}
                   <div className={[styles.btn,(isEnable)?styles.btn_active:""].join(" ")} onClick={()=>onProceed()}>{btnName}</div>
                 </div>
              

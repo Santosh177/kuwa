@@ -108,7 +108,7 @@ const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , on
               <div className={styles.paymentMethod}>
                 <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
               </div>
-              <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+              <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig} onPayment={onPayment} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}} isEnable={selectedPaymentMethod != ""} />
       </div>
   )
 }
@@ -127,7 +127,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
       {/* <div className={styles.headerTxt}>Price Details</div> */}
       <PriceDetails data={priceDetails}/>
     </div>
-    <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+    <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig}  onPayment={onPayment} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}}  isEnable={selectedPaymentMethod != ""} />
 </div>
   )
 }
@@ -525,10 +525,11 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
 
 
-    const onProceed = () => {
+    const onProceed = (pMode) => {
+     
       if(selectedPaymentMethod =="CHECKOUT_CARD"){
         Frames.submitCard()
-      }else if(selectedPaymentMethod === "APPLE_PAY"){
+      }else if(selectedPaymentMethod === "APPLE_PAY" || pMode === "APPLE_PAY"){
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
