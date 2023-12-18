@@ -10,9 +10,8 @@ const AccountDetails = ({setIsSuccessPopup}) => {
   const [ password , setNewPassword ] = useState("");
     const [ repeatNewPassword, setRepeatNewPassword ] = useState("");
     const [passwordError, setPasswordError] = useState("");
-  console.log("author",useAuth())
 
-  const {isLogin=false , userData = {}} = useAuth();
+  const { userData = {}} = useAuth();
   
   const email = userData?.emailAddress;
   const {firstName="",lastName,id="",newShippingAddress=""}   = userData || {}
@@ -51,29 +50,8 @@ const handleCreateAccount = async () => {
     }
 
     const responseData = await response.json();
-    console.log("guestResponse",responseData)
 
     setIsSuccessPopup(true);
-    window.clevertap.onUserLogin.push({
-      "Site": {
-        "Name": name,            // String
-        "Identity": id,              // String or number
-        "Email": email,         // Email address of the user
-        "Phone": mobNumber, 
-        "Country":country,
-        "MSG-email": true,                // Disable email notifications
-        "MSG-push": true,                  // Enable push notifications
-        "MSG-sms": true,                   // Enable sms notifications
-        "MSG-whatsapp": true,              // Enable WhatsApp notifications
-      },
-      "cart_items": []
-     })
-     window.clevertap.event.push("kuwa_user_signup_success", {
-      "Country":country,
-      "Email":email,
-      "Name": name,
-      "Phone": mobNumber
-    });
   } catch (error) {
     console.error('Error updating password:', error);
   }

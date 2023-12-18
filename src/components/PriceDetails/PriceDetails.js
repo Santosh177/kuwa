@@ -3,7 +3,6 @@ import styles from './price-details.module.scss';
 
 
 const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
-    console.log("bsba",currency)
     return(
         <div className={styles.amountSavedInfo}>You saved : {currency +" " + savedAmount}</div>
     )

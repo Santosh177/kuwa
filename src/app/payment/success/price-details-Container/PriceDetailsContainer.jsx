@@ -18,7 +18,6 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
      discount="" ,
      currency="",
     deliveryFee=0 } = orderDetailsData
-    const isHidePriceDetails=false
     const subTotal = finalAmount + discount;
    
     return(
@@ -30,7 +29,7 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
                 <div className={styles.rowItemLeftText}>Price ({orderProducts.length} items)</div>
                 <div className={styles.rowItemRightText}>{ currency +" " + subTotal }</div>
             </div>
-           {!isHidePriceDetails && <>
+           { <>
             {discount > 0 &&<div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Discount</div>
                 <div  className={[styles.rowItemLeftText,styles.discount].join(" ")}>- {currency + " "+ discount}

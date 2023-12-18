@@ -26,15 +26,11 @@ export default function PaymentSuccess() {
   const [orderDetailsData,setOrderDetailsData] = useState({});
   const [isThankYouPage ,setIsThankYouPage] = useState(false)
   
-  const {isLogin=false , userData = {}} = useAuth() || {};
+  const {isLogin=false } = useAuth() || {};
 
 
   const {shippingAddress } = orderDetailsData || {};
   const {orderProducts} = orderDetailsData || []
-
-  const {orderCreatedAt=" "} =  orderDetailsData || {};
-const orderCreateDate = orderCreatedAt?.split(" ");
-console.log("orderCreateDate",orderCreateDate)
 
 
  
@@ -64,7 +60,6 @@ console.log("orderCreateDate",orderCreateDate)
         method:'GET'
       })
       const orderDetailsData = await orderDetails.json();
-      console.log("orderDetailsData",orderDetailsData)
       setOrderDetailsData(orderDetailsData);
       
     }

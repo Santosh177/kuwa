@@ -17,7 +17,6 @@ export async function PATCH(request,res) {
 
     try {
         const signupData = await guestSignup.json();
-        console.log("signupData====",signupData)
         if(signupData && signupData.token || signupData.id){
           const data =  setTokenCookie(res, signupData.token, signupData.id)
           return NextResponse.json({"status_code":200, "status_msg":"success",data:signupData})

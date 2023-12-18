@@ -30,7 +30,6 @@ const getUser = async () => {
   const user = nextCookies.get('userId');
   console.log("tokentoken", token)
   if ((token && token.value) || (user && user.value)) {
-    console.log("dhbshbs",user, user.value)
     try {
       const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${user.value}`, {
         method: 'GET',
@@ -40,7 +39,6 @@ const getUser = async () => {
         }
       })
       const userData = await userLoginResp.json();
-      console.log("userData",userData)
       if (token && token.value) {
         return { isLogin: true, userData: userData };
       } else {
