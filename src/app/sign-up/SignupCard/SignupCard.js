@@ -33,7 +33,7 @@ const validateForm = (formData) => {
 };
 
 
-const SignupForm = ({setFormData={},formData={},errors={}}) => {
+const SignupForm = ({setFormData={},formData={},errors={},setErrors={}}) => {
   const { selectedCountry={} } = useCountry();
   const countryCode = selectedCountry && selectedCountry.code || "";
   const onInputChange = (event, labelId) =>{
@@ -42,8 +42,8 @@ const SignupForm = ({setFormData={},formData={},errors={}}) => {
     }else{
       setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
     }
-
-    
+    const { [labelId]: removedKey, ...newFormData } = errors;
+    setErrors(newFormData);
   }
  
 
@@ -162,7 +162,7 @@ export default function SignupCard() {
           <div className={styles.signUpCardWrapper}>
             <div className={styles.signUpTxt}>Create an account</div>
             <div className={styles.descTxt}>Create or login to enjoy exclusive benefits.</div>
-              <SignupForm setFormData={setFormData} formData={formData} errors={errors}/>
+              <SignupForm setFormData={setFormData} formData={formData} errors={errors} setErrors={setErrors}/>
               <div className={styles.createAccountBtn} onClick={onSignup}>Create account</div>
               <div className={styles.loginTxt} onClick={()=> router.push('/login')}>Already have an account ? <span className={styles.loginSubTxt} >Login</span></div>
           </div>
