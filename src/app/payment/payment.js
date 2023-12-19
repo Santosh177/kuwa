@@ -327,8 +327,13 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("placeOrderplaceOrder",placeOrder)
               setIsLoader(false);
               if(placeOrder && placeOrder.status_code == 200){
+                if(placeOrder && placeOrder.redirect_link){
+                  window.location.href = placeOrder.redirect_link
+                }else {
+                  window.location.href = `/payment/success`
+                }
                 // router.push(placeOrder.redirect_link)
-                window.location.href = placeOrder.redirect_link
+                // window.location.href = placeOrder.redirect_link
               }
         }else if(selectedPaymentMethod == "TAMARA"){
               trackData['Payment Type'] = 'tamara' || '';
