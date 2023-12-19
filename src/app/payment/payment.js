@@ -248,7 +248,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   }
 
 
-    const onPayment = async(data) => {
+    const onPayment = async(data,pMode="") => {
       setIsLoader(true);
       const userName = userData && userData['firstName'] || "";
       const getCartItems = await getCartItem();
@@ -440,7 +440,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
                 }
                
               }
-        }else if(selectedPaymentMethod == "APPLE_PAY"){
+        }else if(selectedPaymentMethod == "APPLE_PAY" || pMode === "APPLE_PAY"){
           payload['token'] = data.token;
           payload['paymentMode'] = "APPLE_PAY";
           trackData['Payment Type'] = 'Apple pay' || ''
@@ -573,7 +573,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
                 let data = {
                   token: getCheckoutToken.token
                 } 
-                onPayment(data)
+                onPayment(data,pMode)
                
               }
           }
