@@ -208,6 +208,13 @@ export default  function Cart({cartData}) {
       // const deliveryFeesConfig = countryList.find((data) => data.code == selectedCountry.code) || {}
       let totalAmount = priceDetails['totalAmount'];
       let devliveryFees = priceDetails['deliveryFees'];
+      const cartItemCount = cartItems && cartItems.length;
+      console.log("cartItemscartItems",cartItems)
+      let labelData = [];
+
+      cartItems.map((data,index)=>{
+        labelData.push({"label":data.productName,"amount":data.finalPrice})
+      })
     
       const applePaySupportednetworks = "visa, mastercard, amex";
       let request = {
@@ -215,7 +222,7 @@ export default  function Cart({cartData}) {
         supportedNetworks: applePaySupportednetworks.split(", "),
         countryCode: selectedCountry.code || "",
         currencyCode:  selectedCountry.currency || "",
-        total: { label: "For " + "Multiple Product", amount: totalAmount },
+        total: { label: "For " + (cartItemCount==1)?`${cartItemCount} item`:`${cartItemCount} items`, amount: totalAmount },
         "shippingType": "shipping",
         "requiredBillingContactFields": [
             "postalAddress",
@@ -226,10 +233,11 @@ export default  function Cart({cartData}) {
             "name",
         ],
         "lineItems": [
-            {
-                "label": "Shipping",
-                "amount": devliveryFees
-            }
+         ...labelData,
+          {
+            "label": "Shipping",
+            "amount": devliveryFees
+          }
         ],
       };
 
