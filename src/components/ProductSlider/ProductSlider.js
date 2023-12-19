@@ -127,7 +127,7 @@ let trackData={};
             <div className={styles.sliderLine1} style={{background:backgroundColors[index].backgroundColor}}></div><div className={styles.sliderLine2} style={{background:backgroundColors[index].backgroundColor}}></div>
           </div>
           <div className={styles.container} style={{backgroundImage:backgroundColors[index].backgroundImage}}>
-            <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
+            <div className={styles.headerTxt} style={{...headerTextStyle}}>{headerTitle}</div>
             <div className={styles.sliderContainer}>
             <Glider
               hasArrows={(width>990)}
