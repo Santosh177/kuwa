@@ -214,6 +214,10 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
  
   console.log("personalInfoErrors",personalInfoErrors)
 
+  useEffect(()=>{
+   
+
+  },[shippingAddress])
 
   useEffect(()=>{
 
@@ -322,8 +326,12 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
             value = e.target.value;
         }
         setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value}))
+        const { [fieldName]: removedKey, ...newFormData } = personalInfoErrors;
+        setPersonalInfoErrors(newFormData);
+   
       }
       
+    
       const onShippingAddress = (e,fieldName) => {
         let value = ""
         if(fieldName === 'mobNumber'){
@@ -332,6 +340,8 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
             value = e.target.value;
         }
         setShippingAddress(currentValues =>({...currentValues,[fieldName]:value}))
+        const { [fieldName]: removedKey, ...newFormData } = shippingAddressErrors;
+        setShippingAddressErrors(newFormData);
       }
 
       const onBillngAddress = (e,fieldName) => {
@@ -342,6 +352,8 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
             value = e.target.value;
         }
         setBillngAddress(currentValues =>({...currentValues,[fieldName]:value}))
+        const { [fieldName]: removedKey, ...newFormData } = billingAddressErrors;
+        setBillingAddressErrors(newFormData);
       }
 
       const onSelectBillngAddress = () => {
