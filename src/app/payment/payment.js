@@ -330,7 +330,10 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
                 if(placeOrder && placeOrder.redirect_link){
                   window.location.href = placeOrder.redirect_link
                 }else {
-                  window.location.href = `/payment/success`
+                  if(placeOrder && placeOrder.order_id){
+                    window.location.href = `/payment/success?orderId=${placeOrder.order_id}`
+                  }
+                 
                 }
                 // router.push(placeOrder.redirect_link)
                 // window.location.href = placeOrder.redirect_link
