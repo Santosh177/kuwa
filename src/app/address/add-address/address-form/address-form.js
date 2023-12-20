@@ -6,8 +6,8 @@ import PhoneNumberInput from "@/components/PhoneNumberInput/PhoneNumberInput";
 import CreateAccountBox from "../components/CreateAccountBox/CreateAccountBox";
 import { useAuth } from '@/context/userDetail';
 import { useCountry } from '@/context/contryDetails';
+import { checkInternationalPhone } from "../../../../utils/validation";
 import styles from './address-form.module.scss';
-
 
 const validatePersonalForm = (formData) => {
     const errors = {};
@@ -17,8 +17,10 @@ const validatePersonalForm = (formData) => {
     if (!formData.lastName) {
       errors.lastName = 'Last name is required.';
     }
-    if(!formData.mobNumber){
+    if(!formData.mobNoValidation){
       errors.mobNumber = "Mobile number is required";
+    }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
+      errors.mobNumber = "Invalid mobile number";
     }
     if(!formData.email){
       errors.email = "Email is required";
@@ -315,7 +317,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
      
 
-      const onPersonalInfo = (e,fieldName) => {
+      const onPersonalInfo = (e,fieldName,data) => {
         let value = ""
         if(fieldName === 'mobNumber'){
             value = "+"+e;
@@ -325,7 +327,11 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         else{
             value = e.target.value;
         }
-        setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value}))
+        if(fieldName === 'mobNumber'){
+          setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value,["mobNoValidation"]:e.slice(data.dialCode.length)}))
+        }else{
+          setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value}))
+        }
         const { [fieldName]: removedKey, ...newFormData } = personalInfoErrors;
         setPersonalInfoErrors(newFormData);
    
