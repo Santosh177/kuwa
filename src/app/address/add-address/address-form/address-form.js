@@ -17,9 +17,9 @@ const validatePersonalForm = (formData) => {
     if (!formData.lastName) {
       errors.lastName = 'Last name is required.';
     }
-    if(!formData.mobNoValidation){
+    if(("mobNoValidation" in formData) && !formData.mobNoValidation){
       errors.mobNumber = "Mobile number is required";
-    }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
+    }else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
       errors.mobNumber = "Invalid mobile number";
     }
     if(!formData.email){
