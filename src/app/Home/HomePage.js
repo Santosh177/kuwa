@@ -16,12 +16,15 @@ import Carousel from './Carousel/Carousel';
 import { useEffect, useState } from 'react';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { useCountry } from '@/context/contryDetails';
+import ExploreCategory from './ExploreCategory/ExploreCategory';
+import NewArrivals from './NewArrivals/NewArrivals';
+import BestSelling from './BestSelling/BestSelling';
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
-    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {} } = homePageData.homePageData || {};
+    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[] } = homePageData.homePageData || {};
     const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
     useEffect(() => {
@@ -95,7 +98,11 @@ export default function Home(homePageData) {
                     </div> */}
                     <Carousel data={primaryBanner}/>
                     <AssuredInfo assuredInfo={kuwaUsps} />
-                    <BestSellingProduct data={bestSellings} />
+                    <ExploreCategory exploreCategory={menuItemsHealths}/>
+                    <BestSelling bestSellerCollectioWithProducts={bestSellerCollectioWithProducts}/>
+                    <NewArrivals data={newArrivals}/>
+                    
+                    {/* <BestSellingProduct data={bestSellings} /> */}
                     <SecondaryBanner data={secondryBanners} />
                     <BrandMustTry data={brandUMustTry} />
                     {

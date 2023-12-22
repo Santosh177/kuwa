@@ -9,8 +9,7 @@ import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
-const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyle = {} }) => {
-  console.log("hbahab",data)
+const ProductSlider = ({data}) => {
   const router = useRouter();
   const { product = [], headerTitle = "" } = data || {};
   const [isLoading, setIsLoading] = useState(false);
@@ -34,16 +33,8 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
     }
   }
   return (
-    <div className={styles.bestSellingProductSlider}>
-      <div className={styles.sliderTopDecorationDesktop} >
-        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/desktop_top.png' alt='background' />
-      </div>
-      <div className={styles.sliderTopDecorationMob} >
-        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top+(1).png' alt='background' />
-      </div>
-      <div className={styles.container} style={{ backgroundImage: backgroundColor }}>
-        <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
-        <div className={styles.sliderContainer}>
+    <div className={styles.container}>
+    <div className={styles.sliderContainer}>
           <Glider
             slidesToShow={4.5}
             slidesToScroll={4}
@@ -85,22 +76,8 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
             }
           </Glider>
         </div>
-      </div>
-      <div className={styles.sliderBottomDecorationDesktop} >
-        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/desktop_bottom.png' alt='background' />
-      </div>
-      <div className={styles.sliderBottomDecorationMob} >
-        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/bottom+(1).png' alt='background' />
-      </div>
-      <Loader isShow={isLoading} />
-    </div>
-  );
-
-
-
-
+        </div>
+  )
 }
 
-
-export default ProductSlider;
-
+export default ProductSlider

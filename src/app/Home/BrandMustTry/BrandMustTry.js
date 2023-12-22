@@ -9,7 +9,7 @@ const BrandMustTry = ({data={}}) => {
     const router = useRouter();
     return(
         <>
-        {data && data.length>0 &&<div className={styles.headerTxt}>Brand You Must Try</div>}
+        {/* {data && data.length>0 &&<div className={styles.headerTxt}>Brand You Must Try</div>}
         <div className={styles.brandMustTry}>
 
               {
@@ -28,7 +28,29 @@ const BrandMustTry = ({data={}}) => {
                     )
                 })
               }
-        </div>
+        </div> */}
+        {
+          data && data.length>0 && 
+          <div className={styles.brandHeader}>Brands <span>You Must Try</span></div>}
+              <div className={styles.brandContent}>
+          <div  className={styles.brandContainer} >
+            {
+                data.map((data,index)=>{
+                    return(
+                        <div className={styles.brandSection}>
+                        <div className={styles.brand} onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data.brandName)}`}>
+                            <div className={styles.brandImg}>
+                                <img src={data.image}></img>
+                            </div>
+                            <div className={styles.brandName}>{data.brandName}</div>
+                        </div>
+                        </div>
+                    )
+                })
+            }
+          </div> 
+          </div>
+        
        </>
     )
 }
