@@ -9,8 +9,10 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
 }
 const PriceDetailsContainer = ({orderDetailsData}) => {
     const { cartItemCount="",
+    allProductsPrice="",
     couponType="",
     coupon="",
+    couponPercentage="",
     paymentType="",
     orderProducts=[],
      finalAmount="",
@@ -18,7 +20,7 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
      discount="" ,
      currency="",
     deliveryFee=0 } = orderDetailsData
-    const subTotal = finalAmount + discount;
+   
    
     return(
         <div className={styles.header}>
@@ -27,17 +29,17 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
        
             <div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Price ({orderProducts.length} items)</div>
-                <div className={styles.rowItemRightText}>{ currency +" " + subTotal }</div>
+                <div className={styles.rowItemRightText}>{ currency +" " + allProductsPrice }</div>
             </div>
            { <>
             {discount > 0 &&<div className={styles.rowItemContainer}>
-                <div className={styles.rowItemLeftText}>Discount</div>
+                <div className={styles.rowItemLeftText}>Coupon Discount</div>
                 <div  className={[styles.rowItemLeftText,styles.discount].join(" ")}>- {currency + " "+ discount}
-                <div className={styles.couponCode}>({couponType=="Percentage"?(coupon +" " + "-" + " " + (discount / subTotal) * 100 + ""+ "%"):(coupon +" " + "-" + " " + discount + ""+" " + currency)})</div> </div>
+                <div className={styles.couponCode}>({couponType=="Percentage"?coupon +" " + "-" + " " + (couponPercentage + ""+ "%"):(coupon +" " + "-" + " " + discount + ""+" " + currency)})</div> </div>
             </div>}
             <div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Delivery Fee</div>
-                <div className={[styles.rowItemRightText,styles.freeDeliveryTxt].join(" ")}> {deliveryFee>0 ? (<><span>Free</span> <span className={styles.price}>{currency + " "+ deliveryFee}</span></>):(<span>Free</span>)}</div>
+                <div className={[styles.rowItemRightText,styles.freeDeliveryTxt].join(" ")}> {deliveryFee>0 ? (<span className={styles.price}>+ {currency + " "+ deliveryFee}</span>):(<span>Free</span>)}</div>
             </div>
             {discount> 0 &&  <AmountSavedInfo savedAmount={discount} currency={currency}/>}
             <div className={styles.rowItemContainer}>

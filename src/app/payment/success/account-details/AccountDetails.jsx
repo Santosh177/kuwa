@@ -3,6 +3,7 @@ import React, {useState}from 'react';
 import styles from './account-details.module.scss';
 import Input from "@/components/Input/Input";
 import { useAuth } from '@/context/userDetail';
+import Loader from '@/components/Loader/Loader';
 
 
 
@@ -10,6 +11,7 @@ const AccountDetails = ({setIsSuccessPopup}) => {
   const [ password , setNewPassword ] = useState("");
     const [ repeatNewPassword, setRepeatNewPassword ] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
   const { userData = {}} = useAuth();
   
@@ -36,6 +38,7 @@ const handleCreateAccount = async () => {
     "password": password
   };
   try {
+    setIsLoading(true)
     const response = await fetch('/api/guest-login', {
       method: 'PATCH',
       headers: {
@@ -48,7 +51,7 @@ const handleCreateAccount = async () => {
       console.error(`Failed to update password. Status: ${response.status}`);
       return;
     }
-
+    setIsLoading(false)
     const responseData = await response.json();
 
     setIsSuccessPopup(true);
@@ -58,6 +61,7 @@ const handleCreateAccount = async () => {
 };
 
   return (
+    <>
     <div className={styles.accountContainer}>
     <div className={styles.headerTxt}>Complete creating an account</div>
     <div className={styles.container}>
@@ -83,8 +87,9 @@ const handleCreateAccount = async () => {
       <Input className={styles.guestEmail}type="email" fieldName="email" value={email}  placeHolder="Email ID (ex. abc@gmail.com)*" isDisabled={email}/>
       </div>
       <div className={styles.inputPassword}>
-        <Input className={styles.guestPassword} type='password'  value={password || ""} placeHolder='Password' onInputChange={(e)=>onInputChange(e) }/>
-        <Input className={styles.guestPassword} type='password' value={repeatNewPassword || ""} placeHolder='Confirm Password' onInputChange={(e) => setRepeatNewPassword(e.target.value)} />
+
+       <div className={styles.inputDiv}><Input className={styles.guestPassword} type='password'  value={password || ""} placeHolder='Password' onInputChange={(e)=>onInputChange(e) }/></div> 
+        <div className={styles.inputDiv}><Input className={styles.guestPassword} type='password' value={repeatNewPassword || ""} placeHolder='Confirm Password' onInputChange={(e) => setRepeatNewPassword(e.target.value)} /></div>
      
       </div>
       {passwordError && <div className={styles.passwordError}>{passwordError}</div>}
@@ -93,6 +98,8 @@ const handleCreateAccount = async () => {
     </div>    
 
     </div>
+       <Loader isShow={isLoading} />
+       </>
   )
 }
 

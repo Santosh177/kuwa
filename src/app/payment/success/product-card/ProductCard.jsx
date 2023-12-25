@@ -12,8 +12,8 @@ const ProductCard = ({data, currency,index}) => {
                 <div className={styles.itemName}>{productName}</div>
                  </div>
                <div className={styles.priceContainer}>
-                    <div className={styles.finalPrice}>{currency + " " + productPriceAmount}</div>
-                    {<div className={styles.retailPrice}>{currency + " " + productPriceSpecialAmount}</div>}
+                    <div className={styles.finalPrice}>{currency + " " + productPriceSpecialAmount}</div>
+                    {<div className={styles.retailPrice}>{currency + " " + productPriceAmount}</div>}
                
                 </div>
             </div>
