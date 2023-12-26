@@ -4,6 +4,7 @@ import { useCountryList } from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
 import { useAuth } from '@/context/userDetail';
 import Loader from '@/components/Loader/Loader';
+import { useCartItems } from '@/context/cartItems';
 import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
@@ -16,7 +17,9 @@ import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
 import {getCartItem} from '@/services';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
-
+import DeliveryAddress from '../order-summary/DeliveryAddress/DeliveryAddress'
+import CartItemCard from "@/components/CartItemCard/CartItemCard";
+import { updateCartItem, deleteCartItem } from '@/services';
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
       card_checkout: {
@@ -92,18 +95,52 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
 
 }
 
-const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={},onPayment={}}) => {
+const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems }) => {
+  const [isLoading, setIsLoading] = useState(false)  
   const { selectedPaymentMethod=""} = usePaymentPageData();
+  const refreshData = () => {
+    router.refresh()
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500)
+  }
+  const onUpdateItem = async (data) => {
+    setIsLoading(true)
+    const cartItem = await updateCartItem(data);
+    refreshData()
+  }
+
+  const onDeleteItem = async (data) => {
+    setIsLoading(true)
+    const deleteData = {
+      cartItemId: data.id
+    }
+    const cartItem = await deleteCartItem(deleteData);
+    if (cartItem && cartItem.status == 200) {
+      refreshData()
+    }
+  }
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
+        <div>
+          <DeliveryAddress />
+        </div>
                 <div className={styles.couponCode}>
                   <CouponCode />
                 </div>
+                <div></div>
                 <div className={styles.priceDetails}>
                 {/* <div className={styles.headerTxt}>Price Details</div> */}
                 <PriceDetails data={priceDetails} />
               </div>
+        {
+          cartItems.map((data, index) => {
+            return (
+              <CartItemCard data={data} key={index} onUpdateItem={onUpdateItem} onDeleteItem={() => onDeleteItem(data)} />
+            )
+          })
+        }
               </div>
               <div className={styles.paymentMethod}>
                 <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
@@ -207,6 +244,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const getCartItem = await getCartItemDetails(data['products'],data.currency);
       setCartItems(getCartItem)
   }
+ 
 
   useEffect(()=>{
     if(cartItems && cartItems.length > 0){
@@ -587,9 +625,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
       return (
         <>
-            <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} />
-            <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} />
-            <Loader isShow={isLoader} />
+          <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} />
+          <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} />
+          <Loader isShow={isLoader} />
         </>
       )
     }
