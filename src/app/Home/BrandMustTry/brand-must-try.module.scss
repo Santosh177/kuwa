@@ -115,18 +115,18 @@ span{
   
 .brandContainer{
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    width:670px;
+    width:600px;
     gap:50px;
     margin-top: 24px;
 
-   .brandSection{
-    display: flex;
-    flex-wrap: wrap;
+//    .brandSection{
+//     display: flex;
+//     flex-wrap: wrap;
 
-   } 
+//    } 
    .brand{
     display: flex;
     flex-direction: column;
@@ -156,18 +156,21 @@ line-height: normal;
         font-size: 18px;
     }
     .brandContent{
+            margin: 10px 10px 80px 10px;
 .brandContainer{
-
-    gap:30px;
-    margin-left: 28px;
-    margin-right: 20px;
+    margin-top: 0px;
+    width: 350px;
+    gap: 10px;
+    // gap:30px;
+    // margin-left: 28px;
+    // margin-right: 20px;
     .brand{
         cursor: pointer;
       
         .brandImg{
             img{    
-            width:60px;
-            height:60px;
+            width:109px;
+            height:48px;
             }
         }
         .brandName{
@@ -176,4 +179,20 @@ line-height: normal;
     }
 }
     }
+}
+
+@media(max-width:375px){
+.brandContent{
+    .brandContainer{
+            width: 270px;
+        .brand{
+         .brandImg{
+            img{
+                width: 80px;
+                height: 40px;
+            }
+         }
+        }
+    }
+}
 }

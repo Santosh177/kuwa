@@ -71,17 +71,18 @@ const ProductSlider = ({data}) => {
          }
          >
          {
-            product.map((data,index) => {
+              product.map((data, index) => {
+                const { finalPrice = "", retailPrice = "", currency = "", discount = "", discountType = "" } = data && data.price || {}
                 const cardData = {
-                    productName: data && data.name || "",
-                  finalPrice: data.specialPrice,
-                  retailPrice: data.price,
-                //   currency: currency,
-                //   discount: discount,
-                //   discountType: discountType,
+                  productName: data && data.name || "",
+                  finalPrice: finalPrice,
+                  retailPrice: retailPrice,
+                  currency: currency,
+                  discount: discount,
+                  discountType: discountType,
                   image: data?.image || "",
                   id: data?.id || "",
-                  seoUrl: data?.seoUrl || "" 
+                  seoUrl: data?.seoUrl || ""
                 }
                 trackData = {
                   "product Name": data && data.name || "",
