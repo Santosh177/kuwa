@@ -6,13 +6,19 @@ const BestSelling = ({bestSellerCollectioWithProducts}) => {
     console.log("bestSellerCollectioWithProducts",bestSellerCollectioWithProducts)
     const [selectedCollection, setSelectedCollection] = useState(null);
 
+  const bestSellerHeadings = bestSellerCollectioWithProducts
+    .map(data => data.products.map(product => product.heading))
+    .flat() 
+    .find(heading => heading !== undefined).split(" ")
+  const headingFirstWord = bestSellerHeadings[0]
+
     const BestSelling = {
         product: selectedCollection
           ? bestSellerCollectioWithProducts
               .find((data) => data.id === selectedCollection)
               .products
           : [],
-        headerTitle: "",
+      headerTitle:"",
       };
     const handleCollectionClick = (collectionId) => {
         setSelectedCollection(collectionId);
@@ -21,6 +27,8 @@ const BestSelling = ({bestSellerCollectioWithProducts}) => {
         return (
           <>
             <div className={styles.bestSellingContainer}>
+              
+              <div className={styles.heading}> <span className={styles.firstWord}>{headingFirstWord}</span> {bestSellerHeadings.slice(1).join(" ")}</div>
               <div className={styles.collectionScrollContainer}>
                 <div className={styles.collectionList}>
                   {bestSellerCollectioWithProducts.map((data, index) => (

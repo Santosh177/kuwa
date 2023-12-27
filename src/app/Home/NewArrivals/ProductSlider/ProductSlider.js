@@ -21,6 +21,8 @@ const ProductSlider = ({data}) => {
     const [isArrowVisible, setIsArrowVisible] = useState(false);
     const clevertapEvent = useCleverTapEvents();
     const handleResize = () => setWidth(window.innerWidth);
+  const headerTitleupdate = headerTitle.split(" ");
+  const firstWordHeder = headerTitleupdate[0]
 
     useEffect(() => {
       setWidth(window.innerWidth);
@@ -48,7 +50,7 @@ const ProductSlider = ({data}) => {
     <>
     <div className={styles.container}>
       <div className={styles.headerContainer}>
-    <div className={styles.headerTxt} >{headerTitle}</div>
+          <div className={styles.headerTxt} ><span>{firstWordHeder}</span> {headerTitleupdate.slice(1).join(" ") }</div>
     <div className={styles.seeAllDiv} onClick={handleAllProduct}>
       <div className={styles.txt}>See all</div>
       <div className={styles.arrowImg}><img src='https://d25uasl7utydze.cloudfront.net/assets/right%20arrow.svg'/></div>

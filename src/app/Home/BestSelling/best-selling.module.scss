@@ -5,11 +5,26 @@
     // justify-content: center;
     // align-items: center;
     margin-top: 80px;
+    // text-align: center;
+    .heading{
+      text-align: center;
+      color: #07141A;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 28px;
+      padding-top: 16px;
+      padding-bottom: 14px;
+      .firstWord{
+        
+          font-weight: 700;
+      }
+    }
     .collectionScrollContainer{
      margin: auto auto;
      width: 430px;
      overflow-x: scroll;
-     margin-top: 24px;
+    //  margin-top: 24px;
      margin-bottom: -30px;
      .collectionList {
         display: flex;
@@ -19,7 +34,7 @@
         display: -webkit-box;
         overflow-x: scroll;
         width: max-content;
-        margin-top: 24px;
+        // margin-top: 24px;
         margin-bottom: 24px;
     
         .collectionName {
@@ -46,4 +61,12 @@
     }
     
    
+}
+
+@media(max-width:770px){
+  .bestSellingContainer{
+    .heading{
+      font-size: 18px;
+    }
+  }
 }
