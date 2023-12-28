@@ -169,7 +169,7 @@ export default  function Cart({cartData}) {
 
     const onProceed = () => {
       if(haveAddress){
-        router.push('/order-summary');
+        router.push('/payment');
       }else{
         router.push('/address/add-address');
       }

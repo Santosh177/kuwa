@@ -32,9 +32,9 @@ export default async function PaymentPage() {
 
   console.log("getCartItemsgetCartItems++++",getCartItems)
 
-    if((getCartItems && getCartItems.length == 0 ) || (getCartItems.status == 404)){
-      redirect(`/`);
-    }
+    // if((getCartItems && getCartItems.length == 0 ) || (getCartItems.status == 404)){
+    //   redirect(`/`);
+    // }
   
 
   try {
@@ -86,7 +86,7 @@ export default async function PaymentPage() {
         <>
 
           <PageHeader headerName="Payment"/>
-          <PageStepTracker stepCount={3} />
+          <PageStepTracker stepCount={2} />
           <PaymentPageProvider cartItemsResp={getCartItems}>
           <Payment cartData={getCartItems} paymentModes={paymentModes} tamaraConfig={tamaraConfig}/>
           </PaymentPageProvider>

@@ -20,6 +20,7 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import DeliveryAddress from '../order-summary/DeliveryAddress/DeliveryAddress'
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import { updateCartItem, deleteCartItem } from '@/services';
+
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
       card_checkout: {
@@ -96,6 +97,7 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
 }
 
 const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems }) => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)  
   const { selectedPaymentMethod=""} = usePaymentPageData();
   const refreshData = () => {
@@ -108,6 +110,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
     setIsLoading(true)
     const cartItem = await updateCartItem(data);
     refreshData()
+    // window.location.reload()
   }
 
   const onDeleteItem = async (data) => {
@@ -134,10 +137,11 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
                 {/* <div className={styles.headerTxt}>Price Details</div> */}
                 <PriceDetails data={priceDetails} />
               </div>
+              <div className={styles.productDetailsTitle}>Product Details</div>
         {
           cartItems.map((data, index) => {
             return (
-              <CartItemCard data={data} key={index} onUpdateItem={onUpdateItem} onDeleteItem={() => onDeleteItem(data)} />
+              <CartItemCard data={data} key={index}paymentPage={true}/>
             )
           })
         }
@@ -150,10 +154,36 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
   )
 }
 
-const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={}}) => {
+const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={},cartItems}) => {
+  const router = useRouter();
   const { selectedPaymentMethod=""} = usePaymentPageData();
+  const refreshData = () => {
+    router.refresh()
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500)
+  }
+  const onUpdateItem = async (data) => {
+    setIsLoading(true)
+    const cartItem = await updateCartItem(data);
+    refreshData()
+  }
+
+  const onDeleteItem = async (data) => {
+    setIsLoading(true)
+    const deleteData = {
+      cartItemId: data.id
+    }
+    const cartItem = await deleteCartItem(deleteData);
+    if (cartItem && cartItem.status == 200) {
+      refreshData()
+    }
+  }
   return(
     <div className={styles.orderSummary}>
+        <div>
+          <DeliveryAddress />
+        </div>
     <div className={styles.couponCode}>
       <CouponCode />
     </div>
@@ -164,6 +194,14 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
       {/* <div className={styles.headerTxt}>Price Details</div> */}
       <PriceDetails data={priceDetails}/>
     </div>
+    <div className={styles.productDetailsTitle}>Product Details</div>
+    {
+          cartItems.map((data, index) => {
+            return (
+              <CartItemCard paymentPage={true} data={data} key={index} />
+            )
+          })
+        }
     <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
 </div>
   )
@@ -186,6 +224,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [ isLoader , setIsLoader] = useState(false);
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,tamaraConfig));
   const clevertapEvent = useCleverTapEvents();
+  const {setCartItemCount={} } = useCartItems();
   let appleSession;
   
   useEffect(()=>{
@@ -197,7 +236,12 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
   },[listOfAddress])
 
-
+  useEffect(()=>{
+    setData(cartData);
+    if(cartData && cartData.quantity){
+      setCartItemCount(cartData.quantity)
+    }
+  },[cartData])
   useEffect(()=>{
     if(data && Object.keys(data).length > 0 ){
             if(data['products']){
@@ -207,6 +251,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
   },[data]);
 
+  
 
   useEffect(()=>{
     console.log("couponCodeDatacouponCodeData",couponCodeData)
@@ -252,6 +297,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
 
   },[cartItems]);
+
   useEffect(() => {
     clevertapEvent.onCleverTapEvent("kuwa_payments_landing");  
   }, [])

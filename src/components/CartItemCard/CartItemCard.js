@@ -6,7 +6,7 @@ import styles from './cart-item-card.module.scss';
 
 
 
-const CartItemCard = ({data,onUpdateItem={},onDeleteItem={}}) => {
+const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage}) => {
 
     console.log("CartItemCardCartItemCard",data)
     const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="", id="" } = data || {};
@@ -17,11 +17,12 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={}}) => {
         <div className={styles.cartItemCard}>
             <div className={styles.cartItemContainer}>
                 <img src={image}></img>
+                {paymentPage== true? "" :
                 <div className={styles.quantityContainer}>
                     <div className={styles.quantityBtn} onClick={()=>(qty > 1) && onUpdateItem({product:id,quantity:qty-1})}>-</div>
                     <span>{qty}</span>
                     <div className={styles.quantityBtn} onClick={()=>onUpdateItem({product:id,quantity:qty+1})}>+</div>
-                </div>
+                </div>}
             </div>
             <div className={styles.cartItemInfo}>
                 <div className={styles.itemName}>{productName}</div>
@@ -34,8 +35,9 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={}}) => {
                     {discountAmount > 0 &&<div className={styles.retailPrice}>{currency + " " + retailPrice}</div>}
                 </div>
             </div>
+            {paymentPage == true ? "" :
             <img className={styles.deleteIcon} onClick={()=>onDeleteItem()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/delete.png' alt='delete-icon'/>
-           
+    }
         </div>
     )
 

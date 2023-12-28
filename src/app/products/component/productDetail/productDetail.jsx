@@ -194,7 +194,7 @@ const ProductDeatil = ({ productData = {} }) => {
         if (response === 200) {
             setNoOfProduct(1);
             if (haveAdress) {
-                router.push('/order-summary')
+                router.push('/payment')
             } else {
                 router.push('/address/add-address');
             }
