@@ -2,6 +2,7 @@
 import React,{useState,useEffect} from 'react';
 import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import styles from './checkout-frames.module.scss';
+import Loader from '@/components/Loader/Loader';
 
 export default function CheckoutFrames({onPayment,publicKey=""}) {
       const [isDomReady , setDomReady ] = useState(false);
@@ -11,6 +12,7 @@ export default function CheckoutFrames({onPayment,publicKey=""}) {
       const [isCvvValid ,setIsCvvValid ]= useState(false);
       const [isTrigged, setIsTriggered] = useState(false);
       const [currency, setCurrency] = useState("");
+      const [showLoader, setIsShowLoader] = useState(false)
      
   
 
@@ -23,6 +25,7 @@ export default function CheckoutFrames({onPayment,publicKey=""}) {
     
   
       return (
+        <>
         <div className={styles['checkout-frames-wrapper']}>
              <Frames
         config={{
@@ -70,13 +73,17 @@ export default function CheckoutFrames({onPayment,publicKey=""}) {
           }
         }}
         paymentMethodChanged={(e) => {}}
-        cardValidationChanged={(e) => {}}
-        cardSubmitted={() => {}}
+        cardValidationChanged={(e) => {
+        }}
+        cardSubmitted={(e) => {
+          setIsShowLoader(true)
+        }}
         cardTokenized={(e) => {
           console.log("TOKENN",e.token)
           onPayment({token:e.token})
       }}
-        cardTokenizationFailed={(e) => {}}
+        cardTokenizationFailed={(e) => {
+        }}
         cardBinChanged={(e) => {}}
     >
       <div  className={styles['checkout-frames-container']}>
@@ -96,6 +103,7 @@ export default function CheckoutFrames({onPayment,publicKey=""}) {
       </div>
     </Frames>
         </div>
+        <Loader isShow={showLoader} /></>
       )
     }
     

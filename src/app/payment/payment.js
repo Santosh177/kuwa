@@ -527,7 +527,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
     const onProceed = () => {
       if(selectedPaymentMethod =="CHECKOUT_CARD"){
-        setIsLoader(true);
         Frames.submitCard()
       }else if(selectedPaymentMethod === "APPLE_PAY"){
         const applePaySupportednetworks = "visa, mastercard, amex";
