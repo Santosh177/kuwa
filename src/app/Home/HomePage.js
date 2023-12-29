@@ -24,7 +24,7 @@ const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
-    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[] } = homePageData.homePageData || {};
+    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={} } = homePageData.homePageData || {};
     const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
     useEffect(() => {
@@ -104,7 +104,7 @@ export default function Home(homePageData) {
                     
                     {/* <BestSellingProduct data={bestSellings} /> */}
                     <SecondaryBanner data={secondryBanners} />
-                    <BrandMustTry data={brandUMustTry} />
+                    <BrandMustTry data={brandMain} />
                     {
                         data.map((product, index) => {
                             return (

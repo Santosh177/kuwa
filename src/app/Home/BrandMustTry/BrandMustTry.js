@@ -5,6 +5,10 @@ import styles from './brand-must-try.module.scss';
 
 
 const BrandMustTry = ({data={}}) => {
+   
+    const brand = data?.brand || [];
+    const heading = data?.heading || ""
+    const headingtWord = heading.split(" ");
 
     const router = useRouter();
     return(
@@ -29,13 +33,12 @@ const BrandMustTry = ({data={}}) => {
                 })
               }
         </div> */}
-        {
-          data && data.length>0 && 
-          <div className={styles.brandHeader}>Brands <span>You Must Try</span></div>}
+        
+          <div className={styles.brandHeader}>{headingtWord[0]} <span>{headingtWord.slice(1).join(" ")}</span></div>
               <div className={styles.brandContent}>
           <div  className={styles.brandContainer} >
             {
-                data.map((data,index)=>{
+                brand.map((data,index)=>{
                     return(
                         // <div className={styles.brandSection}>
                         <div className={styles.brand} onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data.brandName)}`}>
