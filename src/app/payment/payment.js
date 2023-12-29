@@ -100,29 +100,6 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)  
   const { selectedPaymentMethod=""} = usePaymentPageData();
-  const refreshData = () => {
-    router.refresh()
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500)
-  }
-  const onUpdateItem = async (data) => {
-    setIsLoading(true)
-    const cartItem = await updateCartItem(data);
-    refreshData()
-    // window.location.reload()
-  }
-
-  const onDeleteItem = async (data) => {
-    setIsLoading(true)
-    const deleteData = {
-      cartItemId: data.id
-    }
-    const cartItem = await deleteCartItem(deleteData);
-    if (cartItem && cartItem.status == 200) {
-      refreshData()
-    }
-  }
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
@@ -157,28 +134,6 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
 const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={},cartItems}) => {
   const router = useRouter();
   const { selectedPaymentMethod=""} = usePaymentPageData();
-  const refreshData = () => {
-    router.refresh()
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500)
-  }
-  const onUpdateItem = async (data) => {
-    setIsLoading(true)
-    const cartItem = await updateCartItem(data);
-    refreshData()
-  }
-
-  const onDeleteItem = async (data) => {
-    setIsLoading(true)
-    const deleteData = {
-      cartItemId: data.id
-    }
-    const cartItem = await deleteCartItem(deleteData);
-    if (cartItem && cartItem.status == 200) {
-      refreshData()
-    }
-  }
   return(
     <div className={styles.orderSummary}>
         <div>
