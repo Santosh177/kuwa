@@ -6,10 +6,9 @@ import styles from './product-card.module.scss';
 const ProductCard = ({cardData,addToCart={},style={}}) => {
     const router = useRouter();
     const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id="" , seoUrl="" } = cardData || {}
-  
     return(
-        <div className={styles.productCardItem} onClick={()=>router.push(`/products/`+seoUrl)}>
-            <div className={styles.productCardWrapper} style={...style}>
+        <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
+            <div className={styles.productCardWrapper} style={{...style}}>
                 <div className={styles.productImgWrapper}>
                     <div className={styles.productImgContainer}>
                         <img className={styles.productImg} src={image} alt='product-name' />
