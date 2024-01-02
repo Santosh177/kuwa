@@ -141,13 +141,15 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const {isLogin=false, userData={}} = useAuth();
   console.log("countryListcountryList",countryList)
   console.log("selectedCountryselectedCountry",selectedCountry)
-  const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {}
+  const selectedCountryCode = selectedCountry && selectedCountry.code || "BH"
+  const deliveryFeesConfig = countryList.find((data) => data.code == selectedCountryCode || data.code == selectedCountryCode) || {}
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} } = useAddressData();
   const [ data, setData] = useState(cartData);
   const [ cartItems , setCartItems] = useState([]);
   const [ priceDetails , setPriceDetails] = useState({});
   const [ isLoader , setIsLoader] = useState(false);
-  const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,tamaraConfig));
+  const [tamaraPaymentConfig, setTamaraPaymentConfig] = useState([])
+  const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,[]));
   const clevertapEvent = useCleverTapEvents();
   let appleSession;
   
@@ -175,6 +177,32 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     console.log("couponCodeDatacouponCodeData",couponCodeData)
     applyCouponDiscount()
   },[couponCodeData])
+
+  useEffect(()=>{
+    getTamaraPaymentTypes()
+  },[])
+
+  useEffect(()=>{
+    if(tamaraPaymentConfig && tamaraPaymentConfig.length > 0){
+      const getPaymentMethodData = getActivePaymentMethod(paymentModes,tamaraPaymentConfig);
+      setPaymentMethodConfig(getPaymentMethodData)
+    }
+  },[tamaraPaymentConfig])
+
+  const getTamaraPaymentTypes = async() =>{
+    try {
+      const countryCode = selectedCountryCode;
+      const getTamaraPaymentResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/payment-types?countryCode=${countryCode}`, {
+        method: 'GET',
+        cache: 'no-store' 
+      })
+      const getTamaraPaymentConfigData = await getTamaraPaymentResp.json();
+      setTamaraPaymentConfig(getTamaraPaymentConfigData)
+    } catch (error) {
+  
+    }
+  
+  }
 
 
   const applyCouponDiscount = () => {

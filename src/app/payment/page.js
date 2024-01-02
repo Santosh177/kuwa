@@ -51,21 +51,22 @@ export default async function PaymentPage() {
   }
 
 
-  try {
-    const customHeader = await authHeader();
-    const countryCode = 'BH';
-    console.log("padasd")
-    const getTamaraPaymentResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/payment-types?countryCode=${countryCode}`, {
-      method: 'GET',
-      cache: 'no-store' 
-    })
-    console.log("getTamaraPaymentRespgetTamaraPaymentResp",getTamaraPaymentResp)
-    const getTamaraPaymentConfigData = await getTamaraPaymentResp.json();
-    console.log("getTamaraPaymentConfigData",getTamaraPaymentConfigData);
-    tamaraConfig = getTamaraPaymentConfigData || [];
-  } catch (error) {
+  // try {
+  //   const customHeader = await authHeader();
+  //   console.log("customHeadercustomHeader",customHeader)
+  //   const countryCode = 'BH';
+  //   console.log("padasd")
+  //   const getTamaraPaymentResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/payment-types?countryCode=${countryCode}`, {
+  //     method: 'GET',
+  //     cache: 'no-store' 
+  //   })
+  //   console.log("getTamaraPaymentRespgetTamaraPaymentResp",getTamaraPaymentResp)
+  //   const getTamaraPaymentConfigData = await getTamaraPaymentResp.json();
+  //   console.log("getTamaraPaymentConfigData",getTamaraPaymentConfigData);
+  //   tamaraConfig = getTamaraPaymentConfigData || [];
+  // } catch (error) {
 
-  }
+  // }
 
   
   
@@ -83,7 +84,7 @@ export default async function PaymentPage() {
           <PageHeader headerName="Payment"/>
           <PageStepTracker stepCount={3} />
           <PaymentPageProvider cartItemsResp={getCartItems}>
-              <Payment cartData={getCartItems} paymentModes={paymentModes} tamaraConfig={tamaraConfig}/>
+              <Payment cartData={getCartItems} paymentModes={paymentModes} />
           </PaymentPageProvider>
           
         </>
