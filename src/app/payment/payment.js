@@ -118,7 +118,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
         {
           cartItems.map((data, index) => {
             return (
-              <CartItemCard data={data} key={index}paymentPage={true}/>
+              <CartItemCard data={data} key={index} paymentPage={true} index={index}/>
             )
           })
         }
@@ -134,6 +134,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
 const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={},cartItems}) => {
   const router = useRouter();
   const { selectedPaymentMethod=""} = usePaymentPageData();
+  const [showPriceDetails, setShowPriceDetails] = useState(false);
   return(
     <div className={styles.orderSummary}>
         <div>
@@ -147,17 +148,17 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
     </div>
     <div className={styles.priceDetails}>
       {/* <div className={styles.headerTxt}>Price Details</div> */}
-      <PriceDetails data={priceDetails}/>
+      {showPriceDetails && <PriceDetails data={priceDetails}/>}
     </div>
     <div className={styles.productDetailsTitle}>Product Details</div>
     {
           cartItems.map((data, index) => {
             return (
-              <CartItemCard paymentPage={true} data={data} key={index} />
+              <CartItemCard paymentPage={true} data={data} key={index} index={index} />
             )
           })
         }
-    <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+    <PaymentFooterBtn showPriceDetails={showPriceDetails} setShowPriceDetails={setShowPriceDetails} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
 </div>
   )
 }
