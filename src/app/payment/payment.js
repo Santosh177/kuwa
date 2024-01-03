@@ -20,6 +20,7 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import DeliveryAddress from '../order-summary/DeliveryAddress/DeliveryAddress'
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import { updateCartItem, deleteCartItem } from '@/services';
+import { useRef } from 'react';
 
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
@@ -132,9 +133,12 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
 }
 
 const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={},cartItems}) => {
+  const priceDetailsRef = useRef();
   const router = useRouter();
   const { selectedPaymentMethod=""} = usePaymentPageData();
-  const [showPriceDetails, setShowPriceDetails] = useState(false);
+  const showViewDetails = ()=>{
+    priceDetailsRef.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+   }
   return(
     <div className={styles.orderSummary}>
         <div>
@@ -146,9 +150,9 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
     <div className={styles.paymentMethod}>
     <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment} />
     </div>
-    <div className={styles.priceDetails}>
+    <div className={styles.priceDetails} ref={priceDetailsRef} >
       {/* <div className={styles.headerTxt}>Price Details</div> */}
-      {showPriceDetails && <PriceDetails data={priceDetails}/>}
+      {<PriceDetails data={priceDetails}/>}
     </div>
     <div className={styles.productDetailsTitle}>Product Details</div>
     {
@@ -158,7 +162,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
             )
           })
         }
-    <PaymentFooterBtn showPriceDetails={showPriceDetails} setShowPriceDetails={setShowPriceDetails} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+    <PaymentFooterBtn showViewDetails={showViewDetails} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
 </div>
   )
 }
