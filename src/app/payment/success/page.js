@@ -12,11 +12,15 @@ export default function PaymentSuccess() {
   const { name = "", id = "", currency="" }=selectedCountry||{}
   const orderId = searchParams.get('orderId')
   const totalPurchaseValue = searchParams.get('totalPurchaseValue')
-  const couponDiscount = searchParams.get('couponDiscount')
+  const couponDiscount = searchParams.get('couponDiscount');
+  const isIndividualProduct = searchParams.get('isIndividualProduct');
   
 
     useEffect(()=>{
-      deleteAllItem();
+      if(!isIndividualProduct){
+        deleteAllItem();
+      }
+   
       if(window && window.clevertap){
         window.clevertap.setMultiValuesForKey("cart_items", []);
       }

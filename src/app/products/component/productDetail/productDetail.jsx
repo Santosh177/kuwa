@@ -85,7 +85,8 @@ const ProductDeatil = ({ productData = {} }) => {
         "product": id,
         "quantity": noOfProduct,
         "isVariant": selectedVarients ? true : false,
-        "variantId": selectedVarients
+        "variantId": selectedVarients,
+        "isGetBuyNow":true
     }
    const trackData = {
         "product Name": name,
@@ -141,6 +142,7 @@ const ProductDeatil = ({ productData = {} }) => {
         setIsLoading(true)
         console.log("handelAddToCart")
         const response = await addToCart(payload);
+        console.log("responseresponse")
         if (response === 200) {
             // setNoOfProduct(1);
            const data = await getCartItems();
@@ -467,7 +469,9 @@ const ProductDeatil = ({ productData = {} }) => {
         console.log("id",id)
         const finalSelectedItems = cartItemsData.filter((data)=>data.id == id);
         console.log("finalSelectedItems",finalSelectedItems)
+        const cartItemIdForIndividualProduct = finalSelectedItems && finalSelectedItems[0]['cartItemId'] || ""
         const cartItemPayload = await createPayloadForCartItems(finalSelectedItems);
+
         const description = `${userName + ",MULTIPLE_ITEM," + ""}`;
         const userId = getCartItems['customer'] || userData['id'] || null;
         const productPrice = parseInt(finalPrice) * parseInt(noOfProduct);
@@ -502,7 +506,7 @@ const ProductDeatil = ({ productData = {} }) => {
             "taxAmount": taxAmount,
             "shippingAmount": 0,
             "deliveryCharges":devliveryFees,
-            "cartItems": cartItemPayload
+            "cartItems": cartItemPayload,
           }
 
           payload['token'] = token;
@@ -528,11 +532,21 @@ const ProductDeatil = ({ productData = {} }) => {
                     "productName":name
                 });
               appleSession.completePayment(ApplePaySession.STATUS_SUCCESS);
-              // router.push(`/payment/success?orderId=${placeOrder.order_id}`)
-              window.location.href = `/payment/success?orderId=${placeOrder.order_id}`
+                const deletePayload = {cartItemId:cartItemIdForIndividualProduct}
+                const deleteCartItemResp = await fetch('/api/delete-cart-item', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify(deletePayload)
+                  })
+                  try {
+                    const deleteCartItemData = await deleteCartItemResp.json();
+                    console.log("deleteCartItemDatadeleteCartItemData",deleteCartItemData)
+                    router.push(`/payment/success?orderId=${placeOrder.order_id}&isIndividualProduct=true`)
+                  } catch (error) {
+                  }
             }
-
-        //   console.log("payloadpayload",payload)
     }
 
     try{
