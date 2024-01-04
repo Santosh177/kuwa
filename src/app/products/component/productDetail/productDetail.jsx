@@ -81,12 +81,12 @@ const ProductDeatil = ({ productData = {} }) => {
             setAllImages(bulkImage)
         }
     }, [selectedVarients])
-    const payload = {
+    let payload = {
         "product": id,
         "quantity": noOfProduct,
         "isVariant": selectedVarients ? true : false,
         "variantId": selectedVarients,
-        "isGetBuyNow":true
+        
     }
    const trackData = {
         "product Name": name,
@@ -138,9 +138,10 @@ const ProductDeatil = ({ productData = {} }) => {
         console.log("noOfProductnoOfProduct",noOfProduct)
         // setIsAddedToCart(false)
     },[noOfProduct])
-    const handelAddToCart = async () => {
+    const handelAddToCart = async ({isIndividualProduct=false}) => {
         setIsLoading(true)
         console.log("handelAddToCart")
+        payload["isGetBuyNow"] = isIndividualProduct;
         const response = await addToCart(payload);
         console.log("responseresponse")
         if (response === 200) {
@@ -328,7 +329,7 @@ const ProductDeatil = ({ productData = {} }) => {
                 let data = {
                   token: getCheckoutToken.token
                 } 
-                handelAddToCart();
+                handelAddToCart({isIndividualProduct:true});
                 placeApplePayOrderFlow({applePayData:applePayData,token:getCheckoutToken.token})
 
                
