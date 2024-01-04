@@ -515,7 +515,7 @@ const ProductDeatil = ({ productData = {} }) => {
         //   trackData['Payment Type'] = 'Apple pay' || ''
         //   clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData);
         console.log("payloadpayload",payload) 
-            const placeOrderResp  =  await fetch('/api/apple-pay-place-order', {
+            const placeOrderResp  =  await fetch('/api/apple-pay-get-buy-now', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
