@@ -15,6 +15,7 @@ import { deleteCartItem , updateCartItem } from '@/services';
 import styles from './cart-page.module.scss';
 import useCleverTapEvents from "@/hooks/useCleverTapEvents";
 export default  function Cart({cartData}) {
+    console.log("to check")
     const router = useRouter();
     const countryList = useCountryList();
     const {setCartItemCount={} } = useCartItems();
