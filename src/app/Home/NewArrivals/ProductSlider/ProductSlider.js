@@ -58,6 +58,7 @@ const ProductSlider = ({data}) => {
     </div>
     <div className={styles.sliderContainer}>
         <Glider
+         hasArrows={(width>990)}
          slidesToShow={4.5}
          slidesToScroll={4}
          hasDots={width > 990}

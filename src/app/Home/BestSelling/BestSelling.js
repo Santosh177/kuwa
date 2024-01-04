@@ -4,7 +4,9 @@ import ProductSlider from "./ProductSlider/ProductSlider"
 import styles from './best-selling.module.scss'
 const BestSelling = ({bestSellerCollectioWithProducts}) => {
     console.log("bestSellerCollectioWithProducts",bestSellerCollectioWithProducts)
-    const [selectedCollection, setSelectedCollection] = useState(null);
+    const [selectedCollection, setSelectedCollection] = useState( bestSellerCollectioWithProducts.length > 0
+      ? bestSellerCollectioWithProducts[0].id
+      : null);
 
   const bestSellerHeadings = bestSellerCollectioWithProducts
     .map(data => data.products.map(product => product.heading))
@@ -41,6 +43,7 @@ const BestSelling = ({bestSellerCollectioWithProducts}) => {
                     </div>
                   ))}   
                 </div>
+                <div className={styles.border}></div>
                
               </div>
               <ProductSlider data={BestSelling}/>

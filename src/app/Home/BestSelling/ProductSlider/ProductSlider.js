@@ -15,11 +15,16 @@ const ProductSlider = ({data}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [width, setWidth] = useState(0);
   const handleResize = () => setWidth(window.innerWidth);
+  const [isArrowVisible, setIsArrowVisible] = useState(false);
   const clevertapEvent = useCleverTapEvents();
   useEffect(() => {
+    setWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
+
+
+
   let trackData = {};
   const onAddToCart = async (data) => {
     try {
@@ -36,6 +41,7 @@ const ProductSlider = ({data}) => {
     <div className={styles.container}>
     <div className={styles.sliderContainer}>
           <Glider
+           hasArrows={(width>990)}
             slidesToShow={4.5}
             slidesToScroll={4}
             hasDots={width > 990}
