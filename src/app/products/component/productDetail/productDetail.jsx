@@ -138,9 +138,10 @@ const ProductDeatil = ({ productData = {} }) => {
         console.log("noOfProductnoOfProduct",noOfProduct)
         // setIsAddedToCart(false)
     },[noOfProduct])
-    const handelAddToCart = async ({isIndividualProduct=false}) => {
+    const handelAddToCart = async (data) => {
         setIsLoading(true)
         console.log("handelAddToCart")
+        const isIndividualProduct = (data && data.isIndividualProduct) || false
         payload["isGetBuyNow"] = isIndividualProduct;
         const response = await addToCart(payload);
         console.log("responseresponse")
