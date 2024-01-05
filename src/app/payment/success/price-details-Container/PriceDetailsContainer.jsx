@@ -21,7 +21,7 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
      currency="",
     deliveryFee=0 } = orderDetailsData
 
-
+    const discountAmount = parseFloat(discount).toFixed(2);
     const totalQuantity = orderProducts.reduce((sum, data) => {
         return sum + data.productQuantity;
     }, 0);
@@ -38,17 +38,17 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
            { <>
             {discount > 0 &&<div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Coupon Discount</div>
-                <div  className={[styles.rowItemLeftText,styles.discount].join(" ")}>- {currency + " "+ discount}
-                <div className={styles.couponCode}>({couponType=="Percentage"?coupon +" " + "-" + " " + (couponPercentage + ""+ "%"):(coupon +" " + "-" + " " + discount + ""+" " + currency)})</div> </div>
+                <div  className={[styles.rowItemLeftText,styles.discount].join(" ")}>- {currency + " "+ discountAmount}
+                <div className={styles.couponCode}>({couponType=="Percentage"?coupon +" " + "-" + " " + (couponPercentage + ""+ "%"):(coupon +" " + "-" + " " + discountAmount + ""+" " + currency)})</div> </div>
             </div>}
             <div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Delivery Fee</div>
                 <div className={[styles.rowItemRightText,styles.freeDeliveryTxt].join(" ")}> {deliveryFee>0 ? (<span className={styles.price}>+ {currency + " "+ deliveryFee}</span>):(<span>Free</span>)}</div>
             </div>
-            {discount> 0 &&  <AmountSavedInfo savedAmount={discount} currency={currency}/>}
+            {discount> 0 &&  <AmountSavedInfo savedAmount={discountAmount} currency={currency}/>}
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>Total Amount</div>
-                <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + finalAmount}</div>
+                <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + parseFloat(finalAmount).toFixed(2)}</div>
             </div>
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.paymentTypeTxt].join(" ")}>Payment Method</div>
