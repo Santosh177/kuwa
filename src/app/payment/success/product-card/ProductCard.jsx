@@ -3,6 +3,7 @@ import styles from './product-card.module.scss'
 
 const ProductCard = ({data, currency,index}) => {
     const { productImage="" , productName="",productPriceAmount="", productPriceSpecialAmount="",discountType="", id="",productQuantity } = data || {};
+    const saveprice = (productPriceAmount)- (productPriceSpecialAmount) || 0
     return(
         <div className={styles.cartItemCard}>
            
@@ -16,7 +17,7 @@ const ProductCard = ({data, currency,index}) => {
                  </div>
                <div className={styles.priceContainer}>
                     <div className={styles.finalPrice}>{currency + " " + productPriceSpecialAmount}</div>
-                    {<div className={styles.retailPrice}>{currency + " " + productPriceAmount}</div>}
+                    {saveprice > 0 && <div className={styles.retailPrice}>{currency + " " + productPriceAmount}</div>}
                
                 </div>
             </div>
