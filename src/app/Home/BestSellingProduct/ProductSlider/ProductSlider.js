@@ -10,7 +10,6 @@ import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
 const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyle = {} }) => {
-  console.log("hbahab",data)
   const router = useRouter();
   const { product = [], headerTitle = "" } = data || {};
   const [isLoading, setIsLoading] = useState(false);
@@ -94,6 +93,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
       </div>
       <Loader isShow={isLoading} />
     </div>
+ 
   );
 
 

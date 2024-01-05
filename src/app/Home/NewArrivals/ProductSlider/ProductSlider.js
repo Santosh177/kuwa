@@ -48,7 +48,7 @@ const ProductSlider = ({data}) => {
     }
   return (
     <>
-    {data && data.length > 0 && 
+    {product && product.length > 0 && 
     <div className={styles.container}>
       <div className={styles.headerContainer}>
           <div className={styles.headerTxt} ><span>{firstWordHeder}</span> {headerTitleupdate.slice(1).join(" ") }</div>

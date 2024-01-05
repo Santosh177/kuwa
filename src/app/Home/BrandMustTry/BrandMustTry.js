@@ -5,7 +5,7 @@ import styles from './brand-must-try.module.scss';
 
 
 const BrandMustTry = ({data={}}) => {
-   
+    console.log("brands",data)
     const brand = data?.brand || [];
     const heading = data?.heading || ""
     const headingtWord = heading.split(" ");

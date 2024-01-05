@@ -3,7 +3,6 @@ import './new-arrivals.module.scss'
 
 
 const NewArrivals = ({data}) => {
-    console.log("cnjbaj",data)
     const newArrivals = {
         product : data,
         headerTitle:"New Arrivals"
