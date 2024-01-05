@@ -9,7 +9,6 @@ const BrandMustTry = ({data={}}) => {
     const brand = data?.brand || [];
     const heading = data?.heading || ""
     const headingtWord = heading.split(" ");
-
     const router = useRouter();
     return(
         <>
@@ -34,7 +33,7 @@ const BrandMustTry = ({data={}}) => {
               }
         </div> */}
         
-          <div className={styles.brandHeader}>{headingtWord[0]} <span>{headingtWord.slice(1).join(" ")}</span></div>
+         {brand && brand.length > 0 && <div className={styles.brandHeader}>{headingtWord[0]} <span>{headingtWord.slice(1).join(" ")}</span></div> }
               <div className={styles.brandContent}>
           <div  className={styles.brandContainer} >
             {
