@@ -3,7 +3,7 @@ import React,{useEffect, useState} from 'react';
 import { useRouter} from 'next/navigation';
 import styles from './CouponInfo.module.scss'
 
-export default function  CouponInfo()  {
+export default function CouponInfo({setCouponBannerData})  {
   const router = useRouter();
   const [couponBanner, setCouponBanner] = useState({});
 
@@ -21,6 +21,9 @@ export default function  CouponInfo()  {
     const couponRespData = await getCouponResp.json();
     if(couponRespData && couponRespData.length > 0 ){
       setCouponBanner(couponRespData[0])
+      if (setCouponBannerData){
+        setCouponBannerData(couponRespData[0]);
+      }
     }
   
   }

@@ -1,0 +1,56 @@
+.trending-search-main {
+    position: absolute;
+    top: 39px;
+    right: 106px;
+    width: 424px;
+    padding: 24px 17px;
+    background-color: #FFF;
+    border-radius: 0px 0px 8px 8px;
+
+    .trending-search-cont {
+        .heading {
+            color: #07141A;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+        }
+        
+        .trending-list-wraper {
+            margin-top: 8px;
+            display:flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            .trending-list-chip {
+                color: #247A81;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    padding: 11px 13px;
+                    border-radius: 4px;
+                    background: #F7FCFB;
+                    cursor: pointer;
+            }
+        }
+
+    }
+}
+
+@media (max-width:990px) {
+    .trending-search-main {
+        top: 78px;
+        left: 50%;
+        transform: translate(-50%,0px);
+        width: 90%;
+        max-width: 449px;
+        .trending-search-cont {
+            .heading {}
+
+            .trending-list-wraper {
+                .trending-list-chip {}
+
+            }
+        }
+    }
+}

@@ -9,7 +9,7 @@ const ProductCard = ({cardData,addToCart={},style={}}) => {
   
     return(
         <div className={styles.productCardItem} onClick={()=>router.push(`/products/`+seoUrl)}>
-            <div className={styles.productCardWrapper} style={...style}>
+            <div className={styles.productCardWrapper}>
                 <div className={styles.productImgWrapper}>
                     <div className={styles.productImgContainer}>
                         <img className={styles.productImg} src={image} alt='product-name' />

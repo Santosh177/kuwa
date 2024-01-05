@@ -50,5 +50,20 @@
             color: #A0A0A0;
             text-align: center;
         }
+        .productCardMain{
+            position: relative;
+            max-width:768px;    
+            width: 90%;
+            margin: auto auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: auto auto;
+            justify-content: center;
+            margin-top:24px;
+            overflow-y: auto;
+            max-height:calc(100vh - 135px);;
+
+        }
     }
 // }
