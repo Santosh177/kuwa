@@ -30,7 +30,7 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index}) 
                  </div>
                <div className={styles.PaymentpriceContainer}>
                     <div className={styles.PaymentfinalPrice}>{currency + " " + finalPrice}</div>
-                    {<div className={styles.PaymentretailPrice}>{currency + " " + retailPrice}</div>}
+                    {discountAmount>0 &&<div className={styles.PaymentretailPrice}>{currency + " " + retailPrice}</div>}
 
                 </div>
                 </div>

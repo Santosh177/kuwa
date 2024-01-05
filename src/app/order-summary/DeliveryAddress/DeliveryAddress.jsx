@@ -11,7 +11,7 @@ export default function DeliveryAddress() {
   const addressTxt = apartment+ " " +address + " " +country;
   
 
-    console.log("ht",selectedAddress)
+    console.log("deliverAddress",selectedAddress)
   
       return (
         <div className={styles.deliveryAddress}> 
