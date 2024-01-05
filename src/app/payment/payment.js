@@ -187,13 +187,24 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const {setCartItemCount={} } = useCartItems();
   let appleSession;
   
-  useEffect(()=>{
-    if(Object.keys(selectedAddress).length == 0){
-      const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
-        const findSelectedAddress = listOfAddress.find((data) => data.id == JSON.parse(getAddressIdFromLocalStorage));
-        setSelectedAddress(findSelectedAddress)
-    }
+  // useEffect(()=>{
+  //   if(Object.keys(selectedAddress).length == 0){
+  //     const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
+  //       const findSelectedAddress = listOfAddress.find((data) => data.id == JSON.parse(getAddressIdFromLocalStorage));
+  //       setSelectedAddress(findSelectedAddress)
+  //   }
 
+  // },[listOfAddress])
+
+  useEffect(()=>{
+    if(selectedAddress && Object.keys(selectedAddress).length == 0){
+          const defaultAddress = listOfAddress.find((data) => data.isDefault);
+          if(defaultAddress){
+            setSelectedAddress(defaultAddress)
+          }else{
+            setSelectedAddress(listOfAddress[0])
+          }
+    }
   },[listOfAddress])
 
   useEffect(()=>{
