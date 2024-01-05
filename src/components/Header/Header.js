@@ -17,7 +17,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   const router = useRouter();
     const searchDataCount = searchData && searchData.length || 0;
   const handleSeeAll=(couponBanner,searchQuery)=>{
-    router.push(`${couponBanner.redirectionLink}?search_key=${searchQuery}`)
+    window.location.href=`${couponBanner.redirectionLink}?search_key=${searchQuery}`
   }
 
     return(
@@ -44,7 +44,6 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                             seoUrl: seoUrl || ""
                           }
                             return(
-                              // <SearchCard searchData={cardData}/>
                                 <ProductCard cardData={cardData} />
                             )
                         })
@@ -324,7 +323,9 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
     if (window &&  window.location.search){
       const urlParams = new URLSearchParams(window.location.search);
       const queryParam = urlParams.get('search_key');
-      queryParam?setSearchQuery(queryParam):"";
+      if (queryParam){
+        setSearchQuery(queryParam)
+      }
     }
   },[])
 

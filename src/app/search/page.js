@@ -170,7 +170,6 @@ export default function Search() {
                   seoUrl: seoUrl || ""
                 }
                 return (
-                  // <SearchCard searchData = {data}/>
                   <ProductCard cardData={cardData} />
                 )
               })

@@ -22,17 +22,15 @@ export default function TrendingSearch({ isLogin=false, isShowSeeAllBtn=true,set
         getTrendingList()
     }, [])
     const handleChip = (couponBanner, searchQuery) => {
-        // window.location.href = `${couponBanner.redirectionLink}?search_key=${searchQuery}`
         if (!isShowSeeAllBtn){
             if (setParamsData){
                 setParamsData((previous) => ({ ...previous, searchKey: searchQuery }));
-                setSearchQuery(searchQuery);
             }
-            if (setSearchQuery){
+            if (setSearchQuery || setParamsData){
                 setSearchQuery(searchQuery);
             }
         }else{
-            router.push(`${couponBanner.redirectionLink}?search_key=${searchQuery}`)
+            window.location.href = `${couponBanner.redirectionLink}?search_key=${searchQuery}`
         }
     }
     return (
@@ -43,13 +41,7 @@ export default function TrendingSearch({ isLogin=false, isShowSeeAllBtn=true,set
                 <div  className='heading'>Trending search</div>
                 <div  className='trending-list-wraper'>
                     {
-                        trendingList && trendingList.length > 0 && trendingList.map((item, index) => {
-                            return (
-                                <>
-                                    <div id="trending-search" className='trending-list-chip' onClick={() => handleChip(couponBanner,item)}>{item}</div>
-                                </>
-                            )
-                        })
+                        trendingList && trendingList.length > 0 && trendingList.map((item, index) =><div id="trending-search" className='trending-list-chip' onClick={() => handleChip(couponBanner,item)}>{item}</div>)
                     }
                 </div>
             </div>
