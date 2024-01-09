@@ -14,6 +14,7 @@ import Loader from "@/components/Loader/Loader";
 import { deleteCartItem , updateCartItem } from '@/services';
 import styles from './cart-page.module.scss';
 import useCleverTapEvents from "@/hooks/useCleverTapEvents";
+import { useRef } from 'react';
 export default  function Cart({cartData}) {
     console.log("to check")
     const router = useRouter();
@@ -28,6 +29,7 @@ export default  function Cart({cartData}) {
     const [ isLoading , setIsLoading ] = useState(false);
     const clevertapEvent = useCleverTapEvents();
 
+  
 
     useEffect(()=>{
       try {
@@ -179,7 +181,7 @@ export default  function Cart({cartData}) {
 
     const onProceed = () => {
       if(haveAddress){
-        router.push('/order-summary');
+        router.push('/payment');
       }else{
         router.push('/address/add-address');
       }
@@ -204,10 +206,15 @@ export default  function Cart({cartData}) {
       },500)
     }
      
+    const priceDetailsContainer = useRef();
+    const showViewDetails = ()=>{
+      priceDetailsContainer.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+    }
   
 
     const totalPrice =(priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+priceDetails.totalAmount :""
- 
+    
+   
       return (
         <>
           <div className={styles.cartPage}>
@@ -223,14 +230,15 @@ export default  function Cart({cartData}) {
             </div>
             <div className={styles.priceDetailsContainer}>
               {/* <div className={styles.headerTxt}>Price Details</div> */}
-              <div className={styles.priceInfo}>
+              <div className={styles.priceInfo} ref={priceDetailsContainer}>
                 <PriceDetailsInfo data={priceDetails} />
               </div>
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed To Checkout" totalPrice={totalPrice} onProceed={onProceed} />
+          <PaymentFooterBtn showViewDetails={showViewDetails} btnName="Proceed To Checkout" totalPrice={totalPrice} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
+          </div>
         </>
       )
     }
