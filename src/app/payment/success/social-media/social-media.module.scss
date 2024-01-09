@@ -1,0 +1,98 @@
+.socialMediaContainer{
+    margin-top: 24px;
+    // display: flex;
+  
+    .mediaSection{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap:13px;
+      
+        .iconDiv{
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap:16px;
+            
+                font-size: 12px;
+                font-weight: 400;
+             
+              
+             
+            .whatsAppDiv{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              
+                padding: 10px 24px 10px 10px;
+                color: #247A81;
+                background: #F7FCFB;
+                border-radius: 16px;
+                cursor: pointer;
+                .whatsAppIcon{
+                    width:24px;
+                    height:24px;
+                }
+                .whatsAppTxt{
+                  
+                }
+            }
+            .mailDiv{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+               padding:10px 12px;
+                color: #247A81;
+                background: #F7FCFB;
+                border-radius: 16px;
+                .mailIcon{
+                   display: flex;
+                    img{
+                        width:24px;
+                        height:24px;
+                    }
+                }
+            }
+        }
+        .iconContainer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap:48px;
+            color: #247A81;
+            background-color: #F7FCFB;
+            padding: 8px 70px;
+            border-radius: 16px;
+            .icon{
+                width: 32px;
+                height: 32px;
+            }
+
+        }
+    }
+
+}
+
+@media(max-width:401px){
+    .socialMediaContainer{
+    width: 100%;
+    .mediaSection{
+      .iconDiv{
+        gap:5px;
+        .whatsAppDiv{
+            padding:6px 0px;
+        }
+        .mailDiv{
+            padding:6px 12px
+        }
+      }  
+      .iconContainer{
+        gap:53px;
+        padding: 8px 40px;
+    }
+    }
+    
+    }
+}

@@ -1,0 +1,114 @@
+
+    .accountContainer{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width:397px;
+        padding-bottom: 16px;
+        padding-top: 16px;
+        border-radius: 16px;
+        background: #FFF;
+
+        box-shadow: 0px 6px 7px 0px rgba(173, 173, 173, 0.16);
+
+     
+        .headerTxt{
+            color: #247A81;
+            font-size: 16px;
+            font-weight: 500;
+
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap:16px;
+            margin-top: 8px;
+            .icon{
+                display: flex;
+               
+                justify-content: center;
+                align-items: center;
+             img {
+                width:18px;
+                height:18px;
+            }
+             span{
+                color: #07141A;
+                font-size: 10px;
+
+                font-weight: 500;
+
+            }
+            }
+
+        }
+        .personalDetails{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+           
+            
+            .inputEmail{
+                width:365px;
+                .guestEmail{
+
+                }
+                // height:34px;
+            }
+            .inputPassword{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap:7px;
+                width:365px;
+                .inputDiv{
+                    width:50%
+                }
+                .guestPassword{
+                   
+                }
+            }
+            .passwordError{
+                color:#ce4224;
+                font-size: 14px;
+            }
+            .btn{
+                font-size: 14px;
+                width:287px;
+                background: #247A81;
+                border-radius: 24px;
+                padding: 12px 88px;
+                color: #FFF;
+                margin-top: 24px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    @media(max-width:990px){
+        .accountContainer{
+            width:343px;
+            .headerTxt{
+                font-size: 12px;
+            }
+            .container{
+                .icon{
+                span{
+                    font-size: 8px;
+                }
+            }
+            }
+            .personalDetails{
+              .inputEmail{
+                width:287px;
+              } 
+              .inputPassword{
+                width:289px;
+              } 
+            }
+           
+        }
+    }

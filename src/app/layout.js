@@ -33,7 +33,7 @@ const getUser = async () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token.value,
+          ...(token && { Authorization: 'Bearer ' + token.value }),
         }
       })
       const userData = await userLoginResp.json();
