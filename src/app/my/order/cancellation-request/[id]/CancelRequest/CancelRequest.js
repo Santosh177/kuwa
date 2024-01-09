@@ -26,13 +26,15 @@ const ReasonCard = ({data,onSelect,cancelReason}) => {
 
 export default  function CancelRequest({cancelReasonData=[]}) {
   const [ cancelReason , setCancelReason ] = useState("");
+  const [isSubmitDisabled, setSubmitDisabled] = useState(false);
   const params = useParams();
   const router = useRouter();
 
 
   
   const onCancelRequest = async() => {
-    if(cancelReason){
+    if(cancelReason && !isSubmitDisabled){
+      setSubmitDisabled(true);
       let data ={
         productId: params.id,
         cancelReason:cancelReason
@@ -63,7 +65,7 @@ export default  function CancelRequest({cancelReasonData=[]}) {
               )
             })
           }
-          <div className={styles.submitRequest} onClick={onCancelRequest}>Submit Request</div>
+          <div className={styles.submitRequest} onClick={onCancelRequest}  disabled={isSubmitDisabled ? 'disabled' : ''}>Submit Request</div>
         </div>
 
     </div>
