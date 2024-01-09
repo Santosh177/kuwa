@@ -16,6 +16,7 @@ import styles from './cart-page.module.scss';
 import useCleverTapEvents from "@/hooks/useCleverTapEvents";
 import { useRef } from 'react';
 export default  function Cart({cartData}) {
+    console.log("to check")
     const router = useRouter();
     const countryList = useCountryList();
     const {setCartItemCount={} } = useCartItems();
@@ -31,6 +32,15 @@ export default  function Cart({cartData}) {
   
 
     useEffect(()=>{
+      try {
+        if(window && window.fcWidget){
+          window.fcWidget.hide()
+        }
+      } catch (error) {
+        
+      }
+
+   
       setData(cartData);
 
       if(cartData && cartData.quantity){
@@ -207,8 +217,6 @@ export default  function Cart({cartData}) {
    
       return (
         <>
-          <script type="text/javascript" src="/fresh-chat.js" async></script>
-          <div>
           <div className={styles.cartPage}>
             <div className={styles.cartItemsContainer}>
               <div className={[styles.headerTxt,styles.cartHeaderTxt].join(" ")}> Cart Items </div>

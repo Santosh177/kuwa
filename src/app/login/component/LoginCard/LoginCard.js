@@ -117,9 +117,13 @@ export default function Login() {
 
     const onEmailChange = (e) => {
         setUserEmail(e.target.value)
+        const { ['userEmail']: removedKey, ...newFormData } = errors;
+        setErrors(newFormData);
     }
     const onPasswordChange = (e) => {
         setPassword(e.target.value);
+        const { ['password']: removedKey, ...newFormData } = errors;
+        setErrors(newFormData);
     }
   
 

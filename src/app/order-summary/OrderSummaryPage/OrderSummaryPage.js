@@ -31,6 +31,13 @@ export default function OrderSummaryPage({cartData}) {
   const clevertapEvent = useCleverTapEvents();
 
   useEffect(()=>{
+    try {
+      if(window && window.fcWidget){
+        window.fcWidget.hide()
+      }
+    } catch (error) {
+      
+    }
     setData(cartData);
     if(cartData && cartData.quantity){
       setCartItemCount(cartData.quantity)
