@@ -192,7 +192,7 @@ export default  function Cart({cartData}) {
      const onDeleteItem = async (data) => {
       setIsLoading(true)
          const deleteData = {
-          cartItemId: data.id
+          cartItemId: data.cartItemId
          }
       const cartItem = await deleteCartItem(deleteData);
       if(cartItem && cartItem.status == 200) {
