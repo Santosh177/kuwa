@@ -238,7 +238,6 @@ export default  function Cart({cartData}) {
           </div>
           <PaymentFooterBtn showViewDetails={showViewDetails} btnName="Proceed To Checkout" totalPrice={totalPrice} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
-          </div>
         </>
       )
     }
