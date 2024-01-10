@@ -58,7 +58,7 @@ const ProductSlider = ({data}) => {
           >
             {
               product.map((data, index) => {
-                const { finalPrice = "", retailPrice = "", currency = "", discount = "", discountType = "" } = data && data.price || {}
+                const { finalPrice = "", retailPrice = "", currency = "", discount = "", discountType = "" } = data && data?.price || {}
                 const cardData = {
                   productName: data && data.name || "",
                   finalPrice: finalPrice,

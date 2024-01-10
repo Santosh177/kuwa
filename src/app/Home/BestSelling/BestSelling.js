@@ -1,45 +1,48 @@
 'use client'
 import React,{useState} from 'react'
+import { useRef } from 'react'
 import ProductSlider from "./ProductSlider/ProductSlider"
 import styles from './best-selling.module.scss'
 const BestSelling = ({bestSellerCollectioWithProducts}) => {
+  const useRefscroll = useRef()
     console.log("bestSellerCollectioWithProducts",bestSellerCollectioWithProducts)
     const [selectedCollection, setSelectedCollection] = useState( bestSellerCollectioWithProducts.length > 0
-      ? bestSellerCollectioWithProducts[0].id
+      ? bestSellerCollectioWithProducts[0]?.id
       : null);
 
   const bestSellerHeadings = bestSellerCollectioWithProducts
-    .map(data => data.products.map(product => product.heading))
+    .map(data => data?.products?.map(product => product?.heading))
     .flat() 
-    .find(heading => heading !== undefined).split(" ")
-  const headingFirstWord = bestSellerHeadings[0]
+    .find(heading => heading !== undefined)?.split(" ")
+    const headingFirstWord = bestSellerHeadings ? bestSellerHeadings[0] : ""
 
     const BestSelling = {
         product: selectedCollection
           ? bestSellerCollectioWithProducts
-              .find((data) => data.id === selectedCollection)
+              .find((data) => data?.id === selectedCollection)
               .products
           : [],
       headerTitle:"",
       };
     const handleCollectionClick = (collectionId) => {
         setSelectedCollection(collectionId);
+        useRefscroll.current.scrollLeft = 100
       };
     if (bestSellerCollectioWithProducts && bestSellerCollectioWithProducts.length > 0) {
         return (
           <>
             <div className={styles.bestSellingContainer}>
               
-              <div className={styles.heading}> <span className={styles.firstWord}>{headingFirstWord}</span> {bestSellerHeadings.slice(1).join(" ")}</div>
+              <div className={styles.heading}> <span className={styles.firstWord}>{headingFirstWord}</span> {bestSellerHeadings?.slice(1).join(" ")}</div>
               <div className={styles.collectionScrollContainer}>
                 <div className={styles.collectionList}>
                   {bestSellerCollectioWithProducts.map((data, index) => (
-                    <div
+                    <div ref = {useRefscroll}
                       key={data.id}
-                      className={`${styles.collectionName} ${selectedCollection === data.id ? styles.selected : ''}`}
+                      className={`${styles.collectionName} ${selectedCollection === data?.id ? styles.selected : ''}`}
                       onClick={() => handleCollectionClick(data.id)}
                     >
-                      {data.name}
+                      {data?.name}
                     </div>
                   ))}   
                 </div>
