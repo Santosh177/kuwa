@@ -353,6 +353,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
   const handleKeyPress = (event) => {
     if (event.key==='Enter' || event.key===' ') {
       if (setParamsData) {
+        setIsShowSearchList(false);
         setParamsData((previous) => ({ ...previous, searchKey:searchQuery }));
       }
     }
