@@ -1,6 +1,7 @@
 import PageHeader from '@/components/PageHeader/PageHeader';
 import CancelRequest from './CancelRequest/CancelRequest';
 import { authHeader } from "../../../../../lib/auth-cookies";
+import ItmeListForCancellation from './CancelRequest/ItmeListForCancellation';
 
 export default async function CancellationRequest({}) {
 
@@ -16,6 +17,7 @@ export default async function CancellationRequest({}) {
   return (
     <>
       <PageHeader headerName="Cancellation Request" />
+      <ItmeListForCancellation/>
       <CancelRequest cancelReasonData={cancelReasonData}/>
  
     </>
