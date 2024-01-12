@@ -7,13 +7,13 @@ export default async function Home({}) {
   const countryIdFromCookie = getCountryCookie();
   let homePageDataResp = {}
   console.log("countryIdFromCookiecountryIdFromCookie",countryIdFromCookie)
-  // if(8){
-    if(countryIdFromCookie){
+  if(8){
+    // if(countryIdFromCookie){
      const homePageData  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/home-page`, {
       method: 'GET',
       headers:{
       'Content-Type': 'application/json',
-      'country' : countryIdFromCookie
+      'country' : 8
     },
     cache: 'no-store' 
     })

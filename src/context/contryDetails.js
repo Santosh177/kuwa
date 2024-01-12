@@ -47,7 +47,7 @@ export const CountryProvider = ({ children, countryCode,selectedCountryData , co
         body:JSON.stringify({countryId:data.id})
       })
       const coutryApiData = await coutryApiResp.json();
-      router.refresh();
+      // router.refresh();
     }
   }
 

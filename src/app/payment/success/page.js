@@ -22,6 +22,7 @@ export default function PaymentSuccess() {
   const orderId = searchParams.get('orderId')
   const totalPurchaseValue = searchParams.get('totalPurchaseValue')
   const couponDiscount = searchParams.get('couponDiscount');
+  const isIndividualProduct = searchParams.get('isIndividualProduct');
   const [isSuccessPopUp ,setIsSuccessPopup] = useState(false);
   const [orderDetailsData,setOrderDetailsData] = useState({});
   const [isThankYouPage ,setIsThankYouPage] = useState(false)
@@ -36,7 +37,10 @@ export default function PaymentSuccess() {
  
 
     useEffect(()=>{
-      deleteAllItem();
+      if(!isIndividualProduct){
+        deleteAllItem();
+      }
+   
       if(window && window.clevertap){
         window.clevertap.setMultiValuesForKey("cart_items", []);
       }

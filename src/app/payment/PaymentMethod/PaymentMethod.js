@@ -159,7 +159,7 @@ export default  function PaymentMethod({paymentMethodConfig,price=0,onPayment={}
     const isTapCard = paymentMethodConfig['card_tap']['isEnable'];
     const isTamara =  paymentMethodConfig['tamara']['isEnable'];
     const isTabby =  paymentMethodConfig['tabby']['isEnable'];
-    const isApplePay =  paymentMethodConfig['applePay']['isEnable'];
+    const isApplePay =  false
     const isCod =  paymentMethodConfig['cod']['isEnable'];
 
 
