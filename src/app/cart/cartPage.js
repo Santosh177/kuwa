@@ -14,13 +14,10 @@ import Loader from "@/components/Loader/Loader";
 import { deleteCartItem , updateCartItem } from '@/services';
 import styles from './cart-page.module.scss';
 import useCleverTapEvents from "@/hooks/useCleverTapEvents";
-<<<<<<< HEAD
 import { useAuth } from '@/context/userDetail';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
 import {getCartItem} from '@/services';
-=======
 import { useRef } from 'react';
->>>>>>> 657e5f8af324017c8c5165562e8b0a7d60b082de
 export default  function Cart({cartData}) {
     console.log("to check")
     const router = useRouter();
