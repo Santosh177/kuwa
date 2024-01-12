@@ -14,7 +14,9 @@ import Loader from "@/components/Loader/Loader";
 import { deleteCartItem , updateCartItem } from '@/services';
 import styles from './cart-page.module.scss';
 import useCleverTapEvents from "@/hooks/useCleverTapEvents";
+import { useRef } from 'react';
 export default  function Cart({cartData}) {
+    console.log("to check")
     const router = useRouter();
     const countryList = useCountryList();
     const {setCartItemCount={} } = useCartItems();
@@ -27,8 +29,18 @@ export default  function Cart({cartData}) {
     const [ isLoading , setIsLoading ] = useState(false);
     const clevertapEvent = useCleverTapEvents();
 
+  
 
     useEffect(()=>{
+      try {
+        if(window && window.fcWidget){
+          window.fcWidget.hide()
+        }
+      } catch (error) {
+        
+      }
+
+   
       setData(cartData);
 
       if(cartData && cartData.quantity){
@@ -169,7 +181,7 @@ export default  function Cart({cartData}) {
 
     const onProceed = () => {
       if(haveAddress){
-        router.push('/order-summary');
+        router.push('/payment');
       }else{
         router.push('/address/add-address');
       }
@@ -180,7 +192,7 @@ export default  function Cart({cartData}) {
      const onDeleteItem = async (data) => {
       setIsLoading(true)
          const deleteData = {
-          cartItemId: data.id
+          cartItemId: data.cartItemId
          }
       const cartItem = await deleteCartItem(deleteData);
       if(cartItem && cartItem.status == 200) {
@@ -194,13 +206,17 @@ export default  function Cart({cartData}) {
       },500)
     }
      
+    const priceDetailsContainer = useRef();
+    const showViewDetails = ()=>{
+      priceDetailsContainer.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+    }
   
 
     const totalPrice =(priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+priceDetails.totalAmount :""
- 
+    
+   
       return (
         <>
-          <script type="text/javascript" src="/fresh-chat.js" async></script>
           <div className={styles.cartPage}>
             <div className={styles.cartItemsContainer}>
               <div className={[styles.headerTxt,styles.cartHeaderTxt].join(" ")}> Cart Items </div>
@@ -214,13 +230,13 @@ export default  function Cart({cartData}) {
             </div>
             <div className={styles.priceDetailsContainer}>
               {/* <div className={styles.headerTxt}>Price Details</div> */}
-              <div className={styles.priceInfo}>
+              <div className={styles.priceInfo} ref={priceDetailsContainer}>
                 <PriceDetailsInfo data={priceDetails} />
               </div>
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn btnName="Proceed To Checkout" totalPrice={totalPrice} onProceed={onProceed} />
+          <PaymentFooterBtn showViewDetails={showViewDetails} btnName="Proceed To Checkout" totalPrice={totalPrice} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
         </>
       )

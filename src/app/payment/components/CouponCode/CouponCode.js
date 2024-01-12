@@ -7,11 +7,11 @@ import styles from './coupon-code.module.scss';
 
 const Input = ({onInputChange={},type="text",fieldName="",value="",placeHolder="",isError="",errorMsg="",isDisabled="",style={}}) => {
   return(
-      <div className={styles.inputWrapper} style={...style}>
+      <div className={styles.inputWrapper} style={{...style}}>
           <div className={styles.inputContainer}>
               <input type={type} id={fieldName} name={fieldName}  value={value} onChange={(e)=>onInputChange(e,fieldName)}  disabled={isDisabled}/>
               <label className={styles.placeholderText}>
-                  <div className={styles.text}>{placeHolder}</div>
+                {value?"":  <div className={styles.text}>{placeHolder}</div>}
               </label>
           </div>
        {isError && <span className={styles.errorMsg}>{errorMsg}</span>}
@@ -60,7 +60,7 @@ export default function CouponCode() {
             <div className={styles.couponCodeContainer}>
                 <div style={{width:'100%',position:'relative'}}>
                   <Input  type="text" fieldName="couponCode" placeHolder="Enter coupon code" value={couponCode} onInputChange={(e)=>{setCouponCode(e.target.value)}}  isDisabled={(couponCodeData.reason== "Applied Successfully" )}/>
-                  {Object.keys(couponCodeData).length>0 && <img onClick={()=>{setCouponCodeData("");setCouponCode("")}} className={styles.removeIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon.png' alt='close'/>}
+                  {couponCode ? <img onClick={()=>{setCouponCodeData("");setCouponCode("")}} className={styles.removeIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon.png' alt='close'/>:<img className={styles.removeInActiveIcon} src="https://d25uasl7utydze.cloudfront.net/assets/cross_icon%20(1).svg"/>}
                 </div>
                 <div className={styles.applyBtn} onClick={onCouponApply}> Apply</div>
             </div>

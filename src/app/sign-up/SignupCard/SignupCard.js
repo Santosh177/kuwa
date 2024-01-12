@@ -7,6 +7,7 @@ import Loader from '@/components/Loader/Loader';
 import styles from './sign-up-card.module.scss';
 import { useCountry } from '@/context/contryDetails';
 import { useState } from 'react';
+import { checkInternationalPhone } from "../../../utils/validation";
 
 const validateForm = (formData) => {
   const errors = {};
@@ -16,8 +17,10 @@ const validateForm = (formData) => {
   if (!formData.lastName) {
     errors.lastName = 'Last name is required.';
   }
-  if(!formData.mobileNumber){
+  if(!formData.mobNoValidation){
     errors.mobileNumber = "Mobile number is required";
+  }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
+    errors.mobileNumber = "Invalid mobile number";
   }
   if(!formData.email){
     errors.email = "Email is required";
@@ -33,17 +36,17 @@ const validateForm = (formData) => {
 };
 
 
-const SignupForm = ({setFormData={},formData={},errors={}}) => {
+const SignupForm = ({setFormData={},formData={},errors={},setErrors={}}) => {
   const { selectedCountry={} } = useCountry();
   const countryCode = selectedCountry && selectedCountry.code || "";
-  const onInputChange = (event, labelId) =>{
+  const onInputChange = (event, labelId, data) =>{
     if(labelId === 'mobileNumber'){
-      setFormData(inputs => ({ ...inputs, [labelId]: "+"+event}));
+      setFormData(inputs => ({ ...inputs, [labelId]: "+"+event,["mobNoValidation"]:event.slice(data.dialCode.length)}));
     }else{
       setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
     }
-
-    
+    const { [labelId]: removedKey, ...newFormData } = errors;
+    setErrors(newFormData);
   }
  
 
@@ -162,7 +165,7 @@ export default function SignupCard() {
           <div className={styles.signUpCardWrapper}>
             <div className={styles.signUpTxt}>Create an account</div>
             <div className={styles.descTxt}>Create or login to enjoy exclusive benefits.</div>
-              <SignupForm setFormData={setFormData} formData={formData} errors={errors}/>
+              <SignupForm setFormData={setFormData} formData={formData} errors={errors} setErrors={setErrors}/>
               <div className={styles.createAccountBtn} onClick={onSignup}>Create account</div>
               <div className={styles.loginTxt} onClick={()=> router.push('/login')}>Already have an account ? <span className={styles.loginSubTxt} >Login</span></div>
           </div>

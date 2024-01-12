@@ -30,11 +30,12 @@ const PhoneNumberInput = ({ countryCode="ae", onInputChange={},type="text",field
 
 
     return(
-        <div className={styles.inputWrapper} style={...style}>
+        <div className={styles.inputWrapper} style={{...style}}>
            <PhoneInput
                     country={countryCode.toLowerCase()}
                     value={value}
-                    onChange={phone => onInputChange(phone,fieldName)}
+                    onlyCountries={['ae','sa','kw','qa','om','bh','in']}
+                    onChange={(phone,dialCode) => onInputChange(phone,fieldName,dialCode)}
                     placeholder='fieldName'
                     searchPlaceholder="ss"
                     />

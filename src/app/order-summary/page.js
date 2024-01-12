@@ -38,9 +38,9 @@ export default async function OrderSummary() {
   
       return (
         <>
-            <PageHeader headerName="Order Summary"/>
+            {/* <PageHeader headerName="Order Summary"/>
             <PageStepTracker stepCount={2} />
-            <OrderSummaryPage cartData={getCartItems} />
+            <OrderSummaryPage cartData={getCartItems} /> */}
         </>
       )
     }
