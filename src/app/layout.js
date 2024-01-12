@@ -106,6 +106,13 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />
       <Script src="/tamara-script.js" strategy="lazyOnload" />
+      <script type="text/javascript">
+          {(function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+          })(window, document, "clarity", "script", "kdgq0zr9a6")}
+       </script>
       {/* <Script type="text/javascript" src="/meta-pixel-code.js" strategy="lazyOnload" /> */}
       {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZH5J03SH9"></script> */}
       {/* <noscript><img height="1" width="1" style="display:none"
