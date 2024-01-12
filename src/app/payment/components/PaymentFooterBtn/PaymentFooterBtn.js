@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import styles from './payment-footer-btn.module.scss';
 import { usePaymentPageData } from '@/context/payment';
 
-export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false}) {
+export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false,showViewDetails}) {
   const isApplePay =  paymentMethodConfig['applePay']['isEnable'];
   useEffect(()=>{
     try {
@@ -22,7 +22,7 @@ export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, b
             <div className={styles.paymentFooterBtnContainer}>
                 <div className={styles.paymentInfo}>
                     <div className={styles.txt}>Total : <span className={styles.price}>{totalPrice}</span></div>
-                    <div className={styles.subTxt}>View price details</div>
+                   <div className={styles.subTxt} onClick={()=>showViewDetails()}>View price details</div> 
                 </div>
                 <div className={styles.paymentBtn}>
                  {isApplePay && <div className={styles.applePayBtn} onClick={()=>{onProceed("APPLE_PAY")}}>

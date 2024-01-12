@@ -167,3 +167,123 @@
     
     }
 }
+
+// for Payment Page
+.PaymentcartItemCard{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-top: 8px;
+    border-radius: 16px;
+border: 1px solid #E6E7E7;
+padding-top: 14px;
+padding-bottom: 12px;
+    .PaymentcartItemInfo{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .Paymentindex{
+            padding-left: 14px;
+            padding-right: 8px;
+        }
+        img{
+            width:40px;
+            height:40px;
+        }
+        .paymentItem{
+            display: flex;
+            flex-direction: column;
+            margin-left: 8px;
+        
+        .PaymentitemName{
+           
+            width:190px;
+            color: #07141A;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .quantity{
+            // display: block;
+            color: #A0A0A0;
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+    }
+    }
+       .PaymentpriceContainer{
+        padding-right: 16px;
+        font-size: 12px;
+                
+
+                .PaymentfinalPrice{
+                    color: #07141A;
+                   
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+
+                }
+                .PaymentretailPrice{
+                    color: #A0A0A0;
+
+font-family: Work Sans;
+
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-decoration: line-through;
+
+                }
+
+            }
+        
+    
+}
+@media(min-width:990px){
+    
+}
+@media(max-width:990px){
+.PaymentcartItemCard{
+    .PaymentcartItemInfo{
+        display: flex;
+        // justify-content: space-between;
+        align-items: center;
+        .Paymentindex{
+            padding-left: 10px;
+            padding-right: 5px;
+        }
+        img{
+            width:30px;
+            height:30px;
+        }
+        .paymentItem{
+        .PaymentitemName{
+            font-size: 10px;
+            width:140px;
+        }
+    }
+    }
+        
+    
+
+    .PaymentpriceContainer{
+        font-size: 10px;
+        padding-right: 10px;
+
+        .finalPrice{
+           
+        }
+        .retailPrice{
+          
+
+        }
+
+    }
+}
+}
+
+
+
+

@@ -19,7 +19,8 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     },[])
 
     const getTamaraConfig = async() => {
-        const tamaraPaymentConfig = await getTamaraPaymentTypes();
+        const selectedCountryCode = selectedCountry && selectedCountry.code || "BH"
+        const tamaraPaymentConfig = await getTamaraPaymentTypes(selectedCountryCode);
         if(tamaraPaymentConfig && Object.keys(tamaraPaymentConfig).length > 0){
             setTamaraConfig(tamaraPaymentConfig)
         }

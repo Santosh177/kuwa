@@ -1,0 +1,38 @@
+'use client';
+import React from 'react'
+import styles from "./explore-category.module.scss"
+
+const ExploreCategory = ({exploreCategory}) => {
+    console.log("exploreCategory",exploreCategory)
+  return (
+    <>
+    
+    {exploreCategory && exploreCategory.length>0 && 
+    <div className={styles.categoryHeader}>Explore <span>Categories</span></div>}
+    <div className={styles.categoryContent}>
+    <div className={styles.categoryContainer} >
+        {
+          exploreCategory.map((data,index)=>{
+            return(
+                // <div className={styles.categorySection}>
+                <div className={styles.category} onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data.healthGoal)}`}>
+                    <div className={styles.categoryImg}>
+                        <img src={data.icon}></img>
+                    </div>
+                    <div className={styles.categoryName}>{data.healthGoal}</div>
+                </div>
+                // </div>
+            )
+           
+          })  
+        }
+
+    </div>
+    </div>
+    
+    </>
+   
+  )
+}
+
+export default ExploreCategory

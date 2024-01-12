@@ -14,10 +14,15 @@ import Loader from "@/components/Loader/Loader";
 import { deleteCartItem , updateCartItem } from '@/services';
 import styles from './cart-page.module.scss';
 import useCleverTapEvents from "@/hooks/useCleverTapEvents";
+<<<<<<< HEAD
 import { useAuth } from '@/context/userDetail';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
 import {getCartItem} from '@/services';
+=======
+import { useRef } from 'react';
+>>>>>>> 657e5f8af324017c8c5165562e8b0a7d60b082de
 export default  function Cart({cartData}) {
+    console.log("to check")
     const router = useRouter();
     const countryList = useCountryList();
     const {setCartItemCount={} } = useCartItems();
@@ -33,8 +38,18 @@ export default  function Cart({cartData}) {
     const [isApplePaySession , setIsApplePaySession] = useState(false)
      let appleSession;
 
+  
 
     useEffect(()=>{
+      try {
+        if(window && window.fcWidget){
+          window.fcWidget.hide()
+        }
+      } catch (error) {
+        
+      }
+
+   
       setData(cartData);
 
       if(cartData && cartData.quantity){
@@ -178,7 +193,7 @@ export default  function Cart({cartData}) {
 
     const onProceed = () => {
       if(haveAddress){
-        router.push('/order-summary');
+        router.push('/payment');
       }else{
         router.push('/address/add-address');
       }
@@ -189,7 +204,7 @@ export default  function Cart({cartData}) {
      const onDeleteItem = async (data) => {
       setIsLoading(true)
          const deleteData = {
-          cartItemId: data.id
+          cartItemId: data.cartItemId
          }
       const cartItem = await deleteCartItem(deleteData);
       if(cartItem && cartItem.status == 200) {
@@ -201,6 +216,11 @@ export default  function Cart({cartData}) {
       setTimeout(()=>{
         setIsLoading(false);
       },500)
+    }
+     
+    const priceDetailsContainer = useRef();
+    const showViewDetails = ()=>{
+      priceDetailsContainer.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     }
   
     const onHandleApplePay = () => {
@@ -475,7 +495,8 @@ export default  function Cart({cartData}) {
   }
 
     const totalPrice =(priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+priceDetails.totalAmount :""
- 
+    
+   
       return (
         <>
           {/* <script type="text/javascript" src="/fresh-chat.js" async></script> */}
@@ -492,13 +513,13 @@ export default  function Cart({cartData}) {
             </div>
             <div className={styles.priceDetailsContainer}>
               {/* <div className={styles.headerTxt}>Price Details</div> */}
-              <div className={styles.priceInfo}>
+              <div className={styles.priceInfo} ref={priceDetailsContainer}>
                 <PriceDetailsInfo data={priceDetails} />
               </div>
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn isApplePaySession={isApplePaySession} btnName="Proceed To Checkout" totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} />
+          <PaymentFooterBtn showViewDetails={showViewDetails} isApplePaySession={isApplePaySession} btnName="Proceed To Checkout" totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} />
           <Loader isShow={isLoading}/>
         </>
       )

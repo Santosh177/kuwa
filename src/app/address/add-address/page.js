@@ -109,7 +109,7 @@ export default function AddAddress() {
             // router.replace(refererPath)
             window.location.replace(refererPath)
           }else{
-            window.location.replace('/order-summary')
+            window.location.replace('/payment')
             // router.replace('/order-summary')
           }
           
