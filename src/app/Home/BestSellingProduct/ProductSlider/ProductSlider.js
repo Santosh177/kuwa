@@ -41,7 +41,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top+(1).png' alt='background' />
       </div>
       <div className={styles.container} style={{ backgroundImage: backgroundColor }}>
-        <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
+        <div className={styles.headerTxt} style={{...headerTextStyle}}>{headerTitle}</div>
         <div className={styles.sliderContainer}>
           <Glider
             slidesToShow={4.5}
@@ -95,7 +95,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
                 trackData = {
                   "product Name": data && data.name,
                   "quantity": 1,
-                  "product Id": data.id,
+                  "product Id": data?.id,
                 }
 
                 let addToCartPayload = {  }
@@ -127,6 +127,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
       </div>
       <Loader isShow={isLoading} />
     </div>
+ 
   );
 
 

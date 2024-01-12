@@ -5,11 +5,14 @@ import styles from './brand-must-try.module.scss';
 
 
 const BrandMustTry = ({data={}}) => {
-
+    console.log("brands",data)
+    const brand = data?.brand || [];
+    const heading = data?.heading || ""
+    const headingtWord = heading?.split(" ");
     const router = useRouter();
     return(
         <>
-        {data && data.length>0 &&<div className={styles.headerTxt}>Brand You Must Try</div>}
+        {/* {data && data.length>0 &&<div className={styles.headerTxt}>Brand You Must Try</div>}
         <div className={styles.brandMustTry}>
 
               {
@@ -28,7 +31,28 @@ const BrandMustTry = ({data={}}) => {
                     )
                 })
               }
-        </div>
+        </div> */}
+        
+         {brand && brand.length > 0 && <div className={styles.brandHeader}>{headingtWord[0]} <span>{headingtWord?.slice(1).join(" ")}</span></div> }
+              <div className={styles.brandContent}>
+          <div  className={styles.brandContainer} >
+            {
+                brand.map((data,index)=>{
+                    return(
+                        // <div className={styles.brandSection}>
+                        <div className={styles.brand} onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data?.brandName)}`}>
+                            <div className={styles.brandImg}>
+                                <img src={data?.image}></img>
+                            </div>
+                            {/* <div className={styles.brandName}>{data.brandName}</div> */}
+                        </div>
+                        // </div>
+                    )
+                })
+            }
+          </div> 
+          </div>
+        
        </>
     )
 }
