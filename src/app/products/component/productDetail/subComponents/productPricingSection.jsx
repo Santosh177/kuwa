@@ -4,9 +4,10 @@ import styles from './ProductPricingSection.module.scss'
 import IncrimentBar from "@/components/IncrimnetBar/incrimentBar";
 import Varients from "./productVarients";
 import { getTamaraPaymentTypes } from '@/services';
+import { useCountry } from '@/context/contryDetails';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={}} = pricingSectionVariables;
-
+    const { selectedCountry={} } = useCountry();
     const [tamaraConfig, setTamaraConfig] = useState({});
 
     useEffect(()=>{
@@ -14,7 +15,8 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     },[])
 
     const getTamaraConfig = async() => {
-        const tamaraPaymentConfig = await getTamaraPaymentTypes();
+        const selectedCountryCode = selectedCountry && selectedCountry.code || "BH"
+        const tamaraPaymentConfig = await getTamaraPaymentTypes(selectedCountryCode);
         if(tamaraPaymentConfig && Object.keys(tamaraPaymentConfig).length > 0){
             setTamaraConfig(tamaraPaymentConfig)
         }

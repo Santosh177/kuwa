@@ -33,7 +33,7 @@ const getUser = async () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token.value,
+          ...(token && { Authorization: 'Bearer ' + token.value }),
         }
       })
       const userData = await userLoginResp.json();
@@ -72,12 +72,22 @@ export default async function RootLayout({ children }) {
   let selectedCountryData = {};
   if(isLogin){
     const filteredCountry = countryList.find((data,index)=>data.id == userData.userData.country)
-    selectedCountryData = filteredCountry;
+    if(filteredCountry){
+      selectedCountryData = filteredCountry;
+    }else{
+      selectedCountryData = countryList && countryList[0] 
+    }
+    
+   
   }else{
     const countryIdFromCookie = getCountryCookie();
     if(countryIdFromCookie){
       const filteredCountry = countryList.find((data,index)=>data.id == countryIdFromCookie)
-      selectedCountryData = filteredCountry;
+      if(filteredCountry){
+        selectedCountryData = filteredCountry;
+      }else{
+        selectedCountryData = countryList && countryList[0] 
+      }
     }
   }
 

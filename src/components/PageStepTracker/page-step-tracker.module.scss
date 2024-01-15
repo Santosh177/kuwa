@@ -31,7 +31,7 @@
     position: absolute;
     background: #E6E7E7;
     height: 3px;
-    width: 195px;
+    width: 470px;
     top: 50%;
     transition: 0.4s ease;
     transform: translateY(-50%);
@@ -84,7 +84,7 @@
 
 @media(max-width:768px){
     .MainContainer{
-        max-width: 290px;
+        max-width: 230px;
     }
     .StepStyle{
         width: 28px;
@@ -94,7 +94,7 @@
             position: absolute;
             background: #E6E7E7;
             height: 3px;
-            width: 70px;
+            width: 125px;
             top: 50%;
             transition: 0.4s ease;
             transform: translateY(-50%);
@@ -119,7 +119,7 @@
 
 @media(min-width:990px){
     .MainContainer{
-        max-width: 349px;
+        max-width: 290px;
     }
     
     .StepStyle{
@@ -136,7 +136,7 @@
            position: absolute;
            background: #E6E7E7;
            height: 3px;
-            width: 72px;
+            width: 155px;
            top: 50%;
            transition: 0.4s ease;
            transform: translateY(-50%);

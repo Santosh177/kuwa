@@ -31,6 +31,13 @@ export default function OrderSummaryPage({cartData}) {
   const clevertapEvent = useCleverTapEvents();
 
   useEffect(()=>{
+    try {
+      if(window && window.fcWidget){
+        window.fcWidget.hide()
+      }
+    } catch (error) {
+      
+    }
     setData(cartData);
     if(cartData && cartData.quantity){
       setCartItemCount(cartData.quantity)
@@ -114,7 +121,7 @@ const onUpdateItem = async(data) => {
 const onDeleteItem = async (data) => {
   setIsLoading(true)
      const deleteData = {
-      cartItemId: data.id
+      cartItemId: data.cartItemId
      }
   const cartItem = await deleteCartItem(deleteData);
   if(cartItem && cartItem.status == 200) {

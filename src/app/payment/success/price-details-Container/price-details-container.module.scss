@@ -1,0 +1,101 @@
+
+.header{
+    margin-top: 24px;
+}
+.headerTxt{
+    color: #000;
+    font-weight: 600;
+    
+    font-size: 16px;
+    // margin-top: 24px;
+    // margin-bottom: 10px;
+}
+
+.priceDetailsWrapper{
+    background: #FFFFFF;
+    border: 1px solid #E6E7E7;
+    border-radius: 16px;
+    padding-top: 10px;
+    padding-bottom: 24px;
+    padding-right: 16px;
+    padding-left: 16px;
+    margin-top: 10px;
+    .rowItemContainer{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 16px;
+        .rowItemLeftText{
+            font-weight: 400;
+            font-size: 14px;
+        }
+        .rowItemRightText{
+            font-weight: 400;
+            font-size: 14px;
+        }
+        .discount{
+            text-align: right;
+            color: #247A81;
+        }
+        .couponCode{
+
+        }
+        .freeDeliveryTxt{
+          
+           
+            span {
+             color: #247A81; 
+             font-size: 14px;
+font-style: normal;
+font-weight: 500  
+            }
+            .price{
+                color: #000;
+                // text-decoration: line-through;
+            }
+        }
+        .totalAmountTxt{
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .totalAmountPrice{
+            font-weight: 400;
+            font-size: 14px;
+        }
+        .paymentTypeTxt{
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .paymentType{
+            font-weight: 400;
+            font-size: 14px;  
+        }
+    }
+}
+
+.amountSavedInfo{
+    background: #F1FAF8;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    color: #247A81;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 16px;
+}
+
+
+@media (max-width:990px){
+    .priceDetailsWrapper{
+      
+        .rowItemContainer{
+            .rowItemLeftText{
+                font-size: 12px;
+            }
+            .rowItemRightText{
+                font-size: 12px;
+            }
+
+        }
+    }
+}
+   

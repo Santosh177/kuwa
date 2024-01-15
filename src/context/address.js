@@ -44,6 +44,7 @@ export const AddressProvider = ({ children, countryCode }) => {
     })
     const addressData = await getAddressResp.json();
     const addressList = addressData && addressData['shippingAddress'] && addressData['shippingAddress'];
+    console.log("addressList",addressList)
     if(addressList && addressList.length > 0){
       setListOfAddress(addressList);
     }

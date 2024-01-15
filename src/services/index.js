@@ -65,9 +65,8 @@ export const getCartItem = async() =>{
     return getCartItemData;
 }
 
-export const getTamaraPaymentTypes = async() =>{
-  const countryCode = 'BH';
-  const getTamaraPaymentTypes = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/payment-types?countryCode=${countryCode}`, {
+export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
+  const getTamaraPaymentTypes = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/payment-types?countryCode=${selectedCountryCode}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
