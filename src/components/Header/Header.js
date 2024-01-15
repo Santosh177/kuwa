@@ -21,12 +21,12 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   }
 
     return(
-      <div className={styles.searchListWrapper} style={(isLogin) ? { left: '-23px', paddingBottom: !isShowSeeAllBtn ? "25px" : "" } : { left: '13px', paddingBottom: !isShowSeeAllBtn ? "25px" : "" }}>
+      <div className={styles.searchListWrapper} style={(isLogin) ? { left: '-23px', paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: '13px', paddingBottom: !isShowSeeAllBtn ? "25px" : "" }}>
                 <div className={styles.resultFound}>
                   <span> {searchDataCount} Results found</span>
                 </div>
                 <div className={styles.productCardMain} 
-                style={{maxHeight:isShowSeeAllBtn?"":"522px"}}
+                // style={{maxHeight:isShowSeeAllBtn?"":"522px"}}
                  >
                     {
                         searchData.map((data, index)=>{
@@ -49,7 +49,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                         })
                     }
                 </div>
-        {searchData && searchData.length > 0 && isShowSeeAllBtn && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBanner, searchQuery)}>
+        {searchData && searchData.length>0  && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBanner, searchQuery)}>
                     See all
                 </div>
         }       
@@ -423,6 +423,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
            </div>
 
         </div>
+        {((showTrendingSearch && !searchQuery) || (searchQuery && isShowSearchList)) && <div className={styles.searchOverlay}></div>}
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}

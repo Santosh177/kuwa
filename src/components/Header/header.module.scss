@@ -187,7 +187,7 @@
     position: absolute;
     background: white;
     width: 100%;
-    padding: 20px;
+    padding: 20px 10px 20px 20px;
     width: 424px;
     // height: 400px;
     max-height:600px;
@@ -207,10 +207,31 @@
     .productCardMain{
         display: flex;
         flex-wrap: wrap;
-        gap:21px;
+        gap:19px;
         overflow-y: auto;
         max-height: 450px;  
         margin-top: 24px;
+        scrollbar-width: thin;
+        &::-webkit-scrollbar {
+            // width: 8px;
+                width: 8px; 
+                // height: 100px;
+                display: unset;
+                // border-radius: 10px;
+                /* Set the width of the scrollbar */
+            }
+        
+            &::-webkit-scrollbar-thumb {
+                background-color: #D6D6D6;
+                min-height:50px;
+                border-radius:8px;
+                /* Set the color of the thumb */
+            }
+        
+            &::-webkit-scrollbar-track {
+                // background-color: #ecf0f1;
+                /* Set the color of the track */
+            }
     }
     
     .seeAll{
@@ -236,6 +257,17 @@
 }
 .searchListWrapperSeeAllNOt{
     padding: 25px;
+}
+.searchOverlay{
+    width: 100vw;
+    min-height:calc(100vh - 56px);
+    background: rgba(7, 20, 26, 0.40);
+    backdrop-filter: blur(4px);
+    position: fixed;
+    z-index: 1;
+    top:56px;
+    left: 0;
+
 }
 
 @media(min-width:990px){

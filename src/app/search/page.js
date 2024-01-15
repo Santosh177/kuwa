@@ -177,6 +177,7 @@ export default function Search() {
 
           </div>
         {showTrendingSearch && !searchQuery && <TrendingSearch isShowSeeAllBtn={false} setSearchQuery={setSearchQuery} couponBanner={{}} />}
+        {(showTrendingSearch && !searchQuery) && <div className={styles.searchOverlay}></div>}
       </div>
     </>
   )
