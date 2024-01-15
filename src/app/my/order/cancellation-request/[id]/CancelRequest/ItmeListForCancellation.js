@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import OrderItemList from './OrderItemList';
 // import OrderItemList from './OrderItemList';
+import styles from './order-item-list.module.scss';
+
 const itemList={
     "orderProducts": [
         {
@@ -15,8 +17,8 @@ const itemList={
             "status": "CANCELED"
         },
         {
-            "childOrderId": 13659,
-            "productId": 13659,
+            "childOrderId": 13660,
+            "productId": 13660,
             "image": "https://dcngmd8umaj1u.cloudfront.net/Products_Picture_902_451_1688738409185.PNG",
             "name": "Arthred Collagen Formula",
             "quantity": 1,
@@ -25,8 +27,8 @@ const itemList={
             "status": "CANCELED"
         },
         {
-            "childOrderId": 13659,
-            "productId": 13659,
+            "childOrderId": 13661,
+            "productId": 13661,
             "image": "https://dcngmd8umaj1u.cloudfront.net/Products_Picture_902_451_1688738409185.PNG",
             "name": "Arthred Collagen Formula",
             "quantity": 1,
@@ -35,8 +37,8 @@ const itemList={
             "status": "CANCELED"
         },
         {
-            "childOrderId": 13659,
-            "productId": 13659,
+            "childOrderId": 13662,
+            "productId": 13662,
             "image": "https://dcngmd8umaj1u.cloudfront.net/Products_Picture_902_451_1688738409185.PNG",
             "name": "Arthred Collagen Formula",
             "quantity": 1,
@@ -100,7 +102,7 @@ const itemList={
     "parentOrderId": 5443151103014
 }
 
-const ItmeListForCancellation=()=> {
+const ItmeListForCancellation = ({ setIsSelectAll, setPayloadData, payloadData=[] })=> {
     const [listOfMyOrder, setListOfMyOrder] = useState({});
     // useEffect(() => {
     //    const fetchData=async ()=>{
@@ -130,12 +132,28 @@ const ItmeListForCancellation=()=> {
         setListOfMyOrder({ ...itemList }) 
 
     },[])
+    const handleSelectAll=(event)=>{
+        alert(event.target.checked)
+      if(event.target.checked){
+        setIsSelectAll(true);
+      }
+      else{
+          setIsSelectAll(false)
+      }
+    }
     console.log("listorder", listOfMyOrder)
     return (
         <div>
+            <div className={styles.selectItemTextHeader}>
+                <div className={styles.selectItemCancel} >Select Item to cancel</div>
+                <div className={styles.selectAll}>
+                    <input type="checkbox" className={styles.checkboxAll} style={{color:"red",backgroundColor:"yellow"}} onChange={handleSelectAll} />
+                    <span>Select all</span>
+                </div>
+            </div>
             {listOfMyOrder.orderProducts && listOfMyOrder.orderProducts.length > 0 && listOfMyOrder.orderProducts.map((data, index) =>{
                 return  (
-                    <OrderItemList data={data} key={index} />
+                    <OrderItemList data={data} key={index} setPayloadData={setPayloadData} payloadData={payloadData||[]} />
             )
                 }
             )

@@ -7,7 +7,7 @@ import styles from './order-item-list.module.scss';
 
 
 
-export default function OrderItemList({ data }) {
+export default function OrderItemList({ data, setPayloadData, payloadData=[] }) {
 
 
 
@@ -25,7 +25,7 @@ export default function OrderItemList({ data }) {
 
     return (
         <div className={styles.orderItemList}>
-            <OrderItem data={orderItemData} />
+            <OrderItem data={orderItemData} setPayloadData={setPayloadData} payloadData={payloadData||[]} />
 
         </div>
 

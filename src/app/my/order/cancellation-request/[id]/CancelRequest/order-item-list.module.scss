@@ -3,6 +3,39 @@
 
 }
 
+.selectItemTextHeader {
+    display: flex;
+    justify-content: space-between;
+    margin: auto auto;
+    max-width: 430px;
+    padding: 16px 16px 0px 16px;
+
+    .selectItemCancel {
+        color: #07141A;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+        .selectAll {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            color: #07141A;
+            font-family: Work Sans;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            .checkboxAll{
+                background-color: red;
+                color:green;
+            }
+              
+        }
+}
+
 
 @media (min-width:990px) {
     .orderItemList {

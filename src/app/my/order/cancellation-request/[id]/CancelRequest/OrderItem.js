@@ -16,14 +16,13 @@ const getDeliveryDate = (expDelivery) => {
     }
     return date + " " + month;
 }
-export default function OrderItem({ data }) {
+export default function OrderItem({ data, setPayloadData, payloadData=[] }) {
     const router = useRouter();
-    const [payloadData,setPayloadData]=useState([]);
     const [isChecked,setIsChecked]=useState(false);
 
-    console.log("orderData", data)
+    // console.log("orderData", data)
 
-    const { orderId = "", productName = "", productImg = "", orderStatus = "", orderProductId = "", expDelivery = "", productId = "", rating = "" } = data || {};
+    const { orderId = "", productName = "", productImg = "", orderStatus = "", orderProductId = "", expDelivery = "", productId = "", rating = "",} = data || {};
 
 
     const updateRating = async (rating) => {
@@ -85,15 +84,23 @@ export default function OrderItem({ data }) {
     }
 
     const handleCheck=(event,data)=>{
+        console.log("dddddd",data)
         if(isChecked){
+            alert(2)
+            console.log("payl", payloadData)
             let dummyPayload = [...payloadData];
-            dummyPayload = dummyPayload && dummyPayload.length > 0 && dummyPayload.filter((item, index) => item.productId !== data.productId);
+            console.log("dummyPayload", dummyPayload)
+            dummyPayload = dummyPayload && dummyPayload.length > 0 && dummyPayload.filter((item, index) =>{
+                console.log("true",item.product, data.productId)
+               return item.product!==data.productId;
+
+            }) 
             setPayloadData([...dummyPayload])
         }else{
             alert(1)
             const currPayload={
                 status: 'CANCELED',
-                cancelReason: 'whatever the reason they choosed',
+                cancelReason: '',
                 product: data.productId //this is orderProductId
 
             }
@@ -105,7 +112,7 @@ export default function OrderItem({ data }) {
         console.log("event", event.target)
         setIsChecked(!isChecked);
     }
-    console.log("payloadData", payloadData)
+    // console.log("payloadData", payloadData)
     return (
         <>
             <div className={styles.orderItem}
