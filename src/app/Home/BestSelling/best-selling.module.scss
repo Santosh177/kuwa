@@ -26,6 +26,7 @@
      overflow-x: scroll;
     //  margin-top: 24px;
      margin-bottom: -30px;
+    //  .collectionSection{
      
      .collectionList {
         display: flex;
@@ -37,6 +38,8 @@
         width: max-content;
         // margin-top: 24px;
         margin-bottom: 24px;
+
+        position: relative;
        
     
         .collectionName {
@@ -63,13 +66,17 @@
           
           z-index: 100;
         }
+        .border{
+          width: 100%;
+          border:#E0F0EE 3px solid;
+          position: relative;
+          top: 23px;
+          position: absolute;
+        }
+       
       }
-      .border{
-        width: 100vh;
-        border:#E0F0EE 3px solid;
-        position: relative;
-        top: -28px;
-      }
+     
+    // }
     }
     
    
@@ -88,6 +95,16 @@
         gap:30px !important;
         .collectionName{
           font-size: 12px;
+        }
+        .selected:after{
+          height: 2px; 
+        }
+        .border{
+          width: 100%;
+          border:#E0F0EE 2px solid;
+          position: relative;
+          top: 20px;
+          position: absolute;
         }
       }
     }

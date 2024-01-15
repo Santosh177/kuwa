@@ -35,6 +35,7 @@ const BestSelling = ({bestSellerCollectioWithProducts}) => {
               
               <div className={styles.heading}> <span className={styles.firstWord}>{headingFirstWord}</span> {bestSellerHeadings?.slice(1).join(" ")}</div>
               <div className={styles.collectionScrollContainer}>
+                {/* <div className={styles.collectionSec}> */}
                 <div className={styles.collectionList}>
                   {bestSellerCollectioWithProducts.map((data, index) => (
                     <div ref = {useRefscroll}
@@ -44,10 +45,12 @@ const BestSelling = ({bestSellerCollectioWithProducts}) => {
                     >
                       {data?.name}
                     </div>
+                  
                   ))}   
+                  <div className={styles.border}></div> 
                 </div>
-                <div className={styles.border}></div>
-               
+             
+                {/* </div> */}
               </div>
               <ProductSlider data={BestSelling}/>
             
