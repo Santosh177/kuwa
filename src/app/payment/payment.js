@@ -524,7 +524,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               if(placeOrder && placeOrder.status_code == 200){
                 if(orderId){
                   // router.replace(`/payment/success?orderId=${orderId}`)
-                  window.location.href = `/payment/success?orderId=${orderId}&couponDiscount=${priceDetails['discountAmount']}&totalPurchaseValue=${priceDetails['totalAmount']}`
+                  window.location.href = `/payment/success?orderId=${orderId}&couponDiscount=${priceDetails['discountAmount']}&totalPurchaseValue=${priceDetails['totalAmount']}&paymentMode=${payload['paymentMode']}`
                 }else{
                   window.location.href = `/payment/success`
                   // router.replace(`/payment/success`)
@@ -549,7 +549,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             if(placeOrder && placeOrder.status_code == 200){
               appleSession.completePayment(ApplePaySession.STATUS_SUCCESS);
               // router.push(`/payment/success?orderId=${placeOrder.order_id}`)
-              window.location.href = `/payment/success?orderId=${placeOrder.order_id}`
+              window.location.href = `/payment/success?orderId=${placeOrder.order_id}&paymentMode=${payload['paymentMode']}`
             }
             // const applePaySupportednetworks = "visa, mastercard, amex";
             // let request = {
