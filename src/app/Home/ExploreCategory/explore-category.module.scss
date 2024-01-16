@@ -5,7 +5,7 @@ font-style: normal;
 font-weight: 500;
 line-height: 28px;
 text-align: center;
-margin-top: 34px;
+margin-top: 40px;
 span{
     font-weight: 700;
 }
@@ -50,6 +50,7 @@ font-size: 14px;
 font-style: normal;
 font-weight: 500;
 line-height: normal;
+margin-top: 10px;
     }
    }
 }
@@ -61,15 +62,15 @@ line-height: normal;
     }
     .categoryContent{
 .categoryContainer{
-        width: 320px;
+        width: 315px;
     gap:22px;
     .category{
         cursor: pointer;
-      
+        width: 60px;
         .categoryImg{
             img{    
-            width:55px;
-            height:55px;
+            width:60px;
+            height:60px;
             }
         }
         .categoryName{

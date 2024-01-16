@@ -32,7 +32,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 60px !important;
+        gap: 20px !important;
         display: -webkit-box;
         // overflow-x: scroll;
         width: max-content;
@@ -47,13 +47,14 @@
           position: relative;
           padding-bottom: 8px;
           padding-left: 20px;
+          padding-right: 20px;
             cursor: pointer;
             &:after {
               content: '';
               position: absolute;
               bottom: 0;
               left: 0;
-              width: 120%;
+              width: 100%;
               height: 2px;
               // background-color: #E0F0EE; 
               transition: border-width 0.3s ease; 
