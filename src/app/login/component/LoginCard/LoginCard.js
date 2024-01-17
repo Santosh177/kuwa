@@ -4,6 +4,7 @@ import styles from './login-card.module.scss';
 import { useState ,useEffect } from 'react';
 import Loader from '@/components/Loader/Loader';
 import { useCountry } from '@/context/contryDetails';
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 const validateForm = (formData) => {
   const errors = {};
   if(!formData.userEmail){
@@ -86,21 +87,26 @@ export default function Login() {
         window.removeEventListener('resize', handleResize);
       };
     }, []);
-    
+
     function getPageType() {
-      return window.innerWidth > 770 ? 'desktop' : 'mWeb';
+      return window.innerWidth > 770 ? 'web' : 'mWeb';
     }
 
     const onLogin = async() =>{
       const validationErrors = validateForm({userEmail:userEmail,password:password });
       function getDeviceType() {
-        const userAgent = window.navigator.userAgent;
-        if (userAgent.match(/Android/i)) {
-          return 'Android';
-        } else if (userAgent.match(/iPhone|iPad|iPod/i)) {
-          return 'iOS';
+        if (isMobile) {
+          if (isAndroid) {
+            return 'Android';
+          } else if (isIOS) {
+            return 'iOS';
+          } else {
+            return 'Mobile';
+          }
+        } else if (isTablet) {
+          return 'Tablet';
         } else {
-          return 'Unknown';
+          return 'Desktop';
         }
       }
     

@@ -8,6 +8,7 @@ import styles from './sign-up-card.module.scss';
 import { useCountry } from '@/context/contryDetails';
 import { useState,useEffect } from 'react';
 import { checkInternationalPhone } from "../../../utils/validation";
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 
 const validateForm = (formData) => {
   const errors = {};
@@ -98,14 +99,19 @@ export default function SignupCard() {
     
     console.log("useCountry",selectedCountry)
   
-    function getDeviceType(){
-      const userAgent = window.navigator.userAgent;
-      if (userAgent.match(/Android/i)) {
+    function getDeviceType() {
+      if (isMobile) {
+        if (isAndroid) {
           return 'Android';
-      } else if (userAgent.match(/iPhone|iPad|iPod/i)) {
+        } else if (isIOS) {
           return 'iOS';
+        } else {
+          return 'Mobile';
+        }
+      } else if (isTablet) {
+        return 'Tablet';
       } else {
-          return 'Unknown';
+        return 'Desktop';
       }
     }
     useEffect(() => {

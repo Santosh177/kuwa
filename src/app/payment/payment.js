@@ -21,6 +21,7 @@ import DeliveryAddress from '../order-summary/DeliveryAddress/DeliveryAddress'
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import { updateCartItem, deleteCartItem } from '@/services';
 import { useRef } from 'react';
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
@@ -211,7 +212,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   }, []);
   
   function getPageType() {
-    return window.innerWidth > 770 ? 'desktop' : 'mWeb';
+    return window.innerWidth > 770 ? 'web' : 'mWeb';
   }
 
   useEffect(()=>{
@@ -357,14 +358,19 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['coupon']}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
       const taxAmount = await calculateVatPercentage(priceDetails['subTotal'])
-      function getDeviceType(){
-        const userAgent = window.navigator.userAgent;
-        if (userAgent.match(/Android/i)) {
+      function getDeviceType() {
+        if (isMobile) {
+          if (isAndroid) {
             return 'Android';
-        } else if (userAgent.match(/iPhone|iPad|iPod/i)) {
+          } else if (isIOS) {
             return 'iOS';
+          } else {
+            return 'Mobile';
+          }
+        } else if (isTablet) {
+          return 'Tablet';
         } else {
-            return 'Unknown';
+          return 'Desktop';
         }
       }
         let payload = {
