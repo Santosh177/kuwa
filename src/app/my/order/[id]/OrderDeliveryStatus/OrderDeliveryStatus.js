@@ -38,8 +38,8 @@ const OrderDeliveryStatus = ({orderStatus=""}) => {
 
     return(
       <>
-        <div className={styles.headerTxt}>Delivery Status</div>
        {orderStatus != "CANCELED" && <div className={styles.deliveryStatusContainer}>
+        <div className={styles.headerTxt}>Delivery Status</div>
           <div className={styles.MainContainer}>
             <div className={styles.StepContainer} >
               {steps.map(({ step, label,icon,icon_white, tickIcon }) => (

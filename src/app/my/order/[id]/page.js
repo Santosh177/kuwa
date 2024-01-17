@@ -17,12 +17,13 @@ export default async function MyOrderDetails(req) {
   try {
     
     const customHeader = await authHeader();
-    const orderDetailsResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/detail-order/${orderId}`, {
+    // const orderDetailsResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/detail-order/${orderId}`, {
+    const orderDetailsResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/order-summary/${orderId}`, {
       method: 'GET',
-      headers:{
-        ...customHeader
-      },
-      cache: 'no-store'
+      // headers:{
+      //   ...customHeader
+      // },
+      // cache: 'no-store'
     })
     const orderDetailData = await orderDetailsResp.json();
     orderDetails = orderDetailData;

@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 // import StarRating from '../StarRating/StarRating';
 import styles from './order-item.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const MONTHS = ["Jan", "Feb", "Mar", "April", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -16,15 +16,20 @@ const getDeliveryDate = (expDelivery) => {
     }
     return date + " " + month;
 }
-export default function OrderItem({ data, setPayloadData, payloadData=[] }) {
+const OrderItem = ({ listOfMyOrder=[],currency, data, setPayloadData, payloadData=[] })=> {
     const router = useRouter();
-    const [isChecked,setIsChecked]=useState(false);
+    const [isChecked, setIsChecked] = useState(false);
 
-    // console.log("orderData", data)
+    const { orderId = "", productName = "", productImg = "", orderStatus = "", orderProductId = "", expDelivery = "", productId = "", rating = "", productPrice = 0, quantity =1} = data || {};
 
-    const { orderId = "", productName = "", productImg = "", orderStatus = "", orderProductId = "", expDelivery = "", productId = "", rating = "",} = data || {};
-
-
+useEffect(()=>{
+    if (payloadData && payloadData.length==0){
+        setIsChecked(false);
+    }
+    else if (listOfMyOrder.length === payloadData.length) {
+        setIsChecked(true);
+    }
+}, [payloadData])
     const updateRating = async (rating) => {
         let data = {
             productId: productId,
@@ -84,35 +89,26 @@ export default function OrderItem({ data, setPayloadData, payloadData=[] }) {
     }
 
     const handleCheck=(event,data)=>{
-        console.log("dddddd",data)
-        if(isChecked){
-            alert(2)
-            console.log("payl", payloadData)
+        if (isChecked) {
             let dummyPayload = [...payloadData];
-            console.log("dummyPayload", dummyPayload)
-            dummyPayload = dummyPayload && dummyPayload.length > 0 && dummyPayload.filter((item, index) =>{
-                console.log("true",item.product, data.productId)
-               return item.product!==data.productId;
+            dummyPayload = (dummyPayload && dummyPayload.length > 0 && dummyPayload.filter((item, index) => {
+                return item.product !== data.orderProductId;
 
-            }) 
-            setPayloadData([...dummyPayload])
-        }else{
-            alert(1)
-            const currPayload={
-                status: 'CANCELED',
-                cancelReason: '',
-                product: data.productId //this is orderProductId
+            })) || []
+            setPayloadData(dummyPayload)
+        } else {
+            const currPayload = {
+                status: "CANCELED",
+                cancelReason: "",
+                product: orderProductId //this is orderProductId
 
             }
-            let dummyPayload=[...payloadData];
-                dummyPayload.push(currPayload);
-            console.log("object", dummyPayload)
+            let dummyPayload = [...payloadData];
+            dummyPayload.push(currPayload);
             setPayloadData(dummyPayload)
         }
-        console.log("event", event.target)
         setIsChecked(!isChecked);
     }
-    // console.log("payloadData", payloadData)
     return (
         <>
             <div className={styles.orderItem}
@@ -123,15 +119,23 @@ export default function OrderItem({ data, setPayloadData, payloadData=[] }) {
                 </div>
                 <div className={styles.orderItemInfo}>
                     <div className={styles.orderItemStatus}>
-                        {renderOrderStatus(orderStatus)}
-                        <div className={styles.orderId}>Order ID : #{orderId}</div>
+                        {/* {renderOrderStatus(orderStatus)} */}
+                        {/* <div className={styles.orderId}>Order ID : #{orderId}</div> */}
                     </div>
                     <div className={styles.orderItemName}>{productName}</div>
-                    {renderOrderInfo(orderStatus)}
+                    {/* {renderOrderInfo(orderStatus)} */}
+                    <div className={styles.orderItemPriceQty}>
+                        <div className={styles.price}>{currency} {productPrice}</div>
+                        <div className={styles.quantity}>QTY : <span>{quantity}</span></div>
+                    </div>
                 </div>
-                <input type="checkbox" checked={isChecked} onChange={(event)=>handleCheck(event,data)} />
+                <div className={styles.checkboxContainer}>
+                    <input type="checkbox" checked={isChecked} onChange={(event)=>handleCheck(event,data)} />
+                <span className={styles.checkmark}></span>
+                </div>
             </div>
         </>
 
     )
 }
+export default OrderItem;

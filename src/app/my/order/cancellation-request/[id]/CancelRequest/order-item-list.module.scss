@@ -1,3 +1,7 @@
+.subcontainer{
+    flex: 1;
+    max-width: 400px;
+}
 .orderItemList {
     padding: 16px;
 
@@ -21,17 +25,65 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 3px;
+            gap: 4px;
             color: #07141A;
-            font-family: Work Sans;
             font-size: 14px;
             font-style: normal;
             font-weight: 500;
             line-height: normal;
-            .checkboxAll{
-                background-color: red;
-                color:green;
-            }
+                input[type="checkbox"] {
+                        position: relative;
+                        width: 16px;
+                        height: 16px;
+                        background-color: white;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        border: 2px solid #247a81;
+                        appearance: none;
+                    }
+                
+                    input[type="checkbox"]:checked {
+                        //    position: absolute;
+                        //    opacity: 0;
+                        //    cursor: pointer;
+                        //    height: 20px;
+                        //    width: 20px;
+                        background-color: #247a81;
+                    }
+                
+                    input[type="checkbox"]::before {
+                        content: "";
+                        position: absolute;
+                        top: 0px;
+                        left: 3.5px;
+                        width: 4px;
+                        height: 8px;
+                        border: 3px solid transparent;
+                        border-left: none;
+                        border-top: none;
+                        // border-radius: 4px;
+                        transform: rotate(45deg) scale(1);
+                    }
+                
+                    input[type="checkbox"]:checked:before {
+                        // content: "";
+                        // position: absolute;
+                        // top: 4px;
+                        // left: 9px;
+                        // width: 20px;
+                        // height: 20px;
+                        // border: 2px solid #247A81;
+                        // border-radius: 4px;
+                        border-color: #FFFFFF;
+                        animation: checkAnim 0.2s ease;
+                    }
+                
+                    @keyframes checkAnim {
+                        from {
+                            transform: rotate(45deg) scale(0);
+                        }
+                    }
+       
               
         }
 }

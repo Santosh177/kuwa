@@ -1,5 +1,4 @@
 
-
 import OrderItem from './OrderItem';
 import styles from './order-item-list.module.scss';
 
@@ -7,26 +6,33 @@ import styles from './order-item-list.module.scss';
 
 
 
-export default function OrderItemList({ data, setPayloadData, payloadData=[] }) {
+export default function OrderItemList({listOfMyOrder = [],currency, data={}, setPayloadData, payloadData = [] }) {
 
 
 
     const orderItemData = {
-        orderId: data.childOrderId,
+        orderId: data.orderId,
         productId: data.productId,
-        productName: data.name,
-        productImg: data.image,
-        orderStatus: data.status,
-        orderProductId: data.parentOrderId,
-        expDelivery: (data && data.expDelivery && data.expDelivery)||"",
-        rating: (data && data.rating && data.rating)||"",
+        orderProductId: data.orderProductId,
+        productName: data.productName,
+        productImg: data.productImage,
+        orderStatus: data.orderStatus,
+        // orderProductId: data.parentOrderId,
+        expDelivery: (data && data.expDelivery && data.expDelivery) || "",
+        rating: (data && data.rating && data.rating) || "",
+        productPrice: data.productPriceSpecialAmount,
+        quantity: data.productQuantity || 1,
     }
-    console.log("orderItemData", orderItemData)
 
     return (
         <div className={styles.orderItemList}>
-            <OrderItem data={orderItemData} setPayloadData={setPayloadData} payloadData={payloadData||[]} />
-
+            <OrderItem
+                data={orderItemData}
+                setPayloadData={setPayloadData}
+                payloadData={payloadData}
+                currency={currency}
+                listOfMyOrder={listOfMyOrder}
+            />
         </div>
 
     )

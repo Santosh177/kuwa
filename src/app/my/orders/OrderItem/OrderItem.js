@@ -22,7 +22,7 @@ const getDeliveryDate = (expDelivery) => {
 
 
 
-export default  function OrderItem({data}) {
+export default  function OrderItem({data,index=0}) {
     const router = useRouter();
 
     console.log("orderData",data)
@@ -92,14 +92,14 @@ export default  function OrderItem({data}) {
    
     return (
       <>
-        <div className={styles.orderItem} onClick={()=>router.push(`/my/order/${orderProductId}`)}>
+            <div className={styles.orderItem} onClick={() => router.push(`/my/order/${orderId}`)}>
             <div className={styles.orderItemImage}>
                 <img src={productImg} alt='product-img'/>
             </div>
             <div className={styles.orderItemInfo}>
                 <div className={styles.orderItemStatus}>
                     {renderOrderStatus(orderStatus)}
-                    <div className={styles.orderId}>Order ID : #{orderId}</div>
+                   {index===0 && <div className={styles.orderId}>Order ID : #{orderId}</div>}
                 </div>
                 <div className={styles.orderItemName}>{productName}</div>
                 {renderOrderInfo(orderStatus)}

@@ -3,162 +3,90 @@ import React, { useEffect, useState } from 'react'
 import OrderItemList from './OrderItemList';
 // import OrderItemList from './OrderItemList';
 import styles from './order-item-list.module.scss';
+import { useParams } from 'next/navigation';
 
-const itemList={
-    "orderProducts": [
-        {
-            "childOrderId": 13659,
-            "productId": 13659,
-            "image": "https://dcngmd8umaj1u.cloudfront.net/Products_Picture_902_451_1688738409185.PNG",
-            "name": "Arthred Collagen Formula",
-            "quantity": 1,
-            "price": 710,
-            "specialPrice": 710,
-            "status": "CANCELED"
-        },
-        {
-            "childOrderId": 13660,
-            "productId": 13660,
-            "image": "https://dcngmd8umaj1u.cloudfront.net/Products_Picture_902_451_1688738409185.PNG",
-            "name": "Arthred Collagen Formula",
-            "quantity": 1,
-            "price": 710,
-            "specialPrice": 710,
-            "status": "CANCELED"
-        },
-        {
-            "childOrderId": 13661,
-            "productId": 13661,
-            "image": "https://dcngmd8umaj1u.cloudfront.net/Products_Picture_902_451_1688738409185.PNG",
-            "name": "Arthred Collagen Formula",
-            "quantity": 1,
-            "price": 710,
-            "specialPrice": 710,
-            "status": "CANCELED"
-        },
-        {
-            "childOrderId": 13662,
-            "productId": 13662,
-            "image": "https://dcngmd8umaj1u.cloudfront.net/Products_Picture_902_451_1688738409185.PNG",
-            "name": "Arthred Collagen Formula",
-            "quantity": 1,
-            "price": 710,
-            "specialPrice": 710,
-            "status": "CANCELED"
-        }
-    ],
-        "price": 710,
-        "discount": 0,
-        "deliveryFee": 0,
-        "total": 710,
-        "currency": "BHD",
-        "address": {
-        "billingAddress": {
-            "id": 45556,
-                "firstName": "abhi",
-                    "lastName": "kr",
-                        "email": "abhi@amail.com",
-                            "mobNumber": "+9731234567890",
-                                "company": null,
-                                    "apartment": "madivaal",
-                                        "address": "madivala",
-                                            "city": null,
-                                                "stateProvince": null,
-                                                    "country": "Bahrain",
-                                                        "shippingAddress": true,
-                                                            "isDefaultAddress": true,
-                                                                "customerId": 7442617500303,
-                                                                    "createdAt": null,
-                                                                        "modifiedAt": null,
-                                                                            "isActive": true,
-                                                                                "deviceId": null,
-                                                                                    "zone": null
-        },
-        "shippingAddress": {
-            "id": 45559,
-                "firstName": "abhi",
-                    "lastName": "kr",
-                        "email": "abhi@amail.com",
-                            "mobNumber": "+9731234567890",
-                                "orderUpdate": null,
-                                    "sameAddressForBilling": true,
-                                        "company": null,
-                                            "apartment": "madivaal",
-                                                "address": "madivala",
-                                                    "city": null,
-                                                        "stateProvince": null,
-                                                            "country": "Bahrain",
-                                                                "billingAddress": true,
-                                                                    "isDefaultAddress": true,
-                                                                        "customerId": 7442617500303,
-                                                                            "createdAt": null,
-                                                                                "modifiedAt": null,
-                                                                                    "zone": null,
-                                                                                        "isActive": true,
-                                                                                            "deviceId": null,
-                                                                                                "asoBillingAddress": 45556
-        }
-    },
-    "parentOrderId": 5443151103014
-}
-
-const ItmeListForCancellation = ({ setIsSelectAll, setPayloadData, payloadData=[] })=> {
+const ItmeListForCancellation = ({setPayloadData, payloadData=[] })=> {
     const [listOfMyOrder, setListOfMyOrder] = useState({});
-    // useEffect(() => {
-    //    const fetchData=async ()=>{
-    //     //    try {
+    const [productsData, setProductsData] = useState({});
+    const [isCheckedAll,setIsCheckedAll]=useState(false);
+    const params = useParams();
+    const orderId = params.id
+    useEffect(() => {
+       const fetchData=async ()=>{
+           try {
                
-    //     //        const customHeader = await authHeader();
-    //     //        const orderDetailsResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/detail-order/${13658}`, {
-    //     //            method: 'GET',
-    //     //            headers: {
-    //     //                ...customHeader
-    //     //            },
-    //     //            cache: 'no-store'
-    //     //        })
-    //     //        const orderDetailData = await orderDetailsResp.json();
-    //     //        setListOfMyOrder([ ...orderDetailData])
-    //     //        // orderDetails = orderDetailData;
-    //     //        console.log("orderDetailsResporderDetailsResporderDetailsResp", orderDetailData)
-   
-    //     //    } catch (error) {
-   
-    //     //    }
-    //        setListOfMyOrder({});
-    //    }
-    //     fetchData()
-    // }, [])
+            //    const customHeader = await authHeader();
+               const orderDetailsResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/order-summary/${orderId}`, {
+                   method: 'GET',
+                //    headers: {
+                //        ...customHeader
+                //    },
+                //    cache: 'no-store'
+               })
+               const orderDetailData = await orderDetailsResp.json();
+               let dummyOrderProducts = orderDetailData.orderProducts||[]
+               dummyOrderProducts = dummyOrderProducts && dummyOrderProducts.length > 0 && dummyOrderProducts.filter((product,index)=>{
+                   return product.orderStatus!=="CANCELED";
+               })
+               setListOfMyOrder([...dummyOrderProducts])
+               setProductsData({ ...orderDetailData})
+           } catch (error) {
+               setListOfMyOrder([]);
+               console.log("Error while fetching all product data",error)
+           }
+       }
+        fetchData()
+    }, [])
     useEffect(()=>{
-        setListOfMyOrder({ ...itemList }) 
-
-    },[])
+        if (payloadData && (payloadData.length < listOfMyOrder.length || payloadData.length===0)){
+         setIsCheckedAll(false);
+       }
+     else if (listOfMyOrder.length === payloadData.length){
+         setIsCheckedAll(true);
+       }
+    }, [payloadData])
     const handleSelectAll=(event)=>{
-        alert(event.target.checked)
       if(event.target.checked){
-        setIsSelectAll(true);
+          let dummyPayload = []
+          listOfMyOrder && listOfMyOrder.length > 0 && listOfMyOrder.map((data) => {
+              dummyPayload.push({
+                  status: 'CANCELED',
+                  cancelReason: '',
+                  product: data.orderProductId //this is orderProductId
+
+              })
+          })
+        setPayloadData([...dummyPayload]);
+        setIsCheckedAll(true)
       }
       else{
-          setIsSelectAll(false)
+          setPayloadData([]);
+          setIsCheckedAll(false);
       }
     }
     console.log("listorder", listOfMyOrder)
+
     return (
-        <div>
+        <>
+        { listOfMyOrder && listOfMyOrder.length>0 && 
+        <div className={styles.subcontainer}>
             <div className={styles.selectItemTextHeader}>
                 <div className={styles.selectItemCancel} >Select Item to cancel</div>
                 <div className={styles.selectAll}>
-                    <input type="checkbox" className={styles.checkboxAll} style={{color:"red",backgroundColor:"yellow"}} onChange={handleSelectAll} />
+                    <input type="checkbox" checked={isCheckedAll} className={styles.checkboxAll} onChange={handleSelectAll} />
                     <span>Select all</span>
                 </div>
             </div>
-            {listOfMyOrder.orderProducts && listOfMyOrder.orderProducts.length > 0 && listOfMyOrder.orderProducts.map((data, index) =>{
+            {listOfMyOrder && listOfMyOrder.length > 0 && listOfMyOrder.map((data, index) =>{
                 return  (
-                    <OrderItemList data={data} key={index} setPayloadData={setPayloadData} payloadData={payloadData||[]} />
+                    <OrderItemList listOfMyOrder={listOfMyOrder} currency={productsData.currency} key={data.productId} data={data} setPayloadData={setPayloadData} payloadData={payloadData||[]} />
             )
                 }
             )
             }
         </div>
+        }
+        </>
     )
 }
 export default ItmeListForCancellation;

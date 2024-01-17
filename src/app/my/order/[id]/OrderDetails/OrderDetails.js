@@ -11,32 +11,48 @@ export default function OrderDetails({data}) {
   const router = useRouter()
 
 
-  const {address={} , product={}, orderId="" , price={},parentOrderId="" } = data || {};
-  const orderStatus = product['status']
-  
+  const { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0} = data || {};
+  // const orderStatus = product['status']
+  let address={}
+      address["billingAddress"]=billingAddress;
+      address["shippingAddress"]=shippingAddress
 
-  
+  let cartItemCount=0;
+  let subTotal=0;
+  if (data && data.orderProducts && data.orderProducts.length > 0){
+    data.orderProducts.map((product,index)=>{
+      // if (product.orderStatus!=="CANCELED"){
+        cartItemCount++;
+        subTotal += (product.productQuantity)*(product.productPriceSpecialAmount);
+      // }
+    })
+  }
   const priceDetailsData = {
-    cartItemCount : product['quantity'],
-    subTotal:(price['price'] * product['quantity']),
-    totalAmount: price['total'],
+    cartItemCount: cartItemCount,
+    subTotal: (subTotal),
+    totalAmount: finalAmount,
     savedAmount:(price['total']- price['deliveryFee']),
-    discountAmount:(price['discount']),
-    currency:price['currency'],
-    deliveryFees:price['deliveryFee']
+    discountAmount: discount,
+    currency:currency,
+    deliveryFees: deliveryFee
   }
 
   return (
     <div className={styles.orderDetails}>
         <div className={styles.orderDetailsLeftContainer}>
-            <OrderItem  product={product} orderId={parentOrderId} currency={price['currency']}/>
+        <div className={styles.orderId}>Order ID : {orderId}</div>
+        {data && data.orderProducts && data.orderProducts.length > 0 && data.orderProducts.map((item,index)=>(
+          <OrderItem product={item} orderId={parentOrderId} currency={data['currency']}/>
+
+        ))
+         }
             <OrderDeliveryStatus  orderStatus={orderStatus}/>
             <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
-            <PriceDetails data={priceDetailsData} isHidePriceDetails={true} />
+            <PriceDetails data={priceDetailsData} isHidePriceDetails={false} />
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
-            {orderStatus.toLocaleUpperCase() ==="CREATED" && <div className={styles.cancelOrderBtn} onClick={()=>window.location.href = `/my/order/cancellation-request/${product.productId}`}>Cancel my order</div>}
+        {(orderStatus && ((orderStatus.toLocaleUpperCase() === "CANCELED") || (orderStatus.toLocaleUpperCase() === "DELIVERED")))?<></> :<div className={styles.cancelOrderBtn} onClick={()=>window.location.href = `/my/order/cancellation-request/${orderId}`}>Cancel my order</div>}
         </div>
       
         
@@ -44,3 +60,4 @@ export default function OrderDetails({data}) {
 
   )
 }
+

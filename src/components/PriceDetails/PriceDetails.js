@@ -10,7 +10,7 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
 
 const PriceDetails = ({data,isHidePriceDetails=false}) => {
 
-    const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0} = data || {}
+    const { cartItemCount = "", subTotal = "", totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0} = data || {}
 
     console.log("discountAmountdiscountAmount",discountAmount)
 
@@ -32,10 +32,10 @@ const PriceDetails = ({data,isHidePriceDetails=false}) => {
                 <div className={styles.rowItemLeftText}>Delivery Fee</div>
                 <div className={[styles.rowItemRightText,styles.freeDeliveryTxt].join(" ")}>{(deliveryFees>0)?"+ "+currency + " "+ deliveryFees:"Free"}</div>
             </div>
-            {discountAmount> 0 &&  <AmountSavedInfo savedAmount={discountAmount}/>}
+            {discountAmount>0 &&  <AmountSavedInfo savedAmount={discountAmount}/>}
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>Total Amount</div>
-                <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + totalAmount}</div>
+                        <div className={[styles.rowItemRightText, styles.totalAmountPrice].join(" ")}>{currency + " " +totalAmount}</div>
             </div>
             </>}
            
