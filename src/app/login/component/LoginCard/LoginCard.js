@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import styles from './login-card.module.scss';
-import { useState } from 'react';
+import { useState ,useEffect } from 'react';
 import Loader from '@/components/Loader/Loader';
 import { useCountry } from '@/context/contryDetails';
 const validateForm = (formData) => {
@@ -30,6 +30,7 @@ export default function Login() {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [ loginFailureTxt , setLoginFailureTxt] = useState("");
     const { selectedCountry={} } = useCountry();
+    const [pageType, setPageType] = useState(getPageType())
 
     const togglePasswordVisibility = () => {
       setIsPasswordVisible(!isPasswordVisible);
@@ -75,14 +76,39 @@ export default function Login() {
          }
     
     }
-   
+    useEffect(() => {
+      const handleResize = () => {
+        setPageType(getPageType());
+      };
+  
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+    
+    function getPageType() {
+      return window.innerWidth > 770 ? 'desktop' : 'mWeb';
+    }
 
     const onLogin = async() =>{
       const validationErrors = validateForm({userEmail:userEmail,password:password });
+      function getDeviceType() {
+        const userAgent = window.navigator.userAgent;
+        if (userAgent.match(/Android/i)) {
+          return 'Android';
+        } else if (userAgent.match(/iPhone|iPad|iPod/i)) {
+          return 'iOS';
+        } else {
+          return 'Unknown';
+        }
+      }
+    
       if (Object.keys(validationErrors).length === 0) {
         try {
           setErrors(validationErrors);
           setIsLoading(true)
+          const deviceType = getDeviceType();
           const res = await fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -90,7 +116,9 @@ export default function Login() {
             },
             body:JSON.stringify({
                 'username':userEmail,
-                'password':password
+                'password':password,
+                'deviceType': deviceType,
+                'pageType': pageType,
             })
           })
           // setIsLoading(false)

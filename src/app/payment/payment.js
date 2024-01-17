@@ -187,6 +187,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,[]));
   const clevertapEvent = useCleverTapEvents();
   const {setCartItemCount={} } = useCartItems();
+  const [pageType, setPageType] = useState(getPageType())
   let appleSession;
   
   // useEffect(()=>{
@@ -197,6 +198,21 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   //   }
 
   // },[listOfAddress])
+
+  useEffect(() => {
+    const handleResize = () => {
+      setPageType(getPageType());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  function getPageType() {
+    return window.innerWidth > 770 ? 'desktop' : 'mWeb';
+  }
 
   useEffect(()=>{
     if(selectedAddress && Object.keys(selectedAddress).length == 0){
@@ -341,6 +357,16 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['coupon']}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
       const taxAmount = await calculateVatPercentage(priceDetails['subTotal'])
+      function getDeviceType(){
+        const userAgent = window.navigator.userAgent;
+        if (userAgent.match(/Android/i)) {
+            return 'Android';
+        } else if (userAgent.match(/iPhone|iPad|iPod/i)) {
+            return 'iOS';
+        } else {
+            return 'Unknown';
+        }
+      }
         let payload = {
           "cartId":getCartItems['id'] || "",
           "orderType": "one-time",
@@ -363,7 +389,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "taxAmount": taxAmount,
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
-          "cartItems": cartItemPayload
+          "cartItems": cartItemPayload,
+          "deviceType":getDeviceType(),
+          "pageType":pageType
         }
       const trackData = {
         'Order Amount': payload['finalAmount'],
