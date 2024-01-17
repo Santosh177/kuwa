@@ -194,7 +194,7 @@
     overflow: scroll;
     border-radius: 0px 0px 8px 8px;
     top: 40px;
-    right: 0px;
+    right:106px;
     padding-bottom: 90px;
 //    left: 13px;
     margin: 0 auto;
@@ -212,6 +212,7 @@
         max-height: 450px;  
         margin-top: 24px;
         scrollbar-width: thin;
+        padding-bottom: 10px;
         &::-webkit-scrollbar {
             // width: 8px;
                 width: 8px; 
