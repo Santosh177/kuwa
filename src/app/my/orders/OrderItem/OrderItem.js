@@ -22,7 +22,7 @@ const getDeliveryDate = (expDelivery) => {
 
 
 
-export default  function OrderItem({data,index=0}) {
+export default  function OrderItem({data,index}) {
     const router = useRouter();
 
     console.log("orderData",data)

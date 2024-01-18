@@ -67,6 +67,13 @@
         }
     }
 }
+.itemListWrapper{
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 6px 7px 0 hsla(0, 0%, 68%, .16);
+    margin: 20px auto;
+    width: 90%;
+}
 .error{
     // margin-left: 610px;
     color:#CE4224;
@@ -87,5 +94,13 @@
             width: 131px;
         }
 
+    }
+    .itemListWrapper {
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 6px 7px 0 hsla(0, 0%, 68%, .16);
+            margin: 20px auto;
+            width: 90%;
+            max-width: 450px;
     }
 }

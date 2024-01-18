@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 
 
-export default function OrderItemList({ data, index=0}) {
+export default function OrderItemList({ data, index}) {
   const router = useRouter();
   const orderItemData = { 
     orderId:data.orderId,

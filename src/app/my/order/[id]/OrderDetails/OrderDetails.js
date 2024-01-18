@@ -38,8 +38,10 @@ export default function OrderDetails({data}) {
   }
 
   let disableCancelBtn = false;
+  let cancelStatement=""
   if ((orderStatus && ((orderStatus.toLocaleUpperCase() === "CANCELED") || (orderStatus.toLocaleUpperCase() === "DELIVERED") || (orderStatus.toLocaleUpperCase() === "FULFILLED")))) {
     disableCancelBtn = true;
+    cancelStatement= (orderStatus.toLocaleUpperCase() === "FULFILLED") ? "Order has been dispatched cannot be cancelled" : (orderStatus.toLocaleUpperCase() === "DELIVERED") ? "Order has been delivered cannot be cancelled":"";
   }
   const handleCancelButton = () => {
     if (disableCancelBtn) {
@@ -62,7 +64,7 @@ export default function OrderDetails({data}) {
   return (
     <div className={styles.orderDetails}>
         <div className={styles.orderDetailsLeftContainer}>
-        <div className={styles.orderId}>Order ID : {orderId}</div>
+        <div className={styles.orderId}>Order ID : #{orderId}</div>
         {data && data.orderProducts && data.orderProducts.length > 0 && data.orderProducts.map((item,index)=>(
           <OrderItem product={item} orderId={parentOrderId} currency={data['currency']}/>
 
@@ -74,7 +76,7 @@ export default function OrderDetails({data}) {
         <div className={styles.orderDetailsRightContainer}>
             <PriceDetails data={priceDetailsData} isHidePriceDetails={false} />
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
-        {/* {disableCancelBtn && <div className={styles.cancelError}>Order has been dispatched cannot be cancelled</div>} */}
+        {disableCancelBtn && <div className={styles.cancelError}>{cancelStatement}</div>}
         <div className={styles.cancelOrderBtn} style={disableStyle} onClick={() => handleCancelButton()}>Cancel my order</div>
         </div>
       
