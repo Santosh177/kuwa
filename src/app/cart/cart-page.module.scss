@@ -37,10 +37,28 @@
             font-weight: 500;
             font-size: 16px;
         }
-        .cartItemsContainer{
-            // width: 50%;
-            width: 396px;
+        .leftSection{
+            display: flex;
+            flex-direction: column;
+            .cartItemsContainer{
+                // width: 50%;
+                width: 396px;
+            }
+            .freeShippingSection{
+                width:396px;
+                background-color: #F1FAF8;
+                .content{
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+.text{
+    color: #07141A;
+}
+                }
+            }
         }
+       
         .priceDetailsContainer{
             width: 346px;
             max-width: 346px;

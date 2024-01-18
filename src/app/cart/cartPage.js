@@ -498,6 +498,7 @@ export default  function Cart({cartData}) {
         <>
           {/* <script type="text/javascript" src="/fresh-chat.js" async></script> */}
           <div className={styles.cartPage}>
+            <div className={styles.leftSection}>
             <div className={styles.cartItemsContainer}>
               <div className={[styles.headerTxt,styles.cartHeaderTxt].join(" ")}> Cart Items </div>
               {
@@ -507,6 +508,14 @@ export default  function Cart({cartData}) {
                   )
                 })
               }
+            </div>
+            <div className={styles.freeShippingSection}>
+              <div className={styles.content}>
+              <div className={styles.text}>You're only <span>Dhs25</span> away from <span>Free Shipping</span></div>
+              <div className={styles.progressBar}></div>
+              </div>
+              <div className={styles.btn}>Add</div>
+            </div>
             </div>
             <div className={styles.priceDetailsContainer}>
               {/* <div className={styles.headerTxt}>Price Details</div> */}
