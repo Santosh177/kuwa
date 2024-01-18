@@ -25,6 +25,7 @@ export default async function Home({}) {
 
   return (
     <>
+      <script type="text/javascript" src="/spin-wheel.js" async></script>
       <script type="text/javascript" src="/fresh-chat.js" async></script>
       {(homePageDataResp && Object.keys(homePageDataResp).length> 0)?<HomePage homePageData={homePageDataResp}/>: <Loader  isShow={true}/>}
     </>
