@@ -1,14 +1,14 @@
 
-
+'use client';
 import OrderItem from '../OrderItem/OrderItem';
 import styles from './order-item-list.module.scss';
-
+import { useRouter } from 'next/navigation';
 
 
 
 
 export default function OrderItemList({ data, index=0}) {
-
+  const router = useRouter();
   const orderItemData = { 
     orderId:data.orderId,
     productId:data.productId,
@@ -22,9 +22,10 @@ export default function OrderItemList({ data, index=0}) {
 
 
     return (
-      <div className={styles.orderItemList}>
+      <div className={styles.orderItemList} 
+        onClick={() => router.push(`/my/order/${data.orderId}`)}
+      >
         <OrderItem data={orderItemData} index={index} />
-        
       </div>
   
     )

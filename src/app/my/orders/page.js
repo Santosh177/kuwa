@@ -15,7 +15,7 @@ export default async function MyOrders({}) {
         redirect("/sign-up?referer=/my/orders")
     }
 let listOfMyOrder = []
-let groupedOrders = [];
+let groupedOrders = {};
   try {
     
     const customHeader = await authHeader();
@@ -27,7 +27,7 @@ let groupedOrders = [];
       },
       cache: 'no-store'
     })
-     listOfMyOrder = await listOfMyOrderResp.json();
+     listOfMyOrder = await listOfMyOrderResp.json()||[];
      console.log("listOfMyOrderlistOfMyOrder",listOfMyOrder)
        groupedOrders = listOfMyOrder && listOfMyOrder.length>0 && listOfMyOrder.reduce((acc, order) => {
           const orderId = order.orderId;

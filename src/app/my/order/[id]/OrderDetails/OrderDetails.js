@@ -37,6 +37,28 @@ export default function OrderDetails({data}) {
     deliveryFees: deliveryFee
   }
 
+  let disableCancelBtn = false;
+  if ((orderStatus && ((orderStatus.toLocaleUpperCase() === "CANCELED") || (orderStatus.toLocaleUpperCase() === "DELIVERED") || (orderStatus.toLocaleUpperCase() === "FULFILLED")))) {
+    disableCancelBtn = true;
+  }
+  const handleCancelButton = () => {
+    if (disableCancelBtn) {
+    }
+    else {
+      window.location.href = `/my/order/cancellation-request/${orderId}`
+    }
+  }
+
+  let disableStyle = {}
+  if (disableCancelBtn) {
+    disableStyle = {
+      border: " 1px solid #CECECE",
+      background: "#FFF",
+      cursor: "not-allowed",
+      color:"#CECECE"
+    }
+  }
+
   return (
     <div className={styles.orderDetails}>
         <div className={styles.orderDetailsLeftContainer}>
@@ -52,7 +74,8 @@ export default function OrderDetails({data}) {
         <div className={styles.orderDetailsRightContainer}>
             <PriceDetails data={priceDetailsData} isHidePriceDetails={false} />
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
-        {(orderStatus && ((orderStatus.toLocaleUpperCase() === "CANCELED") || (orderStatus.toLocaleUpperCase() === "DELIVERED")))?<></> :<div className={styles.cancelOrderBtn} onClick={()=>window.location.href = `/my/order/cancellation-request/${orderId}`}>Cancel my order</div>}
+        {/* {disableCancelBtn && <div className={styles.cancelError}>Order has been dispatched cannot be cancelled</div>} */}
+        <div className={styles.cancelOrderBtn} style={disableStyle} onClick={() => handleCancelButton()}>Cancel my order</div>
         </div>
       
         
