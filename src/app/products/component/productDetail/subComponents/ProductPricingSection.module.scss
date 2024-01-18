@@ -42,6 +42,36 @@
         margin-bottom: 6px;
         margin-top: 26px;
     }
+    .freeShippingSection{
+        border-radius: 8px;
+        background: #EEF5F5;
+        margin-top: 14px;
+        .freeShippingDiv{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           .truckImg{
+            padding-top: 4px;
+            img{
+            width: 28px;
+            height: 28px;
+            }
+            
+           }
+           .text{
+            color: #07141A;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-left: 12px;
+            span{
+                color: #247A81;
+                font-weight: 600;
+            }
+           } 
+        }
+    }
 
     .addToCartContainer {
         display: flex;
@@ -119,6 +149,20 @@
         .reviewContainer {
             margin-top: 17px;
         }
+        .freeShippingSection{
+            .freeShippingDiv{
+                .truckImg{
+                    img{
+                    width: 24px;
+                    height: 24px;
+                    } 
+                    
+            }
+            .text{
+                font-size: 12px;
+                margin-left: 8px;
+            } 
+        }
 
         .addToCartContainer {
             .addToCart {
@@ -131,7 +175,7 @@
         }
 
     }
-
+    }
 }
 
 @media screen and (max-width:769px){
