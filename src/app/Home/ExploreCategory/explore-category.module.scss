@@ -21,7 +21,7 @@ span{
     // justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    width:570px;
+    width:530px;
     gap:50px;
     // margin-top: 24px;
 
@@ -35,7 +35,7 @@ span{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // width:92px;
+    width:92px;
     cursor: pointer;
   
     .categoryImg{
@@ -51,6 +51,7 @@ font-style: normal;
 font-weight: 500;
 line-height: normal;
 margin-top: 10px;
+text-align: center;
     }
    }
 }
@@ -75,7 +76,8 @@ margin-top: 10px;
             }
         }
         .categoryName{
-         font-size: 8px;   
+         font-size: 8px;
+         text-align: center;   
         }
     }
 }
