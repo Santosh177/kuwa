@@ -98,12 +98,13 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
 
 }
 
-const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems,prePaidDiscount }) => {
+const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems,prePaidDiscount="",extraDiscount,setExtraDiscount }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)  
   const { selectedPaymentMethod=""} = usePaymentPageData();
   console.log("paymentMethodConfig",paymentMethodConfig);
   console.log("selectedPaymentMethod",selectedPaymentMethod)
+  console.log("sjsbs",prePaidDiscount)
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
@@ -117,7 +118,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
                 <div></div>
                 <div className={styles.priceDetails}>
                 {/* <div className={styles.headerTxt}>Price Details</div> */}
-                <PriceDetails data={priceDetails} selectedPaymentMethod={selectedPaymentMethod} prePaidDiscount={prePaidDiscount} />
+                <PriceDetails data={priceDetails} selectedPaymentMethod={selectedPaymentMethod} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount}/>
               </div>
               <div className={styles.productDetailsTitle}>Product Details</div>
         {
@@ -131,7 +132,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
               <div className={styles.paymentMethod}>
                 <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
               </div>
-              <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig} onPayment={onPayment} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}} isEnable={selectedPaymentMethod != ""} />
+              <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig} onPayment={onPayment} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}} isEnable={selectedPaymentMethod != ""} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount} selectedPaymentMethod={selectedPaymentMethod} />
       </div>
   )
 }
@@ -192,9 +193,10 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,[]));
   const clevertapEvent = useCleverTapEvents();
   const {setCartItemCount={} } = useCartItems();
+  const [extraDiscount,setExtraDiscount] = useState("")
   let appleSession;
   
-  const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage
+  const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
   console.log("prePaidDiscount",prePaidDiscount)
   // useEffect(()=>{
   //   if(Object.keys(selectedAddress).length == 0){
@@ -336,7 +338,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       return parseFloat(vatAmount.toFixed(2));
     }
   }
-
+ 
 
     const onPayment = async(data,pMode="") => {
       setIsLoader(true);
@@ -682,12 +684,16 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       }
     }
 
+    // if(prePaidDiscount){
+    //   setExtraDiscount((priceDetails['totalAmount'] * prePaidDiscount).toFixed(2))
+    // }
+
 
 
       return (
         <>
-          <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} prePaidDiscount={prePaidDiscount} />
-          <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} prePaidDiscount={prePaidDiscount} />
+          <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} prePaidDiscount={prePaidDiscount} setExtraDiscount={setExtraDiscount} extraDiscount={extraDiscount} />
+          <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} prePaidDiscount={prePaidDiscount} setExtraDiscount={setExtraDiscount} extraDiscount={extraDiscount} />
           <Loader isShow={isLoader} />
         </>
       )

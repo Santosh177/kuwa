@@ -8,12 +8,16 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
     )
 }
 
-const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePaidDiscount}) => {
+const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePaidDiscount="",extraDiscount,setExtraDiscount}) => {
 
     const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0} = data || {}
-
-    console.log("discountAmountdiscountAmount",discountAmount)
-    const prepaidDiscount = ((totalAmount * prePaidDiscount)/100).toFixed(2)
+    if(prePaidDiscount && selectedPaymentMethod){
+        setExtraDiscount(((totalAmount * prePaidDiscount)/100).toFixed(2))
+    }
+    console.log("extraDiscount",extraDiscount)
+    
+    
+    const FinalTotalAmount = extraDiscount ? totalAmount-extraDiscount : totalAmount  
     return(
         <div className={styles.header}>
             <div classname={styles.headerTxt} >Price Details</div>
@@ -31,7 +35,7 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
             {(selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" ) &&
                <div className={styles.rowItemContainer}>
                <div className={styles.rowItemLeftText}>5% Extra Off on paying online applied</div>
-               <div  className={[styles.rowItemLeftText,styles.discountAmount].join(" ")}>- {currency + " "+ prepaidDiscount} </div>
+               <div  className={[styles.rowItemLeftText,styles.discountAmount].join(" ")}>- {currency + " "+ extraDiscount} </div>
            </div>
             }
             <div className={styles.rowItemContainer}>
@@ -41,7 +45,7 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
             {discountAmount> 0 &&  <AmountSavedInfo savedAmount={discountAmount} currency={currency}/>}
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>Total Amount</div>
-                <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + totalAmount}</div>
+                <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + FinalTotalAmount}</div>
             </div>
             </>}
            

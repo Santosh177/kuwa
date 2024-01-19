@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import styles from './payment-footer-btn.module.scss';
 import { usePaymentPageData } from '@/context/payment';
 
-export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false,showViewDetails}) {
+export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false,showViewDetails,prePaidDiscount="",extraDiscount,setExtraDiscount,selectedPaymentMethod}) {
   const isApplePay =  paymentMethodConfig['applePay']['isEnable'];
   useEffect(()=>{
     try {
@@ -15,13 +15,16 @@ export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, b
     }
     
   },[])
-
+  if(prePaidDiscount && selectedPaymentMethod){
+    setExtraDiscount(((totalPrice * prePaidDiscount)/100).toFixed(2))
+}
+  const finalTotalAmount = extraDiscount ? totalPrice - extraDiscount : totalPrice
   
       return (
         <div className={styles.paymentFooterbtn} >
             <div className={styles.paymentFooterBtnContainer}>
                 <div className={styles.paymentInfo}>
-                    <div className={styles.txt}>Total : <span className={styles.price}>{totalPrice}</span></div>
+                    <div className={styles.txt}>Total : <span className={styles.price}>{finalTotalAmount}</span></div>
                    <div className={styles.subTxt} onClick={()=>showViewDetails()}>View price details</div> 
                 </div>
                 <div className={styles.paymentBtn}>
