@@ -11,7 +11,7 @@ export default function OrderDetails({data}) {
   const router = useRouter()
 
 
-  const { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0} = data || {};
+  let { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0} = data || {};
   // const orderStatus = product['status']
   let address={}
       address["billingAddress"]=billingAddress;
@@ -19,13 +19,24 @@ export default function OrderDetails({data}) {
 
   let cartItemCount=0;
   let subTotal=0;
+  let orderStatusSet = new Set();
+  let cancelStatusSet = new Set();
+
   if (data && data.orderProducts && data.orderProducts.length > 0){
     data.orderProducts.map((product,index)=>{
-      // if (product.orderStatus!=="CANCELED"){
+      orderStatusSet.add(product.orderStatus)
+      cancelStatusSet.add(product.orderStatus)
         cartItemCount++;
         subTotal += (product.productQuantity)*(product.productPriceSpecialAmount);
-      // }
     })
+  }
+  {
+    cancelStatusSet.delete("FULFILLED");
+    cancelStatusSet.delete("DELIVERED");
+    cancelStatusSet.delete("CANCELED");
+  }
+  {
+    orderStatusSet.delete("CANCELED");
   }
   const priceDetailsData = {
     cartItemCount: cartItemCount,
@@ -39,10 +50,23 @@ export default function OrderDetails({data}) {
 
   let disableCancelBtn = false;
   let cancelStatement=""
-  if ((orderStatus && ((orderStatus.toLocaleUpperCase() === "CANCELED") || (orderStatus.toLocaleUpperCase() === "DELIVERED") || (orderStatus.toLocaleUpperCase() === "FULFILLED")))) {
-    disableCancelBtn = true;
-    cancelStatement= (orderStatus.toLocaleUpperCase() === "FULFILLED") ? "Order has been dispatched cannot be cancelled" : (orderStatus.toLocaleUpperCase() === "DELIVERED") ? "Order has been delivered cannot be cancelled":"";
+  if (orderStatusSet) {
+    if (orderStatusSet.has("CREATED")){
+      orderStatus="CREATED";
+      cancelStatement=""
+    }
+    else if (orderStatusSet.has("FULFILLED")){
+      cancelStatement ="Order has been dispatched cannot be cancelled"
+      orderStatus = "FULFILLED";
+    }
+    else if (orderStatusSet.has("DELIVERED")){
+      orderStatus = "DELIVERED";
+      cancelStatement ="Order has been delivered cannot be cancelled"
+    }
   }
+  if (cancelStatusSet.size<=0){
+    disableCancelBtn=true;
+   }
   const handleCancelButton = () => {
     if (disableCancelBtn) {
     }
