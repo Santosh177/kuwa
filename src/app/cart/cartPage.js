@@ -492,14 +492,15 @@ export default  function Cart({cartData}) {
   }
  
     const totalPrice =(priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+priceDetails.totalAmount :""
+    const subTotal = priceDetails.subTotal
     const minThreshold = deliveryFeesConfig?.minThreshold;
     const deliveryFee = deliveryFeesConfig?.deliveryFee
     const totalAmount = priceDetails.totalAmount
     const currency = selectedCountry?.currency;
-    const deliveryFeeMinPrice = minThreshold - totalAmount;
+    const deliveryFeeMinPrice = minThreshold - subTotal;
     console.log("minThreshold",minThreshold)
     console.log("deliveryFeeMinPrice",deliveryFeeMinPrice)
-    const progressBarColor = deliveryFeeMinPrice >= 0 ? Math.min((totalAmount / minThreshold) * 100, 100) : 100;
+    const progressBarColor = deliveryFeeMinPrice >= 0 ? Math.min((subTotal / minThreshold) * 100, 100) : 100;
     const colorPerc = `${(207 * progressBarColor)/100}px`
     console.log("first",colorPerc)
     const activeProgressBar={
