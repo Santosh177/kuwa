@@ -512,7 +512,7 @@ export default  function Cart({cartData}) {
     
 
     const redirectAllProduct = ()=>{
-      window.location.href = 'https://bh.getkuwa.com/collections?category='
+      window.location.href = '/collections?category='
     }
     console.log("progressBar",progressBarColor)
       return (
