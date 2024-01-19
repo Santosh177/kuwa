@@ -21,6 +21,7 @@ import DeliveryAddress from '../order-summary/DeliveryAddress/DeliveryAddress'
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import { updateCartItem, deleteCartItem } from '@/services';
 import { useRef } from 'react';
+import PrepaidExtraDiscount from './components/PrepaidExtraDiscount/PrepaidExtraDiscount';
 
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
@@ -97,13 +98,16 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
 
 }
 
-const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems }) => {
+const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems,prePaidDiscount }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)  
   const { selectedPaymentMethod=""} = usePaymentPageData();
+  console.log("paymentMethodConfig",paymentMethodConfig);
+  console.log("selectedPaymentMethod",selectedPaymentMethod)
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
+          <PrepaidExtraDiscount prePaidDiscount={prePaidDiscount}/> 
         <div>
           <DeliveryAddress />
         </div>
@@ -113,7 +117,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
                 <div></div>
                 <div className={styles.priceDetails}>
                 {/* <div className={styles.headerTxt}>Price Details</div> */}
-                <PriceDetails data={priceDetails} />
+                <PriceDetails data={priceDetails} selectedPaymentMethod={selectedPaymentMethod} prePaidDiscount={prePaidDiscount} />
               </div>
               <div className={styles.productDetailsTitle}>Product Details</div>
         {
@@ -132,7 +136,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
   )
 }
 
-const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={},cartItems}) => {
+const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={},cartItems,prePaidDiscount}) => {
   const priceDetailsRef = useRef();
   const router = useRouter();
   const { selectedPaymentMethod=""} = usePaymentPageData();
@@ -141,6 +145,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
    }
   return(
     <div className={styles.orderSummary}>
+       <PrepaidExtraDiscount prePaidDiscount={prePaidDiscount}/> 
         <div>
           <DeliveryAddress />
         </div>
@@ -152,7 +157,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
     </div>
     <div className={styles.priceDetails} ref={priceDetailsRef} >
       {/* <div className={styles.headerTxt}>Price Details</div> */}
-      {<PriceDetails data={priceDetails}/>}
+      {<PriceDetails data={priceDetails} selectedPaymentMethod={selectedPaymentMethod}/>}
     </div>
     <div className={styles.productDetailsTitle}>Product Details</div>
     {
@@ -189,6 +194,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const {setCartItemCount={} } = useCartItems();
   let appleSession;
   
+  const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage
+  console.log("prePaidDiscount",prePaidDiscount)
   // useEffect(()=>{
   //   if(Object.keys(selectedAddress).length == 0){
   //     const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
@@ -679,8 +686,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
       return (
         <>
-          <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} />
-          <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} />
+          <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} prePaidDiscount={prePaidDiscount} />
+          <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} prePaidDiscount={prePaidDiscount} />
           <Loader isShow={isLoader} />
         </>
       )
