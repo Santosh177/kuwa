@@ -69,9 +69,10 @@
 @media(min-width:990px){
     .assuredInfoWrapper{
         padding-right: 16px;
-        margin-top: 24px;
         padding-left: 60px;
         overflow: scroll;
+        margin: 13px 32px 0px 32px;
+        background-color: #F4FCF3;
         .assuredIfoContainer{
             display: flex;
         gap: 60px;

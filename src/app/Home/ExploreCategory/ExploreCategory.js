@@ -7,9 +7,9 @@ const ExploreCategory = ({exploreCategory}) => {
   return (
     <>
     
-    {exploreCategory && exploreCategory.length>0 && 
-    <div className={styles.categoryHeader}>Explore <span>Categories</span></div>}
-    <div className={styles.categoryContent}>
+    {/* {exploreCategory && exploreCategory.length>0 && 
+    <div className={styles.categoryHeader}>Explore <span>Categories</span></div>} */}
+    {/* <div className={styles.categoryContent}> */}
     <div className={styles.categoryContainer} >
         {
           exploreCategory.map((data,index)=>{
@@ -28,7 +28,7 @@ const ExploreCategory = ({exploreCategory}) => {
         }
 
     </div>
-    </div>
+    {/* </div> */}
     
     </>
    

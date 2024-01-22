@@ -1,6 +1,7 @@
 'use client';
 import { useRouter,useSearchParams } from 'next/navigation';
 import styles from './brand-must-try.module.scss';
+import ProductSlider from './ProductSlider/ProductSlider';
 
 
 
@@ -32,26 +33,10 @@ const BrandMustTry = ({data={}}) => {
                 })
               }
         </div> */}
-        
-         {brand && brand.length > 0 && <div className={styles.brandHeader}>{headingtWord[0]} <span>{headingtWord?.slice(1).join(" ")}</span></div> }
-              <div className={styles.brandContent}>
-          <div  className={styles.brandContainer} >
-            {
-                brand.map((data,index)=>{
-                    return(
-                        // <div className={styles.brandSection}>
-                        <div className={styles.brand} onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data?.brandName)}`}>
-                            <div className={styles.brandImg}>
-                                <img src={data?.image}></img>
-                            </div>
-                            {/* <div className={styles.brandName}>{data.brandName}</div> */}
-                        </div>
-                        // </div>
-                    )
-                })
-            }
-          </div> 
-          </div>
+        <div>
+            <ProductSlider data={data}/>
+        </div>
+         
         
        </>
     )
