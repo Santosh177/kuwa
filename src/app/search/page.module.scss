@@ -50,5 +50,30 @@
             color: #A0A0A0;
             text-align: center;
         }
+        .productCardMain{
+            position: relative;
+            max-width:768px;    
+            width: 90%;
+            margin: auto auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: auto auto;
+            justify-content: center;
+            margin-top:24px;
+            overflow-y: auto;
+            max-height:calc(100vh - 135px);;
+
+        }
     }
+        .searchOverlay {
+            top: 78px;
+            left: 0;
+            width: 100vw;
+            min-height: calc(100vh - 78px);
+            background: rgba(7, 20, 26, 0.40);
+            backdrop-filter: blur(4px);
+            z-index: 1;
+            position: fixed;
+        }
 // }
