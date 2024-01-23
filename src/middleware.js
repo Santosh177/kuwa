@@ -51,7 +51,13 @@ export async function middleware(req) {
     if(userData && userData.isLogin){
       const filteredCountry = countryList.find((data,index)=>data.id == userData.userData.country)
       const selectedCountryData = filteredCountry;
-      response.cookies.set("countryId",selectedCountryData.id);
+      if(selectedCountryData){
+        response.cookies.set("countryId",selectedCountryData.id);
+      }else{
+        const defaultCountry = countryList && countryList[0] && countryList[0]['id'] || "";
+        response.cookies.set("countryId",defaultCountry);
+      }
+      
     }
   }
 

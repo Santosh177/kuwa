@@ -51,7 +51,8 @@ export default function ListOfAddress({addressList}) {
   }
 
   const onSelectAddress = () => {
-    router.push('/order-summary')
+    window.location.href = '/payment'
+    // router.push('/payment')
   }
  
 

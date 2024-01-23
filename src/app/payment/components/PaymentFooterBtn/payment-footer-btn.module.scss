@@ -44,6 +44,7 @@
             font-size: 14px;
             cursor: not-allowed;
             opacity: 0.5;
+            height: 48px;
         }
         .btn_active{
             background: #247A81;
@@ -62,9 +63,35 @@
 @media(max-width:990px){
     .paymentFooterbtn{
         .paymentFooterBtnContainer{
+            flex-direction: column;
             .btn{
                 padding-left: 12px;
                 padding-right: 12px;
+                flex: auto;
+            }
+            .paymentInfo{
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .paymentBtn{
+                display: flex;
+                gap: 10px;
+                .applePayBtn{
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    background: black;
+                    color: #FFFF;
+                    border-radius: 24px;
+                    width: 48%;
+                    height: 48px;
+                    justify-content: center;
+                    cursor: pointer;
+                    .appleLogo{
+                        width: 40px;
+                        height: 18px;
+                    }
+                }
             }
         }
     }
@@ -76,7 +103,7 @@
             margin: 0 auto;
             align-items: center;
             justify-content: center;
-            gap: 80px;
+            gap: 20px;
             .paymentInfo{
                 // width: 40%;
                 flex: inherit;
@@ -107,6 +134,27 @@
                 font-size: 18px;
                 cursor: pointer;
             }
+            .paymentBtn{
+                display: flex;
+                gap: 10px;
+                .applePayBtn{
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    background: black;
+                    color: #FFFF;
+                    border-radius: 24px;
+                    width: 176px;
+                    height: 48px;
+                    justify-content: center;
+                    cursor: pointer;
+                    .appleLogo{
+                        width: 40px;
+                        height: 18px;
+                    }
+                }
+            }
+          
           
         }
     }

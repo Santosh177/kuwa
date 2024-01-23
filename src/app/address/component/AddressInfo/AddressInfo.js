@@ -14,7 +14,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
   const router = useRouter();
   const pathName = usePathname();
   console.log("PathBane",pathName)
-
+  console.log("onSelectAddress",onSelectAddress,data)
   const { userName="",addressTxt="", mobNumber="",id="" } = data || {}
 
   

@@ -41,7 +41,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/top+(1).png' alt='background' />
       </div>
       <div className={styles.container} style={{ backgroundImage: backgroundColor }}>
-        <div className={styles.headerTxt} style={...headerTextStyle}>{headerTitle}</div>
+        <div className={styles.headerTxt} style={{...headerTextStyle}}>{headerTitle}</div>
         <div className={styles.sliderContainer}>
           <Glider
             slidesToShow={4.5}
@@ -60,25 +60,59 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
           >
             {
               product.map((data, index) => {
+                const { variants=[]} = data  || {}
                 const { finalPrice = "", retailPrice = "", currency = "", discount = "", discountType = "" } = data && data.price || {}
-                const cardData = {
-                  productName: data && data.name || "",
-                  finalPrice: finalPrice,
-                  retailPrice: retailPrice,
-                  currency: currency,
-                  discount: discount,
-                  discountType: discountType,
-                  image: data.image || "",
-                  id: data.id || "",
-                  seoUrl: data.seoUrl || ""
+                let cardData = {
+                }
+                if(variants && variants.length > 0) {
+                  const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
+                  if(variantPrices && variantPrices.length>0){
+                    cardData = {
+                      productName: data && data.name || "",
+                      finalPrice: variantPrices[0].finalPrice,
+                      retailPrice: variantPrices[0].retailPrice,
+                      currency: currency,
+                      discount: variantPrices[0].discount,
+                      discountType: discountType || "",
+                      image: image || "",
+                      id: variantPrices[0].variantId || "",
+                      seoUrl: data.seoUrl || ""
+                    }
+                  }
+                }else{
+                  cardData = {
+                    productName: data && data.name || "",
+                    finalPrice: finalPrice,
+                    retailPrice: retailPrice,
+                    currency: currency,
+                    discount: discount,
+                    discountType: discountType,
+                    image: data.image || "",
+                    id: data.id || "",
+                    seoUrl: data.seoUrl || ""
+                  }
                 }
                 trackData = {
                   "product Name": data && data.name,
                   "quantity": 1,
-                  "product Id": data.id,
+                  "product Id": data?.id,
                 }
+
+                let addToCartPayload = {  }
+
+                if(variants && variants.length > 0){
+                  const { variantPrices = [] ,name="",image="",id=""} = data.variants[0] || {};
+                  let variantId = id;
+                  if(variantPrices && variantPrices.length > 0){
+                    variantId = variantPrices[0].variantId;
+                  }
+                  addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId}
+                }else{
+                  addToCartPayload = { product: data.id, quantity: 1 }
+                }
+
                 return (
-                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1 })} />
+                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart(addToCartPayload)} />
                 )
               })
             }
@@ -93,6 +127,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
       </div>
       <Loader isShow={isLoading} />
     </div>
+ 
   );
 
 

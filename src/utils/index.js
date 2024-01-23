@@ -3,7 +3,7 @@
 export const getCartItemDetails = async(data,currency) => {
    let cartItem = []
     data.map((data, index)=>{
-        const { image = {} ,quantity= 1,price="",originalPrice="",finalPrice="" ,  description={},id=""  } = data || {};
+        const { image = {} ,quantity= 1,price="",originalPrice="",finalPrice="" ,  description={},id="",cartItemId=""  } = data || {};
         const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
         console.log("CART PRODUCT",data)
         let item ={
@@ -15,7 +15,8 @@ export const getCartItemDetails = async(data,currency) => {
             'discountType':"fixed",
             "discountAmount":discountAmount || 0,
             "currency":currency,
-            "id":id
+            "id":id,
+            "cartItemId":cartItemId
         }
        cartItem.push(item)
 
@@ -123,6 +124,32 @@ export const authHeader = async() =>{
       'user':9090
     }
   )
+}
+
+export const getDialCode =(code)=> {
+  let dialCodeData = {
+    "SA":{
+      "dialCode":"+966"
+    },
+    "KW":{
+      "dialCode":"+965"
+    },
+    "BH":{
+      "dialCode":"+973"
+    },
+    "OM":{
+      "dialCode":"+968"
+    },
+    "QA":{
+      "dialCode":"+974"
+    },
+    "AE":{
+      "dialCode":"+971"
+    }
+
+  }
+  return dialCodeData[code]['dialCode'];
+
 }
 
 
