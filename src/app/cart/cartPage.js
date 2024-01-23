@@ -498,11 +498,8 @@ export default  function Cart({cartData}) {
     const totalAmount = priceDetails.totalAmount
     const currency = selectedCountry?.currency;
     const deliveryFeeMinPrice = minThreshold - subTotal;
-    console.log("minThreshold",minThreshold)
-    console.log("deliveryFeeMinPrice",deliveryFeeMinPrice)
     const progressBarColor = deliveryFeeMinPrice >= 0 ? Math.min((subTotal / minThreshold) * 100, 100) : 100;
     const colorPerc = `${(207 * progressBarColor)/100}px`
-    console.log("first",colorPerc)
     const activeProgressBar={
       width:colorPerc,
       height:"4px",
@@ -515,7 +512,6 @@ export default  function Cart({cartData}) {
     const redirectAllProduct = ()=>{
       window.location.href = '/collections?category='
     }
-    console.log("progressBar",progressBarColor)
       return (
         <>
           {/* <script type="text/javascript" src="/fresh-chat.js" async></script> */}
@@ -523,6 +519,7 @@ export default  function Cart({cartData}) {
             <div className={styles.leftSection}>
             <div className={styles.cartItemsContainer}>
               <div className={[styles.headerTxt,styles.cartHeaderTxt].join(" ")}> Cart Items </div>
+              <div className={styles.cartDataInfo}>
               {
                 cartItems.map((data, index)=>{
                   return(
@@ -530,6 +527,7 @@ export default  function Cart({cartData}) {
                   )
                 })
               }
+              </div>
             </div>
             <div className={ styles.freeShippingSection}>
               <div className={styles.content}>

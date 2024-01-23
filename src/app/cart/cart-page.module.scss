@@ -21,9 +21,14 @@
         .cartHeaderTxt{
             display: none;
         }
+        .cartDataInfo{
+            position: relative;
+            z-index: 4;
+        }
+
         .freeShippingSection{
             position: relative;
-                z-index: -1;
+                z-index: 1;
                 top: -10px;
             background-color: #F1FAF8;
             display: flex;
@@ -117,9 +122,13 @@
                 // width: 50%;
                 width: 396px;
             }
+            .cartDataInfo{
+                position: relative;
+                z-index: 4;
+            }
             .freeShippingSection{
                 position: relative;
-                z-index: -1;
+                z-index: 1;
                 top: -10px;
                 width:396px;
                 background-color: #F1FAF8;
