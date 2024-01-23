@@ -22,14 +22,17 @@
             display: none;
         }
         .freeShippingSection{
+            position: relative;
+                z-index: -1;
+                top: -10px;
             background-color: #F1FAF8;
             display: flex;
             justify-content: space-between;
             padding-left: 10px;
             padding-right: 20px;
             align-items: center;
-            padding-top: 14px;
-            border-radius: 16px;
+            padding-top: 20px;
+            border-radius: 0px 0px 16px 16px;
             .content{
             font-size: 12px;
             font-style: normal;
@@ -115,14 +118,17 @@
                 width: 396px;
             }
             .freeShippingSection{
+                position: relative;
+                z-index: -1;
+                top: -10px;
                 width:396px;
                 background-color: #F1FAF8;
                 display: flex;
                 justify-content: space-between;
                 padding-left: 10px;
                 align-items: center;
-                padding-top: 14px;
-                border-radius: 16px;
+                padding-top: 20px;
+                border-radius: 0px 0px 16px 16px;
                 padding-right: 20px;
                 .content{
                 font-size: 12px;
