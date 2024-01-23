@@ -22,6 +22,9 @@ const ProductSlider = ({data}) => {
   return (
     <>
     {brand && brand.length > 0 && <div className={styles.brandHeader}>{headingtWord[0]} <span>{headingtWord?.slice(1).join(" ")}</span></div> }
+    <div className={styles.brandContent}>
+
+<div  className={styles.brandContainer} >
               <Glider
                hasArrows={(width>990)}
                slidesToShow={4.5}
@@ -38,9 +41,7 @@ const ProductSlider = ({data}) => {
                  <img style={{width:48,height:48}}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/right_arrow.png' alt='right-icon'/>
                }>
               
-              <div className={styles.brandContent}>
-
-          <div  className={styles.brandContainer} >
+             
             {
                 brand.map((data,index)=>{
                     return(
@@ -55,9 +56,10 @@ const ProductSlider = ({data}) => {
                     )
                 })
             }
+        
+          </Glider>
           </div> 
           </div>
-          </Glider>
           </>
   )
 }

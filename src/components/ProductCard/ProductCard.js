@@ -9,11 +9,11 @@ const ProductCard = ({cardData,addToCart={},style={}}) => {
     return(
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
             <div className={styles.productCardWrapper} style={{...style}}>
-                <div className={styles.productImgWrapper}>
+                {/* <div className={styles.productImgWrapper}> */}
                     <div className={styles.productImgContainer}>
                         <img className={styles.productImg} src={image} alt='product-name' />
                     </div>
-                </div>
+                {/* </div> */}
                 <div className={styles.textContent}>
                 <div className={styles.productName}>{productName}</div>
                {  <div className={styles.discountTag} style={(discount > 0)?{opacity:1}:{opacity:0}}><span>Save</span> {currency} {discount}</div>}

@@ -10,7 +10,7 @@
 .assuredInfoCard{
     // padding-left: 43px;
     .assuredCard{
-        background: rgba(220, 224, 227, 0.31);
+        // background: rgba(220, 224, 227, 0.31);
         border-radius: 8px;
         display: flex;
         flex-direction: column;
@@ -52,11 +52,14 @@
 .assuredInfoWrapper{
     padding-right: 16px;
     // margin-top: 24px;
-    padding-left: 16px;
+    // padding-left: 16px;
     overflow: scroll;
     .assuredIfoContainer{
         display: flex;
         gap: 60px!important;
+        background-color: #F4FCF3;
+        margin-left: 16px;
+        // margin-right: 16px;
         
        
     }

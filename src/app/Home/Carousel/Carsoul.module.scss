@@ -1,6 +1,7 @@
 .carouselContainer {
     // margin: 20px 95px;
-   
+   margin-left: 32px;
+   margin-right: 32px;
   
   }
   
@@ -25,7 +26,8 @@
   @media (max-width: 768px) {
     .carouselContainer {
       // margin: 10px;
-      
+      margin-left: 16px;
+      margin-right: 16px;
       
     }
     .Gliderr{
