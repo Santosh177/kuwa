@@ -303,7 +303,7 @@ const Header = ({couponBanner={}}) => {
                         <div className={styles.countryImg}>
                             <img src={selectedCountry.flagIcon} alt='country-img'/>
                         </div>
-                        <div className={styles.countryTxt}>{selectedCountry.shortName}</div>
+                        <div className={styles.countryTxt}> <span>Country</span>{selectedCountry.shortName}</div>
                         <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown_icon_country.png' alt='drop-down-icon'/>
                     </div>
                     {/* <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
@@ -319,7 +319,7 @@ const Header = ({couponBanner={}}) => {
                     {(searchQuery && isShowSearchList) && <SearchList isLogin={isLogin} searchData={searchData} />}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
-                        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img>
+                        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img><span>Login</span>
                     </div>}
                     {
                         isLogin && <div className={styles.profileIcon} ref={dropDownOptionsRef} onClick={()=>setIsOpenProfileInfo(!isOpenProfileInfo)}>
@@ -338,7 +338,7 @@ const Header = ({couponBanner={}}) => {
                    
                    
                     <div className={styles.cartIcon} onClick={()=>router.push('/cart')}>
-                        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img>
+                        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img><span>Cart</span>
                         {cartItemCount > 0 && <div className={styles.cartCount}>{cartItemCount}</div>}
                     </div>
                 </div>

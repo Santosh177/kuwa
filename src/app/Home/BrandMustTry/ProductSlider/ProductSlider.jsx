@@ -8,8 +8,6 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 const ProductSlider = ({data}) => {
     console.log("brands",data)
     const brand = data?.brand || [];
-    const heading = data?.heading || ""
-    const headingtWord = heading?.split(" ");
     const router = useRouter();
     const [width, setWidth] = useState(0);
     const clevertapEvent = useCleverTapEvents();
@@ -20,11 +18,9 @@ const ProductSlider = ({data}) => {
         return () => window.removeEventListener('resize', handleResize);
       }, [width]);
   return (
-    <>
-    {brand && brand.length > 0 && <div className={styles.brandHeader}>{headingtWord[0]} <span>{headingtWord?.slice(1).join(" ")}</span></div> }
+    <> 
     <div className={styles.brandContent}>
-
-<div  className={styles.brandContainer} >
+    <div  className={styles.brandContainer} >
               <Glider
                hasArrows={(width>990)}
                slidesToShow={4.5}
@@ -35,10 +31,10 @@ const ProductSlider = ({data}) => {
                exactWidth={true}
                itemWidth={(width>990)?204:138}
                iconLeft={
-                 <img style={{width:48,height:48}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/left_arrow.png' alt='left-icon'/>
+                 <img style={{width:38,height:64,position:"relative",right:"-58px"}} src='https://d25uasl7utydze.cloudfront.net/assets/left.png' alt='left-icon'/>
                }
                iconRight={
-                 <img style={{width:48,height:48}}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/right_arrow.png' alt='right-icon'/>
+                 <img style={{width:38,height:64,position:"relative",left:"-58px"}}  src='https://d25uasl7utydze.cloudfront.net/assets/right.png' alt='right-icon'/>
                }>
               
              

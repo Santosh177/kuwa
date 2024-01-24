@@ -1,20 +1,21 @@
 .bestSellingContainer{
-    background-color: #F1FAF8;;
+    background-color: #F1FAF8;
+    padding-left: 32px;
     // display: flex;
     // flex-direction: column;
     // justify-content: center;
     // align-items: center;
-    margin-top: 80px;
+    margin-top: 25px;
     // text-align: center;
     .heading{
-      text-align: center;
+      // text-align: center;
       color: #07141A;
-      font-size: 24px;
+      font-size: 32px;
       font-style: normal;
       font-weight: 500;
       line-height: 28px;
-      padding-top: 16px;
-      padding-bottom: 14px;
+      padding-top: 24px;
+      padding-bottom: 16px;
       .firstWord{
         
           font-weight: 700;
@@ -22,7 +23,7 @@
     }
     .collectionScrollContainer{
      margin: auto auto;
-     width: 520px;
+    //  width: 520px;
      overflow-x: scroll;
     //  margin-top: 24px;
      margin-bottom: -30px;
@@ -32,7 +33,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px !important;
+        gap: 44px !important;
         display: -webkit-box;
         // overflow-x: scroll;
         width: max-content;
@@ -46,8 +47,8 @@
          font-size: 16px;
           position: relative;
           padding-bottom: 8px;
-          padding-left: 20px;
-          padding-right: 20px;
+          // padding-left: 20px;
+          // padding-right: 20px;
             cursor: pointer;
             &:after {
               content: '';

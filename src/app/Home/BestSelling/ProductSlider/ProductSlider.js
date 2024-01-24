@@ -44,16 +44,16 @@ const ProductSlider = ({data}) => {
            hasArrows={(width>990)}
             slidesToShow={4.5}
             slidesToScroll={4}
-            hasDots={width > 990}
+            // hasDots={width > 990}
             draggable
             gap={20}
             exactWidth={true}
             itemWidth={(width > 990) ? 204 : 138}
             iconLeft={
-              <img style={{ width: 48, height: 48 }} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/left_arrow.png' alt='left-icon' />
+              <img style={{ width: 38, height: 64,position:"relative",right:"-58px" }} src='https://d25uasl7utydze.cloudfront.net/assets/left.png' alt='left-icon' />
             }
             iconRight={
-              <img style={{ width: 48, height: 48 }} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/right_arrow.png' alt='right-icon' />
+              <img style={{ width: 38, height: 64,position:"relative",left:"-58px" }} src='https://d25uasl7utydze.cloudfront.net/assets/right.png' alt='right-icon' />
             }
           >
             {

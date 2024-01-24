@@ -47,7 +47,7 @@ const BestSelling = ({bestSellerCollectioWithProducts}) => {
                     </div>
                   
                   ))}   
-                  <div className={styles.border}></div> 
+                  {/* <div className={styles.border}></div>  */}
                 </div>
              
                 {/* </div> */}

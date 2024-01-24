@@ -123,9 +123,9 @@ let trackData={};
           <>
           
           
-          <div className={styles.sliderDecoration} style={{flexDirection:(index % 2 == 0)?'row-reverse':'row'}}>
+          {/* <div className={styles.sliderDecoration} style={{flexDirection:(index % 2 == 0)?'row-reverse':'row'}}>
             <div className={styles.sliderLine1} style={{background:backgroundColors[index].backgroundColor}}></div><div className={styles.sliderLine2} style={{background:backgroundColors[index].backgroundColor}}></div>
-          </div>
+          </div> */}
           <div className={styles.container} style={{backgroundImage:backgroundColors[index].backgroundImage}}>
             <div className={styles.headerTxt} style={{...headerTextStyle}}>{headerTitle}</div>
             <div className={styles.sliderContainer}>
@@ -139,10 +139,10 @@ let trackData={};
               exactWidth={true}
               itemWidth={(width>990)?204:138}
               iconLeft={
-                <img style={{width:48,height:48}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/left_arrow.png' alt='left-icon'/>
+                <img style={{width:38,height:64,position:"relative",right:"-58px"}} src='https://d25uasl7utydze.cloudfront.net/assets/left.png' alt='left-icon'/>
               }
               iconRight={
-                <img style={{width:48,height:48}}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/right_arrow.png' alt='right-icon'/>
+                <img style={{width:38,height:64,position:"relative",left:"-58px"}}  src='https://d25uasl7utydze.cloudfront.net/assets/right.png' alt='right-icon'/>
               }
             >
 

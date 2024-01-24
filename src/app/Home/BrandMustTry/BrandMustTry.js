@@ -13,8 +13,8 @@ const BrandMustTry = ({data={}}) => {
     const router = useRouter();
     return(
         <>
-        {/* {data && data.length>0 &&<div className={styles.headerTxt}>Brand You Must Try</div>}
-        <div className={styles.brandMustTry}>
+        {/* {data && data.length>0 &&<div className={styles.headerTxt}>Brand You Must Try</div>} */}
+        {/* <div className={styles.brandMustTry}>
 
               {
                 data.map((data,index)=>{
@@ -33,6 +33,7 @@ const BrandMustTry = ({data={}}) => {
                 })
               }
         </div> */}
+            {brand && brand.length > 0 && <div className={styles.brandHeader}>{headingtWord[0]} <span>{headingtWord?.slice(1).join(" ")}</span></div> }
         <div>
             <ProductSlider data={data}/>
         </div>
