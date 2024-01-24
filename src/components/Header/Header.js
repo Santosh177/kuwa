@@ -11,25 +11,54 @@ import SearchCard from '@/app/search/SearchCard/SearchCard';
 import Loader from '../Loader/Loader';
 import styles from './header.module.scss';
 import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
-const SearchList = ({searchData=[], isLogin=false}) =>{
-
+import TrendingSearch from '@/app/search/TrendingSearch/TrendingSearch';
+import ProductCard from '@/app/search/ProductCard/ProductCard';
+const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBanner={},searchQuery="" }) =>{
+  const router = useRouter();
     const searchDataCount = searchData && searchData.length || 0;
+  const handleSeeAll=(couponBanner,searchQuery)=>{
+    window.location.href=`${couponBanner.redirectionLink}?search_key=${searchQuery}`
+  }
+
     return(
-        <div className={styles.searchListWrapper} style={(isLogin)?{left:'-23px'}:{left:'13px'}}>
-                <div className={styles.resultFound}>{searchDataCount} Results found</div>
+      <div className={styles.searchListWrapper} style={(isLogin) ? { right: '142px', paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: 'unset', paddingBottom: !isShowSeeAllBtn ? "" : "" }}>
+                <div className={styles.resultFound}>
+                  <span> {searchDataCount} Results found</span>
+                </div>
+                <div className={styles.productCardMain} 
+                // style={{maxHeight:isShowSeeAllBtn?"":"522px"}}
+                 >
                     {
                         searchData.map((data, index)=>{
+                          const { id = '', productImage: image, productName:name, price = {}, seoUrl = '', title = '' } = data || {};
+                          const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
+                          const cardData = {
+                            productName: name,
+                            finalPrice: finalPrice,
+                            retailPrice: retailPrice,
+                            currency: currency,
+                            discount: discount,
+                            discountType: discountType,
+                            image: image || "",
+                            id: id || "",
+                            seoUrl: seoUrl || ""
+                          }
                             return(
-                                <SearchCard searchData = {data}/>
+                                <ProductCard cardData={cardData} />
                             )
                         })
                     }
+                </div>
+        {searchData && searchData.length>0  && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBanner, searchQuery)}>
+                    See all
+                </div>
+        }       
             </div>
     )
 }
 
 
-const Header = ({couponBanner={}}) => {
+const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
@@ -45,6 +74,8 @@ const Header = ({couponBanner={}}) => {
     const [ sideMenuData , setSideMenuData] = useState([]);
     const [isOpenProfileInfo, setIsOpenProfileInfo] = useState(false)
     const [isTopHeaderFixed, setIsTopHeaderFixed] = useState(false)
+    const [showTrendingSearch,setShowTrendingSearch]=useState(false);
+    const [couponBannerData,setCouponBannerData]=useState({});
     const inputBoxRef = useRef(null);
     const dropDownOptionsRef = useRef(null);
     const dropDownOptionsProfileRef = useRef(null);
@@ -83,7 +114,14 @@ const Header = ({couponBanner={}}) => {
                         productImage : data.productImageUrl || "",
                         productName: data.name || "",
                         id: data.id || "",
-                        seoUrl: data.seoUrl || ""
+                        seoUrl: data.seoUrl || "",
+                        price:{
+                          finalPrice: data.specialPrice,
+                          retailPrice: data.price,
+                          currency: data.currency,
+                          discount: data.discount,
+                          discountType: data.discountType,
+                        }
                     }
                     searchData.push(productData);
                     setSearchData(searchData)
@@ -170,8 +208,8 @@ const Header = ({couponBanner={}}) => {
  
 
     const handleClickOutside = (event) =>{
-        if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && event.target.id !='search-container') {
-            setSearchQuery("")
+      if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && event.target.id != 'search-container') {
+            // setSearchQuery("")
             setIsShowSearchList(false)
         }
     }
@@ -261,6 +299,35 @@ const Header = ({couponBanner={}}) => {
      
 
   }, []);
+  const handleOutsideClick = (event) => {
+    if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && event.target.id != 'trending-search'){
+      // Clicked outside the input box
+      // Close the popup
+     setShowTrendingSearch(false);
+    }
+    else{
+      setShowTrendingSearch(true);
+    }
+  };
+
+  useEffect(() => {
+    // Attach event listener for clicks outside the input box
+    document.addEventListener('click', handleOutsideClick);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
+  useEffect(()=>{
+    if (window &&  window.location.search){
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryParam = urlParams.get('search_key');
+      if (queryParam){
+        setSearchQuery(queryParam)
+      }
+    }
+  },[])
 
   const onScroll = () => {
     try {
@@ -283,10 +350,19 @@ const Header = ({couponBanner={}}) => {
     }
 }
 
+  const handleKeyPress = (event) => {
+    if (event.key==='Enter' || event.key===' ') {
+      if (setParamsData) {
+        setIsShowSearchList(false);
+        setParamsData((previous) => ({ ...previous, searchKey:searchQuery }));
+      }
+    }
+  };
+
     return(
         <>
         
-        <CouponInfo couponBanner={couponBanner}/>
+        <CouponInfo couponBanner={couponBanner} setCouponBannerData={setCouponBannerData} />
         <div className={styles.header} id='top-header-container' >
            <div className={styles.headerWrapper} id='top-header' >
                 <d    iv className={styles.headerIcon}>
@@ -312,11 +388,12 @@ const Header = ({couponBanner={}}) => {
                    
                     <>
                     <div className={styles.searchInputWrapper}  >
-                        <input ref={inputBoxRef} className={styles.searchInput} style={(searchQuery)?{borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}:{}} value={searchQuery} onChange={(e)=>
-                            onSearch(e.target.value)} placeholder='Search by product name' type='text' />
+                  <input ref={inputBoxRef} className={styles.searchInput} style={(searchQuery)?{borderBottomLeftRadius:'',borderBottomRightRadius:''}:{}}value={searchQuery} onKeyPress={handleKeyPress} onChange={(e)=>
+                    onSearch(e.target.value)} placeholder='Search by product name' type='text'/>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
-                    {(searchQuery && isShowSearchList) && <SearchList isLogin={isLogin} searchData={searchData} />}
+                {showTrendingSearch && !searchQuery && <TrendingSearch isLogin={isLogin} isShowSeeAllBtn={isShowSeeAllBtn} couponBanner={(couponBanner && couponBanner.redirectionLink && couponBanner)||couponBannerData } setParamsData={setParamsData} setSearchQuery={setSearchQuery} />}
+                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBanner={(couponBanner && couponBanner.redirectionLink && couponBanner) || couponBannerData} searchQuery={searchQuery} />}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img><span>Login</span>
@@ -346,6 +423,7 @@ const Header = ({couponBanner={}}) => {
            </div>
 
         </div>
+        {((showTrendingSearch && !searchQuery) || (searchQuery && isShowSearchList)) && <div className={styles.searchOverlay}></div>}
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}

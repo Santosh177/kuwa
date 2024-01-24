@@ -7,19 +7,23 @@ import FilterSection from "./FilterSection/filterSection";
 import ProductSection from "./productSection/productSection";
 import style from "./indexPage.module.scss"
 import Loader from "@/components/Loader/Loader";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams,useRouter } from "next/navigation";
+import { useCountry } from "@/context/contryDetails";
 const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 
 
 const MainCategory = () => {
     const searchParams = useSearchParams();
+    const { selectedCountry = {} } = useCountry();
+    const router=useRouter();
     const [slectedFilter, setSelectedFilter] = useState("NOT_SELCTED");
     const [selectedOptionsHead, setSelectedOptionsHead] = useState({});
     const [resposneValue, setResponseValue] = useState([]);
     const [isLoding, setIsLOading] = useState(false);
     const [isLodingProduct, setIsLoadingProduct] = useState(false);
     const [responseData , setResponseData] = useState({})
+    // const [searchKey,setSearchKey]=useState("");
 
     const [paramsData, setParamsData] = useState({})
 
@@ -82,6 +86,11 @@ const MainCategory = () => {
                     sort:""
                 })
             }
+        if (searchParams.has("search_key")){
+            const search = searchParams.get('search_key');
+                setParamsData({ ...paramsData, searchKey: search })
+                router.replace(window.location.pathname);
+            }
 
     },[])
 
@@ -98,7 +107,7 @@ const MainCategory = () => {
 
     const fetchFilterCollectionData = async () => {
         setIsLoadingProduct(true)
-        const { category = "", sort = "" } = paramsData || {};
+        const { category = "", sort = "",searchKey="" } = paramsData || {};
         let query = ""
         if (sort && category) {
             if(category && category.length > 0){
@@ -113,7 +122,21 @@ const MainCategory = () => {
             const categoryJoin = category.join(',')
             query = `category=${encodeURIComponent(categoryJoin)}`
         };
-        const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${query}`, {
+        if (searchKey){
+            if (!sort && (!category||category.length==0) ){
+                query = `search_key=${encodeURIComponent(searchKey)}`
+            }
+            else{
+                query = query + `&search_key=${encodeURIComponent(searchKey)}`
+            }
+        }
+        // const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${query}`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     }
+        // })
+        const getProduct = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}&${query}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -203,7 +226,7 @@ const MainCategory = () => {
 
     return (
         <div className={style.CategoryIndexPage}>
-            {isHide && <Header  />}
+            {isHide && <Header setParamsData={setParamsData} paramsData={paramsData} isShowSeeAllBtn={false}/>}
             {isHide && <div className={style.FilterTabOptionMobile} >
                 <div className={style.FilterTabOption}>
                     <div className={style.filterContainer} onClick={() => setSelectedFilter("Filter")} >
