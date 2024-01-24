@@ -100,10 +100,10 @@ export default function Home(homePageData) {
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <ExploreCategory exploreCategory={menuItemsHealths}/>
                     <BestSelling bestSellerCollectioWithProducts={bestSellerCollectioWithProducts}/>
-                    <SecondaryBanner data={secondryBanners} />
+                    <SecondaryBanner data={secondryBanners.slice(0,3)} />
                     <BrandMustTry data={brandMain} />
-                    <NewArrivals data={newArrivals}/>
-                    
+                    <NewArrivals data={newArrivals.slice(0,12)}/>
+                    <SecondaryBanner data={secondryBanners.slice(3)} />
                     {/* <BestSellingProduct data={bestSellings} /> */}
                    
                    

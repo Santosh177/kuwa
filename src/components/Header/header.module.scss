@@ -235,15 +235,16 @@
     position: absolute;
     background: white;
     width: 100%;
-    padding: 20px;
+    // padding: 20px;
     width: 641px;
-    height: 400px;
+    max-height: 600px;
     overflow: scroll;
     border-radius: 0px 0px 8px 8px;
     top: 45px;
     right: -25px;
     //    left: 13px;
     margin: 0 auto;
+    padding: 20px 10px 90px 20px;
 
     .resultFound {
         font-weight: 500;
@@ -554,7 +555,7 @@
     
     }
     .searchListWrapper{
-        right: 52px; 
+        right: 191px; 
     }
 
     .searchIcon {

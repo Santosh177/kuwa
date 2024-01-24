@@ -61,7 +61,7 @@ const ProductSlider = ({data}) => {
         <Glider
          hasArrows={(width>990)}
          slidesToShow={4.5}
-         slidesToScroll={4}
+         slidesToScroll={7}
         //  hasDots={width > 990}
          draggable
          gap={20}
