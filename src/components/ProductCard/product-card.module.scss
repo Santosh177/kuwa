@@ -194,7 +194,7 @@
 
 
 .productCardItem{
-   
+   min-width: 204px !important;
     // justify-content: center;
     // align-items: center;
    
@@ -297,7 +297,7 @@ width: 180px;
 
 @media(max-width:990px){
     .productCardItem{
-   
+        min-width: 138px !important;
         // justify-content: center;
         // align-items: center;
        

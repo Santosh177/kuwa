@@ -289,14 +289,14 @@ const Header = ({couponBanner={}}) => {
         <CouponInfo couponBanner={couponBanner}/>
         <div className={styles.header} id='top-header-container' >
            <div className={styles.headerWrapper} id='top-header' >
-                <div className={styles.headerIcon}>
+                <d    iv className={styles.headerIcon}>
                     <div className={styles.menuIcon} onClick={onOpenSideMenu}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/menu.png' alt='menu-icon'/>
                     </div>
                     <div className={styles.logo} onClick={()=>window.location.href="/"}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/Group+2.png' alt='menu-icon'/>
                     </div>
-                </div>
+                </d>
                
                 <div className={styles.headerInfo}>
                     <div className={styles.countryInfo} onClick={()=>setIsShowCountry(true)}>

@@ -2,6 +2,7 @@
    
     // padding-top: 31px;
     padding-left: 16px;
+    margin-top: -16px;
     .headerContainer{
         display: flex;
         justify-content: space-between;
@@ -35,7 +36,7 @@ span{
 }
     }
 .sliderContainer{
-    margin-top: 16px;
+    // margin-top: 16px;
     display: flex;
     flex-direction: row;
    
@@ -48,6 +49,7 @@ span{
         // margin-top: 80px;
         // padding-right: 32px;
          padding-left: 32px;
+         margin-top: 0px;
          .headerContainer{
             .headerTxt{
                 font-size: 32px;

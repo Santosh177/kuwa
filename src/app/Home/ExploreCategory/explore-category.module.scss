@@ -16,6 +16,7 @@
     
     display: flex;
     overflow-x: auto;
+    justify-content: center;
     align-items: center;
     gap:44px;
     margin: 24px 32px 10px 32px;
@@ -24,7 +25,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width:124px;
+    // width:124px;
     cursor: pointer;
   
     // .categoryImg{
@@ -54,11 +55,13 @@ text-align: center;
     // .categoryContent{
 .categoryContainer{
         // width: 315px;
+        display: flex;
+        justify-content: flex-start;
     gap:22px;
     margin:17px 16px 17px 16px;
     .category{
         cursor: pointer;
-        width: 60px;
+        // width: 60px;
         .categoryImg{
             img{    
             width:60px;
@@ -67,7 +70,7 @@ text-align: center;
         }
         .categoryName{
          font-size: 12px;
-         text-align: center;   
+        //  text-align: center;   
         }
     }
 }

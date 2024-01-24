@@ -48,7 +48,8 @@ a {
 }
 
 .glider-next {
-  right: -63px !important;
+  /* right: -63px !important; */
+  right: -5px !important
 }
 
 .glider {
@@ -65,7 +66,7 @@ a {
 
 @media(max-width:990px){
   .glider-track {
-    gap: 8px;
+    gap: 16px;
   }
   .glider-dot{
     width: 6px !important; 
@@ -79,7 +80,7 @@ a {
 @media(min-width:990px){
   .glider-track {
     /* gap: 2%; */
-    gap: 100px;
+    gap: 40px;
   }
   .glider-dots{
     display: flex !important;

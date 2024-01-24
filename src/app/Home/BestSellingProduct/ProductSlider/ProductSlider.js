@@ -55,7 +55,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
               <img style={{ width: 38, height: 64 ,position:"relative",right:"-58px"}} src='https://d25uasl7utydze.cloudfront.net/assets/left.png' alt='left-icon' />
             }
             iconRight={
-              <img style={{ width: 38, height: 64,position:"relative",left:"-58px" }} src='https://d25uasl7utydze.cloudfront.net/assets/right.png' alt='right-icon' />
+              <img style={{ width: 38, height: 64, }} src='https://d25uasl7utydze.cloudfront.net/assets/right.png' alt='right-icon' />
             }
           >
             {
