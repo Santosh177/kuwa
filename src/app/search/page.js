@@ -141,6 +141,9 @@ export default function Search() {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, []);
+  useEffect(()=>{
+    setShowTrendingSearch(true);
+  },[])
   return (
     <>
       {/* // <div className={styles.searchWrapper}> */}
