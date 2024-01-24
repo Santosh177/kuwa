@@ -17,7 +17,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   const router = useRouter();
     const searchDataCount = searchData && searchData.length || 0;
   const handleSeeAll=(couponBanner,searchQuery)=>{
-    window.location.href=`${couponBanner.redirectionLink}?search_key=${searchQuery}`
+    window.location.href=`/collections?search_key=${searchQuery}`
   }
 
     return(

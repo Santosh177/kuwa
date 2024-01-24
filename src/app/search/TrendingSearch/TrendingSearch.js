@@ -30,7 +30,7 @@ export default function TrendingSearch({ isLogin=false, isShowSeeAllBtn=true,set
                 setSearchQuery(searchQuery);
             }
         }else{
-            window.location.href = `${couponBanner.redirectionLink}?search_key=${searchQuery}`
+            window.location.href = `/collections?search_key=${searchQuery}`
         }
     }
     return (
