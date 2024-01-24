@@ -618,12 +618,20 @@
 }
 
 @media (min-width: 990px) and (max-width: 1200px){
-    .searchInputContainer{
-        .searchInputWrapper{
-            .searchInput{
-                width:470px;
+    .header{
+
+        .headerWrapper{
+            .searchInputWrapper{
+                .searchInput{
+                    width:470px;
+                }
             }
             
+            
         }
+    }
+    .searchListWrapper{
+        width: 470px;
+        left: 13px;
     }
 }
