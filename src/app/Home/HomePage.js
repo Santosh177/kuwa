@@ -114,7 +114,7 @@ export default function Home(homePageData) {
                             )
                         })
                     }
-                    <MedicalExpert />
+                    {/* <MedicalExpert /> */}
                     {/* <CustomerSay /> */}
                     <Footer />
                     <Loader />

@@ -41,14 +41,11 @@ const ProductSlider = ({data}) => {
             {
                 brand.map((data,index)=>{
                     return(
-                        // <div className={styles.brandSection}>
                         <div className={styles.brand} onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data?.brandName)}`}>
                             <div className={styles.brandImg}>
                                 <img src={data?.image}></img>
                             </div>
-                            {/* <div className={styles.brandName}>{data.brandName}</div> */}
                         </div>
-                        // </div>
                     )
                 })
             }

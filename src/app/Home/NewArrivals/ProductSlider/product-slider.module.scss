@@ -17,6 +17,7 @@ span{
 }
 }
 .seeAllDiv{
+    margin-right: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,12 +30,12 @@ span{
         line-height: normal;
     }
     .arrowImg{
-       
+       padding-top: 6px;
     }
 }
     }
 .sliderContainer{
-    margin-top: 40px;
+    margin-top: 16px;
     display: flex;
     flex-direction: row;
    
@@ -45,8 +46,8 @@ span{
 @media(min-width:990px){
     .container{
         // margin-top: 80px;
-        padding-right: 32px;
-        //  padding-left: 34px;
+        // padding-right: 32px;
+         padding-left: 32px;
          .headerContainer{
             .headerTxt{
                 font-size: 32px;

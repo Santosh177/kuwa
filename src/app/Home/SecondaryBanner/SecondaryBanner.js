@@ -12,7 +12,7 @@ const SecondaryBanner = ({data}) => {
 
         <>
         <div className={styles.secondaryBannerMob}>
-            <Glider  slidesToShow={1} scrollLock  hasDots draggable>
+            <Glider  slidesToShow={1} scrollLock  draggable>
                 {
                     data.map((data,index)=> <img style={{cursor:'pointer'}} onClick={()=> router.push(data.redirectionLink)} src={data.image} alt={index} key={index}/>)
                 }
