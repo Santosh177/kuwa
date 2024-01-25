@@ -9,10 +9,8 @@ import styles from './cart-item-card.module.scss';
 const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index}) => {
 
     console.log("CartItemCardCartItemCard",data)
-    const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="", id="" } = data || {};
-
-
-
+    const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="", id="", variants} = data || {};
+    
     return(
         <div >
          {paymentPage == true ? 
@@ -22,7 +20,7 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index}) 
 
             <div className={styles.PaymentcartItemInfo}>
                 <div className={styles.Paymentindex + " " + "."}>{index+1}</div>
-                <img src={image}></img>
+                <img src={ variants===null ? image : variants.variants.image}></img>
                 <div className={styles.paymentItem}>
                 <div className={styles.PaymentitemName}>{productName}</div>
                 <div className={styles.quantity}>qty: {qty}</div>
@@ -41,7 +39,7 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index}) 
             <>
             <div className={styles.cartItemCard}>
             <div className={styles.cartItemContainer}>
-                <img src={image}></img>
+                <img src={variants=== null || variants == undefined  ? image : variants?.variants?.image}></img>
                 <div className={styles.quantityContainer}>
                     <div className={styles.quantityBtn} onClick={()=>(qty > 1) && onUpdateItem({product:id,quantity:qty-1})}>-</div>
                     <span>{qty}</span>
