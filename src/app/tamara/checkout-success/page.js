@@ -17,7 +17,7 @@ export default async function PaymentSuccess(req,res) {
                   const orderId = getOrderIdRespData && getOrderIdRespData.order_id || "";
                   const  totalPurchaseValue = getOrderIdRespData?.total || "";
                   const couponDiscount =getOrderIdRespData?.discount || "";
-                  redirect(`/payment/success?orderId=${orderId}&totalPurchaseValue=${totalPurchaseValue}&couponDiscount=${couponDiscount}&paymentMode=${Tamara}`);
+                  redirect(`/payment/success?orderId=${orderId}&totalPurchaseValue=${totalPurchaseValue}&couponDiscount=${couponDiscount}&paymentMode=${"Tamara"}`);
                 }else{
                   redirect(`/payment/failure`);
                 }

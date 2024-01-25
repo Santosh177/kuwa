@@ -15,7 +15,7 @@ export default async function PaymentSuccess(req,res) {
           const orderId = tabbyPaymentData && tabbyPaymentData.order_id || "";
           const  totalPurchaseValue = tabbyPaymentData?.total || "";
           const couponDiscount =tabbyPaymentData?.discount || "";
-          redirect(`/payment/success?orderId=${orderId}&totalPurchaseValue=${totalPurchaseValue}&couponDiscount=${couponDiscount}&paymentMode=${Tabby}`);
+          redirect(`/payment/success?orderId=${orderId}&totalPurchaseValue=${totalPurchaseValue}&couponDiscount=${couponDiscount}&paymentMode=${"Tabby"}`);
         }else{
           redirect(`/payment/failure`);
         }
