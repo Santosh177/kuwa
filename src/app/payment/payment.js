@@ -98,14 +98,13 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
 
 }
 
-const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems,prePaidDiscount="",extraDiscount=0, setExtraDiscount }) => {
+const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems,prePaidDiscount=0,extraDiscount=0, setExtraDiscount }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)  
   const { selectedPaymentMethod=""} = usePaymentPageData();
   // console.log("paymentMethodConfig",paymentMethodConfig);
   // console.log("selectedPaymentMethod",selectedPaymentMethod)
   console.log("sjsbs",prePaidDiscount)
-  console.log("extraDiscount",extraDiscount)
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
@@ -199,11 +198,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   
   const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
   console.log("prePaidDiscount",prePaidDiscount)
-  // if(prePaidDiscount){
-  //   let extraDiscountAmount = ((priceDetails?.totalAmount)*prePaidDiscount)/100
-  // }
-  let extraDiscountAmount = prePaidDiscount ? (((priceDetails?.totalAmount)*prePaidDiscount)/100).toFixed(2) : ""
-  console.log("extraDiscountAmount",extraDiscountAmount)
+ 
+
   // useEffect(()=>{
   //   if(Object.keys(selectedAddress).length == 0){
   //     const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
@@ -346,7 +342,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   }
  
 
-    const onPayment = async(data,pMode="",extraDiscountAmount) => {
+    const onPayment = async(data,pMode="",) => {
       setIsLoader(true);
       const userName = userData && userData['firstName'] || "";
       const getCartItems = await getCartItem();
@@ -412,7 +408,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             trackData['Payment Type'] = 'card' || '';
             trackData['Payment Gateway'] = 'checkout' || '';
             clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
-            setExtraDiscount(extraDiscountAmount);
 
             console.log("CHECKOUT_CARD",payload)
               const placeOrderResp  =  await fetch('/api/checkout-place-order', {
@@ -452,7 +447,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               console.log("TAMARA",finalPayload)
             //   console.log("Paylaof",payload)
 
-            setExtraDiscount(extraDiscountAmount)
 
               const placeOrderResp  =  await fetch('/api/tamara-place-order', {
                 method: 'POST',
@@ -483,7 +477,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               const finalPayload = {...payload,...tabbyPayload}
             console.log("TABBY",finalPayload)
               console.log("PAyloadd",tabbyPayload)
-              setExtraDiscount(extraDiscountAmount)
               console.log("bdhbwb",extraDiscount)
                 const placeOrderResp  =  await fetch('/api/tabby-place-order', {
                 method: 'POST',
@@ -635,8 +628,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             // }
         }
     }
-
-
     const onProceed = (pMode) => {
      
       if(selectedPaymentMethod =="CHECKOUT_CARD"){
