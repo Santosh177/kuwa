@@ -429,7 +429,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         {isLoading && <Loader isShow={true} />}
         <div className={styles.searchInputContainer}>
                         <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
-                            <input  className={styles.searchInput}  value={""}  placeholder='Search by product name' type='text' />
+                            <input  className={styles.searchInput}  value={searchQuery}  placeholder='Search by product name' type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                         </div>
                     </div>

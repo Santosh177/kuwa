@@ -131,7 +131,9 @@ export default function Search() {
       setShowTrendingSearch(true);
     }
   };
-
+  const handleSeeAll = (searchQuery) => {
+    window.location.href = `/collections?search_key=${searchQuery}`
+  }
   useEffect(() => {
     // Attach event listener for clicks outside the input box
     document.addEventListener('click', handleOutsideClick);
@@ -177,9 +179,19 @@ export default function Search() {
                 )
               })
             }
-
+            <div className={styles.dummyCard}></div>
+            <div className={styles.dummyCard}></div>
+            <div className={styles.dummyCard}></div>
+            <div className={styles.dummyCard}></div>
+          {searchData && searchData.length > 0 && 
+          <div className={styles.seelAllBox}>
+           <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(searchQuery)}>
+            See all
+           </div>
           </div>
-        {showTrendingSearch && !searchQuery && <TrendingSearch isShowSeeAllBtn={false} setSearchQuery={setSearchQuery} couponBanner={{}} />}
+          }
+          </div>
+        {showTrendingSearch && !searchQuery && <TrendingSearch isShowSeeAllBtn={true} setSearchQuery={setSearchQuery} couponBanner={{}} />}
         {(showTrendingSearch && !searchQuery) && <div className={styles.searchOverlay}></div>}
       </div>
     </>
