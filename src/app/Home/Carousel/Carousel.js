@@ -68,7 +68,7 @@ const Carousel = ({ data }) => {
             
         </Glider>
 
-        <div id="dots-home-banner" ></div>
+        <div id="dots-home-banner" style={{marginTop:"-20px"}}></div>
       </div>
 
     </>

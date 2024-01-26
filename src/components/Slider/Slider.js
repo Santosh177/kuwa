@@ -23,7 +23,7 @@ const Slider = ({children}) => {
               draggable
               gap={20}
               iconLeft={
-                <img style={{width:38,height:64,position:"relative",right:"-58px"}} src='https://d25uasl7utydze.cloudfront.net/assets/left.png' alt='left-icon'/>
+                <img style={{width:38,height:64,}} src='https://d25uasl7utydze.cloudfront.net/assets/left.png' alt='left-icon'/>
               }
               iconRight={
                 <img style={{width:38,height:64,}}  src='https://d25uasl7utydze.cloudfront.net/assets/right.png' alt='right-icon'/>

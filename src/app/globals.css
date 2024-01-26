@@ -44,12 +44,12 @@ a {
 }
 
 .glider-prev {
-  left: -63px !important;
+  left: -3px !important;
 }
 
 .glider-next {
   /* right: -63px !important; */
-  right: -5px !important
+  right: 0px !important
 }
 
 .glider {
