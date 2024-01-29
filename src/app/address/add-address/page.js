@@ -11,6 +11,7 @@ import { useAuth } from '@/context/userDetail';
 import { useAddressData } from "@/context/address";
 import { useCountry } from '@/context/contryDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 
 
 export default function AddAddress() {
@@ -25,6 +26,7 @@ export default function AddAddress() {
   const [ isLoading , setIsLoading] = useState(false);
   const [error,setError] = useState({})
   const clevertapEvent = useCleverTapEvents();
+  const [pageType, setPageType] = useState(getPageType())
 
 
     const onFormData = (formData) => {
@@ -33,6 +35,36 @@ export default function AddAddress() {
 
     const onSaveAddress = () => {
       setGetFormValues(getFormValues => getFormValues + 1)
+    }
+
+    function getDeviceType() {
+      if (isMobile) {
+        if (isAndroid) {
+          return 'Android';
+        } else if (isIOS) {
+          return 'iOS';
+        } else {
+          return 'Mobile';
+        }
+      } else if (isTablet) {
+        return 'Tablet';
+      } else {
+        return 'Desktop';
+      }
+    }
+    useEffect(() => {
+      const handleResize = () => {
+        setPageType(getPageType());
+      };
+  
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+    
+    function getPageType() {
+      return window.innerWidth > 770 ? 'web' : 'mWeb';
     }
 
     const onGetFormValues = async(data) => {
@@ -44,7 +76,9 @@ export default function AddAddress() {
             "email": email,
             "firstName":firstName,
             "lastName": lastName,
-            "mobileNumber":mobNumber
+            "mobileNumber":mobNumber,
+            "deviceType":getDeviceType(),
+            "pageType":pageType
         }
           const signUpResp = await fetch('/api/signup', {
             method: 'POST',
