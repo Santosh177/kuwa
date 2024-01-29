@@ -20,7 +20,7 @@ export default function Search() {
   const [searchData, setSearchData] = useState([]);
   const { selectedCountry = {}, setSelectedCountry = {} } = useCountry();
   const [searchQuery, setSearchQuery] = useState('');
-  const [showTrendingSearch, setShowTrendingSearch] = useState(false);
+  const [showTrendingSearch, setShowTrendingSearch] = useState(true);
   const inputBoxRef = useRef(null);
 
   useEffect(() => {
@@ -126,35 +126,35 @@ export default function Search() {
   };
 
   const searchDataCount = searchData && searchData.length || 0;
-  const handleOutsideClick = (event) => {
-    if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && (event.target.id != 'trending-search')) {
-      // Clicked outside the input box
-      // Close the popup
-      if (event.target.id==="cross-btn"){
-        setShowTrendingSearch(true);
-      }else{
-        setShowTrendingSearch(false);
-      }
-    }
-    else {
-      setShowTrendingSearch(true);
-    }
-  };
+  // const handleOutsideClick = (event) => {
+  //   if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && (event.target.id != 'trending-search')) {
+  //     // Clicked outside the input box
+  //     // Close the popup
+  //     if (event.target.id==="cross-btn"){
+  //       setShowTrendingSearch(true);
+  //     }else{
+  //       setShowTrendingSearch(false);
+  //     }
+  //   }
+  //   else {
+  //     setShowTrendingSearch(true);
+  //   }
+  // };
   const handleSeeAll = (searchQuery) => {
     window.location.href = `/collections?search_key=${searchQuery}`
   }
-  useEffect(() => {
-    // Attach event listener for clicks outside the input box
-    document.addEventListener('click', handleOutsideClick);
+  // useEffect(() => {
+  //   // Attach event listener for clicks outside the input box
+  //   document.addEventListener('click', handleOutsideClick);
 
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, []);
-  useEffect(()=>{
-    setShowTrendingSearch(true);
-  },[])
+  //   // Cleanup the event listener when the component unmounts
+  //   return () => {
+  //     document.removeEventListener('click', handleOutsideClick);
+  //   };
+  // }, []);
+  // useEffect(()=>{
+  //   setShowTrendingSearch(true);
+  // },[])
   return (
     <>
       {/* // <div className={styles.searchWrapper}> */}
