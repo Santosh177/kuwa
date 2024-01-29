@@ -8,7 +8,7 @@
     position: sticky;
     top: 48px;
     z-index: 999;
-    margin-bottom: 23px;
+    margin-bottom: 8px;
 
     .headerWrapper {
 
@@ -323,6 +323,7 @@
 @media(min-width:990px) {
     .header {
         height: 64px;
+        margin-bottom: 23px;
         .headerWrapper {
             width: 96%;
             margin: 0 auto;
@@ -609,12 +610,14 @@
             height: 44px;
             display: flex;
             align-items: center;
-            width: 97%;
+            width: 100%;
             position: -webkit-sticky;
+            margin-left: 16px;
+            margin-right: 16px;
             /* position: fixed; */
             /* top: 104px; */
             /* z-index: 999; */
-            margin: 0 auto;
+            // margin: 0 auto;
             left: 0;
             right: 0;
             background: white;

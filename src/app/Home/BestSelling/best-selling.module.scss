@@ -2,6 +2,7 @@
     background-color: #F1FAF8;
     padding-left: 32px;
     margin-top: 25px;
+    padding-right: 32px;
     .heading{
       color: #07141A;
       font-size: 32px;
@@ -18,7 +19,7 @@
      overflow-x: scroll;
      margin-bottom: -30px;
      .collectionList {
-        display: flex;
+        display: flex !important;
         justify-content: center;
         align-items: center;
         gap: 44px !important;
@@ -62,6 +63,7 @@
   .bestSellingContainer{
     margin-top: 20px;
     padding-left: 16px;
+    padding-right: 16px;
     .heading{
       font-size: 18px;
       padding-top: 8px;
