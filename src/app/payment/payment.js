@@ -108,7 +108,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
-          <PrepaidExtraDiscount prePaidDiscount={prePaidDiscount}/> 
+          <PrepaidExtraDiscount prePaidDiscount={prePaidDiscount} paymentMethodConfig={paymentMethodConfig} /> 
         <div>
           <DeliveryAddress />
         </div>
@@ -137,7 +137,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
   )
 }
 
-const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={},cartItems,prePaidDiscount}) => {
+const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={},cartItems,prePaidDiscount=0,extraDiscount=0, setExtraDiscount}) => {
   const priceDetailsRef = useRef();
   const router = useRouter();
   const { selectedPaymentMethod=""} = usePaymentPageData();
@@ -146,7 +146,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
    }
   return(
     <div className={styles.orderSummary}>
-       <PrepaidExtraDiscount prePaidDiscount={prePaidDiscount}/> 
+       <PrepaidExtraDiscount prePaidDiscount={prePaidDiscount} paymentMethodConfig={paymentMethodConfig}/> 
         <div>
           <DeliveryAddress />
         </div>
@@ -158,7 +158,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
     </div>
     <div className={styles.priceDetails} ref={priceDetailsRef} >
       {/* <div className={styles.headerTxt}>Price Details</div> */}
-      {<PriceDetails data={priceDetails} selectedPaymentMethod={selectedPaymentMethod}/>}
+      {<PriceDetails data={priceDetails} selectedPaymentMethod={selectedPaymentMethod} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount}/>}
     </div>
     <div className={styles.productDetailsTitle}>Product Details</div>
     {
@@ -168,7 +168,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
             )
           })
         }
-    <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig}  onPayment={onPayment} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}}  isEnable={selectedPaymentMethod != ""}/>
+    <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig}  onPayment={onPayment} btnName="Proceed To Pay" currency = {priceDetails.currency} totalPrice={priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}}  isEnable={selectedPaymentMethod != ""} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount} selectedPaymentMethod={selectedPaymentMethod}/>
 </div>
   )
 }
@@ -193,7 +193,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,[]));
   const clevertapEvent = useCleverTapEvents();
   const {setCartItemCount={} } = useCartItems();
-  const [extraDiscount,setExtraDiscount] = useState(0)
+  const [extraDiscount,setExtraDiscount] = useState(0);
   let appleSession;
   
   const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
