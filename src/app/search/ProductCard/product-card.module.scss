@@ -4,8 +4,8 @@
         background: #FFFFFF;
         box-shadow: 0px 2px 6px 0px rgba(36, 122, 129, 0.18);
         border-radius: 16px;
-        padding-right: 8px;
-        padding-left: 8px;
+        padding-right: 12px;
+        padding-left: 12px;
         position: relative;
         flex-shrink: 0;
         width: 138px;
@@ -73,7 +73,7 @@
             font-weight: 600;
             font-size: 12px;
             color: #07141A;
-            margin-top: 3px;
+            margin-top: 5px;
         }
 
         .retailPrice {
@@ -219,4 +219,18 @@
             }
         }
     }
+}
+
+@media (max-width:768px) {
+    .searchListWrapper {
+            .productCardMain {
+            }
+        }
+        .productCardItem{
+            width: 47%;
+            max-width: 164px;
+            .productCardWrapper{
+                width: 100%;
+            }
+        }
 }
