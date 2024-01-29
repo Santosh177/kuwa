@@ -1,5 +1,18 @@
 .orderDetails{
     padding: 16px;
+    .orderDetailsLeftContainer{
+        .orderId{
+            color: #A0A0A0;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+    .orderDetailsRightContainer{
+        margin-top: 24px;
+
+    }
     .needHelpTxt{
         font-weight: 400;
         font-size: 14px;
@@ -14,7 +27,6 @@
             cursor: pointer;
         }
     }
-
     .cancelOrderBtn{
         padding-top: 12px;
         padding-bottom: 12px;
@@ -28,6 +40,16 @@
         margin: 0 auto;
         margin-top: 25px;
         cursor: pointer;
+    }
+    .cancelError{
+    color: #CE4224;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 24px;
+    margin-bottom: -16px;
     }
 }
 
@@ -43,6 +65,17 @@
         }
         .orderDetailsRightContainer{
             width: 346px;
+            margin-top: 24px;
+        }
+        .cancelError {
+            color: #CE4224;
+            text-align: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-top: 24px;
+            margin-bottom: -16px;
         }
     }
     

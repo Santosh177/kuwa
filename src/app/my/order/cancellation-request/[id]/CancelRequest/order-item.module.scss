@@ -1,31 +1,35 @@
-.orderItem{
+.orderItem {
     background: #FFFFFF;
-    // box-shadow: 0px 6px 7px rgba(173, 173, 173, 0.16);
+    box-shadow: 0px 6px 7px rgba(173, 173, 173, 0.16);
     border-radius: 16px;
-    // padding: 15px;
+    padding: 15px;
     display: flex;
     align-items: center;
     gap: 14px;
     cursor: pointer;
-    .orderItemImage{
+
+    .orderItemImage {
         width: 20%;
-        img{
+
+        img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
             max-width: 80px;
             max-height: 80px;
-            object-fit: contain;
         }
     }
 
-    .orderItemInfo{
+    .orderItemInfo {
 
         width: 80%;
-        .orderItemStatus{
+
+        .orderItemStatus {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            .status{
+
+            .status {
                 font-weight: 600;
                 font-size: 10px;
                 background: #F1FAF8;
@@ -35,7 +39,8 @@
                 padding-left: 6px;
                 color: #247A81;
             }
-            .orderCancelled{
+
+            .orderCancelled {
                 font-weight: 600;
                 font-size: 10px;
                 background: rgba(249, 249, 249, 0.94);
@@ -45,7 +50,8 @@
                 padding-left: 6px;
                 color: #A0A0A0;
             }
-            .orderId{
+
+            .orderId {
                 font-weight: 400;
                 font-size: 10px;
                 color: #A0A0A0;
@@ -53,39 +59,74 @@
 
         }
 
-        .orderItemName{
+        .orderItemName {
             font-weight: 500;
             font-size: 12px;
             margin-top: 6px;
         }
 
-        .orderDeliveryTime{
+        .orderItemPriceQty {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin: 5px auto;
+
+            .price {
+                color: #07141A;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+
+            .quantity {
+                color: #A0A0A0;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+
+                span {
+                    color: #07141A;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                }
+            }
+        }
+
+        .orderDeliveryTime {
             font-weight: 400;
             font-size: 10px;
             margin-top: 3px;
         }
 
-        .orderInfoCancelled{
+        .orderInfoCancelled {
             font-weight: 600;
             font-size: 10px;
             margin-top: 3px;
         }
-        .pending{
+
+        .pending {
             font-weight: 500;
             font-size: 10px;
             color: #D6B13E;
             margin-left: 3px;
         }
-        .settled{
+
+        .settled {
             font-weight: 500;
             font-size: 10px;
-            color: #247A81;;
+            color: #247A81;
+            ;
             margin-left: 3px;
         }
 
-        .orderInfoDelivered{
+        .orderInfoDelivered {
             margin-top: 8px;
-            .ratingTxt{
+
+            .ratingTxt {
                 font-weight: 400;
                 font-size: 10px;
             }
@@ -96,32 +137,35 @@
 
 }
 
-@media(min-width:990px){
-    .orderItem{
+@media(min-width:990px) {
+    .orderItem {
         background: #FFFFFF;
-        // box-shadow: 0px 6px 7px rgba(173, 173, 173, 0.16);
+        box-shadow: 0px 6px 7px rgba(173, 173, 173, 0.16);
         border-radius: 16px;
         padding: 15px;
         display: flex;
         align-items: center;
         gap: 14px;
         cursor: pointer;
-        .orderItemImage{
+
+        .orderItemImage {
             width: 70px;
-            img{
+
+            img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
             }
         }
-    
-        .orderItemInfo{
-    
-            .orderItemStatus{
+
+        .orderItemInfo {
+
+            .orderItemStatus {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                .status{
+
+                .status {
                     font-weight: 600;
                     font-size: 12px;
                     background: #F1FAF8;
@@ -131,7 +175,8 @@
                     padding-left: 6px;
                     color: #247A81;
                 }
-                .orderCancelled{
+
+                .orderCancelled {
                     font-weight: 600;
                     font-size: 12px;
                     background: rgba(249, 249, 249, 0.94);
@@ -141,54 +186,102 @@
                     padding-left: 6px;
                     color: #A0A0A0;
                 }
-                .orderId{
+
+                .orderId {
                     font-weight: 400;
                     font-size: 12px;
                     color: #A0A0A0;
                 }
-    
+
             }
-    
-            .orderItemName{
+
+            .orderItemName {
                 font-weight: 500;
                 font-size: 14px;
                 margin-top: 6px;
             }
-    
-            .orderDeliveryTime{
+
+            .orderDeliveryTime {
                 font-weight: 400;
                 font-size: 12px;
                 margin-top: 5px;
             }
-    
-            .orderInfoCancelled{
+
+            .orderInfoCancelled {
                 font-weight: 600;
                 font-size: 12px;
                 margin-top: 3px;
             }
-            .pending{
+
+            .pending {
                 font-weight: 500;
                 font-size: 12px;
                 color: #D6B13E;
                 margin-left: 3px;
             }
-            .settled{
+
+            .settled {
                 font-weight: 500;
                 font-size: 12px;
-                color: #247A81;;
+                color: #247A81;
+                ;
                 margin-left: 3px;
             }
-    
-            .orderInfoDelivered{
+
+            .orderInfoDelivered {
                 margin-top: 10px;
-                .ratingTxt{
+
+                .ratingTxt {
                     font-weight: 400;
                     font-size: 10px;
                 }
-    
+
             }
-    
+
         }
-    
+
+    }
+}
+
+.checkboxContainer {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    input[type="checkbox"] {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 2px solid #247a81;
+        appearance: none;
+    }
+
+    input[type="checkbox"]:checked {
+        background-color: #247a81;
+    }
+
+    input[type="checkbox"]::before {
+        content: "";
+        position: absolute;
+        top: 0px;
+        left: 4.5px;
+        width: 5px;
+        height: 12px;
+        border: 3px solid transparent;
+        border-left: none;
+        border-top: none;   
+        transform: rotate(45deg) scale(1);
+    }
+
+    input[type="checkbox"]:checked:before{
+        border-color: #FFFFFF;
+        animation: checkAnim 0.2s ease;
+    }
+    @keyframes checkAnim{
+        from{
+            transform: rotate(45deg) scale(0);
+        }
     }
 }

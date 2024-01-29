@@ -409,7 +409,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
                    {isOpenProfileInfo && <div className={styles.profileInfoContainer} ref={dropDownOptionsProfileRef} >
                         <div className={styles.profileInfo} onClick={(e)=>{e.preventDefault();window.location.href='/my-account'}}>Edit Profile</div>
                         <div className={styles.profileInfo} onClick={()=>window.location.href='/address/manage-address'}>Manage Address</div>
-                        <div className={styles.profileInfo} onClick={()=>window.location.href='/my/orders'}>my Orders</div>
+                        <div className={styles.profileInfo} onClick={()=>window.location.href='/my/orders'}>My Orders</div>
                     </div>}
                     
                    

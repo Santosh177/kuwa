@@ -11,32 +11,97 @@ export default function OrderDetails({data}) {
   const router = useRouter()
 
 
-  const {address={} , product={}, orderId="" , price={},parentOrderId="" } = data || {};
-  const orderStatus = product['status']
-  
+  let { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0} = data || {};
+  // const orderStatus = product['status']
+  let address={}
+      address["billingAddress"]=billingAddress;
+      address["shippingAddress"]=shippingAddress
 
-  
+  let cartItemCount=0;
+  let subTotal=0;
+  let orderStatusSet = new Set();
+  let cancelStatusSet = new Set();
+
+  if (data && data.orderProducts && data.orderProducts.length > 0){
+    data.orderProducts.map((product,index)=>{
+      orderStatusSet.add(product.orderStatus)
+      cancelStatusSet.add(product.orderStatus)
+        cartItemCount++;
+        subTotal += (product.productQuantity)*(product.productPriceSpecialAmount);
+    })
+  }
+  {
+    cancelStatusSet.delete("FULFILLED");
+    cancelStatusSet.delete("DELIVERED");
+    cancelStatusSet.delete("CANCELED");
+  }
+  {
+    orderStatusSet.delete("CANCELED");
+  }
   const priceDetailsData = {
-    cartItemCount : product['quantity'],
-    subTotal:(price['price'] * product['quantity']),
-    totalAmount: price['total'],
+    cartItemCount: cartItemCount,
+    subTotal: (subTotal),
+    totalAmount: finalAmount,
     savedAmount:(price['total']- price['deliveryFee']),
-    discountAmount:(price['discount']),
-    currency:price['currency'],
-    deliveryFees:price['deliveryFee']
+    discountAmount: discount,
+    currency:currency,
+    deliveryFees: deliveryFee
+  }
+
+  let disableCancelBtn = false;
+  let cancelStatement=""
+  if (orderStatusSet) {
+    if (orderStatusSet.has("CREATED")){
+      orderStatus="CREATED";
+      cancelStatement=""
+    }
+    else if (orderStatusSet.has("FULFILLED")){
+      cancelStatement ="Order has been dispatched cannot be cancelled"
+      orderStatus = "FULFILLED";
+    }
+    else if (orderStatusSet.has("DELIVERED")){
+      orderStatus = "DELIVERED";
+      cancelStatement ="Order has been delivered cannot be cancelled"
+    }
+  }
+  if (cancelStatusSet.size<=0){
+    disableCancelBtn=true;
+   }
+  const handleCancelButton = () => {
+    if (disableCancelBtn) {
+    }
+    else {
+      window.location.href = `/my/order/cancellation-request/${orderId}`
+    }
+  }
+
+  let disableStyle = {}
+  if (disableCancelBtn) {
+    disableStyle = {
+      border: " 1px solid #CECECE",
+      background: "#FFF",
+      cursor: "not-allowed",
+      color:"#CECECE"
+    }
   }
 
   return (
     <div className={styles.orderDetails}>
         <div className={styles.orderDetailsLeftContainer}>
-            <OrderItem  product={product} orderId={parentOrderId} currency={price['currency']}/>
+        <div className={styles.orderId}>Order ID : #{orderId}</div>
+        {data && data.orderProducts && data.orderProducts.length > 0 && data.orderProducts.map((item,index)=>(
+          <OrderItem product={item} orderId={parentOrderId} currency={data['currency']}/>
+
+        ))
+         }
             <OrderDeliveryStatus  orderStatus={orderStatus}/>
             <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
-            <PriceDetails data={priceDetailsData} isHidePriceDetails={true} />
+            <PriceDetails data={priceDetailsData} isHidePriceDetails={false} />
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
-            {orderStatus.toLocaleUpperCase() ==="CREATED" && <div className={styles.cancelOrderBtn} onClick={()=>window.location.href = `/my/order/cancellation-request/${product.productId}`}>Cancel my order</div>}
+        {disableCancelBtn && <div className={styles.cancelError}>{cancelStatement}</div>}
+        <div className={styles.cancelOrderBtn} style={disableStyle} onClick={() => handleCancelButton()}>Cancel my order</div>
         </div>
       
         
@@ -44,3 +109,4 @@ export default function OrderDetails({data}) {
 
   )
 }
+

@@ -80,9 +80,13 @@ export default function FindMyOrder({ setShowOrderInfo }) {
       {isLoading ? (
         <Loader isShow={isLoading} />
       ) : (
-        orderList.map((data, index) => {
-          return <OrderItemList key={index} data={data} />;
-        })
+        <div className={styles.itemListWrapper}>
+         { orderList.map((data, index) => {
+           return <OrderItemList key={index} data={data} index={index} />;
+          })
+         }
+        </div>
+
       )}
     </>
   );

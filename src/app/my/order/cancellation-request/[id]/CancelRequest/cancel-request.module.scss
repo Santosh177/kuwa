@@ -1,4 +1,16 @@
 
+  .CancelRequestMain {
+    display: flex;
+      flex-direction: column;
+    //   justify-content: center ;
+    align-items: center;
+    margin-top: 26px;
+      .subContainer {
+          max-width: 400px;
+          width: 90%;
+      }
+  }
+
 .checkboxContainer {
     display: block;
     position: relative;
@@ -104,6 +116,18 @@
     cursor: pointer;
 }
 @media(min-width:990px){
+    .CancelRequestMain {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            margin-top: 40px;
+            align-items: baseline;
+            .subContainer {
+                flex: 1;
+                max-width: 400px;
+            }
+    
+        }
     .cancelRequest{
         padding: 16px;
         margin-top: 30px;
