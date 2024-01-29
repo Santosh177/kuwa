@@ -83,6 +83,11 @@ export default function Search() {
       }
     };
   }, [searchQuery]);
+  useEffect(()=>{
+    if(!searchQuery){
+       setSearchData([])
+    }
+  },[searchQuery])
 
   const onSearch1 = async (searchValue) => {
     setSearchTxt(searchValue);
@@ -122,10 +127,14 @@ export default function Search() {
 
   const searchDataCount = searchData && searchData.length || 0;
   const handleOutsideClick = (event) => {
-    if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && event.target.id != 'trending-search') {
+    if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && (event.target.id != 'trending-search')) {
       // Clicked outside the input box
       // Close the popup
-      setShowTrendingSearch(false);
+      if (event.target.id==="cross-btn"){
+        setShowTrendingSearch(true);
+      }else{
+        setShowTrendingSearch(false);
+      }
     }
     else {
       setShowTrendingSearch(true);
@@ -153,7 +162,7 @@ export default function Search() {
         <input ref={inputBoxRef} className={styles.searchInput} autoFocus type="text" value={searchQuery} onChange={(e) =>
           onSearch(e.target.value)} />
         <img className={styles.backArrow} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow_search.png" alt="back-arrow" onClick={() => router.back()} />
-        {searchQuery != "" && <img className={styles.crossIcon} src=" https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_search.png" alt="back-arrow" onClick={() => setSearchQuery("")} />}
+        {searchQuery != "" && <img id="cross-btn" className={styles.crossIcon} src=" https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_search.png" alt="back-arrow" onClick={() => setSearchQuery("")} />}
 
       </div>
       <div className={styles.searchListWrapper}>
@@ -192,7 +201,7 @@ export default function Search() {
           }
           </div>
         {showTrendingSearch && !searchQuery && <TrendingSearch isShowSeeAllBtn={true} setSearchQuery={setSearchQuery} couponBanner={{}} />}
-        {(showTrendingSearch && !searchQuery) && <div className={styles.searchOverlay}></div>}
+        {/* {(showTrendingSearch && !searchQuery) && <div className={styles.searchOverlay}></div>} */}
       </div>
     </>
   )
