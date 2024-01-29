@@ -1,5 +1,10 @@
 
 .couponCodeWrapper{
+    background-color: #F1FAF8;
+    margin-top: 24px;
+    padding: 10px;
+   border-radius: 8px;
+
     .headerTxt{
         font-weight: 500;
         font-size: 14px;
@@ -22,13 +27,13 @@
                     outline: none;
                     border-color: #247A81;
                 }
-                input:focus + .placeholderText .text, :not(input[value=""]) + .placeholderText .text{
-                    background-color:white;
-                    font-size: 12px;
-                    color: #A0A0A0;
-                    transform: translate(0, -130%);
-                    margin-left: 12px;
-                }
+                // input:focus + .placeholderText .text, :not(input[value=""]) + .placeholderText .text{
+                //     background-color:white;
+                //     font-size: 12px;
+                //     color: #A0A0A0;
+                //     transform: translate(0, -130%);
+                //     margin-left: 12px;
+                // }
                 .placeholderText{
                     position: absolute;
                     top: 0;
@@ -55,6 +60,16 @@
                     font-weight: 500;
                     font-size: 14px;
                 }
+                // .placeholderText{
+                //   .text{
+                //     position: absolute;
+                //     top: 10px;
+                //     font-weight: 500;
+                //     font-size: 12px;
+                //     padding-left: 16px;
+                //     color: #A0A0A0;
+                //   }  
+                // }
             }
             .errorMsg{
                 font-size: 10px;
@@ -69,6 +84,13 @@
             right: 10px;
             top: 8px;
             cursor: pointer;
+        }
+        .removeInActiveIcon{
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            right: 10px;
+            top: 8px;
         }
 
         .applyBtn{
@@ -96,6 +118,7 @@
 
 @media(min-width:990px){
     .couponCodeContainer{
+        border-radius: 10px;
         .inputWrapper{
             // width: 68% !important;
         }

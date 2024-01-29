@@ -4,6 +4,7 @@ import { useCountryList } from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
 import { useAuth } from '@/context/userDetail';
 import Loader from '@/components/Loader/Loader';
+import { useCartItems } from '@/context/cartItems';
 import CouponCode from "./components/CouponCode/CouponCode";
 import PriceDetails from "@/components/PriceDetails/PriceDetails";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
@@ -16,6 +17,11 @@ import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
 import {getCartItem} from '@/services';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import DeliveryAddress from '../order-summary/DeliveryAddress/DeliveryAddress'
+import CartItemCard from "@/components/CartItemCard/CartItemCard";
+import { updateCartItem, deleteCartItem } from '@/services';
+import { useRef } from 'react';
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
@@ -92,42 +98,72 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
 
 }
 
-const OrderSummayDesktopLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={},onPayment={}}) => {
+const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems }) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false)  
   const { selectedPaymentMethod=""} = usePaymentPageData();
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
+        <div>
+          <DeliveryAddress />
+        </div>
                 <div className={styles.couponCode}>
                   <CouponCode />
                 </div>
+                <div></div>
                 <div className={styles.priceDetails}>
                 {/* <div className={styles.headerTxt}>Price Details</div> */}
                 <PriceDetails data={priceDetails} />
               </div>
+              <div className={styles.productDetailsTitle}>Product Details</div>
+        {
+          cartItems.map((data, index) => {
+            return (
+              <CartItemCard data={data} key={index} paymentPage={true} index={index}/>
+            )
+          })
+        }
               </div>
               <div className={styles.paymentMethod}>
                 <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
               </div>
-              <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+              <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig} onPayment={onPayment} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}} isEnable={selectedPaymentMethod != ""} />
       </div>
   )
 }
 
-const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={}}) => {
+const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onProceed={}, onPayment={},cartItems}) => {
+  const priceDetailsRef = useRef();
+  const router = useRouter();
   const { selectedPaymentMethod=""} = usePaymentPageData();
+  const showViewDetails = ()=>{
+    priceDetailsRef.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+   }
   return(
     <div className={styles.orderSummary}>
+        <div>
+          <DeliveryAddress />
+        </div>
     <div className={styles.couponCode}>
       <CouponCode />
     </div>
     <div className={styles.paymentMethod}>
     <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment} />
     </div>
-    <div className={styles.priceDetails}>
+    <div className={styles.priceDetails} ref={priceDetailsRef} >
       {/* <div className={styles.headerTxt}>Price Details</div> */}
-      <PriceDetails data={priceDetails}/>
+      {<PriceDetails data={priceDetails}/>}
     </div>
-    <PaymentFooterBtn btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={()=>{(selectedPaymentMethod != "")?onProceed():{}}} isEnable={selectedPaymentMethod != ""} />
+    <div className={styles.productDetailsTitle}>Product Details</div>
+    {
+          cartItems.map((data, index) => {
+            return (
+              <CartItemCard paymentPage={true} data={data} key={index} index={index} />
+            )
+          })
+        }
+    <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig}  onPayment={onPayment} btnName="Proceed To Pay" totalPrice={priceDetails.currency+" "+priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}}  isEnable={selectedPaymentMethod != ""}/>
 </div>
   )
 }
@@ -151,18 +187,51 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [tamaraPaymentConfig, setTamaraPaymentConfig] = useState([])
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,[]));
   const clevertapEvent = useCleverTapEvents();
+  const {setCartItemCount={} } = useCartItems();
+  const [pageType, setPageType] = useState(getPageType())
   let appleSession;
   
-  useEffect(()=>{
-    if(Object.keys(selectedAddress).length == 0){
-      const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
-        const findSelectedAddress = listOfAddress.find((data) => data.id == JSON.parse(getAddressIdFromLocalStorage));
-        setSelectedAddress(findSelectedAddress)
-    }
+  // useEffect(()=>{
+  //   if(Object.keys(selectedAddress).length == 0){
+  //     const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
+  //       const findSelectedAddress = listOfAddress.find((data) => data.id == JSON.parse(getAddressIdFromLocalStorage));
+  //       setSelectedAddress(findSelectedAddress)
+  //   }
 
+  // },[listOfAddress])
+
+  useEffect(() => {
+    const handleResize = () => {
+      setPageType(getPageType());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  function getPageType() {
+    return window.innerWidth > 770 ? 'web' : 'mWeb';
+  }
+
+  useEffect(()=>{
+    if(selectedAddress && Object.keys(selectedAddress).length == 0){
+          const defaultAddress = listOfAddress.find((data) => data.isDefault);
+          if(defaultAddress){
+            setSelectedAddress(defaultAddress)
+          }else{
+            setSelectedAddress(listOfAddress[0])
+          }
+    }
   },[listOfAddress])
 
-
+  useEffect(()=>{
+    setData(cartData);
+    if(cartData && cartData.quantity){
+      setCartItemCount(cartData.quantity)
+    }
+  },[cartData])
   useEffect(()=>{
     if(data && Object.keys(data).length > 0 ){
             if(data['products']){
@@ -172,6 +241,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
   },[data]);
 
+  
 
   useEffect(()=>{
     console.log("couponCodeDatacouponCodeData",couponCodeData)
@@ -235,6 +305,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const getCartItem = await getCartItemDetails(data['products'],data.currency);
       setCartItems(getCartItem)
   }
+ 
 
   useEffect(()=>{
     if(cartItems && cartItems.length > 0){
@@ -242,6 +313,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
 
   },[cartItems]);
+
   useEffect(() => {
     clevertapEvent.onCleverTapEvent("kuwa_payments_landing");  
   }, [])
@@ -276,7 +348,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   }
 
 
-    const onPayment = async(data) => {
+    const onPayment = async(data,pMode="") => {
       setIsLoader(true);
       const userName = userData && userData['firstName'] || "";
       const getCartItems = await getCartItem();
@@ -286,6 +358,21 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['coupon']}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
       const taxAmount = await calculateVatPercentage(priceDetails['subTotal'])
+      function getDeviceType() {
+        if (isMobile) {
+          if (isAndroid) {
+            return 'Android';
+          } else if (isIOS) {
+            return 'iOS';
+          } else {
+            return 'Mobile';
+          }
+        } else if (isTablet) {
+          return 'Tablet';
+        } else {
+          return 'Desktop';
+        }
+      }
         let payload = {
           "cartId":getCartItems['id'] || "",
           "orderType": "one-time",
@@ -308,7 +395,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "taxAmount": taxAmount,
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
-          "cartItems": cartItemPayload
+          "cartItems": cartItemPayload,
+          "deviceType":getDeviceType(),
+          "pageType":pageType
         }
       const trackData = {
         'Order Amount': payload['finalAmount'],
@@ -476,7 +565,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
                 }
                
               }
-        }else if(selectedPaymentMethod == "APPLE_PAY"){
+        }else if(selectedPaymentMethod == "APPLE_PAY" || pMode === "APPLE_PAY"){
           payload['token'] = data.token;
           payload['paymentMode'] = "APPLE_PAY";
           trackData['Payment Type'] = 'Apple pay' || ''
@@ -561,10 +650,11 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
 
 
-    const onProceed = () => {
+    const onProceed = (pMode) => {
+     
       if(selectedPaymentMethod =="CHECKOUT_CARD"){
         Frames.submitCard()
-      }else if(selectedPaymentMethod === "APPLE_PAY"){
+      }else if(selectedPaymentMethod === "APPLE_PAY" || pMode === "APPLE_PAY"){
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
@@ -608,7 +698,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
                 let data = {
                   token: getCheckoutToken.token
                 } 
-                onPayment(data)
+                onPayment(data,pMode)
                
               }
           }
@@ -623,9 +713,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
       return (
         <>
-            <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} />
-            <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} />
-            <Loader isShow={isLoader} />
+          <OrderSummayMobileLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} />
+          <OrderSummayDesktopLayout priceDetails={priceDetails} paymentMethodConfig={paymentMethodConfig} onProceed={onProceed} onPayment={onPayment} data={data} cartItems={cartItems} />
+          <Loader isShow={isLoader} />
         </>
       )
     }

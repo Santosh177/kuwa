@@ -27,11 +27,13 @@ const ReasonCard = ({data,onSelect,cancelReason}) => {
 export default  function CancelRequest({cancelReasonData=[]}) {
   const [ cancelReason , setCancelReason ] = useState("");
   const [payloadData, setPayloadData] = useState([]);
+  const [isSubmitDisabled, setSubmitDisabled] = useState(false);
   const params = useParams();
   const router = useRouter();
   
   const onCancelRequest = async() => {
-    if (cancelReason && payloadData && payloadData.length>0){
+    if (cancelReason && payloadData && payloadData.length>0 &&!isSubmitDisabled){
+      setSubmitDisabled(true);
       let data=[];
         payloadData && payloadData.length > 0 && payloadData.map((item,index)=>{
           item["cancelReason"]=cancelReason;
@@ -71,7 +73,7 @@ const handleItemList=(item)=>{
               )
             })
           }
-            <div className={styles.submitRequest} style={{ cursor: (!cancelReason || payloadData.length==0) ? 'not-allowed' : "", opacity: (!cancelReason || payloadData.length==0)?"0.5":""}} onClick={onCancelRequest}>Submit Request</div>
+            <div className={styles.submitRequest} style={{ cursor: (!cancelReason || payloadData.length==0) ? 'not-allowed' : "", opacity: (!cancelReason || payloadData.length==0 || isSubmitDisabled)?"0.5":""}} onClick={onCancelRequest}>Submit Request</div>
         </div>
 
     </div>

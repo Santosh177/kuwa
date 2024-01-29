@@ -1,9 +1,10 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import styles from './login-card.module.scss';
-import { useState } from 'react';
+import { useState ,useEffect } from 'react';
 import Loader from '@/components/Loader/Loader';
 import { useCountry } from '@/context/contryDetails';
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 const validateForm = (formData) => {
   const errors = {};
   if(!formData.userEmail){
@@ -30,6 +31,7 @@ export default function Login() {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [ loginFailureTxt , setLoginFailureTxt] = useState("");
     const { selectedCountry={} } = useCountry();
+    const [pageType, setPageType] = useState(getPageType())
 
     const togglePasswordVisibility = () => {
       setIsPasswordVisible(!isPasswordVisible);
@@ -75,14 +77,44 @@ export default function Login() {
          }
     
     }
-   
+    useEffect(() => {
+      const handleResize = () => {
+        setPageType(getPageType());
+      };
+  
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+
+    function getPageType() {
+      return window.innerWidth > 770 ? 'web' : 'mWeb';
+    }
 
     const onLogin = async() =>{
       const validationErrors = validateForm({userEmail:userEmail,password:password });
+      function getDeviceType() {
+        if (isMobile) {
+          if (isAndroid) {
+            return 'Android';
+          } else if (isIOS) {
+            return 'iOS';
+          } else {
+            return 'Mobile';
+          }
+        } else if (isTablet) {
+          return 'Tablet';
+        } else {
+          return 'Desktop';
+        }
+      }
+    
       if (Object.keys(validationErrors).length === 0) {
         try {
           setErrors(validationErrors);
           setIsLoading(true)
+          const deviceType = getDeviceType();
           const res = await fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -90,7 +122,9 @@ export default function Login() {
             },
             body:JSON.stringify({
                 'username':userEmail,
-                'password':password
+                'password':password,
+                'deviceType': deviceType,
+                'pageType': pageType,
             })
           })
           // setIsLoading(false)

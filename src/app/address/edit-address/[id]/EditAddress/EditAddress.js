@@ -97,7 +97,7 @@ export default function AddAddress() {
           setIsUpdateSuccess(true)
           router.replace(refererPath)
         }else{
-          router.replace('/order-summary')
+          router.replace('/payment')
         }
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
