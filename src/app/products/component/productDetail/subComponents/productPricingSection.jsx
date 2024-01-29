@@ -8,7 +8,7 @@ import { useCountryList } from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
-    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={}} = pricingSectionVariables;
+    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold} = pricingSectionVariables;
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
     const clevertapEvent = useCleverTapEvents();
@@ -269,6 +269,13 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
             </div>
             {variants.length>0 ? <div className={styles.packOf}>Pack of</div>:""}  
             <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} onResetViewCartState={onResetViewCartState}/>
+            <div className={styles.freeShippingSection}>
+              <div className={styles.freeShippingDiv}>
+                <div className={styles.truckImg}><img src="https://d25uasl7utydze.cloudfront.net/assets/truck.svg"></img></div>
+                <div className={styles.text}>Free Delivery above <span>{currency + " " +mininmumDeliveryThreshold}</span></div>
+                
+                </div>
+                </div>
             <div className={styles.addToCartContainer}>
                {
                 isAddedToCart?<div className={styles.addToCart} onClick={() => handelViewCart()} ><span>View Cart</span></div>:
