@@ -19,13 +19,14 @@ export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, b
   
   useEffect(()=>{
     if(prePaidDiscount && (selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" )){
-       setExtraDiscount && setExtraDiscount(((totalPrice * prePaidDiscount)/100).toFixed(2))
+      setExtraDiscount && setExtraDiscount(parseFloat((((totalPrice) * prePaidDiscount) / 100).toFixed(2)))
     }
     else{
       setExtraDiscount && setExtraDiscount(0)
     }
    
 },[prePaidDiscount,selectedPaymentMethod])
+console.log("nahahhb",typeof (parseFloat((((totalPrice) * prePaidDiscount) / 100).toFixed(2))))
   const finalTotalAmount = extraDiscount ? totalPrice - extraDiscount : totalPrice
   
       return (

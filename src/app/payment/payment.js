@@ -98,7 +98,7 @@ const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
 
 }
 
-const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems,prePaidDiscount=0,extraDiscount=0, setExtraDiscount }) => {
+const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {}, onProceed = {}, onPayment = {}, data, cartItems,prePaidDiscount=0,extraDiscount, setExtraDiscount }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)  
   const { selectedPaymentMethod=""} = usePaymentPageData();
@@ -371,7 +371,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "countryCode": selectedCountry.code || "",
           "countryId": selectedCountry.id || "",
           "description": description,
-          "finalAmount": priceDetails['totalAmount']-extraDiscount,
+          "finalAmount": priceDetails['totalAmount'],
           "totalAmount": priceDetails['finalPayloadTotalAmount'],
           "currency": selectedCountry.currency || "",
           "orderSource": "WEBSITE",
@@ -384,7 +384,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
           "cartItems": cartItemPayload,
-          "prepaidDiscountAmount":parseInt(extraDiscount),
+          "prepaidDiscountAmount":extraDiscount,
         }
       const trackData = {
         'Order Amount': payload['finalAmount'],

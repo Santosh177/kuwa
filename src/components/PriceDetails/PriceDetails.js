@@ -12,17 +12,15 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
 const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePaidDiscount,extraDiscount,setExtraDiscount}) => {
     console.log("setExtraDiscount",setExtraDiscount)
     const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0} = data || {}
+    console.log("typeuug",typeof(Number((((totalAmount) * prePaidDiscount)/100).toFixed(2))))
     useEffect(()=>{
         if(prePaidDiscount && (selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" ) ){
-            setExtraDiscount && setExtraDiscount(((totalAmount * prePaidDiscount)/100).toFixed(2))
+            setExtraDiscount && setExtraDiscount(parseFloat((((totalAmount) * prePaidDiscount)/100).toFixed(2)))
         }
         else{
            setExtraDiscount && setExtraDiscount(0)
         }
     },[selectedPaymentMethod,totalAmount])
-   
-    console.log("bsbhbshbh",extraDiscount);
-    
     const FinalTotalAmount = extraDiscount > 0 ? totalAmount-extraDiscount : totalAmount  
 
     console.log("FinalTotalAmount",FinalTotalAmount)
