@@ -198,7 +198,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   
   const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
   console.log("prePaidDiscount",prePaidDiscount)
- 
+ console.log("dsvhv",extraDiscount)
 
   // useEffect(()=>{
   //   if(Object.keys(selectedAddress).length == 0){
@@ -240,7 +240,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   useEffect(()=>{
     console.log("couponCodeDatacouponCodeData",couponCodeData)
     applyCouponDiscount()
-  },[couponCodeData])
+  },[couponCodeData,])
 
   useEffect(()=>{
     getTamaraPaymentTypes()
@@ -270,16 +270,18 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
 
   const applyCouponDiscount = () => {
-    const { totalAmount=0 } = priceDetails || {};
+    const { totalAmount=0,finalTotalAmount=0} = priceDetails || {};
     const {total=0} = data || {};
-    if(couponCodeData && Object.keys(couponCodeData).length > 0 && couponCodeData.discount ){
+    if(((couponCodeData && Object.keys(couponCodeData).length > 0 && couponCodeData.discount)) ){
       const couponDiscountAmount = couponCodeData.discount || 0;
       setPriceDetails((prevState) => {
+        console.log("prevState",prevState)
         return({
           ...prevState,
           totalAmount:totalAmount - couponDiscountAmount,
           finalPayloadTotalAmount:totalAmount,
-          discountAmount: couponDiscountAmount
+          discountAmount: couponDiscountAmount,
+          finalTotalAmount:finalTotalAmount - couponDiscountAmount
         });
       });
     }else{
@@ -306,16 +308,18 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       calculatePriceDetails()
     }
 
-  },[cartItems]);
+  },[cartItems,]);
 
   useEffect(() => {
     clevertapEvent.onCleverTapEvent("kuwa_payments_landing");  
   }, [])
 
   const calculatePriceDetails = () => {
+    console.log("ehvshvhdwxtra",extraDiscount)
     const { total=0, subtotal=0, currency = "" } = data || {};
     const minThreshold = deliveryFeesConfig.minThreshold || 0;
     let  finalAmount = total;
+    
     if(total < minThreshold){
       finalAmount = total + deliveryFeesConfig.deliveryFee
     }
@@ -323,15 +327,19 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     const priceDetailsData = {
       cartItemCount: cartData && cartData.quantity,
       subTotal: subtotal,
-      totalAmount: finalAmount,
+      totalAmount: finalAmount ,
       finalPayloadTotalAmount:finalAmount,
       savedAmount: total - subtotal,
       discountAmount:total - subtotal,
       currency:currency,
-      deliveryFees: (total < minThreshold) ? deliveryFeesConfig.deliveryFee : 0
+      deliveryFees: (total < minThreshold) ? deliveryFeesConfig.deliveryFee : 0,
+      prepaidDiscountAmount:extraDiscount,
+      finalTotalAmount:finalAmount-extraDiscount
     }
     setPriceDetails(priceDetailsData)
   }
+
+  console.log("priceDetailsData",priceDetails)
 
   const calculateVatPercentage = async (subTotal) => {
     if (selectedCountry && selectedCountry) {
@@ -343,6 +351,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
  
 
     const onPayment = async(data,pMode="",) => {
+      console.log("dbhbhh",extraDiscount)
       setIsLoader(true);
       const userName = userData && userData['firstName'] || "";
       const getCartItems = await getCartItem();
@@ -362,7 +371,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "countryCode": selectedCountry.code || "",
           "countryId": selectedCountry.id || "",
           "description": description,
-          "finalAmount": priceDetails['totalAmount'],
+          "finalAmount": priceDetails['totalAmount']-extraDiscount,
           "totalAmount": priceDetails['finalPayloadTotalAmount'],
           "currency": selectedCountry.currency || "",
           "orderSource": "WEBSITE",
@@ -374,7 +383,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "taxAmount": taxAmount,
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
-          "cartItems": cartItemPayload
+          "cartItems": cartItemPayload,
+          "prepaidDiscountAmount":parseInt(extraDiscount),
         }
       const trackData = {
         'Order Amount': payload['finalAmount'],

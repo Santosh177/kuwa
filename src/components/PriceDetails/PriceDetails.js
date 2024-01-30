@@ -12,9 +12,6 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
 const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePaidDiscount,extraDiscount,setExtraDiscount}) => {
     console.log("setExtraDiscount",setExtraDiscount)
     const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0} = data || {}
-    
-    console.log("selectedPaymentMethod",selectedPaymentMethod)
-    console.log("bdba",prePaidDiscount)
     useEffect(()=>{
         if(prePaidDiscount && (selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" ) ){
             setExtraDiscount && setExtraDiscount(((totalAmount * prePaidDiscount)/100).toFixed(2))
@@ -22,7 +19,7 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
         else{
            setExtraDiscount && setExtraDiscount(0)
         }
-    },[selectedPaymentMethod,totalAmount,prePaidDiscount])
+    },[selectedPaymentMethod,totalAmount])
    
     console.log("bsbhbshbh",extraDiscount);
     
@@ -41,12 +38,12 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
            {!isHidePriceDetails && <>
             {discountAmount > 0 &&<div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Discount</div>
-                <div  className={[styles.rowItemLeftText,styles.discountAmount].join(" ")}>- {currency + " "+ discountAmount} </div>
+                <div  className={[styles.rowItemRightText,styles.discountAmount].join(" ")}>- {currency + " "+ discountAmount} </div>
             </div>}
             {(selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" ) &&
                <div className={styles.rowItemContainer}>
-               <div className={styles.rowItemLeftText}>5% Extra Off on paying online applied</div>
-               <div  className={[styles.rowItemLeftText,styles.discountAmount].join(" ")}>- {currency + " "+ extraDiscount} </div>
+               <div  className={`${styles.rowItemLeftText} ${styles.extraPayment}`}>{prePaidDiscount}% Extra Off on paying online applied</div>
+               <div  className={[styles.rowItemRightText,styles.extradiscountAmount].join(" ")}>- {currency + " "+ extraDiscount} </div>
            </div>
             }
             <div className={styles.rowItemContainer}>
