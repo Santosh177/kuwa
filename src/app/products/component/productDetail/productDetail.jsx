@@ -16,7 +16,7 @@ import { useCountry } from '@/context/contryDetails';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
 const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
-    const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [] } = productData || {};
+    const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold } = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
@@ -355,7 +355,8 @@ const ProductDeatil = ({ productData = {} }) => {
         setNoOfProduct: setNoOfProduct,
         handelViewCart: handelViewCart,
         onHandleApplePay:onHandleApplePay,
-        noOfProduct: noOfProduct
+        noOfProduct: noOfProduct,
+        mininmumDeliveryThreshold:mininmumDeliveryThreshold
     };
     const handelRoute = (type) => {
         if (type === "home") {

@@ -9,9 +9,9 @@ import styles from './order-delivery-status.module.scss';
 const OrderDeliveryStatus = ({orderStatus=""}) => {
     const [stepCount,setStepCount] = useState(1);
     useEffect(()=>{
-      if(orderStatus === "SHIPPED"){
+      if (orderStatus === "FULFILLED"){
         setStepCount(2)
-      }else if(orderStatus === "FULFILLED"){
+      } else if (orderStatus === "DELIVERED"){
         setStepCount(3)
       }
     },[orderStatus])
@@ -38,8 +38,8 @@ const OrderDeliveryStatus = ({orderStatus=""}) => {
 
     return(
       <>
-        <div className={styles.headerTxt}>Delivery Status</div>
        {orderStatus != "CANCELED" && <div className={styles.deliveryStatusContainer}>
+        <div className={styles.headerTxt}>Delivery Status</div>
           <div className={styles.MainContainer}>
             <div className={styles.StepContainer} >
               {steps.map(({ step, label,icon,icon_white, tickIcon }) => (

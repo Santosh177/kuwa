@@ -7,19 +7,21 @@ export async function POST(request,res) {
     const customHeader = await authHeader();
     const productId = requestBody.productId || "";
     const cancelReason = requestBody.cancelReason || "";
+    let data = [...requestBody];
+//     let data =[ {
+//         status: "CANCELED",
+//         cancelReason:"cancelReason",
+//         product: 13691
+//     }
+// ]
+//     console.log("objegfdcdtyct", data)
 
-    let data = {
-        "status":"CANCELED",
-        "cancelReason":cancelReason,
-        "product":productId
-    }
-
-
+// return;
 
     const cancellationResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/orders/status`, {
         method: 'PUT',
         headers: customHeader,
-        body:JSON.stringify([data])
+        body:JSON.stringify([...data])
       });
       const cancellationRespData = await cancellationResp.json();
     return NextResponse.json({status:"SUCCESS"})

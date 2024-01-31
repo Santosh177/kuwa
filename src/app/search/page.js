@@ -20,7 +20,7 @@ export default function Search() {
   const [searchData, setSearchData] = useState([]);
   const { selectedCountry = {}, setSelectedCountry = {} } = useCountry();
   const [searchQuery, setSearchQuery] = useState('');
-  const [showTrendingSearch, setShowTrendingSearch] = useState(false);
+  const [showTrendingSearch, setShowTrendingSearch] = useState(true);
   const inputBoxRef = useRef(null);
 
   useEffect(() => {
@@ -83,6 +83,11 @@ export default function Search() {
       }
     };
   }, [searchQuery]);
+  useEffect(()=>{
+    if(!searchQuery){
+       setSearchData([])
+    }
+  },[searchQuery])
 
   const onSearch1 = async (searchValue) => {
     setSearchTxt(searchValue);
@@ -121,26 +126,35 @@ export default function Search() {
   };
 
   const searchDataCount = searchData && searchData.length || 0;
-  const handleOutsideClick = (event) => {
-    if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && event.target.id != 'trending-search') {
-      // Clicked outside the input box
-      // Close the popup
-      setShowTrendingSearch(false);
-    }
-    else {
-      setShowTrendingSearch(true);
-    }
-  };
+  // const handleOutsideClick = (event) => {
+  //   if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && (event.target.id != 'trending-search')) {
+  //     // Clicked outside the input box
+  //     // Close the popup
+  //     if (event.target.id==="cross-btn"){
+  //       setShowTrendingSearch(true);
+  //     }else{
+  //       setShowTrendingSearch(false);
+  //     }
+  //   }
+  //   else {
+  //     setShowTrendingSearch(true);
+  //   }
+  // };
+  const handleSeeAll = (searchQuery) => {
+    window.location.href = `/collections?search_key=${searchQuery}`
+  }
+  // useEffect(() => {
+  //   // Attach event listener for clicks outside the input box
+  //   document.addEventListener('click', handleOutsideClick);
 
-  useEffect(() => {
-    // Attach event listener for clicks outside the input box
-    document.addEventListener('click', handleOutsideClick);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, []);
+  //   // Cleanup the event listener when the component unmounts
+  //   return () => {
+  //     document.removeEventListener('click', handleOutsideClick);
+  //   };
+  // }, []);
+  // useEffect(()=>{
+  //   setShowTrendingSearch(true);
+  // },[])
   return (
     <>
       {/* // <div className={styles.searchWrapper}> */}
@@ -148,7 +162,7 @@ export default function Search() {
         <input ref={inputBoxRef} className={styles.searchInput} autoFocus type="text" value={searchQuery} onChange={(e) =>
           onSearch(e.target.value)} />
         <img className={styles.backArrow} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow_search.png" alt="back-arrow" onClick={() => router.back()} />
-        {searchQuery != "" && <img className={styles.crossIcon} src=" https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_search.png" alt="back-arrow" onClick={() => setSearchQuery("")} />}
+        {searchQuery != "" && <img id="cross-btn" className={styles.crossIcon} src=" https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_search.png" alt="back-arrow" onClick={() => setSearchQuery("")} />}
 
       </div>
       <div className={styles.searchListWrapper}>
@@ -174,10 +188,20 @@ export default function Search() {
                 )
               })
             }
-
+            <div className={styles.dummyCard}></div>
+            <div className={styles.dummyCard}></div>
+            <div className={styles.dummyCard}></div>
+            <div className={styles.dummyCard}></div>
+          {searchData && searchData.length > 0 && 
+          <div className={styles.seelAllBox}>
+           <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(searchQuery)}>
+            See all
+           </div>
           </div>
-        {showTrendingSearch && !searchQuery && <TrendingSearch isShowSeeAllBtn={false} setSearchQuery={setSearchQuery} couponBanner={{}} />}
-        {(showTrendingSearch && !searchQuery) && <div className={styles.searchOverlay}></div>}
+          }
+          </div>
+        {showTrendingSearch && !searchQuery && <TrendingSearch isShowSeeAllBtn={true} setSearchQuery={setSearchQuery} couponBanner={{}} />}
+        {/* {(showTrendingSearch && !searchQuery) && <div className={styles.searchOverlay}></div>} */}
       </div>
     </>
   )

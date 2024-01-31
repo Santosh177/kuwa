@@ -17,7 +17,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   const router = useRouter();
     const searchDataCount = searchData && searchData.length || 0;
   const handleSeeAll=(couponBanner,searchQuery)=>{
-    window.location.href=`${couponBanner.redirectionLink}?search_key=${searchQuery}`
+    window.location.href=`/collections?search_key=${searchQuery}`
   }
 
     return(
@@ -409,7 +409,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
                    {isOpenProfileInfo && <div className={styles.profileInfoContainer} ref={dropDownOptionsProfileRef} >
                         <div className={styles.profileInfo} onClick={(e)=>{e.preventDefault();window.location.href='/my-account'}}>Edit Profile</div>
                         <div className={styles.profileInfo} onClick={()=>window.location.href='/address/manage-address'}>Manage Address</div>
-                        <div className={styles.profileInfo} onClick={()=>window.location.href='/my/orders'}>my Orders</div>
+                        <div className={styles.profileInfo} onClick={()=>window.location.href='/my/orders'}>My Orders</div>
                     </div>}
                     
                    
@@ -429,7 +429,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         {isLoading && <Loader isShow={true} />}
         <div className={styles.searchInputContainer}>
                         <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
-                            <input  className={styles.searchInput}  value={""}  placeholder='Search by product name' type='text' />
+                            <input  className={styles.searchInput}  value={searchQuery}  placeholder='Search by product name' type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                         </div>
                     </div>

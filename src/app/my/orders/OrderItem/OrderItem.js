@@ -22,7 +22,7 @@ const getDeliveryDate = (expDelivery) => {
 
 
 
-export default  function OrderItem({data}) {
+export default  function OrderItem({data,index}) {
     const router = useRouter();
 
     console.log("orderData",data)
@@ -55,9 +55,9 @@ export default  function OrderItem({data}) {
             // case "ORDER_IN_PROCESS":
             case "CREATED":
                 return <div className={styles.status}>Order in process</div>
-            case "SHIPPED":
-                return <div className={styles.status}>On the way</div>
             case "FULFILLED":
+                return <div className={styles.status}>On the way</div>
+            case "DELIVERED":
                 return <div className={styles.status}>Order delivered</div>
             case "CANCELED":
                 return <div className={styles.orderCancelled}>Cancelled</div>
@@ -71,9 +71,9 @@ export default  function OrderItem({data}) {
         switch (orderStatus) {
             case "CREATED":
                 return  <div className={styles.orderDeliveryTime}>Delivery expected by {getDeliveryDate(expDelivery)}</div>
-            case "SHIPPED":
-                return   <div className={styles.orderDeliveryTime}>Delivery expected by {getDeliveryDate(expDelivery)}</div>
             case "FULFILLED":
+                return   <div className={styles.orderDeliveryTime}>Delivery expected by {getDeliveryDate(expDelivery)}</div>
+            case "DELIVERED":
                 return (
                     <div className={styles.orderInfoDelivered}>
                         <div className={styles.ratingTxt}>{(rating)?"You have rated !":"Rate the product based on your experience."}</div>
@@ -92,14 +92,16 @@ export default  function OrderItem({data}) {
    
     return (
       <>
-        <div className={styles.orderItem} onClick={()=>router.push(`/my/order/${orderProductId}`)}>
+            <div className={styles.orderItem} 
+            // onClick={() => router.push(`/my/order/${orderId}`)}
+            >
             <div className={styles.orderItemImage}>
                 <img src={productImg} alt='product-img'/>
             </div>
             <div className={styles.orderItemInfo}>
                 <div className={styles.orderItemStatus}>
                     {renderOrderStatus(orderStatus)}
-                    <div className={styles.orderId}>Order ID : #{orderId}</div>
+                   {index===0 && <div className={styles.orderId}>Order ID : #{orderId}</div>}
                 </div>
                 <div className={styles.orderItemName}>{productName}</div>
                 {renderOrderInfo(orderStatus)}
