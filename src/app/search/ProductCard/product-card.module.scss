@@ -1,0 +1,236 @@
+.productCardItem {
+    padding-top: 57px;
+    .productCardWrapper {
+        background: #FFFFFF;
+        box-shadow: 0px 2px 6px 0px rgba(36, 122, 129, 0.18);
+        border-radius: 16px;
+        padding-right: 12px;
+        padding-left: 12px;
+        position: relative;
+        flex-shrink: 0;
+        width: 138px;
+        height: 177px;
+        cursor: pointer;
+
+        .productImgWrapper {
+            height: 36px;
+            width: 75%;
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+            margin: 0 auto;
+        }
+
+        .productImgContainer {
+            margin: 0 auto;
+            position: absolute;
+            bottom: 0px;
+            justify-content: center;
+            left: 0;
+            right: 0;
+            height: 127px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+        }
+
+        .productImg {
+            width: 100%;
+        }
+
+        .productName {
+            font-weight: 500;
+            font-size: 12px;
+            color: #07141A;
+            font-weight: 500;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-top: 8px;
+            height: 43px;
+        }
+
+        .discountTag {
+            background: #CE4224;
+            border-radius: 4px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-right: 6px;
+            padding-left: 6px;
+            color: #FFFFFF;
+            font-size: 10px;
+            // max-width: 74px;
+            margin-top: 8px;
+            width: fit-content;
+        }
+
+        .price {
+            font-weight: 600;
+            font-size: 12px;
+            color: #07141A;
+            margin-top: 5px;
+        }
+
+        .retailPrice {
+            text-decoration-line: line-through;
+            color: #A0A0A0;
+            font-weight: 400;
+        }
+
+        .finalPrice {
+            font-weight: 600;
+            font-size: 12px;
+            color: #07141A;
+        }
+
+        .btn {
+            background: #247A81;
+            border-radius: 24px;
+            color: #FFFFFF;
+            font-weight: 600;
+            font-size: 12px;
+            text-align: center;
+            padding-top: 9px;
+            padding-bottom: 9px;
+            margin-top: 7px;
+        }
+    }
+}
+
+
+
+@media (min-width: 990px) {
+    .productCardItem {
+        padding-top: 60px;
+        width:180px;
+
+        .productCardWrapper {
+            box-shadow: 0px 2px 6px 0px rgba(36, 122, 129, 0.18);
+            border-radius: 16px;
+            padding-right: 18px;
+            padding-left: 18px;
+            position: relative;
+            flex-shrink: 0;
+            width:180px;
+            height:186px;
+
+            .productImgWrapper {
+                height:56px;
+                width: 75%;
+                position: relative;
+                padding-right: 10px;
+                padding-left: 10px;
+                margin: 0 auto;
+            }
+
+            .productImgContainer {
+                margin: 0 auto;
+                position: absolute;
+                bottom:20px;
+                justify-content: center;
+                left: 0;
+                right: 0;
+                height:92px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+
+                }
+            }
+
+            .productImg {
+                width: 100%;
+            }
+
+            .productName {
+                font-weight: 500;
+                font-size: 16px;
+                color: #07141A;
+                font-weight: 500;
+                margin-top: 7px;
+                height: 56px;
+            }
+
+            .discountTag {
+                background: #CE4224;
+                border-radius: 4px;
+                padding-top: 3px;
+                padding-bottom: 3px;
+                padding-right: 6px;
+                padding-left: 6px;
+                color: #FFFFFF;
+                font-weight: 600;
+                font-size: 14px;
+                margin-top: 8px;
+                // max-width: 100px;
+                width: fit-content;
+            }
+
+            .price {
+                font-weight: 600;
+                font-size: 14px;
+                color: #07141A;
+                margin-top: 7px;
+            }
+
+            .retailPrice {
+                text-decoration-line: line-through;
+                color: #A0A0A0;
+                font-weight: 400;
+            }
+
+            .finalPrice {
+                font-weight: 600;
+                font-size: 14px;
+                color: #07141A;
+            }
+
+            .btn {
+                background: #247A81;
+                border-radius: 24px;
+                color: #FFFFFF;
+                font-weight: 500;
+                font-size: 16px;
+                text-align: center;
+                padding-top: 9px;
+                padding-bottom: 9px;
+                margin-top: 12px;
+            }
+        }
+    }
+}
+
+@media (max-width:990px) {
+    .productCardItem {
+        .productCardWrapper {
+            height: 145px;
+            .productImgWrapper {
+
+            }
+            .productImgContainer{
+                height:90px;
+            }
+        }
+    }
+}
+
+@media (max-width:768px) {
+    .searchListWrapper {
+            .productCardMain {
+            }
+        }
+        .productCardItem{
+            width: 47%;
+            max-width: 164px;
+            .productCardWrapper{
+                width: 100%;
+            }
+        }
+}

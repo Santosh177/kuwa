@@ -490,16 +490,36 @@ export default  function Cart({cartData}) {
 
       //   console.log("payloadpayload",payload)
   }
-
+ 
     const totalPrice =(priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+priceDetails.totalAmount :""
+    const subTotal = priceDetails.subTotal
+    const minThreshold = deliveryFeesConfig?.minThreshold;
+    const deliveryFee = deliveryFeesConfig?.deliveryFee
+    const totalAmount = priceDetails.totalAmount
+    const currency = selectedCountry?.currency;
+    const deliveryFeeMinPrice = minThreshold - subTotal;
+    const progressBarColor = deliveryFeeMinPrice >= 0 ? Math.min((subTotal / minThreshold) * 100, 100) : 100;
+    const colorPerc = `${(207 * progressBarColor)/100}px`
+    const activeProgressBar={
+      width:colorPerc,
+      height:"4px",
+      backgroundColor:"#247A81",
+      position:"relative",
+      bottom:"17px"
+    }
     
-   
+
+    const redirectAllProduct = ()=>{
+      window.location.href = '/collections?category='
+    }
       return (
         <>
           {/* <script type="text/javascript" src="/fresh-chat.js" async></script> */}
           <div className={styles.cartPage}>
+            <div className={styles.leftSection}>
             <div className={styles.cartItemsContainer}>
               <div className={[styles.headerTxt,styles.cartHeaderTxt].join(" ")}> Cart Items </div>
+              <div className={styles.cartDataInfo}>
               {
                 cartItems.map((data, index)=>{
                   return(
@@ -507,6 +527,22 @@ export default  function Cart({cartData}) {
                   )
                 })
               }
+              </div>
+            </div>
+            <div className={ styles.freeShippingSection}>
+              <div className={styles.content}>
+                 {deliveryFeeMinPrice > 0 ? <div className={styles.text}>You're only <span className={styles.feeText}>{deliveryFeeMinPrice+ " " + currency}</span> away from <span className={styles.shipTxt}>Free Shipping</span></div> 
+                 : <div className={styles.text}> Your cart is eligible for <span className={styles.shipTxt}>free delivery</span></div>}
+                  <div className={styles.progressBar}></div>
+                   <div style={activeProgressBar}>
+                   <div className={styles.roundDiv}></div>
+                   <div className={styles.image}><img src="https://d25uasl7utydze.cloudfront.net/assets/truck%20(1).svg"></img></div>
+                   </div>
+                  {deliveryFeeMinPrice > 0 ? "" : <div className={styles.saveTxt}>You saved {deliveryFee + " " + currency} on delivery fee</div>} 
+               
+              </div>
+              <div className={styles.btn} onClick={redirectAllProduct}>Add</div>
+            </div>
             </div>
             <div className={styles.priceDetailsContainer}>
               {/* <div className={styles.headerTxt}>Price Details</div> */}

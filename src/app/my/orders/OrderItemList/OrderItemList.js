@@ -1,32 +1,31 @@
 
-
+'use client';
 import OrderItem from '../OrderItem/OrderItem';
 import styles from './order-item-list.module.scss';
+import { useRouter } from 'next/navigation';
 
 
 
 
-
-export default function OrderItemList({data}) {
-
-
-
+export default function OrderItemList({ data, index}) {
+  const router = useRouter();
   const orderItemData = { 
     orderId:data.orderId,
     productId:data.productId,
-    productName:data.productName,
-    productImg:data.productImage,
-    orderStatus:data.orderStatus,
+    productName: data.orderProductName,
+    productImg: data.productId ? data.productImage : data.variantImage,
+    orderStatus: data.orderProductStatus,
     orderProductId:data.orderProductId,
-    expDelivery:data.expDelivery,
-    rating:data.rating
+    expDelivery: data.expectedDelivery,
+    rating: data.avgRating
   }
 
 
     return (
-      <div className={styles.orderItemList}>
-        <OrderItem data={orderItemData} />
-        
+      <div className={styles.orderItemList} 
+        onClick={() => router.push(`/my/order/${data.orderId}`)}
+      >
+        <OrderItem data={orderItemData} index={index} />
       </div>
   
     )

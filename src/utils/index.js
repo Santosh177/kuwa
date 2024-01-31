@@ -3,7 +3,7 @@
 export const getCartItemDetails = async(data,currency) => {
    let cartItem = []
     data.map((data, index)=>{
-        const { image = {} ,quantity= 1,price="",originalPrice="",finalPrice="" ,  description={},id="",cartItemId=""  } = data || {};
+        const { image = {} ,quantity= 1,price="",originalPrice="",finalPrice="" ,  description={},id="",cartItemId="",variants  } = data || {};
         const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
         console.log("CART PRODUCT",data)
         let item ={
@@ -16,7 +16,8 @@ export const getCartItemDetails = async(data,currency) => {
             "discountAmount":discountAmount || 0,
             "currency":currency,
             "id":id,
-            "cartItemId":cartItemId
+            "cartItemId":cartItemId,
+            "variants":variants
         }
        cartItem.push(item)
 

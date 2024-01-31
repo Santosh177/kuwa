@@ -6,8 +6,9 @@ import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
 import Loader from '@/components/Loader/Loader';
 import styles from './sign-up-card.module.scss';
 import { useCountry } from '@/context/contryDetails';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { checkInternationalPhone } from "../../../utils/validation";
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 
 const validateForm = (formData) => {
   const errors = {};
@@ -94,16 +95,48 @@ export default function SignupCard() {
     const [ errors, setErrors] = useState({});  
     const [isLoading , setIsLoading] = useState(false)
     const refererPath = searchParams.get('referer');
+    const [pageType, setPageType] = useState(getPageType())
     
     console.log("useCountry",selectedCountry)
   
-
+    function getDeviceType() {
+      if (isMobile) {
+        if (isAndroid) {
+          return 'Android';
+        } else if (isIOS) {
+          return 'iOS';
+        } else {
+          return 'Mobile';
+        }
+      } else if (isTablet) {
+        return 'Tablet';
+      } else {
+        return 'Desktop';
+      }
+    }
+    useEffect(() => {
+      const handleResize = () => {
+        setPageType(getPageType());
+      };
+  
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+    function getPageType() {
+      return window.innerWidth > 770 ? 'web' : 'mWeb';
+    }
 
       const onSignup = async() =>{
         const validationErrors = validateForm(formData);
         if (Object.keys(validationErrors).length === 0) {
+       
             try {
               setIsLoading(true)
+              formData.deviceType = getDeviceType();
+              formData.pageType = pageType;
+              console.log("formData",formData)
               const res = await fetch('/api/signup', {
                 method: 'POST',
                 body:JSON.stringify(formData)

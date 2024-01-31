@@ -1,6 +1,7 @@
 .headerTxt{
     font-weight: 500;
     font-size: 16px;
+    color: #000;
     // margin-top: 1px;
     // margin-bottom: 10px;
 }
@@ -62,6 +63,12 @@
 
 
 @media (min-width:990px){
+    .headerTxt{
+        font-weight: 500;
+        font-size: 16px;
+        font-weight: 500;
+        color: #000;
+    }
     .priceDetailsWrapper{
         max-width: 346px;
     }
