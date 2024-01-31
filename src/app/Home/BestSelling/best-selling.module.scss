@@ -1,53 +1,37 @@
 .bestSellingContainer{
-    background-color: #F1FAF8;;
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-    margin-top: 80px;
-    // text-align: center;
+    background-color: #F1FAF8;
+    padding-left: 32px;
+    margin-top: 25px;
+    padding-right: 32px;
     .heading{
-      text-align: center;
       color: #07141A;
-      font-size: 24px;
+      font-size: 32px;
       font-style: normal;
       font-weight: 500;
       line-height: 28px;
-      padding-top: 16px;
-      padding-bottom: 14px;
+      padding-top: 24px;
+      padding-bottom: 16px;
       .firstWord{
-        
-          font-weight: 700;
+        font-weight: 700;
       }
     }
     .collectionScrollContainer{
-     margin: auto auto;
-     width: 520px;
      overflow-x: scroll;
-    //  margin-top: 24px;
      margin-bottom: -30px;
-    //  .collectionSection{
-     
      .collectionList {
-        display: flex;
+        display: flex !important;
         justify-content: center;
         align-items: center;
-        gap: 20px !important;
+        gap: 44px !important;
         display: -webkit-box;
-        // overflow-x: scroll;
         width: max-content;
-        // margin-top: 24px;
         margin-bottom: 24px;
-
         position: relative;
-       
-    
         .collectionName {
          font-size: 16px;
           position: relative;
           padding-bottom: 8px;
-          padding-left: 20px;
-          padding-right: 20px;
+          font-weight: 500;
             cursor: pointer;
             &:after {
               content: '';
@@ -56,57 +40,47 @@
               left: 0;
               width: 100%;
               height: 2px;
-              // background-color: #E0F0EE; 
+              background-color: #E0F0EE; 
               transition: border-width 0.3s ease; 
             }
-        }
-    
-        .selected:after {
-          height: 4px; 
-          background-color: #247A81; 
-          
-          z-index: 100;
-        }
-        .border{
-          width: 100%;
-          border:#E0F0EE 3px solid;
-          position: relative;
-          top: 23px;
-          position: absolute;
+            &.selected {
+              color: #247A81;
+              font-weight: 600;
+              
         }
        
+      
+       }
+       .selected:after {
+        height: 4px; 
+        background-color: #247A81;
       }
-     
-    // }
+      }
     }
-    
-   
-}
+  }
 
 @media(max-width:770px){
   .bestSellingContainer{
     margin-top: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
     .heading{
       font-size: 18px;
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
 
     .collectionScrollContainer{
-      width:320px;
+      width:100% !important;
       // padding-left: 16px;
       .collectionList{
         gap:30px !important;
+        overflow-x: scroll !important;
         .collectionName{
           font-size: 12px;
         }
         .selected:after{
           height: 2px; 
-        }
-        .border{
-          width: 100%;
-          border:#E0F0EE 2px solid;
-          position: relative;
-          top: 20px;
-          position: absolute;
         }
       }
     }

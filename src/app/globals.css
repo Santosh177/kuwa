@@ -44,13 +44,16 @@ a {
 }
 
 .glider-prev {
-  left: -63px !important;
+  left: -3px !important;
 }
 
 .glider-next {
-  right: -63px !important;
+  /* right: -63px !important; */
+  right: -2px !important
 }
-
+.glider-next.disabled, .glider-prev.disabled{
+  opacity: 0 !important;
+}
 .glider {
   padding-bottom: 27px !important;
 }
@@ -62,9 +65,10 @@ a {
   display: none;
 }
 
+
 @media(max-width:990px){
   .glider-track {
-    gap: 8px;
+    gap: 16px;
   }
   .glider-dot{
     width: 6px !important; 
@@ -78,9 +82,10 @@ a {
 @media(min-width:990px){
   .glider-track {
     /* gap: 2%; */
-    gap: 70px;
+    gap: 40px;
   }
   .glider-dots{
     display: flex !important;
   }
+  
  }

@@ -35,7 +35,7 @@ export default function TrendingSearch({ isLogin=false, isShowSeeAllBtn=true,set
     }
     return (
         <div id="trending-search" className='trending-search-main' 
-        style={isLogin?{right:"142px"}:{}} 
+        style={isLogin?{right:"183px"}:{}} 
         >
             <div  className='trending-search-cont'>
                 <div  className='heading'>Trending search</div>

@@ -100,11 +100,13 @@ export default function Home(homePageData) {
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <ExploreCategory exploreCategory={menuItemsHealths}/>
                     <BestSelling bestSellerCollectioWithProducts={bestSellerCollectioWithProducts}/>
-                    <NewArrivals data={newArrivals}/>
-                    
-                    {/* <BestSellingProduct data={bestSellings} /> */}
-                    <SecondaryBanner data={secondryBanners} />
+                    <SecondaryBanner data={secondryBanners.slice(0,3)} />
                     <BrandMustTry data={brandMain} />
+                    <NewArrivals data={newArrivals.slice(0,12)}/>
+                    <SecondaryBanner data={secondryBanners.slice(3)} />
+                    {/* <BestSellingProduct data={bestSellings} /> */}
+                   
+                   
                     {
                         data.map((product, index) => {
                             return (
@@ -112,7 +114,7 @@ export default function Home(homePageData) {
                             )
                         })
                     }
-                    <MedicalExpert />
+                    {/* <MedicalExpert /> */}
                     {/* <CustomerSay /> */}
                     <Footer />
                     <Loader />

@@ -3,8 +3,11 @@
 }
 
 .secondaryBannerMob{
-    margin-top: 30px;
+    margin-top: 16px;
+    margin-bottom: -17px;
     display: flex;
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 
@@ -17,14 +20,16 @@
     }
     .secondaryBannerDesktop{
         display: flex;
-        gap: 16px;
+        justify-content:center ;
+        gap: 14px;
         margin: 0 auto;
-        padding-right: 227px;
-        padding-left: 227px;
-        margin-top: 30px;
-        margin-bottom: 30px;
+        padding-right: 32px;
+        padding-left: 32px;
+        margin-top: 24px;
+        margin-bottom: 24px;
         img{
-            width: 50%;
+            border-radius: 16px;
+            width: 32.50%;
         }
     }
     

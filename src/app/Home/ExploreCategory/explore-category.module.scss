@@ -1,49 +1,39 @@
-.categoryHeader{
-    color: #07141A;
-font-size: 24px;
-font-style: normal;
-font-weight: 500;
-line-height: 28px;
-text-align: center;
-margin-top: 40px;
-span{
-    font-weight: 700;
-}
-}
-.categoryContent{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 15px 10px 10px 10px;
+// .categoryHeader{
+//     color: #07141A;
+// font-size: 24px;
+// font-style: normal;
+// font-weight: 500;
+// line-height: 28px;
+// text-align: center;
+// margin-top: 40px;
+// span{
+//     font-weight: 700;
+// }
+// }
+
   
 .categoryContainer{
+    
     display: flex;
-    // justify-content: center;
+    overflow-x: auto;
+    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    width:530px;
-    gap:50px;
-    // margin-top: 24px;
-
-//    .categorySection{
-//     display: flex;
-//     flex-wrap: wrap;
-
-//    } 
+    gap:44px;
+    margin: 24px 32px 10px 32px;
    .category{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width:92px;
+    // width:124px;
     cursor: pointer;
   
-    .categoryImg{
-        img{    
-        width:92px;
-        height:92px;
-        }
-    }
+    // .categoryImg{
+    //     img{    
+    //     width:92px;
+    //     height:92px;
+    //     }
+    // }
     .categoryName{
         color: #07141A;
 font-size: 14px;
@@ -55,20 +45,24 @@ text-align: center;
     }
    }
 }
-}
+
 
 @media(max-width:770px){
-    .categoryHeader{
-        font-size: 18px;
-        margin-top: 32px;
-    }
-    .categoryContent{
+    // .categoryHeader{
+    //     font-size: 18px;
+    //     margin-top: 32px;
+    // }
+    // .categoryContent{
 .categoryContainer{
-        width: 315px;
+        // width: 315px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: baseline;
     gap:22px;
+    margin:17px 16px 17px 16px;
     .category{
         cursor: pointer;
-        width: 60px;
+        // width: 60px;
         .categoryImg{
             img{    
             width:60px;
@@ -76,10 +70,10 @@ text-align: center;
             }
         }
         .categoryName{
-         font-size: 8px;
-         text-align: center;   
+         font-size: 12px;
+        //  text-align: center;   
         }
     }
 }
-    }
+    // }
 }

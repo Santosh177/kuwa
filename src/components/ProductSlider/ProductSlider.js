@@ -117,37 +117,47 @@ let trackData={};
 //       console.error('An unexpected error happened occurred:', error)
 //     }
 // }
+
+const handleAllProduct = () =>{
+  window.location.href = `/collections?category=${headerTitle}`
+}
     return (
 
 
           <>
           
           
-          <div className={styles.sliderDecoration} style={{flexDirection:(index % 2 == 0)?'row-reverse':'row'}}>
+          {/* <div className={styles.sliderDecoration} style={{flexDirection:(index % 2 == 0)?'row-reverse':'row'}}>
             <div className={styles.sliderLine1} style={{background:backgroundColors[index].backgroundColor}}></div><div className={styles.sliderLine2} style={{background:backgroundColors[index].backgroundColor}}></div>
-          </div>
+          </div> */}
           <div className={styles.container} style={{backgroundImage:backgroundColors[index].backgroundImage}}>
+          <div className={styles.headerContainer}>
             <div className={styles.headerTxt} style={{...headerTextStyle}}>{headerTitle}</div>
+            <div className={styles.seeAllDiv} onClick={handleAllProduct}>
+      <div className={styles.txt}>See all</div>
+      <div className={styles.arrowImg}><img src='https://d25uasl7utydze.cloudfront.net/assets/right%20arrow.svg'/></div>
+    </div>
+    </div>
             <div className={styles.sliderContainer}>
             <Glider
               hasArrows={(width>990)}
               slidesToShow={4.5}
-              slidesToScroll={4}
+              slidesToScroll={7}
               hasDots={false}
               draggable
               gap={20}
               exactWidth={true}
               itemWidth={(width>990)?204:138}
               iconLeft={
-                <img style={{width:48,height:48}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/left_arrow.png' alt='left-icon'/>
+                <img style={{width:38,height:64,}} src='https://d25uasl7utydze.cloudfront.net/assets/left.png' alt='left-icon'/>
               }
               iconRight={
-                <img style={{width:48,height:48}}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/right_arrow.png' alt='right-icon'/>
+                <img style={{width:38,height:64,}}  src='https://d25uasl7utydze.cloudfront.net/assets/right.png' alt='right-icon'/>
               }
             >
 
               {
-                product.map((data,index)=>{
+                product.slice(0, 12).map((data,index)=>{
                   const { variants=[]} = data  || {}
                   const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
                   let cardData = {

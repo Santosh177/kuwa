@@ -21,7 +21,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   }
 
     return(
-      <div className={styles.searchListWrapper} style={(isLogin) ? { right: '142px', paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: 'unset', paddingBottom: !isShowSeeAllBtn ? "" : "" }}>
+      <div className={styles.searchListWrapper} style={(isLogin) ? { right: '183px', paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: 'unset', paddingBottom: !isShowSeeAllBtn ? "" : "" }}>
                 <div className={styles.resultFound}>
                   <span> {searchDataCount} Results found</span>
                 </div>
@@ -365,21 +365,21 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         <CouponInfo couponBanner={couponBanner} setCouponBannerData={setCouponBannerData} />
         <div className={styles.header} id='top-header-container' >
            <div className={styles.headerWrapper} id='top-header' >
-                <div className={styles.headerIcon}>
+                <d    iv className={styles.headerIcon}>
                     <div className={styles.menuIcon} onClick={onOpenSideMenu}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/menu.png' alt='menu-icon'/>
                     </div>
                     <div className={styles.logo} onClick={()=>window.location.href="/"}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/Group+2.png' alt='menu-icon'/>
                     </div>
-                </div>
+                </d>
                
                 <div className={styles.headerInfo}>
                     <div className={styles.countryInfo} onClick={()=>setIsShowCountry(true)}>
                         <div className={styles.countryImg}>
                             <img src={selectedCountry.flagIcon} alt='country-img'/>
                         </div>
-                        <div className={styles.countryTxt}>{selectedCountry.shortName}</div>
+                        <div className={styles.countryTxt}> <span>Country</span>{selectedCountry.shortName}</div>
                         <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown_icon_country.png' alt='drop-down-icon'/>
                     </div>
                     {/* <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
@@ -396,7 +396,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
                 {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBanner={(couponBanner && couponBanner.redirectionLink && couponBanner) || couponBannerData} searchQuery={searchQuery} />}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
-                        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img>
+                        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img><span>Login</span>
                     </div>}
                     {
                         isLogin && <div className={styles.profileIcon} ref={dropDownOptionsRef} onClick={()=>setIsOpenProfileInfo(!isOpenProfileInfo)}>
@@ -415,7 +415,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
                    
                    
                     <div className={styles.cartIcon} onClick={()=>router.push('/cart')}>
-                        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img>
+                        <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img><span>Cart</span>
                         {cartItemCount > 0 && <div className={styles.cartCount}>{cartItemCount}</div>}
                     </div>
                 </div>
