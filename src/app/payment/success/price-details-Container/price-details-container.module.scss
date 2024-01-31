@@ -28,9 +28,16 @@
             font-weight: 400;
             font-size: 14px;
         }
+        .extraPayment{
+            width:187px !important;
+        }
+
         .rowItemRightText{
             font-weight: 400;
             font-size: 14px;
+        }
+        .extradiscountAmount{
+            color: #247A81;
         }
         .discount{
             text-align: right;
@@ -39,18 +46,16 @@
         .couponCode{
 
         }
-        .freeDeliveryTxt{
-          
-           
+        .freeDeliveryTxt {
             span {
-             color: #247A81; 
-             font-size: 14px;
-font-style: normal;
-font-weight: 500  
+            color: #247A81;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500
             }
-            .price{
-                color: #000;
-                // text-decoration: line-through;
+        
+            .price {
+            color: #000;
             }
         }
         .totalAmountTxt{
@@ -99,3 +104,12 @@ font-weight: 500
     }
 }
    
+@media(max-width:350px){
+    .priceDetailsWrapper{
+        .rowItemContainer{
+            .extraPayment{
+                width: 150px !important;    
+            }
+        }
+    }
+}
