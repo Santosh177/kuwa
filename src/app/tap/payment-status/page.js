@@ -22,7 +22,7 @@ export default async function PaymentStatus(req,res) {
           const  totalPurchaseValue = tapPaymentStatusData?.total;
           const couponDiscount = tapPaymentStatusData?.discount;
           console.log("tapPaymentStatusData",tapPaymentStatusData)
-          redirect(`/payment/success?orderId=${orderId}&totalPurchaseValue=${totalPurchaseValue}&couponDiscount=${couponDiscount}`);
+          redirect(`/payment/success?orderId=${orderId}&totalPurchaseValue=${totalPurchaseValue}&couponDiscount=${couponDiscount}&paymentMode=${"Tap"}`);
         }
         else{
             redirect("/payment/failure");

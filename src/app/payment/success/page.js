@@ -22,6 +22,8 @@ export default function PaymentSuccess() {
   const orderId = searchParams.get('orderId')
   const totalPurchaseValue = searchParams.get('totalPurchaseValue')
   const couponDiscount = searchParams.get('couponDiscount');
+  const paymentType = searchParams.get('paymentMode')
+  // console.log("paymentType",paymentType)
   const isIndividualProduct = searchParams.get('isIndividualProduct');
   const [isSuccessPopUp ,setIsSuccessPopup] = useState(false);
   const [orderDetailsData,setOrderDetailsData] = useState({});
@@ -72,6 +74,7 @@ export default function PaymentSuccess() {
       const listOfMyOrderResp  =  await fetch(`/api/list-of-orders`, {
         method: 'GET',
       })
+      console.log("paymentType",paymentType)
       const listOfMyOrder = await listOfMyOrderResp.json();
       if(listOfMyOrder && listOfMyOrder.length > 0){
         const isFirstOrder = listOfMyOrder.length >1;
@@ -81,7 +84,8 @@ export default function PaymentSuccess() {
             productId: listOfOrder.productId,
             productName: listOfOrder.productName,
             orderId:listOfOrder.orderId,
-            orderProductId:listOfOrder.orderProductId
+            orderProductId:listOfOrder.orderProductId,
+            paymentMode:paymentType
          }
          if(window && window.clevertap){
           window.clevertap.setMultiValuesForKey("cart_items", []);
@@ -95,7 +99,8 @@ export default function PaymentSuccess() {
               productId: listOfOrder.productId,
               productName: listOfOrder.productName,
               orderId:listOfOrder.orderId,
-              orderProductId:listOfOrder.orderProductId
+              orderProductId:listOfOrder.orderProductId,
+              paymentMode:paymentType
            }
            if(window && window.clevertap){
             window.clevertap.setMultiValuesForKey("cart_items", []);
