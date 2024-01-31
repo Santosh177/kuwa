@@ -4,14 +4,16 @@ import OrderItem from '../OrderItem/OrderItem';
 import OrderDeliveryStatus from '../OrderDeliveryStatus/OrderDeliveryStatus';
 import OrderAddress from '../OrderAddress/OrderAddress';
 import PriceDetails from '@/components/PriceDetails/PriceDetails';
-import styles from './order-details.module.scss'
+import styles from './order-details.module.scss';
+import { useCountry } from '@/context/contryDetails';
 
 export default function OrderDetails({data}) {
 
   const router = useRouter()
+  const { selectedCountry={} } = useCountry();
+  const myPrePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
 
-
-  let { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0} = data || {};
+  let { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0,prepaidDiscountAmount=0} = data || {};
   // const orderStatus = product['status']
   let address={}
       address["billingAddress"]=billingAddress;
@@ -45,7 +47,8 @@ export default function OrderDetails({data}) {
     savedAmount:(price['total']- price['deliveryFee']),
     discountAmount: discount,
     currency:currency,
-    deliveryFees: deliveryFee
+    deliveryFees: deliveryFee,
+    prepaidDiscountAmount:prepaidDiscountAmount
   }
 
   let disableCancelBtn = false;
@@ -98,7 +101,7 @@ export default function OrderDetails({data}) {
             <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
-            <PriceDetails data={priceDetailsData} isHidePriceDetails={false} />
+            <PriceDetails data={priceDetailsData} isHidePriceDetails={false} myPrePaidDiscount={myPrePaidDiscount} />
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
         {disableCancelBtn && <div className={styles.cancelError}>{cancelStatement}</div>}
         <div className={styles.cancelOrderBtn} style={disableStyle} onClick={() => handleCancelButton()}>Cancel my order</div>
