@@ -42,7 +42,6 @@ const PrepaidExtraDiscount = ({prePaidDiscount,paymentMethodConfig}) => {
 
   const renderValidText = () => {
     const enabledMethods = Object.keys(paymentMethodConfig).filter(method => paymentMethodConfig[method].isEnable);
-    console.log("enabledMethods",enabledMethods)
     if (enabledMethods.length === 0) {
       return null;
     }
@@ -61,8 +60,6 @@ const PrepaidExtraDiscount = ({prePaidDiscount,paymentMethodConfig}) => {
     }
     return <div className={styles.txt}>{text}</div>;
   };
-
-  console.log("renderPaymentImages",renderPaymentImages())
   return (
   prePaidDiscount &&
     <div className={styles.extraDiscountSection}>

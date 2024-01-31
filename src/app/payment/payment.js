@@ -105,7 +105,6 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
   const { selectedPaymentMethod=""} = usePaymentPageData();
   // console.log("paymentMethodConfig",paymentMethodConfig);
   // console.log("selectedPaymentMethod",selectedPaymentMethod)
-  console.log("sjsbs",prePaidDiscount)
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
@@ -175,7 +174,6 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
 }
 
 export default function Payment({cartData,paymentModes,tamaraConfig}) {
-  console.log("paymentModes",paymentModes)
   const router = useRouter();
   const {couponCodeData={}, selectedPaymentMethod=""} = usePaymentPageData();
   const countryList = useCountryList();
@@ -199,8 +197,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   let appleSession;
   
   const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
-  console.log("prePaidDiscount",prePaidDiscount)
- console.log("dsvhv",extraDiscount)
+
 
   // useEffect(()=>{
   //   if(Object.keys(selectedAddress).length == 0){
@@ -287,18 +284,16 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
 
   const applyCouponDiscount = () => {
-    const { totalAmount=0,finalTotalAmount=0} = priceDetails || {};
+    const { totalAmount=0,} = priceDetails || {};
     const {total=0} = data || {};
     if(((couponCodeData && Object.keys(couponCodeData).length > 0 && couponCodeData.discount)) ){
       const couponDiscountAmount = couponCodeData.discount || 0;
       setPriceDetails((prevState) => {
-        console.log("prevState",prevState)
         return({
           ...prevState,
           totalAmount:totalAmount - couponDiscountAmount,
           finalPayloadTotalAmount:totalAmount,
           discountAmount: couponDiscountAmount,
-          finalTotalAmount:finalTotalAmount - couponDiscountAmount
         });
       });
     }else{
@@ -332,7 +327,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   }, [])
 
   const calculatePriceDetails = () => {
-    console.log("ehvshvhdwxtra",extraDiscount)
     const { total=0, subtotal=0, currency = "" } = data || {};
     const minThreshold = deliveryFeesConfig.minThreshold || 0;
     let  finalAmount = total;
@@ -350,13 +344,10 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       discountAmount:total - subtotal,
       currency:currency,
       deliveryFees: (total < minThreshold) ? deliveryFeesConfig.deliveryFee : 0,
-      prepaidDiscountAmount:extraDiscount,
-      finalTotalAmount:finalAmount-extraDiscount
     }
     setPriceDetails(priceDetailsData)
   }
 
-  console.log("priceDetailsData",priceDetails)
 
   const calculateVatPercentage = async (subTotal) => {
     if (selectedCountry && selectedCountry) {
@@ -368,7 +359,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
  
 
     const onPayment = async(data,pMode="",) => {
-      console.log("dbhbhh",extraDiscount)
+      console.log("prePaidDiscount",extraDiscount)
       setIsLoader(true);
       const userName = userData && userData['firstName'] || "";
       const getCartItems = await getCartItem();
@@ -521,7 +512,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               const finalPayload = {...payload,...tabbyPayload}
             console.log("TABBY",finalPayload)
               console.log("PAyloadd",tabbyPayload)
-              console.log("bdhbwb",extraDiscount)
                 const placeOrderResp  =  await fetch('/api/tabby-place-order', {
                 method: 'POST',
                 headers: {
