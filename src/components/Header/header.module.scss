@@ -18,8 +18,8 @@
         justify-content: space-between;
         width: 100%;
         // padding-right: 16px;
-        width: 98%;
-        margin: 0 auto;
+        // width: 98%;
+        margin: 0px 16px;
 
         .headerIcon {
             display: flex;
@@ -54,9 +54,9 @@
         .headerInfo {
             display: flex;
             flex-direction: row;
-            gap: 10px;
+            gap: 14px;
             align-items: center;
-            padding: 10px;
+            // padding: 10px;
             position: relative;
 
             .profileIconPlus {
@@ -680,6 +680,7 @@
 @media(max-width:290px) {
     .header {
         .headerWrapper {
+           
             .headerInfo {
                 gap: 5px;
                 padding: 10px;

@@ -67,6 +67,9 @@ a {
 
 
 @media(max-width:990px){
+  .glider-slide{
+    min-width: 104px !important;
+  }
   .glider-track {
     gap: 16px;
   }

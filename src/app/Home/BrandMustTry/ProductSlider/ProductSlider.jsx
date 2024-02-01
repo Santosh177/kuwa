@@ -29,7 +29,7 @@ const ProductSlider = ({data}) => {
                draggable
                gap={20}
                exactWidth={true}
-               itemWidth={(width>990)?204:138}
+               itemWidth={(width>990)?180:104}
                iconLeft={
                  <img style={{width:38,height:64,}} src='https://d25uasl7utydze.cloudfront.net/assets/left.png' alt='left-icon'/>
                }
