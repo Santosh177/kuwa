@@ -21,7 +21,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   }
 
     return(
-      <div className={styles.searchListWrapper} style={(isLogin) ? { right: '183px', paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: 'unset', paddingBottom: !isShowSeeAllBtn ? "" : "" }}>
+      <div className={styles.searchListWrapper} style={(isLogin) ? { right: '173px', paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: 'unset', paddingBottom: !isShowSeeAllBtn ? "" : "" }}>
                 <div className={styles.resultFound}>
                   <span> {searchDataCount} Results found</span>
                 </div>
