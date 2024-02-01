@@ -103,7 +103,7 @@ export default function Home(homePageData) {
                     <SecondaryBanner data={secondryBanners.slice(0,3)} />
                     <BrandMustTry data={brandMain} />
                     <NewArrivals data={newArrivals.slice(0,12)}/>
-                    <SecondaryBanner data={secondryBanners.slice(3)} />
+                   {secondryBanners.length>3 ?<SecondaryBanner data={secondryBanners.slice(3)} /> : "" } 
                     {/* <BestSellingProduct data={bestSellings} /> */}
                    
                    

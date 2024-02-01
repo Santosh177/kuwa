@@ -11,6 +11,7 @@ const ExploreCategory = ({exploreCategory}) => {
     <div className={styles.categoryHeader}>Explore <span>Categories</span></div>} */}
     {/* <div className={styles.categoryContent}> */}
     <div className={styles.categoryContainer} >
+      <div className={styles.categorySection}>
         {
           exploreCategory.map((data,index)=>{
             return(
@@ -26,6 +27,7 @@ const ExploreCategory = ({exploreCategory}) => {
            
           })  
         }
+        </div>
 
     </div>
     {/* </div> */}

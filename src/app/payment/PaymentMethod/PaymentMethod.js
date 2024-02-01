@@ -82,7 +82,7 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
       <div className={styles.payWithEmi}>
         <div className={styles.headerContainer}>
           <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/paymentheaderimg.png' alt=''/>
-          <div className={styles.txt}>Pay with EMI</div>
+          <div className={styles.txt}>Pay by installment</div>
         </div>
         <div className={styles.paymentOptionsList}>
             {(isTamara && isShow) && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("TAMARA")}>

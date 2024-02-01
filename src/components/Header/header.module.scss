@@ -18,8 +18,8 @@
         justify-content: space-between;
         width: 100%;
         // padding-right: 16px;
-        width: 98%;
-        margin: 0 auto;
+        // width: 98%;
+        margin: 0px 16px;
 
         .headerIcon {
             display: flex;
@@ -54,9 +54,9 @@
         .headerInfo {
             display: flex;
             flex-direction: row;
-            gap: 10px;
+            gap: 14px;
             align-items: center;
-            padding: 10px;
+            // padding: 10px;
             position: relative;
 
             .profileIconPlus {
@@ -241,7 +241,7 @@
     max-height: 600px;
     overflow: scroll;
     border-radius: 0px 0px 8px 8px;
-    top: 45px;
+    top: 42px;
     right: -25px;
     //    left: 13px;
     margin: 0 auto;
@@ -558,7 +558,7 @@
     
     }
     .searchListWrapper{
-        right: 191px; 
+        right: 181px; 
     }
 
     .searchIcon {
@@ -680,6 +680,7 @@
 @media(max-width:290px) {
     .header {
         .headerWrapper {
+           
             .headerInfo {
                 gap: 5px;
                 padding: 10px;
@@ -703,6 +704,6 @@
     }
     .searchListWrapper{
         width: 470px;
-        left: 152px;
+        left: 132px;
     }
 }

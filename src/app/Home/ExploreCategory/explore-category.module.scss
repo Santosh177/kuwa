@@ -15,35 +15,41 @@
 .categoryContainer{
     
     display: flex;
-    overflow-x: auto;
-    justify-content: center;
-    align-items: center;
-    gap:44px;
-    margin: 24px 32px 10px 32px;
-   .category{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    // width:124px;
-    cursor: pointer;
   
-    // .categoryImg{
-    //     img{    
-    //     width:92px;
-    //     height:92px;
-    //     }
-    // }
-    .categoryName{
-        color: #07141A;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-margin-top: 10px;
-text-align: center;
+    justify-content: center;
+    align-items: center;
+    
+    margin: 24px 32px 10px 32px;
+    .categorySection{
+        display: flex;
+        gap:44px;
+        overflow-x: auto;
+        .category{
+            display: flex;
+            flex-direction: column;
+            // justify-content: center;
+            align-items: center;
+            // width:124px;
+            cursor: pointer;
+          
+            .categoryImg{
+                img{    
+                width:124px;
+                height:124px;
+                }
+            }
+            .categoryName{
+                color: #07141A;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        margin-top: 10px;
+        text-align: center;
+            }
+           }
     }
-   }
+   
 }
 
 
@@ -56,24 +62,29 @@ text-align: center;
 .categoryContainer{
         // width: 315px;
         display: flex;
-        justify-content: flex-start;
+        
         align-items: baseline;
-    gap:22px;
+   
     margin:17px 16px 17px 16px;
-    .category{
-        cursor: pointer;
-        // width: 60px;
-        .categoryImg{
-            img{    
-            width:60px;
-            height:60px;
+    .categorySection{
+        justify-content: flex-start;
+        gap:20px;
+        .category{
+            cursor: pointer;
+            // width: 60px;
+            .categoryImg{
+                img{    
+                width:60px;
+                height:60px;
+                }
+            }
+            .categoryName{
+             font-size: 12px;
+            //  text-align: center;   
             }
         }
-        .categoryName{
-         font-size: 12px;
-        //  text-align: center;   
-        }
     }
+   
 }
     // }
 }
