@@ -99,6 +99,9 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
   return (
     <html lang="en">
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
+      <head>
+        <script type="text/javascript" src={"/gtm.js"}></script>
+      </head>
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
       <script type="text/javascript" src={"/clevertap-stage.js"} async />
@@ -111,6 +114,8 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       {/* <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
 /></noscript> */}
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDHHJWPJ"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
