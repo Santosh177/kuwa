@@ -13,8 +13,9 @@ export default function OrderDetails({data}) {
   const { selectedCountry={} } = useCountry();
   const myPrePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
 
-  let { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0,prepaidDiscountAmount=0} = data || {};
+  let { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0,prepaidDiscountAmount=0, codCharge} = data || {};
   // const orderStatus = product['status']
+  const myCodCharge = codCharge;
   let address={}
       address["billingAddress"]=billingAddress;
       address["shippingAddress"]=shippingAddress
@@ -50,7 +51,7 @@ export default function OrderDetails({data}) {
     deliveryFees: deliveryFee,
     prepaidDiscountAmount:prepaidDiscountAmount
   }
-
+ 
   let disableCancelBtn = false;
   let cancelStatement=""
   if (orderStatusSet) {
@@ -101,7 +102,7 @@ export default function OrderDetails({data}) {
             <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
-            <PriceDetails data={priceDetailsData} isHidePriceDetails={false} myPrePaidDiscount={myPrePaidDiscount} />
+            <PriceDetails data={priceDetailsData} isHidePriceDetails={false} myPrePaidDiscount={myPrePaidDiscount} myCodCharge={myCodCharge} />
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>Need help ? <span>Contact Us</span></div>
         {disableCancelBtn && <div className={styles.cancelError}>{cancelStatement}</div>}
         <div className={styles.cancelOrderBtn} style={disableStyle} onClick={() => handleCancelButton()}>Cancel my order</div>

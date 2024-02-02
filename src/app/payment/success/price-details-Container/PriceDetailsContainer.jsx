@@ -21,7 +21,8 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
      discount="" ,
      currency="",
     deliveryFee=0,
-    prepaidDiscountAmount = "" } = orderDetailsData
+    prepaidDiscountAmount = "",
+codCharge=0 } = orderDetailsData
     const { selectedCountry={} } = useCountry();
     const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
     const discountAmount = parseFloat(discount).toFixed(2);
@@ -47,6 +48,10 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
             {prepaidDiscountAmount>0 && <div className={styles.rowItemContainer}>
                <div  className={`${styles.rowItemLeftText} ${styles.extraPayment}`}>{prePaidDiscount}% Extra Off on paying online applied</div>
                <div  className={[styles.rowItemRightText,styles.extradiscountAmount].join(" ")}>- {currency + " "+ parseFloat(prepaidDiscountAmount).toFixed(2)} </div>
+           </div>}
+           {codCharge>0 && <div className={styles.rowItemContainer}>
+               <div  className={`${styles.rowItemLeftText} ${styles.codChargeTxt}`}>Additional COD Charges</div>
+               <div  className={[styles.rowItemRightText,styles.codChargeAmount].join(" ")}>- {currency + " "+ parseFloat(codCharge)} </div>
            </div>}
             <div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Delivery Fee</div>
