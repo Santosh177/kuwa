@@ -232,11 +232,12 @@ const ProductDeatil = ({ productData = {} }) => {
         let totalAmount = productPrice;
         let devliveryFees = 0
         const productName = name;
+        const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
         if(productPrice < minThreshold){
             devliveryFees =  deliveryFeesConfig.deliveryFee;
             totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
         }
-      
+        let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
@@ -257,6 +258,10 @@ const ProductDeatil = ({ productData = {} }) => {
               {
                   "label": "Shipping",
                   "amount": devliveryFees
+              },
+              {
+                "label": "Additional Discount",
+                "amount": extraDiscount
               }
           ],
         };
