@@ -119,7 +119,8 @@ let trackData={};
 // }
 
 const handleAllProduct = () =>{
-  window.location.href = `/collections?category=${headerTitle}`
+  const encodedHeaderTitle = encodeURIComponent(headerTitle);
+  window.location.href = `/collections?category=${encodedHeaderTitle}`
 }
     return (
 
