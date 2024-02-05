@@ -238,6 +238,7 @@ const ProductDeatil = ({ productData = {} }) => {
             totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
         }
         let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
+        totalAmount = totalAmount - extraDiscount
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
