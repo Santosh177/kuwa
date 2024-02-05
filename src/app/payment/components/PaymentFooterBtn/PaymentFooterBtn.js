@@ -26,7 +26,7 @@ export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, b
     }
    
 },[prePaidDiscount,selectedPaymentMethod])
-  const finalTotalAmount = extraDiscount ? totalPrice - extraDiscount : (codCharge > 0 ? totalPrice + codCharge : totalPrice) 
+  const finalTotalAmount = extraDiscount ? totalPrice - extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalPrice + codCharge : totalPrice) 
   
       return (
         <div className={styles.paymentFooterbtn} >

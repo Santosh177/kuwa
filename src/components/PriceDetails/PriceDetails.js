@@ -17,11 +17,12 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
             codCharge=0;
         }
         else{
-           setExtraDiscount && setExtraDiscount(0)
+           setExtraDiscount && setExtraDiscount(0);
+           console.log("dbhah",codCharge)
         }
     },[selectedPaymentMethod,totalAmount]);
     console.log("selectedPaymentMethod",selectedPaymentMethod)
-    const FinalTotalAmount = extraDiscount > 0 ? totalAmount-extraDiscount : (codCharge > 0 ? totalAmount + codCharge : totalAmount )  ;
+    const FinalTotalAmount = extraDiscount > 0 ? totalAmount-extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalAmount + codCharge : totalAmount )  ;
 
     return(
         <div className={styles.header}>
