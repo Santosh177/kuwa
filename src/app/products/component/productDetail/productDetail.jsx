@@ -233,11 +233,13 @@ const ProductDeatil = ({ productData = {} }) => {
         let devliveryFees = 0
         const productName = name;
         const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+        console.log("sajhaj",prePaidDiscount)
         if(productPrice < minThreshold){
             devliveryFees =  deliveryFeesConfig.deliveryFee;
             totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
         }
         let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
+        console.log("hvahah",extraDiscount)
         totalAmount = totalAmount - extraDiscount
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {

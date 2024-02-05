@@ -284,11 +284,11 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                }
                 <div className={styles.buyNow} onClick={() => handelBuyNow()} ><span>Buy Now</span></div>
             </div>
-           
+            
            { window && window.ApplePaySession && <div style={{marginTop:'24px',cursor:'pointer'}} onClick={()=>onHandleApplePay()}>
                <img style={{width:'100%'}} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/default.png" alt="apple-pay"></img>
             </div>}
-            {prePaidDiscount > 0 && <div className={styles.prepaidDiscount}>Extra {prePaidDiscount}% Off</div>}
+            { window && window.ApplePaySession && prePaidDiscount > 0 && <div className={styles.prepaidDiscount}>Extra {prePaidDiscount}% Off</div>}
             {/* <div className={styles.shareConatiner}>
                 <div className={styles.Share} >Share:</div>
                 <div className={styles.shareLogo}>

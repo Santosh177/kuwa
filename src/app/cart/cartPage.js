@@ -227,7 +227,10 @@ export default  function Cart({cartData}) {
       let devliveryFees = priceDetails['deliveryFees'];
       const cartItemCount = cartItems && cartItems.length;
       const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+      console.log("prePaidDiscountbb",prePaidDiscount);
       let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
+      totalAmount = totalAmount - extraDiscount
+      console.log("finalAmount",extraDiscount)
       console.log("cartItemscartItems",cartItems)
       let labelData = [];
 
@@ -256,7 +259,8 @@ export default  function Cart({cartData}) {
           {
             "label": "Shipping",
             "amount": devliveryFees
-          },{
+          },
+          {
             "label": "Additional Discount",
             "amount": extraDiscount
           }
