@@ -444,7 +444,9 @@ export default  function Cart({cartData}) {
       const cartItemPayload = await createPayloadForCartItems(cartItemsData);
       const description = `${userName + ",MULTIPLE_ITEM," + ""}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
-      const taxAmount = await calculateVatPercentage(priceDetails['subTotal'])
+      const taxAmount = await calculateVatPercentage(priceDetails['subTotal']);
+      const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+      let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
       let payload = {
           "cartId":getCartItems['id'] || "",
           "orderType": "one-time",
@@ -467,7 +469,8 @@ export default  function Cart({cartData}) {
           "taxAmount": taxAmount,
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
-          "cartItems": cartItemPayload
+          "cartItems": cartItemPayload,
+          "prepaidDiscountAmount":extraDiscount
         }
         payload['token'] = token;
         payload['paymentMode'] = "APPLE_PAY";
@@ -508,6 +511,8 @@ export default  function Cart({cartData}) {
     const currency = selectedCountry?.currency;
     const deliveryFeeMinPrice = minThreshold - subTotal;
     const progressBarColor = deliveryFeeMinPrice >= 0 ? Math.min((subTotal / minThreshold) * 100, 100) : 100;
+    const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+    console.log("jbwjwb",prePaidDiscount)
     const colorPerc = `${(207 * progressBarColor)/100}px`
     const activeProgressBar={
       width:colorPerc,
@@ -561,7 +566,7 @@ export default  function Cart({cartData}) {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn showViewDetails={showViewDetails} isApplePaySession={isApplePaySession} btnName="Proceed To Checkout" totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} />
+          <PaymentFooterBtn showViewDetails={showViewDetails} isApplePaySession={isApplePaySession} btnName="Proceed To Checkout" totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} prePaidDiscount={prePaidDiscount} />
           <Loader isShow={isLoading}/>
         </>
       )

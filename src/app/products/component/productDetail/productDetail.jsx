@@ -494,7 +494,9 @@ const ProductDeatil = ({ productData = {} }) => {
             devliveryFees =  deliveryFeesConfig.deliveryFee;
             totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
         }
-        const taxAmount = await calculateVatPercentage(productPrice)
+        const taxAmount = await calculateVatPercentage(productPrice);
+        const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+        let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
         let payload = {
             "cartId":getCartItems['id'] || "",
             "orderType": "one-time",
@@ -518,6 +520,7 @@ const ProductDeatil = ({ productData = {} }) => {
             "shippingAmount": 0,
             "deliveryCharges":devliveryFees,
             "cartItems": cartItemPayload,
+            "prepaidDiscountAmount":extraDiscount
           }
 
           payload['token'] = token;

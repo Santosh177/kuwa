@@ -57,8 +57,24 @@
     flex-direction: row;
     justify-content: space-between;
     .applePayContainer{
-        width: 48%
+        width: 48%;
+        position: relative;
+        span{
+            width: 78px !important;
+            height: 12px !important;
+            border-radius: 3px;
+            background: #CE4224;
+            color: #FFF;
+            font-size: 10px;
+            font-weight: 600;
+            padding-left: 5px;
+            position: absolute;
+            bottom: -3px;
+        //    margin: auto;
+        left: 28%;
+        }
     }
+   
         }
     }
     
