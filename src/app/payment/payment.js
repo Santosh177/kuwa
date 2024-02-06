@@ -394,8 +394,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "countryCode": selectedCountry.code || "",
           "countryId": selectedCountry.id || "",
           "description": description,
-          "finalAmount": priceDetails['totalAmount'],
-          "totalAmount": priceDetails['finalPayloadTotalAmount'],
+          "finalAmount": priceDetails['totalAmount']-extraDiscount ,
+          "totalAmount": priceDetails['finalPayloadTotalAmount'] ,
           "currency": selectedCountry.currency || "",
           "orderSource": "WEBSITE",
           "orderCategory": "CART",
@@ -555,8 +555,12 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
                 window.location.href = placeOrder.redirect_link
               }
         }else if(selectedPaymentMethod == "COD"){
+          const TotalAmount = priceDetails['totalAmount'] + codCharge;
+          const finalAmount = priceDetails['finalPayloadTotalAmount'] + codCharge
             payload['paymentMode'] = "COD";
-            payload[`codCharge`] = codCharge
+            payload[`codCharge`] = codCharge;
+            payload['totalAmount'] = TotalAmount;
+            payload['finalAmount'] = finalAmount
             trackData['Payment Type'] = 'Cod' || ''
             clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
               const placeOrderResp  =  await fetch('/api/place-order-without-payment', {
