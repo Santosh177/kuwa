@@ -1,25 +1,36 @@
+'use client'
 import HomePage from "./Home/HomePage";
-import { getCountryCookie} from '../lib/auth-cookies';
 import Loader from "@/components/Loader/Loader";
-import Head from "next/head";
-export default async function Home({}) {
+import { useEffect, useState } from "react";
+import { useCountry } from '@/context/contryDetails';
+export default function Home(req) {
+
+  console.log("HomePage",req)
+
+  const [homePageData, setHomePageData] = useState({});
+  const { selectedCountry={} }=useCountry()||{};
+
+
+  useEffect(()=>{
+      getHomePageLayout()
+  },[])
+
+  const getHomePageLayout = async() =>{
+       const homePageData  =  await fetch(`/api/get-home-page-data`, {
+        method: 'GET',
+        headers:{
+        'Content-Type': 'application/json',
+        'country' : selectedCountry.id
+      },
+      cache: 'no-store' 
+      })
+      const homePageDataResp = await homePageData.json();
+      setHomePageData(homePageDataResp)
+  }
   
-  const countryIdFromCookie = getCountryCookie();
-  let homePageDataResp = {}
-  console.log("countryIdFromCookiecountryIdFromCookie",countryIdFromCookie)
-  if(8){
-    // if(countryIdFromCookie){
-     const homePageData  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/home-page`, {
-      method: 'GET',
-      headers:{
-      'Content-Type': 'application/json',
-      'country' : 8
-    },
-    cache: 'no-store' 
-    })
-     homePageDataResp = await homePageData.json();
-  // }
-    }
+
+  console.log("homePageData",homePageData)
+
  
 
 
@@ -28,7 +39,7 @@ export default async function Home({}) {
       <script type="text/javascript" src="/spin-wheel.js" async></script>
       <script type="text/javascript" src="/fresh-chat.js" async></script>
       <script type="text/javascript" src="/clarity-setup.js" async></script>
-      {(homePageDataResp && Object.keys(homePageDataResp).length> 0)?<HomePage homePageData={homePageDataResp}/>: <Loader  isShow={true}/>}
+      {(homePageData && Object.keys(homePageData).length> 0)?<HomePage homePageData={homePageData}/>: <Loader  isShow={true}/>}
     </>
 
   )
