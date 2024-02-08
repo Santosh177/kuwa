@@ -67,7 +67,7 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
             {discountAmount> 0 &&  <AmountSavedInfo savedAmount={discountAmount} currency={currency}/>}
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>Total Amount</div>
-                <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + parseFloat(FinalTotalAmount).toFixed}</div>
+                <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + parseFloat(FinalTotalAmount).toFixed(2)}</div>
             </div>
             </>}
            
