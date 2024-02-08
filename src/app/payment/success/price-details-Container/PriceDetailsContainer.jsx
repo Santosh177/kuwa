@@ -37,7 +37,7 @@ codCharge=0 } = orderDetailsData
        
             <div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Price ({totalQuantity} items)</div>
-                <div className={styles.rowItemRightText}>{ currency +" " + allProductsPrice }</div>
+                <div className={styles.rowItemRightText}>{ currency +" " + parseFloat(allProductsPrice).toFixed(2)}</div>
             </div>
            { <>
             {discount > 0 &&<div className={styles.rowItemContainer}>
@@ -51,7 +51,7 @@ codCharge=0 } = orderDetailsData
            </div>}
            {codCharge>0 && <div className={styles.rowItemContainer}>
                <div  className={`${styles.rowItemLeftText} ${styles.codChargeTxt}`}>Additional COD Charges</div>
-               <div  className={[styles.rowItemRightText,styles.codChargeAmount].join(" ")}>- {currency + " "+ parseFloat(codCharge)} </div>
+               <div  className={[styles.rowItemRightText,styles.codChargeAmount].join(" ")}>{currency + " "+ parseFloat(codCharge)} </div>
            </div>}
             <div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Delivery Fee</div>
