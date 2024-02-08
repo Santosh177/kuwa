@@ -555,8 +555,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
                 window.location.href = placeOrder.redirect_link
               }
         }else if(selectedPaymentMethod == "COD"){
-          const TotalAmount = priceDetails['totalAmount'] + codCharge;
-          const finalAmount = priceDetails['finalPayloadTotalAmount'] + codCharge
+          const TotalAmount = priceDetails['finalPayloadTotalAmount'] + codCharge;
+          const finalAmount = priceDetails['totalAmount'] + codCharge
             payload['paymentMode'] = "COD";
             payload[`codCharge`] = codCharge;
             payload['totalAmount'] = TotalAmount;
