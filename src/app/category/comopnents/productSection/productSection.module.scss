@@ -1,7 +1,8 @@
 .productSectionContainer{
-    margin-top:20px;
+    // margin-top:20px;
     margin-bottom:50px;
     padding: 10px;
+    padding-top: 0px !important;
 
     .allProduct{
         display: flex;
@@ -9,7 +10,7 @@
         flex-wrap: wrap;
         gap: 20px;
         .product{
-            margin-top: 60px;
+            // margin-top: 60px;
         }
     }
 }

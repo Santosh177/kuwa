@@ -168,7 +168,7 @@ const handleAllProduct = () =>{
                     "quantity": 1,
                     "product Id":data.id || "",
                   }
-                  if(variants && variants.length > 0) {
+                  if(variants && variants.length > 0 && data.variantPrices) {
                     const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
                     if(variantPrices && variantPrices.length>0){
                       cardData = {
