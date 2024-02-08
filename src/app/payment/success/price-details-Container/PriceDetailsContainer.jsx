@@ -38,17 +38,35 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
            { <>
             {discount > 0 &&<div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Coupon Discount</div>
-                <div  className={[styles.rowItemLeftText,styles.discount].join(" ")}>- {currency + " "+ discountAmount}
+                <div  className={[styles.rowItemLeftText,styles.discount].join(" ")}>
+                    <div style={{display:"flex",gap:"5px",justifyContent:"flex-end"}}>
+                        <div>- {currency}</div>
+                        <div>{discountAmount}</div>
+                    </div>
+                  
                 <div className={styles.couponCode}>({couponType=="Percentage"?coupon +" " + "-" + " " + (couponPercentage + ""+ "%"):(coupon +" " + "-" + " " + discountAmount + ""+" " + currency)})</div> </div>
             </div>}
             <div className={styles.rowItemContainer}>
                 <div className={styles.rowItemLeftText}>Delivery Fee</div>
-                <div className={[styles.rowItemRightText,styles.freeDeliveryTxt].join(" ")}> {deliveryFee>0 ? (<span className={styles.price}>+ {currency + " "+ deliveryFee}</span>):(<span>Free</span>)}</div>
+                <div className={[styles.rowItemRightText,styles.freeDeliveryTxt].join(" ")}>
+                     {deliveryFee>0 ? (<span className={styles.price}>
+                        <div style={{display:"flex",gap:"5px"}}>
+                     <div>+{currency}</div>
+                     <div>{deliveryFee}</div>
+                     </div> 
+                      </span>):(<span>Free</span>)}
+                      </div>
             </div>
             {discount> 0 &&  <AmountSavedInfo savedAmount={discountAmount} currency={currency}/>}
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>Total Amount</div>
-                <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>{currency + " " + parseFloat(finalAmount).toFixed(2)}</div>
+                <div className={[styles.rowItemRightText,styles.totalAmountPrice].join(" ")}>
+                <div style={{display:"flex",gap:"5px"}}>
+                    <div>{currency } </div>
+                    <div> {parseFloat(finalAmount).toFixed(2)}</div>
+                    </div> 
+                     {/* {currency + " " + parseFloat(finalAmount).toFixed(2)} */}
+                    </div>
             </div>
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.paymentTypeTxt].join(" ")}>Payment Method</div>
