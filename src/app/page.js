@@ -38,7 +38,7 @@ export default function Home(req) {
     <>
       <script type="text/javascript" src="/spin-wheel.js" async></script>
       <script type="text/javascript" src="/fresh-chat.js" async></script>
-      <script type="text/javascript" src="/clarity-setup.js" async></script>
+      {process.env.NODE_ENV === 'prod' && <script type="text/javascript" src="/clarity-setup.js" async></script>}
       {(homePageData && Object.keys(homePageData).length> 0)?<HomePage homePageData={homePageData}/>: <Loader  isShow={true}/>}
     </>
 
