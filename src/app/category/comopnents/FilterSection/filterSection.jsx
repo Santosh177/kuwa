@@ -359,7 +359,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 const FilterSection = ({ setSelectedOptionsHead, responseData, slectedFilter, setSelectedFilter, setParamsData, paramsData }) => {
     return (
         <div className={style.filterOuterContainer}>
-            <div className={style.isDekstop} style={{marginTop:'60px',width:'235px'}}>
+            <div className={style.isDekstop} style={{width:'235px'}}>
             {responseData &&Object.keys(responseData).length > 0 &&  <FilterSectionDesktop paramsData={paramsData} setParamsData={setParamsData} responseData={responseData} setSelectedOptionsHead={setSelectedOptionsHead}  />}
             </div>
             <div className={style.isMobile}>
