@@ -116,7 +116,10 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
 
 const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
   const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
-
+  const { selectedCountry={} } = useCountry();
+  const codCharge = selectedCountry.codCharge || 0;
+  const currency =  selectedCountry.currency || ""
+  console.log("codCharge",codCharge)
 
 
   return(
@@ -140,7 +143,7 @@ const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cash_on_delivery.png' alt='logo'/>
                 <div className={styles.desc}>
                    <div className={styles.txt}>Cash On Delivery</div>
-                   <div className={styles.subTxt}>Pay when you receive your order</div>
+                  {codCharge > 0 ? <div className={styles.codChargeTxt}>Additional {codCharge} {currency} fee applicable on COD</div> : <div className={styles.subTxt}>Pay when you receive your order</div> } 
                 </div>
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'COD'}/>

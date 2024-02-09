@@ -23,12 +23,21 @@
             font-weight: 400;
             font-size: 14px;
         }
+        .extraPayment{
+            width:187px !important;
+        }
         .rowItemRightText{
             font-weight: 400;
             font-size: 14px;
         }
         .discountAmount{
             color: #247A81;
+        }
+        .extradiscountAmount{
+            color: #247A81;
+        }
+        .codChargeAmount{
+            color: #CE4224;
         }
         .freeDeliveryTxt{
             color: #247A81;
@@ -67,4 +76,15 @@
         max-width: 346px;
     }
 }
+
+@media(max-width:350px){
+    .priceDetailsWrapper{
+        .rowItemContainer{
+            .extraPayment{
+                width: 150px !important;    
+            }
+        }
+    }
+}
+
    
