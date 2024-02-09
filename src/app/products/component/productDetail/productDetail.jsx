@@ -233,11 +233,15 @@ const ProductDeatil = ({ productData = {} }) => {
         let totalAmount = productPrice;
         let devliveryFees = 0
         const productName = name;
+        const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+        console.log("sajhaj",prePaidDiscount)
         if(productPrice < minThreshold){
             devliveryFees =  deliveryFeesConfig.deliveryFee;
             totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
         }
-      
+        let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
+        console.log("hvahah",extraDiscount)
+        totalAmount = totalAmount - extraDiscount
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
@@ -258,6 +262,10 @@ const ProductDeatil = ({ productData = {} }) => {
               {
                   "label": "Shipping",
                   "amount": devliveryFees
+              },
+              {
+                "label": "Additional Discount",
+                "amount": extraDiscount
               }
           ],
         };
@@ -487,7 +495,9 @@ const ProductDeatil = ({ productData = {} }) => {
             devliveryFees =  deliveryFeesConfig.deliveryFee;
             totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
         }
-        const taxAmount = await calculateVatPercentage(productPrice)
+        const taxAmount = await calculateVatPercentage(productPrice);
+        const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+        let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
         let payload = {
             "cartId":getCartItems['id'] || "",
             "orderType": "one-time",
@@ -511,6 +521,7 @@ const ProductDeatil = ({ productData = {} }) => {
             "shippingAmount": 0,
             "deliveryCharges":devliveryFees,
             "cartItems": cartItemPayload,
+            "prepaidDiscountAmount":extraDiscount
           }
 
           payload['token'] = token;
