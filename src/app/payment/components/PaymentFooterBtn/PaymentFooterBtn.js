@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import styles from './payment-footer-btn.module.scss';
 import { usePaymentPageData } from '@/context/payment';
 
-export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false,showViewDetails,prePaidDiscount="",extraDiscount,selectedPaymentMethod,setExtraDiscount,currency,codCharge}) {
+export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false,showViewDetails,prePaidDiscount="",extraDiscount,selectedPaymentMethod,setExtraDiscount,currency,codCharge,data}) {
+
   const isApplePay =  paymentMethodConfig['applePay']['isEnable'];
   useEffect(()=>{
     try {
@@ -15,10 +16,11 @@ export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, b
     }
     
   },[])
+ 
   
   useEffect(()=>{
     if(prePaidDiscount && (selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" )){
-      setExtraDiscount && setExtraDiscount(parseFloat((((totalPrice) * prePaidDiscount) / 100).toFixed(2)))
+      setExtraDiscount && setExtraDiscount(parseFloat((((data?.subTotal) * prePaidDiscount) / 100).toFixed(2)))
       codCharge=0;
     }
     else{

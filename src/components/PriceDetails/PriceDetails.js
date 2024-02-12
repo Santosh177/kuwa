@@ -11,9 +11,10 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
 
 const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePaidDiscount,extraDiscount,setExtraDiscount,myPrePaidDiscount,codCharge,myCodCharge}) => {
     const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0,prepaidDiscountAmount=0} = data || {}
+    console.log("hdbhjw",subTotal)
     useEffect(()=>{
         if(prePaidDiscount && (selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" ) ){
-            setExtraDiscount && setExtraDiscount(parseFloat((((totalAmount) * prePaidDiscount)/100).toFixed(2)));
+            setExtraDiscount && setExtraDiscount(parseFloat((((subTotal) * prePaidDiscount)/100).toFixed(2)));
             codCharge=0;
         }
         else{

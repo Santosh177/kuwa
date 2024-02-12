@@ -132,7 +132,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
               <div className={styles.paymentMethod}>
                 <PaymentMethod price={priceDetails.totalAmount } paymentMethodConfig={paymentMethodConfig} onPayment={onPayment}  />
               </div>
-              <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig} onPayment={onPayment} btnName="Proceed To Pay"  currency = {priceDetails.currency} totalPrice={priceDetails.totalAmount}  onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}} isEnable={selectedPaymentMethod != ""} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount} selectedPaymentMethod={selectedPaymentMethod} codCharge={codCharge}  />
+              <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig} onPayment={onPayment} btnName="Proceed To Pay"  currency = {priceDetails.currency} totalPrice={priceDetails.totalAmount}  onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}} isEnable={selectedPaymentMethod != ""} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount} selectedPaymentMethod={selectedPaymentMethod} codCharge={codCharge} data={priceDetails}  />
       </div>
   )
 }
