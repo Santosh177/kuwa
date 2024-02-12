@@ -359,7 +359,15 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
  
 
     const onPayment = async(data,pMode="",) => {
-      console.log("prePaidDiscount",extraDiscount)
+      console.log("prePaidDiscount",extraDiscount);
+      const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+      console.log("sdbnsh",priceDetails['discountAmount']);
+
+      console.log("dsbhab",(priceDetails['totalAmount']-priceDetails['deliveryFees']));
+      const discountAmount = (parseFloat((((priceDetails['totalAmount']-priceDetails['deliveryFees']) * prePaidDiscount)/100).toFixed(2)));
+      console.log("discountAmount",discountAmount)
+      console.log("ebqhjq",prePaidDiscount)
+      console.log("pMode",pMode)
       setIsLoader(true);
       const userName = userData && userData['firstName'] || "";
       const getCartItems = await getCartItem();
@@ -438,6 +446,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               }
         }
         if(selectedPaymentMethod == "CHECKOUT_CARD"){
+          payload['prepaidDiscountAmount'] = discountAmount || "",
+          payload['finalAmount'] = priceDetails['totalAmount']-discountAmount 
             payload['token'] = data['token'];
             payload['paymentMode'] = "CARD";
             trackData['Payment Type'] = 'card' || '';
