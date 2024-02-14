@@ -688,7 +688,13 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           supportedNetworks: applePaySupportednetworks.split(", "),
           countryCode: selectedCountry.code || "",
           currencyCode:  selectedCountry.currency || "",
-          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount'] },
+          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-extraDiscount },
+        "lineItems":[
+          {
+            "label": "Additional Discount",
+            "amount": -extraDiscount
+          }
+        ]
         };
         appleSession = new ApplePaySession(3, request);
         appleSession.begin();

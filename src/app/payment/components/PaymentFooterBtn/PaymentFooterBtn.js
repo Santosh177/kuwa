@@ -6,7 +6,7 @@ import { usePaymentPageData } from '@/context/payment';
 export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false,showViewDetails,prePaidDiscount="",extraDiscount,selectedPaymentMethod,setExtraDiscount,currency,codCharge,data}) {
 const {discountAmount="",subTotal=""} = data || {}
   const isApplePay =  paymentMethodConfig['applePay']['isEnable'];
-  const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
+  // const {selectedPaymentMethod , setSelectedPaymentMethod} = usePaymentPageData();
   useEffect(()=>{
     try {
       if(window && window.fcWidget){
@@ -44,10 +44,17 @@ const {discountAmount="",subTotal=""} = data || {}
                    <div className={styles.subTxt} onClick={()=>showViewDetails()}>View price details</div> 
                 </div>
                 <div className={styles.paymentBtn}>
-                 {isApplePay && <div className={styles.applePayBtn} onClick={()=>{setSelectedPaymentMethod(APPLE_PAY);onProceed("APPLE_PAY")}}>
+              
+                <div style={{display:"flex",flexDirection:"column"}}>
+                 {  isApplePay && <div className={styles.applePayBtn} onClick={()=>{setSelectedPaymentMethod(APPLE_PAY);onProceed("APPLE_PAY")}}>
                     <div>Pay with</div>
                     <img className={styles.appleLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/image+122.png' alt='apple-pay'/>
-                  </div>}
+                  
+                  </div>
+                  }
+                    { isApplePay && prePaidDiscount > 0 && <div className={styles.prepaidDiscount}>Extra {prePaidDiscount}% Off</div>}
+                  </div>
+
                   <div className={[styles.btn,(isEnable)?styles.btn_active:""].join(" ")} onClick={()=>onProceed()}>{btnName}</div>
                 </div>
              
