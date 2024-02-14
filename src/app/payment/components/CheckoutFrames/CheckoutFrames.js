@@ -13,6 +13,14 @@ export default function CheckoutFrames({onPayment,publicKey=""}) {
       const [isTrigged, setIsTriggered] = useState(false);
       const [currency, setCurrency] = useState("");
       const [showLoader, setIsShowLoader] = useState(false)
+      const [token , setToken] = useState("")
+
+
+      useEffect(()=>{
+        if(token){
+          onPayment({token:token})
+        }
+      },[token])
      
   
 
@@ -80,7 +88,8 @@ export default function CheckoutFrames({onPayment,publicKey=""}) {
         }}
         cardTokenized={(e) => {
           console.log("TOKENN",e.token)
-          onPayment({token:e.token})
+      
+          setToken(e.token)
       }}
         cardTokenizationFailed={(e) => {
         }}

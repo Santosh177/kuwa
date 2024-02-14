@@ -11,16 +11,24 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
 
 const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePaidDiscount,extraDiscount,setExtraDiscount,myPrePaidDiscount,codCharge,myCodCharge}) => {
     const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0,prepaidDiscountAmount=0} = data || {}
+    console.log("hdbhjw",subTotal)
+    console.log("bqgq",discountAmount)
     useEffect(()=>{
         if(prePaidDiscount && (selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" ) ){
-            setExtraDiscount && setExtraDiscount(parseFloat((((totalAmount) * prePaidDiscount)/100).toFixed(2)));
+            if(discountAmount<0){
+                setExtraDiscount && setExtraDiscount(parseFloat((((subTotal) * prePaidDiscount)/100).toFixed(2)));
             codCharge=0;
+            }
+            else{
+                setExtraDiscount && setExtraDiscount(parseFloat((((subTotal-discountAmount) * prePaidDiscount)/100).toFixed(2)));
+            }
+            
         }
         else{
            setExtraDiscount && setExtraDiscount(0);
            console.log("dbhah",codCharge)
         }
-    },[selectedPaymentMethod,totalAmount]);
+    },[selectedPaymentMethod,totalAmount,discountAmount]);
     console.log("selectedPaymentMethod",selectedPaymentMethod)
     const FinalTotalAmount = extraDiscount > 0 ? totalAmount-extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalAmount + codCharge : totalAmount )  ;
 
