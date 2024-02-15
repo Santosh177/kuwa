@@ -682,17 +682,18 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       if(selectedPaymentMethod =="CHECKOUT_CARD"){
         Frames.submitCard()
       }else if(selectedPaymentMethod === "APPLE_PAY" || pMode === "APPLE_PAY"){
+        console.log("extradiscountttt",extraDiscount)
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
           supportedNetworks: applePaySupportednetworks.split(", "),
           countryCode: selectedCountry.code || "",
           currencyCode:  selectedCountry.currency || "",
-          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-extraDiscount },
+          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount'] },
         "lineItems":[
           {
             "label": "Additional Discount",
-            "amount": -extraDiscount
+            "amount": -"extraDiscount"
           }
         ]
         };
