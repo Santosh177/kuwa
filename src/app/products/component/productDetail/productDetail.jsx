@@ -265,7 +265,7 @@ const ProductDeatil = ({ productData = {} }) => {
               },
               {
                 "label": "Additional Discount",
-                "amount": extraDiscount
+                "amount": - extraDiscount
               }
           ],
         };

@@ -262,7 +262,7 @@ export default  function Cart({cartData}) {
           },
           {
             "label": "Additional Discount",
-            "amount": extraDiscount
+            "amount": - extraDiscount
           }
         ],
       };

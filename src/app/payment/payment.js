@@ -693,10 +693,12 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         "lineItems":[
           {
             "label": "Additional Discount",
-            "amount": -"extraDiscount"
+            "amount": - "extraDiscount"
           }
         ]
+        
         };
+        console.log("hvahjavha",request)
         appleSession = new ApplePaySession(3, request);
         appleSession.begin();
         appleSession.onvalidatemerchant = async (event) => {
