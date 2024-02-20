@@ -5,11 +5,19 @@ import styles from './product-card.module.scss';
 
 const ProductCard = ({ cardData={}, addToCart = {}, style = {} }) => {
     const router = useRouter();
-    const { productName =0, finalPrice =0, retailPrice = "", currency = "", image = "", id = "", seoUrl = "" } = cardData || {}
+    const { productName =0, finalPrice =0, retailPrice = "", currency = "", image = "", id = "", seoUrl = "",dealId="",isDealActive="",isTimerActive="",tag="",tagIconUrl="" } = cardData || {}
+    console.log("shbhhaa",cardData)
     let discount=retailPrice-finalPrice;
     return (
         <div id="search-container" className={styles.productCardItem} onClick={() => { window.location.href = `/products/` + seoUrl}}>
+              {
+            // tag &&
+             tagIconUrl && <div className={styles.tagSection}>
+                        <img src={tagIconUrl} alt='tag-icon'></img>
+                        <div className={styles.tagTxt}>{ "hot deals"}</div>
+                    </div>}
             <div id="search-container" className={styles.productCardWrapper}>
+          
                 <div id="search-container" className={styles.productImgWrapper}>
                     <div id="search-container" className={styles.productImgContainer}>
                         <img id="search-container" className={styles.productImg} src={image} alt='product-name' />

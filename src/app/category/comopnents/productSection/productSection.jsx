@@ -6,6 +6,7 @@ import ProductCard from "@/components/ProductCard/ProductCard"
 import Loader from "@/components/Loader/Loader"
 import { addToCart } from "@/services"
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { mappingDealProducts } from "@/services"
 
 const ProductSection = ({ resposneValue = [] }) => {
     const [isLodaing, setIsLoading] = useState(false);
@@ -27,23 +28,27 @@ const ProductSection = ({ resposneValue = [] }) => {
             <div className={style.productSectionContainer}>
                 <div className={style.allProduct}>
                     {resposneValue.map((item, index) => {
-                        const { id = '', image = '', name = '', price = {}, seoUrl = '', title = '' } = item || {};
-                        const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
-                        const cardData = {
-                            productName: name,
-                            finalPrice: finalPrice,
-                            retailPrice: retailPrice,
-                            currency: currency,
-                            discount: discount,
-                            discountType: discountType,
-                            image: image || "",
-                            id: id || "",
-                            seoUrl:seoUrl || ""
-                        }
+                        // const { id = '', image = '', name = '', price = {}, seoUrl = '', title = '' } = item || {};
+                        // const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
+                        // const cardData = {
+                        //     productName: name,
+                        //     finalPrice: finalPrice,
+                        //     retailPrice: retailPrice,
+                        //     currency: currency,
+                        //     discount: discount,
+                        //     discountType: discountType,
+                        //     image: image || "",
+                        //     id: id || "",
+                        //     seoUrl:seoUrl || ""
+                        // }
+                        const cardData = mappingDealProducts(item);
+                        console.log("allProduct",cardData)
+                        const productName = cardData.productName;
+                        const productId = cardData.productId;
                          trackData = {
-                            "product Name": name,
+                            "product Name": productName,
                             "quantity": 1,
-                            "product Id": id,
+                            "product Id": productId,
                         }
                         return (
                             <div className={style.product}>

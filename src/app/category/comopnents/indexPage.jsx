@@ -1,5 +1,5 @@
 'use client'
-
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
@@ -13,7 +13,8 @@ const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 
 
-const MainCategory = () => {
+const MainCategory = ({isDealPage}) => {
+    console.log("isDealPage",isDealPage)
     const searchParams = useSearchParams();
     const { selectedCountry = {} } = useCountry();
     const router=useRouter();
@@ -26,13 +27,15 @@ const MainCategory = () => {
     // const [searchKey,setSearchKey]=useState("");
 
     const [paramsData, setParamsData] = useState({})
-
-
+    const params = useParams();
+    const dealId= params.id || "";
+    console.log("sbhs",dealId)
+   console.log("searchParamsugwugw",searchParams)
     console.log('paramsData',paramsData)
 
     useEffect(()=>{
-           
-            
+          
+        //    else{
             if(searchParams.has('category') && searchParams.has('sort')){
                 const category = searchParams.get('category');
                 const sort = searchParams.get('sort');
@@ -91,98 +94,116 @@ const MainCategory = () => {
                 setParamsData({ ...paramsData, searchKey: search })
                 router.replace(window.location.pathname);
             }
+        //    }
+            
+            
 
     },[])
 
 
     useEffect(()=>{
-        if(paramsData && Object.keys(paramsData).length > 0){
-            fetchFilterCollectionData()
-        }
-
-        if(paramsData && Object.keys(paramsData).length > 0 && searchParams.has('category') && searchParams.has('sort')){
-
-        }
+       
+            if(paramsData && Object.keys(paramsData).length > 0){
+                fetchFilterCollectionData()
+            }
+    
+            if(paramsData && Object.keys(paramsData).length > 0 && searchParams.has('category') && searchParams.has('sort')){
+    
+            }
+        
+       
     },[paramsData])
-
-    const fetchFilterCollectionData = async () => {
-        setIsLoadingProduct(true)
-        const { category = "", sort = "",searchKey="" } = paramsData || {};
-        let query = ""
-        if (sort && category) {
-            if(category && category.length > 0){
-                query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category)}`
-            }else{
-                query = `sort_by=${encodeURIComponent(sort)}`
-            }
-            
-        } else if (sort && !category) {
-            query = `sort_by=${encodeURIComponent(sort)}`
-        } else if (!sort && category && category.length > 0) {
-            const categoryJoin = category.join(',')
-            query = `category=${encodeURIComponent(categoryJoin)}`
-        };
-        if (searchKey){
-            if (!sort && (!category||category.length==0) ){
-                query = `search_key=${encodeURIComponent(searchKey)}`
-            }
-            else{
-                query = query + `&search_key=${encodeURIComponent(searchKey)}`
-            }
-        }
-        // const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${query}`, {
+     // const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${query}`, {
         //     method: 'GET',
         //     headers: {
         //         'Content-Type': 'application/json',
         //     }
         // })
-        const getProduct = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}&${query}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
+
+        const fetchFilterCollectionData = async () => {
+            setIsLoadingProduct(true);
+            const { category = [], sort = "", searchKey = "" } = paramsData || {};
+            let query = "";
+        
+            if (sort && category.length > 0) {
+                query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category.join(','))}`;
+            } else if (sort && category.length === 0) {
+                query = `sort_by=${encodeURIComponent(sort)}`;
+            } else if (!sort && category.length > 0) {
+                query = `category=${encodeURIComponent(category.join(','))}`;
             }
-        })
-     
-        if (getProduct) {
-            const getProductData = await getProduct.json();
-            setResponseValue(getProductData);
-        }
-        setIsLoadingProduct(false)
-    }
-
-
-
-
-
-
-
-
-
-
-    const fetchData = async () => {
-        setIsLoadingProduct(true)
-        const { category = "", sort = "" } = selectedOptionsHead || {};
-        let query = ""
-        if (sort && category) {
-            query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category)}`
-        } else if (sort && !category) {
-            query = `sort_by=${encodeURIComponent(sort)}`
-        } else if (!sort && category) {
-            query = `category=${encodeURIComponent(category)}`
+        
+            if (searchKey) {
+                if (!sort && category.length === 0) {
+                    query = `search_key=${encodeURIComponent(searchKey)}`;
+                } else {
+                    query += `&search_key=${encodeURIComponent(searchKey)}`;
+                }
+            }
+        
+            let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}&${query}`;
+        
+            if (isDealPage) {
+                endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealId}?${query}&country_id=${selectedCountry.id}`;
+            }
+        
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+        
+                const data = await response.json();
+                setResponseValue(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                // Handle error or set appropriate state
+            } finally {
+                setIsLoadingProduct(false);
+            }
         };
-        const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${query}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
+        
+
+        
+
+
+
+
+
+
+
+
+
+    // const fetchData = async () => {
+    //     setIsLoadingProduct(true)
+    //     const { category = "", sort = "" } = selectedOptionsHead || {};
+    //     let query = ""
+    //     if (sort && category) {
+    //         query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category)}`
+    //     } else if (sort && !category) {
+    //         query = `sort_by=${encodeURIComponent(sort)}`
+    //     } else if (!sort && category) {
+    //         query = `category=${encodeURIComponent(category)}`
+    //     };
+    //     const getProduct = await fetch(`/api/catrgories-products?paramsofCat=${query}`, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         }
+    //     })
      
-        if (getProduct) {
-            const getProductData = await getProduct.json();
-            setResponseValue(getProductData);
-        }
-        setIsLoadingProduct(false)
-    }
+    //     if (getProduct) {
+    //         const getProductData = await getProduct.json();
+    //         setResponseValue(getProductData);
+    //     }
+    //     setIsLoadingProduct(false)
+    // }
 
 
     const fetchFilterData = async() =>{
@@ -200,15 +221,36 @@ const MainCategory = () => {
         setIsLOading(false)
     }
   
+    const fetchDealFilterData = async()=>{
+        setIsLOading(true)
+        const getFilterData = await fetch(`/api/deal-category-filter?dealId=${dealId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        if(responseData && Object.keys(responseData).length == 0){
+            const getFilterDataResp = await getFilterData.json();
+            setResponseData(getFilterDataResp);
+        }
+        setIsLOading(false)
+    }
     useEffect(() => {
+        if(isDealPage){
+            fetchDealFilterData();
+        }
+        else{
             fetchFilterData()
+        }
+            
     }, [])
 
-    useEffect(()=>{
-        if(selectedOptionsHead &&  ((selectedOptionsHead.sort != "") || (selectedOptionsHead.category != ""))){
-            // fetchData()
-        }
-    },[selectedOptionsHead])
+    // useEffect(()=>{
+    //     if(selectedOptionsHead &&  ((selectedOptionsHead.sort != "") || (selectedOptionsHead.category != ""))){
+    //         // fetchData()
+    //     }
+    // },[selectedOptionsHead])
+
     const isHide = slectedFilter === "NOT_SELCTED" || slectedFilter === "Sort By";
     let isShowDotForCat = false;
     if (paramsData && paramsData['category'] && paramsData['category'].length > 0) {

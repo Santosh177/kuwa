@@ -58,8 +58,68 @@ const ProductSlider = ({data}) => {
           >
             {
               product.map((data, index) => {
+
+               const {
+                image= "",
+                id= "",
+                title="",
+                name= "",
+                countDownStartsAt="",
+                countDownEndsAt="",
+                dealId="",
+                dealListPrice="",
+                dealDiscountPrice="",
+                dealFinalPrice= "",
+                dealInventory="",
+                rank="",
+                seoUrl="",
+                productListPrice= "",
+                productFinalPrice = "",
+                productDiscount = "",
+                normalInventory = "",
+                variantId="",
+                variantName = "",
+                variantImage = "",
+                variantListPrice = "",
+                variantFinalPrice = "",
+                variantDiscount = "",
+                isDealActive="",
+                isTimerActive="",
+                dealTag="",
+                dealIconUrl="",
+                currentTimerStatus="",
+                currentTimerValue="",
+                currentDateTime=""} = data || {}
+
+                console.log("dealData",data)
                 const { finalPrice = "", retailPrice = "", currency = "", discount = "", discountType = "" } = data && data?.price || {}
-                const cardData = {
+                let cardData = {}
+                if(dealId){
+                   cardData={
+                    "dealId":dealId || "",
+                    "id":id || "",
+                    "productName":name,
+                    "productImage":image || "",
+                    "seoUrl":seoUrl || "",
+                    "retailPrice":dealListPrice,
+                  'finalPrice':dealFinalPrice,
+                  'discountType':"fixed",
+                  "discount":dealDiscountPrice || 0,
+                  "currency":currency,
+                  "dealInventory":dealInventory,
+                  "tag":dealTag,
+                  "tagIconUrl":dealIconUrl,
+                  "isDealActive":isDealActive,
+                  "isTimerActive":isTimerActive,
+                  "currentTimerStatus":currentTimerStatus,
+                  "currentTimerValue":currentTimerValue,
+                  "currentDateTime":currentDateTime
+                  }
+                }
+                else{
+
+                
+                 cardData = {
                   productName: data && data.name || "",
                   finalPrice: finalPrice,
                   retailPrice: retailPrice,
@@ -70,6 +130,7 @@ const ProductSlider = ({data}) => {
                   id: data?.id || "",
                   seoUrl: data?.seoUrl || ""
                 }
+              }
                 trackData = {
                   "product Name": data && data.name,
                   "quantity": 1,

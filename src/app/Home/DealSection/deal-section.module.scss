@@ -1,5 +1,5 @@
 .dealContainer{
-    background-color: bisque;
+    // background-color: bisque;
     margin: 16px;
     .dealHeader{    
         padding-top: 10px;
@@ -40,10 +40,18 @@ line-height: normal;
             align-items: center;
             gap:8px;
             .timerDiv{
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 width: 64px;
                 height: 32px;
                 border-radius: 4px;
                 background: #FFF;
+                color: #CE4224;
+font-size: 24px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
             }
         }
     }
@@ -69,5 +77,55 @@ line-height: normal;
            padding-top: 6px;
         }
     }
+    }
+}
+
+@media(max-width:990px){
+    .dealContainer{
+       .dealHeader{
+        .headingContent{
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: center;
+            align-items: baseline;
+            gap:14px;
+            .dealHeading{
+                
+                font-size: 18px;
+            }
+            .timeDurationDiv{
+                .timeTxt{
+                    font-size: 12px;
+                }
+                .dealTimeDuration{
+                    .timerDiv{
+                        width: 36px;
+                        height: 20px;
+                        font-size: 14px;
+                    }
+                }
+
+            }
+        }
+        .seeAllDiv{
+            width: 85px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    background: #FFF;
+            .txt{
+                font-size: 14px;
+                font-weight: 500;
+            }
+            .arrowImg{
+                padding-top: 6px;
+                // width: 16px;
+                // height: 16px;
+            }
+        }
+       } 
     }
 }

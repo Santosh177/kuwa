@@ -159,6 +159,37 @@ const handleAllProduct = () =>{
 
               {
                 product.slice(0, 12).map((data,index)=>{
+                  const {
+                    image= "",
+                    id= "",
+                    title="",
+                    name= "",
+                    countDownStartsAt="",
+                    countDownEndsAt="",
+                    dealId="",
+                    dealListPrice="",
+                    dealDiscountPrice="",
+                    dealFinalPrice= "",
+                    dealInventory="",
+                    rank="",
+                    seoUrl="",
+                    productListPrice= "",
+                    productFinalPrice = "",
+                    productDiscount = "",
+                    normalInventory = "",
+                    variantId="",
+                    variantName = "",
+                    variantImage = "",
+                    variantListPrice = "",
+                    variantFinalPrice = "",
+                    variantDiscount = "",
+                    isDealActive="",
+                    isTimerActive="",
+                    dealTag="",
+                    dealIconUrl="",
+                    currentTimerStatus="",
+                    currentTimerValue="",
+                    currentDateTime=""} = data || {}
                   const { variants=[]} = data  || {}
                   const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
                   let cardData = {
@@ -168,34 +199,61 @@ const handleAllProduct = () =>{
                     "quantity": 1,
                     "product Id":data.id || "",
                   }
-                  if(variants && variants.length > 0 && data.variantPrices) {
-                    const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
-                    if(variantPrices && variantPrices.length>0){
+                  if(dealId){
+                    if(dealId){
+                      cardData={
+                       "dealId":dealId || "",
+                       "id":id || "",
+                       "productName":name,
+                       "productImage":image || "",
+                       "seoUrl":seoUrl || "",
+                       "retailPrice":dealListPrice,
+                     'finalPrice':dealFinalPrice,
+                     'discountType':"fixed",
+                     "discount":dealDiscountPrice || 0,
+                     "currency":currency,
+                     "tag":dealTag,
+                     "tagIconUrl":dealIconUrl,
+                     "dealInventory":dealInventory,
+                     "isDealActive":isDealActive,
+                     "isTimerActive":isTimerActive,
+                     "currentTimerStatus":currentTimerStatus,
+                     "currentTimerValue":currentTimerValue,
+                     "currentDateTime":currentDateTime
+                     }
+                   }
+                  }
+                  else{
+                    if(variants && variants.length > 0 && data.variantPrices) {
+                      const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
+                      if(variantPrices && variantPrices.length>0){
+                        cardData = {
+                          productName: data && data.name || "",
+                          finalPrice: variantPrices[0].finalPrice,
+                          retailPrice: variantPrices[0].retailPrice,
+                          currency: currency,
+                          discount: variantPrices[0].discount,
+                          discountType: discountType || "",
+                          image: image || "",
+                          id: variantPrices[0].variantId || "",
+                          seoUrl: data.seoUrl || ""
+                        }
+                      }
+                    }else{
                       cardData = {
                         productName: data && data.name || "",
-                        finalPrice: variantPrices[0].finalPrice,
-                        retailPrice: variantPrices[0].retailPrice,
+                        finalPrice: finalPrice,
+                        retailPrice: retailPrice,
                         currency: currency,
-                        discount: variantPrices[0].discount,
-                        discountType: discountType || "",
-                        image: image || "",
-                        id: variantPrices[0].variantId || "",
+                        discount: discount,
+                        discountType: discountType,
+                        image: data.image || "",
+                        id: data.id || "",
                         seoUrl: data.seoUrl || ""
                       }
                     }
-                  }else{
-                    cardData = {
-                      productName: data && data.name || "",
-                      finalPrice: finalPrice,
-                      retailPrice: retailPrice,
-                      currency: currency,
-                      discount: discount,
-                      discountType: discountType,
-                      image: data.image || "",
-                      id: data.id || "",
-                      seoUrl: data.seoUrl || ""
-                    }
                   }
+                 
                   let addToCartPayload = {  }
                   if(variants && variants.length > 0){
                     const { variantPrices = [] ,name="",image="",id=""} = data.variants[0] || {};

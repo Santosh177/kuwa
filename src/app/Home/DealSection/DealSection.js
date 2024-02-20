@@ -6,59 +6,90 @@ import DealProductSlider from './DealProductSlider/DealProductSlider';
 const DealSection = ({ data }) => {
     console.log("dealDtoList", data);
     const { deal, dealProductVariantDtoList } = data || {};
-    const { heading, backgroundImageUrl, countDownEndsAt, countDownStartsAt, countryId, id, isDealActive, isTimerActive, tagIconUrl, seoUrl, tag } = deal || {};
-    const [time,setTime]=useState({hr:0,min:0,sec:0,days:0})
-    const startDate = new Date(countDownStartsAt);  
-    const endDate = new Date(countDownEndsAt);
-    let duration = endDate - startDate;
+    console.log("dealProductVariantDtoList",dealProductVariantDtoList)
+    const { heading, backgroundImageUrl, countDownEndsAt, countDownStartsAt,currentTimeStatus="", countryId, id, isDealActive, isTimerActive, tagIconUrl, seoUrl, tag } = deal || {};
 
-    // const formatDuration = (duration) => {
-    //     // Convert milliseconds to days, hours, minutes, and seconds
-    //     const days = Math.floor(duration / (1000 * 60 * 60 * 24));
-    //     const hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    //     const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
-    //     const seconds = Math.floor((duration % (1000 * 60)) / 1000);
+    const [remainingDays, setRemainingDays] = useState("")
+    const [remainingHour, setRemainingHour] = useState("")
+    const [remainingMin, setRemainingMin] = useState("")
+    const [remainingSec, setRemainingSec] = useState("")
+    // let { currentTimerValue ="" } = deal || {};
 
-    //     // Format the remaining time
-    //     // setTime(prevState=>({
-    //     //     ...prevState,hr:hours,min:minutes,sec:seconds,days:days
-    //     // }))
-    //     return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
-    // };
-    // const formattedDuration = formatDuration(duration);
+    let currentTimerValue = "1d-10h-60m"
+   
+    const [timer, setTimer] = useState(0); 
 
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         duration -= 1000;
-    //         const formattedDuration = formatDuration(duration);
 
-    //         console.log(formattedDuration); 
-    //         if (duration <= 0) {
-    //             clearInterval(intervalId);
-    //             console.log("Countdown ended");
-    //         }
-    //     }, 1000);
-    //     return () => clearInterval(intervalId);
-    // }, []);
-console.log("time",time)
-    const handleAllProduct = () => { };
+    useEffect(() => {
+        if (currentTimerValue) {
+          const data = currentTimerValue.match(/\d+/g); // Extract digits from the string
+          const [days, hours, minutes] = data && data.length === 3 ? data.map(Number) : [0, 0, 0];
+          const totalSeconds = days * 24 * 3600 + hours * 3600 + minutes * 60;
+          setTimer(totalSeconds);
+        } else {
+          setTimer(0);
+        }
+      }, [currentTimerValue]);
+  
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+          if(timer > 0) {
+              setTimer(prevTimer => prevTimer - 1);
+          }
+      
+      }, 1000);
+  
+      return () => clearInterval(intervalId);
+    }, [timer]);
+  
+//     const formatTime = (timeInSeconds) => {
+//       // const minutes = Math.floor(timeInSeconds / 60);
+//       // const seconds = timeInSeconds % 60;
+//       const days = Math.floor(timeInSeconds/86400)
+//       const hours = Math.floor(timeInSeconds / 3600);
+//       const minutes = Math.floor((timeInSeconds % 3600) / 60);
+//       const seconds = timeInSeconds % 60;
+//       return `${days.toString().padStart(2,'0')}:${hours.toString().padStart(2, '0')}hr:${minutes.toString().padStart(2, '0')}min:${seconds.toString().padStart(2, '0')}sec`;
+//     };
+//   console.log("dealTimer",formatTime(timer))
+
+  useEffect(() => {
+    if (timer > 0) {
+        const days = Math.floor(timer / (24 * 3600));
+        const hours = Math.floor((timer % (24 * 3600)) / 3600);
+        const minutes = Math.floor((timer % 3600) / 60);
+        const seconds = timer % 60;
+
+        setRemainingDays(days.toString().padStart(2, '0'));
+        setRemainingHour(hours.toString().padStart(2, '0'));
+        setRemainingMin(minutes.toString().padStart(2, '0'));
+        setRemainingSec(seconds.toString().padStart(2, '0'));
+    }
+}, [timer]);
+
+console.log("remaining",remainingSec)
+  
+    const handleAllProduct = () => {
+        window.location.href = `/DealPage/${id}`;
+     };
 
     return (
         <>
             {isDealActive && (
+                <div  style={{backgroundImage: `url('${backgroundImageUrl}')`}}>
                 <div className={styles.dealContainer}>
                     <div className={styles.dealHeader}>
                         <div className={styles.headingContent}>
                         <div className={styles.dealHeading}>{heading}</div>
-                        {/* isTimerActive && */}
-                        { (
+                        {isTimerActive && currentTimeStatus == "in-between" && 
+                        (
                             <div className={styles.timeDurationDiv}>
                                 <div className={styles.timeTxt}>Valid till</div>
                                 <div className={styles.dealTimeDuration}>
-                                    <div className={styles.timerDiv}></div>
-                                    <div className={styles.timerDiv}></div>
-                                    <div className={styles.timerDiv}></div>
-                                    <div className={styles.timerDiv}></div>
+                                    <div className={styles.timerDiv}>{remainingDays}d</div>
+                                    <div className={styles.timerDiv}>{remainingHour}h</div>
+                                    <div className={styles.timerDiv}>{remainingMin}m</div>
+                                    <div className={styles.timerDiv}>{remainingSec}s</div>
                                 </div>
                             </div>
                         )}
@@ -69,8 +100,9 @@ console.log("time",time)
                         </div>
                     </div>
                     <div className={styles.dealProductsContainer}>
-                        <DealProductSlider data={dealProductVariantDtoList} />
+                        <DealProductSlider data={dealProductVariantDtoList} tagIconUrl={tagIconUrl} tag={tag} isDealActive={isDealActive} isTimerActive={isTimerActive} />
                     </div>
+                </div>
                 </div>
             )}
         </>
