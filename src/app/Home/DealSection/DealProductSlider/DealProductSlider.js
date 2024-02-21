@@ -9,7 +9,7 @@ import Loader from '@/components/Loader/Loader';
 import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import styles from './deal-product-slider.module.scss'
-const DealProductSlider = ({data,tagIconUrl,tag,isDealActive}) => {
+const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,currentTimeStatus}) => {
   console.log("sdbhsha",isDealActive)
   // let isDealActive = isDealActive || false;
     const [isLoading , setIsLoading] = useState(false);
@@ -56,7 +56,7 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive}) => {
          {
               data.map((data, index) => {
                 const {productId,variantId} = data || {}
-                console.log("vahahv",data)
+                console.log("vahahv",isDealActive)
                 let cardData = {}
                 trackData = {
                     "product Name": data && data.productName || "",
@@ -65,6 +65,7 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive}) => {
                   }
                 if(variantId == null){
                     cardData = {
+                      dealId : data.dealId || "",
                         productName: data && data.productName || "",
                         finalPrice: data.productFinalPrice,
                         retailPrice: data.productListPrice,
@@ -81,9 +82,14 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive}) => {
                         normalInventory:data?.normalInventory,
                         tag:tag || "",
                         tagIconUrl:tagIconUrl || "",
+                        isDealActive:isDealActive,
+                        isTimerActive:isTimerActive,
+                        currentTimeStatus:currentTimeStatus,
                       }
                 }else{
                     cardData = {
+                      dealId : data.dealId || "",
+
                       productName: data && data.productName || "",
                       finalPrice: data.variantFinalPrice,
                       retailPrice: data.variantListPrice,
@@ -100,18 +106,21 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive}) => {
                       normalInventory:data?.normalInventory,
                       tag:tag || "",
                       tagIconUrl:tagIconUrl || "",
+                      isDealActive:isDealActive || false,
+                      isTimerActive:isTimerActive,
+                      currentTimeStatus:currentTimeStatus,
                     }
                 }
                 let addToCartPayload = {}
                 if(variantId){
-                    addToCartPayload = {"product":data.productId,"quantity:":1,"isVariant":true,"variantId":data.variantId}    
+                    addToCartPayload = {"product":data.productId,"quantity:":1,"isVariant":true,"variantId":data.variantId,"dealId":data.dealId}    
                 }
                 else{
-                    addToCartPayload =  { "product": data.productId, quantity: 1 }
+                    addToCartPayload =  { "product": data.productId, quantity: 1, "dealId" :data.dealId }
                 }
                
                 return (
-                    <ProductCard key={index} cardData={cardData}  addToCart={()=>onAddToCart(addToCartPayload)} isDealActive={isDealActive}/>
+                    <ProductCard key={index} cardData={cardData}  addToCart={()=>onAddToCart(addToCartPayload)} />
                 )
             })
          }

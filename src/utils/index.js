@@ -2,11 +2,33 @@
 
 export const getCartItemDetails = async(data,currency) => {
    let cartItem = []
+   let item = {}
     data.map((data, index)=>{
         const { image = {} ,quantity= 1,price="",originalPrice="",finalPrice="" ,  description={},id="",cartItemId="",variants  } = data || {};
+        const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive="",dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = data || {}
         const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
-        console.log("CART PRODUCT",data)
-        let item ={
+        console.log("CART PRODUCT",data);
+        if(dealId 
+          && isDealActive && isTimerActive 
+          // && currentTimerStatus == "in-between"
+          ){
+           item ={
+            "dealId":dealId,
+            "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+            "qty":quantity,
+            "productName":description.name || "",
+            "retailPrice":dealListPrice,
+            'finalPrice':dealFinalPrice,
+            'discountType':"fixed",
+            "discountAmount":dealDiscountPrice || 0,
+            "currency":currency,
+            "id":id,
+            "cartItemId":cartItemId,
+            "variants":variants
+        }
+        }
+        else{
+           item ={
             "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
             "qty":quantity,
             "productName":description.name || "",
@@ -19,6 +41,8 @@ export const getCartItemDetails = async(data,currency) => {
             "cartItemId":cartItemId,
             "variants":variants
         }
+        }
+       
        cartItem.push(item)
 
     })
@@ -27,7 +51,7 @@ export const getCartItemDetails = async(data,currency) => {
 
 export const createPayloadForCartItems = async(cartData) => {
     let cartItems = [];
-    
+      console.log("createPayloadForCartItems",createPayloadForCartItems)
       if(cartData && cartData.length > 0){
         cartData.map((data,index)=>{
           if(data.variants && data.variants.variants.id){
@@ -60,6 +84,7 @@ export const createPayloadForCartItems = async(cartData) => {
 
 export const createPayloadForItems = async (cartItems) => {
   console.log("cartItemscartItemscartItems",cartItems)
+  
   let items = [];
    if(cartItems && cartItems.length > 0){
       cartItems.map((data,index)=>{

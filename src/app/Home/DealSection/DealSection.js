@@ -8,64 +8,53 @@ const DealSection = ({ data }) => {
     const { deal, dealProductVariantDtoList } = data || {};
     console.log("dealProductVariantDtoList",dealProductVariantDtoList)
     const { heading, backgroundImageUrl, countDownEndsAt, countDownStartsAt,currentTimeStatus="", countryId, id, isDealActive, isTimerActive, tagIconUrl, seoUrl, tag } = deal || {};
-
+    console.log("currentTimeStatus",currentTimeStatus)
     const [remainingDays, setRemainingDays] = useState("")
     const [remainingHour, setRemainingHour] = useState("")
     const [remainingMin, setRemainingMin] = useState("")
     const [remainingSec, setRemainingSec] = useState("")
-    // let { currentTimerValue ="" } = deal || {};
+    let { currentTimerValue ="" } = deal || {};
 
-    let currentTimerValue = "1d-10h-60m"
+    // let currentTimerValue = "1d-10h-60m"
    
     const [timer, setTimer] = useState(0); 
 
 
-    useEffect(() => {
-        if (currentTimerValue) {
-          const data = currentTimerValue.match(/\d+/g); // Extract digits from the string
-          const [days, hours, minutes] = data && data.length === 3 ? data.map(Number) : [0, 0, 0];
-          const totalSeconds = days * 24 * 3600 + hours * 3600 + minutes * 60;
-          setTimer(totalSeconds);
-        } else {
-          setTimer(0);
-        }
-      }, [currentTimerValue]);
+//     useEffect(() => {
+//         if (currentTimerValue) {
+//           const data = currentTimerValue.match(/\d+/g); // Extract digits from the string
+//           const [days, hours, minutes] = data && data.length === 3 ? data.map(Number) : [0, 0, 0];
+//           const totalSeconds = days * 24 * 3600 + hours * 3600 + minutes * 60;
+//           setTimer(totalSeconds);
+//         } else {
+//           setTimer(0);
+//         }
+//       }, [currentTimerValue]);
   
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-          if(timer > 0) {
-              setTimer(prevTimer => prevTimer - 1);
-          }
+//     useEffect(() => {
+//       const intervalId = setInterval(() => {
+//           if(timer > 0) {
+//               setTimer(prevTimer => prevTimer - 1);
+//           }
       
-      }, 1000);
+//       }, 1000);
   
-      return () => clearInterval(intervalId);
-    }, [timer]);
-  
-//     const formatTime = (timeInSeconds) => {
-//       // const minutes = Math.floor(timeInSeconds / 60);
-//       // const seconds = timeInSeconds % 60;
-//       const days = Math.floor(timeInSeconds/86400)
-//       const hours = Math.floor(timeInSeconds / 3600);
-//       const minutes = Math.floor((timeInSeconds % 3600) / 60);
-//       const seconds = timeInSeconds % 60;
-//       return `${days.toString().padStart(2,'0')}:${hours.toString().padStart(2, '0')}hr:${minutes.toString().padStart(2, '0')}min:${seconds.toString().padStart(2, '0')}sec`;
-//     };
-//   console.log("dealTimer",formatTime(timer))
+//       return () => clearInterval(intervalId);
+//     }, [timer]);
 
-  useEffect(() => {
-    if (timer > 0) {
-        const days = Math.floor(timer / (24 * 3600));
-        const hours = Math.floor((timer % (24 * 3600)) / 3600);
-        const minutes = Math.floor((timer % 3600) / 60);
-        const seconds = timer % 60;
+//   useEffect(() => {
+//     if (timer > 0) {
+//         const days = Math.floor(timer / (24 * 3600));
+//         const hours = Math.floor((timer % (24 * 3600)) / 3600);
+//         const minutes = Math.floor((timer % 3600) / 60);
+//         const seconds = timer % 60;
 
-        setRemainingDays(days.toString().padStart(2, '0'));
-        setRemainingHour(hours.toString().padStart(2, '0'));
-        setRemainingMin(minutes.toString().padStart(2, '0'));
-        setRemainingSec(seconds.toString().padStart(2, '0'));
-    }
-}, [timer]);
+//         setRemainingDays(days.toString().padStart(2, '0'));
+//         setRemainingHour(hours.toString().padStart(2, '0'));
+//         setRemainingMin(minutes.toString().padStart(2, '0'));
+//         setRemainingSec(seconds.toString().padStart(2, '0'));
+//     }
+// }, [timer]);
 
 console.log("remaining",remainingSec)
   
@@ -81,7 +70,8 @@ console.log("remaining",remainingSec)
                     <div className={styles.dealHeader}>
                         <div className={styles.headingContent}>
                         <div className={styles.dealHeading}>{heading}</div>
-                        {isTimerActive && currentTimeStatus == "in-between" && 
+                        {isTimerActive &&
+                         currentTimeStatus == "in-between" && 
                         (
                             <div className={styles.timeDurationDiv}>
                                 <div className={styles.timeTxt}>Valid till</div>
@@ -100,7 +90,7 @@ console.log("remaining",remainingSec)
                         </div>
                     </div>
                     <div className={styles.dealProductsContainer}>
-                        <DealProductSlider data={dealProductVariantDtoList} tagIconUrl={tagIconUrl} tag={tag} isDealActive={isDealActive} isTimerActive={isTimerActive} />
+                        <DealProductSlider data={dealProductVariantDtoList} tagIconUrl={tagIconUrl} tag={tag} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimeStatus={currentTimeStatus} />
                     </div>
                 </div>
                 </div>

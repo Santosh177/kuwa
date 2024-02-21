@@ -42,11 +42,12 @@ const ProductImageSection = ({ allImages,dealTag,dealIconUrl,isDealActive,isTime
                         })}
 
                     </Glider> */}
-                     <div className={styles.tagSection} >
+                { isDealActive && isTimerActive && currentTimerStatus == "in-between" &&     <div className={styles.tagSection} >
                                         <img src={dealIconUrl}></img>
                                         <div className={styles.tagTxt}>{dealTag}</div>
                                       
                                     </div>
+    }
                     <div>
                  
                     <ImageSlider images = {images}/>
@@ -65,11 +66,11 @@ const ProductImageSection = ({ allImages,dealTag,dealIconUrl,isDealActive,isTime
                             const { imageUrl = "" } = item || {};
                             return <>
                                 <div className={styles.imageSection} key={i}>
-                                <div className={styles.tagSection} >
+                            { isDealActive && isTimerActive && currentTimerStatus == "in-between" &&    <div className={styles.tagSection} >
                                         <img src={dealIconUrl}></img>
                                         <div className={styles.tagTxt}>{dealTag}</div>
                                       
-                                    </div>
+                                    </div>}
                                     <div style={{display:"flex",justifyContent:"center",alignItems : "center"}} className={styles.imageContainer}>
                                         <img style={{maxWidth : "278px",width:"100%"}} src={item} alt={"productImage"} />
                                     </div>

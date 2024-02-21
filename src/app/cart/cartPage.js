@@ -19,6 +19,7 @@ import { createPayloadForCartItems,getDialCode } from "@/utils";
 import {getCartItem} from '@/services';
 import { useRef } from 'react';
 export default  function Cart({cartData}) {
+  console.log("abhjva",cartData)
     console.log("to check")
     const router = useRouter();
     const countryList = useCountryList();

@@ -26,10 +26,13 @@ const MainCategory = ({isDealPage}) => {
     const [responseData , setResponseData] = useState({})
     // const [searchKey,setSearchKey]=useState("");
 
+    
+ 
+
     const [paramsData, setParamsData] = useState({})
     const params = useParams();
     const dealId= params.id || "";
-    console.log("sbhs",dealId)
+    console.log("dealId",dealId)
    console.log("searchParamsugwugw",searchParams)
     console.log('paramsData',paramsData)
 
@@ -170,6 +173,7 @@ const MainCategory = ({isDealPage}) => {
         };
         
 
+    
         
 
 
@@ -268,7 +272,9 @@ const MainCategory = ({isDealPage}) => {
 
     return (
         <div className={style.CategoryIndexPage}>
+        
             {isHide && <Header setParamsData={setParamsData} paramsData={paramsData} isShowSeeAllBtn={false}/>}
+            
             {isHide && <div className={style.FilterTabOptionMobile} >
                 <div className={style.FilterTabOption}>
                     <div className={style.filterContainer} onClick={() => setSelectedFilter("Filter")} >
@@ -287,9 +293,10 @@ const MainCategory = ({isDealPage}) => {
                     </div>
                 </div>
             </div>}
+           
             {<div className={style.productAndFilter}>
                 {<FilterSection paramsData={paramsData} setParamsData={setParamsData}  setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} slectedFilter={slectedFilter} responseData={responseData} />}
-                {isHide && <ProductSection resposneValue={resposneValue} />}
+                {isHide && <ProductSection resposneValue={resposneValue} isDealPage={isDealPage} />}
             </div >}
             {isHide && responseData &&Object.keys(responseData).length > 0  && <Footer />}
             <Loader isShow={isLoding} />

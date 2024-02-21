@@ -94,7 +94,7 @@ const ProductSlider = ({data}) => {
                 console.log("dealData",data)
                 const { finalPrice = "", retailPrice = "", currency = "", discount = "", discountType = "" } = data && data?.price || {}
                 let cardData = {}
-                if(dealId){
+                if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
                    cardData={
                     "dealId":dealId || "",
                     "id":id || "",

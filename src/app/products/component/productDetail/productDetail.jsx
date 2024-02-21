@@ -18,7 +18,8 @@ const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold } = productData || {};
    const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive="",dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = productData || {}
-        console.log("dealListPrice",dealListPrice)
+        // console.log("dealListPrice",dealListPrice)
+        console.log("productdetails",productData)
    const [noOfProduct, setNoOfProduct] = useState(1);
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
@@ -45,12 +46,14 @@ const ProductDeatil = ({ productData = {} }) => {
                 setselectedVarients(variantId)
             }
         }
-    },[variants])
+    },[variants,dealId])
 
     useEffect(() => {
         setIsLoading(true)
-        if(dealId){
-            console.log("dealId",dealFinalPrice)
+        if(dealId
+             && isDealActive && isTimerActive
+            //   && currentTimerStatus == "in-between"
+             ){
             setFinalPrice(dealFinalPrice);
             setRetailPrice(dealListPrice);
             if(dealListPrice > dealFinalPrice){
@@ -77,14 +80,22 @@ const ProductDeatil = ({ productData = {} }) => {
 
             const selectedVarientsData = variants.filter((item) => item?.pricings[0]?.variantId === selectedVarients);
             const { id = '', image = '', name = '', productId = '', quantity = '' } = selectedVarientsData[0].variants || {}
-            let dealId = selectedVarientsData[0].pricings[0] || {}
-            if(dealId){
+            let dealId = selectedVarientsData[0].pricings[0].dealId 
+            let isDealActive = selectedVarientsData[0].pricings[0].isDealActive 
+            let isTimerActive = selectedVarientsData[0].pricings[0].isTimerActive 
+            console.log("dshbhjbja",)
+            console.log("dbhbahbah",dealId)
+         debugger;
+            if(dealId && isDealActive && isTimerActive 
+                // && currentTimerStatus == "in-between"
+                ){
                const  { varientId = '', dealListPrice = 0, dealFinalPrice = 0, dealDiscountPrice = 0 } = selectedVarientsData[0]?.pricings[0] || {};
                setFinalPrice(dealFinalPrice);
            setRetailPrice(dealListPrice);
            setDiscount(dealDiscountPrice);
             }
             else{
+                console.log("selectedVarientsData",selectedVarientsData[0].pricings[0]) 
            const  { varientId = '', retailPrice = 0, finalPrice = 0, discount = 0 } = selectedVarientsData[0]?.pricings[0] || {};
            setFinalPrice(finalPrice);
            setRetailPrice(retailPrice);
@@ -95,8 +106,12 @@ const ProductDeatil = ({ productData = {} }) => {
             // if (!allImages.includes(image)) {
                 setAllImages([image]);
             // }
-        }else{
-            if(dealId){
+        }
+        
+        else{
+            if(dealId && isDealActive && isTimerActive
+                //  && currentTimerStatus == "in-between" 
+                  ){
                 console.log("dealId",dealFinalPrice)
                 setFinalPrice(dealFinalPrice);
                 setRetailPrice(dealListPrice);
@@ -117,8 +132,9 @@ const ProductDeatil = ({ productData = {} }) => {
             images.map((data)=> bulkImage.push(data.imageUrl))
             setAllImages(bulkImage)
         }
-    }, [selectedVarients])
-    console.log("sjvjhavha",finalPrice)
+
+    }, [selectedVarients,dealId])
+  
     let payload = {
         "dealId" : dealId ? dealId : null,
         "product": id,

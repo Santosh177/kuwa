@@ -81,26 +81,12 @@ export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
 }
 
 export const mappingHomeSearchDealProducts = (data)=>{
-const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",tag="",currentTimeStatus="",currentTimerValue=""} = data || {}
+const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",tag="",currentTimerStatus="",currentTimerValue=""} = data || {}
   console.log("mappingHomeSearchDealProducts",data)
 
   let cardData={}
-  if(dealId== null ){
-    cardData = {
-      "id":id || "",
-      "productImage":productImageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
-      "productName":name || "",
-      "seoUrl":seoUrl ,
-      "retailPrice":specialPrice,
-      'finalPrice':price,
-      'discountType':"fixed",
-      "discount":discount || 0,
-      "currency":currency,
-      "discountType":""
-    }
-  }
-    else{
-      cardData={
+  if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between" ){
+    cardData={
       "id":id || "",
       "dealId":dealId || "",
       "isDealActive":isDealActive,
@@ -115,7 +101,25 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
       "currency":currency,
       "discountType":"",
       "tagIconUrl":tagIconUrl,
-      "tag":tag
+      "tag":tag,
+      "currentTimeStatus":currentTimeStatus
+      }
+
+
+   
+  }
+    else{
+      cardData = {
+        "id":id || "",
+        "productImage":productImageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":name || "",
+        "seoUrl":seoUrl ,
+        "retailPrice":specialPrice,
+        'finalPrice':price,
+        'discountType':"fixed",
+        "discount":discount || 0,
+        "currency":currency,
+        "discountType":""
       }
       
     }
@@ -156,7 +160,7 @@ export const  mappingDealProducts = (data)=>{
     currentDateTime=""
   } = data || {}
   let cardData = {}
-if(dealId){
+if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
  cardData = {
     "dealId":dealId || "",
     "productId":productId || "",
@@ -174,7 +178,10 @@ if(dealId){
     "tag":dealTag,
     "dealInventory":dealInventory,
     "rank": rank,
-    "normalInventory":normalInventory
+    "normalInventory":normalInventory,
+    "currentTimerStatus":currentTimerStatus,
+    "isDealActive":isDealActive,
+    "isTimerActive":isTimerActive
   }
   
  
