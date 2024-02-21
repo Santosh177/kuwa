@@ -20,41 +20,41 @@ const DealSection = ({ data }) => {
     const [timer, setTimer] = useState(0); 
 
 
-//     useEffect(() => {
-//         if (currentTimerValue) {
-//           const data = currentTimerValue.match(/\d+/g); // Extract digits from the string
-//           const [days, hours, minutes] = data && data.length === 3 ? data.map(Number) : [0, 0, 0];
-//           const totalSeconds = days * 24 * 3600 + hours * 3600 + minutes * 60;
-//           setTimer(totalSeconds);
-//         } else {
-//           setTimer(0);
-//         }
-//       }, [currentTimerValue]);
+    useEffect(() => {
+        if (currentTimerValue) {
+          const data = currentTimerValue.match(/\d+/g); // Extract digits from the string
+          const [days, hours, minutes] = data && data.length === 3 ? data.map(Number) : [0, 0, 0];
+          const totalSeconds = days * 24 * 3600 + hours * 3600 + minutes * 60;
+          setTimer(totalSeconds);
+        } else {
+          setTimer(0);
+        }
+      }, [currentTimerValue]);
   
-//     useEffect(() => {
-//       const intervalId = setInterval(() => {
-//           if(timer > 0) {
-//               setTimer(prevTimer => prevTimer - 1);
-//           }
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+          if(timer > 0) {
+              setTimer(prevTimer => prevTimer - 1);
+          }
       
-//       }, 1000);
+      }, 1000);
   
-//       return () => clearInterval(intervalId);
-//     }, [timer]);
+      return () => clearInterval(intervalId);
+    }, [timer]);
 
-//   useEffect(() => {
-//     if (timer > 0) {
-//         const days = Math.floor(timer / (24 * 3600));
-//         const hours = Math.floor((timer % (24 * 3600)) / 3600);
-//         const minutes = Math.floor((timer % 3600) / 60);
-//         const seconds = timer % 60;
+  useEffect(() => {
+    if (timer > 0) {
+        const days = Math.floor(timer / (24 * 3600));
+        const hours = Math.floor((timer % (24 * 3600)) / 3600);
+        const minutes = Math.floor((timer % 3600) / 60);
+        const seconds = timer % 60;
 
-//         setRemainingDays(days.toString().padStart(2, '0'));
-//         setRemainingHour(hours.toString().padStart(2, '0'));
-//         setRemainingMin(minutes.toString().padStart(2, '0'));
-//         setRemainingSec(seconds.toString().padStart(2, '0'));
-//     }
-// }, [timer]);
+        setRemainingDays(days.toString().padStart(2, '0'));
+        setRemainingHour(hours.toString().padStart(2, '0'));
+        setRemainingMin(minutes.toString().padStart(2, '0'));
+        setRemainingSec(seconds.toString().padStart(2, '0'));
+    }
+}, [timer]);
 
 console.log("remaining",remainingSec)
   
