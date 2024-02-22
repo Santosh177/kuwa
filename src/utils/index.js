@@ -8,27 +8,60 @@ export const getCartItemDetails = async(data,currency) => {
         const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive="",dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = data || {}
         const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
         console.log("CART PRODUCT",data);
-        if(dealId 
-          && isDealActive && isTimerActive 
-          // && currentTimerStatus == "in-between"
-          ){
-           item ={
-            "dealId":dealId,
+
+        if( variants && variants.pricings.length > 0){
+          if(variants?.pricings[0]?.dealId){
+            console.log("bhvah",variants.pricings[0].dealId)
+            item ={
+              "dealId":variants.pricings[0].dealId,
+              "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+              "qty":quantity,
+              "productName":description.name || "",
+              "retailPrice":variants?.pricings[0]?.dealListPrice,
+              'finalPrice':variants?.pricings[0]?.dealFinalPrice,
+              'discountType':"fixed",
+              "discountAmount":variants?.pricings[0]?.dealDiscountPrice || 0,
+              "currency":currency,
+              "id":id,
+              "cartItemId":cartItemId,
+              "variants":variants
+          }
+          }
+          else{
+          item ={
             "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
             "qty":quantity,
             "productName":description.name || "",
-            "retailPrice":dealListPrice,
-            'finalPrice':dealFinalPrice,
+            "retailPrice":variants.pricings[0].retailPrice,
+            'finalPrice':variants.pricings[0].finalPrice,
             'discountType':"fixed",
-            "discountAmount":dealDiscountPrice || 0,
+            "discountAmount":variants.pricings[0].discount || 0,
             "currency":currency,
             "id":id,
             "cartItemId":cartItemId,
             "variants":variants
         }
         }
+      }
         else{
-           item ={
+          if(dealId){
+            item ={
+              "dealId":dealId,
+              "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+              "qty":quantity,
+              "productName":description.name || "",
+              "retailPrice":dealListPrice,
+              'finalPrice':dealFinalPrice,
+              'discountType':"fixed",
+              "discountAmount":dealDiscountPrice || 0,
+              "currency":currency,
+              "id":id,
+              "cartItemId":cartItemId,
+              "variants":variants
+          }
+        }
+        else{
+          item ={
             "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
             "qty":quantity,
             "productName":description.name || "",
@@ -42,6 +75,46 @@ export const getCartItemDetails = async(data,currency) => {
             "variants":variants
         }
         }
+      }
+
+
+        // if(dealId 
+        //   && isDealActive && isTimerActive 
+        //   && currentTimerStatus == "in-between"
+        //   )
+
+         
+        //   {
+        //    item ={
+        //     "dealId":dealId,
+        //     "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        //     "qty":quantity,
+        //     "productName":description.name || "",
+        //     "retailPrice":dealListPrice,
+        //     'finalPrice':dealFinalPrice,
+        //     'discountType':"fixed",
+        //     "discountAmount":dealDiscountPrice || 0,
+        //     "currency":currency,
+        //     "id":id,
+        //     "cartItemId":cartItemId,
+        //     "variants":variants
+        // }
+        // }
+        // else{
+        //    item ={
+        //     "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        //     "qty":quantity,
+        //     "productName":description.name || "",
+        //     "retailPrice":originalPrice,
+        //     'finalPrice':finalPrice,
+        //     'discountType':"fixed",
+        //     "discountAmount":discountAmount || 0,
+        //     "currency":currency,
+        //     "id":id,
+        //     "cartItemId":cartItemId,
+        //     "variants":variants
+        // }
+        // }
        
        cartItem.push(item)
 
@@ -55,7 +128,21 @@ export const createPayloadForCartItems = async(cartData) => {
       if(cartData && cartData.length > 0){
         cartData.map((data,index)=>{
           if(data.variants && data.variants.variants.id){
-            cartItems.push({
+            if(data.variants.pricings[0].dealId){
+              cartItems.push({
+                "dealId":data.variants.pricings[0].dealId,
+                "quantity": data.quantity || 1,
+                "itemId": data.id || "",
+                "itemType": "Supplement",
+                "price": data.variants.pricings[0].dealFinalPrice|| "",
+                "orderType": "one-time",
+                "isVariant": true,
+                "variantId":data.variants.variants.id,
+                "subscriptionDetail": null
+            })
+            }
+            else{
+              cartItems.push({
                 "quantity": data.quantity || 1,
                 "itemId": data.id || "",
                 "itemType": "Supplement",
@@ -65,17 +152,34 @@ export const createPayloadForCartItems = async(cartData) => {
                 "variantId":data.variants.variants.id,
                 "subscriptionDetail": null
             })
+            }
+           
           }
           else{
-            cartItems.push({
-              "quantity": data.quantity || 1,
-              "itemId": data.id || "",
-              "itemType": "Supplement",
-              "price": data.finalPrice || "",
-              "orderType": "one-time",
-              "isVariant": false,
-              "subscriptionDetail": null
-          })
+            if(data.dealId){
+              cartItems.push({
+                "dealId": data.dealId,
+                "quantity": data.quantity || 1,
+                "itemId": data.id || "",
+                "itemType": "Supplement",
+                "price": data.dealFinalPrice || "",
+                "orderType": "one-time",
+                "isVariant": false,
+                "subscriptionDetail": null
+            })
+            }
+            else{
+              cartItems.push({
+                "quantity": data.quantity || 1,
+                "itemId": data.id || "",
+                "itemType": "Supplement",
+                "price": data.finalPrice || "",
+                "orderType": "one-time",
+                "isVariant": false,
+                "subscriptionDetail": null
+            })
+            }
+           
           }
         })
       }

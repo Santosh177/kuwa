@@ -56,7 +56,6 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,curre
          {
               data.map((data, index) => {
                 const {productId,variantId} = data || {}
-                console.log("vahahv",isDealActive)
                 let cardData = {}
                 trackData = {
                     "product Name": data && data.productName || "",
@@ -89,7 +88,6 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,curre
                 }else{
                     cardData = {
                       dealId : data.dealId || "",
-
                       productName: data && data.productName || "",
                       finalPrice: data.variantFinalPrice,
                       retailPrice: data.variantListPrice,

@@ -9,6 +9,7 @@ import useCleverTapEvents from "@/hooks/useCleverTapEvents"
 
 const RelatedProducts = ({ productData = {} }) => {
     const { relatedProduct = [] } = productData || {};
+    console.log("relatedProduct",relatedProduct)
     const [isLodaing, setIsLoading] = useState(false);
     const leftArrow = useRef(null);
     const clevertapEvent = useCleverTapEvents();

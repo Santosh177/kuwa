@@ -199,68 +199,76 @@ const handleAllProduct = () =>{
                     "quantity": 1,
                     "product Id":data.id || "",
                   }
-                  if(dealId
-                     &&
-                      isDealActive && isTimerActive 
-                      // &&  currentTimerStatus == "in-between"
-                     ){
+                 
                     if(variants && variants.length > 0 && data.variants[0].variantPrices.length>0)
+                    
                     {
-                      const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
-                      if(variantPrices && variantPrices.length>0){
+                      if(data.variants[0].variantPrices[0].dealId
+                        && data.variants[0].variantPrices[0].isDealActive
+                        && data.variants[0].variantPrices[0].isTimerActive
+                        && data.variants[0].variantPrices[0].currentTimerStatus == "in-between"
+                        ){
+                          const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
                         cardData = {
+                          dealId:variantPrices[0].dealId,
                           productName: data && data.name || "",
-                          finalPrice: variantPrices[0].dealFinalPrice,
-                          retailPrice: variantPrices[0].dealListPrice,
+                          dealFinalPrice: variantPrices[0].dealFinalPrice,
+                          dealListPrice: variantPrices[0].dealListPrice,
                           currency: currency,
-                          discount: variantPrices[0].dealDiscountPrice,
+                          dealDiscountPrice: variantPrices[0].dealDiscountPrice,
                           discountType: discountType || "",
                           image: image || "",
                           id: variantPrices[0].variantId || "",
                           seoUrl: data.seoUrl || ""
                         }
-                      }
                     }
                     else
                     {
-                      cardData={
-                       "dealId":dealId || "",
-                       "id":id || "",
-                       "productName":name,
-                       "productImage":image || "",
-                       "seoUrl":seoUrl || "",
-                       "retailPrice":dealListPrice,
-                     'finalPrice':dealFinalPrice,
-                     'discountType':"fixed",
-                     "discount":dealDiscountPrice || 0,
-                     "currency":currency,
-                     "tag":dealTag,
-                     "tagIconUrl":dealIconUrl,
-                     "dealInventory":dealInventory,
-                     "isDealActive":isDealActive,
-                     "isTimerActive":isTimerActive,
-                     "currentTimerStatus":currentTimerStatus,
-                     "currentTimerValue":currentTimerValue,
-                     "currentDateTime":currentDateTime
-                     }
+                      const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
+                      cardData = {
+                        productName: data && data.name || "",
+                        finalPrice: variantPrices[0].finalPrice,
+                        retailPrice: variantPrices[0].retailPrice,
+                        currency: currency,
+                        discount: variantPrices[0].discount,
+                        discountType: discountType || "",
+                        image: image || "",
+                        id: variantPrices[0].variantId || "",
+                        seoUrl: data.seoUrl || ""
+                      }
                    }
                   }
-                  else{
-                    if(variants && variants.length > 0 && data.variants[0].variantPrices.length>0) {
-                      const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
-                      if(variantPrices && variantPrices.length>0){
-                        cardData = {
-                          productName: data && data.name || "",
-                          finalPrice: variantPrices[0].finalPrice,
-                          retailPrice: variantPrices[0].retailPrice,
-                          currency: currency,
-                          discount: variantPrices[0].discount,
-                          discountType: discountType || "",
-                          image: image || "",
-                          id: variantPrices[0].variantId || "",
-                          seoUrl: data.seoUrl || ""
-                        }
+
+                 else{
+
+                    if(dealId &&
+                      isDealActive && isTimerActive
+                      &&  currentTimerStatus == "in-between"
+                    ) {
+
+                      cardData={
+                        "dealId":dealId || "",
+                        "id":id || "",
+                        "productName":name,
+                        "productImage":image || "",
+                        "seoUrl":seoUrl || "",
+                        "dealListPrice":dealListPrice,
+                      'dealFinalPrice':dealFinalPrice,
+                      'discountType':"fixed",
+                      "dealDiscountPrice":dealDiscountPrice || 0,
+                      "currency":currency,
+                      "tag":dealTag,
+                      "tagIconUrl":dealIconUrl,
+                      "dealInventory":dealInventory,
+                      "isDealActive":isDealActive,
+                      "isTimerActive":isTimerActive,
+                      "currentTimerStatus":currentTimerStatus,
+                      "currentTimerValue":currentTimerValue,
+                      "currentDateTime":currentDateTime
                       }
+                     
+                      
+                      
                     }else{
                       cardData = {
                         productName: data && data.name || "",
@@ -283,7 +291,8 @@ const handleAllProduct = () =>{
                     if(variantPrices && variantPrices.length > 0){
                       variantId = variantPrices[0].variantId;
                     }
-                    if(dealId && isDealActive && isTimerActive  &&  currentTimerStatus == "in-between"
+                    if(dealId && isDealActive && isTimerActive
+                        &&  currentTimerStatus == "in-between"
                      ){
                     addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId,dealId:dealId}
 

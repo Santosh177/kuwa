@@ -35,6 +35,7 @@ const ProductDeatil = ({ productData = {} }) => {
     const [haveAdress, setHaveAddress] = useState(false);
     const [ isAddedToCart , setIsAddedToCart ] = useState(false);
     const [ isLoading , setIsLoading] = useState(false)
+    const [variantdealId, setVariantDealId] = useState()
     const router = useRouter()
     const clevertapEvent = useCleverTapEvents();
     useEffect(()=>{
@@ -80,13 +81,11 @@ const ProductDeatil = ({ productData = {} }) => {
 
             const selectedVarientsData = variants.filter((item) => item?.pricings[0]?.variantId === selectedVarients);
             const { id = '', image = '', name = '', productId = '', quantity = '' } = selectedVarientsData[0].variants || {}
-            let dealId = selectedVarientsData[0].pricings[0].dealId 
+            let selectedVariantdealId = selectedVarientsData[0].pricings[0].dealId
+            setVariantDealId(selectedVariantdealId) 
             let isDealActive = selectedVarientsData[0].pricings[0].isDealActive 
             let isTimerActive = selectedVarientsData[0].pricings[0].isTimerActive 
-            console.log("dshbhjbja",)
-            console.log("dbhbahbah",dealId)
-         debugger;
-            if(dealId && isDealActive && isTimerActive 
+            if(selectedVariantdealId && isDealActive && isTimerActive 
                 // && currentTimerStatus == "in-between"
                 ){
                const  { varientId = '', dealListPrice = 0, dealFinalPrice = 0, dealDiscountPrice = 0 } = selectedVarientsData[0]?.pricings[0] || {};
@@ -136,7 +135,7 @@ const ProductDeatil = ({ productData = {} }) => {
     }, [selectedVarients,dealId])
   
     let payload = {
-        "dealId" : dealId ? dealId : null,
+        "dealId" : selectedVarients ? variantdealId : (  dealId ? dealId : null),   
         "product": id,
         "quantity": noOfProduct,
         "isVariant": selectedVarients ? true : false,
