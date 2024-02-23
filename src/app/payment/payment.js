@@ -370,6 +370,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const cartItemsData = getCartItems && getCartItems['products'];
       
       const cartItemPayload = await createPayloadForCartItems(cartItemsData);
+      // const dealId = cartItemPayload.dealId || null
       const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
       const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['coupon']}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
@@ -415,6 +416,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "prepaidDiscountAmount":extraDiscount,
           "deviceType":getDeviceType(),
           "pageType":pageType,
+          // "dealId" :dealId
         }
       const trackData = {
         'Order Amount': payload['finalAmount'],

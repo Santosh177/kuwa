@@ -81,7 +81,7 @@ export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
 }
 
 export const mappingHomeSearchDealProducts = (data)=>{
-const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",tag="",currentTimerStatus="",currentTimerValue=""} = data || {}
+const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue=""} = data || {}
   console.log("mappingHomeSearchDealProducts",data)
 
   let cardData={}
@@ -101,8 +101,8 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
       "currency":currency,
       "discountType":"",
       "tagIconUrl":tagIconUrl,
-      "tag":tag,
-      "currentTimeStatus":currentTimeStatus
+      "tag":dealTag,
+      "currentTimerStatus":currentTimerStatus
       }
 
 

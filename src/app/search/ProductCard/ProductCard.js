@@ -11,7 +11,7 @@ const ProductCard = ({ cardData={}, addToCart = {}, style = {} }) => {
     return (
         <div id="search-container" className={styles.productCardItem} onClick={() => { window.location.href = `/products/` + seoUrl}}>
               {
-            // tag &&
+            tag &&
              tagIconUrl && <div className={styles.tagSection}>
                         <img src={tagIconUrl} alt='tag-icon'></img>
                         <div className={styles.tagTxt}>{ "hot deals"}</div>

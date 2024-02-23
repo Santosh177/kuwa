@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useRouter } from 'next/navigation';
-import DealProductCard from '@/components/DealProductCard/DealProductCard';
-import ProductCard from '@/components/ProductCard/ProductCard';
+// import ProductCard from '@/components/ProductCard/ProductCard';
+import ProductDealCard from '@/components/ProductDealCard/ProductDealCard';
 import { addToCart } from '@/services'
 import { useCartItems } from '@/context/cartItems';
 import Glider from 'react-glider';
@@ -83,7 +83,7 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,curre
                         tagIconUrl:tagIconUrl || "",
                         isDealActive:isDealActive,
                         isTimerActive:isTimerActive,
-                        currentTimeStatus:currentTimeStatus,
+                        currentTimerStatus:currentTimeStatus,
                       }
                 }else{
                     cardData = {
@@ -118,7 +118,7 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,curre
                 }
                
                 return (
-                    <ProductCard key={index} cardData={cardData}  addToCart={()=>onAddToCart(addToCartPayload)} />
+                    <ProductDealCard key={index} cardData={cardData}  addToCart={()=>onAddToCart(addToCartPayload)} />
                 )
             })
          }

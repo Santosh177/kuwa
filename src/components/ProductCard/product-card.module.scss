@@ -221,7 +221,7 @@
             font-weight: 600;
             line-height: normal;
             position: relative;
-            top:0px;
+            top:0;
             left:-65px;
             .tagDiv{
                 padding: 6px;
@@ -261,7 +261,7 @@
             text-align: start;
             padding-left: 16px;
             padding-right: 16px;
-            .dealInentory{
+            .dealInventory{
                 height: 15px;
                 color: #CE4224;
 font-size: 12px;
@@ -379,7 +379,7 @@ width: 180px;
             .textContent{
                 padding-left: 8px;
                 padding-right: 8px;
-                .dealInentory{
+                .dealInventory{
                     font-size: 10px;
                 }
                 .productName{

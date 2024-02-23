@@ -53,7 +53,7 @@ const ProductDeatil = ({ productData = {} }) => {
         setIsLoading(true)
         if(dealId
              && isDealActive && isTimerActive
-            //   && currentTimerStatus == "in-between"
+              && currentTimerStatus == "in-between"
              ){
             setFinalPrice(dealFinalPrice);
             setRetailPrice(dealListPrice);
@@ -86,7 +86,7 @@ const ProductDeatil = ({ productData = {} }) => {
             let isDealActive = selectedVarientsData[0].pricings[0].isDealActive 
             let isTimerActive = selectedVarientsData[0].pricings[0].isTimerActive 
             if(selectedVariantdealId && isDealActive && isTimerActive 
-                // && currentTimerStatus == "in-between"
+                && currentTimerStatus == "in-between"
                 ){
                const  { varientId = '', dealListPrice = 0, dealFinalPrice = 0, dealDiscountPrice = 0 } = selectedVarientsData[0]?.pricings[0] || {};
                setFinalPrice(dealFinalPrice);
@@ -109,7 +109,7 @@ const ProductDeatil = ({ productData = {} }) => {
         
         else{
             if(dealId && isDealActive && isTimerActive
-                //  && currentTimerStatus == "in-between" 
+                 && currentTimerStatus == "in-between" 
                   ){
                 console.log("dealId",dealFinalPrice)
                 setFinalPrice(dealFinalPrice);
@@ -649,7 +649,7 @@ const ProductDeatil = ({ productData = {} }) => {
             </div>
             <div className={style.productPricingContainer}>
                 <ProductImageSection allImages={allImages} dealTag={dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} currentTimerValue={currentTimerValue} />
-                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf} />
+                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf}  isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>
                 <FrequntlyBoughtTogether currency={currency} productData={frequentlyBoughtTogether} />

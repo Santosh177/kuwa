@@ -42,7 +42,9 @@ const ProductImageSection = ({ allImages,dealTag,dealIconUrl,isDealActive,isTime
                         })}
 
                     </Glider> */}
-                { isDealActive && isTimerActive && currentTimerStatus == "in-between" &&     <div className={styles.tagSection} >
+                { isDealActive && isTimerActive && 
+                currentTimerStatus == "in-between" &&
+                     <div className={styles.tagSection} >
                                         <img src={dealIconUrl}></img>
                                         <div className={styles.tagTxt}>{dealTag}</div>
                                       

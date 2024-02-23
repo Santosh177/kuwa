@@ -8,7 +8,7 @@ const DealSection = ({ data }) => {
     const { deal, dealProductVariantDtoList } = data || {};
     console.log("dealProductVariantDtoList",dealProductVariantDtoList)
     const { heading, backgroundImageUrl, countDownEndsAt, countDownStartsAt,currentTimeStatus="", countryId, id, isDealActive, isTimerActive, tagIconUrl, seoUrl, tag } = deal || {};
-    console.log("currentTimeStatus",currentTimeStatus)
+  
     const [remainingDays, setRemainingDays] = useState("")
     const [remainingHour, setRemainingHour] = useState("")
     const [remainingMin, setRemainingMin] = useState("")
@@ -56,7 +56,7 @@ const DealSection = ({ data }) => {
     }
 }, [timer]);
 
-console.log("remaining",remainingSec)
+
   
     const handleAllProduct = () => {
         window.location.href = `/DealPage/${id}`;

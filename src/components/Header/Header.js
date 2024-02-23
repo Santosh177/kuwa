@@ -33,24 +33,24 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                     {
                         searchData.map((data, index)=>{
                           console.log("ahbabh",data)
-                          // mappingHomeSearchDealProducts(data);
-                          const { id = '', productImage: image, productName:name, seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag=""} = data || {};
+                          const { id = '', productImage="", productName="", seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag="",currentTimerStatus=""} = data || {};
                           // const {  } = price || {}
                           const cardData = {
-                            productName: name,
+                            productName: productName,
                             finalPrice: finalPrice,
                             retailPrice: retailPrice,
                             currency: currency,
                             discount: discount,
                             discountType: discountType,
-                            image: image || "",
+                            image: productImage || "",
                             id: id || "",
                             seoUrl: seoUrl || "",
                             dealId:dealId,
                             isDealActive:isDealActive,
                             isTimerActive:isTimerActive,
                             tagIconUrl:tagIconUrl,
-                            tag:tag
+                            tag:tag,
+                            currentTimerStatus:currentTimerStatus
                           }
                             return(
                                 <ProductCard cardData={cardData} />
@@ -151,7 +151,9 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
                     //       discountType: data.discountType,
                     //     }
                     // }
-                    searchData.push(mappingHomeSearchDealProducts(data));
+                    const productData = mappingHomeSearchDealProducts(data);
+                    console.log("sjbsjbjs",productData)
+                    searchData.push(productData);
                     setSearchData(searchData)
                 }
                

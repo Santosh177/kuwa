@@ -73,8 +73,8 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
               <div className={style.headingContent}>
               <div className={style.dealHeading}>{resposneValue[0]?.dealHeading}</div>
               {resposneValue[0]?.isTimerActive
-            //    && 
-            //    resposneValue[0]?.currentTimeStatus == "in-between" 
+               && 
+               resposneValue[0]?.currentTimeStatus == "in-between" 
                && 
               (
                   <div className={style.timeDurationDiv}>
@@ -104,9 +104,12 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
                         //     seoUrl:seoUrl || ""
                         // }
                         const cardData = mappingDealProducts(item);
-                        console.log("allProduct",cardData)
+                        // console.log("allProduct",cardData)
                         const productName = cardData.productName;
                         const productId = cardData.productId;
+                        const dealId = cardData.dealId;
+                        const variantId = cardData.variantId;
+                        const isVariant = variantId ? true : false
                          trackData = {
                             "product Name": productName,
                             "quantity": 1,
@@ -114,7 +117,7 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
                         }
                         return (
                             <div className={style.product}>
-                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: id, quantity: 1 })} />
+                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant })} />
                             </div>
                         )
                     })}

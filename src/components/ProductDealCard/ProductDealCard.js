@@ -1,12 +1,13 @@
 import { useRouter } from 'next/navigation';
-import styles from './product-card.module.scss';
+import styles from './product-deal-card.module.scss'
 
 
 
-const ProductCard = ({cardData,addToCart={},style={}}) => {
+const ProductDealCard = ({cardData,addToCart={},style={}}) => {
     const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="" } = cardData || {}
-    console.log("productCard+++++",cardData)
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus=""} = cardData || {}
+    // console.log("dealProductCard",currentTimerStatus)
+
     return(
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
             <div className={styles.productCardWrapper} style={{...style}}>
@@ -26,12 +27,12 @@ const ProductCard = ({cardData,addToCart={},style={}}) => {
                    
                 </div>
                 <div className={styles.textContent}>
-
-                   <div className={styles.dealInventory}>{ dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory? (dealInventory+ " " + "left in stock"): ""}</div>
+                  
+                   <div className={styles.dealInventory}>{dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory? (dealInventory+ " " + "left in stock"): ""}</div>
                    
                 <div className={styles.productName}>{productName}</div>
-                {dealId && isDealActive && isTimerActive
-                 && currentTimerStatus=="in-between"
+    {dealId && isDealActive && isTimerActive
+    && currentTimerStatus=="in-between"
                   ? (
         <>
           <div className={styles.discountTag} style={{ opacity: dealDiscountPrice > 0 ? 1 : 0 }}>
@@ -75,6 +76,6 @@ const ProductCard = ({cardData,addToCart={},style={}}) => {
 }
 
 
-export default ProductCard;
+export default ProductDealCard;
 
   
