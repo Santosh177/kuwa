@@ -82,11 +82,29 @@ export default function PaymentSuccess() {
           const listOfOrder = listOfMyOrder[0];
           const track = {
             productId: listOfOrder.productId,
-            productName: listOfOrder.productName,
+            productName: listOfOrder.orderProductName,
             orderId:listOfOrder.orderId,
             orderProductId:listOfOrder.orderProductId,
             paymentMode:paymentType
          }
+
+         try {
+          window.dataLayer.push({
+            'event': 'kuwa_order_confirmed',
+            'pagePath': window.location.pathname,
+            'pageTitle': document.title,
+            'productId':listOfOrder.productId,
+            'productName':listOfOrder.orderProductName,
+            'orderId':listOfOrder.orderId,
+            'orderProductId':listOfOrder.orderProductId,
+            'paymentMode':paymentType
+  
+            // Add more data as needed
+        });
+  
+        } catch (error) {
+            console.log("ERROR", error)
+        }
          if(window && window.clevertap){
           window.clevertap.setMultiValuesForKey("cart_items", []);
         }
@@ -97,11 +115,28 @@ export default function PaymentSuccess() {
             const listOfOrder = listOfMyOrder[0];
             const track = {
               productId: listOfOrder.productId,
-              productName: listOfOrder.productName,
+              productName: listOfOrder.orderProductName,
               orderId:listOfOrder.orderId,
               orderProductId:listOfOrder.orderProductId,
               paymentMode:paymentType
            }
+           try {
+            window.dataLayer.push({
+              'event': 'kuwa_order_confirmed',
+              'pagePath': window.location.pathname,
+              'pageTitle': document.title,
+              'productId':listOfOrder.productId,
+              'productName':listOfOrder.orderProductName,
+              'orderId':listOfOrder.orderId,
+              'orderProductId':listOfOrder.orderProductId,
+              'paymentMode':paymentType
+    
+              // Add more data as needed
+          });
+    
+          } catch (error) {
+              console.log("ERROR", error)
+          }
            if(window && window.clevertap){
             window.clevertap.setMultiValuesForKey("cart_items", []);
           }
