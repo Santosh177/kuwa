@@ -82,7 +82,7 @@ export default function PaymentSuccess() {
           const listOfOrder = listOfMyOrder[0];
           const track = {
             productId: listOfOrder.productId,
-            productName: listOfOrder.productName,
+            productName: listOfOrder.orderProductName,
             orderId:listOfOrder.orderId,
             orderProductId:listOfOrder.orderProductId,
             paymentMode:paymentType
@@ -94,7 +94,7 @@ export default function PaymentSuccess() {
             'pagePath': window.location.pathname,
             'pageTitle': document.title,
             'productId':listOfOrder.productId,
-            'productName':listOfOrder.productName,
+            'productName':listOfOrder.orderProductName,
             'orderId':listOfOrder.orderId,
             'orderProductId':listOfOrder.orderProductId,
             'paymentMode':paymentType
@@ -115,7 +115,7 @@ export default function PaymentSuccess() {
             const listOfOrder = listOfMyOrder[0];
             const track = {
               productId: listOfOrder.productId,
-              productName: listOfOrder.productName,
+              productName: listOfOrder.orderProductName,
               orderId:listOfOrder.orderId,
               orderProductId:listOfOrder.orderProductId,
               paymentMode:paymentType
@@ -126,7 +126,7 @@ export default function PaymentSuccess() {
               'pagePath': window.location.pathname,
               'pageTitle': document.title,
               'productId':listOfOrder.productId,
-              'productName':listOfOrder.productName,
+              'productName':listOfOrder.orderProductName,
               'orderId':listOfOrder.orderId,
               'orderProductId':listOfOrder.orderProductId,
               'paymentMode':paymentType
