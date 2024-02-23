@@ -64,7 +64,7 @@ const DealSection = ({ data }) => {
 
     return (
         <>
-            {isDealActive && (
+            {isDealActive && dealProductVariantDtoList.length>0 && (
                 <div  style={{backgroundImage: `url('${backgroundImageUrl}')`}}>
                 <div className={styles.dealContainer}>
                     <div className={styles.dealHeader}>

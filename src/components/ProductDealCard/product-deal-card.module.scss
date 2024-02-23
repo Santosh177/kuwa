@@ -13,6 +13,7 @@
          justify-content: center;
          align-items: center;
          flex-direction: column;
+         position: relative;
          box-shadow: 0px 12px 12px 0px rgba(36, 122, 129, 0.08);
          .tagSection{
              max-width: 100px;
@@ -25,15 +26,17 @@
              font-style: normal;
              font-weight: 600;
              line-height: normal;
-             position: relative;
+             position: absolute;
              top:0px;
-             left:-65px;
+             left:0px;
              .tagDiv{
                  padding: 6px;
                  display: flex;
                  justify-content: center;
+                 gap:2px;
                  align-items: center;
                  background-color: #2E7CF6;
+                 border-radius: 6px;
                  img{
                      width: 14px;
                      height: 14px;
@@ -156,9 +159,10 @@
                  // width: 57px;
                  height: 16px;
                  font-size: 8px;
-                 position: relative;
+                 position: absolute;
                  top:0px;
-                 left:-40px;
+                 left:0px;
+              
                  .tagDiv{
                      img{
                          width: 12px;

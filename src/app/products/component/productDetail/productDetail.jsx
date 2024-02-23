@@ -17,7 +17,7 @@ import { createPayloadForCartItems,getDialCode } from "@/utils";
 const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold } = productData || {};
-   const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive="",dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = productData || {}
+   const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive=false,dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = productData || {}
         // console.log("dealListPrice",dealListPrice)
         console.log("productdetails",productData)
    const [noOfProduct, setNoOfProduct] = useState(1);
@@ -35,7 +35,12 @@ const ProductDeatil = ({ productData = {} }) => {
     const [haveAdress, setHaveAddress] = useState(false);
     const [ isAddedToCart , setIsAddedToCart ] = useState(false);
     const [ isLoading , setIsLoading] = useState(false)
-    const [variantdealId, setVariantDealId] = useState()
+    const [variantdealId, setVariantDealId] = useState();
+   const[isVariantDealActive,setIsVariantDealActive] = useState();
+   const[isVariantTimeActive,setIsVariantTimeActive] = useState();
+   const[isVariantCurrenTimeStatus,setIsVariantCurrenTimeStatus] = useState();
+   const[selectedVariantTag,setSelectedVariantTag] = useState();
+   const[seleVariantIcon,setSeleVariantIcon] = useState();
     const router = useRouter()
     const clevertapEvent = useCleverTapEvents();
     useEffect(()=>{
@@ -82,9 +87,18 @@ const ProductDeatil = ({ productData = {} }) => {
             const selectedVarientsData = variants.filter((item) => item?.pricings[0]?.variantId === selectedVarients);
             const { id = '', image = '', name = '', productId = '', quantity = '' } = selectedVarientsData[0].variants || {}
             let selectedVariantdealId = selectedVarientsData[0].pricings[0].dealId
-            setVariantDealId(selectedVariantdealId) 
-            let isDealActive = selectedVarientsData[0].pricings[0].isDealActive 
-            let isTimerActive = selectedVarientsData[0].pricings[0].isTimerActive 
+         
+            let isVariantDealActive = selectedVarientsData[0].pricings[0].isDealActive 
+            let isVariantTimerActive = selectedVarientsData[0].pricings[0].isTimerActive || false
+            let currentVariantTimerStatus = selectedVarientsData[0].pricings[0].currentTimerStatus || ""
+            let dealTag = selectedVarientsData[0].pricings[0].dealTag || ""
+            let dealIconUrl = selectedVarientsData[0].pricings[0].dealIconUrl || ""
+            setVariantDealId(selectedVariantdealId);
+            setIsVariantCurrenTimeStatus(currentVariantTimerStatus);
+            setIsVariantTimeActive(isVariantTimerActive);
+            setIsVariantDealActive(isVariantDealActive);
+            setSeleVariantIcon(dealIconUrl);
+            setSelectedVariantTag(dealTag)
             if(selectedVariantdealId && isDealActive && isTimerActive 
                 && currentTimerStatus == "in-between"
                 ){
@@ -421,7 +435,7 @@ const ProductDeatil = ({ productData = {} }) => {
         handelViewCart: handelViewCart,
         onHandleApplePay:onHandleApplePay,
         noOfProduct: noOfProduct,
-        mininmumDeliveryThreshold:mininmumDeliveryThreshold
+        mininmumDeliveryThreshold:mininmumDeliveryThreshold,
     };
     console.log("pricingSectionVariables",pricingSectionVariables)
     const handelRoute = (type) => {
@@ -648,7 +662,7 @@ const ProductDeatil = ({ productData = {} }) => {
                 <span onClick={() => handelRoute("product")}> {name}</span>
             </div>
             <div className={style.productPricingContainer}>
-                <ProductImageSection allImages={allImages} dealTag={dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} currentTimerValue={currentTimerValue} />
+                <ProductImageSection allImages={allImages} dealTag={dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} seleVariantIcon={seleVariantIcon} selectedVariantTag={selectedVariantTag} />
                 <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf}  isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>

@@ -40,7 +40,7 @@ const RelatedProducts = ({ productData = {} }) => {
                         <div ref={leftArrow} className={style.allProducts}>
                             {relatedProduct.map((item, index) => {
                                 const { id = '', image = '', name = '', price = {}, seoUrl = '', title = '' } = item || {};
-                                const {dealId,isTimeActive,isDealActive,currentTimeStatus='',dealInventory='',dealIconUrl='',dealTag='',dealDiscountPrice='',dealFinalPrice='',dealListPrice=''}= item || {}
+                                const {dealId, isTimerActive,isDealActive,currentTimerStatus='',dealInventory='',dealIconUrl='',dealTag='',dealDiscountPrice='',dealFinalPrice='',dealListPrice=''}= item || {}
                                 const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
                                 const cardData = {
                                     productName: name,
@@ -53,9 +53,9 @@ const RelatedProducts = ({ productData = {} }) => {
                                     id: id || "",
                                     seoUrl:seoUrl || "",
                                     dealId:dealId || "",
-                                    isTimeActive: isTimeActive,
+                                    isTimerActive: isTimerActive,
                                     isDealActive:isDealActive,
-                                    currentTimeStatus:currentTimeStatus,
+                                    currentTimerStatus:currentTimerStatus,
                                     dealInventory:dealInventory,
                                     tagIconUrl:dealIconUrl,
                                     tag:dealTag,
@@ -63,13 +63,14 @@ const RelatedProducts = ({ productData = {} }) => {
                                     dealFinalPrice:dealFinalPrice,
                                     dealListPrice:dealListPrice
                                 }
+                                console.log("cardData", cardData)
                                 trackData = {
                                     "product Name": name,
                                     "quantity": 1,
                                     "product Id": id,
                                 }
                                 let addToCartPayload = {};
-                                if(dealId && isDealActive && isTimerActive,currentTimeStatus=="in-between"){
+                                if(dealId && isDealActive && isTimerActive,currentTimerStatus=="in-between"){
                                      addToCartPayload= {"product":id,"quantity":1,"dealId":dealId}
                                 }
                                 else{
