@@ -1,12 +1,39 @@
 import { useRouter } from 'next/navigation';
 import styles from './product-card.module.scss';
+import NotifySuccessPopup from '../NotifySuccessPopup/NotifySuccessPopup';
+import { useState } from 'react';
 
 
 
 const ProductCard = ({cardData,addToCart={},style={}}) => {
+
+    const [isShowNotifySuccessPop,setIsShowNotifySuccessPop] = useState(false);
+
+    const handleNotify = async()=>{
+
+        const payload = {
+            productId:"",
+            variantId:"",
+            deviceId:"",
+            email:"",
+            userId:""
+        }
+
+        // const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/out-of-stock/email`,{
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        setIsShowNotifySuccessPop(true)
+       
+    }
+   
     const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id="" , seoUrl="" } = cardData || {}
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id="" , seoUrl="",normalInventory=0} = cardData || {}
+    const btnName = normalInventory > 0 ? "Add to cart" : "Notify me"
     return(
+        <>
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
             <div className={styles.productCardWrapper} style={{...style}}>
                 <div className={styles.productImgWrapper}>
@@ -21,10 +48,21 @@ const ProductCard = ({cardData,addToCart={},style={}}) => {
                 <div className={styles.btn} onClick={(e)=>
                     {
                         e.stopPropagation()
-                        addToCart()}}>Add to cart</div>
+                        if(normalInventory> 0){
+                            addToCart();
+                        }
+                        else{
+                            handleNotify();
+                        }
+                        }}>{btnName}</div>
             </div>
             </div>
         </div>
+        
+       {isShowNotifySuccessPop &&
+       <div className={styles.popUp}> <NotifySuccessPopup/></div>
+       }
+        </>
     )
 
 

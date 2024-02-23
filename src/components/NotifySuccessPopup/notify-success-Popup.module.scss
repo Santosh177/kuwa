@@ -1,0 +1,32 @@
+.NotifyOverlay{
+    .NotifySuccessPopup{
+        width:370px;
+        border-radius: 16px;
+        background: #FFF;
+        .content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+           .rightArrowImg{
+            img{
+                width:72px;
+                height:72px;
+            }
+           } 
+           .txt{
+            color: #07141A;
+            text-align: center;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+           }
+           .btn{
+            border-radius: 24px;
+            background: #247A81;
+            padding: 8px 96px;
+           }
+        }
+    }
+}
