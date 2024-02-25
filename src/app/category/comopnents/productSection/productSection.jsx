@@ -109,7 +109,8 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
                         const productId = cardData.productId;
                         const dealId = cardData.dealId;
                         const variantId = cardData.variantId;
-                        const isVariant = variantId ? true : false
+                        const isVariant = variantId ? true : false;
+                        const dealPrice = cardData.dealFinalPrice
                          trackData = {
                             "product Name": productName,
                             "quantity": 1,
@@ -117,7 +118,7 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
                         }
                         return (
                             <div className={style.product}>
-                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant })} />
+                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice })} />
                             </div>
                         )
                     })}

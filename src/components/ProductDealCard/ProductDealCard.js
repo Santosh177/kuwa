@@ -6,7 +6,7 @@ import styles from './product-deal-card.module.scss'
 const ProductDealCard = ({cardData,addToCart={},style={}}) => {
     const router = useRouter();
     const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus=""} = cardData || {}
-    // console.log("dealProductCard",currentTimerStatus)
+    console.log("cardData++++",cardData)
 
     return(
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>

@@ -71,7 +71,7 @@ const RelatedProducts = ({ productData = {} }) => {
                                 }
                                 let addToCartPayload = {};
                                 if(dealId && isDealActive && isTimerActive,currentTimerStatus=="in-between"){
-                                     addToCartPayload= {"product":id,"quantity":1,"dealId":dealId}
+                                     addToCartPayload= {"product":id,"quantity":1,"dealId":dealId,dealPrice:dealFinalPrice}
                                 }
                                 else{
                                     addToCartPayload = {"product":id, "quantity":1}

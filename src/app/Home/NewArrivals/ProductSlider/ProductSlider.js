@@ -92,13 +92,14 @@ const ProductSlider = ({data}) => {
                 const cardData = mappingDealProducts(data);
                 const productName = cardData.productName || ""
                 const productId = cardData.productId || ""
+                const dealPrice = cardData.dealFinalPrice || ""
                 trackData = {
                   "product Name": productName,
                   "quantity": 1,
                   "product Id":productId
                 }
                 return (
-                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 })} />
+                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice})} />
                 )
             })
          }

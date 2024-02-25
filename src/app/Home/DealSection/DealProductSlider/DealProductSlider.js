@@ -62,7 +62,7 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,curre
                     "quantity": 1,
                     "product Id":data.productId || "",
                   }
-                if(variantId == null){
+                if(variantId==null){
                     cardData = {
                       dealId : data.dealId || "",
                         productName: data && data.productName || "",
@@ -73,6 +73,7 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,curre
                         dealFinalPrice:data.dealFinalPrice,
                         currency: data.currency,
                         discount: data.productDiscount,
+                        dealDiscountPrice:data.dealDiscountPrice,
                         // discountType: discountType,
                         image: data?.productImage || "",
                         id: data?.productId || "",
@@ -106,15 +107,16 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,curre
                       tagIconUrl:tagIconUrl || "",
                       isDealActive:isDealActive || false,
                       isTimerActive:isTimerActive,
-                      currentTimeStatus:currentTimeStatus,
+                      currentTimerStatus:currentTimeStatus,
                     }
                 }
+
                 let addToCartPayload = {}
                 if(variantId){
-                    addToCartPayload = {"product":data.productId,"quantity:":1,"isVariant":true,"variantId":data.variantId,"dealId":data.dealId}    
+                    addToCartPayload = {"product":data.productId,"quantity":1,"isVariant":true,"variantId":data.variantId,"dealId":data.dealId,"dealPrice":data.dealFinalPrice}    
                 }
                 else{
-                    addToCartPayload =  { "product": data.productId, quantity: 1, "dealId" :data.dealId }
+                    addToCartPayload =  { "product": data.productId, quantity: 1, "dealId" :data.dealId ,"dealPrice":data.dealFinalPrice}
                 }
                
                 return (

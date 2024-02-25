@@ -219,7 +219,14 @@ const handleAllProduct = () =>{
                           discountType: discountType || "",
                           image: image || "",
                           id: variantPrices[0].variantId || "",
-                          seoUrl: data.seoUrl || ""
+                          seoUrl: data.seoUrl || "",
+                          isDealActive:variantPrices[0].isDealActive,
+                          isTimerActive:variantPrices[0].isTimerActive,
+                      currentTimerStatus:variantPrices[0].currentTimerStatus,
+                      currentTimerValue:variantPrices[0].currentTimerValue,
+                      tag:variantPrices[0].dealTag,
+                      tagIconUrl:variantPrices[0].dealIconUrl,
+
                         }
                     }
                     else
@@ -283,18 +290,23 @@ const handleAllProduct = () =>{
                       }
                     }
                   }
+                  console.log("hshbhabjha",cardData)
                  
-                  let addToCartPayload = {  }
+                  let addToCartPayload = {}
                   if(variants && variants.length > 0){
                     const { variantPrices = [] ,name="",image="",id=""} = data.variants[0] || {};
                     let variantId = id;
+                    let variantDealPrice = "";
+                    let variantDealId = ''
                     if(variantPrices && variantPrices.length > 0){
                       variantId = variantPrices[0].variantId;
+                      variantDealPrice = variantPrices[0].dealFinalPrice;
+                      variantDealId = variantPrices[0].dealId;
                     }
-                    if(dealId && isDealActive && isTimerActive
-                        &&  currentTimerStatus == "in-between"
+                    if( variantPrices[0].dealId &&  variantPrices[0].isDealActive && variantPrices[0].isTimerActive
+                        && variantPrices[0].currentTimerStatus == "in-between"
                      ){
-                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId,dealId:dealId}
+                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId,dealId:variantDealId,dealPrice:variantDealPrice}
 
                     }
                     else{
@@ -304,7 +316,7 @@ const handleAllProduct = () =>{
                   }
                   else{
                     if(dealId && isDealActive && isTimerActive  &&  currentTimerStatus == "in-between" ){
-                    addToCartPayload = { product: data.id, quantity: 1,dealId:dealId }
+                    addToCartPayload = { product: data.id, quantity: 1,dealId:dealId ,dealPrice:dealFinalPrice}
 
                     }
                     else{
