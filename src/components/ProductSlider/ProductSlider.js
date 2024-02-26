@@ -9,6 +9,8 @@ import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import NotifySuccessPopup from '../NotifySuccessPopup/NotifySuccessPopup';
+import NotifyEmailPopup from '../NotifyEmailPopup/NotifyEmailPopup';
 
   const BACKGROUND_COLORS = [
     {
@@ -70,13 +72,21 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
   const [ backgroundColors , setBackgroundColors] = useState(createBackgroundColors(totalRow));
   const [width, setWidth] = useState(0);
   const [isArrowVisible, setIsArrowVisible] = useState(false);
+  const [isShowNotifySuccessPopup, setIsShowNotifySuccessPopup] = useState(false);
+  const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
+  const [emailId,setEmailId] = useState("")
   const clevertapEvent = useCleverTapEvents();
   const handleResize = () => setWidth(window.innerWidth);
+
+  const [payload,setPayload] = useState({});
+  
   useEffect(() => {
     setWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
+
+  let handleNotify = ()=>{};
   
 let trackData={};
   const onAddToCart = async(data) =>{
@@ -122,6 +132,44 @@ const handleAllProduct = () =>{
   const encodedHeaderTitle = encodeURIComponent(headerTitle);
   window.location.href = `/collections?category=${encodedHeaderTitle}`
 }
+
+ handleNotify = async (payload, isLogin,) => {
+  setPayload(payload)
+  if (isLogin) {
+    try {
+      const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/out-of-stock/email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      setIsShowNotifySuccessPopup(true);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  } else {
+    setIsShowNotifyEmailPopup(true)
+    if (emailId) {
+      payload['email'] = emailId;
+      try {
+        const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/out-of-stock/email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+        setIsShowNotifySuccessPopup(true);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      // setIsShowNotifyEmailPopup(true);
+    }
+  }
+};
+
     return (
 
 
@@ -208,7 +256,7 @@ const handleAllProduct = () =>{
                     addToCartPayload = { product: data.id, quantity: 1 }
                   }
                   return(
-                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart(addToCartPayload)} key={index}/>
+                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart(addToCartPayload)} key={index}  emailId={emailId} handleNotify={handleNotify} />
                   )
                 })
               }
@@ -218,6 +266,8 @@ const handleAllProduct = () =>{
           
             </div>
           </div>
+          <div className={styles.NotifySuccessPopup}>{isShowNotifySuccessPopup && <NotifySuccessPopup setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}/>}</div>
+              <div>{isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}  emailId={emailId} setEmailId={setEmailId} handleNotify={handleNotify} payload={payload}/>}</div>
           <Loader isShow={isLoading} />
           </>
       );

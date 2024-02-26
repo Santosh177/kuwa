@@ -1,41 +1,39 @@
 import { useRouter } from 'next/navigation';
 import styles from './product-card.module.scss';
-import NotifySuccessPopup from '../NotifySuccessPopup/NotifySuccessPopup';
 import { useState } from 'react';
 
 
+import { useAuth } from '@/context/userDetail';
 
-const ProductCard = ({cardData,addToCart={},style={}}) => {
 
-    const [isShowNotifySuccessPop,setIsShowNotifySuccessPop] = useState(false);
 
-    const handleNotify = async()=>{
 
-        const payload = {
-            productId:"",
-            variantId:"",
-            deviceId:"",
-            email:"",
-            userId:""
-        }
+const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotify=()=>{}}) => {
 
-        // const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/out-of-stock/email`,{
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
-        setIsShowNotifySuccessPop(true)
-       
-    }
-   
-    const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id="" , seoUrl="",normalInventory=0} = cardData || {}
+    const { isLogin=false ,userData = {}} = useAuth();
+
+    console.log("shdhsabhja",useAuth());
+    
+
+    // const deviceId = cookies.getItem("deviceID")
+    // console.log("deviceId",deviceId)
+
+     const router = useRouter();
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id="" , seoUrl="",normalInventory=1} = cardData || {}
     const btnName = normalInventory > 0 ? "Add to cart" : "Notify me"
+
+    const payload = {
+        productId:id,
+        // variantId:"",
+        deviceId:"",
+        email: isLogin ? userData.emailAddress : emailId ,
+        userId: isLogin ? userData.id : null
+    }
     return(
         <>
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
             <div className={styles.productCardWrapper} style={{...style}}>
+              {normalInventory <= 0 && <div className={styles.outOfStockTxt}>Out of stock</div>}
                 <div className={styles.productImgWrapper}>
                     <div className={styles.productImgContainer}>
                         <img className={styles.productImg} src={image} alt='product-name' />
@@ -52,16 +50,13 @@ const ProductCard = ({cardData,addToCart={},style={}}) => {
                             addToCart();
                         }
                         else{
-                            handleNotify();
+                            handleNotify(payload,isLogin);
                         }
                         }}>{btnName}</div>
             </div>
             </div>
         </div>
         
-       {isShowNotifySuccessPop &&
-       <div className={styles.popUp}> <NotifySuccessPopup/></div>
-       }
         </>
     )
 

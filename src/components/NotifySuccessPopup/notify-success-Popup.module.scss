@@ -1,8 +1,23 @@
 .NotifyOverlay{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    position:fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 10000;
+    background: rgba(7, 20, 26, 0.40);
+
+backdrop-filter: blur(4px);
+
     .NotifySuccessPopup{
         width:370px;
         border-radius: 16px;
         background: #FFF;
+        padding: 24px;
         .content{
             display: flex;
             flex-direction: column;
@@ -21,11 +36,14 @@
             font-style: normal;
             font-weight: 600;
             line-height: normal;
+            width: 286px;
            }
            .btn{
+            margin-top: 12px;
             border-radius: 24px;
             background: #247A81;
             padding: 8px 96px;
+            cursor: pointer;
            }
         }
     }
