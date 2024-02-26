@@ -99,8 +99,8 @@ const ProductDeatil = ({ productData = {} }) => {
             setIsVariantDealActive(isVariantDealActive);
             setSeleVariantIcon(dealIconUrl);
             setSelectedVariantTag(dealTag)
-            if(selectedVariantdealId && isDealActive && isTimerActive 
-                && currentTimerStatus == "in-between"
+            if(selectedVariantdealId && isVariantDealActive && isVariantTimerActive 
+                && currentVariantTimerStatus == "in-between"
                 ){
                const  { varientId = '', dealListPrice = 0, dealFinalPrice = 0, dealDiscountPrice = 0 } = selectedVarientsData[0]?.pricings[0] || {};
                setFinalPrice(dealFinalPrice);
@@ -436,6 +436,7 @@ const ProductDeatil = ({ productData = {} }) => {
         onHandleApplePay:onHandleApplePay,
         noOfProduct: noOfProduct,
         mininmumDeliveryThreshold:mininmumDeliveryThreshold,
+        
     };
     console.log("pricingSectionVariables",pricingSectionVariables)
     const handelRoute = (type) => {
@@ -663,7 +664,7 @@ const ProductDeatil = ({ productData = {} }) => {
             </div>
             <div className={style.productPricingContainer}>
                 <ProductImageSection allImages={allImages} dealTag={dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} seleVariantIcon={seleVariantIcon} selectedVariantTag={selectedVariantTag} />
-                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf}  isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} />
+                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf}  isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus}  isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>
                 <FrequntlyBoughtTogether currency={currency} productData={frequentlyBoughtTogether} />

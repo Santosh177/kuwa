@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react'
 import { useRouter } from 'next/navigation';
-// import ProductCard from '@/components/ProductCard/ProductCard';
 import ProductDealCard from '@/components/ProductDealCard/ProductDealCard';
 import { addToCart } from '@/services'
 import { useCartItems } from '@/context/cartItems';
@@ -10,8 +9,6 @@ import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import styles from './deal-product-slider.module.scss'
 const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,currentTimeStatus}) => {
-  console.log("sdbhsha",isDealActive)
-  // let isDealActive = isDealActive || false;
     const [isLoading , setIsLoading] = useState(false);
     const [width, setWidth] = useState(0);
     const clevertapEvent = useCleverTapEvents();
