@@ -303,7 +303,7 @@ const handleAllProduct = () =>{
                       variantDealPrice = variantPrices[0].dealFinalPrice;
                       variantDealId = variantPrices[0].dealId;
                     }
-                    if( variantPrices[0].dealId &&  variantPrices[0].isDealActive && variantPrices[0].isTimerActive
+                    if( variantPrices[0]?.dealId &&  variantPrices[0]?.isDealActive && variantPrices[0]?.isTimerActive
                         && variantPrices[0].currentTimerStatus == "in-between"
                      ){
                     addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId,dealId:variantDealId,dealPrice:variantDealPrice}
