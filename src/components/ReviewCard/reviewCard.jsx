@@ -26,7 +26,7 @@ const ReviewCard = ({item}) => {
     
     return (
       <>
-      {isActive &&  <div className={style.reviewCardConatiner}>
+        <div className={style.reviewCardConatiner}>
             <div className={style.reviewStarConatiner}>
             {renderStars()}
             </div>
@@ -43,7 +43,7 @@ const ReviewCard = ({item}) => {
                
             </div>
         </div>
-    }
+    
     </>
     )
 }

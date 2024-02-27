@@ -13,19 +13,23 @@ const splitAndPush = (intialProduct, currentQueue) => {
             }
         }
     }
+    
     return ([...currentQueue, ...finalResult])
 }
 const ProductReview = ({ productData }) => {
     const { reviews = [] } = productData || {}
+    const activeReviews = reviews.filter(data=>data.isActive == true)
+    console.log("activeReviews",activeReviews)
     const [currentQueue, setCurrentQueue] = useState([]);
     useEffect(() => {
-        setCurrentQueue(splitAndPush(reviews, currentQueue))
+        setCurrentQueue(splitAndPush(activeReviews, currentQueue))
     }, [])
+    console.log("currentQueue",currentQueue)
     const handelOnCLick = () => {
-        setCurrentQueue(splitAndPush(reviews, currentQueue))
+        setCurrentQueue(splitAndPush(activeReviews, currentQueue))
     }
-    const totalReviews  = productData && productData.reviews && productData.reviews.length || 0;
-    const isShowMore = (reviews && reviews.length > 3 && currentQueue.length < totalReviews );
+    const totalReviews  = productData && productData.activeReviews && productData.activeReviews.length || 0;
+    const isShowMore = (activeReviews && activeReviews.length > 3 && currentQueue.length < totalReviews );
     if (currentQueue && currentQueue.length > 0) {
         return (
             <div className={style.reviewsContainerOuter}>
