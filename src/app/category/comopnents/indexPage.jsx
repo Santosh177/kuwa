@@ -31,10 +31,7 @@ const MainCategory = ({isDealPage}) => {
 
     const [paramsData, setParamsData] = useState({})
     const params = useParams();
-    const dealId= params.id || "";
-    console.log("dealId",dealId)
-   console.log("searchParamsugwugw",searchParams)
-    console.log('paramsData',paramsData)
+    const dealSeoUrl= params.id || "";
 
     useEffect(()=>{
           
@@ -147,7 +144,7 @@ const MainCategory = ({isDealPage}) => {
             let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}&${query}`;
         
             if (isDealPage) {
-                endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealId}?country_id=${selectedCountry.id}&${query}`;
+                endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealSeoUrl}?country_id=${selectedCountry.id}&${query}`;
             }
         
             try {
@@ -227,7 +224,7 @@ const MainCategory = ({isDealPage}) => {
   
     const fetchDealFilterData = async()=>{
         setIsLOading(true)
-        const getFilterData = await fetch(`/api/deal-category-filter?dealId=${dealId}`, {
+        const getFilterData = await fetch(`/api/deal-category-filter?dealSeoUrl=${dealSeoUrl}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

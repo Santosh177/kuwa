@@ -63,7 +63,7 @@ const DealSection = ({ data }) => {
 
   
     const handleAllProduct = () => {
-        window.location.href = `/DealPage/${id}`;
+        window.location.href = `/DealPage/${seoUrl}`;
      };
 
     return (
