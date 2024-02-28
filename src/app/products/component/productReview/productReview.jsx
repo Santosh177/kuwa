@@ -18,7 +18,7 @@ const splitAndPush = (intialProduct, currentQueue) => {
 }
 const ProductReview = ({ productData }) => {
     const { reviews = [] } = productData || {}
-    const activeReviews = reviews.filter(data=>data.isActive == true)
+    const activeReviews = reviews?.filter(data=>data.isActive == true)
     console.log("activeReviews",activeReviews)
     const [currentQueue, setCurrentQueue] = useState([]);
     useEffect(() => {
@@ -28,15 +28,15 @@ const ProductReview = ({ productData }) => {
     const handelOnCLick = () => {
         setCurrentQueue(splitAndPush(activeReviews, currentQueue))
     }
-    const totalReviews  = productData  && activeReviews.length || 0;
-    const isShowMore = (activeReviews && activeReviews.length > 3 && currentQueue.length < totalReviews );
+    const totalReviews  = productData  && activeReviews?.length || 0;
+    const isShowMore = (activeReviews && activeReviews?.length > 3 && currentQueue.length < totalReviews );
     if (currentQueue && currentQueue.length > 0) {
         return (
             <div className={style.reviewsContainerOuter}>
                 <div className={style.review}>Customer Review</div>
                 <div className={style.reviewsContainer}>
                     {
-                        currentQueue.map((item, index) => {
+                        currentQueue?.map((item, index) => {
                             return (
                                 <div className={style.cards}>
                                     <ReviewCard item={item} key={index} />

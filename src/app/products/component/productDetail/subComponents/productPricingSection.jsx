@@ -286,10 +286,10 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 <div className={styles.imageReview}><img src="" alt="" /></div>
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
             </div>} */}
-            <div className={styles.ratingSection}>
+           {avgRating && totalRating && <div className={styles.ratingSection}>
               <div className={styles.avgRating}>{renderStars()}</div>
               <div className={styles.totalNumberRating}>{`(${totalRating}  ratings)`}</div>
-            </div>
+            </div>}
             <div className={styles.pricingConatiner}>
                 <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>
                 <div className={styles.incriment}>
