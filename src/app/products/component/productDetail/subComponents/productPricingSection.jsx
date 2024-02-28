@@ -225,41 +225,41 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         }
       }
 
-    const onPayment = ()=>{
-        let payload = {
-            "cartId":getCartItems['id'] || "",
-            "orderType": "one-time",
-            "userId": userId || "",
-            "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
-            "shippingAddressId":selectedAddress && selectedAddress.id || "",
-            "addressId": selectedAddress && selectedAddress.id || "",
-            "countryCode": selectedCountry.code || "",
-            "countryId": selectedCountry.id || "",
-            "description": description,
-            "finalAmount": priceDetails['totalAmount'],
-            "totalAmount": priceDetails['finalPayloadTotalAmount'],
-            "currency": selectedCountry.currency || "",
-            "orderSource": "WEBSITE",
-            "orderCategory": "CART",
-            "couponApplied": isCouponApplied || false,
-            "couponCode": couponCodeData['coupon'] || "",
-            "discount": priceDetails['discountAmount'],
-            "paymentType": "Regular",
-            "taxAmount": taxAmount,
-            "shippingAmount": 0,
-            "deliveryCharges":priceDetails['deliveryFees'],
-            "cartItems": cartItemPayload
-          }
-    }
+    // const onPayment = ()=>{
+    //     let payload = {
+    //         "cartId":getCartItems['id'] || "",
+    //         "orderType": "one-time",
+    //         "userId": userId || "",
+    //         "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
+    //         "shippingAddressId":selectedAddress && selectedAddress.id || "",
+    //         "addressId": selectedAddress && selectedAddress.id || "",
+    //         "countryCode": selectedCountry.code || "",
+    //         "countryId": selectedCountry.id || "",
+    //         "description": description,
+    //         "finalAmount": priceDetails['totalAmount'],
+    //         "totalAmount": priceDetails['finalPayloadTotalAmount'],
+    //         "currency": selectedCountry.currency || "",
+    //         "orderSource": "WEBSITE",
+    //         "orderCategory": "CART",
+    //         "couponApplied": isCouponApplied || false,
+    //         "couponCode": couponCodeData['coupon'] || "",
+    //         "discount": priceDetails['discountAmount'],
+    //         "paymentType": "Regular",
+    //         "taxAmount": taxAmount,
+    //         "shippingAmount": 0,
+    //         "deliveryCharges":priceDetails['deliveryFees'],
+    //         "cartItems": cartItemPayload
+    //       }
+    // }
 
     const tamaraMinAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].min_limit && tamaraConfig[0].min_limit.amount:0
     const tamaraMaxAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].max_limit && tamaraConfig[0].max_limit.amount:0
     
     const getStarImage = (index) => {
       const rating = avgRating - index;
-      if (rating >= 1) {
+      if (rating >= 0.75) {
           return "https://d25uasl7utydze.cloudfront.net/assets/star-filled.svg"; 
-      } else if (rating >= 0.5) {
+      } else if (rating >= 0.25) {
           return "https://d25uasl7utydze.cloudfront.net/assets/star-halft.svg"; 
       } else {
           return "https://d25uasl7utydze.cloudfront.net/assets/star.svg"; 

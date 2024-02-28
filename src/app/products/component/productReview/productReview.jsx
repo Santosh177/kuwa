@@ -28,7 +28,7 @@ const ProductReview = ({ productData }) => {
     const handelOnCLick = () => {
         setCurrentQueue(splitAndPush(activeReviews, currentQueue))
     }
-    const totalReviews  = productData && productData.activeReviews && productData.activeReviews.length || 0;
+    const totalReviews  = productData  && activeReviews.length || 0;
     const isShowMore = (activeReviews && activeReviews.length > 3 && currentQueue.length < totalReviews );
     if (currentQueue && currentQueue.length > 0) {
         return (
