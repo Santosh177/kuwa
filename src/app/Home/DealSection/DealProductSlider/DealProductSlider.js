@@ -9,6 +9,7 @@ import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import styles from './deal-product-slider.module.scss'
 const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,currentTimeStatus}) => {
+console.log("DEAL PRODUCT SLIDER")
     const [isLoading , setIsLoading] = useState(false);
     const [width, setWidth] = useState(0);
     const clevertapEvent = useCleverTapEvents();

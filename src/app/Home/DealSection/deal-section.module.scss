@@ -1,7 +1,9 @@
 .dealContainer{
     // background-color: bisque;
     margin: 16px;
-    .dealHeader{    
+    .dealHeader{  
+        padding-left: 16px;
+        padding-right: 16px;  
         padding-top: 10px;
         display: flex;
         justify-content: space-between;
@@ -83,6 +85,8 @@ line-height: normal;
 @media(max-width:990px){
     .dealContainer{
        .dealHeader{
+        padding-left: 0px;
+        padding-right: 0px;  
         .headingContent{
             display: flex;
             flex-direction: column-reverse;
