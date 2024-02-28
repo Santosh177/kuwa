@@ -9,10 +9,10 @@ const DealSection = ({ data }) => {
     console.log("dealProductVariantDtoList",dealProductVariantDtoList)
     const { heading, backgroundImageUrl, countDownEndsAt, countDownStartsAt,currentTimeStatus="", countryId, id, isDealActive, isTimerActive, tagIconUrl, seoUrl, tag } = deal || {};
   
-    const [remainingDays, setRemainingDays] = useState("")
-    const [remainingHour, setRemainingHour] = useState("")
-    const [remainingMin, setRemainingMin] = useState("")
-    const [remainingSec, setRemainingSec] = useState("")
+    const [remainingDays, setRemainingDays] = useState("00")
+    const [remainingHour, setRemainingHour] = useState("00")
+    const [remainingMin, setRemainingMin] = useState("00")
+    const [remainingSec, setRemainingSec] = useState("00")
     let { currentTimerValue ="" } = deal || {};
 
     // let currentTimerValue = "1d-10h-60m"
@@ -29,7 +29,7 @@ const DealSection = ({ data }) => {
         } else {
           setTimer(0);
         }
-      }, [currentTimerValue]);
+      }, [currentTimerValue,currentTimeStatus]);
   
     useEffect(() => {
       const intervalId = setInterval(() => {
@@ -40,9 +40,13 @@ const DealSection = ({ data }) => {
       }, 1000);
   
       return () => clearInterval(intervalId);
-    }, [timer]);
+    }, [timer,currentTimeStatus]);
 
   useEffect(() => {
+    if (timer === 1) {
+      
+        window.location.reload();
+      }
     if (timer > 0) {
         const days = Math.floor(timer / (24 * 3600));
         const hours = Math.floor((timer % (24 * 3600)) / 3600);
@@ -54,7 +58,7 @@ const DealSection = ({ data }) => {
         setRemainingMin(minutes.toString().padStart(2, '0'));
         setRemainingSec(seconds.toString().padStart(2, '0'));
     }
-}, [timer]);
+}, [timer,currentTimeStatus]);
 
 
   

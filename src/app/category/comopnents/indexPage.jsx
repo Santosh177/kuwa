@@ -147,7 +147,7 @@ const MainCategory = ({isDealPage}) => {
             let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}&${query}`;
         
             if (isDealPage) {
-                endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealId}?${query}&country_id=${selectedCountry.id}`;
+                endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealId}?country_id=${selectedCountry.id}&${query}`;
             }
         
             try {

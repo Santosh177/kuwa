@@ -51,7 +51,7 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,curre
          }
          >
          {
-              data.map((data, index) => {
+              data.slice(0, 12).map((data, index) => {
                 const {productId,variantId} = data || {}
                 let cardData = {}
                 trackData = {
@@ -109,11 +109,24 @@ const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,curre
                 }
 
                 let addToCartPayload = {}
-                if(variantId){
+                if(variantId ){
+                  if(isDealActive && isTimerActive && currentTimeStatus== "in-between"){
                     addToCartPayload = {"product":data.productId,"quantity":1,"isVariant":true,"variantId":data.variantId,"dealId":data.dealId,"dealPrice":data.dealFinalPrice}    
+                  }
+                  else{
+                    addToCartPayload = {"product":data.productId,"quantity":1,"isVariant":true,"variantId":data.variantId,}    
+                  }
+                   
                 }
                 else{
+                  if(isDealActive && isTimerActive && currentTimeStatus== "in-between"){
                     addToCartPayload =  { "product": data.productId, quantity: 1, "dealId" :data.dealId ,"dealPrice":data.dealFinalPrice}
+                  }
+                  else{
+                    addToCartPayload =  { "product": data.productId, quantity: 1,}
+                  }
+
+
                 }
                
                 return (

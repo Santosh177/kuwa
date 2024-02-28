@@ -14,10 +14,10 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
     const [isLodaing, setIsLoading] = useState(false);
     const clevertapEvent = useCleverTapEvents();
     let trackData={};
-    const [remainingDays, setRemainingDays] = useState("")
-    const [remainingHour, setRemainingHour] = useState("")
-    const [remainingMin, setRemainingMin] = useState("")
-    const [remainingSec, setRemainingSec] = useState("")
+    const [remainingDays, setRemainingDays] = useState("00")
+    const [remainingHour, setRemainingHour] = useState("00")
+    const [remainingMin, setRemainingMin] = useState("00")
+    const [remainingSec, setRemainingSec] = useState("00")
 
     const [timer, setTimer] = useState(0); 
     const onAddToCart = async (data) => {
@@ -56,6 +56,10 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
     }, [timer]);
 
   useEffect(() => {
+    if (timer === 1) {
+      
+        window.location.reload();
+      }
     if (timer > 0) {
         const days = Math.floor(timer / (24 * 3600));
         const hours = Math.floor((timer % (24 * 3600)) / 3600);

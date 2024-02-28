@@ -129,3 +129,11 @@ line-height: normal;
        } 
     }
 }
+
+@media(max-width:340px){
+    .dealContainer{
+       .dealHeader{
+        gap: 4px;
+       } 
+    }
+}
