@@ -34,6 +34,8 @@ const ProductDeatil = ({ productData = {} }) => {
     const [ isLoading , setIsLoading] = useState(false)
     const router = useRouter()
     const clevertapEvent = useCleverTapEvents();
+
+    let normalInventory = quantity
     useEffect(()=>{
 
         if(variants && variants.length > 0){
@@ -365,7 +367,8 @@ const ProductDeatil = ({ productData = {} }) => {
         handelViewCart: handelViewCart,
         onHandleApplePay:onHandleApplePay,
         noOfProduct: noOfProduct,
-        mininmumDeliveryThreshold:mininmumDeliveryThreshold
+        mininmumDeliveryThreshold:mininmumDeliveryThreshold,
+        normalInventory:normalInventory
     };
     const handelRoute = (type) => {
         if (type === "home") {

@@ -8,13 +8,17 @@ import { useCountryList } from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
-    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold} = pricingSectionVariables;
+    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory} = pricingSectionVariables;
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
     const clevertapEvent = useCleverTapEvents();
     const [tamaraConfig, setTamaraConfig] = useState({});
     const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {};
     const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+
+    const [stockQuantity,setStockQuantity] = useState(normalInventory-1);
+
+    console.log("normalInventory",normalInventory)
     useEffect(()=>{
         getTamaraConfig()
     },[])
@@ -257,6 +261,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
 
     return (
         <div className={styles.pricingSectionContainer}>
+        {stockQuantity <= 15 && <div className={styles.normalInventory}>{stockQuantity} left in stock</div>}
             <div className={styles.title}>{title}</div>
             {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
@@ -265,7 +270,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
             <div className={styles.pricingConatiner}>
                 <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>
                 <div className={styles.incriment}>
-                    <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} />
+                    <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} setStockQuantity={setStockQuantity} stockQuantity={stockQuantity} />
                 </div>
             </div>
             {variants.length>0 ? <div className={styles.packOf}>Pack of</div>:""}  
