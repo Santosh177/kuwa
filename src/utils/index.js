@@ -45,7 +45,7 @@ export const getCartItemDetails = async(data,currency) => {
       }
         else{
           if(dealId && isDealActive && isTimerActive
-             && currentTimerStatus == "in-betwween"
+             && currentTimerStatus == "in-between"
                ){
             item ={
               "dealId":dealId,
@@ -92,7 +92,7 @@ export const createPayloadForCartItems = async(cartData) => {
         cartData.map((data,index)=>{
           if(data.variants && data.variants.variants.id){
             if(data?.variants?.pricings[0].dealId && data.variants?.pricings[0].isDealActive && data?.variants?.pricings[0].isTimerActive 
-              && data?.variants?.pricings[0].currentTimerStatus == 'in-betwen'){
+              && data?.variants?.pricings[0].currentTimerStatus == 'in-between'){
               cartItems.push({
                 "dealId":data.variants.pricings[0].dealId,
                 "quantity": data.quantity || 1,
@@ -158,7 +158,7 @@ export const createPayloadForItems = async (cartItems) => {
       cartItems.map((data,index)=>{
         if(data.variants && data.variants.variants.id){
           if(data?.variants?.pricings[0].dealId && data.variants?.pricings[0].isDealActive && data?.variants?.pricings[0].isTimerActive 
-            && data?.variants?.pricings[0].currentTimerStatus == 'in-betwen'){
+            && data?.variants?.pricings[0].currentTimerStatus == 'in-between'){
               items.push({
                 "imageUrl":data.image && data.image.imageUrl || "https://d2krpu1dx8jgw5.cloudfront.net/media/subscription/Adv-Woman_Crllhff.png",
                 "type":"Supplement",
@@ -253,7 +253,7 @@ export const createCouponPayload = async(cartItems) => {
       console.log("itemitem",item)
       if(item.variants && item.variants.variants.id){
         if(item?.variants?.pricings[0].dealId && item.variants?.pricings[0].isDealActive && item?.variants?.pricings[0].isTimerActive 
-          && item?.variants?.pricings[0].currentTimerStatus == 'in-betwen'){
+          && item?.variants?.pricings[0].currentTimerStatus == 'in-between'){
       supplements.push({"id":item.id,"quantity":item.quantity ,"isVariant":true,"variantId":item.variants.variants.id,"dealId":item?.variants?.pricings[0].dealId })
 
           }

@@ -137,7 +137,7 @@ const ProductSlider = ({data}) => {
                   "product Id": data?.id,
                 }
                 return (
-                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1 })} />
+                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1,dealId:data.dealId,dealPrice:data.dealFinalPrice })} />
                 )
               })
             }
