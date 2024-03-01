@@ -690,12 +690,12 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           countryCode: selectedCountry.code || "",
           currencyCode:  selectedCountry.currency || "",
           total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount'] },
-        "lineItems":[
-          {
-            "label": "Additional Discount",
-            "amount": - "extraDiscount"
-          }
-        ]
+        // "lineItems":[
+        //   {
+        //     "label": "Additional Discount",
+        //     "amount": - "extraDiscount"
+        //   }
+        // ]
         
         };
         console.log("hvahjavha",request)
