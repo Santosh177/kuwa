@@ -16,7 +16,7 @@ import { useCountry } from '@/context/contryDetails';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
 const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
-    const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold } = productData || {};
+    const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold ,avgRating="",totalRating=""} = productData || {};
     const [noOfProduct, setNoOfProduct] = useState(1);
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
@@ -592,7 +592,7 @@ const ProductDeatil = ({ productData = {} }) => {
             </div>
             <div className={style.productPricingContainer}>
                 <ProductImageSection allImages={allImages} />
-                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf} />
+                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf} avgRating={avgRating} totalRating={totalRating} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>
                 <FrequntlyBoughtTogether currency={currency} productData={frequentlyBoughtTogether} />
