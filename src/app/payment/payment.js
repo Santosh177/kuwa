@@ -196,7 +196,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [pageType, setPageType] = useState(getPageType())
   let appleSession;
   
-  const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+  let prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
   const codCharge = selectedCountry?.codCharge || 0;
 
   // useEffect(()=>{
@@ -683,17 +683,19 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         Frames.submitCard()
       }else if(selectedPaymentMethod === "APPLE_PAY" || pMode === "APPLE_PAY"){
         console.log("extradiscountttt",extraDiscount)
+        console.log("prePaidDiscount++++",prePaidDiscount)
+        const discountAmount = (parseFloat((((priceDetails['totalAmount']-priceDetails['deliveryFees']) * prePaidDiscount)/100).toFixed(2)));
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
           supportedNetworks: applePaySupportednetworks.split(", "),
           countryCode: selectedCountry.code || "",
           currencyCode:  selectedCountry.currency || "",
-          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-extraDiscount },
+          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-discountAmount },
         "lineItems":[
           {
             "label": "Additional Discount",
-            "amount": - extraDiscount
+            "amount": - discountAmount
           }
         ]
         
