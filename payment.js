@@ -21,8 +21,8 @@ import DeliveryAddress from '../order-summary/DeliveryAddress/DeliveryAddress'
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import { updateCartItem, deleteCartItem } from '@/services';
 import { useRef } from 'react';
-import PrepaidExtraDiscount from './components/PrepaidExtraDiscount/PrepaidExtraDiscount';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
+import PrepaidExtraDiscount from './components/PrepaidExtraDiscount/PrepaidExtraDiscount';
 
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
@@ -168,7 +168,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
             )
           })
         }
-    <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig}  onPayment={onPayment} btnName="Proceed To Pay" currency = {priceDetails.currency} totalPrice={priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}}  isEnable={selectedPaymentMethod != ""} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount} selectedPaymentMethod={selectedPaymentMethod} codCharge={codCharge}/>
+    <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig}  onPayment={onPayment} showViewDetails={showViewDetails} btnName="Proceed To Pay" currency = {priceDetails.currency} totalPrice={priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}}  isEnable={selectedPaymentMethod != ""} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount} selectedPaymentMethod={selectedPaymentMethod} codCharge={codCharge}/>
 </div>
   )
 }
@@ -192,8 +192,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,[]));
   const clevertapEvent = useCleverTapEvents();
   const {setCartItemCount={} } = useCartItems();
-  const [extraDiscount,setExtraDiscount] = useState(0);
   const [pageType, setPageType] = useState(getPageType())
+  const [extraDiscount,setExtraDiscount] = useState(0);
   let appleSession;
   
   const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
@@ -361,18 +361,16 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     const onPayment = async(data,pMode="",) => {
       console.log("prePaidDiscount",extraDiscount);
       const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
-      console.log("sdbnsh",priceDetails['discountAmount']);
 
-      console.log("dsbhab",(priceDetails['totalAmount']-priceDetails['deliveryFees']));
       const discountAmount = (parseFloat((((priceDetails['totalAmount']-priceDetails['deliveryFees']) * prePaidDiscount)/100).toFixed(2)));
-      console.log("discountAmount",discountAmount)
-      console.log("ebqhjq",prePaidDiscount)
       console.log("pMode",pMode)
       setIsLoader(true);
       const userName = userData && userData['firstName'] || "";
       const getCartItems = await getCartItem();
       const cartItemsData = getCartItems && getCartItems['products'];
+      
       const cartItemPayload = await createPayloadForCartItems(cartItemsData);
+      // const dealId = cartItemPayload.dealId || null
       const isCouponApplied = (couponCodeData['reason'] === "Applied Successfully")
       const description = `${userName + ",MULTIPLE_ITEM," + couponCodeData['coupon']}`;
       const userId = getCartItems['customer'] || userData['id'] || null;
@@ -415,9 +413,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
           "cartItems": cartItemPayload,
-          "prepaidDiscountAmount":extraDiscount,
           "deviceType":getDeviceType(),
           "pageType":pageType,
+          "prepaidDiscountAmount":extraDiscount,
         }
       const trackData = {
         'Order Amount': payload['finalAmount'],
@@ -689,16 +687,14 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           supportedNetworks: applePaySupportednetworks.split(", "),
           countryCode: selectedCountry.code || "",
           currencyCode:  selectedCountry.currency || "",
-          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-extraDiscount },
+          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount'] },
         "lineItems":[
           {
             "label": "Additional Discount",
-            "amount": - extraDiscount
+            "amount": -"extraDiscount"
           }
         ]
-        
         };
-        console.log("hvahjavha",request)
         appleSession = new ApplePaySession(3, request);
         appleSession.begin();
         appleSession.onvalidatemerchant = async (event) => {
@@ -739,6 +735,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               }
           }
         }
+      }else if(selectedPaymentMethod =="CHECKOUT_CARD"){
+        Frames.submitCard()
       }
       else if(selectedPaymentMethod){
         onPayment()
