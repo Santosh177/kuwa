@@ -13,7 +13,7 @@ function BlogPage() {
   return (
     <div>
       <Header />
-      <BlogBanner/>
+      {/* <BlogBanner/> */}
       <LatestBlog countryId={countryId}/>
       <BlogCategories countryId={countryId} />
       <Footer/>
