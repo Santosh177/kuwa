@@ -2,16 +2,16 @@
 import React from "react";
 import style  from "./incriment-bar.module.scss"
 
-const IncrimentBar = ({noOfProduct=0,setNoOfProduct={} , onResetViewCartState={} ,setStockQuantity,stockQuantity}) =>{
+const IncrimentBar = ({noOfProduct=0,setNoOfProduct={} , onResetViewCartState={} }) =>{
     const handelOnclick = (action) =>{
         onResetViewCartState(true)
         if(action === "minus" &&  noOfProduct > 1 ){
             setNoOfProduct(noOfProduct - 1)
-            setStockQuantity(stockQuantity+1)
+           
         }
-        if(action === "plus"){
+        if(action === "plus"  && noOfProduct <20){
             setNoOfProduct(noOfProduct + 1);
-            setStockQuantity(stockQuantity - 1)
+           
         }
     }
     return(

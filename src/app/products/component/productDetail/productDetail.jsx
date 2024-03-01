@@ -368,7 +368,8 @@ const ProductDeatil = ({ productData = {} }) => {
         onHandleApplePay:onHandleApplePay,
         noOfProduct: noOfProduct,
         mininmumDeliveryThreshold:mininmumDeliveryThreshold,
-        normalInventory:normalInventory
+        normalInventory:normalInventory,
+        productId:id
     };
     const handelRoute = (type) => {
         if (type === "home") {
@@ -594,7 +595,7 @@ const ProductDeatil = ({ productData = {} }) => {
                 <span onClick={() => handelRoute("product")}> {name}</span>
             </div>
             <div className={style.productPricingContainer}>
-                <ProductImageSection allImages={allImages} />
+                <ProductImageSection allImages={allImages} normalInventory={normalInventory} />
                 <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>

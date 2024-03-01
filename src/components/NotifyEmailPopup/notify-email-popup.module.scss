@@ -24,6 +24,12 @@ backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
            
+            .crossIcon{
+                cursor: pointer;
+                position: relative;
+                top: 0px;
+                left: 150px;
+            }
            .txt{
             color: #07141A;
             text-align: center;

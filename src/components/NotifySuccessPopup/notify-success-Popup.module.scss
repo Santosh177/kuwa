@@ -23,6 +23,11 @@ backdrop-filter: blur(4px);
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            .crossIcon{
+                position: relative;
+                left: 150px;
+                cursor: pointer;
+            }
            .rightArrowImg{
             img{
                 width:72px;
@@ -39,6 +44,7 @@ backdrop-filter: blur(4px);
             width: 286px;
            }
            .btn{
+            color: #FFF;
             margin-top: 12px;
             border-radius: 24px;
             background: #247A81;

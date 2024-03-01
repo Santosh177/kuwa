@@ -6,10 +6,10 @@ import styles from './cart-item-card.module.scss';
 
 
 
-const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index}) => {
+const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index,outOfStockPopUp}) => {
 
     console.log("CartItemCardCartItemCard",data)
-    const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="", id="", variants} = data || {};
+    const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="", id="", variants,normalInventory=""} = data || {};
     
     return(
         <div >
@@ -40,14 +40,18 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index}) 
             <div className={styles.cartItemCard}>
             <div className={styles.cartItemContainer}>
                 <img src={variants=== null || variants == undefined  ? image : variants?.variants?.image}></img>
-                <div className={styles.quantityContainer}>
+                {normalInventory<=0 ? 
+                 <div className={styles.outOfStockTxt}>Out of stock</div>
+                  : 
+                  <div className={styles.quantityContainer}>
                     <div className={styles.quantityBtn} onClick={()=>(qty > 1) && onUpdateItem({product:id,quantity:qty-1})}>-</div>
                     <span>{qty}</span>
                     <div className={styles.quantityBtn} onClick={()=>onUpdateItem({product:id,quantity:qty+1})}>+</div>
-                </div>
+                    </div>
+                }
             </div>
             <div className={styles.cartItemInfo}>
-                <div className={styles.itemName}>{productName}</div>
+            <div className={styles.itemName} style={outOfStockPopUp ? {fontSize: "12px"} : {}}>{productName}</div>
                 <div className={styles.discountTag} style={(discountAmount > 0)?{opacity:1}:{opacity:0}}>
                     <div className={styles.discountText}>Save</div>
                     <div className={styles.discountPrice}>{currency + " " + discountAmount}</div>
@@ -57,7 +61,7 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index}) 
                     {discountAmount > 0 &&<div className={styles.retailPrice}>{currency + " " + retailPrice}</div>}
                 </div>
             </div>
-            <img className={styles.deleteIcon} onClick={()=>onDeleteItem()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/delete.png' alt='delete-icon'/>
+        {outOfStockPopUp ? <div></div> :    <img className={styles.deleteIcon} onClick={()=>onDeleteItem()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/delete.png' alt='delete-icon'/>}
             </div>
     </>
 }

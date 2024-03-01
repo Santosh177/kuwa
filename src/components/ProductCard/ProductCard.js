@@ -8,27 +8,13 @@ import { useAuth } from '@/context/userDetail';
 
 
 
-const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotify=()=>{}}) => {
+const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotifyMe,setIsShowNotifyEmailPopup}) => {
 
     const { isLogin=false ,userData = {}} = useAuth();
-
-    console.log("shdhsabhja",useAuth());
-    
-
-    // const deviceId = cookies.getItem("deviceID")
-    // console.log("deviceId",deviceId)
-
-     const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id="" , seoUrl="",normalInventory=1} = cardData || {}
+    const router = useRouter();
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",id="" , seoUrl="",normalInventory=2} = cardData || {}
     const btnName = normalInventory > 0 ? "Add to cart" : "Notify me"
 
-    const payload = {
-        productId:id,
-        // variantId:"",
-        deviceId:"",
-        email: isLogin ? userData.emailAddress : emailId ,
-        userId: isLogin ? userData.id : null
-    }
     return(
         <>
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
@@ -50,7 +36,13 @@ const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotify=()=>{}
                             addToCart();
                         }
                         else{
-                            handleNotify(payload,isLogin);
+                            if(isLogin){
+                                handleNotifyMe(id);
+                            }
+                            else{
+                                setIsShowNotifyEmailPopup(true)
+                            }
+                           
                         }
                         }}>{btnName}</div>
             </div>

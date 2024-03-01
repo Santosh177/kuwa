@@ -3,7 +3,7 @@
 export const getCartItemDetails = async(data,currency) => {
    let cartItem = []
     data.map((data, index)=>{
-        const { image = {} ,quantity= 1,price="",originalPrice="",finalPrice="" ,  description={},id="",cartItemId="",variants  } = data || {};
+        const { image = {} ,quantity= 1,price="",originalPrice="",finalPrice="" ,  description={},id="",cartItemId="",variants,normalInventory  } = data || {};
         const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
         console.log("CART PRODUCT",data)
         let item ={
@@ -17,7 +17,8 @@ export const getCartItemDetails = async(data,currency) => {
             "currency":currency,
             "id":id,
             "cartItemId":cartItemId,
-            "variants":variants
+            "variants":variants,
+            "normalInventory":normalInventory
         }
        cartItem.push(item)
 
@@ -114,6 +115,36 @@ export const createCouponPayload = async(cartItems) => {
      })
   }
   return supplements; 
+}
+
+export const getOutOfStockProduct = async(cartItems,currency) => {
+  let outOfStockProducts = [];
+  
+  if (cartItems && cartItems.length > 0) {
+    cartItems.map((item, index) => {
+      const { image = {}, quantity = 1, price = "", originalPrice = "", finalPrice = "", description = {}, id = "", cartItemId = "", variants, normalInventory } = item || {};
+      const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
+      if (normalInventory === 0) {
+        let item ={
+          "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+          "qty":quantity,
+          "productName":description.name || "",
+          "retailPrice":originalPrice,
+          'finalPrice':finalPrice,
+          'discountType':"fixed",
+          "discountAmount":discountAmount || 0,
+          "currency":currency,
+          "id":id,
+          "cartItemId":cartItemId,
+          "variants":variants,
+          "normalInventory":normalInventory
+      }
+        outOfStockProducts.push(item);
+      }
+    });
+  }
+  
+  return outOfStockProducts;
 }
 
 

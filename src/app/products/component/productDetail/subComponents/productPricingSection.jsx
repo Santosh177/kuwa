@@ -7,8 +7,11 @@ import { getTamaraPaymentTypes } from '@/services';
 import { useCountryList } from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import NotifySuccessPopup from "@/components/NotifySuccessPopup/NotifySuccessPopup";
+import NotifyEmailPopup from "@/components/NotifyEmailPopup/NotifyEmailPopup";
+import { useAuth } from '@/context/userDetail';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
-    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory} = pricingSectionVariables;
+    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory,productId} = pricingSectionVariables;
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
     const clevertapEvent = useCleverTapEvents();
@@ -16,9 +19,15 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     const deliveryFeesConfig = countryList.find((data) => data.code == "BH" || data.code == "BH") || {};
     const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
 
-    const [stockQuantity,setStockQuantity] = useState(normalInventory-1);
+    // const [stockQuantity,setStockQuantity] = useState(normalInventory-1);
+    const [isShowNotifySuccessPopup, setIsShowNotifySuccessPopup] = useState(false);
+    const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
+    const [emailId,setEmailId] = useState("");
+    const { isLogin=false ,userData = {}} = useAuth();
+
 
     console.log("normalInventory",normalInventory)
+   
     useEffect(()=>{
         getTamaraConfig()
     },[])
@@ -259,9 +268,57 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     const tamaraMinAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].min_limit && tamaraConfig[0].min_limit.amount:0
     const tamaraMaxAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].max_limit && tamaraConfig[0].max_limit.amount:0
 
+    const handleNotify = async() =>{
+     const payload={
+          productId:productId,
+          variantId:"",
+          email: emailId 
+        }
+        try {
+          const res = await fetch(`/api/out-of-stock`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+          // if(res.status == 200){
+          //   setIsShowNotifySuccessPopup(true);
+          // }
+          setIsShowNotifySuccessPopup(true);
+          
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+
+      const handleNotifyMe = async()=>{
+        const payload={
+          productId:productId,
+          variantId:"",
+          email: emailAddress 
+        }
+        try {
+          const res = await fetch(`/api/out-of-stock`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+          // if(res.status == 200){
+          //   setIsShowNotifySuccessPopup(true);
+          // }
+          setIsShowNotifySuccessPopup(true);
+          
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
     return (
+      <>
         <div className={styles.pricingSectionContainer}>
-        {stockQuantity <= 15 && <div className={styles.normalInventory}>{stockQuantity} left in stock</div>}
+        {normalInventory <= 15 && normalInventory >=1 && <div className={styles.normalInventory}>{normalInventory} left in stock</div>}
             <div className={styles.title}>{title}</div>
             {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
@@ -270,7 +327,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
             <div className={styles.pricingConatiner}>
                 <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>
                 <div className={styles.incriment}>
-                    <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} setStockQuantity={setStockQuantity} stockQuantity={stockQuantity} />
+                    <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} />
                 </div>
             </div>
             {variants.length>0 ? <div className={styles.packOf}>Pack of</div>:""}  
@@ -282,13 +339,27 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 
                 </div>
                 </div>
-            <div className={styles.addToCartContainer}>
-               {
-                isAddedToCart?<div className={styles.addToCart} onClick={() => handelViewCart()} ><span>View Cart</span></div>:
-                <div className={styles.addToCart} onClick={() => handelAddToCart()} ><span>Add to Cart</span></div>
-               }
-                <div className={styles.buyNow} onClick={() => handelBuyNow()} ><span>Buy Now</span></div>
-            </div>
+                <div className={styles.addToCartContainer}>
+  {normalInventory <=0  ? (
+    <div className={styles.notifyBtn} onClick={()=> (isLogin ? handleNotifyMe() : setIsShowNotifyEmailPopup(true))}>NotifyMe</div>
+  ) : (
+    <>
+      {isAddedToCart ? (
+        <div className={styles.addToCart} onClick={() => handelViewCart()}>
+          <span>View Cart</span>
+        </div>
+      ) : (
+        <div className={styles.addToCart} onClick={() => handelAddToCart()}>
+          <span>Add to Cart</span>
+        </div>
+      )}
+      <div className={styles.buyNow} onClick={() => handelBuyNow()}>
+        <span>Buy Now</span>
+      </div>
+    </>
+  )}
+</div>
+
             
            { window && window.ApplePaySession && <div style={{marginTop:'24px',cursor:'pointer'}} onClick={()=>onHandleApplePay()}>
                <img style={{width:'100%'}} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/default.png" alt="apple-pay"></img>
@@ -317,6 +388,9 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 />
                                
         </div>
+       {isShowNotifySuccessPopup&& <NotifySuccessPopup setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}/>}
+       {isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup} handleNotify={handleNotify} setEmailId={setEmailId} emailId={emailId} />}
+        </>
     )
 }
 

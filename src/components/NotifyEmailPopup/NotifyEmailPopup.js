@@ -2,7 +2,7 @@ import React , {useState} from 'react'
 import styles from './notify-email-popup.module.scss'
 import { useAuth } from '@/context/userDetail';
 
-const NotifyEmailPopup = ({setIsShowNotifyEmailPopup,setIsShowNotifySuccessPopup,emailId,setEmailId,handleNotify=()=>{},payload}) => {
+const NotifyEmailPopup = ({setIsShowNotifyEmailPopup,setIsShowNotifySuccessPopup,emailId,setEmailId,handleNotify,payload}) => {
     const [error, setError] = useState('');
     const { isLogin=false ,userData} = useAuth();
     
@@ -14,14 +14,16 @@ const NotifyEmailPopup = ({setIsShowNotifyEmailPopup,setIsShowNotifySuccessPopup
       return;
     }
     setError('');
-    
+    console.log("email nonlogin");
     setIsShowNotifyEmailPopup(false);
-    handleNotify(payload,isLogin)
+    // handleNotify(payload,isLogin)
+    handleNotify()
   }
     return (
     <div className={styles.NotifyEmailOverlay}>
     <div className={styles.NotifyEmailPopup}>
         <div className={styles.content}>
+          <div className={styles.crossIcon} onClick={()=>setIsShowNotifyEmailPopup(false)}><img src="https://d25uasl7utydze.cloudfront.net/assets/cross_icon%20(2).svg"/></div>
             <div className={styles.txt}>We will notify you when the product is back in stock</div>
             <div><input type="email" placeholder='Email ID * (ex. abc@gmail.com)' value={emailId} onChange={(e)=>setEmailId(e.target.value)} ></input>
             {error && <div className={styles.error}>{error}</div>}</div>

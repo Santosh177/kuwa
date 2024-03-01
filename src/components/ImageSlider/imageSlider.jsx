@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import "./image-slider.scss"
 
-const ImageSlider = ({ images }) => {
+const ImageSlider = ({ images,normalInventory }) => {
     const [current, setCurrent] = useState(0);
     const length = images.length;
 
@@ -24,8 +24,11 @@ const ImageSlider = ({ images }) => {
 
     return (
         <section >
+                  {normalInventory<=0&&     <div className='outOfStockTxt'>Out of stock</div>}
             <div className='slider'>
+
                 <div className='left-arrow' onClick={prevSlide} > <img src="https://d25uasl7utydze.cloudfront.net/kuwa/right%20arrow.png" alt="" />  </div>
+           
                 <div className='all-slides'>
                     {images.map((item, index) => {
                         const { imageUrl = "" } = item || {};
