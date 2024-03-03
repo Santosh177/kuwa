@@ -80,6 +80,148 @@ export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
     }
 }
 
+export const mappingHomeSearchDealProducts = (data)=>{
+const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue=""} = data || {}
+  console.log("mappingHomeSearchDealProducts",data)
+
+  let cardData={}
+  if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between" ){
+    cardData={
+      "id":id || "",
+      "dealId":dealId || "",
+      "isDealActive":isDealActive,
+      "isTimerActive":isTimerActive,
+      "productImage":productImageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+      "productName":name || "",
+      "seoUrl":seoUrl ,
+      "retailPrice":dealListPrice,
+      'finalPrice':dealFinalPrice,
+      'discountType':"fixed",
+      "discount":dealDiscountPrice || 0,
+      "currency":currency,
+      "discountType":"",
+      "tagIconUrl":tagIconUrl,
+      "tag":dealTag,
+      "currentTimerStatus":currentTimerStatus
+      }
+
+
+   
+  }
+    else{
+      cardData = {
+        "id":id || "",
+        "productImage":productImageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":name || "",
+        "seoUrl":seoUrl ,
+        "retailPrice":specialPrice,
+        'finalPrice':price,
+        'discountType':"fixed",
+        "discount":discount || 0,
+        "currency":currency,
+        "discountType":""
+      }
+      
+    }
+    return cardData;
+  }
+
+export const  mappingDealProducts = (data)=>{
+ const {
+    currency= "",
+    productImage= "",
+    productId= "",
+    productName= "",
+    countDownStartsAt="",
+    countDownEndsAt="",
+    dealId="",
+    dealListPrice="",
+    dealDiscountPrice="",
+    dealFinalPrice= "",
+    dealInventory="",
+    rank="",
+    productSeoUrl="",
+    productListPrice= "",
+    productFinalPrice = "",
+    productDiscount = "",
+    normalInventory = "",
+    variantId="",
+    variantName = "",
+    variantImage = "",
+    variantListPrice = "",
+    variantFinalPrice = "",
+    variantDiscount = "",
+    isDealActive="",
+    isTimerActive="",
+    dealTag="",
+    dealIconUrl="",
+    currentTimerStatus="",
+    currentTimerValue="",
+    currentDateTime=""
+  } = data || {}
+  let cardData = {}
+if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
+ cardData = {
+    "dealId":dealId || "",
+    "productId":productId || "",
+    "variantId":variantId,
+    "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+    "productName":productName || "",
+    "seoUrl":productSeoUrl,
+    "dealListPrice":dealListPrice,
+    'dealFinalPrice':dealFinalPrice,
+    'discountType':"fixed",
+    "dealDiscountPrice":dealDiscountPrice || 0,
+    "currency":currency,
+    "discountType":"",
+    "tagIconUrl":dealIconUrl,
+    "tag":dealTag,
+    "dealInventory":dealInventory,
+    "rank": rank,
+    "normalInventory":normalInventory,
+    "currentTimerStatus":currentTimerStatus,
+    "isDealActive":isDealActive,
+    "isTimerActive":isTimerActive
+  }
+  
+ 
+}
+else{
+  if(variantId){
+   cardData={
+      "variantId":variantId,
+      "productId":productId,
+      "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+      "productName":productName || "",
+      "seoUrl":productSeoUrl,
+      "retailPrice":variantListPrice,
+      'finalPrice':variantFinalPrice,
+      'discountType':"fixed",
+      "discount":variantDiscount || 0,
+      "currency":currency,
+      "variantName": variantName,
+      "variantImage":variantImage
+   }
+  }
+  else{
+cardData={
+  "variantId":variantId,
+      "productId":productId,
+      "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+      "productName":productName || "",
+      "seoUrl":productSeoUrl,
+      "retailPrice":productListPrice,
+      'finalPrice':productFinalPrice,
+      'discountType':"fixed",
+      "discount":productDiscount || 0,
+      "currency":currency,
+}
+  }
+}
+
+return cardData;
+
+}
 
 
 

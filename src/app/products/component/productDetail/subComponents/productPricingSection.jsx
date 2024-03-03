@@ -10,8 +10,10 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import NotifySuccessPopup from "@/components/NotifySuccessPopup/NotifySuccessPopup";
 import NotifyEmailPopup from "@/components/NotifyEmailPopup/NotifyEmailPopup";
 import { useAuth } from '@/context/userDetail';
-const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
+const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId}) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory,productId} = pricingSectionVariables;
+    console.log("pricingSectionVariables",pricingSectionVariables)
+    console.log("dbhjahva",variantdealId,isVariantDealActive,isVariantTimeActive,isVariantCurrenTimeStatus)
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
     const clevertapEvent = useCleverTapEvents();
@@ -325,7 +327,17 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
             </div>}
             <div className={styles.pricingConatiner}>
-                <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>
+              {
+              (isDealActive && isTimerActive
+               &&
+              currentTimerStatus=="in-between"
+              ) ||
+              
+              (isVariantDealActive && isVariantTimeActive 
+                && isVariantCurrenTimeStatus == "in-between")
+              ? 
+              <div className={styles.price}>{"Only at" + " " +currency + ". " + finalPrice * noOfProduct}</div>:
+                <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>}
                 <div className={styles.incriment}>
                     <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} />
                 </div>

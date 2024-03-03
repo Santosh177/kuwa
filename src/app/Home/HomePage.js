@@ -11,7 +11,7 @@ import MedicalExpert from './MedicalExpert/MedicalExpert';
 import Footer from '@/components/Footer/Footer';
 import Loader from '@/components/Loader/Loader';
 import VideoBanner from './VideoBanner/VideoBanner';
-import styles from './home-page.module.scss';
+import styles from './home-page.module.scss'
 import Carousel from './Carousel/Carousel';
 import { useEffect, useState } from 'react';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
@@ -19,12 +19,13 @@ import { useCountry } from '@/context/contryDetails';
 import ExploreCategory from './ExploreCategory/ExploreCategory';
 import NewArrivals from './NewArrivals/NewArrivals';
 import BestSelling from './BestSelling/BestSelling';
+import DealSection from './DealSection/DealSection';
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
-    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={} } = homePageData.homePageData || {};
+    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[] } = homePageData.homePageData || {};
     const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
     useEffect(() => {
@@ -112,7 +113,15 @@ export default function Home(homePageData) {
                    {secondryBanners.length>3 ?<SecondaryBanner data={secondryBanners.slice(3)} /> : "" } 
                     {/* <BestSellingProduct data={bestSellings} /> */}
                    
-                   
+                   {
+                    dealDtoList.map((data,index)=>{
+                        return(
+                            <DealSection data={data} index={index}/>
+                        )
+                    })
+                   }
+                  
+
                     {
                         data.map((product, index) => {
                             return (

@@ -6,12 +6,14 @@ import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 import ImageSlider from "@/components/ImageSlider/imageSlider";
 
-const ProductImageSection = ({ allImages,normalInventory }) => {
+const ProductImageSection = ({ allImages,dealTag,dealIconUrl,isDealActive,isTimerActive=false,currentTimerStatus,isVariantCurrenTimeStatus="",isVariantDealActive,isVariantTimeActive,variantdealId="",selectedVariantTag="",seleVariantIcon="",normalInventory}) => {
     // const images = ["https://valeo-qa-media.s3.ap-south-1.amazonaws.com/Tribulus-333x235_1675403245987.png", "https://valeo-qa-media.s3.ap-south-1.amazonaws.com/IV-December-Blog-Horizontal_1675403171780.jpg", "https://valeo-qa-media.s3.ap-south-1.amazonaws.com/LoveYourKidney_1675403171457.png"]
     const images = allImages;
+    console.log("selectedVariantTag",selectedVariantTag)
     if (images && images.length > 0) {
         return (
             <div className={styles.imageSectionContainer}>
+                
                 <div className={styles.isDesktop}>
                     {/* <Glider
                         hasArrows
@@ -41,7 +43,28 @@ const ProductImageSection = ({ allImages,normalInventory }) => {
                         })}
 
                     </Glider> */}
+                { isDealActive && isTimerActive && 
+                currentTimerStatus == "in-between" &&
+                     <div className={styles.tagSection} >
+                                        <img src={dealIconUrl}></img>
+                                        <div className={styles.tagTxt}>{dealTag}</div>
+                                      
+                                    </div>
+                                    
+                
+                                    
+    }
+    { isVariantDealActive && isVariantTimeActive && variantdealId 
+    && isVariantCurrenTimeStatus == "in-between" &&
+      <div className={styles.tagSection} >
+                                        <img src={seleVariantIcon}></img>
+                                        <div className={styles.tagTxt}>{selectedVariantTag}</div>
+                                      
+                                    </div>}
+                    <div>
+                 
                     <ImageSlider images = {images} normalInventory={normalInventory}/>
+                    </div>
                 </div>
                 <div className={styles.isMobile}>
                     <Glider
@@ -57,6 +80,21 @@ const ProductImageSection = ({ allImages,normalInventory }) => {
                             return <>
                                 <div className={styles.imageSection} key={i}>
                                 {normalInventory<=0&&     <div className={styles.outOfStockTxt}>Out of stock</div>}
+                            { isDealActive && isTimerActive && currentTimerStatus == "in-between" &&  
+                              <div className={styles.tagSection} >
+                                        <img src={dealIconUrl}></img>
+                                        <div className={styles.tagTxt}>{dealTag}</div>
+                                      
+                                    </div>}
+                                    {
+                                        variantdealId && isVariantDealActive && isVariantTimeActive 
+                                        && isVariantCurrenTimeStatus == "in-between" &&
+                                        <div className={styles.tagSection} >
+                                        <img src={seleVariantIcon}></img>
+                                        <div className={styles.tagTxt}>{selectedVariantTag}</div>
+                                        </div>
+                                    }
+                                  
                                     <div style={{display:"flex",justifyContent:"center",alignItems : "center"}} className={styles.imageContainer}>
                                         <img style={{maxWidth : "278px",width:"100%"}} src={item} alt={"productImage"} />
                                     </div>

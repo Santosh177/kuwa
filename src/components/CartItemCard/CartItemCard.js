@@ -9,8 +9,8 @@ import styles from './cart-item-card.module.scss';
 const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index,outOfStockPopUp}) => {
 
     console.log("CartItemCardCartItemCard",data)
-    const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="", id="", variants,normalInventory=""} = data || {};
-    
+    const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="", id="", variants,dealId="",normalInventory=""} = data || {};
+console.log("cartItemCard",data)
     return(
         <div >
          {paymentPage == true ? 
@@ -44,9 +44,9 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index,ou
                  <div className={styles.outOfStockTxt}>Out of stock</div>
                   : 
                   <div className={styles.quantityContainer}>
-                    <div className={styles.quantityBtn} onClick={()=>(qty > 1) && onUpdateItem({product:id,quantity:qty-1})}>-</div>
+                    <div className={styles.quantityBtn} onClick={()=>(qty > 1) && onUpdateItem({product:id,quantity:qty-1,dealId:dealId})}>-</div>
                     <span>{qty}</span>
-                    <div className={styles.quantityBtn} onClick={()=>onUpdateItem({product:id,quantity:qty+1})}>+</div>
+                    <div className={styles.quantityBtn} onClick={()=>onUpdateItem({product:id,quantity:qty+1,dealId:dealId})}>+</div>
                     </div>
                 }
             </div>

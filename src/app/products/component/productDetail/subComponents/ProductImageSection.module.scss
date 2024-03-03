@@ -8,6 +8,31 @@
     .isMobile{
         display: none !important;
     }
+    .tagSection{
+        width: 87px;
+        padding: 6px;
+        height: 18px;
+        background-color: #2E7CF6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #FFF;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        position: relative;
+        top: 0px;
+        left: 87px;
+        z-index: 11;
+        img{
+            width: 14px;
+            height: 14px;
+        }
+        .tagTxt{
+
+        }
+    }
     .imageSectionOuter {
         display: flex;
         gap: 16px;
@@ -25,7 +50,6 @@
 
         .imageSection {
             width: 100%;
-
             img {
                 width: 100%;
                 max-width: 342px;
@@ -68,6 +92,21 @@
 
 @media(max-width:960px) {
     .imageSectionContainer {
+        .tagSection{
+            width: 73px;
+            height: 16px;
+            font-size: 8px;
+            position: relative;
+            top:0px;
+            left:20px;
+            img{
+                width: 12px;
+                height: 12px;
+            }
+            .tagTxt{
+
+            }
+        }
         width: 100%;
         margin: auto;
         .imageSection{

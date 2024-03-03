@@ -7,6 +7,7 @@ import SearchCard from "./SearchCard/SearchCard";
 import styles from './page.module.scss';
 import ProductCard from './ProductCard/ProductCard';
 import TrendingSearch from './TrendingSearch/TrendingSearch';
+import { mappingHomeSearchDealProducts } from '@/services';
 
 
 
@@ -41,20 +42,20 @@ export default function Search() {
           searchData = []
           searchApiData.map((data, index) => {
             if (data && Object.keys(data).length > 0) {
-              const productData = {
-                productImage: data.productImageUrl || "",
-                productName: data.name || "",
-                id: data.id || "",
-                seoUrl: data.seoUrl || "",
-                price: {
-                  finalPrice: data.specialPrice,
-                  retailPrice: data.price,
-                  currency: data.currency,
-                  discount: data.discount,
-                  discountType: data.discountType,
-                }
-              }
-              searchData.push(productData);
+              // const productData = {
+              //   productImage: data.productImageUrl || "",
+              //   productName: data.name || "",
+              //   id: data.id || "",
+              //   seoUrl: data.seoUrl || "",
+              //   price: {
+              //     finalPrice: data.specialPrice,
+              //     retailPrice: data.price,
+              //     currency: data.currency,
+              //     discount: data.discount,
+              //     discountType: data.discountType,
+              //   }
+              // }
+              searchData.push(mappingHomeSearchDealProducts(data));
               setSearchData(searchData)
             }
           })
@@ -170,19 +171,24 @@ export default function Search() {
           <div className={styles.productCardMain}>
             {
               searchData.map((data, index) => {
-                const { id = '', productImage: image, productName: name, price = {}, seoUrl = '', title = '' } = data || {};
-                const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
-                const cardData = {
-                  productName: name,
-                  finalPrice: finalPrice,
-                  retailPrice: retailPrice,
-                  currency: currency,
-                  discount: discount,
-                  discountType: discountType,
-                  image: image || "",
-                  id: id || "",
-                  seoUrl: seoUrl || ""
-                }
+
+                const { id = '', productImage: image, productName:name, seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag=""} = data || {};
+                  const cardData = {
+                    productName: name,
+                    finalPrice: finalPrice,
+                    retailPrice: retailPrice,
+                    currency: currency,
+                    discount: discount,
+                    discountType: discountType,
+                    image: image || "",
+                    id: id || "",
+                    seoUrl: seoUrl || "",
+                    dealId:dealId,
+                    isDealActive:isDealActive,
+                    isTimerActive:isTimerActive,
+                    tagIconUrl:tagIconUrl,
+                    tag:tag
+                  }
                 return (
                   <ProductCard cardData={cardData} />
                 )

@@ -10,6 +10,7 @@ import Glider from 'react-glider';
 import Loader from '@/components/Loader/Loader';
 import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { mappingDealProducts } from '@/services';
 
 const ProductSlider = ({data}) => {
     console.log("newArrivals",data);
@@ -76,25 +77,30 @@ const ProductSlider = ({data}) => {
          >
          {
               product.map((data, index) => {
-                const { finalPrice = "", retailPrice = "", currency = "", discount = "", discountType = "" } = data && data.price || {}
-                const cardData = {
-                  productName: data && data.name || "",
-                  finalPrice: finalPrice,
-                  retailPrice: retailPrice,
-                  currency: currency,
-                  discount: discount,
-                  discountType: discountType,
-                  image: data?.image || "",
-                  id: data?.id || "",
-                  seoUrl: data?.seoUrl || ""
-                }
+                // const { finalPrice = "", retailPrice = "", currency = "", discount = "", discountType = "" } = data && data.price || {}
+                // const cardData = {
+                //   productName: data && data.name || "",
+                //   finalPrice: finalPrice,
+                //   retailPrice: retailPrice,
+                //   currency: currency,
+                //   discount: discount,
+                //   discountType: discountType,
+                //   image: data?.image || "",
+                //   id: data?.id || "",
+                //   seoUrl: data?.seoUrl || ""
+                // }
+                const cardData = mappingDealProducts(data);
+                const productName = cardData.productName || ""
+                const productId = cardData.productId || ""
+                const dealPrice = cardData.dealFinalPrice || ""
+                const dealId = cardData.dealId || null
                 trackData = {
-                  "product Name": data && data.name || "",
+                  "product Name": productName,
                   "quantity": 1,
-                  "product Id":data.id || "",
+                  "product Id":productId
                 }
                 return (
-                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1 })} />
+                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId})} />
                 )
             })
          }
