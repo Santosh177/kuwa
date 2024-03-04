@@ -2,7 +2,7 @@ import React , {useState} from 'react'
 import styles from './notify-email-popup.module.scss'
 import { useAuth } from '@/context/userDetail';
 
-const NotifyEmailPopup = ({setIsShowNotifyEmailPopup,setIsShowNotifySuccessPopup,emailId,setEmailId,handleNotify,payload}) => {
+const NotifyEmailPopup = ({setIsShowNotifyEmailPopup,setIsShowNotifySuccessPopup,emailId,setEmailId,handleNotify}) => {
     const [error, setError] = useState('');
     const { isLogin=false ,userData} = useAuth();
     
@@ -16,7 +16,6 @@ const NotifyEmailPopup = ({setIsShowNotifyEmailPopup,setIsShowNotifySuccessPopup
     setError('');
     console.log("email nonlogin");
     setIsShowNotifyEmailPopup(false);
-    // handleNotify(payload,isLogin)
     handleNotify()
   }
     return (

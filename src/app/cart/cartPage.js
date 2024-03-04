@@ -112,28 +112,8 @@ export default  function Cart({cartData}) {
       }
   }, [cartData,(typeof window !== "undefined") && window.clevertap]);
 
-//   useEffect(() => {
-//   if (outOfStockProducts.length === cartItems.length) {
-//     setIsAllOutOfStockProducts(true);
-//     setIsNoOutOfStockProducts(false); 
-//   }
-//   else {
-//     setIsAllOutOfStockProducts(false);
-    
-//   if (outOfStockProducts.length === 0) {
-//       setIsNoOutOfStockProducts(true);
-//     } else {
-//       setIsNoOutOfStockProducts(false);
-//     }
-//   }
 
-//   return () => {
-//     setIsAllOutOfStockProducts(false);
-//     setIsNoOutOfStockProducts(false);
-//   };
-// }, [cartItems, outOfStockProducts]);
-
-useEffect(()=>{
+    useEffect(()=>{
   if(outOfStockProducts.length === cartItems.length){
     setIsAllOutOfStockProducts(true)
     setIsNoOutOfStockProducts(false)
@@ -159,9 +139,7 @@ useEffect(()=>{
       setOutOfStockProducts(getOutOfStockProductsData)
     }
 
- 
-   
-    console.log("isAllOutOfStockProducts",isAllOutOfStockProducts)
+   console.log("isAllOutOfStockProducts",isAllOutOfStockProducts)
 
     useEffect(()=>{
       if(cartItems && cartItems.length > 0){
@@ -572,7 +550,6 @@ useEffect(()=>{
     const deliveryFeeMinPrice = minThreshold - subTotal;
     const progressBarColor = deliveryFeeMinPrice >= 0 ? Math.min((subTotal / minThreshold) * 100, 100) : 100;
     const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
-    console.log("jbwjwb",prePaidDiscount)
     const colorPerc = `${(207 * progressBarColor)/100}px`
     const activeProgressBar={
       width:colorPerc,

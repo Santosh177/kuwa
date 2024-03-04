@@ -76,12 +76,13 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
   const [isShowNotifySuccessPopup, setIsShowNotifySuccessPopup] = useState(false);
   const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
   const [emailId,setEmailId] = useState("")
+  const [productId,setProductId] = useState("");
+  const [variantId,setVariantId] = useState("");
   const clevertapEvent = useCleverTapEvents();
   const handleResize = () => setWidth(window.innerWidth);
 
-  const [payload,setPayload] = useState({});
   const { isLogin=false ,userData = {}} = useAuth();
-const emailAddress = userData && userData.emailAddress
+  const emailAddress = userData && userData.emailAddress
   
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -103,33 +104,6 @@ let trackData={};
     }
 }
 
-//   const onAddToCart = async(data) =>{
-//     try {
-//       setIsLoading(true)
-//       const addToCartResp = await fetch('/api/add-to-cart', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body:JSON.stringify(data)
-//       })
-//       const addToCartData = await addToCartResp.json();
-//       console.log("addToCartData",addToCartData);
-//       if(addToCartData && addToCartData['products'] && addToCartData['products'].length > 0){
-//         setCartItemData(addToCartData['products']);
-//         setCartItemCount(addToCartData['products'].length);
-//         router.push('/cart')
-//       }else{
-//         setCartItemData([]);
-//         setCartItemCount(0)
-//       }
-//       setIsLoading(false)
-     
-//     } catch (error) {
-//       console.error('An unexpected error happened occurred:', error)
-//     }
-// }
-
 const handleAllProduct = () =>{
   const encodedHeaderTitle = encodeURIComponent(headerTitle);
   window.location.href = `/collections?category=${encodedHeaderTitle}`
@@ -137,11 +111,12 @@ const handleAllProduct = () =>{
 
 const handleNotify = async() =>{
   const payload={
-      //  productId:productId,
-       variantId:"",
+       productId:productId|| null,
+       variantId:variantId || null,
        email: emailId 
      }
      try {
+      setIsLoading(true)
        const res = await fetch(`/api/out-of-stock`, {
          method: 'POST',
          headers: {
@@ -149,23 +124,31 @@ const handleNotify = async() =>{
          },
          body: JSON.stringify(payload),
        });
-       // if(res.status == 200){
-       //   setIsShowNotifySuccessPopup(true);
-       // }
-       setIsShowNotifySuccessPopup(true);
+       if(res.status == 200){
+        setIsLoading(false)
+         setIsShowNotifySuccessPopup(true);
+       }
+       else{
+        setIsLoading(false)
+        console.log(error)
+       }
+       
        
      } catch (error) {
+      setIsLoading(false)
        console.error('Error:', error);
      }
    }
 
-   const handleNotifyMe = async(productId)=>{
+   const handleNotifyMe = async()=>{
+    console.log("variantId",variantId)
     const payload={
-      productId:productId,
-      variantId:"",
+      productId:productId || null,
+      variantId:variantId || null,
       email: emailAddress 
     }
     try {
+      setIsLoading(true)
       const res = await fetch(`/api/out-of-stock`, {
         method: 'POST',
         headers: {
@@ -173,12 +156,18 @@ const handleNotify = async() =>{
         },
         body: JSON.stringify(payload),
       });
-      // if(res.status == 200){
-      //   setIsShowNotifySuccessPopup(true);
-      // }
-      setIsShowNotifySuccessPopup(true);
+      if(res.status == 200){
+        setIsLoading(false)
+        setIsShowNotifySuccessPopup(true);
+      }
+      else{
+        setIsLoading(true)
+        console.log(error)
+      }
+     
       
     } catch (error) {
+      setIsLoading(false)
       console.error('Error:', error);
     }
   }
@@ -198,11 +187,11 @@ const handleNotify = async() =>{
           <div className={styles.headerContainer}>
             <div className={styles.headerTxt} style={{...headerTextStyle}}>{headerTitle}</div>
             <div className={styles.seeAllDiv} onClick={handleAllProduct}>
-      <div className={styles.txt}>See all</div>
-      <div className={styles.arrowImg}><img src='https://d25uasl7utydze.cloudfront.net/assets/right%20arrow.svg'/></div>
-    </div>
-    </div>
-            <div className={styles.sliderContainer}>
+          <div className={styles.txt}>See all</div>
+          <div className={styles.arrowImg}><img src='https://d25uasl7utydze.cloudfront.net/assets/right%20arrow.svg'/></div>
+          </div>
+          </div>
+          <div className={styles.sliderContainer}>
             <Glider
               hasArrows={(width>990)}
               slidesToShow={4.5}
@@ -281,14 +270,15 @@ const handleNotify = async() =>{
                           dealDiscountPrice: variantPrices[0].dealDiscountPrice,
                           discountType: discountType || "",
                           image: image || "",
-                          id: variantPrices[0].variantId || "",
+                          variantId: variantPrices[0].variantId || "",
                           seoUrl: data.seoUrl || "",
                           isDealActive:variantPrices[0].isDealActive,
                           isTimerActive:variantPrices[0].isTimerActive,
-                      currentTimerStatus:variantPrices[0].currentTimerStatus,
-                      currentTimerValue:variantPrices[0].currentTimerValue,
-                      tag:variantPrices[0].dealTag,
-                      tagIconUrl:variantPrices[0].dealIconUrl,
+                          currentTimerStatus:variantPrices[0].currentTimerStatus,
+                          currentTimerValue:variantPrices[0].currentTimerValue,
+                          tag:variantPrices[0].dealTag,
+                          tagIconUrl:variantPrices[0].dealIconUrl,
+                          normalInventory:data.variants[0].quantity
 
                         }
                     }
@@ -303,8 +293,9 @@ const handleNotify = async() =>{
                         discount: variantPrices[0].discount,
                         discountType: discountType || "",
                         image: image || "",
-                        id: variantPrices[0].variantId || "",
-                        seoUrl: data.seoUrl || ""
+                        variantId: variantPrices[0].variantId || "",
+                        seoUrl: data.seoUrl || "",
+                        normalInventory:data.variants[0].quantity
                       }
                    }
                   }
@@ -318,28 +309,26 @@ const handleNotify = async() =>{
 
                       cardData={
                         "dealId":dealId || "",
-                        "id":id || "",
+                        "productId":id || "",
                         "productName":name,
                         "productImage":image || "",
                         "seoUrl":seoUrl || "",
                         "dealListPrice":dealListPrice,
-                      'dealFinalPrice':dealFinalPrice,
-                      'discountType':"fixed",
-                      "dealDiscountPrice":dealDiscountPrice || 0,
-                      "currency":currency,
-                      "tag":dealTag,
-                      "tagIconUrl":dealIconUrl,
-                      "dealInventory":dealInventory,
-                      "isDealActive":isDealActive,
-                      "isTimerActive":isTimerActive,
-                      "currentTimerStatus":currentTimerStatus,
-                      "currentTimerValue":currentTimerValue,
-                      "currentDateTime":currentDateTime
+                        'dealFinalPrice':dealFinalPrice,
+                        'discountType':"fixed",
+                        "dealDiscountPrice":dealDiscountPrice || 0,
+                        "currency":currency,
+                        "tag":dealTag,
+                        "tagIconUrl":dealIconUrl,
+                        "dealInventory":dealInventory,
+                        "isDealActive":isDealActive,
+                        "isTimerActive":isTimerActive,
+                        "currentTimerStatus":currentTimerStatus,
+                        "currentTimerValue":currentTimerValue,
+                        "currentDateTime":currentDateTime,
+                        "normalInventory":data.normalQuantity
                       }
-                     
-                      
-                      
-                    }else{
+                     }else{
                       cardData = {
                         productName: data && data.name || "",
                         finalPrice: finalPrice,
@@ -348,12 +337,12 @@ const handleNotify = async() =>{
                         discount: discount,
                         discountType: discountType,
                         image: data.image || "",
-                        id: data.id || "",
-                        seoUrl: data.seoUrl || ""
+                        productId: data.id || "",
+                        seoUrl: data.seoUrl || "",
+                        normalInventory:data.normalQuantity
                       }
                     }
                   }
-                  console.log("hshbhabjha",cardData)
                  
                   let addToCartPayload = {}
                   if(variants && variants.length > 0){
@@ -373,7 +362,7 @@ const handleNotify = async() =>{
 
                     }
                     else{
-                      addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId}
+                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId}
                     }
  
                   }
@@ -387,7 +376,7 @@ const handleNotify = async() =>{
                       }
                   }
                   return(
-                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart(addToCartPayload)} key={index} handleNotifyMe={handleNotifyMe} setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} />
+                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart(addToCartPayload)} key={index} handleNotifyMe={handleNotifyMe} setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setProductId={setProductId} setVariantId={setVariantId} />
                   )
                 })
               }
@@ -398,7 +387,7 @@ const handleNotify = async() =>{
             </div>
           </div>
           <div className={styles.NotifySuccessPopup}>{isShowNotifySuccessPopup && <NotifySuccessPopup setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}/>}</div>
-          <div>{isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}  emailId={emailId} setEmailId={setEmailId} handleNotify={handleNotify} payload={payload}/>}</div>
+          <div>{isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}  emailId={emailId} setEmailId={setEmailId} handleNotify={handleNotify}/>}</div>
           <Loader isShow={isLoading} />
           </>
       );

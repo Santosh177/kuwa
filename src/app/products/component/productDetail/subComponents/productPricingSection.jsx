@@ -26,6 +26,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
     const [emailId,setEmailId] = useState("");
     const { isLogin=false ,userData = {}} = useAuth();
+    const emailAddress = userData && userData.emailAddress
 
 
     console.log("normalInventory",normalInventory)

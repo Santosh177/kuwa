@@ -15,7 +15,7 @@ console.log("cartItemCard",data)
         <div >
          {paymentPage == true ? 
         <div>
-           
+          { normalInventory > 0 &&
             <div className={styles.PaymentcartItemCard}>
 
             <div className={styles.PaymentcartItemInfo}>
@@ -32,7 +32,7 @@ console.log("cartItemCard",data)
 
                 </div>
                 </div>
-                
+}
             </div>
             
             :

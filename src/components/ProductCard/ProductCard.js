@@ -4,29 +4,30 @@ import { useState } from 'react';
 
 
 import { useAuth } from '@/context/userDetail';
-
-
-
-
-const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotifyMe,setIsShowNotifyEmailPopup}) => {
+const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotifyMe,setProductId=()=>{},setVariantId=()=>{}}) => {
 
     const { isLogin=false ,userData = {}} = useAuth();
     const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory=2 } = cardData || {}
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="" } = cardData || {}
     console.log("productCard+++++",cardData)
     const btnName = normalInventory > 0 ? "Add to cart" : "Notify me"
+    setProductId(productId);
+    setVariantId(variantId)
     return(
         <>
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
+
             <div className={styles.productCardWrapper} style={{...style}}>
-            {dealId && isDealActive
-             && tag && tagIconUrl && <div className={styles.tagSection}>
-                <div className={styles.tagDiv}>
+
+            {dealId && isDealActive && tag && tagIconUrl && 
+            <div className={styles.tagSection}>
+              <div className={styles.tagDiv}>
                <img src={tagIconUrl} alt='tag-icon'></img>
-                   <div className={styles.tagTxt}>{tag}</div>
-                    </div>
-                    </div>}
-                  {normalInventory <= 0 && <div className={styles.outOfStockTxt}>Out of stock</div>}
+              <div className={styles.tagTxt}>{tag}</div>
+              </div>
+            </div>}
+          
+            {normalInventory <= 0 && <div className={styles.outOfStockTxt}>Out of stock</div>}
                 <div className={styles.productImgWrapper}>
             
                     <div className={styles.productImgContainer}>
@@ -36,7 +37,7 @@ const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotifyMe,setI
                 </div>
                 <div className={styles.textContent}>
 
-                   <div className={styles.dealInventory}>{ dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory? (dealInventory+ " " + "left in stock"): ""}</div>
+                <div className={styles.dealInventory}>{ dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory ? (dealInventory+ " " + "left in stock"): ""}</div>
                    
                 <div className={styles.productName}>{productName}</div>
                 {dealId && isDealActive && isTimerActive
@@ -78,7 +79,7 @@ const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotifyMe,setI
                         }
                         else{
                             if(isLogin){
-                                handleNotifyMe(id);
+                                handleNotifyMe();
                             }
                             else{
                                 setIsShowNotifyEmailPopup(true)
