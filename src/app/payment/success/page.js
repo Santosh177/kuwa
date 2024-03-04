@@ -34,6 +34,7 @@ export default function PaymentSuccess() {
 
   const {shippingAddress } = orderDetailsData || {};
   const {orderProducts} = orderDetailsData || []
+  const totalPurchaseAmount = orderDetailsData && orderDetailsData.finalAmount || 0;
 
 
  
@@ -97,7 +98,8 @@ export default function PaymentSuccess() {
             'productName':listOfOrder.orderProductName,
             'orderId':listOfOrder.orderId,
             'orderProductId':listOfOrder.orderProductId,
-            'paymentMode':paymentType
+            'paymentMode':paymentType,
+            'purchaseValue':totalPurchaseAmount?totalPurchaseAmount:0
   
             // Add more data as needed
         });
@@ -129,7 +131,8 @@ export default function PaymentSuccess() {
               'productName':listOfOrder.orderProductName,
               'orderId':listOfOrder.orderId,
               'orderProductId':listOfOrder.orderProductId,
-              'paymentMode':paymentType
+              'paymentMode':paymentType,
+              'purchaseValue':totalPurchaseAmount?totalPurchaseAmount:0
     
               // Add more data as needed
           });
