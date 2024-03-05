@@ -597,6 +597,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         }else if(selectedPaymentMethod == "APPLE_PAY" || pMode === "APPLE_PAY"){
           payload['token'] = data.token;
           payload['paymentMode'] = "APPLE_PAY";
+          payload['prepaidDiscountAmount'] = discountAmount || "",
+          payload['finalAmount'] = priceDetails['totalAmount']-discountAmount
           trackData['Payment Type'] = 'Apple pay' || ''
           clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
             const placeOrderResp  =  await fetch('/api/apple-pay-place-order', {
