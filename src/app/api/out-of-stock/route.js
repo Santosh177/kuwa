@@ -8,7 +8,7 @@ export async function POST(request,res) {
 
     console.log("customHeaderEmail",customHeader)
     console.log("requestBodyrequestBody",requestBody)
-    const outOfStockEmail = await fetch(`${process.env.BACKEND_END_POINT_URL}/out-of-stock/email`, {
+    const outOfStockEmail = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/out-of-stock/email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

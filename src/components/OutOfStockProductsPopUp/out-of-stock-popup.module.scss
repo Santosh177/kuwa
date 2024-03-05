@@ -19,14 +19,14 @@
         width: 370px;
         border-radius: 16px;
         background: #FFF;
-        padding-left: 24px;
+        // padding-left: 24px;
         padding-bottom: 16px;
 
         .crossIcon {
             cursor: pointer;
             position: relative !important;
             top: 25px !important;
-            left: 304px !important;
+            left: 325px !important;
         }
 
         .content {
@@ -83,4 +83,16 @@
     }
 
 
+}
+
+@media(max-width:768px) {
+    .PopContainer{
+        .PopSection{
+            width: 315px;
+            .crossIcon{
+                top: 20px !important;
+                left: 287px !important
+            }
+        }
+    }
 }

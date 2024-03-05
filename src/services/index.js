@@ -200,7 +200,8 @@ else{
       "discount":variantDiscount || 0,
       "currency":currency,
       "variantName": variantName,
-      "variantImage":variantImage
+      "variantImage":variantImage,
+      "normalInventory":normalInventory,
    }
   }
   else{
@@ -215,6 +216,7 @@ cardData={
       'discountType':"fixed",
       "discount":productDiscount || 0,
       "currency":currency,
+      "normalInventory":normalInventory,
 }
   }
 }

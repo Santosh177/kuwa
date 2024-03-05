@@ -123,7 +123,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
               </div>
               <div className={styles.productDetailsTitle}>Product Details</div>
         {
-          cartItems.map((data, index) => {
+          cartItems.filter((data,index)=>data.normalInventory > 0).map((data, index) => {
             return (
               <CartItemCard data={data} key={index} paymentPage={true} index={index}/>
             )

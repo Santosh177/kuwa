@@ -2,8 +2,16 @@ import React from 'react'
 import styles from './out-of-stock-popup.module.scss';
 import CartItemCard from '../CartItemCard/CartItemCard';
 
-const OutOfStockProductsPopUp = ({outOfStockProducts,setIsShowOutOfStockProductsPopUp }) => {
+const OutOfStockProductsPopUp = ({outOfStockProducts,setIsShowOutOfStockProductsPopUp,haveAddress }) => {
     console.log("outOfStockProducts+++",outOfStockProducts)
+    const handleProceed = ()=>{
+        if(haveAddress) {
+            window.location.href = './payment'
+    }
+    else{
+        window.location.href = '/address/add-address';
+    }
+}
   return (
     <div className={styles.PopContainer}>
         <div className={styles.PopSection}>
@@ -22,7 +30,7 @@ const OutOfStockProductsPopUp = ({outOfStockProducts,setIsShowOutOfStockProducts
             </div>
             <div className={styles.footer}>
                 <div className={styles.subTxt}>Please continue with other available supplements.</div>
-                <div className={styles.button} onClick={()=> window.location.href='./payment'} >Yes, Continue</div>
+                <div className={styles.button} onClick={()=> handleProceed()} >Yes, Continue</div>
             </div>
         </div>
         </div>

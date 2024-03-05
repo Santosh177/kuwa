@@ -17,6 +17,7 @@ const NotifyEmailPopup = ({setIsShowNotifyEmailPopup,setIsShowNotifySuccessPopup
     console.log("email nonlogin");
     setIsShowNotifyEmailPopup(false);
     handleNotify()
+    setEmailId('')
   }
     return (
     <div className={styles.NotifyEmailOverlay}>

@@ -24,7 +24,8 @@ export const getCartItemDetails = async(data,currency) => {
               "currency":currency,
               "id":id,
               "cartItemId":cartItemId,
-              "variants":variants
+              "variants":variants,
+              "normalInventory":variants.variants.quantity
           }
           }
           else{
@@ -39,7 +40,8 @@ export const getCartItemDetails = async(data,currency) => {
             "currency":currency,
             "id":id,
             "cartItemId":cartItemId,
-            "variants":variants
+            "variants":variants,
+            "normalInventory":variants.variants.quantity
         }
         }
       }
@@ -59,7 +61,8 @@ export const getCartItemDetails = async(data,currency) => {
               "currency":currency,
               "id":id,
               "cartItemId":cartItemId,
-              "variants":variants
+              "variants":variants,
+              "normalInventory":normalInventory
           }
         }
         else{
@@ -91,7 +94,7 @@ export const createPayloadForCartItems = async(cartData) => {
       console.log("createPayloadForCartItems",createPayloadForCartItems)
       if(cartData && cartData.length > 0){
         cartData.map((data,index)=>{
-          if(data.variants && data.variants.variants.id){
+          if(data.variants && data.variants.variants.id && data.variants.variants.quantity > 0){
             if(data?.variants?.pricings[0].dealId && data.variants?.pricings[0].isDealActive && data?.variants?.pricings[0].isTimerActive 
               && data?.variants?.pricings[0].currentTimerStatus == 'in-between'){
               cartItems.push({
@@ -121,6 +124,10 @@ export const createPayloadForCartItems = async(cartData) => {
            
           }
           else{
+            if(data.normalInventory > 0)
+            {
+
+            
             if(data.dealId && data.isDealActive && data.isTimerActive && data.currentTimerStatus == 'in-between'){
               cartItems.push({
                 "dealId": data.dealId,
@@ -144,6 +151,7 @@ export const createPayloadForCartItems = async(cartData) => {
                 "subscriptionDetail": null
             })
             }
+          }
            
           }
         })
@@ -288,6 +296,28 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
     cartItems?.map((item, index) => {
       const { image = {}, quantity = 1, price = "", originalPrice = "", finalPrice = "", description = {}, id = "", cartItemId = "", variants, normalInventory } = item || {};
       const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
+      if(variants && variants.pricings.length > 0){
+        if(variants.variants.quantity === 0){
+          const {variants ={} , pricings=[]} = variants || {}
+          let item ={
+            "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+            "qty":quantity,
+            "productName":description.name || "",
+            "retailPrice":pricings[0].retailPrice,
+            'finalPrice':pricings[0].finalPrice,
+            'discountType':"fixed",
+            "discountAmount":pricings[0].discount || 0,
+            "currency":currency,
+            "id":id,
+            "cartItemId":cartItemId,
+            "variants":variants,
+            "normalInventory":variants.variants.quantity
+          }
+          outOfStockProducts.push(item);
+        }
+      }
+      else
+      {
       if (normalInventory === 0) {
         let item ={
           "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
@@ -305,6 +335,7 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
       }
         outOfStockProducts.push(item);
       }
+    }
     });
   }
   

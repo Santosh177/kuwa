@@ -6,7 +6,7 @@ import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 import ImageSlider from "@/components/ImageSlider/imageSlider";
 
-const ProductImageSection = ({ allImages,dealTag,dealIconUrl,isDealActive,isTimerActive=false,currentTimerStatus,isVariantCurrenTimeStatus="",isVariantDealActive,isVariantTimeActive,variantdealId="",selectedVariantTag="",seleVariantIcon="",normalInventory}) => {
+const ProductImageSection = ({ allImages,dealTag,dealIconUrl,isDealActive,isTimerActive=false,currentTimerStatus,isVariantCurrenTimeStatus="",isVariantDealActive,isVariantTimeActive,variantdealId="",selectedVariantTag="",seleVariantIcon="",normalInventory,selectedVariantQuantity}) => {
     // const images = ["https://valeo-qa-media.s3.ap-south-1.amazonaws.com/Tribulus-333x235_1675403245987.png", "https://valeo-qa-media.s3.ap-south-1.amazonaws.com/IV-December-Blog-Horizontal_1675403171780.jpg", "https://valeo-qa-media.s3.ap-south-1.amazonaws.com/LoveYourKidney_1675403171457.png"]
     const images = allImages;
     console.log("selectedVariantTag",selectedVariantTag)
@@ -63,7 +63,7 @@ const ProductImageSection = ({ allImages,dealTag,dealIconUrl,isDealActive,isTime
                                     </div>}
                     <div>
                  
-                    <ImageSlider images = {images} normalInventory={normalInventory}/>
+                    <ImageSlider images = {images} normalInventory={normalInventory} selectedVariantQuantity={selectedVariantQuantity}/>
                     </div>
                 </div>
                 <div className={styles.isMobile}>
@@ -79,7 +79,13 @@ const ProductImageSection = ({ allImages,dealTag,dealIconUrl,isDealActive,isTime
                             const { imageUrl = "" } = item || {};
                             return <>
                                 <div className={styles.imageSection} key={i}>
-                                {normalInventory<=0&&     <div className={styles.outOfStockTxt}>Out of stock</div>}
+                                {
+            selectedVariantQuantity == null ? (
+            normalInventory <= 0 && <div className={styles.outOfStockTxtMob}>Out of stock</div>
+            ) : (
+            selectedVariantQuantity <= 0 && <div className={styles.outOfStockTxtMob}>Out of stock</div>
+            )
+        }
                             { isDealActive && isTimerActive && currentTimerStatus == "in-between" &&  
                               <div className={styles.tagSection} >
                                         <img src={dealIconUrl}></img>

@@ -13,6 +13,7 @@ import NotifySuccessPopup from '../NotifySuccessPopup/NotifySuccessPopup';
 import NotifyEmailPopup from '../NotifyEmailPopup/NotifyEmailPopup';
 import { useAuth } from '@/context/userDetail';
 
+
   const BACKGROUND_COLORS = [
     {
       "backgroundImage":"linear-gradient(180deg, #FCEEE0 0%, rgba(252, 238, 224, 0) 100%)",
@@ -76,13 +77,15 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
   const [isShowNotifySuccessPopup, setIsShowNotifySuccessPopup] = useState(false);
   const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
   const [emailId,setEmailId] = useState("")
-  const [productId,setProductId] = useState("");
-  const [variantId,setVariantId] = useState("");
+  const [nonloginProductId,setNonLoginProductId] = useState("");
+  const [nonLoginVariantId,setNonLoginVariantId] = useState("");
+
   const clevertapEvent = useCleverTapEvents();
   const handleResize = () => setWidth(window.innerWidth);
 
   const { isLogin=false ,userData = {}} = useAuth();
-  const emailAddress = userData && userData.emailAddress
+  const emailAddress = userData && userData.emailAddress;
+
   
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -109,10 +112,17 @@ const handleAllProduct = () =>{
   window.location.href = `/collections?category=${encodedHeaderTitle}`
 }
 
+const handleNonLogin = (id,variantId)=>{
+  console.log("id, variantId", id, variantId);
+   setIsShowNotifyEmailPopup(true);
+   setNonLoginProductId(id);
+   setNonLoginVariantId(variantId);
+}
+
 const handleNotify = async() =>{
   const payload={
-       productId:productId|| null,
-       variantId:variantId || null,
+       productId:nonloginProductId|| null,
+       variantId:nonLoginVariantId || null,
        email: emailId 
      }
      try {
@@ -140,7 +150,7 @@ const handleNotify = async() =>{
      }
    }
 
-   const handleNotifyMe = async()=>{
+   const handleNotifyMe = async(productId, variantId)=>{
     console.log("variantId",variantId)
     const payload={
       productId:productId || null,
@@ -229,7 +239,6 @@ const handleNotify = async() =>{
                     productFinalPrice = "",
                     productDiscount = "",
                     normalInventory = "",
-                    variantId="",
                     variantName = "",
                     variantImage = "",
                     variantListPrice = "",
@@ -242,7 +251,8 @@ const handleNotify = async() =>{
                     currentTimerStatus="",
                     currentTimerValue="",
                     currentDateTime=""} = data || {}
-                  const { variants=[]} = data  || {}
+                  const { variants=[]} = data  || {};
+                 const variantId= data.variants[0]?.variantPrices[0]?.variantId || ""
                   const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
                   let cardData = {
                   }
@@ -376,7 +386,7 @@ const handleNotify = async() =>{
                       }
                   }
                   return(
-                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart(addToCartPayload)} key={index} handleNotifyMe={handleNotifyMe} setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setProductId={setProductId} setVariantId={setVariantId} />
+                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart(addToCartPayload)} key={index} handleNotifyMe={()=>handleNotifyMe(id,variantId)} handleNonLogin={()=>handleNonLogin(id,variantId)}  />
                   )
                 })
               }

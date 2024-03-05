@@ -92,6 +92,9 @@
 
 @media(max-width:960px) {
     .imageSectionContainer {
+        width: 100%;
+        margin: auto;
+        .imageSection{
         .tagSection{
             width: 73px;
             height: 16px;
@@ -107,13 +110,12 @@
 
             }
         }
-        width: 100%;
-        margin: auto;
-        .imageSection{
-            .outOfStockTxt{
+      
+       
+            .outOfStockTxtMob{
                 position: relative;
-                top: 150px;
-    left: 55px;
+                top: 50%;
+                left: 50%;
                 width: 204px;
 height: 40px;
 border-radius: 8px;
@@ -125,6 +127,7 @@ font-weight: 500;
 line-height: normal;
 text-align: center;
 padding: 10px 53px;
+transform: translate(-50%, -50%);
             }
         }
         .isDesktop{

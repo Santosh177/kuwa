@@ -41,6 +41,7 @@ const ProductDeatil = ({ productData = {} }) => {
    const[isVariantCurrenTimeStatus,setIsVariantCurrenTimeStatus] = useState();
    const[selectedVariantTag,setSelectedVariantTag] = useState();
    const[seleVariantIcon,setSeleVariantIcon] = useState();
+   const [selectedVariantQuantity,setSelectedVariantQuantity] = useState(null);
     const router = useRouter()
     const clevertapEvent = useCleverTapEvents();
 
@@ -100,12 +101,13 @@ const ProductDeatil = ({ productData = {} }) => {
             setIsVariantTimeActive(isVariantTimerActive);
             setIsVariantDealActive(isVariantDealActive);
             setSeleVariantIcon(dealIconUrl);
-            setSelectedVariantTag(dealTag)
+            setSelectedVariantTag(dealTag);
+            setSelectedVariantQuantity(quantity);
             if(selectedVariantdealId && isVariantDealActive && isVariantTimerActive 
                 && currentVariantTimerStatus == "in-between"
                 ){
                const  { varientId = '', dealListPrice = 0, dealFinalPrice = 0, dealDiscountPrice = 0 } = selectedVarientsData[0]?.pricings[0] || {};
-               setFinalPrice(dealFinalPrice);
+            setFinalPrice(dealFinalPrice);
            setRetailPrice(dealListPrice);
            setDiscount(dealDiscountPrice);
             }
@@ -273,6 +275,7 @@ const ProductDeatil = ({ productData = {} }) => {
     const handelViewCart = () => {
         window.location.href = "/cart";
     }
+
     const handelBuyNow = async () => {
         const response = await addToCart(payload)
         clevertapEvent.onCleverTapEvent("kuwa_buy_now", trackData);
@@ -439,9 +442,11 @@ const ProductDeatil = ({ productData = {} }) => {
         noOfProduct: noOfProduct,
         mininmumDeliveryThreshold:mininmumDeliveryThreshold,
         normalInventory:normalInventory,
-        productId:id
+        productId:id,
+        selectedVariantQuantity:selectedVariantQuantity 
     };
     console.log("pricingSectionVariables",pricingSectionVariables)
+
     const handelRoute = (type) => {
         if (type === "home") {
             router.push('/')
@@ -666,7 +671,7 @@ const ProductDeatil = ({ productData = {} }) => {
                 <span onClick={() => handelRoute("product")}> {name}</span>
             </div>
             <div className={style.productPricingContainer}>
-                <ProductImageSection allImages={allImages} dealTag={dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} seleVariantIcon={seleVariantIcon} selectedVariantTag={selectedVariantTag} normalInventory={normalInventory}   />
+                <ProductImageSection allImages={allImages} dealTag={dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} seleVariantIcon={seleVariantIcon} selectedVariantTag={selectedVariantTag} normalInventory={normalInventory} selectedVariantQuantity={selectedVariantQuantity}  />
                 <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf}  isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus}  isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>

@@ -41,7 +41,7 @@ export default  function Cart({cartData}) {
     const [IsShowOutOfStockProductsPopUp,setIsShowOutOfStockProductsPopUp] = useState(false);
      let appleSession;
 
-  
+  console.log("cartItemsCard",cartItems)
 
     useEffect(()=>{
       try {
@@ -139,6 +139,7 @@ export default  function Cart({cartData}) {
       setOutOfStockProducts(getOutOfStockProductsData)
     }
 
+      console.log("outOfStockProducts",outOfStockProducts)
    console.log("isAllOutOfStockProducts",isAllOutOfStockProducts)
 
     useEffect(()=>{
@@ -220,18 +221,31 @@ export default  function Cart({cartData}) {
   }
 
     const onProceed = async() => {
-      if(haveAddress){
-        if(isNoOutOfStockProducts){
-          router.push('/payment');
+
+      if(isNoOutOfStockProducts){
+        if(haveAddress){
+          router.push('./payment')
         }
         else{
-          setIsShowOutOfStockProductsPopUp(true)
+          router.push('/address/add-address')
         }
+      }
+      else{
+        setIsShowOutOfStockProductsPopUp(true)
+      }
+      // if(haveAddress){
+      //   if(isNoOutOfStockProducts){
+      //     router.push('/payment');
+      //   }
+      //   else{
+      //     setIsShowOutOfStockProductsPopUp(true)
+      //   }
        
      
-      }else{
-        router.push('/address/add-address');
-      }
+      // }
+      // else{
+      //   router.push('/address/add-address');
+      // }
       trcakcData();
     }
 
@@ -604,7 +618,7 @@ export default  function Cart({cartData}) {
             </div>
           </div>
         {isAllOutOfStockProducts ? <PaymentFooterBtn isAllOutOfStockProducts={isAllOutOfStockProducts}  btnName="Continue shopping" onProceed={()=>window.location.href="./"} /> :  <PaymentFooterBtn showViewDetails={showViewDetails} isApplePaySession={isApplePaySession} btnName="Proceed To Checkout" totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} prePaidDiscount={prePaidDiscount} />}
-         {IsShowOutOfStockProductsPopUp &&  <OutOfStockProductsPopUp outOfStockProducts={outOfStockProducts} setIsShowOutOfStockProductsPopUp={setIsShowOutOfStockProductsPopUp}/>}
+         {IsShowOutOfStockProductsPopUp &&  <OutOfStockProductsPopUp outOfStockProducts={outOfStockProducts} setIsShowOutOfStockProductsPopUp={setIsShowOutOfStockProductsPopUp} haveAddress={haveAddress}/>}
           <Loader isShow={isLoading}/>
         </>
       )

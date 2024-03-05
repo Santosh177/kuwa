@@ -4,15 +4,16 @@ import { useState } from 'react';
 
 
 import { useAuth } from '@/context/userDetail';
-const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotifyMe,setProductId=()=>{},setVariantId=()=>{}}) => {
+const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLogin}) => {
 
     const { isLogin=false ,userData = {}} = useAuth();
     const router = useRouter();
     const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="" } = cardData || {}
     console.log("productCard+++++",cardData)
     const btnName = normalInventory > 0 ? "Add to cart" : "Notify me"
-    setProductId(productId);
-    setVariantId(variantId)
+   
+
+
     return(
         <>
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
@@ -82,7 +83,7 @@ const ProductCard = ({cardData,addToCart={},style={},emailId,handleNotifyMe,setP
                                 handleNotifyMe();
                             }
                             else{
-                                setIsShowNotifyEmailPopup(true)
+                              handleNonLogin();
                             }
                            
                         }
