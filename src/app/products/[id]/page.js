@@ -65,7 +65,7 @@ export default async function AllProduct(req) {
         </div>
         <ProductFaq productData={productData} />
         <ProductReview productData={productData} />
-        <RelatedProducts productData={productData} />
+        <RelatedProducts productData={productData}  />
         <Footer />
       </>}
       {(productData && Object.keys(productData).length == 0 && customHeader && Object.keys(customHeader).length !=0 )&& <PageNotFound productID={productID}/>}

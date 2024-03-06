@@ -15,8 +15,13 @@
             }
         }
     }
+    .heading{
+        font-size: 14px;
+        font-weight: 500;
+    }
 
     .reviewBody {
+        height: 64px;
         font-weight: 400;
         font-size: 14px;
     }
@@ -51,17 +56,17 @@
             }
         }
 
-        .like {
-            font-weight: 500;
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        // .like {
+        //     font-weight: 500;
+        //     font-size: 12px;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
 
-            img {
-                width: 16px;
-                height: 16px;
-            }
-        }
+        //     img {
+        //         width: 16px;
+        //         height: 16px;
+        //     }
+        // }
     }
 }

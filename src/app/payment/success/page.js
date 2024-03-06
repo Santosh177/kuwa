@@ -34,6 +34,7 @@ export default function PaymentSuccess() {
 
   const {shippingAddress } = orderDetailsData || {};
   const {orderProducts} = orderDetailsData || []
+  const totalPurchaseAmount = orderDetailsData && orderDetailsData.finalAmount || 0;
 
 
  
@@ -51,8 +52,10 @@ export default function PaymentSuccess() {
 
 
     useEffect(()=>{
-      getListOfOrder();
-    },[])
+      if(orderDetailsData && Object.keys(orderDetailsData).length>0){
+        getListOfOrder();
+      }
+    },[orderDetailsData])
 
     useEffect(()=>{
       getOrderDetails();
@@ -82,11 +85,31 @@ export default function PaymentSuccess() {
           const listOfOrder = listOfMyOrder[0];
           const track = {
             productId: listOfOrder.productId,
-            productName: listOfOrder.productName,
+            productName: listOfOrder.orderProductName,
             orderId:listOfOrder.orderId,
             orderProductId:listOfOrder.orderProductId,
             paymentMode:paymentType
          }
+
+         try {
+          console.log("totalPurchaseAmount",totalPurchaseAmount)
+          window.dataLayer.push({
+            'event': 'kuwa_order_confirmed',
+            'pagePath': window.location.pathname,
+            'pageTitle': document.title,
+            'productId':listOfOrder.productId,
+            'productName':listOfOrder.orderProductName,
+            'orderId':listOfOrder.orderId,
+            'orderProductId':listOfOrder.orderProductId,
+            'paymentMode':paymentType,
+            'purchaseValue':totalPurchaseAmount?totalPurchaseAmount:0
+  
+            // Add more data as needed
+        });
+  
+        } catch (error) {
+            console.log("ERROR", error)
+        }
          if(window && window.clevertap){
           window.clevertap.setMultiValuesForKey("cart_items", []);
         }
@@ -97,11 +120,29 @@ export default function PaymentSuccess() {
             const listOfOrder = listOfMyOrder[0];
             const track = {
               productId: listOfOrder.productId,
-              productName: listOfOrder.productName,
+              productName: listOfOrder.orderProductName,
               orderId:listOfOrder.orderId,
               orderProductId:listOfOrder.orderProductId,
               paymentMode:paymentType
            }
+           try {
+            window.dataLayer.push({
+              'event': 'kuwa_order_confirmed',
+              'pagePath': window.location.pathname,
+              'pageTitle': document.title,
+              'productId':listOfOrder.productId,
+              'productName':listOfOrder.orderProductName,
+              'orderId':listOfOrder.orderId,
+              'orderProductId':listOfOrder.orderProductId,
+              'paymentMode':paymentType,
+              'purchaseValue':totalPurchaseAmount?totalPurchaseAmount:0
+    
+              // Add more data as needed
+          });
+    
+          } catch (error) {
+              console.log("ERROR", error)
+          }
            if(window && window.clevertap){
             window.clevertap.setMultiValuesForKey("cart_items", []);
           }
