@@ -7,7 +7,7 @@ import { getTamaraPaymentTypes } from '@/services';
 import { useCountryList } from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
-const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} }) => {
+const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={},avgRating="",totalRating="" }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold} = pricingSectionVariables;
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
@@ -225,42 +225,70 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         }
       }
 
-    const onPayment = ()=>{
-        let payload = {
-            "cartId":getCartItems['id'] || "",
-            "orderType": "one-time",
-            "userId": userId || "",
-            "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
-            "shippingAddressId":selectedAddress && selectedAddress.id || "",
-            "addressId": selectedAddress && selectedAddress.id || "",
-            "countryCode": selectedCountry.code || "",
-            "countryId": selectedCountry.id || "",
-            "description": description,
-            "finalAmount": priceDetails['totalAmount'],
-            "totalAmount": priceDetails['finalPayloadTotalAmount'],
-            "currency": selectedCountry.currency || "",
-            "orderSource": "WEBSITE",
-            "orderCategory": "CART",
-            "couponApplied": isCouponApplied || false,
-            "couponCode": couponCodeData['coupon'] || "",
-            "discount": priceDetails['discountAmount'],
-            "paymentType": "Regular",
-            "taxAmount": taxAmount,
-            "shippingAmount": 0,
-            "deliveryCharges":priceDetails['deliveryFees'],
-            "cartItems": cartItemPayload
-          }
-    }
+    // const onPayment = ()=>{
+    //     let payload = {
+    //         "cartId":getCartItems['id'] || "",
+    //         "orderType": "one-time",
+    //         "userId": userId || "",
+    //         "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
+    //         "shippingAddressId":selectedAddress && selectedAddress.id || "",
+    //         "addressId": selectedAddress && selectedAddress.id || "",
+    //         "countryCode": selectedCountry.code || "",
+    //         "countryId": selectedCountry.id || "",
+    //         "description": description,
+    //         "finalAmount": priceDetails['totalAmount'],
+    //         "totalAmount": priceDetails['finalPayloadTotalAmount'],
+    //         "currency": selectedCountry.currency || "",
+    //         "orderSource": "WEBSITE",
+    //         "orderCategory": "CART",
+    //         "couponApplied": isCouponApplied || false,
+    //         "couponCode": couponCodeData['coupon'] || "",
+    //         "discount": priceDetails['discountAmount'],
+    //         "paymentType": "Regular",
+    //         "taxAmount": taxAmount,
+    //         "shippingAmount": 0,
+    //         "deliveryCharges":priceDetails['deliveryFees'],
+    //         "cartItems": cartItemPayload
+    //       }
+    // }
 
     const tamaraMinAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].min_limit && tamaraConfig[0].min_limit.amount:0
     const tamaraMaxAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].max_limit && tamaraConfig[0].max_limit.amount:0
+    
+    const getStarImage = (index) => {
+      const rating = avgRating - index;
+      if (rating >= 0.75) {
+          return "https://d25uasl7utydze.cloudfront.net/assets/star-filled.svg"; 
+      } else if (rating >= 0.25) {
+          return "https://d25uasl7utydze.cloudfront.net/assets/star-halft.svg"; 
+      } else {
+          return "https://d25uasl7utydze.cloudfront.net/assets/star.svg"; 
+      }
+  };
+
+    const renderStars = () => {
+      const stars = [];
+      for (let i = 0; i < 5; i++) {
+        const starImage = getStarImage(i);
+        stars.push(
+          <div className={styles.reviewStar} key={i}>
+            <img src={starImage} alt="star" />
+          </div>
+        );
+      }
+      return stars;
+    };
 
     return (
         <div className={styles.pricingSectionContainer}>
             <div className={styles.title}>{title}</div>
-            {numberOfProductReview && <div className={styles.reviewContainer}>
+            {/* {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
+            </div>} */}
+           {avgRating && totalRating && <div className={styles.ratingSection}>
+              <div className={styles.avgRating}>{renderStars()}</div>
+              <div className={styles.totalNumberRating}>{`(${totalRating}  ratings)`}</div>
             </div>}
             <div className={styles.pricingConatiner}>
                 <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>

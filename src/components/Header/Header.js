@@ -89,7 +89,24 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         setIsOpenProfileInfo(false)
       }
     });
+
+    try {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-9ZH5J03SH9'); 
+      window.dataLayer.push({
+          'event': 'pageview',
+          'pagePath': window.location.pathname,
+          'pageTitle': document.title
+          // Add more data as needed
+      });
+  } catch (error) {
+      
+  }
   }, [])
+
+ 
 
   console.log("searchDatasearchData",searchData)
   useEffect(() => {
