@@ -14,7 +14,9 @@ const ProductDealCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNo
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
             <div className={styles.productCardWrapper} style={{...style}}>
             {dealId && isDealActive
-             && tag && tagIconUrl && <div className={styles.tagSection}>
+             && tag && tagIconUrl && 
+              isTimerActive && currentTimerStatus=="in-between" &&
+               <div className={styles.tagSection}>
                 <div className={styles.tagDiv}>
                <img src={tagIconUrl} alt='tag-icon'></img>
                    <div className={styles.tagTxt}>{tag}</div>
