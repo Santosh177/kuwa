@@ -327,6 +327,33 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     clevertapEvent.onCleverTapEvent("kuwa_payments_landing");  
   }, [])
 
+  useEffect(()=>{
+    deleteOutOfStockProducts()
+  },[])
+
+  const deleteOutOfStockProducts = async()=>{
+    const outOfStockProducts = await getOutOfStockProduct(data[`products`],data.currency) || [];
+    const cartItemId = outOfStockProducts?.map((data)=>data.cartItemId);
+    if(cartItemId && cartItemId.length>0){
+
+    
+    try{
+      const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/delete/cart-items?cart_item_id_list=${cartItemId}`, {
+        method:'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+    }
+    catch{
+      console.log("error",error)
+    }
+  }
+  else{
+
+  }
+  }
+
 
   const calculatePriceDetails = async() => {
     let { total=0, subtotal=0, currency = "" } = data || {};
