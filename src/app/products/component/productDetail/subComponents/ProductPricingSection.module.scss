@@ -28,6 +28,9 @@
         align-items: center;
         margin-top: 16px;
         gap: 8px;
+        .avgRatingValue{
+            padding-bottom: 5px;
+        }
         .avgRating{
             display: flex;
             justify-content: center;
@@ -47,7 +50,7 @@
             font-style: normal;
             font-weight: 500;
             margin-bottom: 3px;
-            border-bottom: 1px solid #2E7CF6 ;
+            // border-bottom: 1px solid #2E7CF6 ;
         }
     }
 

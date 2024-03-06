@@ -38,6 +38,7 @@
     }
 
     .faqDropDownIcon {
+        cursor: pointer;
         transition: all .25s ease;
     }
 
@@ -109,7 +110,7 @@
         .faqAns {
             font-size: 12px;
             font-weight: 400;
-            padding-left: 40px;
+            padding-left: 20px;
             padding-right: 70px;
         }
     }
