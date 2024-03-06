@@ -52,8 +52,10 @@ export default function PaymentSuccess() {
 
 
     useEffect(()=>{
-      getListOfOrder();
-    },[])
+      if(orderDetailsData && Object.keys(orderDetailsData).length>0){
+        getListOfOrder();
+      }
+    },[orderDetailsData])
 
     useEffect(()=>{
       getOrderDetails();
@@ -90,6 +92,7 @@ export default function PaymentSuccess() {
          }
 
          try {
+          console.log("totalPurchaseAmount",totalPurchaseAmount)
           window.dataLayer.push({
             'event': 'kuwa_order_confirmed',
             'pagePath': window.location.pathname,
