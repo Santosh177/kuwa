@@ -47,7 +47,11 @@ const {discountAmount="",subTotal=""} = data || {}
                  {true && <div className={styles.applePayBtn} onClick={()=>{setSelectedPaymentMethod('APPLE_PAY');onProceed("APPLE_PAY")}}>
                     <div>Pay with</div>
                     <img className={styles.appleLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/image+122.png' alt='apple-pay'/>
-                  </div>}
+                    { true && prePaidDiscount > 0 && <span className={styles.prepaidDiscount}>Extra {prePaidDiscount}% Off</span>}
+                  </div>
+                  }
+                   
+               
                   <div className={[styles.btn,(isEnable)?styles.btn_active:""].join(" ")} onClick={()=>onProceed()}>{btnName}</div>
                 </div>
              
