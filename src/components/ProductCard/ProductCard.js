@@ -11,10 +11,13 @@ const ProductCard = ({cardData,addToCart={},style={}}) => {
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
             <div className={styles.productCardWrapper} style={{...style}}>
             {dealId && isDealActive
-             && tag && tagIconUrl && <div className={styles.tagSection}>
+             && 
+              isTimerActive && currentTimerStatus=="in-between" &&
+              (tagIconUrl || tag) &&
+              <div className={styles.tagSection}>
                 <div className={styles.tagDiv}>
-               <img src={tagIconUrl} alt='tag-icon'></img>
-                   <div className={styles.tagTxt}>{tag}</div>
+                {tagIconUrl &&   <img src={tagIconUrl} alt='tag-icon'></img>}
+                {tag &&   <div className={styles.tagTxt}>{tag}</div>}
                     </div>
                     </div>}
                

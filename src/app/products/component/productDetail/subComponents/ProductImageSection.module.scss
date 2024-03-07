@@ -9,27 +9,34 @@
         display: none !important;
     }
     .tagSection{
-        width: 87px;
-        padding: 6px;
-        height: 18px;
-        background-color: #2E7CF6;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #FFF;
-        font-size: 10px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-        position: relative;
-        top: 0px;
-        left: 87px;
-        z-index: 11;
-        img{
-            width: 14px;
-            height: 14px;
-        }
-        .tagTxt{
+        max-width: 150px;
+             
+             height: 18px;
+            
+           
+             color: #FFF;
+             font-size: 14px;
+             font-style: normal;
+             font-weight: 500;
+             line-height: normal;
+             position: relative;
+             top:0px;
+             left:0px;
+        .tagDiv{
+            padding: 4px 6px;
+            display: flex;
+            justify-content: center;
+            gap:2px;
+            align-items: center;
+            background-color: #2E7CF6;
+            border-radius: 6px;
+            img{
+                width: 14px;
+                height: 14px;
+            }
+            .tagTxt{
+
+            }
 
         }
     }

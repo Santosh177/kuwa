@@ -79,11 +79,13 @@ const ProductImageSection = ({ allImages,dealTag,dealIconUrl,isDealActive,isTime
                             const { imageUrl = "" } = item || {};
                             return <>
                                 <div className={styles.imageSection} key={i}>
-                            { isDealActive && isTimerActive && currentTimerStatus == "in-between" &&  
+                            { isDealActive && isTimerActive && currentTimerStatus == "in-between" &&
+                              (dealIconUrl || dealTag) &&
                               <div className={styles.tagSection} >
-                                        <img src={dealIconUrl}></img>
-                                        <div className={styles.tagTxt}>{dealTag}</div>
-                                      
+                                 <div className={styles.tagDiv}>
+                                 {dealIconUrl &&  <img src={dealIconUrl}></img>}
+                                 {dealTag &&  <div className={styles.tagTxt}>{dealTag}</div>}
+                                        </div>
                                     </div>}
                                     {
                                         variantdealId && isVariantDealActive && isVariantTimeActive 

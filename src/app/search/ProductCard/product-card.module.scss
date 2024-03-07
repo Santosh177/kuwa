@@ -111,26 +111,34 @@
         padding-top: 60px;
         width:180px;
         .tagSection{
-            width: 72px;
+            max-width: 106px;
+             
             height: 18px;
-            background-color: #2E7CF6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+           
+          
             color: #FFF;
             font-size: 10px;
             font-style: normal;
-            font-weight: 600;
-            line-height: normal;
+            font-weight: 500;
             position: relative;
-            top: -38px;
-            left: 1px;
+            top: -30px;
+            left: 0px;
             z-index: 10;
-            img{
-                width: 14px;
-                height: 14px;
-            }
-            .tagTxt{
+            .tagDiv{
+                padding: 4px 6px;
+                display: flex;
+                justify-content: center;
+                gap:2px;
+                align-items: center;
+                background-color: #2E7CF6;
+                border-radius: 6px;
+                img{
+                    width: 14px;
+                    height: 14px;
+                }
+                .tagTxt{
+    
+                }
 
             }
         }
