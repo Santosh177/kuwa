@@ -121,7 +121,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
                     </div>
                 )
             })}
-            {multiSelect.map((item) => {
+            {multiSelect?.map((item) => {
                 const { superCollectionName = '', category = [] } = item || {}
                 const [isCollapse, setIsCollapse] = useState(true)
                 if (superCollectionName) {
@@ -173,8 +173,8 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 
     
     useEffect(() => {
-        setSelectedTab(multiSelect[0].superCollectionName);
-        setSelectedCatogries(multiSelect[0].category)
+        setSelectedTab(multiSelect[0]?.superCollectionName);
+        setSelectedCatogries(multiSelect[0]?.category)
     }, []);
 
     const handelOnclick = (options, cat) => {

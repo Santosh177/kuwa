@@ -9,6 +9,7 @@ import useCleverTapEvents from "@/hooks/useCleverTapEvents"
 
 const RelatedProducts = ({ productData = {} }) => {
     const { relatedProduct = [] } = productData || {};
+    console.log("relatedProduct",relatedProduct)
     const [isLodaing, setIsLoading] = useState(false);
     const leftArrow = useRef(null);
     const clevertapEvent = useCleverTapEvents();
@@ -39,6 +40,7 @@ const RelatedProducts = ({ productData = {} }) => {
                         <div ref={leftArrow} className={style.allProducts}>
                             {relatedProduct.map((item, index) => {
                                 const { id = '', image = '', name = '', price = {}, seoUrl = '', title = '' } = item || {};
+                                const {dealId, isTimerActive,isDealActive,currentTimerStatus='',dealInventory='',dealIconUrl='',dealTag='',dealDiscountPrice='',dealFinalPrice='',dealListPrice=''}= item || {}
                                 const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
                                 const cardData = {
                                     productName: name,
@@ -49,15 +51,33 @@ const RelatedProducts = ({ productData = {} }) => {
                                     discountType: discountType,
                                     image: image || "",
                                     id: id || "",
-                                    seoUrl:seoUrl || ""
+                                    seoUrl:seoUrl || "",
+                                    dealId:dealId || "",
+                                    isTimerActive: isTimerActive,
+                                    isDealActive:isDealActive,
+                                    currentTimerStatus:currentTimerStatus,
+                                    dealInventory:dealInventory,
+                                    tagIconUrl:dealIconUrl,
+                                    tag:dealTag,
+                                    dealDiscountPrice:dealDiscountPrice,
+                                    dealFinalPrice:dealFinalPrice,
+                                    dealListPrice:dealListPrice
                                 }
+                                console.log("cardData", cardData)
                                 trackData = {
                                     "product Name": name,
                                     "quantity": 1,
                                     "product Id": id,
                                 }
+                                let addToCartPayload = {};
+                                if(dealId && isDealActive && isTimerActive,currentTimerStatus=="in-between"){
+                                     addToCartPayload= {"product":id,"quantity":1,"dealId":dealId,dealPrice:dealFinalPrice}
+                                }
+                                else{
+                                    addToCartPayload = {"product":id, "quantity":1}
+                                }
                                 return (
-                                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: id, quantity: 1 })} />
+                                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart(addToCartPayload)} />
                                 )
                             })}
                         </div>

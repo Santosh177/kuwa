@@ -159,6 +159,37 @@ const handleAllProduct = () =>{
 
               {
                 product.slice(0, 12).map((data,index)=>{
+                  const {
+                    image= "",
+                    id= "",
+                    title="",
+                    name= "",
+                    countDownStartsAt="",
+                    countDownEndsAt="",
+                    dealId="",
+                    dealListPrice="",
+                    dealDiscountPrice="",
+                    dealFinalPrice= "",
+                    dealInventory="",
+                    rank="",
+                    seoUrl="",
+                    productListPrice= "",
+                    productFinalPrice = "",
+                    productDiscount = "",
+                    normalInventory = "",
+                    variantId="",
+                    variantName = "",
+                    variantImage = "",
+                    variantListPrice = "",
+                    variantFinalPrice = "",
+                    variantDiscount = "",
+                    isDealActive="",
+                    isTimerActive="",
+                    dealTag="",
+                    dealIconUrl="",
+                    currentTimerStatus="",
+                    currentTimerValue="",
+                    currentDateTime=""} = data || {}
                   const { variants=[]} = data  || {}
                   const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
                   let cardData = {
@@ -168,9 +199,39 @@ const handleAllProduct = () =>{
                     "quantity": 1,
                     "product Id":data.id || "",
                   }
-                  if(variants && variants.length > 0 && data.variantPrices) {
-                    const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
-                    if(variantPrices && variantPrices.length>0){
+                 
+                    if(variants && variants.length > 0 && data.variants[0].variantPrices.length>0)
+                    
+                    {
+                      if(data.variants[0].variantPrices[0].dealId
+                        && data.variants[0].variantPrices[0].isDealActive
+                        && data.variants[0].variantPrices[0].isTimerActive
+                        && data.variants[0].variantPrices[0].currentTimerStatus == "in-between"
+                        ){
+                          const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
+                        cardData = {
+                          dealId:variantPrices[0].dealId,
+                          productName: data && data.name || "",
+                          dealFinalPrice: variantPrices[0].dealFinalPrice,
+                          dealListPrice: variantPrices[0].dealListPrice,
+                          currency: currency,
+                          dealDiscountPrice: variantPrices[0].dealDiscountPrice,
+                          discountType: discountType || "",
+                          image: image || "",
+                          id: variantPrices[0].variantId || "",
+                          seoUrl: data.seoUrl || "",
+                          isDealActive:variantPrices[0].isDealActive,
+                          isTimerActive:variantPrices[0].isTimerActive,
+                      currentTimerStatus:variantPrices[0].currentTimerStatus,
+                      currentTimerValue:variantPrices[0].currentTimerValue,
+                      tag:variantPrices[0].dealTag,
+                      tagIconUrl:variantPrices[0].dealIconUrl,
+
+                        }
+                    }
+                    else
+                    {
+                      const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
                       cardData = {
                         productName: data && data.name || "",
                         finalPrice: variantPrices[0].finalPrice,
@@ -182,30 +243,85 @@ const handleAllProduct = () =>{
                         id: variantPrices[0].variantId || "",
                         seoUrl: data.seoUrl || ""
                       }
-                    }
-                  }else{
-                    cardData = {
-                      productName: data && data.name || "",
-                      finalPrice: finalPrice,
-                      retailPrice: retailPrice,
-                      currency: currency,
-                      discount: discount,
-                      discountType: discountType,
-                      image: data.image || "",
-                      id: data.id || "",
-                      seoUrl: data.seoUrl || ""
+                   }
+                  }
+
+                 else{
+
+                    if(dealId &&
+                      isDealActive && isTimerActive
+                      &&  currentTimerStatus == "in-between"
+                    ) {
+
+                      cardData={
+                        "dealId":dealId || "",
+                        "id":id || "",
+                        "productName":name,
+                        "productImage":image || "",
+                        "seoUrl":seoUrl || "",
+                        "dealListPrice":dealListPrice,
+                      'dealFinalPrice':dealFinalPrice,
+                      'discountType':"fixed",
+                      "dealDiscountPrice":dealDiscountPrice || 0,
+                      "currency":currency,
+                      "tag":dealTag,
+                      "tagIconUrl":dealIconUrl,
+                      "dealInventory":dealInventory,
+                      "isDealActive":isDealActive,
+                      "isTimerActive":isTimerActive,
+                      "currentTimerStatus":currentTimerStatus,
+                      "currentTimerValue":currentTimerValue,
+                      "currentDateTime":currentDateTime
+                      }
+                     
+                      
+                      
+                    }else{
+                      cardData = {
+                        productName: data && data.name || "",
+                        finalPrice: finalPrice,
+                        retailPrice: retailPrice,
+                        currency: currency,
+                        discount: discount,
+                        discountType: discountType,
+                        image: data.image || "",
+                        id: data.id || "",
+                        seoUrl: data.seoUrl || ""
+                      }
                     }
                   }
-                  let addToCartPayload = {  }
+                  console.log("hshbhabjha",cardData)
+                 
+                  let addToCartPayload = {}
                   if(variants && variants.length > 0){
                     const { variantPrices = [] ,name="",image="",id=""} = data.variants[0] || {};
                     let variantId = id;
+                    let variantDealPrice = "";
+                    let variantDealId = ''
                     if(variantPrices && variantPrices.length > 0){
                       variantId = variantPrices[0].variantId;
+                      variantDealPrice = variantPrices[0].dealFinalPrice;
+                      variantDealId = variantPrices[0].dealId;
                     }
-                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId}
-                  }else{
-                    addToCartPayload = { product: data.id, quantity: 1 }
+                    if( variantPrices[0]?.dealId &&  variantPrices[0]?.isDealActive && variantPrices[0]?.isTimerActive
+                        && variantPrices[0].currentTimerStatus == "in-between"
+                     ){
+                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId,dealId:variantDealId,dealPrice:variantDealPrice}
+
+                    }
+                    else{
+                      addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId}
+                    }
+ 
+                  }
+                  else{
+                    if(dealId && isDealActive && isTimerActive  &&  currentTimerStatus == "in-between" ){
+                    addToCartPayload = { product: data.id, quantity: 1,dealId:dealId ,dealPrice:dealFinalPrice}
+
+                    }
+                    else{
+                    addToCartPayload = { product: data.id, quantity: 1,}
+                      }
                   }
                   return(
                     <ProductCard  cardData={cardData} addToCart={()=>onAddToCart(addToCartPayload)} key={index}/>

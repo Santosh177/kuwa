@@ -16,8 +16,11 @@ import { useCountry } from '@/context/contryDetails';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
 const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
-    const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold ,avgRating="",totalRating=""} = productData || {};
-    const [noOfProduct, setNoOfProduct] = useState(1);
+    const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating=""} = productData || {};
+   const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive=false,dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = productData || {}
+        // console.log("dealListPrice",dealListPrice)
+        console.log("productdetails",productData)
+   const [noOfProduct, setNoOfProduct] = useState(1);
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
   
@@ -32,6 +35,12 @@ const ProductDeatil = ({ productData = {} }) => {
     const [haveAdress, setHaveAddress] = useState(false);
     const [ isAddedToCart , setIsAddedToCart ] = useState(false);
     const [ isLoading , setIsLoading] = useState(false)
+    const [variantdealId, setVariantDealId] = useState();
+   const[isVariantDealActive,setIsVariantDealActive] = useState();
+   const[isVariantTimeActive,setIsVariantTimeActive] = useState();
+   const[isVariantCurrenTimeStatus,setIsVariantCurrenTimeStatus] = useState();
+   const[selectedVariantTag,setSelectedVariantTag] = useState();
+   const[seleVariantIcon,setSeleVariantIcon] = useState();
     const router = useRouter()
     const clevertapEvent = useCleverTapEvents();
     useEffect(()=>{
@@ -43,45 +52,104 @@ const ProductDeatil = ({ productData = {} }) => {
                 setselectedVarients(variantId)
             }
         }
-    },[variants])
+    },[variants,dealId])
 
     useEffect(() => {
         setIsLoading(true)
-        const { productPriceAmount = 0, productPriceType = "", productPriceSpecialAmount = 0 } = price || {};
-        setFinalPrice(productPriceSpecialAmount);
-        setRetailPrice(productPriceAmount);
-        if (productPriceAmount > productPriceSpecialAmount) {
-            setDiscount(productPriceAmount - productPriceSpecialAmount);
+        if(dealId
+             && isDealActive && isTimerActive
+              && currentTimerStatus == "in-between"
+             ){
+            setFinalPrice(dealFinalPrice);
+            setRetailPrice(dealListPrice);
+            if(dealListPrice > dealFinalPrice){
+                setDiscount(dealDiscountPrice);
+            }
         }
-        let bulkImage = [];
-        images.map((data)=> bulkImage.push(data.imageUrl))
-        setAllImages(bulkImage)
-    }, [])
-    useEffect(() => {
-        if (selectedVarients) {
-            const selectedVarientsData = variants.filter((item) => item?.pricings[0]?.variantId === selectedVarients);
-            const { id = '', image = '', name = '', productId = '', quantity = '' } = selectedVarientsData[0].variants || {}
-            const { varientId = '', retailPrice = 0, finalPrice = 0, discount = 0 } = selectedVarientsData[0]?.pricings[0] || {};
-            setSelectedVrientsData(selectedVarientsData)
-            setFinalPrice(finalPrice);
-            setRetailPrice(retailPrice);
-            setDiscount(discount);
-            // if (!allImages.includes(image)) {
-                setAllImages([image]);
-            // }
-        }else{
+        else{
             const { productPriceAmount = 0, productPriceType = "", productPriceSpecialAmount = 0 } = price || {};
             setFinalPrice(productPriceSpecialAmount);
             setRetailPrice(productPriceAmount);
             if (productPriceAmount > productPriceSpecialAmount) {
                 setDiscount(productPriceAmount - productPriceSpecialAmount);
             }
+        }
+       
+       
+        let bulkImage = [];
+        images.map((data)=> bulkImage.push(data.imageUrl))
+        setAllImages(bulkImage)
+    }, [dealId])
+    
+    useEffect(() => {
+        if (selectedVarients) {
+
+            const selectedVarientsData = variants.filter((item) => item?.pricings[0]?.variantId === selectedVarients);
+            const { id = '', image = '', name = '', productId = '', quantity = '' } = selectedVarientsData[0].variants || {}
+            let selectedVariantdealId = selectedVarientsData[0].pricings[0].dealId
+         
+            let isVariantDealActive = selectedVarientsData[0].pricings[0].isDealActive 
+            let isVariantTimerActive = selectedVarientsData[0].pricings[0].isTimerActive || false
+            let currentVariantTimerStatus = selectedVarientsData[0].pricings[0].currentTimerStatus || ""
+            let dealTag = selectedVarientsData[0].pricings[0].dealTag || ""
+            let dealIconUrl = selectedVarientsData[0].pricings[0].dealIconUrl || ""
+            setVariantDealId(selectedVariantdealId);
+            setIsVariantCurrenTimeStatus(currentVariantTimerStatus);
+            setIsVariantTimeActive(isVariantTimerActive);
+            setIsVariantDealActive(isVariantDealActive);
+            setSeleVariantIcon(dealIconUrl);
+            setSelectedVariantTag(dealTag)
+            if(selectedVariantdealId && isVariantDealActive && isVariantTimerActive 
+                && currentVariantTimerStatus == "in-between"
+                ){
+               const  { varientId = '', dealListPrice = 0, dealFinalPrice = 0, dealDiscountPrice = 0 } = selectedVarientsData[0]?.pricings[0] || {};
+               setFinalPrice(dealFinalPrice);
+           setRetailPrice(dealListPrice);
+           setDiscount(dealDiscountPrice);
+            }
+            else{
+                console.log("selectedVarientsData",selectedVarientsData[0].pricings[0]) 
+           const  { varientId = '', retailPrice = 0, finalPrice = 0, discount = 0 } = selectedVarientsData[0]?.pricings[0] || {};
+           setFinalPrice(finalPrice);
+           setRetailPrice(retailPrice);
+           setDiscount(discount);
+            }
+            setSelectedVrientsData(selectedVarientsData)
+          
+            // if (!allImages.includes(image)) {
+                setAllImages([image]);
+            // }
+        }
+        
+        else{
+            if(dealId && isDealActive && isTimerActive
+                 && currentTimerStatus == "in-between" 
+                  ){
+                console.log("dealId",dealFinalPrice)
+                setFinalPrice(dealFinalPrice);
+                setRetailPrice(dealListPrice);
+                if(dealListPrice > dealFinalPrice){
+                    setDiscount(dealDiscountPrice);
+                }
+            }
+            else{
+                const { productPriceAmount = 0, productPriceType = "", productPriceSpecialAmount = 0 } = price || {};
+            setFinalPrice(productPriceSpecialAmount);
+            setRetailPrice(productPriceAmount);
+            if (productPriceAmount > productPriceSpecialAmount) {
+                setDiscount(productPriceAmount - productPriceSpecialAmount);
+            }
+            }
+            
             let bulkImage = [];
             images.map((data)=> bulkImage.push(data.imageUrl))
             setAllImages(bulkImage)
         }
-    }, [selectedVarients])
+
+    }, [selectedVarients,dealId])
+  
     let payload = {
+        "dealId" : selectedVarients ? variantdealId : (  dealId ? dealId : null),   
         "product": id,
         "quantity": noOfProduct,
         "isVariant": selectedVarients ? true : false,
@@ -347,6 +415,8 @@ const ProductDeatil = ({ productData = {} }) => {
           }
         }
     }
+
+    
     const pricingSectionVariables = {
         currency: currency,
         name: name,
@@ -365,8 +435,10 @@ const ProductDeatil = ({ productData = {} }) => {
         handelViewCart: handelViewCart,
         onHandleApplePay:onHandleApplePay,
         noOfProduct: noOfProduct,
-        mininmumDeliveryThreshold:mininmumDeliveryThreshold
+        mininmumDeliveryThreshold:mininmumDeliveryThreshold,
+        
     };
+    console.log("pricingSectionVariables",pricingSectionVariables)
     const handelRoute = (type) => {
         if (type === "home") {
             router.push('/')
@@ -591,8 +663,8 @@ const ProductDeatil = ({ productData = {} }) => {
                 <span onClick={() => handelRoute("product")}> {name}</span>
             </div>
             <div className={style.productPricingContainer}>
-                <ProductImageSection allImages={allImages} />
-                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf} avgRating={avgRating} totalRating={totalRating} />
+                <ProductImageSection allImages={allImages} dealTag={dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} seleVariantIcon={seleVariantIcon} selectedVariantTag={selectedVariantTag} />
+                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf}  isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus}  isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} avgRating={avgRating} totalRating={totalRating} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>
                 <FrequntlyBoughtTogether currency={currency} productData={frequentlyBoughtTogether} />

@@ -13,8 +13,10 @@ import styles from './header.module.scss';
 import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
 import TrendingSearch from '@/app/search/TrendingSearch/TrendingSearch';
 import ProductCard from '@/app/search/ProductCard/ProductCard';
+import { mappingHomeSearchDealProducts } from '@/services';
 const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBanner={},searchQuery="" }) =>{
   const router = useRouter();
+  console.log("searchData",searchData)
     const searchDataCount = searchData && searchData.length || 0;
   const handleSeeAll=(couponBanner,searchQuery)=>{
     window.location.href=`/collections?search_key=${searchQuery}`
@@ -30,18 +32,25 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                  >
                     {
                         searchData.map((data, index)=>{
-                          const { id = '', productImage: image, productName:name, price = {}, seoUrl = '', title = '' } = data || {};
-                          const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
+                          console.log("ahbabh",data)
+                          const { id = '', productImage="", productName="", seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag="",currentTimerStatus=""} = data || {};
+                          // const {  } = price || {}
                           const cardData = {
-                            productName: name,
+                            productName: productName,
                             finalPrice: finalPrice,
                             retailPrice: retailPrice,
                             currency: currency,
                             discount: discount,
                             discountType: discountType,
-                            image: image || "",
+                            image: productImage || "",
                             id: id || "",
-                            seoUrl: seoUrl || ""
+                            seoUrl: seoUrl || "",
+                            dealId:dealId,
+                            isDealActive:isDealActive,
+                            isTimerActive:isTimerActive,
+                            tagIconUrl:tagIconUrl,
+                            tag:tag,
+                            currentTimerStatus:currentTimerStatus
                           }
                             return(
                                 <ProductCard cardData={cardData} />
@@ -126,20 +135,24 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         if(searchApiData && searchApiData.length > 0 ){
             searchData = []
             searchApiData.map((data,index)=>{
+            
                 if(data && Object.keys(data).length > 0){
-                    const productData = {
-                        productImage : data.productImageUrl || "",
-                        productName: data.name || "",
-                        id: data.id || "",
-                        seoUrl: data.seoUrl || "",
-                        price:{
-                          finalPrice: data.specialPrice,
-                          retailPrice: data.price,
-                          currency: data.currency,
-                          discount: data.discount,
-                          discountType: data.discountType,
-                        }
-                    }
+                  
+                    // const productData = {
+                    //     productImage : data.productImageUrl || "",
+                    //     productName: data.name || "",
+                    //     id: data.id || "",
+                    //     seoUrl: data.seoUrl || "",
+                    //     price:{
+                    //       finalPrice: data.specialPrice,
+                    //       retailPrice: data.price,
+                    //       currency: data.currency,
+                    //       discount: data.discount,
+                    //       discountType: data.discountType,
+                    //     }
+                    // }
+                    const productData = mappingHomeSearchDealProducts(data);
+                    console.log("sjbsjbjs",productData)
                     searchData.push(productData);
                     setSearchData(searchData)
                 }
@@ -263,45 +276,45 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         setIsShowCountry(false)
     }
 
-    const onSearcha = async(searchValue) => {
-        setSearchTxt(searchValue);
+    // const onSearcha = async(searchValue) => {
+    //     setSearchTxt(searchValue);
         	
-        setIsShowSearchList(true);
-        console.log("customHeadercustomHeader",selectedCountry)
-        const countryId = selectedCountry && selectedCountry.id || "";
-        const abortController = new AbortController();
-        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchValue}&country=${countryId}`, {
-            method: 'GET',
-            signal: abortController.signal,
-            headers: {
-              'Content-Type': 'application/json',
-            }
-          })
-        const searchApiData = await searchApiResp.json();
-        let searchData = []
-        if(searchApiData && searchApiData.length > 0 ){
-            searchData = []
-            searchApiData.map((data,index)=>{
-                const sData = data['product'] || {}
-                if(sData){
-                    const productData = {
-                        productImage : sData.productImage && sData.productImage.productImageUrl || "",
-                        productName: sData.productDescription && sData.productDescription.name || "",
-                        id: sData.id || "",
-                        seoUrl: data.seoUrl || ""
-                    }
-                    searchData.push(productData);
-                    setSearchData(searchData)
-                }
+    //     setIsShowSearchList(true);
+    //     console.log("customHeadercustomHeader",selectedCountry)
+    //     const countryId = selectedCountry && selectedCountry.id || "";
+    //     const abortController = new AbortController();
+    //     const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchValue}&country=${countryId}`, {
+    //         method: 'GET',
+    //         signal: abortController.signal,
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         }
+    //       })
+    //     const searchApiData = await searchApiResp.json();
+    //     let searchData = []
+    //     if(searchApiData && searchApiData.length > 0 ){
+    //         searchData = []
+    //         searchApiData.map((data,index)=>{
+    //             const sData = data['product'] || {}
+    //             if(sData){
+    //                 const productData = {
+    //                     productImage : sData.productImage && sData.productImage.productImageUrl || "",
+    //                     productName: sData.productDescription && sData.productDescription.name || "",
+    //                     id: sData.id || "",
+    //                     seoUrl: data.seoUrl || ""
+    //                 }
+    //                 searchData.push(productData);
+    //                 setSearchData(searchData)
+    //             }
                
-            })
+    //         })
 
-        abortController.abort();
-        }else{
-            searchData.push([])
-            setSearchData([])
-        }
-    }
+    //     abortController.abort();
+    //     }else{
+    //         searchData.push([])
+    //         setSearchData([])
+    //     }
+    // }
 
     useEffect(() => {
       try {

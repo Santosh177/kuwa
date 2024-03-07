@@ -1,8 +1,63 @@
 .productSectionContainer{
+    width: 100%;
     // margin-top:20px;
     margin-bottom:50px;
     padding: 10px;
     padding-top: 0px !important;
+    .headingContent{
+        display: flex;
+        //  justify-content: center;
+         align-items: center;
+         gap:64px;
+         background: linear-gradient(180deg, #fceee0 0%, rgba(252, 238, 224, 0.00) 100%);
+            padding: 26px;
+            margin-bottom: 20px;
+         .heading{
+         font-size: 18px;
+        //  font-weight: 700;
+         color: #07141A;
+        }
+         
+     .dealHeading{
+         color: #07141A;
+         font-size: 24px;
+         font-style: normal;
+         font-weight: 700;
+     }
+     .timeDurationDiv{
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         gap:12px;
+         .timeTxt{
+             color: #07141A; 
+ font-size: 16px;
+ font-style: normal;
+ font-weight: 500;
+ line-height: normal;
+         }
+         .dealTimeDuration{
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             gap:8px;
+             .timerDiv{
+                 display: flex;
+                 justify-content: center;
+                 align-items: center;
+                 width: 64px;
+                 height: 32px;
+                 border-radius: 4px;
+                 background: #FFF;
+                 color: #CE4224;
+ font-size: 24px;
+ font-style: normal;
+ font-weight: 500;
+ line-height: normal;
+             }
+         }
+     }
+ }
 
     .allProduct{
         display: flex;
@@ -17,8 +72,32 @@
 
 @media (max-width:990px){
     .productSectionContainer{
-        .allProduct{
+        .headingContent{
+            display: flex;
+            flex-direction: column-reverse;
             justify-content: center;
+            align-items: baseline;
+            gap:14px;
+            .dealHeading{
+                
+                font-size: 18px;
+            }
+            .timeDurationDiv{
+                .timeTxt{
+                    font-size: 12px;
+                }
+                .dealTimeDuration{
+                    .timerDiv{
+                        width: 36px;
+                        height: 20px;
+                        font-size: 14px;
+                    }
+                }
+
+            }
+        }
+        .allProduct{
+            // justify-content: center;
             .product{
                 width: 45%;
                 .productCardItem{
