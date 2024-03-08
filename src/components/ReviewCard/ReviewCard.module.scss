@@ -17,26 +17,27 @@
         }
     }
     .heading{
+        height: 40px;
         font-size: 18px;
         font-weight: 600;
         
     }
 
     .reviewBody {
-        height: 28px;
+        height: 55px;
         font-weight: 400;
         font-size: 14px;
-        padding-top: 3px;
+        padding-top: 4px;
     }
 
     .bottomContainer {
         display: flex;
         justify-content: space-between;
         .customer {
-            display: flex;
-            align-items: center;
-            gap:10px;
-            margin-top: 14px;
+            // display: flex;
+            // align-items: center;
+            // gap:10px;
+            margin-top: 4px;
             .customerName {
                 font-weight: 600;
                 font-size: 14px;
