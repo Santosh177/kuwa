@@ -11,11 +11,13 @@ const ProductCard = ({ cardData={}, addToCart = {}, style = {} }) => {
     return (
         <div id="search-container" className={styles.productCardItem} onClick={() => { window.location.href = `/products/` + seoUrl}}>
               {
-            (tag ||
-             tagIconUrl) && <div className={styles.tagSection}>
+            (tag || tagIconUrl) && 
+            <div className={styles.tagContainer}>
+            <div className={styles.tagSection}>
                   <div className={styles.tagDiv}>
-                        <img src={tagIconUrl} alt='tag-icon'></img>
-                        <div className={styles.tagTxt}>{tag}</div>
+                      {tagIconUrl && <img src={tagIconUrl} alt='tag-icon'></img>}
+                    {tag && <div className={styles.tagTxt}>{tag}</div>}
+                        </div>
                         </div>
                     </div>}
             <div id="search-container" className={styles.productCardWrapper}>
