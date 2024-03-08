@@ -297,8 +297,8 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
       const { image = {}, quantity = 1, price = "", originalPrice = "", finalPrice = "", description = {}, id = "", cartItemId = "", variants, normalInventory } = item || {};
       const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
       if(variants && variants.pricings.length > 0){
-        if(variants.variants.quantity === 0){
-          const {variants ={} , pricings=[]} = variants || {}
+        if(variants.variants.quantity == 0){
+          const { pricings=[]} = variants || {}
           let item ={
             "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
             "qty":quantity,

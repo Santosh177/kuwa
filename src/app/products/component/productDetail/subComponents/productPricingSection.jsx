@@ -354,7 +354,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
               <div className={styles.price}>{"Only at" + " " +currency + ". " + finalPrice * noOfProduct}</div>:
                 <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>}
                 <div className={styles.incriment}>
-                    <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} />
+                    <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} selectedVariantQuantity={selectedVariantQuantity} normalInventory={normalInventory}/>
                 </div>
             </div>
             {variants.length>0 ? <div className={styles.packOf}>Pack of</div>:""}  

@@ -139,7 +139,7 @@ export default  function Cart({cartData}) {
       setOutOfStockProducts(getOutOfStockProductsData)
     }
 
-      console.log("outOfStockProducts",outOfStockProducts)
+      console.log("outOfStockProducts++++",outOfStockProducts)
    console.log("isAllOutOfStockProducts",isAllOutOfStockProducts)
 
     useEffect(()=>{
