@@ -77,3 +77,14 @@
         // }
     }
 }
+
+@media(max-width:769px){
+    .reviewCardConatiner{
+        .heading{
+           height:fit-content
+        }
+        .reviewBody{
+            height: fit-content;
+        }
+    }
+}
