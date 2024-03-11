@@ -8,6 +8,8 @@ const Varients = ({ setselectedVarients, variants,selectedVarients,currency, onR
                 const { variants, pricings = {} } = item || {};
                 const {id='',image='',name='',productId='',quantity=''} = variants || {}
                 const {countryId='',discount='',finalPrice='',retailPrice='',variantId=NaN} = pricings[0] || {}
+                const discountAmount = retailPrice-finalPrice
+                console.log("variantDiscountAmount", discountAmount)
                 return (
                     <div className={[style.VarientBox, ((selectedVarients === variantId)?  style.variantsSelcted : "")].join(" ")} onClick={()=>
                     {
@@ -20,7 +22,7 @@ const Varients = ({ setselectedVarients, variants,selectedVarients,currency, onR
                     }}>
                         <div>
                             <div className={style.quantity}>{name}</div>
-                            {discount > 0 ? <div className={style.discount}>Extra {discount} off</div> :<></>}
+                            {discountAmount > 0 ? <div className={style.discount}>Extra {discountAmount} off</div> :<></>}
                         </div>
                     </div>
                 )

@@ -310,6 +310,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
             </div>
             {variants.length>0 ? <div className={styles.packOf}>Pack of</div>:""}  
             <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} onResetViewCartState={onResetViewCartState}/>
+           {variants.find(data=> data.variants.name==3) && <div className={styles.variantRecommendedTxt}>Recommended pack of 3 for better result !</div>}
             <div className={styles.freeShippingSection}>
               <div className={styles.freeShippingDiv}>
                 <div className={styles.truckImg}><img src="https://d25uasl7utydze.cloudfront.net/assets/truck.svg"></img></div>
