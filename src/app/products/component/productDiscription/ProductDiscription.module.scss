@@ -6,6 +6,7 @@
     .tabSectionContainer {
         display: flex;
         justify-content: center;
+        gap:120px;
 
         .tabs {
             font-weight: 500;
@@ -46,6 +47,7 @@
 .productDiscriptionContainer {
     padding-top: 0px;
     .tabSectionContainer {
+        gap:24px;
         .tabs {
             font-size: 14px;
 
