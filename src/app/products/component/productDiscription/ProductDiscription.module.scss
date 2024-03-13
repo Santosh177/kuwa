@@ -2,7 +2,7 @@
     max-width: 625px !important;
     margin: auto;
     padding-top: 50px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     .tabSectionContainer {
         display: flex;
         justify-content: center;
@@ -28,7 +28,7 @@
     .selectedTabData {
         font-weight: 400;
         line-height: 24px;
-        margin-top: 35px;
+        margin-top: 15px;
 
         h1{
             line-height: 36px;
@@ -62,7 +62,8 @@
     .selectedTabData {
         font-weight: 400;
         font-size: 14px;
-        margin-top: 24px;
+        margin-top: 12px;
+
 
     }
 }
