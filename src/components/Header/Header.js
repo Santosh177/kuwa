@@ -392,8 +392,8 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
     return(
         <>
         
-        <CouponInfo couponBanner={couponBanner} setCouponBannerData={setCouponBannerData} />
-        <div className={styles.header} id='top-header-container' >
+       {couponBanner.isActive && <CouponInfo couponBanner={couponBanner} setCouponBannerData={setCouponBannerData} />}
+        <div className={ styles.header} style={!couponBanner.isActive?{top:"0px"}:{}} id='top-header-container' >
            <div className={styles.headerWrapper} id='top-header' >
                 <d    iv className={styles.headerIcon}>
                     <div className={styles.menuIcon} onClick={onOpenSideMenu}>
