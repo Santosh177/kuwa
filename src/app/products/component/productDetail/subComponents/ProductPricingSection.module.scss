@@ -73,6 +73,14 @@
         margin-bottom: 6px;
         margin-top: 26px;
     }
+    .variantRecommendedTxt{
+        width:fit-content;
+        margin-top: 10px;
+        background-color: #ce4224;
+        color: #fff;
+        padding: 2px 10px;
+        border-radius: 8px;
+    }
     .freeShippingSection{
         border-radius: 8px;
         background: #EEF5F5;
@@ -193,6 +201,10 @@
 
         .reviewContainer {
             margin-top: 17px;
+        }
+        .variantRecommendedTxt{
+            font-size: 10px;
+            padding: 1px 10px;
         }
         .freeShippingSection{
             .freeShippingDiv{
