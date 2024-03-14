@@ -289,6 +289,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
             </div>} */}
            {avgRating && totalRating && <div className={styles.ratingSection}>
+           <div className={styles.avgRatingValue}>{`${avgRating.toFixed(1)}`}</div>
               <div className={styles.avgRating}>{renderStars()}</div>
               <div className={styles.totalNumberRating}>{`(${totalRating}  ratings)`}</div>
             </div>}

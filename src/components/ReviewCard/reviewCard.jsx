@@ -27,10 +27,11 @@ const ReviewCard = ({item}) => {
     return (
       <>
         <div className={style.reviewCardConatiner}>
-            <div className={style.reviewStarConatiner}>
+        <div className={style.heading}>{headLine}</div>
+          <div className={style.reviewStarConatiner}>
             {renderStars()}
             </div>
-            <div className={style.heading}>{headLine}</div>
+         
             <div className={style.reviewBody}>{reviewBody}</div>
             <div className={style.bottomContainer}>
                 <div className={style.customer}>
