@@ -87,7 +87,7 @@ export default function Home(homePageData) {
     return (
 
         <div className={styles.homePageWrapper}>
-            <div className={(isSafariOniOS)?{}:(bannerImage.isActive ? styles.homePageContainer:{} )} id="homePage">
+            <div className={(isSafariOniOS)?{}:( styles.homePageContainer )} id="homePage">
             {bannerImage.isActive &&
              <div className={styles.mainBanner} style={(isSafariOniOS)?{}:{scrollSnapAlign:'start'}}>
                     {bannerImage.type === "VIDEO" ?
@@ -99,7 +99,7 @@ export default function Home(homePageData) {
                     <img id="scoll-image" className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe' />
                 </div>
 }
-                <div className={styles.mainContainer} id="main-container" style={(isSafariOniOS)?{}:{height:'100vh',scrollSnapAlign:'start'}}>
+                <div className={styles.mainContainer} id="main-container" style={(isSafariOniOS)?{}:{height:'100vh',scrollSnapAlign:'start',overflowY:"scroll"}}>
 
                     <Header couponBanner={couponBanner} />
                     {/* <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >

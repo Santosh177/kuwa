@@ -68,6 +68,8 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
 
 
 const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
+
+  console.log("couponBannerData:", couponBanner);
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
@@ -84,7 +86,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
     const [isOpenProfileInfo, setIsOpenProfileInfo] = useState(false)
     const [isTopHeaderFixed, setIsTopHeaderFixed] = useState(false)
     const [showTrendingSearch,setShowTrendingSearch]=useState(false);
-    const [couponBannerData,setCouponBannerData]=useState({});
+    const [couponBannerData,setCouponBannerData]=useState();
     const inputBoxRef = useRef(null);
     const dropDownOptionsRef = useRef(null);
     const dropDownOptionsProfileRef = useRef(null);
@@ -276,46 +278,6 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         setIsShowCountry(false)
     }
 
-    // const onSearcha = async(searchValue) => {
-    //     setSearchTxt(searchValue);
-        	
-    //     setIsShowSearchList(true);
-    //     console.log("customHeadercustomHeader",selectedCountry)
-    //     const countryId = selectedCountry && selectedCountry.id || "";
-    //     const abortController = new AbortController();
-    //     const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchValue}&country=${countryId}`, {
-    //         method: 'GET',
-    //         signal: abortController.signal,
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         }
-    //       })
-    //     const searchApiData = await searchApiResp.json();
-    //     let searchData = []
-    //     if(searchApiData && searchApiData.length > 0 ){
-    //         searchData = []
-    //         searchApiData.map((data,index)=>{
-    //             const sData = data['product'] || {}
-    //             if(sData){
-    //                 const productData = {
-    //                     productImage : sData.productImage && sData.productImage.productImageUrl || "",
-    //                     productName: sData.productDescription && sData.productDescription.name || "",
-    //                     id: sData.id || "",
-    //                     seoUrl: data.seoUrl || ""
-    //                 }
-    //                 searchData.push(productData);
-    //                 setSearchData(searchData)
-    //             }
-               
-    //         })
-
-    //     abortController.abort();
-    //     }else{
-    //         searchData.push([])
-    //         setSearchData([])
-    //     }
-    // }
-
     useEffect(() => {
       try {
         const elem = document.getElementById("homePage");
@@ -457,7 +419,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
-        <div className={styles.searchInputContainer}>
+        <div className={styles.searchInputContainer} style={!couponBanner.isActive?{top:"60px"}:{}}>
                         <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
                             <input  className={styles.searchInput}  value={searchQuery}  placeholder='Search by product name' type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>

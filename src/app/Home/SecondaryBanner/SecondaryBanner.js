@@ -11,18 +11,18 @@ const SecondaryBanner = ({data}) => {
     return(
 
         <>
-        <div className={styles.secondaryBannerMob}>
+      {data && data.length >0 &&  <div className={styles.secondaryBannerMob}>
             <Glider  slidesToShow={1.3} scrollLock  draggable>
                 {
                     data.map((data,index)=> <img style={{cursor:'pointer'}} onClick={()=> router.push(data.redirectionLink)} src={data.image} alt={index} key={index}/>)
                 }
             </Glider>
-        </div>
-       <div className={styles.secondaryBannerDesktop}>
+        </div>}
+      {data && data.length > 0 && <div className={styles.secondaryBannerDesktop}>
                 {
                     data.map((data,index)=> <img style={{cursor:'pointer'}} onClick={()=> router.push(data.redirectionLink)} src={data.image} alt={index} key={index}/>)
                 }
-       </div>
+       </div>}
        </>
     )
 }
