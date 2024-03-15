@@ -110,30 +110,42 @@
     .productCardItem {
         padding-top: 60px;
         width:180px;
-        .tagSection{
-            width: 72px;
-            height: 18px;
-            background-color: #2E7CF6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #FFF;
-            font-size: 10px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
+        .tagContainer{
             position: relative;
-            top: -38px;
-            left: 1px;
-            z-index: 10;
-            img{
-                width: 14px;
-                height: 14px;
-            }
-            .tagTxt{
-
+            .tagSection{
+                max-width: 106px;
+                 
+                height: 18px;
+               
+              
+                color: #FFF;
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 500;
+                position: absolute;
+                top: -55px;
+                left: 10px;
+                z-index: 10;
+                .tagDiv{
+                    padding: 4px 6px;
+                    display: flex;
+                    justify-content: center;
+                    gap:2px;
+                    align-items: center;
+                    background-color: #2E7CF6;
+                    border-radius: 6px;
+                    img{
+                        width: 14px;
+                        height: 14px;
+                    }
+                    .tagTxt{
+        
+                    }
+    
+                }
             }
         }
+       
 
         .productCardWrapper {
             box-shadow: 0px 2px 6px 0px rgba(36, 122, 129, 0.18);
@@ -236,30 +248,40 @@
 
 @media (max-width:990px) {
     .productCardItem {
-        .tagSection{
-            width: 57px;
-            height: 16px;
-            background-color: #2E7CF6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #FFF;
-            font-size: 8px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
+        .tagContainer{
             position: relative;
-            top: -38px;
-            left: 1px;
-            z-index: 10;
-            img{
-                width: 12px;
-                height: 12px;
-            }
-            .tagTxt{
-
+            .tagSection{
+                max-width: 100px;
+                height: 16px;
+               
+                color: #FFF;
+                font-size: 8px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                position: absolute;
+                top: -55px;
+                left: 1px;
+                z-index: 10;
+                .tagDiv{
+                    padding: 3px 5px;
+                    background-color: #2E7CF6;
+                    display: flex;
+                    gap: 2px;
+                    justify-content: center;
+                    align-items: center;
+                    img{
+                        width: 12px;
+                        height: 12px;
+                    }
+                    .tagTxt{
+        
+                    }
+                }
+               
             }
         }
+       
         .productCardWrapper {
             height: 145px;
             .productImgWrapper {
