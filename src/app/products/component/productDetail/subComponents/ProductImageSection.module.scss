@@ -8,31 +8,43 @@
     .isMobile{
         display: none !important;
     }
-    .tagSection{
-        width: 87px;
-        padding: 6px;
-        height: 18px;
-        background-color: #2E7CF6;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #FFF;
-        font-size: 10px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
+    .tagContainer{
         position: relative;
-        top: 0px;
-        left: 87px;
-        z-index: 11;
-        img{
-            width: 14px;
-            height: 14px;
-        }
-        .tagTxt{
-
+        .tagSection{
+            max-width: 150px;
+                 
+                 height: 18px;
+                
+               
+                 color: #FFF;
+                 font-size: 14px;
+                 font-style: normal;
+                 font-weight: 500;
+                 line-height: normal;
+                 position: absolute;
+                 top:0px;
+                 left:100px;
+                 z-index: 2;
+            .tagDiv{
+                padding: 4px 6px;
+                display: flex;
+                justify-content: center;
+                gap:2px;
+                align-items: center;
+                background-color: #2E7CF6;
+                border-radius: 6px;
+                img{
+                    width: 14px;
+                    height: 14px;
+                }
+                .tagTxt{
+    
+                }
+    
+            }
         }
     }
+   
     .imageSectionOuter {
         display: flex;
         gap: 16px;
@@ -96,12 +108,21 @@
         margin: auto;
         .imageSection{
         .tagSection{
-            width: 73px;
+            max-width: 100px;
             height: 16px;
             font-size: 8px;
-            position: relative;
-            top:0px;
-            left:20px;
+            position: absolute;
+            top:10px;
+            left:62px;
+            color: #FFF;
+            .tagDiv{
+                padding: 4px 6px;
+                display: flex;
+                justify-content: center;
+                gap:2px;
+                align-items: center;
+                background-color: #2E7CF6;
+                border-radius: 6px;
             img{
                 width: 12px;
                 height: 12px;
@@ -110,13 +131,12 @@
 
             }
         }
-      
-       
-            .outOfStockTxtMob{
-                position: relative;
-                top: 50%;
-                left: 50%;
-                width: 204px;
+      }
+        .outOfStockTxtMob{
+            position: relative;
+            top: 50%;
+            left: 50%;
+            width: 204px;
 height: 40px;
 border-radius: 8px;
 background: #FFF;
@@ -128,8 +148,8 @@ line-height: normal;
 text-align: center;
 padding: 10px 53px;
 transform: translate(-50%, -50%);
-            }
         }
+    }
         .isDesktop{
             display: none !important;
         }

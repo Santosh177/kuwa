@@ -19,16 +19,17 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
 
             <div className={styles.productCardWrapper} style={{...style}}>
-
-            {dealId && isDealActive && tag && tagIconUrl && 
-            <div className={styles.tagSection}>
-              <div className={styles.tagDiv}>
-               <img src={tagIconUrl} alt='tag-icon'></img>
-              <div className={styles.tagTxt}>{tag}</div>
-              </div>
-            </div>}
-          
-            {normalInventory <= 0 && <div className={styles.outOfStockTxt}>Out of stock</div>}
+            {dealId && isDealActive
+             && 
+              isTimerActive && currentTimerStatus=="in-between" &&
+              (tagIconUrl || tag) &&
+              <div className={styles.tagSection}>
+                <div className={styles.tagDiv}>
+                {tagIconUrl &&   <img src={tagIconUrl} alt='tag-icon'></img>}
+                {tag &&   <div className={styles.tagTxt}>{tag}</div>}
+                    </div>
+                    </div>}
+                 {normalInventory <= 0 && <div className={styles.outOfStockTxt}>Out of stock</div>}
                 <div className={styles.productImgWrapper}>
             
                     <div className={styles.productImgContainer}>

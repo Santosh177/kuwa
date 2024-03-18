@@ -3,8 +3,7 @@ import React from "react";
 import style from "./ReviewCard.module.scss"
 const ReviewCard = ({item}) => {
  
-    const { reviewBody = "", headLine = "", customerName = "", id = "", rating= "" } = item || {}
-    console.log("djsj",item)
+    const { reviewBody = "", headLine = "", customerName = "", id = "", rating= "",isActive } = item || {}
     const getStarImage = (index) => {
         if (index < rating) {
           return "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/stars.png"; 
@@ -26,10 +25,13 @@ const ReviewCard = ({item}) => {
       };
     
     return (
+      <>
         <div className={style.reviewCardConatiner}>
-            <div className={style.reviewStarConatiner}>
+        <div className={style.heading}>{headLine}</div>
+          <div className={style.reviewStarConatiner}>
             {renderStars()}
             </div>
+         
             <div className={style.reviewBody}>{reviewBody}</div>
             <div className={style.bottomContainer}>
                 <div className={style.customer}>
@@ -42,7 +44,8 @@ const ReviewCard = ({item}) => {
                
             </div>
         </div>
-       
+    
+    </>
     )
 }
 

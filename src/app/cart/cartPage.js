@@ -287,7 +287,7 @@ export default  function Cart({cartData}) {
       let labelData = [];
 
       cartItems.map((data,index)=>{
-        labelData.push({"label":data.productName,"amount":data.finalPrice})
+        labelData.push({"label":data.productName,"amount":(data.finalPrice)*(data.qty)})
       })
     
       const applePaySupportednetworks = "visa, mastercard, amex";
@@ -314,7 +314,7 @@ export default  function Cart({cartData}) {
           },
           {
             "label": "Additional Discount",
-            "amount": extraDiscount
+            "amount": - extraDiscount
           }
         ],
       };

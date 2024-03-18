@@ -21,9 +21,8 @@ import DeliveryAddress from '../order-summary/DeliveryAddress/DeliveryAddress'
 import CartItemCard from "@/components/CartItemCard/CartItemCard";
 import { updateCartItem, deleteCartItem } from '@/services';
 import { useRef } from 'react';
-import PrepaidExtraDiscount from './components/PrepaidExtraDiscount/PrepaidExtraDiscount';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
-import { getOutOfStockProduct } from "@/utils";
+import PrepaidExtraDiscount from './components/PrepaidExtraDiscount/PrepaidExtraDiscount';
 
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
@@ -123,7 +122,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
               </div>
               <div className={styles.productDetailsTitle}>Product Details</div>
         {
-          cartItems.filter((data,index)=>data.normalInventory > 0).map((data, index) => {
+          cartItems.map((data, index) => {
             return (
               <CartItemCard data={data} key={index} paymentPage={true} index={index}/>
             )
@@ -169,7 +168,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
             )
           })
         }
-    <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig}  onPayment={onPayment} btnName="Proceed To Pay" currency = {priceDetails.currency} totalPrice={priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}}  isEnable={selectedPaymentMethod != ""} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount} selectedPaymentMethod={selectedPaymentMethod} codCharge={codCharge}/>
+    <PaymentFooterBtn paymentMethodConfig={paymentMethodConfig}  onPayment={onPayment} showViewDetails={showViewDetails} btnName="Proceed To Pay" currency = {priceDetails.currency} totalPrice={priceDetails.totalAmount} onProceed={(pMode)=>{(selectedPaymentMethod != "" || pMode!="")?onProceed(pMode):{}}}  isEnable={selectedPaymentMethod != ""} prePaidDiscount={prePaidDiscount} extraDiscount={extraDiscount} setExtraDiscount={setExtraDiscount} selectedPaymentMethod={selectedPaymentMethod} codCharge={codCharge}/>
 </div>
   )
 }
@@ -193,11 +192,11 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const [ paymentMethodConfig , setPaymentMethodConfig] = useState(getActivePaymentMethod(paymentModes,[]));
   const clevertapEvent = useCleverTapEvents();
   const {setCartItemCount={} } = useCartItems();
-  const [extraDiscount,setExtraDiscount] = useState(0);
   const [pageType, setPageType] = useState(getPageType())
+  const [extraDiscount,setExtraDiscount] = useState(0);
   let appleSession;
   
-  let prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+  const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
   const codCharge = selectedCountry?.codCharge || 0;
 
   // useEffect(()=>{
@@ -314,8 +313,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const getCartItem = await getCartItemDetails(data['products'],data.currency);
       setCartItems(getCartItem)
   }
-  
  
+
   useEffect(()=>{
     if(cartItems && cartItems.length > 0){
       calculatePriceDetails()
@@ -327,46 +326,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     clevertapEvent.onCleverTapEvent("kuwa_payments_landing");  
   }, [])
 
-  useEffect(()=>{
-    deleteOutOfStockProducts()
-  },[])
-
-  const deleteOutOfStockProducts = async()=>{
-    const outOfStockProducts = await getOutOfStockProduct(data[`products`],data.currency) || [];
-    const cartItemId = outOfStockProducts?.map((data)=>data.cartItemId);
-    if(cartItemId && cartItemId.length>0){
-
-    
-    try{
-      const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/delete/cart-items?cart_item_id_list=${cartItemId}`, {
-        method:'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-    }
-    catch{
-      console.log("error",error)
-    }
-  }
-  else{
-
-  }
-  }
-
-
-  const calculatePriceDetails = async() => {
-    let { total=0, subtotal=0, currency = "" } = data || {};
-    const outOfStockProducts = await getOutOfStockProduct(data[`products`],data.currency) || []
-
-    console.log("getOutOfStockProductPaymentPage",outOfStockProducts);
-    const outOfStockProductsPrice = outOfStockProducts?.map((data)=> data.finalPrice);
-    
-    const totalPriceOfOutOfStockProducts = outOfStockProductsPrice.reduce((total, price) => total + price, 0);
-    console.log("outOfStockProductsPrice",outOfStockProductsPrice)
-    console.log("totalPriceOfOutOfStockProducts", totalPriceOfOutOfStockProducts);
-    total = total - totalPriceOfOutOfStockProducts;
-    subtotal = subtotal- totalPriceOfOutOfStockProducts;
+  const calculatePriceDetails = () => {
+    const { total=0, subtotal=0, currency = "" } = data || {};
     const minThreshold = deliveryFeesConfig.minThreshold || 0;
     let  finalAmount = total;
     
@@ -375,7 +336,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
     
     const priceDetailsData = {
-      cartItemCount: cartData && cartData.quantity-outOfStockProducts.length,
+      cartItemCount: cartData && cartData.quantity,
       subTotal: subtotal,
       totalAmount: finalAmount ,
       finalPayloadTotalAmount:finalAmount,
@@ -452,10 +413,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
           "cartItems": cartItemPayload,
-          "prepaidDiscountAmount":extraDiscount,
           "deviceType":getDeviceType(),
           "pageType":pageType,
-          // "dealId" :dealId
+          "prepaidDiscountAmount":extraDiscount,
         }
       const trackData = {
         'Order Amount': payload['finalAmount'],
@@ -635,8 +595,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         }else if(selectedPaymentMethod == "APPLE_PAY" || pMode === "APPLE_PAY"){
           payload['token'] = data.token;
           payload['paymentMode'] = "APPLE_PAY";
-          payload['prepaidDiscountAmount'] = discountAmount || "",
-          payload['finalAmount'] = priceDetails['totalAmount']-discountAmount
           trackData['Payment Type'] = 'Apple pay' || ''
           clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
             const placeOrderResp  =  await fetch('/api/apple-pay-place-order', {
@@ -723,24 +681,20 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         Frames.submitCard()
       }else if(selectedPaymentMethod === "APPLE_PAY" || pMode === "APPLE_PAY"){
         console.log("extradiscountttt",extraDiscount)
-        console.log("prePaidDiscount++++",prePaidDiscount)
-        const discountAmount = (parseFloat((((priceDetails['totalAmount']-priceDetails['deliveryFees']) * prePaidDiscount)/100).toFixed(2)));
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
           supportedNetworks: applePaySupportednetworks.split(", "),
           countryCode: selectedCountry.code || "",
           currencyCode:  selectedCountry.currency || "",
-          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-discountAmount },
+          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount'] },
         "lineItems":[
           {
             "label": "Additional Discount",
-            "amount": - discountAmount
+            "amount": -"extraDiscount"
           }
         ]
-        
         };
-        console.log("hvahjavha",request)
         appleSession = new ApplePaySession(3, request);
         appleSession.begin();
         appleSession.onvalidatemerchant = async (event) => {
@@ -781,6 +735,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               }
           }
         }
+      }else if(selectedPaymentMethod =="CHECKOUT_CARD"){
+        Frames.submitCard()
       }
       else if(selectedPaymentMethod){
         onPayment()

@@ -10,7 +10,7 @@ const PrepaidExtraDiscount = ({prePaidDiscount,paymentMethodConfig}) => {
     card_checkout:["visa.png", "mastercard.png"],
     tabby: "tabby.png",
     tamara: "tamaraLogo.png",
-    applePay:""
+    applePay:"pay.png"
   };
 
   

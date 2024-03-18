@@ -10,8 +10,7 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import NotifySuccessPopup from "@/components/NotifySuccessPopup/NotifySuccessPopup";
 import NotifyEmailPopup from "@/components/NotifyEmailPopup/NotifyEmailPopup";
 import { useAuth } from '@/context/userDetail';
-
-const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId}) => {
+const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId,avgRating="",totalRating="" }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory,productId,selectedVariantQuantity} = pricingSectionVariables;
     console.log("pricingSectionVariables",pricingSectionVariables)
 
@@ -243,35 +242,59 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         }
       }
 
-    const onPayment = ()=>{
-        let payload = {
-            "cartId":getCartItems['id'] || "",
-            "orderType": "one-time",
-            "userId": userId || "",
-            "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
-            "shippingAddressId":selectedAddress && selectedAddress.id || "",
-            "addressId": selectedAddress && selectedAddress.id || "",
-            "countryCode": selectedCountry.code || "",
-            "countryId": selectedCountry.id || "",
-            "description": description,
-            "finalAmount": priceDetails['totalAmount'],
-            "totalAmount": priceDetails['finalPayloadTotalAmount'],
-            "currency": selectedCountry.currency || "",
-            "orderSource": "WEBSITE",
-            "orderCategory": "CART",
-            "couponApplied": isCouponApplied || false,
-            "couponCode": couponCodeData['coupon'] || "",
-            "discount": priceDetails['discountAmount'],
-            "paymentType": "Regular",
-            "taxAmount": taxAmount,
-            "shippingAmount": 0,
-            "deliveryCharges":priceDetails['deliveryFees'],
-            "cartItems": cartItemPayload
-          }
-    }
+    // const onPayment = ()=>{
+    //     let payload = {
+    //         "cartId":getCartItems['id'] || "",
+    //         "orderType": "one-time",
+    //         "userId": userId || "",
+    //         "billingAddressId":selectedAddress && selectedAddress.asoBillingAddress || "",
+    //         "shippingAddressId":selectedAddress && selectedAddress.id || "",
+    //         "addressId": selectedAddress && selectedAddress.id || "",
+    //         "countryCode": selectedCountry.code || "",
+    //         "countryId": selectedCountry.id || "",
+    //         "description": description,
+    //         "finalAmount": priceDetails['totalAmount'],
+    //         "totalAmount": priceDetails['finalPayloadTotalAmount'],
+    //         "currency": selectedCountry.currency || "",
+    //         "orderSource": "WEBSITE",
+    //         "orderCategory": "CART",
+    //         "couponApplied": isCouponApplied || false,
+    //         "couponCode": couponCodeData['coupon'] || "",
+    //         "discount": priceDetails['discountAmount'],
+    //         "paymentType": "Regular",
+    //         "taxAmount": taxAmount,
+    //         "shippingAmount": 0,
+    //         "deliveryCharges":priceDetails['deliveryFees'],
+    //         "cartItems": cartItemPayload
+    //       }
+    // }
 
     const tamaraMinAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].min_limit && tamaraConfig[0].min_limit.amount:0
     const tamaraMaxAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].max_limit && tamaraConfig[0].max_limit.amount:0
+    
+    const getStarImage = (index) => {
+      const rating = avgRating - index;
+      if (rating >= 0.75) {
+          return "https://d25uasl7utydze.cloudfront.net/assets/star-filled.svg"; 
+      } else if (rating >= 0.25) {
+          return "https://d25uasl7utydze.cloudfront.net/assets/star-halft.svg"; 
+      } else {
+          return "https://d25uasl7utydze.cloudfront.net/assets/star.svg"; 
+      }
+  };
+
+    const renderStars = () => {
+      const stars = [];
+      for (let i = 0; i < 5; i++) {
+        const starImage = getStarImage(i);
+        stars.push(
+          <div className={styles.reviewStar} key={i}>
+            <img src={starImage} alt="star" />
+          </div>
+        );
+      }
+      return stars;
+    };
 
     const handleNotify = async() =>{
      const payload={
@@ -337,9 +360,14 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         )
         }
             <div className={styles.title}>{title}</div>
-            {numberOfProductReview && <div className={styles.reviewContainer}>
+            {/* {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
+            </div>} */}
+           {avgRating && totalRating && <div className={styles.ratingSection}>
+           <div className={styles.avgRatingValue}>{`${avgRating.toFixed(1)}`}</div>
+              <div className={styles.avgRating}>{renderStars()}</div>
+              <div className={styles.totalNumberRating}>{`(${totalRating}  ratings)`}</div>
             </div>}
             <div className={styles.pricingConatiner}>
               {
@@ -359,6 +387,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
             </div>
             {variants.length>0 ? <div className={styles.packOf}>Pack of</div>:""}  
             <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} onResetViewCartState={onResetViewCartState}/>
+           {variants.find(data=> data.variants.name==3) && <div className={styles.variantRecommendedTxt}>Recommended pack of 3 for better result</div>}
             <div className={styles.freeShippingSection}>
               <div className={styles.freeShippingDiv}>
                 <div className={styles.truckImg}><img src="https://d25uasl7utydze.cloudfront.net/assets/truck.svg"></img></div>

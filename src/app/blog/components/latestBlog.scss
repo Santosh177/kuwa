@@ -4,15 +4,25 @@
     font-size: 24px;
     font-weight: 500;
     margin: 32px auto;
-    text-align:center,
+   //  text-align:center,
+   max-width: 850px;
+   width: 85%;
    }
 }
 @media screen and (max-width:769px) {
     .latest-blog-main{
+      margin-top: -24px;
         .heading{
         font-size: 18px;
         margin-top: 40px;
         margin-bottom: 14px;
         }
      }
+}
+@media screen and (max-width:415px){
+   .latest-blog-main{
+      .heading{
+         width: 90%;
+      }
+   }
 }

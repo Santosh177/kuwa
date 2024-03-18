@@ -31,6 +31,37 @@
             color: #858585;
         }
     }
+    .ratingSection{
+        display: flex;
+        // justify-content: center;
+        align-items: center;
+        margin-top: 16px;
+        gap: 8px;
+        .avgRatingValue{
+            padding-bottom: 5px;
+        }
+        .avgRating{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+           
+            .reviewStar{
+                img{
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+        .totalNumberRating{
+            color: #2E7CF6;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            margin-bottom: 3px;
+            // border-bottom: 1px solid #2E7CF6 ;
+        }
+    }
 
     .pricingConatiner {
         margin-top: 13px;
@@ -50,6 +81,14 @@
         font-size: 14px;
         margin-bottom: 6px;
         margin-top: 26px;
+    }
+    .variantRecommendedTxt{
+        width:fit-content;
+        margin-top: 10px;
+        background-color: #ce4224;
+        color: #fff;
+        padding: 2px 10px;
+        border-radius: 8px;
     }
     .freeShippingSection{
         border-radius: 8px;
@@ -187,6 +226,10 @@
 
         .reviewContainer {
             margin-top: 17px;
+        }
+        .variantRecommendedTxt{
+            font-size: 10px;
+            padding: 1px 10px;
         }
         .freeShippingSection{
             .freeShippingDiv{
