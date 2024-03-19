@@ -101,7 +101,7 @@ export default function Home(homePageData) {
 }
                 <div className={styles.mainContainer} id="main-container" style={(isSafariOniOS)?{}:{height:'100vh',scrollSnapAlign:'start',overflowY:"scroll"}}>
 
-                    <Header couponBanner={couponBanner} />
+                    <Header />
                     {/* <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
                         <input  className={styles.searchInput}  value={""}  placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>

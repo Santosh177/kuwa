@@ -14,11 +14,11 @@ import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
 import TrendingSearch from '@/app/search/TrendingSearch/TrendingSearch';
 import ProductCard from '@/app/search/ProductCard/ProductCard';
 import { mappingHomeSearchDealProducts } from '@/services';
-const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBanner={},searchQuery="" }) =>{
+const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="" }) =>{
   const router = useRouter();
   console.log("searchData",searchData)
     const searchDataCount = searchData && searchData.length || 0;
-  const handleSeeAll=(couponBanner,searchQuery)=>{
+  const handleSeeAll=(couponBannerData,searchQuery)=>{
     window.location.href=`/collections?search_key=${searchQuery}`
   }
 
@@ -58,7 +58,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                         })
                     }
                 </div>
-        {searchData && searchData.length>0  && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBanner, searchQuery)}>
+        {searchData && searchData.length>0  && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBannerData, searchQuery)}>
                     See all
                 </div>
         }       
@@ -403,8 +403,8 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                     onSearch(e.target.value)} placeholder='Search by product name' type='text'/>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
-                {showTrendingSearch && !searchQuery && <TrendingSearch isLogin={isLogin} isShowSeeAllBtn={isShowSeeAllBtn} couponBanner={(couponBanner && couponBanner.redirectionLink && couponBanner)||couponBannerData } setParamsData={setParamsData} setSearchQuery={setSearchQuery} />}
-                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBanner={(couponBanner && couponBanner.redirectionLink && couponBanner) || couponBannerData} searchQuery={searchQuery} />}
+                {showTrendingSearch && !searchQuery && <TrendingSearch isLogin={isLogin} isShowSeeAllBtn={isShowSeeAllBtn} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData)||couponBannerData } setParamsData={setParamsData} setSearchQuery={setSearchQuery} />}
+                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData) || couponBannerData} searchQuery={searchQuery} />}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img><span>Login</span>
