@@ -1,4 +1,4 @@
-
+import Head from 'next/head';
 import ProductDeatil from "../component/productDetail/productDetail"
 import ProductDiscription from "../component/productDiscription/productDiscription"
 import ProductFaq from "../component/productFaq/productFaq"
@@ -28,16 +28,22 @@ export async function generateMetadata({ params, searchParams }) {
 
   const seoTitle = productData && productData.seo && productData.seo.metaTitle || "";
   const seoDescription = productData && productData.seo && productData.seo.metaDescription || "";
-
+ 
   return {
     title: seoTitle || "",
-    description:seoDescription || ""
+    description:seoDescription || "",
+    keywords: "santosh" || "" ,
+    // imgUrl: imgUrl || "",
+    // url: url || ""
   };
 }
 
+
 export default async function AllProduct(req) {
+  const params = req.params
   const productID = req && req.params && req.params.id || "";
   const customHeader = await authHeader();
+  // const { title, description, keywords } = generateMetadata({params});
   console.log("customHeader",customHeader)
   let productData = {}
    try {
@@ -48,9 +54,10 @@ export default async function AllProduct(req) {
    } catch (error) {
    }
 
-
   return (
+    
     <>
+  
        <script type="text/javascript" src="/fresh-chat.js" async></script>
 
     <div className={style.productDetailContainerPage}>

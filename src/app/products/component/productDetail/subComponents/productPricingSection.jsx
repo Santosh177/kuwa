@@ -283,7 +283,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
 
     return (
         <div className={styles.pricingSectionContainer}>
-            <div className={styles.title}>{title}</div>
+            <h1 className={styles.title}>{title}</h1>
             {/* {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
@@ -351,8 +351,9 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 data-installment-minimum-amount= {tamaraMinAmount}
                 data-installment-maximum-amount= {tamaraMaxAmount}
                 data-installment-available-amount={tamaraMinAmount}
+                
                 />
-                               
+                             
         </div>
     )
 }
