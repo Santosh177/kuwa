@@ -220,7 +220,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
                 typeId: null
             }
             if(isLogin){
-                getSideMenuData.push(additionData)
+                getSideMenuData?.push(additionData)
             }else{
                 let findMyOrderData =    {
                     icon: "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/truck.png",

@@ -2,17 +2,18 @@
 import React,{useEffect, useState} from 'react';
 import { useRouter} from 'next/navigation';
 import styles from './CouponInfo.module.scss'
+import { useCountry } from '@/context/contryDetails';
 
 export default function CouponInfo({setCouponBannerData})  {
   const router = useRouter();
   const [couponBanner, setCouponBanner] = useState({});
-
+  const { selectedCountry = {} } = useCountry();
   useEffect(()=>{
     getCouponData();
   },[])
 
   const getCouponData = async() =>{
-    const getCouponResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/cms/coupon-banner`, {
+    const getCouponResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/cms/coupon-banner?country=${selectedCountry.id}`, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
