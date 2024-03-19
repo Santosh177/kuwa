@@ -67,9 +67,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
 }
 
 
-const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
-
-  console.log("couponBannerData:", couponBanner);
+const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
@@ -86,7 +84,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
     const [isOpenProfileInfo, setIsOpenProfileInfo] = useState(false)
     const [isTopHeaderFixed, setIsTopHeaderFixed] = useState(false)
     const [showTrendingSearch,setShowTrendingSearch]=useState(false);
-    const [couponBannerData,setCouponBannerData]=useState();
+    const [couponBannerData,setCouponBannerData]=useState({});
     const inputBoxRef = useRef(null);
     const dropDownOptionsRef = useRef(null);
     const dropDownOptionsProfileRef = useRef(null);
@@ -351,11 +349,32 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
     }
   };
 
+  useEffect(()=>{
+    getCouponData();
+  },[])
+
+  const getCouponData = async() =>{
+    const getCouponResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/cms/coupon-banner?country=${selectedCountry.id}`, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    })
+    const couponRespData = await getCouponResp.json();
+    if(couponRespData && couponRespData.length > 0 ){
+      setCouponBannerData(couponRespData[0])
+      // if (setCouponBannerData){
+      //   setCouponBannerData(couponRespData[0]);
+      // }
+    }
+  
+  }
+
     return(
         <>
         
-       {couponBanner.isActive && <CouponInfo couponBanner={couponBanner} setCouponBannerData={setCouponBannerData} />}
-        <div className={ styles.header} style={!couponBanner.isActive?{top:"0px"}:{}} id='top-header-container' >
+       {couponBannerData.isActive && <CouponInfo couponBannerData={couponBannerData} setCouponBannerData={setCouponBannerData} />}
+        <div className={ styles.header} style={!couponBannerData.isActive?{top:"0px"}:{}} id='top-header-container' >
            <div className={styles.headerWrapper} id='top-header' >
                 <d    iv className={styles.headerIcon}>
                     <div className={styles.menuIcon} onClick={onOpenSideMenu}>
@@ -419,7 +438,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
-        <div className={styles.searchInputContainer} style={!couponBanner.isActive?{top:"60px"}:{}}>
+        <div className={styles.searchInputContainer} style={!couponBannerData.isActive?{top:"60px"}:{}}>
                         <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
                             <input  className={styles.searchInput}  value={searchQuery}  placeholder='Search by product name' type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
