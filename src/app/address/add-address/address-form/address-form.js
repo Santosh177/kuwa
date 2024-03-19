@@ -40,6 +40,12 @@ const validateShippingAddressForm = (formData) => {
     if(!formData.country){
       errors.country = "Country is required";
     }
+    if(!formData.city){
+      errors.city = "City is required";
+    }
+    if(!formData.postalCode){
+      errors.postalCode = "Postal Code is required";
+    }
     // if(!formData.stateProvince){
       // errors.stateProvince = "State Province is required";
     // }
@@ -57,6 +63,12 @@ const validateShippingAddressForm = (formData) => {
     }
     if(!formData.country){
       errors.country = "Country is required";
+    }
+    if(!formData.city){
+      errors.city = "City is required";
+    }
+    if(!formData.postalCode){
+      errors.postalCode = "Postal Code is required";
     }
     // if(!formData.stateProvince){
     //   errors.stateProvince = "State Province is required";
@@ -113,21 +125,33 @@ const ShippingAddressForm = ({onChange={},values={},errors={}}) => {
                 <div className={styles.inputContainer}>
                     <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")} />
                     <label className={styles.placeholderText}>
-                        <div className={styles.text}>Area name, Colony *</div>
+                        <div className={styles.text}>Area name, Road, Block *</div>
                     </label>
                 </div>
                 {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
             </div>
-            <Input type="text" fieldName="apartment" placeHolder="Appartment name, Floor, Room no, City*" value={values['apartment']} onInputChange={onChange}  />
+            <Input type="text" fieldName="apartment" placeHolder="Building/Villa name, Floor, Flat no. *" value={values['apartment']} onInputChange={onChange}  />
             {errors.apartment && <span className={styles.errorMsg}>{errors.apartment}</span>}
             <div className={styles.countryContainer}>
+              <div className={styles.addressDiv}>
                 <div className={styles.countryInfoField}>
                     <Input type="text" fieldName="country" placeHolder="Country *"  value={values['country']} onInputChange={onChange} isDisabled={true} />
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
                 <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="stateProvince" placeHolder="State Province"  value={values['stateProvince']} onInputChange={onChange}   />
+                    <Input type="text" fieldName="city" placeHolder="City *"  value={values['city']} onInputChange={onChange}  />
+                    {errors.city && <span className={styles.errorMsg}>{errors.city}</span>}
+                </div>
+                </div>
+                <div className={styles.addressDiv}>
+                <div className={styles.countryInfoField}>
+                    <Input type="text" fieldName="stateProvince" placeHolder="State/Province"  value={values['stateProvince']} onInputChange={onChange}   />
                     {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
+                </div>
+                <div className={styles.countryInfoField}>
+                    <Input type="text" fieldName="postalCode" placeHolder="Postal code *"  value={values['postalCode']} onInputChange={onChange}   />
+                    {errors.postalCode && <span className={styles.errorMsg}>{errors.postalCode}</span>}
+                </div>
                 </div>
             </div>
         </div>
@@ -150,13 +174,26 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
             <Input type="text" fieldName="apartment" placeHolder="Appartment name, Floor, Room no, City*" value={values['apartment']} onInputChange={onChange}  />
             {errors.apartment && <span className={styles.errorMsg}>{errors.apartment}</span>}
             <div className={styles.countryContainer}>
+            <div className={styles.addressDiv}>
                 <div className={styles.countryInfoField}>
+             
                     <Input type="text" fieldName="country" placeHolder="Country *"  value={values['country']} onInputChange={onChange} isDisabled={true} />
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
                 <div className={styles.countryInfoField}>
+                    <Input type="text" fieldName="city" placeHolder="City *"  value={values['city']} onInputChange={onChange}  />
+                    {errors.city && <span className={styles.errorMsg}>{errors.city}</span>}
+                </div>
+                </div>
+                <div className={styles.addressDiv}>
+                <div className={styles.countryInfoField}>
                     <Input type="text" fieldName="stateProvince" placeHolder="State Province"  value={values['stateProvince']} onInputChange={onChange}   />
                     {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
+                </div>
+                <div className={styles.countryInfoField}>
+                    <Input type="text" fieldName="postalCode" placeHolder="Postal code *"  value={values['postalCode']} onInputChange={onChange}   />
+                    {errors.postalCode && <span className={styles.errorMsg}>{errors.postalCode}</span>}
+                </div>
                 </div>
             </div>
         </div>
@@ -178,7 +215,9 @@ const getShippingAddressData = (data) => {
       "billingAddress":data.billingAddress,
       "isDefaultAddress": data.isDefaultAddress,
       "isActive": data.isActive,
-      "id":data.id
+      "id":data.id,
+      "city": data.city,
+      "postalCode":data.postalCode,
     }
   )
 }
@@ -196,7 +235,9 @@ const getBillingAddressData = (data) => {
       "apartment": data.apartment,
       "stateProvince":data.stateProvince ,
       "isDefaultAddress": data.isDefaultAddress,
-      "isActive": data.isActive
+      "isActive": data.isActive,
+      "city": data.city,
+      "postalCode":data.postalCode,
     }
   )
 }
