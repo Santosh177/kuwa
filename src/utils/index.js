@@ -4,7 +4,7 @@ export const getCartItemDetails = async(data,currency) => {
    let cartItem = []
    let item = {}
     data.map((data, index)=>{
-        const { image = {} ,quantity= 1,price="",originalPrice="",finalPrice="" ,  description={},id="",cartItemId="",variants  } = data || {};
+        const { image = {} ,quantity= 1,price="",originalPrice="",finalPrice="" ,  description={},id="",cartItemId="",variants,normalInventory  } = data || {};
         const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive="",dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = data || {}
         const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
         console.log("CART PRODUCT",data);
@@ -24,7 +24,8 @@ export const getCartItemDetails = async(data,currency) => {
               "currency":currency,
               "id":id,
               "cartItemId":cartItemId,
-              "variants":variants
+              "variants":variants,
+              "normalInventory":variants?.variants?.quantity || 0
           }
           }
           else{
@@ -39,7 +40,8 @@ export const getCartItemDetails = async(data,currency) => {
             "currency":currency,
             "id":id,
             "cartItemId":cartItemId,
-            "variants":variants
+            "variants":variants,
+            "normalInventory":variants?.variants?.quantity || 0
         }
         }
       }
@@ -59,7 +61,8 @@ export const getCartItemDetails = async(data,currency) => {
               "currency":currency,
               "id":id,
               "cartItemId":cartItemId,
-              "variants":variants
+              "variants":variants,
+              "normalInventory":normalInventory || 0
           }
         }
         else{
@@ -74,7 +77,8 @@ export const getCartItemDetails = async(data,currency) => {
             "currency":currency,
             "id":id,
             "cartItemId":cartItemId,
-            "variants":variants
+            "variants":variants,
+            "normalInventory":normalInventory || 0
         }
         }
       }
@@ -90,36 +94,40 @@ export const createPayloadForCartItems = async(cartData) => {
       console.log("createPayloadForCartItems",createPayloadForCartItems)
       if(cartData && cartData.length > 0){
         cartData.map((data,index)=>{
-          if(data.variants && data.variants.variants.id){
+          if(data.variants && data.variants.variants.id && data.variants.variants.quantity > 0){
             if(data?.variants?.pricings[0].dealId && data.variants?.pricings[0].isDealActive && data?.variants?.pricings[0].isTimerActive 
               && data?.variants?.pricings[0].currentTimerStatus == 'in-between'){
               cartItems.push({
-                "dealId":data.variants.pricings[0].dealId,
+                "dealId":data?.variants?.pricings[0]?.dealId,
                 "quantity": data.quantity || 1,
                 "itemId": data.id || "",
                 "itemType": "Supplement",
-                "price": data.variants.pricings[0].dealFinalPrice|| "",
+                "price": data?.variants?.pricings[0]?.dealFinalPrice|| "",
                 "orderType": "one-time",
                 "isVariant": true,
-                "variantId":data.variants.variants.id,
+                "variantId":data?.variants?.variants?.id || "",
                 "subscriptionDetail": null
             })
             }
             else{
               cartItems.push({
-                "quantity": data.quantity || 1,
+                "quantity": data?.quantity || 1,
                 "itemId": data.id || "",
                 "itemType": "Supplement",
                 "price": data.finalPrice || "",
                 "orderType": "one-time",
                 "isVariant": true,
-                "variantId":data.variants.variants.id,
+                "variantId":data?.variants?.variants?.id || "",
                 "subscriptionDetail": null
             })
             }
            
           }
           else{
+            if(data.normalInventory > 0)
+            {
+
+            
             if(data.dealId && data.isDealActive && data.isTimerActive && data.currentTimerStatus == 'in-between'){
               cartItems.push({
                 "dealId": data.dealId,
@@ -143,6 +151,7 @@ export const createPayloadForCartItems = async(cartData) => {
                 "subscriptionDetail": null
             })
             }
+          }
            
           }
         })
@@ -164,11 +173,11 @@ export const createPayloadForItems = async (cartItems) => {
                 "type":"Supplement",
                 "name":data.description && data.description.name || "",
                 "quantity":data.quantity || 1,
-                "retailPrice":data.variants?.pricings[0].dealListPrice || "",
-                "finalAmount":data.variants?.pricings[0].dealFinalPrice || "",
+                "retailPrice":data?.variants?.pricings[0].dealListPrice || "",
+                "finalAmount":data?.variants?.pricings[0].dealFinalPrice || "",
                 "taxAmount":"8.45",
                 "sku":"hari hari,MULTIPLE_ITEM,No_Coupon",
-                "discountAmount":data.variants?.pricings[0].dealDiscountPrice || 0,
+                "discountAmount":data?.variants?.pricings[0].dealDiscountPrice || 0,
                 "referenceId":"hari hari,MULTIPLE_ITEM,No_Coupon"
               })
             }
@@ -178,11 +187,11 @@ export const createPayloadForItems = async (cartItems) => {
                 "type":"Supplement",
                 "name":data.description && data.description.name || "",
                 "quantity":data.quantity || 1,
-                "retailPrice":data.variants?.pricings[0].retailPrice || "",
-                "finalAmount":data.variants?.pricings[0].finalPrice || "",
+                "retailPrice":data?.variants?.pricings[0].retailPrice || "",
+                "finalAmount":data?.variants?.pricings[0].finalPrice || "",
                 "taxAmount":"8.45",
                 "sku":"hari hari,MULTIPLE_ITEM,No_Coupon",
-                "discountAmount":data.variants?.pricings[0].discount || 0,
+                "discountAmount":data?.variants?.pricings[0].discount || 0,
                 "referenceId":"hari hari,MULTIPLE_ITEM,No_Coupon"
               })
 
@@ -249,12 +258,13 @@ export const createPayloadForTabby = async (cartItems) => {
 export const createCouponPayload = async(cartItems) => {
   let supplements = [];
   if(cartItems && cartItems.length > 0){
-     cartItems.map((item,index)=>{
+    cartItems.filter(item => item.normalInventory> 0)
+    .map((item,index)=>{
       console.log("itemitem",item)
       if(item.variants && item.variants.variants.id){
         if(item?.variants?.pricings[0].dealId && item.variants?.pricings[0].isDealActive && item?.variants?.pricings[0].isTimerActive 
           && item?.variants?.pricings[0].currentTimerStatus == 'in-between'){
-      supplements.push({"id":item.id,"quantity":item.quantity ,"isVariant":true,"variantId":item.variants.variants.id,"dealId":item?.variants?.pricings[0].dealId })
+          supplements.push({"id":item.id,"quantity":item.quantity ,"isVariant":true,"variantId":item.variants.variants.id,"dealId":item?.variants?.pricings[0].dealId })
 
           }
           else{
@@ -263,7 +273,7 @@ export const createCouponPayload = async(cartItems) => {
     
       }
       else{
-        if(item.dealId && item.isDealActive && item.isTimerActive && item.currentTimerStatus == 'in-between'){
+        if(item.dealId && item.isDealActive && item.isTimerActive && item.currentTimerStatus == 'in-between'  ){
       supplements.push({"id":item.id,"quantity":item.quantity , "isVariant":false,dealId:item.dealId})
 
       }
@@ -277,6 +287,59 @@ export const createCouponPayload = async(cartItems) => {
     })
   }
   return supplements; 
+}
+
+export const getOutOfStockProduct = async(cartItems,currency) => {
+  let outOfStockProducts = [];
+  
+  if (cartItems && cartItems.length > 0) {
+    cartItems?.map((item, index) => {
+      const { image = {}, quantity = 1, price = "", originalPrice = "", finalPrice = "", description = {}, id = "", cartItemId = "", variants, normalInventory } = item || {};
+      const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
+      if(variants && variants.pricings.length > 0){
+        if(variants.variants.quantity == 0){
+          const { pricings=[]} = variants || {}
+          let item ={
+            "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+            "qty":quantity,
+            "productName":description.name || "",
+            "retailPrice":pricings[0]?.retailPrice,
+            'finalPrice':pricings[0]?.finalPrice,
+            'discountType':"fixed",
+            "discountAmount":pricings[0].discount || 0,
+            "currency":currency,
+            "id":id,
+            "cartItemId":cartItemId,
+            "variants":variants,
+            "normalInventory":variants?.variants?.quantity || 0
+          }
+          outOfStockProducts.push(item);
+        }
+      }
+      else
+      {
+      if (normalInventory === 0) {
+        let item ={
+          "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+          "qty":quantity,
+          "productName":description.name || "",
+          "retailPrice":originalPrice,
+          'finalPrice':finalPrice,
+          'discountType':"fixed",
+          "discountAmount":discountAmount || 0,
+          "currency":currency,
+          "id":id,
+          "cartItemId":cartItemId,
+          "variants":variants,
+          "normalInventory":normalInventory || 0
+      }
+        outOfStockProducts.push(item);
+      }
+    }
+    });
+  }
+  
+  return outOfStockProducts;
 }
 
 

@@ -1,14 +1,14 @@
 
 import styles from './payment-footer-btn.module.scss';
 
-export default function PatmentFooterBtn({isApplePaySession=false,btnName="",totalPrice="",onProceed={},onHandleApplePay={},showViewDetails, prePaidDiscount=""}) {
+export default function PatmentFooterBtn({isApplePaySession=false,btnName="",totalPrice="",onProceed={},onHandleApplePay={},showViewDetails, prePaidDiscount="",isAllOutOfStockProducts}) {
 
   
       return (
         <div className={styles.paymentFooterbtn} >
             <div className={styles.paymentFooterBtnContainer} style={(!isApplePaySession)?{justifyContent:'center'}:{}}>
                 <div className={styles.paymentInfo}>
-                    <div className={styles.txt}>Total : <span className={styles.price}>{(totalPrice != undefined)?totalPrice:""}</span></div>
+                {isAllOutOfStockProducts ? "" :     <div className={styles.txt}>Total : <span className={styles.price}>{(totalPrice != undefined)?totalPrice:""}</span></div>}
                     <div className={styles.subTxt} onClick={()=>showViewDetails()}>View price details</div>
                 </div>
                 <div className={styles.paymentBtnContainer}>

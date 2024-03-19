@@ -23,6 +23,7 @@ import { updateCartItem, deleteCartItem } from '@/services';
 import { useRef } from 'react';
 import PrepaidExtraDiscount from './components/PrepaidExtraDiscount/PrepaidExtraDiscount';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
+import { getOutOfStockProduct } from "@/utils";
 
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
@@ -122,7 +123,7 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
               </div>
               <div className={styles.productDetailsTitle}>Product Details</div>
         {
-          cartItems.map((data, index) => {
+          cartItems.filter((data,index)=>data.normalInventory > 0).map((data, index) => {
             return (
               <CartItemCard data={data} key={index} paymentPage={true} index={index}/>
             )
@@ -313,8 +314,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       const getCartItem = await getCartItemDetails(data['products'],data.currency);
       setCartItems(getCartItem)
   }
+  
  
-
   useEffect(()=>{
     if(cartItems && cartItems.length > 0){
       calculatePriceDetails()
@@ -326,8 +327,46 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     clevertapEvent.onCleverTapEvent("kuwa_payments_landing");  
   }, [])
 
-  const calculatePriceDetails = () => {
-    const { total=0, subtotal=0, currency = "" } = data || {};
+  useEffect(()=>{
+    deleteOutOfStockProducts()
+  },[])
+
+  const deleteOutOfStockProducts = async()=>{
+    const outOfStockProducts = await getOutOfStockProduct(data[`products`],data.currency) || [];
+    const cartItemId = outOfStockProducts?.map((data)=>data.cartItemId);
+    if(cartItemId && cartItemId.length>0){
+
+    
+    try{
+      const res = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/delete/cart-items?cart_item_id_list=${cartItemId}`, {
+        method:'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+    }
+    catch{
+      console.log("error",error)
+    }
+  }
+  else{
+
+  }
+  }
+
+
+  const calculatePriceDetails = async() => {
+    let { total=0, subtotal=0, currency = "" } = data || {};
+    const outOfStockProducts = await getOutOfStockProduct(data[`products`],data.currency) || []
+
+    console.log("getOutOfStockProductPaymentPage",outOfStockProducts);
+    const outOfStockProductsPrice = outOfStockProducts?.map((data)=> data.finalPrice);
+    
+    const totalPriceOfOutOfStockProducts = outOfStockProductsPrice.reduce((total, price) => total + price, 0);
+    console.log("outOfStockProductsPrice",outOfStockProductsPrice)
+    console.log("totalPriceOfOutOfStockProducts", totalPriceOfOutOfStockProducts);
+    total = total - totalPriceOfOutOfStockProducts;
+    subtotal = subtotal- totalPriceOfOutOfStockProducts;
     const minThreshold = deliveryFeesConfig.minThreshold || 0;
     let  finalAmount = total;
     
@@ -336,7 +375,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     }
     
     const priceDetailsData = {
-      cartItemCount: cartData && cartData.quantity,
+      cartItemCount: cartData && cartData.quantity-outOfStockProducts.length,
       subTotal: subtotal,
       totalAmount: finalAmount ,
       finalPayloadTotalAmount:finalAmount,

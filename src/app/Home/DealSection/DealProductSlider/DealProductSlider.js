@@ -8,10 +8,20 @@ import Loader from '@/components/Loader/Loader';
 import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import styles from './deal-product-slider.module.scss'
+import NotifyEmailPopup from '@/components/NotifyEmailPopup/NotifyEmailPopup';
+import NotifySuccessPopup from '@/components/NotifySuccessPopup/NotifySuccessPopup';
+import { useAuth } from '@/context/userDetail';
+
 const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,currentTimeStatus}) => {
 console.log("DEAL PRODUCT SLIDER")
     const [isLoading , setIsLoading] = useState(false);
     const [width, setWidth] = useState(0);
+    const [isShowNotifySuccessPopup, setIsShowNotifySuccessPopup] = useState(false);
+    const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
+    const [emailId,setEmailId] = useState("")
+    const [nonloginProductId,setNonLoginProductId] = useState("");
+    const [nonLoginVariantId,setNonLoginVariantId] = useState("");
+
     const clevertapEvent = useCleverTapEvents();
     const handleResize = () => setWidth(window.innerWidth);
     useEffect(() => {
@@ -20,6 +30,8 @@ console.log("DEAL PRODUCT SLIDER")
       return () => window.removeEventListener('resize', handleResize);
     }, [width]);
     let trackData={};
+    const { isLogin=false ,userData = {}} = useAuth();
+    const emailAddress = userData && userData.emailAddress;
   const onAddToCart = async(data) =>{
     try {
       setIsLoading(true)
@@ -31,6 +43,77 @@ console.log("DEAL PRODUCT SLIDER")
       console.error('An unexpected error happened occurred:', error)
     }
 }
+
+
+const handleNonLogin = (id,variantId)=>{
+  console.log("id, variantId", id, variantId);
+   setIsShowNotifyEmailPopup(true);
+   setNonLoginProductId(id);
+   setNonLoginVariantId(variantId);
+}
+
+const handleNotify = async() =>{
+  const payload={
+       productId:nonloginProductId|| null,
+       variantId:nonLoginVariantId || null,
+       email: emailId 
+     }
+     try {
+      setIsLoading(true)
+       const res = await fetch(`/api/out-of-stock`, {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(payload),
+       });
+       if(res.status == 200){
+        setIsLoading(false)
+         setIsShowNotifySuccessPopup(true);
+       }
+       else{
+        setIsLoading(false)
+        console.log(error)
+       }
+       
+       
+     } catch (error) {
+      setIsLoading(false)
+       console.error('Error:', error);
+     }
+   }
+
+   const handleNotifyMe = async(productId, variantId)=>{
+    console.log("variantId",variantId)
+    const payload={
+      productId:productId || null,
+      variantId:variantId || null,
+      email: emailAddress 
+    }
+    try {
+      setIsLoading(true)
+      const res = await fetch(`/api/out-of-stock`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      if(res.status == 200){
+        setIsLoading(false)
+        setIsShowNotifySuccessPopup(true);
+      }
+      else{
+        setIsLoading(true)
+        console.log(error)
+      }
+     
+      
+    } catch (error) {
+      setIsLoading(false)
+      console.error('Error:', error);
+    }
+  }
   return (
     <>
        <div className={styles.container}>
@@ -131,14 +214,17 @@ console.log("DEAL PRODUCT SLIDER")
                 }
                
                 return (
-                    <ProductDealCard key={index} cardData={cardData}  addToCart={()=>onAddToCart(addToCartPayload)} />
+                    <ProductDealCard key={index} cardData={cardData}  addToCart={()=>onAddToCart(addToCartPayload)}  handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} />
                 )
             })
          }
          </Glider>
-         <Loader isShow={isLoading} />
+        
     </div>
        </div>
+       <div className={styles.NotifySuccessPopup}>{isShowNotifySuccessPopup && <NotifySuccessPopup setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}/>}</div>
+          <div>{isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}  emailId={emailId} setEmailId={setEmailId} handleNotify={handleNotify}/>}</div>
+         <Loader isShow={isLoading} />
     </>
  
     
