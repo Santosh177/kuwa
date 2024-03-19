@@ -6,7 +6,7 @@ const OutOfStockProductsPopUp = ({outOfStockProducts,setIsShowOutOfStockProducts
     console.log("outOfStockProducts+++",outOfStockProducts)
     const handleProceed = ()=>{
         if(haveAddress) {
-            window.location.href = './payment'
+            window.location.href = '/payment'
     }
     else{
         window.location.href = '/address/add-address';

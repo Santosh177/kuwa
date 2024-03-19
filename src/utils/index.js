@@ -25,7 +25,7 @@ export const getCartItemDetails = async(data,currency) => {
               "id":id,
               "cartItemId":cartItemId,
               "variants":variants,
-              "normalInventory":variants.variants.quantity
+              "normalInventory":variants?.variants?.quantity || 0
           }
           }
           else{
@@ -41,7 +41,7 @@ export const getCartItemDetails = async(data,currency) => {
             "id":id,
             "cartItemId":cartItemId,
             "variants":variants,
-            "normalInventory":variants.variants.quantity
+            "normalInventory":variants?.variants?.quantity || 0
         }
         }
       }
@@ -62,7 +62,7 @@ export const getCartItemDetails = async(data,currency) => {
               "id":id,
               "cartItemId":cartItemId,
               "variants":variants,
-              "normalInventory":normalInventory
+              "normalInventory":normalInventory || 0
           }
         }
         else{
@@ -78,7 +78,7 @@ export const getCartItemDetails = async(data,currency) => {
             "id":id,
             "cartItemId":cartItemId,
             "variants":variants,
-            "normalInventory":normalInventory
+            "normalInventory":normalInventory || 0
         }
         }
       }
@@ -98,26 +98,26 @@ export const createPayloadForCartItems = async(cartData) => {
             if(data?.variants?.pricings[0].dealId && data.variants?.pricings[0].isDealActive && data?.variants?.pricings[0].isTimerActive 
               && data?.variants?.pricings[0].currentTimerStatus == 'in-between'){
               cartItems.push({
-                "dealId":data.variants.pricings[0].dealId,
+                "dealId":data?.variants?.pricings[0]?.dealId,
                 "quantity": data.quantity || 1,
                 "itemId": data.id || "",
                 "itemType": "Supplement",
-                "price": data.variants.pricings[0].dealFinalPrice|| "",
+                "price": data?.variants?.pricings[0]?.dealFinalPrice|| "",
                 "orderType": "one-time",
                 "isVariant": true,
-                "variantId":data.variants.variants.id,
+                "variantId":data?.variants?.variants?.id || "",
                 "subscriptionDetail": null
             })
             }
             else{
               cartItems.push({
-                "quantity": data.quantity || 1,
+                "quantity": data?.quantity || 1,
                 "itemId": data.id || "",
                 "itemType": "Supplement",
                 "price": data.finalPrice || "",
                 "orderType": "one-time",
                 "isVariant": true,
-                "variantId":data.variants.variants.id,
+                "variantId":data?.variants?.variants?.id || "",
                 "subscriptionDetail": null
             })
             }
@@ -173,11 +173,11 @@ export const createPayloadForItems = async (cartItems) => {
                 "type":"Supplement",
                 "name":data.description && data.description.name || "",
                 "quantity":data.quantity || 1,
-                "retailPrice":data.variants?.pricings[0].dealListPrice || "",
-                "finalAmount":data.variants?.pricings[0].dealFinalPrice || "",
+                "retailPrice":data?.variants?.pricings[0].dealListPrice || "",
+                "finalAmount":data?.variants?.pricings[0].dealFinalPrice || "",
                 "taxAmount":"8.45",
                 "sku":"hari hari,MULTIPLE_ITEM,No_Coupon",
-                "discountAmount":data.variants?.pricings[0].dealDiscountPrice || 0,
+                "discountAmount":data?.variants?.pricings[0].dealDiscountPrice || 0,
                 "referenceId":"hari hari,MULTIPLE_ITEM,No_Coupon"
               })
             }
@@ -187,11 +187,11 @@ export const createPayloadForItems = async (cartItems) => {
                 "type":"Supplement",
                 "name":data.description && data.description.name || "",
                 "quantity":data.quantity || 1,
-                "retailPrice":data.variants?.pricings[0].retailPrice || "",
-                "finalAmount":data.variants?.pricings[0].finalPrice || "",
+                "retailPrice":data?.variants?.pricings[0].retailPrice || "",
+                "finalAmount":data?.variants?.pricings[0].finalPrice || "",
                 "taxAmount":"8.45",
                 "sku":"hari hari,MULTIPLE_ITEM,No_Coupon",
-                "discountAmount":data.variants?.pricings[0].discount || 0,
+                "discountAmount":data?.variants?.pricings[0].discount || 0,
                 "referenceId":"hari hari,MULTIPLE_ITEM,No_Coupon"
               })
 
@@ -303,15 +303,15 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
             "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
             "qty":quantity,
             "productName":description.name || "",
-            "retailPrice":pricings[0].retailPrice,
-            'finalPrice':pricings[0].finalPrice,
+            "retailPrice":pricings[0]?.retailPrice,
+            'finalPrice':pricings[0]?.finalPrice,
             'discountType':"fixed",
             "discountAmount":pricings[0].discount || 0,
             "currency":currency,
             "id":id,
             "cartItemId":cartItemId,
             "variants":variants,
-            "normalInventory":variants.variants.quantity
+            "normalInventory":variants?.variants?.quantity || 0
           }
           outOfStockProducts.push(item);
         }
@@ -331,7 +331,7 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
           "id":id,
           "cartItemId":cartItemId,
           "variants":variants,
-          "normalInventory":normalInventory
+          "normalInventory":normalInventory || 0
       }
         outOfStockProducts.push(item);
       }
