@@ -10,6 +10,7 @@ import { cookies } from 'next/headers';
 import { CountryListProvider } from "@/context/countryList";
 import Script from 'next/script'
 // import { Work_Sans } from 'next/font/google';
+import Head from 'next/head';
 
 const workSans = Work_Sans({ weight: ['400','500','600', '700'],
 style: ['normal', 'italic'],
@@ -17,7 +18,7 @@ subsets: ['latin'],})
 
 
 export const metadata = {
-  title: 'GetKuwa: Supplements, Health &amp; Nutrition in UAE',
+  title: 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain',
   description: 'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!',
 }
 
@@ -102,6 +103,10 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       <head>
         <script type="text/javascript" src={"/gtm.js"}></script>
       </head>
+      <Head>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+      </Head>
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
       <script type="text/javascript" src={"/clevertap-stage.js"} async />
