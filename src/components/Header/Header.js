@@ -438,7 +438,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
-        <div className={styles.searchInputContainer} style={!couponBannerData.isActive?{top:"60px"}:{}}>
+        <div className={styles.searchInputContainer} style={!couponBannerData.isActive?{top:"56px"}:{}}>
                         <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
                             <input  className={styles.searchInput}  value={searchQuery}  placeholder='Search by product name' type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
