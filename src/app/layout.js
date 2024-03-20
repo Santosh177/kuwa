@@ -103,10 +103,18 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       <head>
         <script type="text/javascript" src={"/gtm.js"}></script>
       </head>
-      <Head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-      </Head>
+      <head>
+        {/* <title>{metadata.title}</title> */}
+        <meta name="title" content={metadata.title} />
+        {/* <meta name="description" content={metadata.description} /> */}
+
+        <meta property="og:title" content={metadata.title} key="title" />
+        <meta property="og:description" content={metadata.description} />
+
+        <meta property="twitter:title" content={metadata.title} />
+        <meta property="twitter:description" content={metadata.description} />
+
+      </head>
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
       <script type="text/javascript" src={"/clevertap-stage.js"} async />
