@@ -17,10 +17,13 @@ style: ['normal', 'italic'],
 subsets: ['latin'],})
 
 
-export const metadata = {
-  title: 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain',
-  description: 'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!',
-}
+// export const metadata = {
+//   title: 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain',
+//   description: 'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!',
+// }
+
+let title = 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain'
+let description =  'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!'
 
 
 const getUser = async () => {
@@ -104,15 +107,15 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
         <script type="text/javascript" src={"/gtm.js"}></script>
       </head>
       <head>
-        {/* <title>{metadata.title}</title> */}
-        <meta name="title" content={metadata.title} />
-        {/* <meta name="description" content={metadata.description} /> */}
-
+        <title>{title}</title>
+        <meta name="title" content={title} />
+        <meta name="description" content={description} />
+{/* 
         <meta property="og:title" content={metadata.title} key="title" />
         <meta property="og:description" content={metadata.description} />
 
         <meta property="twitter:title" content={metadata.title} />
-        <meta property="twitter:description" content={metadata.description} />
+        <meta property="twitter:description" content={metadata.description} /> */}
 
       </head>
       <body className={workSans.className}>
