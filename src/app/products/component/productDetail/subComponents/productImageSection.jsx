@@ -92,7 +92,7 @@ const ProductImageSection = ({ allImages, dealTag, dealIconUrl, isDealActive, is
                                     }
 
                                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} className={styles.imageContainer}>
-                                        <img style={{ maxWidth: "278px", width: "100%" }} src={item} alt={"productImage"} />
+                                        <img style={{ maxWidth: "278px", width: "100%",maxHeight:"280px",objectFit:"contain" }} src={item} alt={"productImage"} />
                                     </div>
                                 </div>
                             </>

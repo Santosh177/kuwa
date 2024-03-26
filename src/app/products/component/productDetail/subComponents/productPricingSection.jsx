@@ -443,7 +443,13 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
 
 
             
-           { window && window.ApplePaySession && <div style={{marginTop:'24px',cursor:'pointer'}} onClick={()=>onHandleApplePay()}>
+           { window && window.ApplePaySession && <div style={{marginTop:'24px',cursor:normalInventory <=0 || selectedVariantQuantity<=0 ? 'not-allowed':'pointer'}}
+            onClick={()=>{
+              if(normalInventory > 0 || selectedVariantQuantity > 0){
+                onHandleApplePay()
+              }
+            }
+           }>
                <img style={{width:'100%'}} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/default.png" alt="apple-pay"></img>
             </div>}
             { window && window.ApplePaySession && prePaidDiscount > 0 && <div className={styles.prepaidDiscount}>Extra {prePaidDiscount}% Off</div>}

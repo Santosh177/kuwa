@@ -40,7 +40,7 @@ const RelatedProducts = ({ productData = {} }) => {
                         <div ref={leftArrow} className={style.allProducts}>
                             {relatedProduct.map((item, index) => {
                                 const { id = '', image = '', name = '', price = {}, seoUrl = '', title = '' } = item || {};
-                                const {dealId, isTimerActive,isDealActive,currentTimerStatus='',dealInventory='',dealIconUrl='',dealTag='',dealDiscountPrice='',dealFinalPrice='',dealListPrice=''}= item || {}
+                                const {dealId, isTimerActive,isDealActive,currentTimerStatus='',dealInventory='',dealIconUrl='',dealTag='',dealDiscountPrice='',dealFinalPrice='',dealListPrice='',normalQuantity=""}= item || {}
                                 const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
                                 const cardData = {
                                     productName: name,
@@ -61,7 +61,8 @@ const RelatedProducts = ({ productData = {} }) => {
                                     tag:dealTag,
                                     dealDiscountPrice:dealDiscountPrice,
                                     dealFinalPrice:dealFinalPrice,
-                                    dealListPrice:dealListPrice
+                                    dealListPrice:dealListPrice,
+                                    normalInventory:normalQuantity
                                 }
                                 console.log("cardData", cardData)
                                 trackData = {
