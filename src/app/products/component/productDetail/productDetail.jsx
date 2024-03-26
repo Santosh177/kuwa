@@ -116,7 +116,7 @@ const ProductDeatil = ({ productData = {} }) => {
            const  { varientId = '', retailPrice = 0, finalPrice = 0, discount = 0 } = selectedVarientsData[0]?.pricings[0] || {};
            setFinalPrice(finalPrice);
            setRetailPrice(retailPrice);
-           setDiscount(discount);
+           setDiscount(retailPrice-finalPrice );
             }
             setSelectedVrientsData(selectedVarientsData)
           

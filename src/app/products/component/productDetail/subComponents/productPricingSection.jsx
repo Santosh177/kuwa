@@ -13,7 +13,7 @@ import { useAuth } from '@/context/userDetail';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId,avgRating="",totalRating="" }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory,productId,selectedVariantQuantity} = pricingSectionVariables;
     console.log("pricingSectionVariables",pricingSectionVariables)
-
+console.log("sljwneklnwk",discount)
     console.log("selectedVarients",selectedVarients)
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
@@ -370,21 +370,26 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
               <div className={styles.totalNumberRating}>{`(${totalRating}  ratings)`}</div>
             </div>}
             <div className={styles.pricingConatiner}>
+            <div className={styles.price}>
               {
               (isDealActive && isTimerActive
                &&
               currentTimerStatus=="in-between"
               ) ||
-              
               (isVariantDealActive && isVariantTimeActive 
                 && isVariantCurrenTimeStatus == "in-between")
               ? 
-              <div className={styles.price}>{"Only at" + " " +currency + ". " + finalPrice * noOfProduct}</div>:
-                <div className={styles.price}>{currency + ". " + finalPrice * noOfProduct}</div>}
+              <><div className={styles.finalPrice}>{"Only at" + " " +currency + " " + finalPrice }</div>
+             {discount>0 && <div className={styles.retailPrice}>{currency + " " + retailPrice}</div>}</>
+              :
+                <><div className={styles.finalPrice}>{currency +" " + finalPrice }</div>
+               {discount> 0 &&  <div className={styles.retailPrice}>{currency + " " + retailPrice}</div>}</>}
+                </div>
                 <div className={styles.incriment}>
                     <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} selectedVariantQuantity={selectedVariantQuantity} normalInventory={normalInventory}/>
                 </div>
             </div>
+            {discount > 0 && <div className={styles.discount}>Save {currency +" " + discount}</div>}
             {variants.length>0 ? <div className={styles.packOf}>Pack of</div>:""}  
             <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} onResetViewCartState={onResetViewCartState}/>
            {variants.find(data=> data.variants.name==3) && <div className={styles.variantRecommendedTxt}>Recommended pack of 3 for better result</div>}
