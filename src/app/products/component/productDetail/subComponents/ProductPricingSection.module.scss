@@ -10,6 +10,13 @@
         font-size: 24px;
         color: #07141A;
     }
+    .shortDescription{
+        color: #247A81;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
 
     .reviewContainer {
         margin-top: 17px;
@@ -189,6 +196,31 @@
         margin-top: 24px;
         margin-bottom: 12px;
     }
+    .benefitsLogoSection{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        margin-top: 20px;
+        .logoDiv{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            img{
+                width: 40px;
+                height: 40px;
+            }
+            .logoTxt{
+                color: #98A1AC;
+                text-align: center;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+        }
+    }
 }
 
 @media(max-width:960px) {
@@ -197,6 +229,9 @@
 
         .title {
             font-size: 16px;
+        }
+        .shortDescription{
+            font-size: 14px;
         }
 
         .reviewContainer {
@@ -231,6 +266,15 @@
             }
         }
 
+    }
+    .benefitsLogoSection{
+        gap: 20px;
+        .logoDiv{
+            img{
+                height: 32px;
+                width: 32px;
+            }
+        }
     }
     }
 }

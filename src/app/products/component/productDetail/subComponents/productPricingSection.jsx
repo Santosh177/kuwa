@@ -284,7 +284,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     return (
         <div className={styles.pricingSectionContainer}>
             <h1 className={styles.title}>{title}</h1>
-            <h2 dangerouslySetInnerHTML={{ __html: shortDescription && shortDescription.replace(/&lt;br&gt;/g, '')}}></h2>
+            <h2  className={styles.shortDescription} dangerouslySetInnerHTML={{ __html: shortDescription && shortDescription.replace(/&lt;br&gt;/g, '')}}></h2>
 
             {/* {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
@@ -353,9 +353,21 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 data-installment-minimum-amount= {tamaraMinAmount}
                 data-installment-maximum-amount= {tamaraMaxAmount}
                 data-installment-available-amount={tamaraMinAmount}
-                
                 />
-                             
+              <div className={styles.benefitsLogoSection}>
+                  <div className={styles.logoDiv}>
+                    <img src="https://d25uasl7utydze.cloudfront.net/assets/kuwa_cash.svg" alt="benefits-logo" />
+                    <div className={styles.logoTxt}>Cash on delivery</div>
+                  </div>
+                  <div className={styles.logoDiv}>
+                    <img src="https://d25uasl7utydze.cloudfront.net/assets/kuwa_lock.svg" alt="benefits-logo" />
+                    <div className={styles.logoTxt}>Secure payment</div>
+                  </div>
+                  <div className={styles.logoDiv}>
+                    <img src="https://d25uasl7utydze.cloudfront.net/assets/kuwa_offer.svg" alt="benefits-logo" />
+                    <div className={styles.logoTxt}>100% authentic</div>
+                  </div>
+                </div> 
         </div>
     )
 }
