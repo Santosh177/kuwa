@@ -8,7 +8,7 @@ import { useCountryList } from '@/context/countryList';
 import { useCountry } from '@/context/contryDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId,avgRating="",totalRating="" }) => {
-    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold} = pricingSectionVariables;
+    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,shortDescription=""} = pricingSectionVariables;
     console.log("pricingSectionVariables",pricingSectionVariables)
     console.log("dbhjahva",variantdealId,isVariantDealActive,isVariantTimeActive,isVariantCurrenTimeStatus)
     const countryList = useCountryList();
@@ -284,6 +284,8 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     return (
         <div className={styles.pricingSectionContainer}>
             <h1 className={styles.title}>{title}</h1>
+            <h2 dangerouslySetInnerHTML={{ __html: shortDescription && shortDescription.replace(/&lt;br&gt;/g, '')}}></h2>
+
             {/* {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}

@@ -16,7 +16,7 @@ import { useCountry } from '@/context/contryDetails';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
 const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
-    const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating=""} = productData || {};
+    const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating="",shortDescription=""} = productData || {};
    const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive=false,dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = productData || {}
         // console.log("dealListPrice",dealListPrice)
         console.log("productdetails",productData)
@@ -436,7 +436,7 @@ const ProductDeatil = ({ productData = {} }) => {
         onHandleApplePay:onHandleApplePay,
         noOfProduct: noOfProduct,
         mininmumDeliveryThreshold:mininmumDeliveryThreshold,
-        
+        shortDescription:shortDescription
     };
     console.log("pricingSectionVariables",pricingSectionVariables)
     const handelRoute = (type) => {
