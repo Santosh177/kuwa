@@ -123,8 +123,8 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
         <div>
           <DeliveryAddress />
         </div>
-  
-                <div className={styles.couponCode}>
+        <div className={styles.deliveryDate}>Order now and get it by<span> {deliveryDateString}</span></div>
+   <div className={styles.couponCode}>
                   <CouponCode />
                 </div>
                 <div></div>
