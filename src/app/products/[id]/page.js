@@ -28,11 +28,11 @@ export async function generateMetadata({ params, searchParams }) {
 
   const seoTitle = productData && productData.seo && productData.seo.metaTitle || "";
   const seoDescription = productData && productData.seo && productData.seo.metaDescription || "";
- 
+  const seoKeywords = productData && productData.seo && productData.seo.keyword || "";
   return {
     title: seoTitle || "",
     description:seoDescription || "",
-    keywords: "santosh" || "" ,
+    keywords: seoKeywords || "" ,
     // imgUrl: imgUrl || "",
     // url: url || ""
   };
@@ -43,7 +43,6 @@ export default async function AllProduct(req) {
   const params = req.params
   const productID = req && req.params && req.params.id || "";
   const customHeader = await authHeader();
-  // const { title, description, keywords } = generateMetadata({params});
   console.log("customHeader",customHeader)
   let productData = {}
    try {
@@ -70,9 +69,9 @@ export default async function AllProduct(req) {
         <div className={style.allDetailDisciptionContainer}>
           <ProductDiscription productData={productData} />
         </div>
-        <ProductFaq productData={productData} />
         <ProductReview productData={productData} />
         <RelatedProducts productData={productData}  />
+        <ProductFaq productData={productData} />
         <Footer />
       </>}
       {(productData && Object.keys(productData).length == 0 && customHeader && Object.keys(customHeader).length !=0 )&& <PageNotFound productID={productID}/>}

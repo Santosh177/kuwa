@@ -17,13 +17,13 @@ style: ['normal', 'italic'],
 subsets: ['latin'],})
 
 
-// export const metadata = {
-//   title: 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain',
-//   description: 'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!',
-// }
+export const metadata = {
+  title: 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain',
+  description: 'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!',
+}
 
-let title = 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain'
-let description =  'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!'
+// let title = 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain'
+// let description =  'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!'
 
 
 const getUser = async () => {
@@ -105,9 +105,9 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
       <head>
         <script type="text/javascript" src={"/gtm.js"}></script>
-        <title>{title}</title>
+        {/* <title>{title}</title>
         <meta name="title" content={title} />
-        <meta name="description" content={description} />
+        <meta name="description" content={description} /> */}
       </head>
       
       <body className={workSans.className}>
