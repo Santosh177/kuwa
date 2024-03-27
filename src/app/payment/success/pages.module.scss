@@ -1,122 +1,128 @@
+@media(min-width:990px) {
+    .thankYouPage {
+        .paymentSuceesContainer {
 
-@media(min-width:990px){
-    .thankYouPage{
-.paymentSuceesContainer{
 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            width: 396px;
 
-   display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    width:396px;
-    img{
-        width: 42px;
-        height: 42px;
-        margin: 0 auto;
+            img {
+                width: 42px;
+                height: 42px;
+                margin: 0 auto;
+            }
+
+            .txt {
+                font-weight: 600;
+                font-size: 16px;
+                margin-top: 8px;
+            }
+
+            .orderId {
+                font-weight: 500;
+                font-size: 14px;
+                color: #247A81;
+                margin-top: 8px;
+                // margin-bottom: 10px;
+            }
+
+            .subTxt {
+                font-weight: 400;
+                font-size: 12px;
+                color: #A0A0A0;
+                margin-top: 5px;
+                margin-bottom: 16px;
+            }
+
+        }
+
+        .rightSection {
+            display: flex;
+            flex-direction: column;
+
+            // justify-content: center;
+            // align-items: center;
+            .btn {
+                display: flex;
+                justify-content: center;
+                background: #247A81;
+                width: 242px;
+                border-radius: 24px;
+                padding-top: 8px;
+                font-size: 14px;
+                padding-bottom: 8px;
+                color: #FFF;
+                margin-top: 16px;
+                margin-left: 52px;
+                cursor: pointer;
+            }
+        }
     }
-    .txt{
-        font-weight: 600;
-        font-size: 16px;
-        margin-top: 8px;
-    }
-    .orderId{
-        font-weight: 500;
-        font-size: 14px;
-        color: #247A81;
-        margin-top: 4px;
-        // margin-bottom: 10px;
-    }
-    .subTxt{
-        font-weight: 400;
-        font-size: 12px;
-        color: #A0A0A0;
-        margin-top: 5px;
-        margin-bottom: 16px;
-    }
-   
 }
-.rightSection{
-    display: flex;
-    flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-.btn{
-    display: flex;
-    justify-content: center;
-    background: #247A81;
-    width:242px;
-    border-radius: 24px;
-    padding-top: 8px;
-    font-size: 14px;
-    padding-bottom: 8px;
-    color: #FFF;
-    margin-top: 16px;
-    margin-left: 52px;
-    cursor: pointer;
-}
-}
-    }
-}
 
 
 
-@media (min-width:990px){
-    .thankYouPage{
+@media (min-width:990px) {
+    .thankYouPage {
         display: flex;
         gap: 30px;
         justify-content: center;
         margin-top: 40px;
-        .leftSection{
+
+        .leftSection {
             display: flex;
             flex-direction: column;
             // justify-content: center;
             align-items: center;
-            .paymentSuceesContainer{
+
+            .paymentSuceesContainer {
                 width: 100%;
                 max-width: 343px;
-                img{
+
+                .deliveryDate {
+                    color: #247A81;
+                    text-align: center;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    margin-top: 8px;
+                }
+
+                img {
                     width: 128px;
                     height: 128px;
                     margin: 0 auto;
                 }
-                .subTxt{
+
+                .subTxt {
                     margin: 0 auto;
                     margin-top: 5px;
                 }
             }
-            
-        // .headerTxt{
-        //     font-weight: 500;
-        //     font-size: 16px;
-        // }
-        // .addressAndProductDetails{
-        //     width: 396px;
-        // }
-    
-        // .priceDetails{
-        //     width: 346px;
-        //     max-width: 346px;
-        // }
-        // .priceDetailsContainer{
-        //     margin-top: 16px;
-        // }
-        .productContainer{
-            width:396px;
-            margin-top: 24px;
-            margin-bottom: 24px;
-            .productTitle{
-                color: #07141A;
-                font-size: 14px;
-font-style: normal;
-font-weight: 500;
+
+            .productContainer {
+                width: 396px;
+                margin-top: 24px;
+                margin-bottom: 24px;
+
+                .productTitle {
+                    color: #07141A;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                }
+
             }
-            
         }
     }
 }
-}
-@media (max-width:990px){
-    .thankYouPage{
+
+@media (max-width:990px) {
+    .thankYouPage {
         display: flex;
         // justify-content: center;
         margin: 0 auto;
@@ -124,110 +130,133 @@ font-weight: 500;
         flex-direction: column;
         width: 90%;
         padding-bottom: 100px;
-        .leftSection{
+
+        .leftSection {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 100%;
-            .paymentSuceesContainer{
+
+            .paymentSuceesContainer {
                 width: 287px;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                img{
+
+                img {
                     width: 30px;
                     height: 30px;
                 }
-                .txt{
-                    color: #07141A; 
-font-size: 12px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+
+                .txt {
+                    color: #07141A;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
                 }
-                .orderId{
+
+                .orderId {
                     color: #247A81;
-font-size: 12px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
                 }
-                .subTxt{
+
+                .subTxt {
                     color: #9AA1AB;
 
-text-align: center;
-font-size: 10px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+                    text-align: center;
+                    font-size: 10px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
 
                 }
+                .deliveryDate{
+                    color: #247A81;
+                    text-align: center;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    margin-bottom: 12px;
+                }
             }
-            .productContainer{
+
+            .productContainer {
                 width: 100%;
                 margin-top: 24px;
-                .productTitle{
+
+                .productTitle {
                     color: #07141A;
                     font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
+                    font-style: normal;
+                    font-weight: 500;
                 }
             }
-           
 
-        // .headerTxt{
-        //     font-weight: 500;
-        //     font-size: 16px;
-        // }
 
-        // .addressTxt{
-        //     display: none;
-        // }
-        // .priceDetails{
-        //     margin-top: 32px;
-        // }
-        
-        // .priceDetailsContainer{
-        //     // margin-top: 16px;
-        // }
-    }
-    .rightSection{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width:100%;
-        .deliveryContainer{
-           width: 100%; 
+            // .headerTxt{
+            //     font-weight: 500;
+            //     font-size: 16px;
+            // }
+
+            // .addressTxt{
+            //     display: none;
+            // }
+            // .priceDetails{
+            //     margin-top: 32px;
+            // }
+
+            // .priceDetailsContainer{
+            //     // margin-top: 16px;
+            // }
         }
-        .priceDetailsContainer{
-            width:100%
-        }
-        .btn{
+
+        .rightSection {
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            background: #247A81;
-            width:242px;
-            border-radius: 24px;
-            padding-top: 8px;
-            font-size: 14px;
-            padding-bottom: 8px;
-            color: #FFF;
-            margin-top: 16px;
-        }
-        .socialMedialContainer{
-           width: 100%;
+            align-items: center;
+            width: 100%;
 
+            .deliveryContainer {
+                width: 100%;
+            }
+
+            .priceDetailsContainer {
+                width: 100%
+            }
+
+            .btn {
+                display: flex;
+                justify-content: center;
+                background: #247A81;
+                width: 242px;
+                border-radius: 24px;
+                padding-top: 8px;
+                font-size: 14px;
+                padding-bottom: 8px;
+                color: #FFF;
+                margin-top: 16px;
+            }
+
+            .socialMedialContainer {
+                width: 100%;
+
+            }
         }
-    }
     }
 }
-@media(max-width:400px){
-    .thankYouPage{
-        .rightSection{
-            .socialMedialContainer{
+
+@media(max-width:400px) {
+    .thankYouPage {
+        .rightSection {
+            .socialMedialContainer {
                 display: flex;
                 justify-content: center;
                 align-items: center;
