@@ -10,7 +10,7 @@ var phoneNumberDelimiters = "()- ";
 // (a leading + is OK)
 var validWorldPhoneChars = phoneNumberDelimiters + "+";
 // Minimum no of digits in an international phone no without the country code.
-var minDigitsInIPhoneNumber = 7;
+var minDigitsInIPhoneNumber = 8;
 
 function isInteger(s) {
   let i;
