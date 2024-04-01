@@ -58,7 +58,7 @@ export default async function AllProduct(req) {
       {/* <div className={style.routeDetail} >Home / men's performance / product</div> */}
       {productData && Object.keys(productData).length>0&&
       <>
-        <Header couponBanner={{}}/>
+        <Header />
         <ProductDeatil productData={productData} />
         <div className={style.allDetailDisciptionContainer}>
           <ProductDiscription productData={productData} />

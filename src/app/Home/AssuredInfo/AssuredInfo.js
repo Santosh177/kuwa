@@ -45,7 +45,8 @@ const AssuredInfo = ({ assuredInfo = [] }) => {
     // }, []);
     
     return (
-        <div className={styles.assuredInfoWrapper}>
+        <>
+       {assuredInfo && assuredInfo.length > 0 && <div className={styles.assuredInfoWrapper}>
    
                 <div className={[styles.assuredIfoContainer,styles.assuredInfoDesktop].join(" ")}>
                     {assuredInfo.map((data, index) => (
@@ -66,7 +67,8 @@ const AssuredInfo = ({ assuredInfo = [] }) => {
                         </Marquee>
                     </ScrollContainer>
                 </div>
-        </div>
+        </div>}
+        </>
     );
     }
      export default AssuredInfo;                     

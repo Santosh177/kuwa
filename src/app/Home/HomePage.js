@@ -42,6 +42,7 @@ export default function Home(homePageData) {
         }
 
     }, []);
+
     useEffect(() => {
         setTimeout(()=>{
             clevertapEvent.onCleverTapEvent("kuwa_home_page_landing");
@@ -86,8 +87,9 @@ export default function Home(homePageData) {
     return (
 
         <div className={styles.homePageWrapper}>
-            <div className={(isSafariOniOS)?{}:styles.homePageContainer} id="homePage">
-                <div className={styles.mainBanner} style={(isSafariOniOS)?{}:{scrollSnapAlign:'start'}}>
+            <div className={(isSafariOniOS)?{}:( styles.homePageContainer )} id="homePage">
+            {bannerImage.isActive &&
+             <div className={styles.mainBanner} style={(isSafariOniOS)?{}:{scrollSnapAlign:'start'}}>
                     {bannerImage.type === "VIDEO" ?
                         (<VideoBanner videoImage={bannerImage.mobileVideo} videoDesktopImage={bannerImage.desktopVideo} videoRedirection={bannerImage.videoRedirectionLink} />
                         ) : (
@@ -96,9 +98,10 @@ export default function Home(homePageData) {
 
                     <img id="scoll-image" className={styles.swipeImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/95JuYPY9Wr.gif' alt='swipe' />
                 </div>
-                <div className={styles.mainContainer} id="main-container" style={(isSafariOniOS)?{}:{height:'100vh',scrollSnapAlign:'start'}}>
+}
+                <div className={styles.mainContainer} id="main-container" style={(isSafariOniOS)?{}:{height:'100vh',scrollSnapAlign:'start',overflowY:"scroll"}}>
 
-                    <Header couponBanner={couponBanner} />
+                    <Header />
                     {/* <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
                         <input  className={styles.searchInput}  value={""}  placeholder='Search by product name' type='text' />
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>

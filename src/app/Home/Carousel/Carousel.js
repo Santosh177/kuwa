@@ -41,7 +41,7 @@ const Carousel = ({ data }) => {
 
   return (
     <>
-      <div className={styles.carouselContainer} >
+    {data.length > 0 &&   <div className={styles.carouselContainer} >
         <Glider 
           className="home-banner-glider"
           draggable
@@ -70,7 +70,7 @@ const Carousel = ({ data }) => {
 
         <div id="dots-home-banner" style={{marginTop:"-20px"}}></div>
       </div>
-
+}
     </>
   );
 };
