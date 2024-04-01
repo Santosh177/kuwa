@@ -14,11 +14,11 @@ import CouponInfo from '@/app/Home/CouponInfo/CouponInfo';
 import TrendingSearch from '@/app/search/TrendingSearch/TrendingSearch';
 import ProductCard from '@/app/search/ProductCard/ProductCard';
 import { mappingHomeSearchDealProducts } from '@/services';
-const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBanner={},searchQuery="" }) =>{
+const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="" }) =>{
   const router = useRouter();
   console.log("searchData",searchData)
     const searchDataCount = searchData && searchData.length || 0;
-  const handleSeeAll=(couponBanner,searchQuery)=>{
+  const handleSeeAll=(couponBannerData,searchQuery)=>{
     window.location.href=`/collections?search_key=${searchQuery}`
   }
 
@@ -58,7 +58,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                         })
                     }
                 </div>
-        {searchData && searchData.length>0  && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBanner, searchQuery)}>
+        {searchData && searchData.length>0  && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBannerData, searchQuery)}>
                     See all
                 </div>
         }       
@@ -67,7 +67,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
 }
 
 
-const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
+const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const router = useRouter();
     const {isLogin=false, userData={}} = useAuth();
     const [ isShowSideMenu,setIsShowSideMenu] = useState(false);
@@ -218,7 +218,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
                 typeId: null
             }
             if(isLogin){
-                getSideMenuData.push(additionData)
+                getSideMenuData?.push(additionData)
             }else{
                 let findMyOrderData =    {
                     icon: "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/truck.png",
@@ -275,46 +275,6 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
     const onCloseCountry = () =>{
         setIsShowCountry(false)
     }
-
-    // const onSearcha = async(searchValue) => {
-    //     setSearchTxt(searchValue);
-        	
-    //     setIsShowSearchList(true);
-    //     console.log("customHeadercustomHeader",selectedCountry)
-    //     const countryId = selectedCountry && selectedCountry.id || "";
-    //     const abortController = new AbortController();
-    //     const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchValue}&country=${countryId}`, {
-    //         method: 'GET',
-    //         signal: abortController.signal,
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         }
-    //       })
-    //     const searchApiData = await searchApiResp.json();
-    //     let searchData = []
-    //     if(searchApiData && searchApiData.length > 0 ){
-    //         searchData = []
-    //         searchApiData.map((data,index)=>{
-    //             const sData = data['product'] || {}
-    //             if(sData){
-    //                 const productData = {
-    //                     productImage : sData.productImage && sData.productImage.productImageUrl || "",
-    //                     productName: sData.productDescription && sData.productDescription.name || "",
-    //                     id: sData.id || "",
-    //                     seoUrl: data.seoUrl || ""
-    //                 }
-    //                 searchData.push(productData);
-    //                 setSearchData(searchData)
-    //             }
-               
-    //         })
-
-    //     abortController.abort();
-    //     }else{
-    //         searchData.push([])
-    //         setSearchData([])
-    //     }
-    // }
 
     useEffect(() => {
       try {
@@ -389,11 +349,32 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
     }
   };
 
+  useEffect(()=>{
+    getCouponData();
+  },[])
+
+  const getCouponData = async() =>{
+    const getCouponResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/cms/coupon-banner?country=${selectedCountry.id}`, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+    })
+    const couponRespData = await getCouponResp.json();
+    if(couponRespData && couponRespData.length > 0 ){
+      setCouponBannerData(couponRespData[0])
+      // if (setCouponBannerData){
+      //   setCouponBannerData(couponRespData[0]);
+      // }
+    }
+  
+  }
+
     return(
         <>
         
-        <CouponInfo couponBanner={couponBanner} setCouponBannerData={setCouponBannerData} />
-        <div className={styles.header} id='top-header-container' >
+       {couponBannerData.isActive && <CouponInfo couponBannerData={couponBannerData} setCouponBannerData={setCouponBannerData} />}
+        <div className={ styles.header} style={!couponBannerData.isActive?{top:"0px"}:{}} id='top-header-container' >
            <div className={styles.headerWrapper} id='top-header' >
                 <d    iv className={styles.headerIcon}>
                     <div className={styles.menuIcon} onClick={onOpenSideMenu}>
@@ -422,8 +403,8 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
                     onSearch(e.target.value)} placeholder='Search by product name' type='text'/>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
-                {showTrendingSearch && !searchQuery && <TrendingSearch isLogin={isLogin} isShowSeeAllBtn={isShowSeeAllBtn} couponBanner={(couponBanner && couponBanner.redirectionLink && couponBanner)||couponBannerData } setParamsData={setParamsData} setSearchQuery={setSearchQuery} />}
-                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBanner={(couponBanner && couponBanner.redirectionLink && couponBanner) || couponBannerData} searchQuery={searchQuery} />}
+                {showTrendingSearch && !searchQuery && <TrendingSearch isLogin={isLogin} isShowSeeAllBtn={isShowSeeAllBtn} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData)||couponBannerData } setParamsData={setParamsData} setSearchQuery={setSearchQuery} />}
+                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData) || couponBannerData} searchQuery={searchQuery} />}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img><span>Login</span>
@@ -457,7 +438,7 @@ const Header = ({ isShowSeeAllBtn=true, couponBanner = {}, setParamsData}) => {
         {isShowSideMenu&&<SideMenu sideMenuData={sideMenuData} onclose={()=>setIsShowSideMenu(!isShowSideMenu)}/>}
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
-        <div className={styles.searchInputContainer}>
+        <div className={styles.searchInputContainer} style={!couponBannerData.isActive?{top:"56px"}:{}}>
                         <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
                             <input  className={styles.searchInput}  value={searchQuery}  placeholder='Search by product name' type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>

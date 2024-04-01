@@ -71,17 +71,41 @@
     }
 
     .pricingConatiner {
-        margin-top: 13px;
+        margin-top: 9px;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
         .price {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 8px;
+            .finalPrice{
+                font-weight: 500;
+                font-size: 18px;
+            }
+           .retailPrice{
+            color: #999;
+            font-size: 14px;
             font-weight: 500;
-            font-size: 18px;
+            text-decoration: line-through;
+           }
         }
 
         .incriment {}
+    }
+    .discount{
+        border-radius: 4px;
+        background: #CE4224;
+        display: inline-flex;
+padding: 2px 8px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+color: #FFF;
+font-size: 16px;
+font-weight: 600;
     }
 
     .packOf {
@@ -258,8 +282,23 @@
         .reviewContainer {
             margin-top: 17px;
         }
-
-        .variantRecommendedTxt {
+        .ratingSection{
+            margin-top: 8px;
+        }
+        .pricingConatiner{
+            .price{
+              .finalPrice{
+                font-size: 16px;
+              } 
+              .retailPrice{
+                font-size: 12px;
+            } 
+            }
+        }
+        .discount{
+            font-size: 12px;
+        }
+        .variantRecommendedTxt{
             font-size: 10px;
             padding: 1px 10px;
         }
@@ -307,3 +346,14 @@
     }
 
 }
+    
+@media (max-width:335px){
+    .pricingSectionContainer{
+        .pricingConatiner{
+            .price{
+                display: block;
+            }
+           } 
+    }
+       
+    }

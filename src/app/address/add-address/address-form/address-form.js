@@ -19,7 +19,11 @@ const validatePersonalForm = (formData) => {
     }
     if(("mobNoValidation" in formData) && !formData.mobNoValidation){
       errors.mobNumber = "Mobile number is required";
-    }else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
+    }
+    else if(!formData.mobNoValidation){
+        errors.mobNumber = "Mobile number is required";
+    }
+    else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
       errors.mobNumber = "Invalid mobile number";
     }
     if(!formData.email){

@@ -34,9 +34,9 @@ const BrandMustTry = ({data={}}) => {
               }
         </div> */}
             {brand && brand.length > 0 && <div className={styles.brandHeader}>{headingtWord[0]} <span>{headingtWord?.slice(1).join(" ")}</span></div> }
-        <div>
+            {brand && brand.length > 0 &&   <div>
             <ProductSlider data={data}/>
-        </div>
+        </div>}
          
         
        </>

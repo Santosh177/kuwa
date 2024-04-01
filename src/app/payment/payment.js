@@ -740,10 +740,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         }
     }
     const onProceed = (pMode) => {
-     
-      if(selectedPaymentMethod =="CHECKOUT_CARD"){
-        Frames.submitCard()
-      }else if(selectedPaymentMethod === "APPLE_PAY" || pMode === "APPLE_PAY"){
+      if(selectedPaymentMethod === "APPLE_PAY" || pMode === "APPLE_PAY"){
         console.log("extradiscountttt",extraDiscount)
         console.log("prePaidDiscount++++",prePaidDiscount)
         const discountAmount = (parseFloat((((priceDetails['totalAmount']-priceDetails['deliveryFees']) * prePaidDiscount)/100).toFixed(2)));
@@ -803,6 +800,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               }
           }
         }
+      }else if(selectedPaymentMethod == "CHECKOUT_CARD"){
+        Frames.submitCard()
       }
       else if(selectedPaymentMethod){
         onPayment()
