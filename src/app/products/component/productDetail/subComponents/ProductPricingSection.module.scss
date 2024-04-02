@@ -118,9 +118,9 @@ font-weight: 600;
     .variantRecommendedTxt {
         width: fit-content;
         margin-top: 10px;
-        background-color: #ce4224;
-        color: #fff;
-        padding: 2px 10px;
+        background-color: #FBEEEB;
+        color: #ce4224;
+        padding: 4px 10px;
         border-radius: 8px;
     }
 
@@ -299,8 +299,9 @@ font-weight: 600;
             font-size: 12px;
         }
         .variantRecommendedTxt{
-            font-size: 10px;
-            padding: 1px 10px;
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 4px;
         }
         .deliveryDate{
             font-size: 12px;
