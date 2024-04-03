@@ -106,6 +106,16 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
   const { selectedPaymentMethod=""} = usePaymentPageData();
   // console.log("paymentMethodConfig",paymentMethodConfig);
   // console.log("selectedPaymentMethod",selectedPaymentMethod)
+  const currentDate = new Date();
+  const deliveryDate = new Date(currentDate);
+  deliveryDate.setDate(deliveryDate.getDate() + 4);
+
+  const day = deliveryDate.getDate();
+  const monthIndex = deliveryDate.getMonth();
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const month = monthNames[monthIndex];
+  console.log("Delivery Date: " + deliveryDate)
+  const deliveryDateString = `${month} ${day}`;
   return(
     <div className={styles.orderSummaryDesktop}>
         <div className={styles.paymentLeftContainer}>
@@ -113,7 +123,8 @@ const OrderSummayDesktopLayout = ({ priceDetails = {}, paymentMethodConfig = {},
         <div>
           <DeliveryAddress />
         </div>
-                <div className={styles.couponCode}>
+        <div className={styles.deliveryDate}>Order now and get it by<span> {deliveryDateString}</span></div>
+   <div className={styles.couponCode}>
                   <CouponCode />
                 </div>
                 <div></div>
@@ -145,12 +156,23 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
   const showViewDetails = ()=>{
     priceDetailsRef.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
    }
+   const currentDate = new Date();
+   const deliveryDate = new Date(currentDate);
+   deliveryDate.setDate(deliveryDate.getDate() + 4);
+
+   const day = deliveryDate.getDate();
+   const monthIndex = deliveryDate.getMonth();
+   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+   const month = monthNames[monthIndex];
+   console.log("Delivery Date: " + deliveryDate)
+   const deliveryDateString = `${month} ${day}`;
   return(
     <div className={styles.orderSummary}>
        <PrepaidExtraDiscount prePaidDiscount={prePaidDiscount} paymentMethodConfig={paymentMethodConfig}/> 
         <div>
           <DeliveryAddress />
         </div>
+        <div className={styles.deliveryDate}>Order now and get it by<span> {deliveryDateString}</span></div>
     <div className={styles.couponCode}>
       <CouponCode />
     </div>

@@ -161,6 +161,16 @@ export default function PaymentSuccess() {
       })
     }
   
+    const currentDate = new Date();
+    const deliveryDate = new Date(currentDate);
+    deliveryDate.setDate(deliveryDate.getDate() + 4);
+  
+    const day = deliveryDate.getDate();
+    const monthIndex = deliveryDate.getMonth();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const month = monthNames[monthIndex];
+    console.log("Delivery Date: " + deliveryDate)
+    const deliveryDateString = `${month} ${day}`;
       return (
         <>
          <script type="text/javascript" src="/fresh-chat.js" async></script>
@@ -171,6 +181,7 @@ export default function PaymentSuccess() {
         <div className={styles.paymentSuceesContainer}>
           <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/success.png' alt=''/>
           <div className={styles.txt}>Order placed </div>
+          <div className={styles.deliveryDate}>Expect delivery by <span> {deliveryDateString}</span></div>
           {orderId && <div className={styles.orderId}>Order ID : #{orderId}</div>}
           <div className={styles.subTxt}>Thanks for your purchase!
           <br/> Confirmation email with details coming soon.</div>

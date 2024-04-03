@@ -73,7 +73,13 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
           )}
         </>
       )}
-                <div className={styles.btn} onClick={(e)=>
+                <div className={styles.btn} 
+                 style={{ 
+                  backgroundColor: btnName === "Notify me" ? "#fff" : "", 
+                  color: btnName === "Notify me" ? "#247A81" : "",
+                  border: btnName === "Notify me" ? "2px solid #247A81" : "" 
+                }}
+                onClick={(e)=>
                     {
                         e.stopPropagation()
                         if(normalInventory> 0){
