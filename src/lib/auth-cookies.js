@@ -103,7 +103,7 @@ export const authHeader = async() =>{
     return (
       {
         'Content-Type': 'application/json',
-        'country':country &&parseInt(country.value) || 7,
+        'country':country &&parseInt(country.value) || 8,
         'Authorization':"Bearer "+token.value,
         'user':parseInt(user.value)
       }
@@ -126,7 +126,7 @@ export const authHeader = async() =>{
     }
     let data = {
       'Content-Type': 'application/json',
-      'country' : country && parseInt(country.value) || 7,
+      'country' : country && parseInt(country.value) || 8,
       'device':cookies().get("deviceID").value || ""
     }
 
