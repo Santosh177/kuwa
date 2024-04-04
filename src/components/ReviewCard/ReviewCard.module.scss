@@ -62,19 +62,6 @@
                 }
             }
         }
-
-        // .like {
-        //     font-weight: 500;
-        //     font-size: 12px;
-        //     display: flex;
-        //     justify-content: center;
-        //     align-items: center;
-
-        //     img {
-        //         width: 16px;
-        //         height: 16px;
-        //     }
-        // }
     }
 }
 
@@ -85,6 +72,9 @@
         }
         .reviewBody{
             height: fit-content;
+        }
+        .bottomContainer{
+            padding-top: 4px;
         }
     }
 }

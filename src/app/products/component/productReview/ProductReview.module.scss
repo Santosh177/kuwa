@@ -44,26 +44,37 @@
     }
 }
 
-@media(max-width:960px) {
-    .reviewsContainerOuter {
+// @media(max-width:960px) {
+//     .reviewsContainerOuter {
+//         padding-left: 16px;
+//         padding-right: 16px;
+//         .review {
+//             font-size: 16px;
+//             text-align: start;
+//             margin-bottom: 10px;
+//         }
+//         .reviewsContainer {
+//             justify-content: center;
+//         }
+//     }
+// }
+// @media(max-width:737px){
+//    .reviewsContainerOuter{
+//     .review{
+//        width:343px;
+//        margin: auto auto;
+
+//     }
+//    } 
+// }
+
+
+@media(max-width:770px){
+    .reviewsContainerOuter{
         padding-left: 16px;
         padding-right: 16px;
-        .review {
-            font-size: 16px;
+        .review{
             text-align: start;
-            margin-bottom: 10px;
-        }
-        .reviewsContainer {
-            justify-content: center;
         }
     }
-}
-@media(max-width:737px){
-   .reviewsContainerOuter{
-    .review{
-       width:343px;
-       margin: auto auto;
-
-    }
-   } 
 }
