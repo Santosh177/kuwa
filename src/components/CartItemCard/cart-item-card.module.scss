@@ -11,6 +11,7 @@
     gap: 16px;
     margin-top: 16px;
     position: relative;
+    z-index: 1;
     align-items: center;
     .cartItemContainer{
         display: flex;
@@ -20,6 +21,20 @@
             height: 71px;
             width: 77px;
             object-fit: contain;
+        }
+        .outOfStockTxt{
+            color: #CE4224;
+            font-family: "Work Sans";
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            padding: 6px 9px;
+            position: relative;
+            border-radius: 4px;
+            background: #FFF;
+            top: -15px;
+        
         }
     }
 

@@ -65,9 +65,17 @@
     }
     .countryContainer{
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 15px;
+        flex-direction: column;
+
+        // flex-direction: row;
+        // justify-content: space-between;
+        // gap: 15px;
+        .addressDiv{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between; 
+            gap: 15px;
+        }
         .countryInfoField{
             width: 100%;
         }

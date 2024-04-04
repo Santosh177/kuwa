@@ -7,7 +7,21 @@
         padding-top: 20px;
         padding-bottom: 150px;
         .couponCode{
-            margin-top: 35px;
+            // margin-top: 35px;
+        }
+        .deliveryDate{
+            margin-top: 8px;
+            text-align: center;
+            color: #07141A;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+    
+            span {
+                color: #247A81;
+                font-weight: 700;
+            }
         }
         .paymentMethod{
             margin-top: 30px;
@@ -49,6 +63,20 @@
             flex-direction: column;
             max-width: 346px;
             width: 100%;
+            .deliveryDate{
+                margin-top: 8px;
+                text-align: center;
+                color: #07141A;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+        
+                span {
+                    color: #247A81;
+                    font-weight: 700;
+                }
+            }
         }
         .headerTxt{
             padding-bottom: 18px;

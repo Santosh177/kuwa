@@ -2,11 +2,13 @@ import { useRouter } from 'next/navigation';
 import styles from './product-deal-card.module.scss'
 
 
-
-const ProductDealCard = ({cardData,addToCart={},style={}}) => {
-    const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus=""} = cardData || {}
+import { useAuth } from '@/context/userDetail';
+const ProductDealCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLogin}) => {
+  const { isLogin=false ,userData = {}} = useAuth();
+  const router = useRouter();
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus="",normalInventory} = cardData || {}
     console.log("cardData++++",cardData)
+    const btnName = normalInventory > 0 ? "Add to cart" : "Notify me"
 
     return(
         <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
@@ -21,7 +23,7 @@ const ProductDealCard = ({cardData,addToCart={},style={}}) => {
                   {tag &&  <div className={styles.tagTxt}>{tag}</div>}
                     </div>
                     </div>}
-               
+                {normalInventory <= 0 && <div className={styles.outOfStockTxt}>Out of stock</div>}
                 <div className={styles.productImgWrapper}>
             
                     <div className={styles.productImgContainer}>
@@ -65,10 +67,28 @@ const ProductDealCard = ({cardData,addToCart={},style={}}) => {
           )}
         </>
       )}
-                <div className={styles.btn} onClick={(e)=>
+               <div className={styles.btn} 
+                style={{ 
+                  backgroundColor: btnName === "Notify me" ? "#fff" : "", 
+                  color: btnName === "Notify me" ? "#247A81" : "",
+                  border: btnName === "Notify me" ? "2px solid #247A81" : "" 
+                }}
+               onClick={(e)=>
                     {
                         e.stopPropagation()
-                        addToCart()}}>Add to cart</div>
+                        if(normalInventory> 0){
+                            addToCart();
+                        }
+                        else{
+                            if(isLogin){
+                                handleNotifyMe();
+                            }
+                            else{
+                              handleNonLogin();
+                            }
+                           
+                        }
+                        }}>{btnName}</div>
             </div>
             </div>
         </div>

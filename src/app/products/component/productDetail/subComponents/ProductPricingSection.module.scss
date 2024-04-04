@@ -1,10 +1,22 @@
 .pricingSectionContainer {
     width: 40%;
     margin: auto;
-    #tamara-widget-main{
-        margin: 24px 0px ;
+
+    #tamara-widget-main {
+        margin: 24px 0px;
     }
+
     // background-color: red;
+
+    .normalInventory {
+        height: 15px;
+        color: #ce4224;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
     .title {
         font-weight: 500;
         font-size: 24px;
@@ -29,29 +41,33 @@
             color: #858585;
         }
     }
-    .ratingSection{
+
+    .ratingSection {
         display: flex;
         // justify-content: center;
         align-items: center;
         margin-top: 16px;
         gap: 8px;
-        .avgRatingValue{
+
+        .avgRatingValue {
             padding-bottom: 5px;
         }
-        .avgRating{
+
+        .avgRating {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 6px;
-           
-            .reviewStar{
-                img{
+
+            .reviewStar {
+                img {
                     width: 16px;
                     height: 16px;
                 }
             }
         }
-        .totalNumberRating{
+
+        .totalNumberRating {
             color: #2E7CF6;
             font-size: 12px;
             font-style: normal;
@@ -62,16 +78,41 @@
     }
 
     .pricingConatiner {
-        margin-top: 13px;
+        margin-top: 9px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .price {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 8px;
+            .finalPrice{
+                font-weight: 500;
+                font-size: 18px;
+            }
+           .retailPrice{
+            color: #999;
+            font-size: 14px;
             font-weight: 500;
-            font-size: 18px;
+            text-decoration: line-through;
+           }
         }
 
         .incriment {}
+    }
+    .discount{
+        border-radius: 4px;
+        background: #CE4224;
+        display: inline-flex;
+padding: 2px 8px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+color: #FFF;
+font-size: 16px;
+font-weight: 600;
     }
 
     .packOf {
@@ -80,42 +121,63 @@
         margin-bottom: 6px;
         margin-top: 26px;
     }
-    .variantRecommendedTxt{
-        width:fit-content;
+
+    .variantRecommendedTxt {
+        width: fit-content;
         margin-top: 10px;
-        background-color: #ce4224;
-        color: #fff;
-        padding: 2px 10px;
+        background-color: #FBEEEB;
+        color: #ce4224;
+        padding: 4px 10px;
         border-radius: 8px;
     }
-    .freeShippingSection{
+
+    .deliveryDate {
+        margin-top: 16px;
+        text-align: center;
+        color: #07141A;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        span {
+            font-weight: 700;
+        }
+    }
+
+    .freeShippingSection {
         border-radius: 8px;
         background: #EEF5F5;
         margin-top: 14px;
-        .freeShippingDiv{
+
+        .freeShippingDiv {
             display: flex;
             justify-content: center;
             align-items: center;
-           .truckImg{
-            padding-top: 4px;
-            img{
-            width: 28px;
-            height: 28px;
+
+            .truckImg {
+                padding-top: 4px;
+
+                img {
+                    width: 28px;
+                    height: 28px;
+                }
+
             }
-            
-           }
-           .text{
-            color: #07141A;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-            margin-left: 12px;
-            span{
-                color: #247A81;
-                font-weight: 600;
+
+            .text {
+                color: #07141A;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                margin-left: 12px;
+
+                span {
+                    color: #247A81;
+                    font-weight: 600;
+                }
             }
-           } 
         }
     }
 
@@ -124,6 +186,21 @@
         gap: 8px;
         width: 100%;
         margin-top: 24px;
+
+        .notifyBtn {
+            background: #FFF;
+            border-radius: 24px;
+            border: 2px solid #247A81;
+            font-weight: 500;
+            font-size: 14px;
+            width: 100%;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: #247A81;
+        }
 
         .addToCart {
             background: #247A81;
@@ -140,6 +217,7 @@
 
         }
 
+
         .buyNow {
             background: #FFFFFF;
             border: 2px solid #247A81;
@@ -155,7 +233,8 @@
 
         }
     }
-    .prepaidDiscount{
+
+    .prepaidDiscount {
         width: 78px;
         height: 12px;
         border-radius: 3px;
@@ -166,10 +245,10 @@
         padding-left: 5px;
         position: relative;
         bottom: 10px;
-       margin: auto;
+        margin: auto;
 
     }
-  
+
     .shareConatiner {
         display: flex;
         gap: 18px;
@@ -192,7 +271,8 @@
             }
         }
     }
-   .tabbyDetailMain{
+
+    .tabbyDetailMain {
         margin-top: 24px;
         margin-bottom: 12px;
     }
@@ -237,54 +317,88 @@
         .reviewContainer {
             margin-top: 17px;
         }
-        .variantRecommendedTxt{
-            font-size: 10px;
-            padding: 1px 10px;
+        .ratingSection{
+            margin-top: 8px;
         }
-        .freeShippingSection{
-            .freeShippingDiv{
-                .truckImg{
-                    img{
-                    width: 24px;
-                    height: 24px;
-                    } 
-                    
-            }
-            .text{
+        .pricingConatiner{
+            .price{
+              .finalPrice{
+                font-size: 16px;
+              } 
+              .retailPrice{
                 font-size: 12px;
-                margin-left: 8px;
             } 
-        }
-
-        .addToCartContainer {
-            .addToCart {
-                font-size: 14px;
-            }
-
-            .buyNow {
-                font-size: 14px;
             }
         }
+        .discount{
+            font-size: 12px;
+        }
+        .variantRecommendedTxt{
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .deliveryDate{
+            font-size: 12px;
+        }
 
-    }
-    .benefitsLogoSection{
-        gap: 20px;
-        .logoDiv{
-            img{
-                height: 32px;
-                width: 32px;
+        .freeShippingSection {
+            .freeShippingDiv {
+                .truckImg {
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
+
+                }
+
+                .text {
+                    font-size: 12px;
+                    margin-left: 8px;
+                }
+            }
+
+            .addToCartContainer {
+
+                .addToCart {
+                    font-size: 14px;
+                }
+
+                .buyNow {
+                    font-size: 14px;
+                }
+            }
+
+        }
+        .benefitsLogoSection{
+            gap: 20px;
+            .logoDiv{
+                img{
+                    height: 32px;
+                    width: 32px;
+                }
             }
         }
-    }
     }
 }
 
-@media screen and (max-width:769px){
+@media screen and (max-width:769px) {
     .pricingSectionContainer {
-        .tabbyDetailMain{
+        .tabbyDetailMain {
             margin-top: 16px;
             margin-bottom: 8px;
         }
     }
 
+}
+    
+@media (max-width:335px){
+    .pricingSectionContainer{
+        .pricingConatiner{
+            .price{
+                display: block;
+            }
+           } 
+    }
+       
     }

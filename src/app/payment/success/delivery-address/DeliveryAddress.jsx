@@ -11,16 +11,19 @@ const DeliveryAddress = ({shippingAddress}) => {
      mobNumber="" ,
       apartment="",
        address="",
-       country=""} = shippingAddress || {}
+       country="",city="",postalCode=""} = shippingAddress || {}
     const userName = firstName + " " +lastName;
-    const addressTxt = apartment+ " " +address + " " +country;
+    const addressTxt1 = apartment+ " " +address 
+    const addressTxt2 = city+ " " +postalCode + " " +country;
   return (
     <div className={styles.deliveryAddress}> 
             <div className={styles.actionItem}>
                 <div className={styles.headerTxt}>Delivery address</div>
             </div>
             <div className={styles.name}>{userName}</div>
-            <div className={styles.txt}>{addressTxt}</div>
+            <div className={styles.txt}>{addressTxt1}</div>
+            <div className={styles.txt}>{addressTxt2}</div>
+
             <div className={styles.txt}>Phone no : {mobNumber}</div>
         </div>
    

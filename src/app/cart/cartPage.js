@@ -18,6 +18,8 @@ import { useAuth } from '@/context/userDetail';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
 import {getCartItem} from '@/services';
 import { useRef } from 'react';
+import { getOutOfStockProduct } from "@/utils";
+import OutOfStockProductsPopUp from "@/components/OutOfStockProductsPopUp/OutOfStockProductsPopUp";
 export default  function Cart({cartData}) {
     console.log("to check")
     const router = useRouter();
@@ -33,9 +35,13 @@ export default  function Cart({cartData}) {
     const clevertapEvent = useCleverTapEvents();
     const {isLogin=false, userData={}} = useAuth();
     const [isApplePaySession , setIsApplePaySession] = useState(false)
+    const [isAllOutOfStockProducts,setIsAllOutOfStockProducts] = useState(false);
+    const [isNoOutOfStockProducts,setIsNoOutOfStockProducts] = useState(false)
+    const [outOfStockProducts,setOutOfStockProducts] = useState([]);
+    const [IsShowOutOfStockProductsPopUp,setIsShowOutOfStockProductsPopUp] = useState(false);
      let appleSession;
 
-  
+  console.log("cartItemsCard",cartItems)
 
     useEffect(()=>{
       try {
@@ -68,10 +74,12 @@ export default  function Cart({cartData}) {
         if(data && Object.keys(data).length > 0 ){
           if(data['products']){
               getData();
+              getOutOfStockProducts()
           }
                 
         }
     },[data]);
+
 
     useEffect(() => {
       if ( cartData && cartData.products && cartData.products.length > 0) {
@@ -105,18 +113,42 @@ export default  function Cart({cartData}) {
   }, [cartData,(typeof window !== "undefined") && window.clevertap]);
 
 
+    useEffect(()=>{
+  if(outOfStockProducts.length === cartItems.length){
+    setIsAllOutOfStockProducts(true)
+    setIsNoOutOfStockProducts(false)
+  }
+   if(outOfStockProducts.length <  cartItems.length){
+    setIsAllOutOfStockProducts(false)
+    setIsNoOutOfStockProducts(false)
+  }
+   if(outOfStockProducts.length == 0){
+    setIsNoOutOfStockProducts(true)
+    setIsAllOutOfStockProducts(false)
+  }
+  },[cartItems,outOfStockProducts])
+
+    console.log("noOutbsm",isNoOutOfStockProducts)
     const getData = async() => {
         const getCartItem = await getCartItemDetails(data['products'],data.currency);
         setCartItems(getCartItem)
     }
     
+    const getOutOfStockProducts = async()=>{
+      const getOutOfStockProductsData= await getOutOfStockProduct(data[`products`],data.currency);
+      setOutOfStockProducts(getOutOfStockProductsData)
+    }
+
+      console.log("outOfStockProducts++++",outOfStockProducts)
+   console.log("isAllOutOfStockProducts",isAllOutOfStockProducts)
+
     useEffect(()=>{
       if(cartItems && cartItems.length > 0){
         calculatePriceDetails()
 
       }
 
-    },[cartItems]);
+    },[cartItems,]);
 
 
     const calculatePriceDetails = () => {
@@ -188,12 +220,32 @@ export default  function Cart({cartData}) {
     }
   }
 
-    const onProceed = () => {
-      if(haveAddress){
-        router.push('/payment');
-      }else{
-        router.push('/address/add-address');
+    const onProceed = async() => {
+
+      if(isNoOutOfStockProducts){
+        if(haveAddress){
+          router.push('./payment')
+        }
+        else{
+          router.push('/address/add-address')
+        }
       }
+      else{
+        setIsShowOutOfStockProductsPopUp(true)
+      }
+      // if(haveAddress){
+      //   if(isNoOutOfStockProducts){
+      //     router.push('/payment');
+      //   }
+      //   else{
+      //     setIsShowOutOfStockProductsPopUp(true)
+      //   }
+       
+     
+      // }
+      // else{
+      //   router.push('/address/add-address');
+      // }
       trcakcData();
     }
 
@@ -512,7 +564,6 @@ export default  function Cart({cartData}) {
     const deliveryFeeMinPrice = minThreshold - subTotal;
     const progressBarColor = deliveryFeeMinPrice >= 0 ? Math.min((subTotal / minThreshold) * 100, 100) : 100;
     const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
-    console.log("jbwjwb",prePaidDiscount)
     const colorPerc = `${(207 * progressBarColor)/100}px`
     const activeProgressBar={
       width:colorPerc,
@@ -566,7 +617,8 @@ export default  function Cart({cartData}) {
               <CompanyInfo />
             </div>
           </div>
-          <PaymentFooterBtn showViewDetails={showViewDetails} isApplePaySession={isApplePaySession} btnName="Proceed To Checkout" totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} prePaidDiscount={prePaidDiscount} />
+        {isAllOutOfStockProducts ? <PaymentFooterBtn isAllOutOfStockProducts={isAllOutOfStockProducts}  btnName="Continue shopping" onProceed={()=>window.location.href="./"} /> :  <PaymentFooterBtn showViewDetails={showViewDetails} isApplePaySession={isApplePaySession} btnName="Proceed To Checkout" totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} prePaidDiscount={prePaidDiscount} />}
+         {IsShowOutOfStockProductsPopUp &&  <OutOfStockProductsPopUp outOfStockProducts={outOfStockProducts} setIsShowOutOfStockProductsPopUp={setIsShowOutOfStockProductsPopUp} haveAddress={haveAddress}/>}
           <Loader isShow={isLoading}/>
         </>
       )

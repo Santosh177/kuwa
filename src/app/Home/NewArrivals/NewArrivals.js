@@ -1,9 +1,8 @@
 import ProductSlider from './ProductSlider/ProductSlider';
 import './new-arrivals.module.scss'
 
-
 const NewArrivals = ({data}) => {
-    const newArrivals = {
+ const newArrivals = {
         product : data,
         headerTitle:"New Arrivals"
       }

@@ -21,7 +21,9 @@ export default async function PaymentPage() {
       },
       cache: 'no-store'
     })
+    
      getCartItems = await getCartItemResp.json();
+     console.log("paymentGetcartItem",getCartItems)
     
   } catch (error) {
     

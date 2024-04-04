@@ -8,15 +8,28 @@ import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import NotifyEmailPopup from '@/components/NotifyEmailPopup/NotifyEmailPopup';
+import NotifySuccessPopup from '@/components/NotifySuccessPopup/NotifySuccessPopup';
+import { useAuth } from '@/context/userDetail';
+
 
 const ProductSlider = ({data}) => {
   const router = useRouter();
   const { product = [], headerTitle = "" } = data || {};
   const [isLoading, setIsLoading] = useState(false);
   const [width, setWidth] = useState(0);
-  const handleResize = () => setWidth(window.innerWidth);
+
   const [isArrowVisible, setIsArrowVisible] = useState(false);
+  const [emailId,setEmailId] = useState("")
+  const [nonloginProductId,setNonLoginProductId] = useState("");
+  const [nonLoginVariantId,setNonLoginVariantId] = useState("");
+  const [isShowNotifySuccessPopup, setIsShowNotifySuccessPopup] = useState(false);
+  const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
   const clevertapEvent = useCleverTapEvents();
+  const handleResize = () => setWidth(window.innerWidth);
+
+  const { isLogin=false ,userData = {}} = useAuth();
+  const emailAddress = userData && userData.emailAddress;
   useEffect(() => {
     setWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
@@ -37,7 +50,79 @@ const ProductSlider = ({data}) => {
       console.error('An unexpected error happened occurred:', error);
     }
   }
+
+  
+  const handleNonLogin = (id,variantId)=>{
+    console.log("id, variantId", id, variantId);
+     setIsShowNotifyEmailPopup(true);
+     setNonLoginProductId(id);
+     setNonLoginVariantId(variantId);
+  }
+  
+  const handleNotify = async() =>{
+    const payload={
+         productId:nonloginProductId|| null,
+         variantId:nonLoginVariantId || null,
+         email: emailId 
+       }
+       try {
+        setIsLoading(true)
+         const res = await fetch(`/api/out-of-stock`, {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(payload),
+         });
+         if(res.status == 200){
+          setIsLoading(false)
+           setIsShowNotifySuccessPopup(true);
+         }
+         else{
+          setIsLoading(false)
+          console.log(error)
+         }
+         
+         
+       } catch (error) {
+        setIsLoading(false)
+         console.error('Error:', error);
+       }
+     }
+  
+     const handleNotifyMe = async(productId, variantId)=>{
+      console.log("variantId",variantId)
+      const payload={
+        productId:productId || null,
+        variantId:variantId || null,
+        email: emailAddress 
+      }
+      try {
+        setIsLoading(true)
+        const res = await fetch(`/api/out-of-stock`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+        if(res.status == 200){
+          setIsLoading(false)
+          setIsShowNotifySuccessPopup(true);
+        }
+        else{
+          setIsLoading(true)
+          console.log(error)
+        }
+       
+        
+      } catch (error) {
+        setIsLoading(false)
+        console.error('Error:', error);
+      }
+    }
   return (
+    <>
     <div className={styles.container}>
     <div className={styles.sliderContainer}>
           <Glider
@@ -113,7 +198,8 @@ const ProductSlider = ({data}) => {
                   "isTimerActive":isTimerActive,
                   "currentTimerStatus":currentTimerStatus,
                   "currentTimerValue":currentTimerValue,
-                  "currentDateTime":currentDateTime
+                  "currentDateTime":currentDateTime,
+                  "normalInventory":normalInventory
                   }
                 }
                 else{
@@ -128,7 +214,8 @@ const ProductSlider = ({data}) => {
                   discountType: discountType,
                   image: data?.image || "",
                   id: data?.id || "",
-                  seoUrl: data?.seoUrl || ""
+                  seoUrl: data?.seoUrl || "",
+                  normalInventory:normalInventory
                 }
               }
                 trackData = {
@@ -137,13 +224,17 @@ const ProductSlider = ({data}) => {
                   "product Id": data?.id,
                 }
                 return (
-                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1,dealId:data.dealId,dealPrice:data.dealFinalPrice })} />
+                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1,dealId:data.dealId,dealPrice:data.dealFinalPrice })} handleNotifyMe={()=>handleNotifyMe(id)} handleNonLogin={()=>handleNonLogin(id)} />
                 )
               })
             }
           </Glider>
         </div>
         </div>
+        <div className={styles.NotifySuccessPopup}>{isShowNotifySuccessPopup && <NotifySuccessPopup setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}/>}</div>
+          <div>{isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}  emailId={emailId} setEmailId={setEmailId} handleNotify={handleNotify}/>}</div>
+         <Loader isShow={isLoading} />
+        </>
   )
 }
 

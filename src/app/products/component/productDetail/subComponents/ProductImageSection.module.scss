@@ -104,6 +104,9 @@
 
 @media(max-width:960px) {
     .imageSectionContainer {
+        width: 100%;
+        margin: auto;
+        .imageSection{
         .tagSection{
             max-width: 100px;
             height: 16px;
@@ -128,9 +131,25 @@
 
             }
         }
+      }
+        .outOfStockTxtMob{
+            position: relative;
+            top: 50%;
+            left: 50%;
+            width: 204px;
+height: 40px;
+border-radius: 8px;
+background: #FFF;
+color: #CE4224;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+text-align: center;
+padding: 10px 53px;
+transform: translate(-50%, -50%);
         }
-        width: 100%;
-        margin: auto;
+    }
         .isDesktop{
             display: none !important;
         }
