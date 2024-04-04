@@ -1,4 +1,4 @@
-
+import Head from 'next/head';
 import ProductDeatil from "../component/productDetail/productDetail"
 import ProductDiscription from "../component/productDiscription/productDiscription"
 import ProductFaq from "../component/productFaq/productFaq"
@@ -28,14 +28,19 @@ export async function generateMetadata({ params, searchParams }) {
 
   const seoTitle = productData && productData.seo && productData.seo.metaTitle || "";
   const seoDescription = productData && productData.seo && productData.seo.metaDescription || "";
-
+  const seoKeywords = productData && productData.seo && productData.seo.keyword || "";
   return {
     title: seoTitle || "",
-    description:seoDescription || ""
+    description:seoDescription || "",
+    keywords: seoKeywords || "" ,
+    // imgUrl: imgUrl || "",
+    // url: url || ""
   };
 }
 
+
 export default async function AllProduct(req) {
+  const params = req.params
   const productID = req && req.params && req.params.id || "";
   const customHeader = await authHeader();
   console.log("customHeader",customHeader)
@@ -48,9 +53,10 @@ export default async function AllProduct(req) {
    } catch (error) {
    }
 
-
   return (
+    
     <>
+  
        <script type="text/javascript" src="/fresh-chat.js" async></script>
 
     <div className={style.productDetailContainerPage}>
@@ -63,9 +69,9 @@ export default async function AllProduct(req) {
         <div className={style.allDetailDisciptionContainer}>
           <ProductDiscription productData={productData} />
         </div>
-        <ProductFaq productData={productData} />
         <ProductReview productData={productData} />
         <RelatedProducts productData={productData}  />
+        <ProductFaq productData={productData} />
         <Footer />
       </>}
       {(productData && Object.keys(productData).length == 0 && customHeader && Object.keys(customHeader).length !=0 )&& <PageNotFound productID={productID}/>}

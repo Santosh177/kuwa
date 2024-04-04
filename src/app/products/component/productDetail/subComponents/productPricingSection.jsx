@@ -11,7 +11,7 @@ import NotifySuccessPopup from "@/components/NotifySuccessPopup/NotifySuccessPop
 import NotifyEmailPopup from "@/components/NotifyEmailPopup/NotifyEmailPopup";
 import { useAuth } from '@/context/userDetail';
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId,avgRating="",totalRating="" }) => {
-    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory,productId,selectedVariantQuantity} = pricingSectionVariables;
+    const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory,productId,selectedVariantQuantity,shortDescription=""} = pricingSectionVariables;
     console.log("pricingSectionVariables",pricingSectionVariables)
 console.log("sljwneklnwk",discount)
     console.log("selectedVarients",selectedVarients)
@@ -371,7 +371,8 @@ console.log("sljwneklnwk",discount)
         </>
         )
         }
-            <div className={styles.title}>{title}</div>
+            <h1 className={styles.title}>{title}</h1>
+            <h2  className={styles.shortDescription} dangerouslySetInnerHTML={{ __html: shortDescription && shortDescription.replace(/&lt;br&gt;/g, '')}}></h2>
             {/* {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
@@ -492,7 +493,20 @@ console.log("sljwneklnwk",discount)
                 data-installment-maximum-amount= {tamaraMaxAmount}
                 data-installment-available-amount={tamaraMinAmount}
                 />
-                               
+              <div className={styles.benefitsLogoSection}>
+                  <div className={styles.logoDiv}>
+                    <img src="https://d25uasl7utydze.cloudfront.net/assets/kuwa_cash.svg" alt="benefits-logo" />
+                    <div className={styles.logoTxt}>Cash on delivery</div>
+                  </div>
+                  <div className={styles.logoDiv}>
+                    <img src="https://d25uasl7utydze.cloudfront.net/assets/kuwa_lock.svg" alt="benefits-logo" />
+                    <div className={styles.logoTxt}>Secure payment</div>
+                  </div>
+                  <div className={styles.logoDiv}>
+                    <img src="https://d25uasl7utydze.cloudfront.net/assets/kuwa_offer.svg" alt="benefits-logo" />
+                    <div className={styles.logoTxt}>100% authentic</div>
+                  </div>
+                </div> 
         </div>
        {isShowNotifySuccessPopup&& <NotifySuccessPopup setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}/>}
        {isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup} handleNotify={handleNotify} setEmailId={setEmailId} emailId={emailId} />}

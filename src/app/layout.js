@@ -10,6 +10,7 @@ import { cookies } from 'next/headers';
 import { CountryListProvider } from "@/context/countryList";
 import Script from 'next/script'
 // import { Work_Sans } from 'next/font/google';
+import Head from 'next/head';
 
 const workSans = Work_Sans({ weight: ['400','500','600', '700'],
 style: ['normal', 'italic'],
@@ -17,9 +18,12 @@ subsets: ['latin'],})
 
 
 export const metadata = {
-  title: 'GetKuwa: Supplements, Health &amp; Nutrition in UAE',
+  title: 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain',
   description: 'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!',
 }
+
+// let title = 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain'
+// let description =  'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!'
 
 
 const getUser = async () => {
@@ -101,7 +105,11 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
       <head>
         <script type="text/javascript" src={"/gtm.js"}></script>
+        {/* <title>{title}</title>
+        <meta name="title" content={title} />
+        <meta name="description" content={description} /> */}
       </head>
+      
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
       <script type="text/javascript" src={"/clevertap-stage.js"} async />
