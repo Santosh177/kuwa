@@ -372,7 +372,7 @@ console.log("sljwneklnwk",discount)
         )
         }
             <h1 className={styles.title}>{title}</h1>
-            <h2  className={styles.shortDescription} dangerouslySetInnerHTML={{ __html: shortDescription && shortDescription.replace(/&lt;br&gt;/g, '')}}></h2>
+            <h2 className={styles.shortDescription}>{shortDescription}</h2>
             {/* {numberOfProductReview && <div className={styles.reviewContainer}>
                 <div className={styles.imageReview}><img src="" alt="" /></div>
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
