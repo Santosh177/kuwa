@@ -66,9 +66,9 @@ const ProductDeatil = ({ productData = {} }) => {
         const deviceType = getDeviceType();
         console.log("deviceType",deviceType)
         const trackData = {
-            userId:userData.id,
+            userId:userData?.id,
             country:selectedCountry.name,
-            email:userData.emailAddress,
+            email:userData?.emailAddress,
             productTitle:title,
             productId:id,
             landing_page_url:window.location.pathname,
