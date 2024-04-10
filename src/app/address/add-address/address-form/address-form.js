@@ -10,6 +10,8 @@ import { checkInternationalPhone } from "../../../../utils/validation";
 import styles from './address-form.module.scss';
 
 const validatePersonalForm = (formData) => {
+
+  console.log("validatePersonalForm",formData)
     const errors = {};
     if (!formData.firstName) {
       errors.firstName = 'First name is required.';
@@ -20,7 +22,7 @@ const validatePersonalForm = (formData) => {
     if(("mobNoValidation" in formData) && !formData.mobNoValidation){
       errors.mobNumber = "Mobile number is required";
     }
-    else if(!formData.mobNoValidation){
+    if(!formData.mobNumber){
         errors.mobNumber = "Mobile number is required";
     }
     else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
@@ -47,9 +49,9 @@ const validateShippingAddressForm = (formData) => {
     if(!formData.city){
       errors.city = "City is required";
     }
-    if(!formData.postalCode){
-      errors.postalCode = "Postal Code is required";
-    }
+    // if(!formData.postalCode){
+    //   errors.postalCode = "Postal Code is required";
+    // }
     // if(!formData.stateProvince){
       // errors.stateProvince = "State Province is required";
     // }
@@ -71,9 +73,9 @@ const validateShippingAddressForm = (formData) => {
     if(!formData.city){
       errors.city = "City is required";
     }
-    if(!formData.postalCode){
-      errors.postalCode = "Postal Code is required";
-    }
+    // if(!formData.postalCode){
+    //   errors.postalCode = "Postal Code is required";
+    // }
     // if(!formData.stateProvince){
     //   errors.stateProvince = "State Province is required";
     // }
@@ -153,7 +155,7 @@ const ShippingAddressForm = ({onChange={},values={},errors={}}) => {
                     {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
                 </div>
                 <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="postalCode" placeHolder="Postal code *"  value={values['postalCode']} onInputChange={onChange}   />
+                    <Input type="text" fieldName="postalCode" placeHolder="Postal code "  value={values['postalCode']} onInputChange={onChange}   />
                     {errors.postalCode && <span className={styles.errorMsg}>{errors.postalCode}</span>}
                 </div>
                 </div>
@@ -195,7 +197,7 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
                     {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
                 </div>
                 <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="postalCode" placeHolder="Postal code *"  value={values['postalCode']} onInputChange={onChange}   />
+                    <Input type="text" fieldName="postalCode" placeHolder="Postal code "  value={values['postalCode']} onInputChange={onChange}   />
                     {errors.postalCode && <span className={styles.errorMsg}>{errors.postalCode}</span>}
                 </div>
                 </div>
@@ -227,7 +229,7 @@ const getShippingAddressData = (data) => {
 }
 
 const getBillingAddressData = (data) => {
-  console.log("biii",data)
+  // console.log("biii",data)
   return(
     {
       "firstName": data.firstName,
@@ -259,7 +261,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const [shippingAddressErrors, setShippingAddressErrors] = useState({});
       const [billingAddressErrors, setBillingAddressErrors] = useState({});
  
-  console.log("personalInfoErrors",personalInfoErrors)
+  // console.log("personalInfoErrors",personalInfoErrors)
 
   useEffect(()=>{
    
@@ -274,7 +276,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
   },[error])
       useEffect(()=>{
         if(isEdit && formData && Object.keys(formData).length > 0){
-          console.log("formData",formData)
+          // console.log("formData",formData)
 
 
             
@@ -327,8 +329,8 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       useEffect(()=>{
       if(getFormValues){
         const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
-        console.log("validationPersonalInfoErrors",validationPersonalInfoErrors)
-        console.log("personalInfo",personalInfo)
+        // console.log("validationPersonalInfoErrors",validationPersonalInfoErrors)
+        // console.log("personalInfo",personalInfo)
         const validationShippingErrors = validateShippingAddressForm(shippingAddress);
         const validationBillingErrors = validateBillingAddressForm(billngAddress);
         if (addressValidation()) {
@@ -415,9 +417,9 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       }
 
   
-      console.log("personalInfo",personalInfo)
-      console.log("shippingAddress",shippingAddress)
-      console.log("billngAddress",billngAddress)
+      // console.log("personalInfo",personalInfo)
+      // console.log("shippingAddress",shippingAddress)
+      // console.log("billngAddress",billngAddress)
       return (
         <>
           <div className={styles.addressForm}> 
