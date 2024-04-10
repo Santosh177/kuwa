@@ -27,9 +27,9 @@ const ProductDiscription = ({ productData}) => {
     return (
         <div className={style.productDiscriptionContainer}>
             <div className={style.tabSectionContainer}>
-                <h2 className={[style.tabs,(selectedTab === "discription" && style.bottomBorder)].join(" ") } onClick={() => handelOnclick("discription")}>Description</h2>
-            {ingredients!="<p><br></p>" && ingredients && <h2 className={[style.tabs,(selectedTab === "ingridents" && style.bottomBorder)].join(" ")} onClick={() => handelOnclick("ingridents")} >Ingredients & Dosage</h2>}
-           {benefits!= "<p><br></p>" && benefits && <h2 className={[style.tabs,(selectedTab === "benfits" && style.bottomBorder)].join(" ")} onClick={() => handelOnclick("benfits")} >Benefits</h2>}
+                <div className={[style.tabs,(selectedTab === "discription" && style.bottomBorder)].join(" ") } onClick={() => handelOnclick("discription")}>Description</div>
+            {ingredients!="<p><br></p>" && ingredients && <div className={[style.tabs,(selectedTab === "ingridents" && style.bottomBorder)].join(" ")} onClick={() => handelOnclick("ingridents")} >Ingredients & Dosage</div>}
+           {benefits!= "<p><br></p>" && benefits && <div className={[style.tabs,(selectedTab === "benfits" && style.bottomBorder)].join(" ")} onClick={() => handelOnclick("benfits")} >Benefits</div>}
             </div>
             <div className={style.selectedTabData}>
                 <div dangerouslySetInnerHTML={{ __html: selectedTabData && selectedTabData.replace(/&lt;br&gt;/g, '')}}></div>
