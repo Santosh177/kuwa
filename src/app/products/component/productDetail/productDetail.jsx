@@ -35,7 +35,7 @@ const ProductDeatil = ({ productData = {} }) => {
     const [haveAdress, setHaveAddress] = useState(false);
     const [ isAddedToCart , setIsAddedToCart ] = useState(false);
     const [ isLoading , setIsLoading] = useState(false)
-    const [variantdealId, setVariantDealId] = useState();
+    const [variantdealId, setVariantDealId] = useState(null);
    const[isVariantDealActive,setIsVariantDealActive] = useState();
    const[isVariantTimeActive,setIsVariantTimeActive] = useState();
    const[isVariantCurrenTimeStatus,setIsVariantCurrenTimeStatus] = useState();
@@ -96,7 +96,12 @@ const ProductDeatil = ({ productData = {} }) => {
             let currentVariantTimerStatus = selectedVarientsData[0].pricings[0].currentTimerStatus || ""
             let dealTag = selectedVarientsData[0].pricings[0].dealTag || ""
             let dealIconUrl = selectedVarientsData[0].pricings[0].dealIconUrl || ""
-            setVariantDealId(selectedVariantdealId);
+            if(selectedVariantdealId && isVariantDealActive && isVariantTimerActive 
+                && currentVariantTimerStatus == "in-between"
+                ){
+                    setVariantDealId(selectedVariantdealId);
+                }
+           
             setIsVariantCurrenTimeStatus(currentVariantTimerStatus);
             setIsVariantTimeActive(isVariantTimerActive);
             setIsVariantDealActive(isVariantDealActive);
