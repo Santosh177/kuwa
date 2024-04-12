@@ -24,10 +24,7 @@ const MainCategory = ({ isDealPage }) => {
     const [isLoding, setIsLOading] = useState(false);
     const [isLodingProduct, setIsLoadingProduct] = useState(false);
     const [responseData, setResponseData] = useState({})
-    // const [searchKey,setSearchKey]=useState("");
-
-    console.log("searchParams", searchParams)
-
+   
 
     const [paramsData, setParamsData] = useState({})
     const params = useParams();
@@ -96,13 +93,13 @@ const MainCategory = ({ isDealPage }) => {
 
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
-        const available = searchParams.get('AVAILABLE');
-
-        if (category || sort || available) {
+        const AVAILABLE = searchParams.get('AVAILABLE');
+        console.log("available",AVAILABLE)
+        if (category || sort || AVAILABLE) {
             const params = {};
             if (category) params.category = category.split(',');
             if (sort) params.sort = sort;
-            if (available) params.available = available;
+            if (AVAILABLE) params.AVAILABLE = AVAILABLE;
 
             setParamsData(params);
         } else {
@@ -121,7 +118,6 @@ const MainCategory = ({ isDealPage }) => {
 
     }, [])
 
-
     useEffect(() => {
 
         if (paramsData && Object.keys(paramsData).length > 0) {
@@ -138,9 +134,9 @@ const MainCategory = ({ isDealPage }) => {
 
     const fetchFilterCollectionData = async () => {
         setIsLoadingProduct(true);
-        const { category = [], sort = "", searchKey = "",available="" } = paramsData || {};
+        const { category = [], sort = "", searchKey = "",AVAILABLE="" } = paramsData || {};
         let query = "";
-
+        console.log("paramsData",paramsData)
         if (sort && category.length > 0) {
             query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category.join(','))}`;
         } else if (sort && category.length === 0) {
@@ -157,12 +153,19 @@ const MainCategory = ({ isDealPage }) => {
             }
         }
 
-        if (available) {
+        if (AVAILABLE) {
             if (!sort && category.length === 0 && !searchKey) {
-                query = `inStock=${available === "true"}`;
+                query = `inStock=true`;
             } else {
-                query += `&inStock=${available === "true"}`;
+                query += `&inStock=true`;
             }
+        }
+        if(!AVAILABLE){
+            if (!sort && category.length === 0 && !searchKey) {
+                query = `inStock=false`;
+            } else {
+                query += `&inStock=false`;
+            }   
         }
 
         let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}&${query}`;

@@ -20,6 +20,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
     const multiSelect = superCollection
 
     const stockSelect = [{cat: {name:"AVAILABLE", value:"inStock"}, options: [{name:"In Stock",value:"inStock"}]}]
+    
     const addQuryPrams = (type,data)=>{
         const current = new URLSearchParams(searchParams);
         if(type === "sort"){
@@ -35,6 +36,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
         const query = search ? `?${search}` : "";
         router.replace(`${pathname}${query}`);
     }
+
     const onClickSelection = (option) => {
 
             if(paramsData && paramsData['category'] && paramsData['category'].length>0 && paramsData['category'].includes(option)){
@@ -52,6 +54,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
                
             }
     }
+
     const onClickSort = (option) =>{
       
             if(paramsData && paramsData['sort'] && paramsData['sort'] === option.value ){
@@ -110,7 +113,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
                         </div>
                         {isCollapse && <div className={style.options}>
                             {options.map((ele) => {
-                                const image = ele.value === (paramsData && paramsData['inStock']) ? checkIamge : uncheckImage;
+                                const image = ele.value === (paramsData && paramsData['AVAILABLE']) ? checkIamge : uncheckImage;
                                 return (
                                     <div className={style.optionsTxt} onClick={() => onClickStock(ele)}>
                                         <div className={style.tickBox}><img src={image} alt="check box" /></div>
@@ -122,6 +125,7 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
                     </div>
                 )
             })}
+            
             {multiSelect?.map((item) => {
                 const { superCollectionName = '', category = [] } = item || {}
                 const [isCollapse, setIsCollapse] = useState(true)
