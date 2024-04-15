@@ -64,7 +64,6 @@ const ProductDeatil = ({ productData = {} }) => {
       }
     useEffect(()=>{
         const deviceType = getDeviceType();
-        console.log("deviceType",deviceType)
         const trackData = {
             userId:userData?.id,
             country:selectedCountry.name,
@@ -74,8 +73,14 @@ const ProductDeatil = ({ productData = {} }) => {
             landing_page_url:window.location.pathname,
             device: deviceType
         }
-        clevertapEvent.onCleverTapEvent("kuwa_page_view",trackData)
+        // clevertapEvent.onCleverTapEvent("kuwa_page_view",trackData)
+       setTimeout(()=>{
+        window.clevertap.event.push("kuwa_page_view", trackData);
+       },2000)
+
     },[])
+
+
     useEffect(()=>{
 
         if(variants && variants.length > 0){
