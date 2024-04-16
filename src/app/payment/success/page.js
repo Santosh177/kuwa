@@ -185,7 +185,10 @@ export default function PaymentSuccess() {
       if(window && window.clevertap){
         window.clevertap.setMultiValuesForKey("cart_items", []);
       }
-      window.clevertap.event.push("kuwa_order_confirmed", track);
+      setTimeout(()=>{
+        window.clevertap.event.push("kuwa_order_confirmed", track);
+      },2000)
+   
     }
   }
 

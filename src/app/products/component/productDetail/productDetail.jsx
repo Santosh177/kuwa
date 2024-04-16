@@ -76,7 +76,7 @@ const ProductDeatil = ({ productData = {} }) => {
         // clevertapEvent.onCleverTapEvent("kuwa_page_view",trackData)
        setTimeout(()=>{
         window.clevertap.event.push("kuwa_page_view", trackData);
-       },2000)
+       },5000)
 
     },[])
 
