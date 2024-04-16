@@ -3,6 +3,7 @@ import HomePage from "./Home/HomePage";
 import Loader from "@/components/Loader/Loader";
 import { useEffect, useState } from "react";
 import { useCountry } from '@/context/contryDetails';
+import mixpanel from 'mixpanel-browser';
 export default function Home(req) {
 
   console.log("HomePage",req)
@@ -31,6 +32,16 @@ export default function Home(req) {
 
   console.log("homePageData",homePageData)
 
+  // useEffect(()=>{
+  //   mixpanel.init('d670cab0105c2c17aaea07a016f2d46f', {debug: true, track_pageview: true, persistence: 'localStorage'})
+
+  //   mixpanel.identify("userData")
+    
+  //   mixpanel.track('Sign Up', {
+  //     'Signup Type': 'santo'
+  //   })
+  // },[])
+ 
  
 
 
