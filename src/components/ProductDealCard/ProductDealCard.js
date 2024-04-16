@@ -7,7 +7,7 @@ const ProductDealCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNo
   const { isLogin=false ,userData = {}} = useAuth();
   const router = useRouter();
     const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus="",normalInventory} = cardData || {}
-    console.log("cardData++++",cardData)
+    // console.log("cardData++++",cardData)
     const btnName = normalInventory > 0 ? "Add to cart" : "Notify me"
 
     return(
