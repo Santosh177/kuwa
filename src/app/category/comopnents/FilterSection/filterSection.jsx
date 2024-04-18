@@ -167,14 +167,19 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const multiSelect = superCollection;
+
+    console.log("multiSelect",multiSelect)
     // const singleSelect = ["new arivals", "Price Low to high", "Price high to low"]
     const singleSelect = [{name:"New Arivals",value:"new_arrivals"},{name:"Price Low to high",value:"price_low_to_high"},{name:"Price High to Low",value:"price_high_to_low"}]
     // const singleSelect = [1, 2, 3, 4]
+    const stockSelect = [{cat:"AVAILABLE", value:"inStock", options: [{name:"In Stock",value:"inStock"}]}]
     const [selectedCatogries, setSelectedCatogries] = useState([]);
     const [selectedTab, setSelectedTab] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [selectedSingle,setSelectedSingle] = useState("");
     const [selectedCollection, setSelectedSelection] = useState([]);
+    const [selectedStockFilter,setSelectedStockFilter] = useState([]);
+    const [selectedStock, setSelectedStock] = useState([])
 
     
     useEffect(() => {
@@ -186,6 +191,10 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         setSelectedCatogries(options);
         setSelectedTab(cat)
     };
+    const handleStockFilter = (options, cat) => {
+        setSelectedStockFilter(options);
+        setSelectedTab(cat)
+    }
     const addQuryPrams = (type,data)=>{
         const current = new URLSearchParams(searchParams);
         if(type === "sort"){
@@ -208,6 +217,15 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
             setSelectedSelection(current => [...current, option]);
         }
 
+    }
+    const onClickStockSelect = (option) =>{
+
+        if(selectedStock && selectedStock.includes(option)){
+            const filteredData = selectedStock.filter((item) => item !== option);
+            setSelectedStock(filteredData)
+        }else{
+            setSelectedStock(current => [...current, option]);
+        }
     }
 
     useEffect(()=>{
@@ -234,7 +252,8 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 
     const handelApply = () => {
         setSelectedFilter("NOT_SELCTED")
-        addQuryPrams("category",selectedCollection) 
+        addQuryPrams("category",selectedCollection)
+         
         setParamsData((prevObject)=>({...prevObject,category:selectedCollection}))
     }
     const handelCancel = () => {
@@ -250,7 +269,20 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                 <div className={style.mobileFiltration} >
                     <div className={style.mobileCategories} >
                         <div className={style.categories} >
+                        {stockSelect.map((item) => {
+                            console.log("bjwfbqjbq",item)
+                                const { cat , options } = item || {};
+                                if (cat) {
+                                    return (<div className={[style.Txt, (cat === selectedTab ? style.slectedTab : "")].join(" ")} onClick={() => handleStockFilter(options, cat) }>
+                                        <div className={style.cat} >{cat}</div>
+                                    </div>)
+                                } else {
+                                    return <></>
+                                } 
+
+                            })}
                             {multiSelect.map((item) => {
+                                console.log("bwdqbq",item)
                                 const { superCollectionName, category } = item || {};
                                 if (superCollectionName) {
                                     return (<div className={[style.Txt, (superCollectionName === selectedTab ? style.slectedTab : "")].join(" ")} onClick={() => handelOnclick(category, superCollectionName)} >
@@ -260,8 +292,28 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                                     return <></>
                                 }
                             })}
+                           
                         </div>
                         <div className={style.options}>
+                        {selectedStockFilter.map((item) => {
+                                const { name = "", value = "" } = item || {};
+                                let isOptionSelected = false
+                                if (selectedStock && selectedStock.length > 0 && selectedStock.includes(name)){
+                                    isOptionSelected = true
+                                }
+                                const image = isOptionSelected ? rectangularCheck : rectangularUnCheck;
+                                if (name) {
+                                    return (
+                                        <div className={style.optionsTxt} onClick={() => onClickStockSelect(name)} >
+                                            <div className={style.tickBox}><img src={image} alt="check box" /></div>
+                                            <div className={style.elements}>{name}</div>
+                                        </div>
+                                    )
+
+                                } else {
+                                    return <></>
+                                }
+                            })}
                             {selectedCatogries.map((item) => {
                                 const { id = "", collectionName = "" } = item || {};
                                 let isOptionSelected = false
