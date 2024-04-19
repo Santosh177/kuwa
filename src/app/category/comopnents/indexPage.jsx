@@ -94,7 +94,6 @@ const MainCategory = ({ isDealPage }) => {
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
-        console.log("available",AVAILABLE)
         if (category || sort || AVAILABLE) {
             const params = {};
             if (category) params.category = category.split(',');
@@ -106,7 +105,7 @@ const MainCategory = ({ isDealPage }) => {
             setParamsData({
                 category: [],
                 sort: "",
-                available: ""
+                AVAILABLE: []
             });
         }
 
@@ -238,7 +237,7 @@ const MainCategory = ({ isDealPage }) => {
 
     const isHide = slectedFilter === "NOT_SELCTED" || slectedFilter === "Sort By";
     let isShowDotForCat = false;
-    if (paramsData && paramsData['category'] && paramsData['category'].length > 0) {
+    if ((paramsData && paramsData['category'] && paramsData['category'].length > 0) || (paramsData && paramsData['AVAILABLE'] && paramsData['AVAILABLE'].length > 0)) {
         // const value = (selectedOptionsHead.category).split(",")
         isShowDotForCat = true
     }
@@ -247,10 +246,6 @@ const MainCategory = ({ isDealPage }) => {
         // const value = selectedOptionsHead.sort
         isShowDotForSort = true
 
-    }
-    let isShowDotForAvailable = false;
-    if (paramsData && paramsData['AVAILABLE']) {
-        isShowDotForAvailable = true
     }
     console.log(selectedOptionsHead.sort, "slectedFilter");
     console.log(isShowDotForSort, "slectedFilter");

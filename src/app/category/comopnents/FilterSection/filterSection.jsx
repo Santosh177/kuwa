@@ -181,7 +181,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
     const [selectedStockFilter,setSelectedStockFilter] = useState([]);
     const [selectedStock, setSelectedStock] = useState([])
 
-    
+        console.log("santoParams",paramsData)
     useEffect(() => {
         setSelectedTab(multiSelect[0]?.superCollectionName);
         setSelectedCatogries(multiSelect[0]?.category)
@@ -192,14 +192,21 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         setSelectedTab(cat)
     };
     const handleStockFilter = (options, cat) => {
+        console.log("stockFilter", options, cat);
         setSelectedStockFilter(options);
         setSelectedTab(cat)
     }
     const addQuryPrams = (type,data)=>{
+        console.log("addQuryPrams", type, data)
         const current = new URLSearchParams(searchParams);
+        console.log("current",current)
         if(type === "sort"){
             current.set(type, data);
-        }else{
+        }
+        else if(type === "AVAILABLE"){
+            current.set(type,data)
+        }
+        else{
             current.set(type, data.join(","));
         }
         const search = current.toString();
@@ -228,8 +235,11 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         }
     }
 
+    console.log("selectedStock",selectedStock)
+    console.log("selectedCollection",selectedCollection)
+
     useEffect(()=>{
-        console.log("paramsDataparamsData",paramsData)
+        // console.log("paramsDataparamsData",paramsData)
         if(paramsData && paramsData['category'] && paramsData['category'].length > 0){
             setSelectedSelection(paramsData['category'])
         }
@@ -252,9 +262,13 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 
     const handelApply = () => {
         setSelectedFilter("NOT_SELCTED")
-        addQuryPrams("category",selectedCollection)
-         
-        setParamsData((prevObject)=>({...prevObject,category:selectedCollection}))
+        if(selectedStock.length > 0){
+            addQuryPrams("AVAILABLE",selectedStock)
+        }
+        else{
+            addQuryPrams("category",selectedCollection)
+        }   
+        setParamsData((prevObject)=>({...prevObject,category:selectedCollection,}))
     }
     const handelCancel = () => {
         setSelectedFilter("NOT_SELCTED")
@@ -270,7 +284,6 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                     <div className={style.mobileCategories} >
                         <div className={style.categories} >
                         {stockSelect.map((item) => {
-                            console.log("bjwfbqjbq",item)
                                 const { cat , options } = item || {};
                                 if (cat) {
                                     return (<div className={[style.Txt, (cat === selectedTab ? style.slectedTab : "")].join(" ")} onClick={() => handleStockFilter(options, cat) }>
@@ -282,7 +295,6 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 
                             })}
                             {multiSelect.map((item) => {
-                                console.log("bwdqbq",item)
                                 const { superCollectionName, category } = item || {};
                                 if (superCollectionName) {
                                     return (<div className={[style.Txt, (superCollectionName === selectedTab ? style.slectedTab : "")].join(" ")} onClick={() => handelOnclick(category, superCollectionName)} >

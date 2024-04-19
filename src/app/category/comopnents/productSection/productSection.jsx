@@ -9,8 +9,8 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { mappingDealProducts } from "@/services"
 
 const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
-    console.log("resposneValue",resposneValue[0])
-    console.log("ahavha",isDealPage)
+    // console.log("resposneValue",resposneValue[0])
+    // console.log("ahavha",isDealPage)
     const [isLodaing, setIsLoading] = useState(false);
     const clevertapEvent = useCleverTapEvents();
     let trackData={};
@@ -32,7 +32,7 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
         }
     }
     let currentTimerValue = resposneValue[0]?.currentTimerValue
-    console.log("currentTimerValue", currentTimerValue)
+    // console.log("currentTimerValue", currentTimerValue)
     useEffect(() => {
         if (currentTimerValue) {
           const data = currentTimerValue.match(/\d+/g); // Extract digits from the string
