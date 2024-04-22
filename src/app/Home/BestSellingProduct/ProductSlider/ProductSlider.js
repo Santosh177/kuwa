@@ -66,6 +66,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
                 console.log("bestSellingProduct",data)
                 if(variants && variants.length > 0  && data.variants[0].variantPrices.length>0) {
                   const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
+
                   if(variantPrices[0].dealId && variantPrices[0].isDealActive && variantPrices[0].isTimerActive
                      && variantPrices[0].currentTimerStatus == "in-between" ){
                     cardData = {
@@ -98,7 +99,8 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
                       seoUrl: data.seoUrl || ""
                     }
                   }
-                }else{
+                }
+                else{
                   if(
                     data.dealId && data.isDealActive && data.isTimerActive
                     && data.currentTimerStatus == "in-between"
@@ -146,7 +148,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
                   "product Id": data?.id,
                 }
 
-                let addToCartPayload = {  }
+                let addToCartPayload = {}
 
                 if(variants && variants.length > 0){
                   const { variantPrices = [] ,name="",image="",id=""} = data.variants[0] || {};
@@ -171,6 +173,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
 
                 }
                 else{
+                  console.log("bwqbjqbjq",data)
                   if(data.dealId && data.isTimerActive && data.isDealActive
                     && data.currentTimerStatus == "in-between"
                   ){

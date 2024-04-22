@@ -223,8 +223,15 @@ const ProductSlider = ({data}) => {
                   "quantity": 1,
                   "product Id": data?.id,
                 }
+               let addToCartPayload={}
+               if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
+                addToCartPayload = { product: data.id, quantity: 1,dealId:data.dealId,dealPrice:data.dealFinalPrice }
+              }
+               else{
+                addToCartPayload = { product: data.id, quantity: 1}
+               }
                 return (
-                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product: data.id, quantity: 1,dealId:data.dealId,dealPrice:data.dealFinalPrice })} handleNotifyMe={()=>handleNotifyMe(id)} handleNonLogin={()=>handleNonLogin(id)} />
+                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart(addToCartPayload)} handleNotifyMe={()=>handleNotifyMe(id)} handleNonLogin={()=>handleNonLogin(id)} />
                 )
               })
             }

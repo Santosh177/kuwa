@@ -357,7 +357,7 @@ const handleNotify = async() =>{
                   let addToCartPayload = {}
                   if(variants && variants.length > 0){
                     const { variantPrices = [] ,name="",image="",id=""} = data.variants[0] || {};
-                    let variantId = id;
+                    let variantId ;
                     let variantDealPrice = "";
                     let variantDealId = ''
                     if(variantPrices && variantPrices.length > 0){
@@ -368,11 +368,11 @@ const handleNotify = async() =>{
                     if( variantPrices[0]?.dealId &&  variantPrices[0]?.isDealActive && variantPrices[0]?.isTimerActive
                         && variantPrices[0].currentTimerStatus == "in-between"
                      ){
-                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId,dealId:variantDealId,dealPrice:variantDealPrice}
+                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":variantId? true : false,"variantId":variantId,dealId:variantDealId,dealPrice:variantDealPrice}
 
                     }
                     else{
-                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":true,"variantId":variantId}
+                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":variantId? true : false,"variantId":variantId}
                     }
  
                   }
