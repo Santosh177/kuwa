@@ -20,6 +20,7 @@ import {getCartItem} from '@/services';
 import { useRef } from 'react';
 import { getOutOfStockProduct } from "@/utils";
 import OutOfStockProductsPopUp from "@/components/OutOfStockProductsPopUp/OutOfStockProductsPopUp";
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 export default  function Cart({cartData}) {
     console.log("to check")
     const router = useRouter();
@@ -106,6 +107,7 @@ export default  function Cart({cartData}) {
               if (window.clevertap) {
                   window.clevertap.setMultiValuesForKey("cart_items", trackData);
               }
+           
           } catch (error) {
               console.log(error, "not work for older user")
           }
@@ -150,7 +152,33 @@ export default  function Cart({cartData}) {
 
     },[cartItems,]);
 
-
+    function getDeviceType() {
+      if (isMobile) {
+        if (isAndroid) {
+          return 'Android';
+        } else if (isIOS) {
+          return 'iOS';
+        } else {
+          return 'Mobile';
+        }
+      } else if (isTablet) {
+        return 'Tablet';
+      } else {
+        return 'Desktop';
+      }
+    }
+    
+   useEffect(()=>{
+    const deviceType = getDeviceType();
+    const trackData = {
+        userId:userData?.id,
+        device: deviceType
+    }
+    setTimeout(()=>{
+      clevertapEvent.onCleverTapEvent("kuwa_cart_landing",trackData)
+    },2000)
+   
+   },[])
     const calculatePriceDetails = () => {
       const { total=0, subtotal=0, currency = "" } = data || {};
       const minThreshold = deliveryFeesConfig.minThreshold || 0;
@@ -260,6 +288,7 @@ export default  function Cart({cartData}) {
         refreshData()
       }
      }
+     
      const refreshData = () => {
       router.refresh()
       setTimeout(()=>{
