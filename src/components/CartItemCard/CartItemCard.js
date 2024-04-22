@@ -10,7 +10,21 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index,ou
 
     console.log("CartItemCardCartItemCard",data)
     const { image="" , qty="" , productName="",retailPrice="", finalPrice="",discountType="",discountAmount="",currency="", id="", variants,dealId="",normalInventory=""} = data || {};
-console.log("cartItemCard",data)
+    let payloadDataIncrement={};
+    let payloadDataDecrement = {}
+    console.log("quantity",qty)
+    if(variants && variants.pricings.length > 0){
+        payloadDataIncrement={product:id,quantity:qty+1,dealId:dealId,isVariant:true,variantId:variants?.variants?.id}
+    }
+    else{
+        payloadDataIncrement={product:id,quantity:qty+1,dealId:dealId,isVariant:false,variantId:null}
+    }
+    if(variants && variants.pricings.length > 0){
+        payloadDataDecrement={product:id,quantity:qty-1,dealId:dealId,isVariant:true,variantId:variants?.variants?.id}
+    }
+    else{
+        payloadDataDecrement={product:id,quantity:qty-1,dealId:dealId,isVariant:false,variantId:null}
+    }
     return(
         <div >
          {paymentPage == true ? 
@@ -44,9 +58,9 @@ console.log("cartItemCard",data)
                  <div className={styles.outOfStockTxt}>Out of stock</div>
                   : 
                   <div className={styles.quantityContainer}>
-                    <div className={styles.quantityBtn} onClick={()=>(qty > 1) && onUpdateItem({product:id,quantity:qty-1,dealId:dealId})}>-</div>
+                    <div className={styles.quantityBtn} onClick={()=>(qty > 1) && onUpdateItem(payloadDataDecrement)}>-</div>
                     <span>{qty}</span>
-                    <div className={styles.quantityBtn} onClick={()=>onUpdateItem({product:id,quantity:qty+1,dealId:dealId})}>+</div>
+                    <div className={styles.quantityBtn} onClick={()=>onUpdateItem(payloadDataIncrement)}>+</div>
                     </div>
                 }
             </div>

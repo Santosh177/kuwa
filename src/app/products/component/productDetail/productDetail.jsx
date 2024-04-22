@@ -26,7 +26,7 @@ const ProductDeatil = ({ productData = {} }) => {
     const { selectedCountry={} } = useCountry();
     const {isLogin=false, userData={}} = useAuth();
     const { setCartItemData={},setCartItemCount={} } = useCartItems();
-    const [selectedVarients, setselectedVarients] = useState("");
+    const [selectedVarients, setselectedVarients] = useState(null);
     const [selctedVrientsData, setSelectedVrientsData] = useState({});
     const [retailPrice, setRetailPrice] = useState(0);
     const [finalPrice, setFinalPrice] = useState(0);
