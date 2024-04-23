@@ -152,14 +152,14 @@ const MainCategory = ({ isDealPage }) => {
             }
         }
 
-        if (AVAILABLE) {
+        if (AVAILABLE && AVAILABLE.length > 0 ) {
             if (!sort && category.length === 0 && !searchKey) {
                 query = `inStock=true`;
             } else {
                 query += `&inStock=true`;
             }
         }
-        if(!AVAILABLE){
+        if(!AVAILABLE || (AVAILABLE && AVAILABLE.length == 0)){
             if (!sort && category.length === 0 && !searchKey) {
                 query = `inStock=false`;
             } else {

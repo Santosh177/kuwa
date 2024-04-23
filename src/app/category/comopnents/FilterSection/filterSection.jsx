@@ -197,14 +197,9 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         setSelectedTab(cat)
     }
     const addQuryPrams = (type,data)=>{
-        console.log("addQuryPrams", type, data)
         const current = new URLSearchParams(searchParams);
-        console.log("current",current)
         if(type === "sort"){
             current.set(type, data);
-        }
-        else if(type === "AVAILABLE"){
-            current.set(type,data)
         }
         else{
             current.set(type, data.join(","));
@@ -213,6 +208,15 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         const query = search ? `?${search}` : "";
         router.replace(`${pathname}${query}`);
     }
+
+    const addQury = (type,data)=>{
+        const current = new URLSearchParams(searchParams);
+        current.set(type, data);
+        const search = current.toString();
+        const query = search ? `?${search}` : "";
+        router.replace(`${pathname}${query}`);
+    }
+
 
     const onClickSelection = (option) =>{
         console.log("optionoption",option)
@@ -262,13 +266,9 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 
     const handelApply = () => {
         setSelectedFilter("NOT_SELCTED")
-        if(selectedStock.length > 0){
-            addQuryPrams("AVAILABLE",selectedStock)
-        }
-        else{
-            addQuryPrams("category",selectedCollection)
-        }   
-        setParamsData((prevObject)=>({...prevObject,category:selectedCollection,}))
+        addQury("AVAILABLE", selectedStock);
+        addQuryPrams("category", selectedCollection);
+        setParamsData((prevObject)=>({...prevObject,AVAILABLE:selectedStock,category:selectedCollection,}))  
     }
     const handelCancel = () => {
         setSelectedFilter("NOT_SELCTED")
