@@ -11,13 +11,14 @@ import { CountryListProvider } from "@/context/countryList";
 import Script from 'next/script'
 // import { Work_Sans } from 'next/font/google';
 import Head from 'next/head';
+import Mixpanel from 'mixpanel';
 
-// import { mixpanel } from '@/utils/mixPanel';
 
 const workSans = Work_Sans({ weight: ['400','500','600', '700'],
 style: ['normal', 'italic'],
 subsets: ['latin'],})
 
+const mixpanel = Mixpanel.init('d670cab0105c2c17aaea07a016f2d46f');
 
 export const metadata = {
   title: 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain',
@@ -73,10 +74,13 @@ const getCountryList = async() => {
 
 
 
+
+
+
 export default async function RootLayout({ children }) {
   const userData = await getUser();
   const countryList = await getCountryList();
-  const { isLogin= false, } = userData || {}
+  const { isLogin= false,  } = userData || {}
   let selectedCountryData = {};
 
   if(isLogin){
@@ -100,12 +104,13 @@ export default async function RootLayout({ children }) {
       }
     }
   }
-
-
+  
+  const trackEvent=(eventName, eventData) => {
+    mixpanel.track(eventName, eventData);
+  }
+  
+ 
   const isProd = (process.env.NODE_ENV === 'pre-prod') || (process.env.NODE_ENV === 'prod')
-
-console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
-
 
   return (
     <html lang="en">
@@ -137,7 +142,7 @@ src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
           <AuthProvider authData={userData}>
             <CartItemProvider>
             <AddressProvider >
-            {children}
+                  {children}
             </AddressProvider> 
             </CartItemProvider>       
           </AuthProvider>
