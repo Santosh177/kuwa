@@ -16,35 +16,29 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    // const singleSelect = [{ cat: "sort", options: ["new arivals", "Price Low to high", "Price High to Low"] }]
     const singleSelect = [{ cat: {name:"sort", value:"sort_by"}, options: [{name:"New Arivals",value:"new_arrivals"},{name:"Price Low to high",value:"price_low_to_high"},{name:"Price High to Low",value:"price_high_to_low"}] }]
-    // const singleSelect = [{ cat: "sort", options: [1, 2, 3, 4] }]
     const multiSelect = superCollection
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    const [selectedSingle, setSelectedSingle] = useState("");
+
+    const stockSelect = [{cat: {name:"AVAILABLE", value:"inStock"}, options: [{name:"In Stock",value:"inStock"}]}]
+    
     const addQuryPrams = (type,data)=>{
         const current = new URLSearchParams(searchParams);
         if(type === "sort"){
             current.set(type, data);
-        }else{
+        }
+        else if(type === "AVAILABLE"){
+            current.set(type, data);
+        }
+        else{
             current.set(type, data.join(","));
         }
         const search = current.toString();
         const query = search ? `?${search}` : "";
         router.replace(`${pathname}${query}`);
     }
+
     const onClickSelection = (option) => {
-        // if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(option)) {
-        //     const filteredData = selectedOptions.filter((item) => item !== option);
-        //     setSelectedOptions(filteredData);
-        //     addQuryPrams("category",filteredData) 
-        // } else {
-        //     setSelectedOptions([...selectedOptions, option]);
-        //     addQuryPrams("category",[...selectedOptions, option])
-        // }
 
-
-        //   if(paramsData && Object.keys(paramsData).length>0){
             if(paramsData && paramsData['category'] && paramsData['category'].length>0 && paramsData['category'].includes(option)){
                 const filteredData = paramsData['category'].filter((item) => item !== option);
                 addQuryPrams("category",filteredData) 
@@ -59,19 +53,10 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
                 }
                
             }
-        //   }
     }
+
     const onClickSort = (option) =>{
-        // if (selectedSingle === option.value) {
-        //     setSelectedSingle("");
-        //     addQuryPrams("sort", "");
-        //   } else {
-        //     setSelectedSingle(option.value);
-        //     addQuryPrams("sort", option.value);
-        //   }
-
-
-        //   if(paramsData && Object.keys(paramsData).length>0){
+      
             if(paramsData && paramsData['sort'] && paramsData['sort'] === option.value ){
                 addQuryPrams("sort", "");
                 setParamsData((prevObject)=>({...prevObject,sort:""}))
@@ -79,23 +64,18 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
                 addQuryPrams("sort", option.value);
                 setParamsData((prevObject)=>({...prevObject,sort:option.value}))
             }
-        //   }
     }
-    useEffect(()=>{
-        if(selectedSingle){
-            // addQuryPrams("sort",selectedSingle)
-        }
-    },[selectedSingle]);
-    useEffect(()=>{
-        // const category = searchParams.get("category");
-        // category && setSelectedOptions(category.split(","));
-        // const sort = searchParams.get("sort");
-        // sort && setSelectedSingle(sort);
-    },[]);
 
-    useEffect(()=>{
-        // setSelectedOptionsHead({sort: selectedSingle,category : selectedOptions.join(",")})
-    },[selectedOptions,selectedSingle])
+    const onClickStock = (option) =>{
+        if(paramsData && paramsData['AVAILABLE'] && paramsData['AVAILABLE'] === option.value ){
+            addQuryPrams("AVAILABLE", "");
+            setParamsData((prevObject)=>({...prevObject,AVAILABLE:""}))
+        }else{
+            addQuryPrams("AVAILABLE", option.value);
+            setParamsData((prevObject)=>({...prevObject,AVAILABLE:option.value}))
+        }
+    }
+   
     return (
         <div className={style.filterSectionContainer}>
             {singleSelect.map((item) => {
@@ -121,6 +101,31 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
                     </div>
                 )
             })}
+
+            {stockSelect.map((item) => {
+                  const { cat = '', options = [] } = item || {}
+                  const [isCollapse, setIsCollapse] = useState(true)
+                  return (
+                    <div className={style.filterSectionCategory}>
+                        <div className={style.Txt} onClick={() => setIsCollapse(!isCollapse)}>
+                            <div className={style.cat} >{cat.name}</div>
+                            <div className={style.arrrow}><img src={colapseImage} alt="collapse image" style={(!isCollapse)?{WebkitTransform:'rotate(180deg)'}:{}}/></div>
+                        </div>
+                        {isCollapse && <div className={style.options}>
+                            {options.map((ele) => {
+                                const image = ele.value === (paramsData && paramsData['AVAILABLE']) ? checkIamge : uncheckImage;
+                                return (
+                                    <div className={style.optionsTxt} onClick={() => onClickStock(ele)}>
+                                        <div className={style.tickBox}><img src={image} alt="check box" /></div>
+                                        <div className={style.elements}>{ele.name}</div>
+                                    </div>
+                                )
+                            })}
+                        </div>}
+                    </div>
+                )
+            })}
+            
             {multiSelect?.map((item) => {
                 const { superCollectionName = '', category = [] } = item || {}
                 const [isCollapse, setIsCollapse] = useState(true)
@@ -162,16 +167,21 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const multiSelect = superCollection;
+
+    console.log("multiSelect",multiSelect)
     // const singleSelect = ["new arivals", "Price Low to high", "Price high to low"]
     const singleSelect = [{name:"New Arivals",value:"new_arrivals"},{name:"Price Low to high",value:"price_low_to_high"},{name:"Price High to Low",value:"price_high_to_low"}]
     // const singleSelect = [1, 2, 3, 4]
+    const stockSelect = [{cat:"AVAILABLE", value:"inStock", options: [{name:"In Stock",value:"inStock"}]}]
     const [selectedCatogries, setSelectedCatogries] = useState([]);
     const [selectedTab, setSelectedTab] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [selectedSingle,setSelectedSingle] = useState("");
     const [selectedCollection, setSelectedSelection] = useState([]);
+    const [selectedStockFilter,setSelectedStockFilter] = useState([]);
+    const [selectedStock, setSelectedStock] = useState([])
 
-    
+        console.log("santoParams",paramsData)
     useEffect(() => {
         setSelectedTab(multiSelect[0]?.superCollectionName);
         setSelectedCatogries(multiSelect[0]?.category)
@@ -181,17 +191,32 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         setSelectedCatogries(options);
         setSelectedTab(cat)
     };
+    const handleStockFilter = (options, cat) => {
+        console.log("stockFilter", options, cat);
+        setSelectedStockFilter(options);
+        setSelectedTab(cat)
+    }
     const addQuryPrams = (type,data)=>{
         const current = new URLSearchParams(searchParams);
         if(type === "sort"){
             current.set(type, data);
-        }else{
+        }
+        else{
             current.set(type, data.join(","));
         }
         const search = current.toString();
         const query = search ? `?${search}` : "";
         router.replace(`${pathname}${query}`);
     }
+
+    const addQury = (type,data)=>{
+        const current = new URLSearchParams(searchParams);
+        current.set(type, data);
+        const search = current.toString();
+        const query = search ? `?${search}` : "";
+        router.replace(`${pathname}${query}`);
+    }
+
 
     const onClickSelection = (option) =>{
         console.log("optionoption",option)
@@ -204,9 +229,21 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
         }
 
     }
+    const onClickStockSelect = (option) =>{
+
+        if(selectedStock && selectedStock.includes(option)){
+            const filteredData = selectedStock.filter((item) => item !== option);
+            setSelectedStock(filteredData)
+        }else{
+            setSelectedStock(current => [...current, option]);
+        }
+    }
+
+    console.log("selectedStock",selectedStock)
+    console.log("selectedCollection",selectedCollection)
 
     useEffect(()=>{
-        console.log("paramsDataparamsData",paramsData)
+        // console.log("paramsDataparamsData",paramsData)
         if(paramsData && paramsData['category'] && paramsData['category'].length > 0){
             setSelectedSelection(paramsData['category'])
         }
@@ -214,42 +251,9 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
     },[paramsData])
 
     console.log("selectedCollectionselectedCollection",selectedCollection)
-    const onClickSelection1 = (option) => {
-        console.log("option",option)
-        // if (selectedOptions && selectedOptions.length > 0 && selectedOptions.includes(option)) {
-        //     const filteredData = selectedOptions.filter((item) => item !== option);
-        //     setSelectedOptions(filteredData);
-        //     addQuryPrams("category",filteredData) 
-        // } else {
-        //     setSelectedOptions([...selectedOptions, option]);
-        //     addQuryPrams("category",[...selectedOptions, option])
-        // }
-        if(paramsData && paramsData['category'] && paramsData['category'].length>0 && paramsData['category'].includes(option)){
-            const filteredData = paramsData['category'].filter((item) => item !== option);
-            addQuryPrams("category",filteredData) 
-            setParamsData((prevObject)=>({...prevObject,category:filteredData}))
-        }else{
-            if(paramsData && paramsData['category'] ){
-                addQuryPrams("category",[...paramsData['category'], option])
-                setParamsData((prevObject)=>({...prevObject,category:[...prevObject['category'],option]}))
-            }else{
-                addQuryPrams("category",[option])
-                setParamsData((prevObject)=>({...prevObject,category:[option]}))
-            }
-           
-        }
-    }
+
     const onClickSort = (option) =>{
-        // if (selectedSingle === option.value) {
-        //     setSelectedSingle("");
-        //     addQuryPrams("sort", "");
-        //   } else {
-        //     setSelectedSingle(option.value);
-        //     addQuryPrams("sort", option.value);
-        //   }
-
-
-        //   if(paramsData && Object.keys(paramsData).length>0){
+        
             if(paramsData && paramsData['sort'] && paramsData['sort'] === option.value ){
                 addQuryPrams("sort", "");
                 setParamsData((prevObject)=>({...prevObject,sort:""}))
@@ -257,27 +261,14 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                 addQuryPrams("sort", option.value);
                 setParamsData((prevObject)=>({...prevObject,sort:option.value}))
             }
-        //   }
     }
-    useEffect(()=>{
-        if(selectedSingle){
-            // addQuryPrams("sort",selectedSingle)
-        }
-    },[selectedSingle]);
-    useEffect(()=>{
-        // const category = searchParams.get("category");
-        // category && setSelectedOptions(category.split(","));
-        // const sort = searchParams.get("sort");
-        // sort && setSelectedSingle(sort);
-    },[]);
+    
 
-    useEffect(()=>{
-        // setSelectedOptionsHead({sort: selectedSingle,category : selectedOptions.join(",")})
-    },[selectedOptions,selectedSingle])
     const handelApply = () => {
         setSelectedFilter("NOT_SELCTED")
-        addQuryPrams("category",selectedCollection) 
-        setParamsData((prevObject)=>({...prevObject,category:selectedCollection}))
+        addQury("AVAILABLE", selectedStock);
+        addQuryPrams("category", selectedCollection);
+        setParamsData((prevObject)=>({...prevObject,AVAILABLE:selectedStock,category:selectedCollection,}))  
     }
     const handelCancel = () => {
         setSelectedFilter("NOT_SELCTED")
@@ -292,6 +283,17 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                 <div className={style.mobileFiltration} >
                     <div className={style.mobileCategories} >
                         <div className={style.categories} >
+                        {stockSelect.map((item) => {
+                                const { cat , options } = item || {};
+                                if (cat) {
+                                    return (<div className={[style.Txt, (cat === selectedTab ? style.slectedTab : "")].join(" ")} onClick={() => handleStockFilter(options, cat) }>
+                                        <div className={style.cat} >{cat}</div>
+                                    </div>)
+                                } else {
+                                    return <></>
+                                } 
+
+                            })}
                             {multiSelect.map((item) => {
                                 const { superCollectionName, category } = item || {};
                                 if (superCollectionName) {
@@ -302,8 +304,28 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                                     return <></>
                                 }
                             })}
+                           
                         </div>
                         <div className={style.options}>
+                        {selectedStockFilter.map((item) => {
+                                const { name = "", value = "" } = item || {};
+                                let isOptionSelected = false
+                                if (selectedStock && selectedStock.length > 0 && selectedStock.includes(name)){
+                                    isOptionSelected = true
+                                }
+                                const image = isOptionSelected ? rectangularCheck : rectangularUnCheck;
+                                if (name) {
+                                    return (
+                                        <div className={style.optionsTxt} onClick={() => onClickStockSelect(name)} >
+                                            <div className={style.tickBox}><img src={image} alt="check box" /></div>
+                                            <div className={style.elements}>{name}</div>
+                                        </div>
+                                    )
+
+                                } else {
+                                    return <></>
+                                }
+                            })}
                             {selectedCatogries.map((item) => {
                                 const { id = "", collectionName = "" } = item || {};
                                 let isOptionSelected = false
