@@ -14,6 +14,7 @@ import { useCountryList } from '@/context/countryList';
 import { useAuth } from '@/context/userDetail';
 import { useCountry } from '@/context/contryDetails';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating="",shortDescription=""} = productData || {};
@@ -23,10 +24,9 @@ const ProductDeatil = ({ productData = {} }) => {
    const [noOfProduct, setNoOfProduct] = useState(1);
     const countryList = useCountryList();
     const { selectedCountry={} } = useCountry();
-  
     const {isLogin=false, userData={}} = useAuth();
     const { setCartItemData={},setCartItemCount={} } = useCartItems();
-    const [selectedVarients, setselectedVarients] = useState("");
+    const [selectedVarients, setselectedVarients] = useState(null);
     const [selctedVrientsData, setSelectedVrientsData] = useState({});
     const [retailPrice, setRetailPrice] = useState(0);
     const [finalPrice, setFinalPrice] = useState(0);
@@ -44,8 +44,43 @@ const ProductDeatil = ({ productData = {} }) => {
    const [selectedVariantQuantity,setSelectedVariantQuantity] = useState(null);
     const router = useRouter()
     const clevertapEvent = useCleverTapEvents();
-
     let normalInventory = quantity
+
+    
+    function getDeviceType() {
+        if (isMobile) {
+          if (isAndroid) {
+            return 'Android';
+          } else if (isIOS) {
+            return 'iOS';
+          } else {
+            return 'Mobile';
+          }
+        } else if (isTablet) {
+          return 'Tablet';
+        } else {
+          return 'Desktop';
+        }
+      }
+    useEffect(()=>{
+        const deviceType = getDeviceType();
+        const trackData = {
+            userId:userData?.id,
+            country:selectedCountry.name,
+            email:userData?.emailAddress,
+            productTitle:title,
+            productId:id,
+            landing_page_url:window.location.pathname,
+            device: deviceType
+        }
+        // clevertapEvent.onCleverTapEvent("kuwa_page_view",trackData)
+       setTimeout(()=>{
+        window.clevertap.event.push("kuwa_page_view", trackData);
+       },5000)
+
+    },[])
+
+
     useEffect(()=>{
 
         if(variants && variants.length > 0){

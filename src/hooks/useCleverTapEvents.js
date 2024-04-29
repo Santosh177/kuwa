@@ -3,6 +3,7 @@ function useCleverTapEvents(initialValue) {
     const { selectedCountry = {} } = useCountry();
     const { name = "", id = "", currency="" }=selectedCountry||{}
     const onCleverTapEvent = (eventName="",data={}) => {
+        console.log("cleverTap_event_name",eventName,data)
         data['country'] = name || '';
         data['countryId'] = id || '';
         data['currency'] = currency || '';
