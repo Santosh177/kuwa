@@ -20,6 +20,10 @@ import ExploreCategory from './ExploreCategory/ExploreCategory';
 import NewArrivals from './NewArrivals/NewArrivals';
 import BestSelling from './BestSelling/BestSelling';
 import DealSection from './DealSection/DealSection';
+import { trackEvent } from '../page';
+import { identifyUser } from '../page';
+
+import { useAuth } from '@/context/userDetail';
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
@@ -28,6 +32,9 @@ export default function Home(homePageData) {
     const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[] } = homePageData.homePageData || {};
     const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
+
+    const {isLogin=false, userData={}} = useAuth();
+        console.log("dhbhbahja",userData)
     useEffect(() => {
         const elem = document.getElementById("homePage");
         elem.addEventListener('scroll', onScroll);
@@ -66,6 +73,29 @@ export default function Home(homePageData) {
         
         // }
     }, [])
+
+    useEffect(()=>{
+        if(isLogin){
+            trackEvent("kuwa_home_page_landing",{country:selectedCountry}, userData.id)
+        }
+        else{
+            trackEvent("kuwa_home_page_landing",{country:selectedCountry})
+        }
+       
+    },[selectedCountry])
+    useEffect(()=>{
+        if(isLogin){
+            const userProperties = {
+                "name": `${userData.firstName} ${userData.lastName}`,
+                 "emailAddress": `${userData.emailAddress}`,
+                 "country_code": `${userData.newShippingAddress[0].country}`,
+                 "region": `${userData.newShippingAddress[0].stateProvince}`,
+                 "city": `${userData.newShippingAddress[0].city}`
+               };
+             identifyUser(userData.id,userProperties)
+        }
+       
+    },[userData])
 
     const onScroll = () => {
         try {

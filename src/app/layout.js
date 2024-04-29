@@ -11,14 +11,12 @@ import { CountryListProvider } from "@/context/countryList";
 import Script from 'next/script'
 // import { Work_Sans } from 'next/font/google';
 import Head from 'next/head';
-import Mixpanel from 'mixpanel';
+
 
 
 const workSans = Work_Sans({ weight: ['400','500','600', '700'],
 style: ['normal', 'italic'],
 subsets: ['latin'],})
-
-const mixpanel = Mixpanel.init('d670cab0105c2c17aaea07a016f2d46f');
 
 export const metadata = {
   title: 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain',
@@ -105,9 +103,7 @@ export default async function RootLayout({ children }) {
     }
   }
   
-  const trackEvent=(eventName, eventData) => {
-    mixpanel.track(eventName, eventData);
-  }
+
   
  
   const isProd = (process.env.NODE_ENV === 'pre-prod') || (process.env.NODE_ENV === 'prod')
