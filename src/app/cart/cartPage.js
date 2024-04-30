@@ -21,6 +21,7 @@ import { useRef } from 'react';
 import { getOutOfStockProduct } from "@/utils";
 import OutOfStockProductsPopUp from "@/components/OutOfStockProductsPopUp/OutOfStockProductsPopUp";
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
+import { trackEvent } from "@/app/page";
 export default  function Cart({cartData}) {
     console.log("to check")
     const router = useRouter();
@@ -176,6 +177,7 @@ export default  function Cart({cartData}) {
     }
     setTimeout(()=>{
       clevertapEvent.onCleverTapEvent("kuwa_cart_landing",trackData)
+      trackEvent("kuwa_cart_landing",trackData, userData.id)
     },2000)
    
    },[])
@@ -244,7 +246,8 @@ export default  function Cart({cartData}) {
         }
         trackData.push(track)
       })
-        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_checkout",trackData);  
+        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_checkout",trackData); 
+        trackEvent("kuwa_add_to_cart_checkout",trackData, userData.id) 
     }
   }
 

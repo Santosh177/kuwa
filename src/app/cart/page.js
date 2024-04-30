@@ -5,6 +5,8 @@ import CartPage from './cartPage';
 import EmptyCart from "./EmptyCart/EmptyCart";
 import { authHeader } from "../../lib/auth-cookies";
 
+
+
 export default async function Cart() {
   let getCartItems = []
   try {
@@ -27,7 +29,6 @@ export default async function Cart() {
 
   console.log("getCartItems,",getCartItems)
   const isNonEmptyCart = getCartItems && Object.keys(getCartItems).length > 0 ;
-  
       return (
         <>
           <PageHeader headerName="My Cart" />

@@ -87,11 +87,9 @@ export default function Home(homePageData) {
         if(isLogin){
             const userProperties = {
                 "name": `${userData.firstName} ${userData.lastName}`,
-                 "emailAddress": `${userData.emailAddress}`,
-                 "country_code": `${userData.newShippingAddress[0].country}`,
-                 "region": `${userData.newShippingAddress[0].stateProvince}`,
-                 "city": `${userData.newShippingAddress[0].city}`
+                 "email": `${userData.emailAddress}`,
                };
+
              identifyUser(userData.id,userProperties)
         }
        

@@ -15,6 +15,7 @@ import { useAuth } from '@/context/userDetail';
 import { useCountry } from '@/context/contryDetails';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
+import { trackEvent } from '../../../../app/page'
 const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating="",shortDescription=""} = productData || {};
@@ -78,6 +79,7 @@ const ProductDeatil = ({ productData = {} }) => {
         window.clevertap.event.push("kuwa_page_view", trackData);
        },5000)
 
+       trackEvent("kuwa_page_view", trackData)
     },[])
 
 

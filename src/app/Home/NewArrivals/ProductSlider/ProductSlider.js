@@ -13,6 +13,7 @@ import { mappingDealProducts } from '@/services';
 import NotifyEmailPopup from '@/components/NotifyEmailPopup/NotifyEmailPopup';
 import NotifySuccessPopup from '@/components/NotifySuccessPopup/NotifySuccessPopup';
 import { useAuth } from '@/context/userDetail';
+import { trackEvent } from '@/app/page';
 
 const ProductSlider = ({data}) => {
     console.log("newArrivals",data);
@@ -50,6 +51,7 @@ const ProductSlider = ({data}) => {
             const res = await addToCart(data);
             setIsLoading(false)
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData); 
+            trackEvent("kuwa_add_to_cart",trackData,userData.id )
             window.location.href =  '/cart';
         }
         catch (error){
