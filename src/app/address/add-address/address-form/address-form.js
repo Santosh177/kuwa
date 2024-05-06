@@ -86,7 +86,7 @@ const validateBillingAddressForm = (formData) => {
 
 
 
-const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={},setIsShowEmailExistPopUp}) => {
+const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={},setIsShowEmailExistPopUp,isShowEmailExistPopUp}) => {
 
 
   const [emailError,setEmailError] = useState("");
@@ -138,11 +138,14 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
 
 
     useEffect(()=>{
-      document.addEventListener("mousedown",handleClickOutside)
+      if(!isShowEmailExistPopUp){
+        document.addEventListener("mousedown",handleClickOutside)
+      }
+    
       return () => {
         document.removeEventListener("mousedown", handleClickOutside);
       };
-    },[values['email']])
+    },[values['email'],isShowEmailExistPopUp])
 
     useEffect(() => {
       const handleResize = () => {
@@ -189,10 +192,13 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
             if (signupRespData.status_code !== 200) {
               setIsLoading(false)
               setIsShowEmailExistPopUp(true);
-  
-            
+             
             }
             document.removeEventListener("mousedown", handleClickOutside); 
+            // else if(signupRespData.status_code ==200){
+            //   document.removeEventListener("mousedown", handleClickOutside); 
+            // }
+            
           }
         catch(err){
           console.log("error",err)

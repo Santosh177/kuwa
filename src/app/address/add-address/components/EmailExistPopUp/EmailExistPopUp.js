@@ -79,19 +79,22 @@ const EmailExistPopUp = ({ setIsShowEmailExistPopUp, email }) => {
         }),
       });
       const loginResp = await res.json();
-      console.log("loginResp",loginResp)
+      console.log("loginResp",loginResp.data)
 
       if (loginResp.status === "SUCCESS") {
         mergeCartItems();
         if (loginResp.data.addressType === "single-address") {
-          window.location.href = '/payment';
+          window.location.replace('/payment')
         }
         else if(loginResp.data.addressType == "multiple-address"){
-          window.location.href = '/address/select-address';
+          window.location.replace('/address/select-address');
         }
         else{
           window.location.href = '/address/add-address';
         }
+      }
+      else{
+        setPasswordError("Incorrect password. Please try again.")
       }
     } catch (err) {
       console.log("fetching the api error", err);

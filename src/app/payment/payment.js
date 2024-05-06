@@ -246,16 +246,20 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     return window.innerWidth > 770 ? 'web' : 'mWeb';
   }
 
-  // useEffect(()=>{
-  //   if(selectedAddress && Object.keys(selectedAddress).length == 0){
-  //         const defaultAddress = listOfAddress.find((data) => data.isDefault);
-  //         if(defaultAddress){
-  //           setSelectedAddress(defaultAddress)
-  //         }else{
-  //           setSelectedAddress(listOfAddress[0])
-  //         }
-  //   }
-  // },[listOfAddress])
+  useEffect(()=>{
+    const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
+    if(!getAddressIdFromLocalStorage){
+      if(selectedAddress && Object.keys(selectedAddress).length == 0){
+        const defaultAddress = listOfAddress.find((data) => data.isDefault);
+        if(defaultAddress){
+          setSelectedAddress(defaultAddress)
+        }else{
+          setSelectedAddress(listOfAddress[0])
+        }
+  }
+    }
+  
+  },[listOfAddress])
 
   useEffect(()=>{
     setData(cartData);
