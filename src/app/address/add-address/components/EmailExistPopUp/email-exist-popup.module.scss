@@ -1,0 +1,77 @@
+.EmailExistPopUpContainer{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 200px;
+.EmailExistPopUpContent{
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px 16px;
+    width: 312px;
+    .crossIcon{
+        text-align: end;
+        cursor: pointer;
+    }
+    .emailTxt{
+        color: #CE4224;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .existTxt{
+        color: #247A81;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .passwordTxt{
+        color: #07141A;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .passwordInput{
+        margin-top: 16px;
+        .inputDiv{
+//             width: 280px;
+//             height: 48px;
+//             border-radius: 8px;
+//             padding-left: 16px;
+// border: 1px solid #E6E7E7;
+        }
+        .passwordError{
+            color: #CE4224;
+            font-size: 12px;
+        }
+       
+    }
+    .forgetPasswordTxt{
+        margin-top: 16px;
+        color: #247A81;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+text-align: end;
+cursor: pointer;
+    }
+    .loginBtn{
+        display: flex;
+width: 280px;
+padding: 12px 80px;
+margin-top: 24px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border-radius: 24px;
+background: #247A81;
+color: var(--White, #FFF);
+cursor: pointer;
+    }
+}
+   
+}

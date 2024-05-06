@@ -113,6 +113,18 @@
     color: red;
     font-size: 10px;
 }
+.emailExistPopUp{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .3);
+    color: #32445b;
+
+}
+
 
 
 @media(max-width:990px){
