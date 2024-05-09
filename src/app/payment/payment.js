@@ -24,6 +24,7 @@ import { useRef } from 'react';
 import PrepaidExtraDiscount from './components/PrepaidExtraDiscount/PrepaidExtraDiscount';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { getOutOfStockProduct } from "@/utils";
+import { mixPanelTrackEvent } from '../page';
 
 const getActivePaymentMethod = (paymentModes,tamaraConfig) => {
   let config ={
@@ -346,7 +347,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   },[cartItems,]);
 
   useEffect(() => {
-    clevertapEvent.onCleverTapEvent("kuwa_payments_landing");  
+    clevertapEvent.onCleverTapEvent("kuwa_payments_landing"); 
+      mixPanelTrackEvent("kuwa_payments_landing",{},userData.id)
+    
   }, [])
 
   useEffect(()=>{
@@ -490,6 +493,12 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           payload['paymentMode'] = "100%";
           trackData['Payment Type'] = 'Zero final Amount' || ''
           clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
+          if(isLogin){
+            mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
+          }
+          else{
+            mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
+          }
               const placeOrderResp  =  await fetch('/api/place-order-without-payment', {
                   method: 'POST',
                   headers: {
@@ -513,7 +522,12 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             trackData['Payment Type'] = 'card' || '';
             trackData['Payment Gateway'] = 'checkout' || '';
             clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
-
+            if(isLogin){
+              mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
+            }
+            else{
+              mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
+            }
             console.log("CHECKOUT_CARD",payload)
               const placeOrderResp  =  await fetch('/api/checkout-place-order', {
                   method: 'POST',
@@ -540,6 +554,12 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         }else if(selectedPaymentMethod == "TAMARA"){
               trackData['Payment Type'] = 'tamara' || '';
               clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
+              if(isLogin){
+                mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
+              }
+              else{
+                mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
+              }
               let items = await createPayloadForItems(cartItemsData);
               let tamaraPayload = {
                 "paymentMode":"TAMARA",
@@ -570,7 +590,13 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
         }else if(selectedPaymentMethod == "TABBY"){
               trackData['Payment Type'] = 'TABBY' || ''
-              clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
+              clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData);
+              if(isLogin){
+                mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
+              }
+              else{
+                mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
+              } 
               let items = await createPayloadForItems(cartItemsData);
               let tabbyPayload = {
                 "paymentMode":"TABBY",
@@ -600,6 +626,12 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         }else if(selectedPaymentMethod == "TAP"){
               trackData['Payment Type'] = 'TAP' || ''
               clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
+              if(isLogin){
+                mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
+              }
+              else{
+                mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
+              }
               let items = await createPayloadForItems(cartItemsData);
               let tapPayload = {
                 "paymentMode":"TAP",
@@ -633,6 +665,13 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             payload['finalAmount'] = finalAmount
             trackData['Payment Type'] = 'Cod' || ''
             clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
+
+            if(isLogin){
+              mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
+            }
+            else{
+              mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
+            }
               const placeOrderResp  =  await fetch('/api/place-order-without-payment', {
                   method: 'POST',
                   headers: {
@@ -661,6 +700,12 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           payload['finalAmount'] = priceDetails['totalAmount']-discountAmount
           trackData['Payment Type'] = 'Apple pay' || ''
           clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
+          if(isLogin){
+            mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
+          }
+          else{
+            mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
+          }
             const placeOrderResp  =  await fetch('/api/apple-pay-place-order', {
                 method: 'POST',
                 headers: {

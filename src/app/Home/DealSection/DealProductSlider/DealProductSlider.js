@@ -11,6 +11,7 @@ import styles from './deal-product-slider.module.scss'
 import NotifyEmailPopup from '@/components/NotifyEmailPopup/NotifyEmailPopup';
 import NotifySuccessPopup from '@/components/NotifySuccessPopup/NotifySuccessPopup';
 import { useAuth } from '@/context/userDetail';
+import { mixPanelTrackEvent } from '@/app/page';
 
 const DealProductSlider = ({data,tagIconUrl,tag,isDealActive,isTimerActive,currentTimeStatus}) => {
 console.log("DEAL PRODUCT SLIDER")
@@ -33,11 +34,22 @@ console.log("DEAL PRODUCT SLIDER")
     const { isLogin=false ,userData = {}} = useAuth();
     const emailAddress = userData && userData.emailAddress;
   const onAddToCart = async(data) =>{
+    const trackingData = {
+      "product Name": data.productName,
+      "quantity": 1,
+      "product Id":data.product
+    }
     try {
       setIsLoading(true)
       const res = await addToCart(data);
       setIsLoading(false)
       clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData);  
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_add_to_cart",trackingData,userData.id )
+       }
+       else{
+        mixPanelTrackEvent("kuwa_add_to_cart",trackingData )
+       }
       window.location.href = '/cart'
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
@@ -195,19 +207,19 @@ const handleNotify = async() =>{
                 let addToCartPayload = {}
                 if(variantId ){
                   if(isDealActive && isTimerActive && currentTimeStatus== "in-between"){
-                    addToCartPayload = {"product":data.productId,"quantity":1,"isVariant":true,"variantId":data.variantId,"dealId":data.dealId,"dealPrice":data.dealFinalPrice}    
+                    addToCartPayload = {"product":data.productId,"quantity":1,"isVariant":true,"variantId":data.variantId,"dealId":data.dealId,"dealPrice":data.dealFinalPrice,productName:data.productName}    
                   }
                   else{
-                    addToCartPayload = {"product":data.productId,"quantity":1,"isVariant":true,"variantId":data.variantId,}    
+                    addToCartPayload = {"product":data.productId,"quantity":1,"isVariant":true,"variantId":data.variantId,productName:data.productName}    
                   }
                    
                 }
                 else{
                   if(isDealActive && isTimerActive && currentTimeStatus== "in-between"){
-                    addToCartPayload =  { "product": data.productId, quantity: 1, "dealId" :data.dealId ,"dealPrice":data.dealFinalPrice}
+                    addToCartPayload =  { "product": data.productId, quantity: 1, "dealId" :data.dealId ,"dealPrice":data.dealFinalPrice,productName:data.productName}
                   }
                   else{
-                    addToCartPayload =  { "product": data.productId, quantity: 1,}
+                    addToCartPayload =  { "product": data.productId, quantity: 1,productName:data.productName}
                   }
 
 

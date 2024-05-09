@@ -13,7 +13,7 @@ import { mappingDealProducts } from '@/services';
 import NotifyEmailPopup from '@/components/NotifyEmailPopup/NotifyEmailPopup';
 import NotifySuccessPopup from '@/components/NotifySuccessPopup/NotifySuccessPopup';
 import { useAuth } from '@/context/userDetail';
-import { trackEvent } from '@/app/page';
+import { mixPanelTrackEvent } from '@/app/page';
 
 const ProductSlider = ({data}) => {
     console.log("newArrivals",data);
@@ -45,13 +45,26 @@ const ProductSlider = ({data}) => {
     }, [width]);
 
     let trackData={};
+
     const onAddToCart = async(data) =>{
+      console.log("addtocart", data)
+      const trackingData = {
+        "product Name": data.productName,
+        "quantity": 1,
+        "product Id":data.product
+      }
         try{
             setIsLoading(true);
             const res = await addToCart(data);
             setIsLoading(false)
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData); 
-            trackEvent("kuwa_add_to_cart",trackData,userData.id )
+           if(isLogin){
+            mixPanelTrackEvent("kuwa_add_to_cart",trackingData,userData.id )
+           }
+           else{
+            mixPanelTrackEvent("kuwa_add_to_cart",trackingData )
+           }
+           
             window.location.href =  '/cart';
         }
         catch (error){
@@ -185,7 +198,7 @@ const ProductSlider = ({data}) => {
                   "product Id":productId
                 }
                 return (
-                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId})} handleNotifyMe={()=>handleNotifyMe(productId)} handleNonLogin={()=>handleNonLogin(productId)} />
+                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId,productName})} handleNotifyMe={()=>handleNotifyMe(productId)} handleNonLogin={()=>handleNonLogin(productId)} />
                 )
             })
          }

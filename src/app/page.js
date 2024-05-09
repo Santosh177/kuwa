@@ -4,10 +4,12 @@ import Mixpanel from 'mixpanel';
 import { cookies } from 'next/headers';
 
 
-export const trackEvent=(eventName, eventData,userId) => {
-  mixpanel.track(eventName, { ...eventData, "distinct_id": userId });
+export const mixPanelTrackEvent=(eventName, eventData,userId) => {
+  const nextCookies = cookies();
+  const deviceId = nextCookies.get('deviceID').value; 
+  mixpanel.track(eventName, { ...eventData, "distinct_id": (userId)?userId:deviceId });
 }
-export const identifyUser = (userId, userProperties) => {
+export const mixPanelIdentifyUser = (userId, userProperties) => {
   mixpanel.people.set(userId, userProperties);
 }
 

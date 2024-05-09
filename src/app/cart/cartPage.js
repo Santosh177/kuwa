@@ -21,7 +21,7 @@ import { useRef } from 'react';
 import { getOutOfStockProduct } from "@/utils";
 import OutOfStockProductsPopUp from "@/components/OutOfStockProductsPopUp/OutOfStockProductsPopUp";
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
-import { trackEvent } from "@/app/page";
+import { mixPanelTrackEvent } from "@/app/page";
 export default  function Cart({cartData}) {
     console.log("to check")
     const router = useRouter();
@@ -41,6 +41,7 @@ export default  function Cart({cartData}) {
     const [isNoOutOfStockProducts,setIsNoOutOfStockProducts] = useState(false)
     const [outOfStockProducts,setOutOfStockProducts] = useState([]);
     const [IsShowOutOfStockProductsPopUp,setIsShowOutOfStockProductsPopUp] = useState(false);
+
      let appleSession;
 
   console.log("cartItemsCard",cartItems)
@@ -107,6 +108,12 @@ export default  function Cart({cartData}) {
           try {
               if (window.clevertap) {
                   window.clevertap.setMultiValuesForKey("cart_items", trackData);
+              }
+              if(isLogin){
+                mixPanelTrackEvent("cart_items", trackData,userData.id)
+              }
+              else{
+                mixPanelTrackEvent("cart_items", trackData)
               }
            
           } catch (error) {
@@ -177,7 +184,13 @@ export default  function Cart({cartData}) {
     }
     setTimeout(()=>{
       clevertapEvent.onCleverTapEvent("kuwa_cart_landing",trackData)
-      trackEvent("kuwa_cart_landing",trackData, userData.id)
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_cart_landing",trackData, userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_cart_landing",trackData,)
+      }
+     
     },2000)
    
    },[])
@@ -246,8 +259,14 @@ export default  function Cart({cartData}) {
         }
         trackData.push(track)
       })
-        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_checkout",trackData); 
-        trackEvent("kuwa_add_to_cart_checkout",trackData, userData.id) 
+        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_checkout",trackData);
+        if(isLogin){
+          mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData, userData.id) 
+        } 
+        else{
+          mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData,) 
+        }
+       
     }
   }
 

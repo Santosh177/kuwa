@@ -7,12 +7,15 @@ import Loader from "@/components/Loader/Loader"
 import { addToCart } from "@/services"
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { mappingDealProducts } from "@/services"
+import { mixPanelTrackEvent } from "@/app/page"
+import { useAuth } from "@/context/userDetail"
 
 const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
     // console.log("resposneValue",resposneValue[0])
     // console.log("ahavha",isDealPage)
     const [isLodaing, setIsLoading] = useState(false);
     const clevertapEvent = useCleverTapEvents();
+    const {isLogin=false, userData={}} = useAuth();
     let trackData={};
     const [remainingDays, setRemainingDays] = useState("00")
     const [remainingHour, setRemainingHour] = useState("00")
@@ -21,11 +24,22 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
 
     const [timer, setTimer] = useState(0); 
     const onAddToCart = async (data) => {
+        const trackingData = {
+            "product Name": data.productName,
+            "quantity": 1,
+            "product Id":data.product
+          }
         try {
             setIsLoading(true)
             const res = await addToCart(data);
             setIsLoading(false)
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", trackData);
+            if(isLogin){
+                mixPanelTrackEvent("kuwa_add_to_cart",trackingData,userData.id )
+               }
+               else{
+                mixPanelTrackEvent("kuwa_add_to_cart",trackingData )
+               }
             window.location.href = '/cart';
         } catch (error) {
             console.error('An unexpected error happened occurred:', error)
@@ -124,7 +138,7 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
                         }
                         return (
                             <div className={style.product}>
-                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice })} />
+                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice,productName })} />
                             </div>
                         )
                     })}

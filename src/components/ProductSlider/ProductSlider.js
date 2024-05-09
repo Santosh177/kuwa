@@ -12,6 +12,7 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import NotifySuccessPopup from '../NotifySuccessPopup/NotifySuccessPopup';
 import NotifyEmailPopup from '../NotifyEmailPopup/NotifyEmailPopup';
 import { useAuth } from '@/context/userDetail';
+import { mixPanelTrackEvent } from '@/app/page';
 
 
   const BACKGROUND_COLORS = [
@@ -96,11 +97,22 @@ const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},
   
 let trackData={};
   const onAddToCart = async(data) =>{
+    const trackingData = {
+      "product Name": data.productName,
+      "quantity": 1,
+      "product Id":data.product
+    }
     try {
       setIsLoading(true)
       const res = await addToCart(data);
       setIsLoading(false)
-      clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData);  
+      clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData);
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_add_to_cart",trackingData,userData.id )
+       }
+       else{
+        mixPanelTrackEvent("kuwa_add_to_cart",trackingData )
+       }  
       window.location.href = '/cart'
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)
@@ -368,21 +380,21 @@ const handleNotify = async() =>{
                     if( variantPrices[0]?.dealId &&  variantPrices[0]?.isDealActive && variantPrices[0]?.isTimerActive
                         && variantPrices[0].currentTimerStatus == "in-between"
                      ){
-                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":variantId? true : false,"variantId":variantId,dealId:variantDealId,dealPrice:variantDealPrice}
+                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":variantId? true : false,"variantId":variantId,dealId:variantDealId,dealPrice:variantDealPrice,productName:data.name}
 
                     }
                     else{
-                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":variantId? true : false,"variantId":variantId}
+                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":variantId? true : false,"variantId":variantId,productName:data.name}
                     }
  
                   }
                   else{
                     if(dealId && isDealActive && isTimerActive  &&  currentTimerStatus == "in-between" ){
-                    addToCartPayload = { product: data.id, quantity: 1,dealId:dealId ,dealPrice:dealFinalPrice}
+                    addToCartPayload = { product: data.id, quantity: 1,dealId:dealId ,dealPrice:dealFinalPrice,productName:data.name}
 
                     }
                     else{
-                    addToCartPayload = { product: data.id, quantity: 1,}
+                    addToCartPayload = { product: data.id, quantity: 1,productName:data.name}
                       }
                   }
                   return(

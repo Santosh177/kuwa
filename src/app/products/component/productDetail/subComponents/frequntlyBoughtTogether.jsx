@@ -6,6 +6,8 @@ const rectangularUnCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/Group%204
 const rectangularCheck = "https://d25uasl7utydze.cloudfront.net/kuwa/RectangularSelcted.svg";
 import Loader from "@/components/Loader/Loader";
 import useCleverTapEvents from "@/hooks/useCleverTapEvents";
+import { mixPanelTrackEvent } from "@/app/page";
+import { useAuth } from "@/context/userDetail";
 
 const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
     const [slectedId, setSelectedId] = useState([]);
@@ -15,6 +17,7 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
     const [isLoading, setLoading] = useState(false);
     const router = useRouter();
     const clevertapEvent = useCleverTapEvents();
+    const { isLogin=false ,userData = {}} = useAuth();
     useEffect(()=>{
         let suggestedSupplemnts= []
         if(productData && productData.length > 0 ){
@@ -159,7 +162,14 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
             const response = await addToCartAPI(payload);
             if(response){
                 router.push('/cart')
-                clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", trackData); 
+                clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", trackData);
+                if(isLogin){
+                    mixPanelTrackEvent("kuwa_add_to_cart", trackData,userData.id)
+                } 
+                else{
+                    mixPanelTrackEvent("kuwa_add_to_cart", trackData)
+
+                }
             }
             console.log(response,"response")
         }

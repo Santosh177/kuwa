@@ -20,8 +20,8 @@ import ExploreCategory from './ExploreCategory/ExploreCategory';
 import NewArrivals from './NewArrivals/NewArrivals';
 import BestSelling from './BestSelling/BestSelling';
 import DealSection from './DealSection/DealSection';
-import { trackEvent } from '../page';
-import { identifyUser } from '../page';
+import { mixPanelTrackEvent } from '../page';
+import { mixPanelIdentifyUser } from '../page';
 
 import { useAuth } from '@/context/userDetail';
 
@@ -75,11 +75,16 @@ export default function Home(homePageData) {
     }, [])
 
     useEffect(()=>{
+        const trackData = {
+            country:selectedCountry.name,
+            currency:selectedCountry.currency,
+            countryId:selectedCountry.id,
+        }
         if(isLogin){
-            trackEvent("kuwa_home_page_landing",{country:selectedCountry}, userData.id)
+            mixPanelTrackEvent("kuwa_home_page_landing",trackData, userData.id)
         }
         else{
-            trackEvent("kuwa_home_page_landing",{country:selectedCountry})
+            mixPanelTrackEvent("kuwa_home_page_landing",trackData)
         }
        
     },[selectedCountry])
@@ -90,7 +95,7 @@ export default function Home(homePageData) {
                  "email": `${userData.emailAddress}`,
                };
 
-             identifyUser(userData.id,userProperties)
+             mixPanelIdentifyUser(userData.id,userProperties)
         }
        
     },[userData])
