@@ -10,7 +10,7 @@ export const mixPanelTrackEvent=(eventName, eventData,userId,clientIpAddress) =>
   mixpanel.track(eventName,
      { ...eventData,
        "distinct_id": (userId)?userId:deviceId ,
-       ip: clientIpAddress
+       "ip": clientIpAddress
       });
 }
 export const mixPanelIdentifyUser = (userId, userProperties) => {
@@ -19,7 +19,8 @@ export const mixPanelIdentifyUser = (userId, userProperties) => {
 
 
 const mixpanel = Mixpanel.init('d670cab0105c2c17aaea07a016f2d46f',
-{  geolocate: true 
+{  
+  geolocate: true 
   // track_pageview: true,
   // secure_cookie: true
 });
