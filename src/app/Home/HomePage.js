@@ -29,12 +29,11 @@ const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
-    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[] } = homePageData.homePageData || {};
+    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[], ipAddress="" } = homePageData.homePageData || {};
     const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
 
     const {isLogin=false, userData={}} = useAuth();
-        console.log("dhbhbahja",userData)
     useEffect(() => {
         const elem = document.getElementById("homePage");
         elem.addEventListener('scroll', onScroll);
@@ -81,10 +80,10 @@ export default function Home(homePageData) {
             countryId:selectedCountry.id,
         }
         if(isLogin){
-            mixPanelTrackEvent("kuwa_home_page_landing",trackData, userData.id)
+            mixPanelTrackEvent("kuwa_home_page_landing",trackData, userData.id,ipAddress)
         }
         else{
-            mixPanelTrackEvent("kuwa_home_page_landing",trackData)
+            mixPanelTrackEvent("kuwa_home_page_landing",trackData,"",ipAddress)
         }
        
     },[selectedCountry])
@@ -92,7 +91,7 @@ export default function Home(homePageData) {
         if(isLogin){
             const userProperties = {
                 "name": `${userData.firstName} ${userData.lastName}`,
-                 "email": `${userData.emailAddress}`,
+                 "$email": `${userData.emailAddress}`,
                };
 
              mixPanelIdentifyUser(userData.id,userProperties)

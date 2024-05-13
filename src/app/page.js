@@ -4,10 +4,14 @@ import Mixpanel from 'mixpanel';
 import { cookies } from 'next/headers';
 
 
-export const mixPanelTrackEvent=(eventName, eventData,userId) => {
+export const mixPanelTrackEvent=(eventName, eventData,userId,ipAddress) => {
   const nextCookies = cookies();
   const deviceId = nextCookies.get('deviceID').value; 
-  mixpanel.track(eventName, { ...eventData, "distinct_id": (userId)?userId:deviceId });
+  mixpanel.track(eventName,
+     { ...eventData,
+       "distinct_id": (userId)?userId:deviceId ,
+       ip: ipAddress
+      });
 }
 export const mixPanelIdentifyUser = (userId, userProperties) => {
   mixpanel.people.set(userId, userProperties);
@@ -24,11 +28,6 @@ console.log("mixpanel+++",mixpanel.config.logger)
 
 export default async function page() {
   
-  const nextCookies = cookies(); 
-const token = nextCookies.get('token');
-const user = nextCookies.get('userId');
-// mixpanel.identify(user);
-
   return (
     
     <div>
