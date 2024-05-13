@@ -29,7 +29,7 @@ const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
-    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[], ipAddress="" } = homePageData.homePageData || {};
+    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[], clientIpAddress="" } = homePageData.homePageData || {};
     const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
 
@@ -80,10 +80,10 @@ export default function Home(homePageData) {
             countryId:selectedCountry.id,
         }
         if(isLogin){
-            mixPanelTrackEvent("kuwa_home_page_landing",trackData, userData.id,ipAddress)
+            mixPanelTrackEvent("kuwa_home_page_landing",trackData, userData.id,clientIpAddress)
         }
         else{
-            mixPanelTrackEvent("kuwa_home_page_landing",trackData,"",ipAddress)
+            mixPanelTrackEvent("kuwa_home_page_landing",trackData,"",clientIpAddress)
         }
        
     },[selectedCountry])

@@ -7,6 +7,7 @@ export const dynamic = 'force-dynamic';
 export async function GET(req,res) {
   const headersList = headers();
   const ipAddress = headersList.get("x-forwarded-for");
+  const clientIpAddress = ipAddress ? ipAddress.split(',')[0] : '';
 
 console.log("ipAddress",ipAddress)
   try {
@@ -18,7 +19,7 @@ console.log("ipAddress",ipAddress)
     })
     const data = await cartData.json();
     const responseData = {
-      ipAddress,
+      clientIpAddress,
       ...data
     };
     return NextResponse.json(responseData);

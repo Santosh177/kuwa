@@ -4,13 +4,13 @@ import Mixpanel from 'mixpanel';
 import { cookies } from 'next/headers';
 
 
-export const mixPanelTrackEvent=(eventName, eventData,userId,ipAddress) => {
+export const mixPanelTrackEvent=(eventName, eventData,userId,clientIpAddress) => {
   const nextCookies = cookies();
   const deviceId = nextCookies.get('deviceID').value; 
   mixpanel.track(eventName,
      { ...eventData,
        "distinct_id": (userId)?userId:deviceId ,
-       ip: ipAddress
+       ip: clientIpAddress
       });
 }
 export const mixPanelIdentifyUser = (userId, userProperties) => {
