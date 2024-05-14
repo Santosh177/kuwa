@@ -11,8 +11,6 @@ export default function Home(req) {
 
   const [homePageData, setHomePageData] = useState({});
   const { selectedCountry={} }=useCountry()||{};
-  const clientIpAddress = homePageData.clientIpAddress || ""
-  console.log("ipaddress",clientIpAddress)
   useEffect(()=>{
       getHomePageLayout()
   },[])

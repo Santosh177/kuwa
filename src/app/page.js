@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 
 
 export const mixPanelTrackEvent=(eventName, eventData,userId,clientIpAddress) => {
+  console.log("clientIp",clientIpAddress)
   const nextCookies = cookies();
   const deviceId = nextCookies.get('deviceID').value; 
   mixpanel.track(eventName,

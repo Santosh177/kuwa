@@ -32,7 +32,7 @@ export default function Home(homePageData) {
     const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[], clientIpAddress="" } = homePageData.homePageData || {};
     const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
-
+    console.log("clientIpAddress",clientIpAddress)
     const {isLogin=false, userData={}} = useAuth();
     useEffect(() => {
         const elem = document.getElementById("homePage");
