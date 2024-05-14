@@ -11,7 +11,7 @@ export const mixPanelTrackEvent=(eventName, eventData,userId,clientIpAddress) =>
   mixpanel.track(eventName,
      { ...eventData,
        "distinct_id": (userId)?userId:deviceId ,
-       "ip": clientIpAddress
+       "$ip": clientIpAddress
       });
 }
 export const mixPanelIdentifyUser = (userId, userProperties) => {
