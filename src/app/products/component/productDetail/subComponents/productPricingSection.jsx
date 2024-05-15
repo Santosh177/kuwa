@@ -402,7 +402,7 @@ console.log("sljwneklnwk",discount)
                     <IncrimentBar noOfProduct={noOfProduct} setNoOfProduct={setNoOfProduct} onResetViewCartState={onResetViewCartState} selectedVariantQuantity={selectedVariantQuantity} normalInventory={normalInventory}/>
                 </div>
             </div>
-            {discount > 0 && <div className={styles.discount}>Save {currency +" " + discount}</div>}
+            {discount > 0 && <div className={styles.discount}>Save {currency +" " + parseFloat(discount.toFixed(2))}</div>}
             {variants.length>0 ? <div className={styles.packOf}>Pack of</div>:""}  
             <Varients currency={currency} variants={variants} setselectedVarients={setselectedVarients} selectedVarients={selectedVarients} onResetViewCartState={onResetViewCartState}/>
            {variants.find(data=> data.variants.name==3) && <div className={styles.variantRecommendedTxt}>Recommended pack of 3 for better result</div>}
