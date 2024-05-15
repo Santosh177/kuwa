@@ -20,14 +20,20 @@ import ExploreCategory from './ExploreCategory/ExploreCategory';
 import NewArrivals from './NewArrivals/NewArrivals';
 import BestSelling from './BestSelling/BestSelling';
 import DealSection from './DealSection/DealSection';
+import { mixPanelTrackEvent } from '../page';
+import { mixPanelIdentifyUser } from '../page';
+
+import { useAuth } from '@/context/userDetail';
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
-    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[] } = homePageData.homePageData || {};
+    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[], clientIpAddress="" } = homePageData.homePageData || {};
     const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();
+    console.log("clientIpAddress",clientIpAddress)
+    const {isLogin=false, userData={}} = useAuth();
     useEffect(() => {
         const elem = document.getElementById("homePage");
         elem.addEventListener('scroll', onScroll);
@@ -66,6 +72,32 @@ export default function Home(homePageData) {
         
         // }
     }, [])
+
+    useEffect(()=>{
+        const trackData = {
+            country:selectedCountry.name,
+            currency:selectedCountry.currency,
+            countryId:selectedCountry.id,
+        }
+        if(isLogin){
+            mixPanelTrackEvent("kuwa_home_page_landing",trackData, userData.id,clientIpAddress)
+        }
+        else{
+            mixPanelTrackEvent("kuwa_home_page_landing",trackData,"",clientIpAddress)
+        }
+       
+    },[selectedCountry])
+    useEffect(()=>{
+        if(isLogin){
+            const userProperties = {
+                "name": `${userData.firstName} ${userData.lastName}`,
+                 "$email": `${userData.emailAddress}`,
+               };
+
+             mixPanelIdentifyUser(userData.id,userProperties)
+        }
+       
+    },[userData])
 
     const onScroll = () => {
         try {

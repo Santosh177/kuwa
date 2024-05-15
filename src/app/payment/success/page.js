@@ -13,6 +13,7 @@ import ProductCard from './product-card/ProductCard';
 import SuccessPopUp from './successPopUp/SuccessPopUp';
 
 import { useAuth } from '@/context/userDetail';
+import { mixPanelTrackEvent } from '@/app/page';
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
@@ -29,7 +30,7 @@ export default function PaymentSuccess() {
   const [orderDetailsData,setOrderDetailsData] = useState({});
   const [isThankYouPage ,setIsThankYouPage] = useState(false)
   
-  const {isLogin=false } = useAuth() || {};
+  const {isLogin=false,userData={} } = useAuth() || {};
 
 
   const {shippingAddress } = orderDetailsData || {};
@@ -157,6 +158,7 @@ export default function PaymentSuccess() {
       const track = {
         first_order: isFirstOrder ? "YES" : "NO",
         productId: listOfOrder.productId,
+        variantId: listOfOrder.variantId,
         productName: listOfOrder.orderProductName,
         orderId:listOfOrder.orderId,
         orderProductId:listOfOrder.orderProductId,
@@ -188,7 +190,12 @@ export default function PaymentSuccess() {
       setTimeout(()=>{
         window.clevertap.event.push("kuwa_order_confirmed", track);
       },2000)
-   
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_order_confirmed", track,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_order_confirmed", track)
+      }
     }
   }
 

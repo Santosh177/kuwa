@@ -39,7 +39,11 @@ const {
     //     }
     //     ]
     // next.config.js object
+    
     return {
+      experimental: {
+        serverActions: true,
+      },
       env,
     //   headers
     }

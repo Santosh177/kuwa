@@ -11,6 +11,7 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import NotifyEmailPopup from '@/components/NotifyEmailPopup/NotifyEmailPopup';
 import NotifySuccessPopup from '@/components/NotifySuccessPopup/NotifySuccessPopup';
 import { useAuth } from '@/context/userDetail';
+import { mixPanelTrackEvent } from '@/app/page';
 
 
 const ProductSlider = ({data}) => {
@@ -40,11 +41,22 @@ const ProductSlider = ({data}) => {
 
   let trackData = {};
   const onAddToCart = async (data) => {
+    const trackingData = {
+      "product Name": data.productName,
+      "quantity": 1,
+      "product Id":data.product
+    }
     try {
       setIsLoading(true);
       const res = await addToCart(data);
       setIsLoading(false);
       clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", trackData);
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_add_to_cart",trackingData,userData.id )
+       }
+       else{
+        mixPanelTrackEvent("kuwa_add_to_cart",trackingData )
+       }
       window.location.href = '/cart';
     } catch (error) {
       console.error('An unexpected error happened occurred:', error);
@@ -225,10 +237,10 @@ const ProductSlider = ({data}) => {
                 }
                let addToCartPayload={}
                if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
-                addToCartPayload = { product: data.id, quantity: 1,dealId:data.dealId,dealPrice:data.dealFinalPrice }
+                addToCartPayload = { product: data.id, quantity: 1,dealId:data.dealId,dealPrice:data.dealFinalPrice,productName:data.name }
               }
                else{
-                addToCartPayload = { product: data.id, quantity: 1}
+                addToCartPayload = { product: data.id, quantity: 1,productName:data.name}
                }
                 return (
                   <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart(addToCartPayload)} handleNotifyMe={()=>handleNotifyMe(id)} handleNonLogin={()=>handleNonLogin(id)} />

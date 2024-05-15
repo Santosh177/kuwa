@@ -12,13 +12,13 @@ import { useAddressData } from "@/context/address";
 import { useCountry } from '@/context/contryDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
-
+import { mixPanelTrackEvent } from '@/app/page';
 
 export default function AddAddress() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { selectedCountry={} } = useCountry();
-  const { isLogin=false} = useAuth();
+  const { isLogin=false,userData={}} = useAuth();
   const refererPath = searchParams.get('referer');
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [ addressData, setAddressData] = useState({});
@@ -27,6 +27,7 @@ export default function AddAddress() {
   const [error,setError] = useState({})
   const clevertapEvent = useCleverTapEvents();
   const [pageType, setPageType] = useState(getPageType())
+
 
 
     const onFormData = (formData) => {
@@ -124,7 +125,13 @@ export default function AddAddress() {
 
     const onAddAddress = async(data) =>{
    
-      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});  
+      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{}); 
+      if(isLogin) {
+        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",{},userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",{})
+      }
       try {
         setIsLoading(true)
         const res = await fetch('/api/save-address', {
@@ -156,7 +163,13 @@ export default function AddAddress() {
     }
 
     useEffect(()=>{
-      clevertapEvent.onCleverTapEvent("kuwa_add_address_landing");  
+      clevertapEvent.onCleverTapEvent("kuwa_add_address_landing"); 
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_add_address_landing",{},userData.id)
+      } 
+      else{
+        mixPanelTrackEvent("kuwa_add_address_landing",{})
+      }
     },[])
 
   

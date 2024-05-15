@@ -15,6 +15,7 @@ import { useAuth } from '@/context/userDetail';
 import { useCountry } from '@/context/contryDetails';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
+import { mixPanelTrackEvent } from '../../../../app/page'
 const ProductDeatil = ({ productData = {} }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating="",shortDescription=""} = productData || {};
@@ -77,7 +78,13 @@ const ProductDeatil = ({ productData = {} }) => {
        setTimeout(()=>{
         window.clevertap.event.push("kuwa_page_view", trackData);
        },5000)
-
+       if(isLogin){
+        mixPanelTrackEvent("kuwa_page_view", trackData,userData.id)
+       }
+       else{
+        mixPanelTrackEvent("kuwa_page_view", trackData)
+       }
+      
     },[])
 
 
@@ -261,6 +268,13 @@ const ProductDeatil = ({ productData = {} }) => {
             // setNoOfProduct(1);
            const data = await getCartItems();
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData);
+            if(isLogin){
+                mixPanelTrackEvent("kuwa_add_to_cart",trackData,userData.id)
+            }
+            else{
+                mixPanelTrackEvent("kuwa_add_to_cart",trackData,)
+            }
+         
             // router.push('/cart')
             // window.location.href = "/cart"
         }
@@ -319,6 +333,13 @@ const ProductDeatil = ({ productData = {} }) => {
     const handelBuyNow = async () => {
         const response = await addToCart(payload)
         clevertapEvent.onCleverTapEvent("kuwa_buy_now", trackData);
+        if(isLogin){
+            mixPanelTrackEvent("kuwa_buy_now", trackData,userData.id)
+        }
+        else{
+            mixPanelTrackEvent("kuwa_buy_now", trackData,)
+        }
+       
         if (response === 200) {
             setNoOfProduct(1);
             if (haveAdress) {

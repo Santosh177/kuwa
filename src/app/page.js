@@ -1,46 +1,41 @@
-'use client'
-import HomePage from "./Home/HomePage";
-import Loader from "@/components/Loader/Loader";
-import { useEffect, useState } from "react";
-import { useCountry } from '@/context/contryDetails';
-export default function Home(req) {
-
-  console.log("HomePage",req)
-
-  const [homePageData, setHomePageData] = useState({});
-  const { selectedCountry={} }=useCountry()||{};
+'use server'
+import Home from './home';
+import Mixpanel from 'mixpanel';
+import { cookies } from 'next/headers';
 
 
-  useEffect(()=>{
-      getHomePageLayout()
-  },[])
+export const mixPanelTrackEvent=(eventName, eventData,userId,clientIpAddress) => {
+  console.log("clientIp",clientIpAddress)
+  const nextCookies = cookies();
+  const deviceId = nextCookies.get('deviceID').value; 
+  mixpanel.track(eventName,
+     { ...eventData,
+       "distinct_id": (userId)?userId:deviceId ,
+       "$ip": clientIpAddress
+      });
+}
+export const mixPanelIdentifyUser = (userId, userProperties) => {
+  mixpanel.people.set(userId, userProperties);
+}
 
-  const getHomePageLayout = async() =>{
-       const homePageData  =  await fetch(`/api/get-home-page-data`, {
-        method: 'GET',
-        headers:{
-        'Content-Type': 'application/json',
-        'country' : selectedCountry.id
-      },
-      cache: 'no-store' 
-      })
-      const homePageDataResp = await homePageData.json();
-      setHomePageData(homePageDataResp)
-  }
+
+const mixpanel = Mixpanel.init('d670cab0105c2c17aaea07a016f2d46f',
+{  
+  geolocate: true 
+  // track_pageview: true,
+  // secure_cookie: true
+});
+
+console.log("mixpanel+++",mixpanel.config.logger)
+
+export default async function page() {
   
-
-  console.log("homePageData",homePageData)
-
- 
-
-
   return (
-    <>
-      <script type="text/javascript" src="/spin-wheel.js" async></script>
-      <script type="text/javascript" src="/fresh-chat.js" async></script>
-      {process.env.NODE_ENV === 'production' && <script type="text/javascript" src="/clarity-setup.js" async></script>}
-      {(homePageData && Object.keys(homePageData).length> 0)?<HomePage homePageData={homePageData}/>: <Loader  isShow={true}/>}
-    </>
-
+    
+    <div>
+      <Home />
+    </div>
   )
 }
+
+

@@ -5,6 +5,8 @@ import ProductCard from "@/components/ProductCard/ProductCard"
 import Loader from "@/components/Loader/Loader"
 import { addToCart } from "@/services"
 import useCleverTapEvents from "@/hooks/useCleverTapEvents"
+import { mixPanelTrackEvent } from "@/app/page"
+import { useAuth } from "@/context/userDetail"
 
 
 const RelatedProducts = ({ productData = {} }) => {
@@ -13,13 +15,25 @@ const RelatedProducts = ({ productData = {} }) => {
     const [isLodaing, setIsLoading] = useState(false);
     const leftArrow = useRef(null);
     const clevertapEvent = useCleverTapEvents();
+    const { isLogin=false ,userData = {}} = useAuth();
     let trackData={}
     const onAddToCart = async (data) => {
+        const trackingData = {
+            "product Name": data.productName,
+            "quantity": 1,
+            "product Id":data.product
+          }
         try {
             setIsLoading(true)
             const res = await addToCart(data);
             setIsLoading(false)
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData);  
+            if(isLogin){
+                mixPanelTrackEvent("kuwa_add_to_cart",trackingData,userData.id )
+               }
+               else{
+                mixPanelTrackEvent("kuwa_add_to_cart",trackingData )
+               }
             window.location.href = '/cart';
         } catch (error) {
             console.error('An unexpected error happened occurred:', error)
@@ -72,10 +86,10 @@ const RelatedProducts = ({ productData = {} }) => {
                                 }
                                 let addToCartPayload = {};
                                 if(dealId && isDealActive && isTimerActive,currentTimerStatus=="in-between"){
-                                     addToCartPayload= {"product":id,"quantity":1,"dealId":dealId,dealPrice:dealFinalPrice}
+                                     addToCartPayload= {"product":id,"quantity":1,"dealId":dealId,dealPrice:dealFinalPrice,productName:name}
                                 }
                                 else{
-                                    addToCartPayload = {"product":id, "quantity":1}
+                                    addToCartPayload = {"product":id, "quantity":1,productName:name}
                                 }
                                 return (
                                     <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart(addToCartPayload)} />
