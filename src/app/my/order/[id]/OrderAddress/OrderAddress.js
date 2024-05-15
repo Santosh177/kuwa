@@ -27,7 +27,7 @@ export default function OrderAddress({address}) {
             headerTitle:"Shipping Address",
             userName:shippingAddress['firstName'] || "",
             address1: shippingAddress['address'] +" "+ shippingAddress['apartment'] ,
-            address2: shippingAddress['city'] + " " + shippingAddress['postalCode'] + " " + shippingAddress['country'] || "",
+            address2: shippingAddress['city'] + " " + (shippingAddress['postalCode'] ? `${shippingAddress['postalCode']}` : "") + " " + shippingAddress['country'] || "",
             phoneNo:shippingAddress['mobNumber'] || ""
         }
     }
@@ -38,7 +38,7 @@ export default function OrderAddress({address}) {
             headerTitle:"Billing Address",
             userName:billingAddress['firstName'],
             address1:billingAddress['address'] +" "+ billingAddress['apartment'] ,
-            address2: shippingAddress['city'] + " " + shippingAddress['postalCode'] + " " + shippingAddress['country'] || "",
+            address2: billingAddress['city'] + " " + (billingAddress['postalCode'] ? `${billingAddress['postalCode']}` : "") + " " + billingAddress['country'] || "",
             phoneNo:billingAddress['mobNumber']
         }
     }

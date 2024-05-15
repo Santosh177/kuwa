@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Input from "@/components/Input/Input";
 import CheckBox from "@/components/Checkbox/Checkbox";
 import PhoneNumberInput from "@/components/PhoneNumberInput/PhoneNumberInput";
@@ -8,7 +8,9 @@ import { useAuth } from '@/context/userDetail';
 import { useCountry } from '@/context/contryDetails';
 import { checkInternationalPhone } from "../../../../utils/validation";
 import styles from './address-form.module.scss';
-
+import EmailExistPopUp from "../components/EmailExistPopUp/EmailExistPopUp";
+import Loader from "@/components/Loader/Loader";
+import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 const validatePersonalForm = (formData) => {
 
   console.log("validatePersonalForm",formData)
@@ -59,7 +61,7 @@ const validateShippingAddressForm = (formData) => {
   };
 
 
-  const validateBillingAddressForm = (formData) => {
+const validateBillingAddressForm = (formData) => {
     const errors = {};
     if (!formData.address) {
       errors.address = 'Area is required.';
@@ -83,22 +85,138 @@ const validateShippingAddressForm = (formData) => {
   };
 
 
-const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={}}) => {
 
-    const {isLogin=false, userData={}} = useAuth();
-    // const onOrderUpdate = async(isOrderUpdate) => {
-    //   let formData = {
-    //     updateWhatsapp: isOrderUpdate
-    //   }
-    //   const res = await fetch('/api/profile-update', {
-    //     method: 'POST',
-    //     body:JSON.stringify(formData)
-    //   })
-    // }
+const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={},setIsShowEmailExistPopUp,isShowEmailExistPopUp}) => {
+
+
+  const [emailError,setEmailError] = useState("");
+  const [isLoading,setIsLoading] = useState(false)
+  const {isLogin=false, userData={}} = useAuth();
+  const [pageType, setPageType] = useState(getPageType())
+
+    const emailInputRef = useRef(null);
+    // const emailValueRef = useRef(values['email']);
+
+    const validateEmail = (email) => {
+      console.log("abjab",email)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    useEffect(() => {
+      const handleResize = () => {
+        setPageType(getPageType());
+      };
+  
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+    
+    function getPageType() {
+      return window.innerWidth > 770 ? 'web' : 'mWeb';
+    }
+
+    function getDeviceType() {
+      if (isMobile) {
+        if (isAndroid) {
+          return 'Android';
+        } else if (isIOS) {
+          return 'iOS';
+        } else {
+          return 'Mobile';
+        }
+      } else if (isTablet) {
+        return 'Tablet';
+      } else {
+        return 'Desktop';
+      }
+    }
+
+    
+
+
+    useEffect(()=>{
+      if(!isShowEmailExistPopUp){
+        document.addEventListener("mousedown",handleClickOutside)
+      }
+    
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    },[values['email'],isShowEmailExistPopUp])
+
+    useEffect(() => {
+      const handleResize = () => {
+        setPageType(getPageType());
+      };
+  
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+    
+    function getPageType() {
+      return window.innerWidth > 770 ? 'web' : 'mWeb';
+    }
+   
+
+    const handleClickOutside = async(event) => {
+      console.log("event",event)
+      if (emailInputRef.current && !emailInputRef.current.contains(event.target) && !isLogin) {
+        if (values['email']) {
+          const isValidEmail = validateEmail(values['email']);
+          if (!isValidEmail) {
+            setEmailError("Please enter a valid email address");
+          } else {
+            setEmailError("");
+           
+            const emailPayload = {
+              "email": values['email'],
+              "firstName":values['firstName'],
+              "lastName": values['lastName'],
+              "mobileNumber":values['mobNumber'],
+              "deviceType":getDeviceType(),
+              "pageType":pageType
+          }
+          console.log("emailPayload",emailPayload)
+          try{
+            setIsLoading(true)
+            const signUpResp = await fetch('/api/signup', {
+              method: 'POST',
+              body:JSON.stringify(emailPayload)
+            })
+            const signupRespData = await signUpResp.json();
+            if (signupRespData.status_code !== 200) {
+              setIsLoading(false)
+              setIsShowEmailExistPopUp(true);
+             
+            }
+            document.removeEventListener("mousedown", handleClickOutside); 
+            // else if(signupRespData.status_code ==200){
+            //   document.removeEventListener("mousedown", handleClickOutside); 
+            // }
+            
+          }
+        catch(err){
+          console.log("error",err)
+        }
+        finally{
+          setIsLoading(false)
+        }
+           
+          }
+        }
+      }
+    }
+
     return (
+      <>
         <div className={styles.personalInfoForm}>
             <div className={styles.headerTxt}>Personal Info</div>
-           {(!isEdit && !isLogin) && <CreateAccountBox />}
+           {/* {(!isEdit && !isLogin) && <CreateAccountBox />} */}
             <div className={styles.userNameContainer}>
                 <div className={styles.nameField}>
                     <Input type="text" fieldName="firstName" placeHolder="First name *"   value={values['firstName']} onInputChange={onChange}  />
@@ -117,9 +235,18 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
                 <CheckBox isChecked={values['orderUpdate']}/>
                 <div className={styles.txt}>Get order updates on WhatsApp</div>
             </div>
-            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} onInputChange={onChange} isDisabled={isLogin || (isEdit && values['email'])} />
-            {errors.email && <span className={styles.errorMsg}>{errors.email} </span>}
+            <div id="email" ref={emailInputRef}>
+            <Input type="email" fieldName="email" placeHolder="Email ID (ex. abc@gmail.com)" value={values['email']} 
+            //  onInputChange={(e)=>handleChange(e)}
+             onInputChange={onChange}
+            isDisabled={isLogin || (isEdit && values['email'])} />
+            {errors.email  && <span className={styles.errorMsg}>{errors.email } </span>}
+            {emailError && <span className={styles.errorMsg}>{emailError} </span>}
+            
+            </div>
         </div>
+        <Loader isShow={isLoading}/>
+        </>
     )
 }
 
@@ -260,6 +387,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const [personalInfoErrors, setPersonalInfoErrors] = useState({});
       const [shippingAddressErrors, setShippingAddressErrors] = useState({});
       const [billingAddressErrors, setBillingAddressErrors] = useState({});
+      const [isShowEmailExistPopUp, setIsShowEmailExistPopUp] = useState(false)
  
   // console.log("personalInfoErrors",personalInfoErrors)
 
@@ -274,6 +402,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       setPersonalInfoErrors(error)
     }
   },[error])
+
       useEffect(()=>{
         if(isEdit && formData && Object.keys(formData).length > 0){
           // console.log("formData",formData)
@@ -329,8 +458,6 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       useEffect(()=>{
       if(getFormValues){
         const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
-        // console.log("validationPersonalInfoErrors",validationPersonalInfoErrors)
-        // console.log("personalInfo",personalInfo)
         const validationShippingErrors = validateShippingAddressForm(shippingAddress);
         const validationBillingErrors = validateBillingAddressForm(billngAddress);
         if (addressValidation()) {
@@ -365,6 +492,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
      
 
       const onPersonalInfo = (e,fieldName,data) => {
+        
         let value = ""
         if(fieldName === 'mobNumber'){
             value = "+"+e;
@@ -416,14 +544,13 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         setIsSameBillingAddress(!isSameBillingAddress)
       }
 
-  
-      // console.log("personalInfo",personalInfo)
-      // console.log("shippingAddress",shippingAddress)
-      // console.log("billngAddress",billngAddress)
+      
+
+    
       return (
         <>
           <div className={styles.addressForm}> 
-            <PersonalInfoFrom countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} />
+            <PersonalInfoFrom countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} setIsShowEmailExistPopUp={setIsShowEmailExistPopUp} isShowEmailExistPopUp={isShowEmailExistPopUp}  />
             <div className={styles.addressContainer}>
                 <ShippingAddressForm onChange={onShippingAddress} values={shippingAddress} errors={shippingAddressErrors} />
                 <div className={styles.selectBillingAddressBtn} onClick={()=> onSelectBillngAddress()}>
@@ -433,6 +560,9 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
                 {!isSameBillingAddress && <BillingAddressForm onChange={onBillngAddress} values={billngAddress} errors={billingAddressErrors}/>}
             </div>
           </div>
+          {isShowEmailExistPopUp &&<div className={styles.emailExistPopUp}>
+          <EmailExistPopUp setIsShowEmailExistPopUp={setIsShowEmailExistPopUp} email={personalInfo['email']}/>
+          </div> }
         </>
       )
     }

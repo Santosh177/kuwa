@@ -9,7 +9,7 @@ export default function DeliveryAddress() {
   const { firstName="", lastName="" , mobNumber="" , apartment="", address="",country="",city="",postalCode=""} = selectedAddress || {};
   const userName = firstName + " " +lastName;
   const addressTxt1 = apartment+ " " +address
-  const addressTxt2 = city + " " + postalCode + " " +country;
+  const addressTxt2 = city + " " + (postalCode ? ` ${postalCode}` : "")+ " " +country;
   
 
     console.log("deliverAddress",selectedAddress)

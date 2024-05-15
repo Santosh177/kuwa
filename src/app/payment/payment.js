@@ -222,14 +222,14 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   let prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
   const codCharge = selectedCountry?.codCharge || 0;
 
-  // useEffect(()=>{
-  //   if(Object.keys(selectedAddress).length == 0){
-  //     const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
-  //       const findSelectedAddress = listOfAddress.find((data) => data.id == JSON.parse(getAddressIdFromLocalStorage));
-  //       setSelectedAddress(findSelectedAddress)
-  //   }
+  useEffect(()=>{
+    if(Object.keys(selectedAddress).length == 0){
+      const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
+        const findSelectedAddress = listOfAddress.find((data) => data.id == JSON.parse(getAddressIdFromLocalStorage));
+        setSelectedAddress(findSelectedAddress)
+    }
 
-  // },[listOfAddress])
+  },[listOfAddress])
   console.log()
   useEffect(() => {
     const handleResize = () => {
@@ -247,14 +247,18 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   }
 
   useEffect(()=>{
-    if(selectedAddress && Object.keys(selectedAddress).length == 0){
-          const defaultAddress = listOfAddress.find((data) => data.isDefault);
-          if(defaultAddress){
-            setSelectedAddress(defaultAddress)
-          }else{
-            setSelectedAddress(listOfAddress[0])
-          }
+    const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
+    if(!getAddressIdFromLocalStorage){
+      if(selectedAddress && Object.keys(selectedAddress).length == 0){
+        const defaultAddress = listOfAddress.find((data) => data.isDefault);
+        if(defaultAddress){
+          setSelectedAddress(defaultAddress)
+        }else{
+          setSelectedAddress(listOfAddress[0])
+        }
+  }
     }
+  
   },[listOfAddress])
 
   useEffect(()=>{
