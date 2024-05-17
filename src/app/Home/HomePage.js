@@ -24,11 +24,13 @@ import { mixPanelTrackEvent } from '../page';
 import { mixPanelIdentifyUser } from '../page';
 
 import { useAuth } from '@/context/userDetail';
+import { useLanguage } from '@/context/languageDetails';
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
+    console.log("languageDetails",useLanguage())
     const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[], clientIpAddress="" } = homePageData.homePageData || {};
     const { selectedCountry={} }=useCountry()||{};
     const clevertapEvent=useCleverTapEvents();

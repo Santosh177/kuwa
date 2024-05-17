@@ -11,6 +11,7 @@ import { CountryListProvider } from "@/context/countryList";
 import Script from 'next/script'
 // import { Work_Sans } from 'next/font/google';
 import Head from 'next/head';
+import { LanguageProvider } from "@/context/languageDetails";
 
 
 
@@ -132,7 +133,7 @@ src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
 /></noscript> */}
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDHHJWPJ"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    
+     <LanguageProvider>
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
           <AuthProvider authData={userData}>
@@ -144,6 +145,7 @@ src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
           </AuthProvider>
         </CountryProvider>
       </CountryListProvider>
+      </LanguageProvider>
       </body>
     </html>
   )
