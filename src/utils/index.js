@@ -25,7 +25,8 @@ export const getCartItemDetails = async(data,currency) => {
               "id":id,
               "cartItemId":cartItemId,
               "variants":variants,
-              "normalInventory":variants?.variants?.quantity || 0
+              "normalInventory":variants?.variants?.quantity || 0,
+              "productNameArabic" : description.nameArabic || ""
           }
           }
           else{
@@ -41,7 +42,8 @@ export const getCartItemDetails = async(data,currency) => {
             "id":id,
             "cartItemId":cartItemId,
             "variants":variants,
-            "normalInventory":variants?.variants?.quantity || 0
+            "normalInventory":variants?.variants?.quantity || 0,
+            "productNameArabic" : description.nameArabic || ""
         }
         }
       }
@@ -62,7 +64,8 @@ export const getCartItemDetails = async(data,currency) => {
               "id":id,
               "cartItemId":cartItemId,
               "variants":variants,
-              "normalInventory":normalInventory || 0
+              "normalInventory":normalInventory || 0,
+              "productNameArabic" : description.nameArabic || ""
           }
         }
         else{
@@ -78,7 +81,8 @@ export const getCartItemDetails = async(data,currency) => {
             "id":id,
             "cartItemId":cartItemId,
             "variants":variants,
-            "normalInventory":normalInventory || 0
+            "normalInventory":normalInventory || 0,
+            "productNameArabic" : description.nameArabic || ""
         }
         }
       }
@@ -311,7 +315,8 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
             "id":id,
             "cartItemId":cartItemId,
             "variants":variants,
-            "normalInventory":variants?.variants?.quantity || 0
+            "normalInventory":variants?.variants?.quantity || 0,
+            "productNameArabic" : description.nameArabic || ""
           }
           outOfStockProducts.push(item);
         }
@@ -331,7 +336,8 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
           "id":id,
           "cartItemId":cartItemId,
           "variants":variants,
-          "normalInventory":normalInventory || 0
+          "normalInventory":normalInventory || 0,
+          "productNameArabic" : description.nameArabic || ""
       }
         outOfStockProducts.push(item);
       }

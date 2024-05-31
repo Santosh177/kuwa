@@ -1,0 +1,199 @@
+.codOtpCard {
+    width: 396px;
+    border-radius: 16px;
+    background: #F1FAF8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 24px;
+    padding-top: 16px;
+    padding-right: 17px;
+    padding-bottom: 16px;
+
+    // align-items: center;
+    .heading {
+        display: flex;
+        justify-content: space-between;
+
+        .Title {
+            color: #247A81;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
+        .sideTitle {
+
+            color: #9AA1AB;
+
+            text-align: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+
+    .subTxt {
+        padding-top: 8px;
+        color: #07141A;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .mobDiv {
+        margin-top: 22px;
+        display: flex;
+        color: #07141A;
+
+
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        span {
+            cursor: pointer;
+            padding-left: 2px;
+            color: #2E7CF6;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            padding-left: 4px;
+        }
+    }
+
+    .phoneDiv{
+       margin-top: 22px;
+       .phoneTxt{
+        color: #07141A;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-bottom: -34px;
+       } 
+       .phoneDiv{
+        display: flex;
+        gap: 16px;
+        align-items: baseline;
+        .phoneInput{
+            height: 32px;
+            width: 172px;
+            border-radius: 8px;
+           }
+           .button{
+            cursor: pointer;
+            height: 32px;
+            border-radius: 24px;
+            background: #247A81;
+            color: var(--White, #FFF);
+            display: inline-flex;
+            padding: 4px 30px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+           }
+       }
+      
+    }
+
+    .otpDiv {
+        cursor: pointer;
+        margin-top: 16px;
+        gap: 16px;
+        display: flex;
+        // justify-content: center;
+        align-items: baseline;
+
+        input {
+            border-radius: 8px;
+            border: 1px solid #E6E7E7;
+            background: #FFF;
+            color: #A0A0A0;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 8px;
+        }
+        .otperror{
+            display: block;
+            color: #ce4224;
+            padding-top: 2px;
+            font-size: 14px;
+        }
+
+        .btn {
+            border-radius: 24px;
+            background: #247A81;
+            color: var(--White, #FFF);
+            display: inline-flex;
+            padding: 4px 22px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+
+    }
+
+    .timerOtp {
+        margin-left: 28px;
+        color: #9AA1AB;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .resendOtp{
+        padding-top: 2px;
+        cursor: pointer;
+        color: #247A81;
+        margin-left: 90px;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+    }
+
+}
+
+@media(max-width:990px){
+    .codOtpCard{
+        width: 100%;
+        margin-top: 12px;
+        .heading{
+            .Title{
+                font-size: 14px;
+            }
+            .sideTitle{
+                font-size: 12px;
+            }
+        }
+        .subTxt{
+            font-size: 10px;
+        }
+        .mobDiv{
+            margin-top: 6px;
+        }
+        .otpDiv{
+            margin-top: 10px;  
+        }
+    }
+}
+
+@media(max-width:440px){
+    .codOtpCard{
+       
+    }
+
+
+}

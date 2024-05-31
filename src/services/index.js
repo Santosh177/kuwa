@@ -81,7 +81,7 @@ export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
 }
 
 export const mappingHomeSearchDealProducts = (data)=>{
-const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue=""} = data || {}
+const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue="",nameArabic} = data || {}
   console.log("mappingHomeSearchDealProducts",data)
 
   let cardData={}
@@ -102,7 +102,8 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
       "discountType":"",
       "tagIconUrl":tagIconUrl,
       "tag":dealTag,
-      "currentTimerStatus":currentTimerStatus
+      "currentTimerStatus":currentTimerStatus,
+      "productNameArabic":nameArabic
       }
 
 
@@ -119,7 +120,8 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
         'discountType':"fixed",
         "discount":discount || 0,
         "currency":currency,
-        "discountType":""
+        "discountType":"",
+        "productNameArabic":nameArabic
       }
       
     }
@@ -132,6 +134,7 @@ export const  mappingDealProducts = (data)=>{
     productImage= "",
     productId= "",
     productName= "",
+    productNameArabic = "",
     countDownStartsAt="",
     countDownEndsAt="",
     dealId="",
@@ -154,6 +157,7 @@ export const  mappingDealProducts = (data)=>{
     isDealActive="",
     isTimerActive="",
     dealTag="",
+    dealTagArabic="",
     dealIconUrl="",
     currentTimerStatus="",
     currentTimerValue="",
@@ -167,6 +171,7 @@ if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between
     "variantId":variantId,
     "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
     "productName":productName || "",
+    "productNameArabic":productNameArabic || "",
     "seoUrl":productSeoUrl,
     "dealListPrice":dealListPrice,
     'dealFinalPrice':dealFinalPrice,
@@ -176,6 +181,7 @@ if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between
     "discountType":"",
     "tagIconUrl":dealIconUrl,
     "tag":dealTag,
+    "tagArabic":dealTagArabic,
     "dealInventory":dealInventory,
     "rank": rank,
     "normalInventory":normalInventory,
@@ -193,6 +199,7 @@ else{
       "productId":productId,
       "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
       "productName":productName || "",
+      "productNameArabic":productNameArabic || "",
       "seoUrl":productSeoUrl,
       "retailPrice":variantListPrice,
       'finalPrice':variantFinalPrice,
@@ -210,6 +217,7 @@ cardData={
       "productId":productId,
       "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
       "productName":productName || "",
+      "productNameArabic":productNameArabic || "",
       "seoUrl":productSeoUrl,
       "retailPrice":productListPrice,
       'finalPrice':productFinalPrice,

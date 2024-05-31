@@ -1,0 +1,272 @@
+.price-container{
+    margin-top: 24px;
+}
+
+
+.one-time-outer-div {
+ box-sizing: border-box;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                height: 115px;
+                background: #DCE0E3;
+                border: 1px solid #DCE0E3;
+                border-radius: 8px;
+                padding: 10px;
+                position: relative;
+                z-index: 3;
+                .onetime-incriment {
+                    width: 69%;
+                     .name-check-container {
+        display: flex;
+        justify-content: space-between;
+        height: 20px;
+        width: 50%;
+        .item-pricing-btn-one-time-text{
+         font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            color: #32445B;
+            position: absolute;
+            margin-left: 29px;
+            margin-top: 8px;
+                     }
+                     }
+                }
+                .price-div {
+        height: 42px;
+        margin-right: 10px;
+        text-align: right;
+        margin-top: 10px;
+        width: 148px;
+        .retail-final {
+            display: flex;
+            gap: 1px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+
+            .retail-price {
+                margin-top: 3px;
+            }
+        }
+    }
+
+ }
+ .is-subscription-div {
+    z-index: 7;
+}
+
+.not-subsiption-div {
+    z-index: -1;
+    background-color: #FFFFFF !important;
+    border: 1px solid #DCE0E3 !important;
+}
+  .margin-subscription {
+                // margin-top: -40px;
+
+                 .item-pricing-btn-one-time-text {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            color: #32445B;
+            position: absolute;
+            margin-left: 29px;
+            margin-top: 8px;
+        }
+        .subscription-dropDownDiv {
+            margin-top: 10px;
+                color: #32445b;
+                width: 147px;
+
+                .dd-header {
+                    width: 147px;
+                    height: 30px;
+
+                    .dd-header-title {
+                        font-size: 12px !important;
+                        margin-left: -20px;
+                    }
+
+                    .dd-arrow {
+                        margin-right: -14px;
+                    }
+                }
+
+                .dd-list {
+                    width: 147px;
+
+                    .dd-scroll-list {
+                        width: 147px;
+
+                        .dd-list-item {
+                            // margin-right: 20px;
+                            // padding-right: 20px;
+                            font-size: 12px;
+                        }
+                    }
+                }
+
+                .item-pricing-btn {
+                    padding-top: 18px;
+                    padding-bottom: 18px;
+                    border-radius: 10px;
+                    text-align: center;
+                    width: 100%;
+                    margin-top: 10px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    border: 2px solid #40C1AB;
+                    cursor: pointer;
+                    position: absolute;
+                    bottom: 0;
+                }
+            }
+
+            }
+             .how-subscriptoin-work {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            gap: 10px;
+            // background: #F1F1F3;
+            // border-radius: 8px;
+            // margin-top: 15px;
+
+            .txt {
+                font-size: 12px;
+                font-weight: 400;
+            }
+
+            .click-here {
+                color: #007AFF;
+                font-size: 12px;
+                font-weight: 600;
+                cursor: pointer;
+            }
+        }
+
+        .pop-up-subscription {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 101;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #32445B;
+    
+            .how-subscription-work {
+                max-width: 480px;
+                width: 100%;
+                background-color: #FFFFFF;
+                border-radius: 16px;
+    
+                .content {
+                    padding: 24px 40px 24px 40px;
+    
+                    .hedding-txt {
+                        font-size: 16px;
+                        font-weight: 700;
+                        text-align: center;
+                    }
+    
+                    .all-subscripition {
+                        margin-top: 20px;
+                    }
+    
+                    li {
+                        font-size: 14px;
+                        font-weight: 300;
+                        margin-top: 10px;
+                        list-style-type: disc !important;
+                    }
+                }
+    
+                .close-Button {
+                    display: flex;
+                    justify-content: center;
+                    padding: 16px;
+                    align-items: center;
+                    background: #F4FCF3;;
+                    box-shadow: 0px -4px 4px rgba(54, 68, 89, 0.2);
+                    cursor: pointer;
+                    border-radius: 0px 0px 16px 16px;
+    
+                    .close {
+                        font-weight: 500;
+                        font-size: 16px;
+                        color: #247A81;
+                    }
+                }
+            }
+        }
+        .how-subscription-work-content {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 200px;
+        }
+
+.checkbox-container {
+            display: block;
+            position: relative;
+            margin-top: 10px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid #07141A;
+        }
+
+        .checkbox-container:hover input~.checkmark {
+            background-color: white;
+
+        }
+
+        .checkbox-container input:checked~.checkmark {
+            background-color: #07141A;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-container input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .checkbox-container .checkmark:after {
+            left: 4px;
+            top: 2px;
+            width: 5px;
+            height: 8px;
+            border: solid #ffffff;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }

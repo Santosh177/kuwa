@@ -1,0 +1,103 @@
+'use client';
+import { useEffect, useState } from "react";
+import Banner from './Banner/Banner';
+import Header from '@/app/[lng]/components/Header/Header';
+import AssuredInfo from './AssuredInfo/AssuredInfo';
+import BestSellingProduct from './BestSellingProduct/BestSellingProduct';
+import BrandMustTry from './BrandMustTry/BrandMustTry';
+import SecondaryBanner from './SecondaryBanner/SecondaryBanner';
+import ProductSlider from '@/app/[lng]/components/ProductSlider/ProductSlider';
+import MedicalExpert from './MedicalExpert/MedicalExpert';
+import Footer from '@/app/[lng]/components/Footer/Footer';
+import Loader from '@/app/[lng]/components/Loader/Loader';
+import { useScrollDirection } from '../../hooks/useScrollDirection';
+import styles from './home-page.module.scss';
+
+export default async function Home(homePageData) {
+
+  const {kuwaUsps=[],data=[],brandUMustTry=[] } = homePageData || {};
+  let scrollYOffset = 0;
+  let scrolling = false;
+
+
+
+  useEffect(() => {
+    // window.scroll = () => {
+    //     // scrolling = true;
+    // };
+    
+    // setInterval(() => {
+    //     if (scrolling) {
+    //         scrolling = false;
+    //         handleClickScroll()
+    //         // place the scroll handling logic here
+    //     }
+    // },300);
+    // window.addEventListener("scroll", handleNavigation);
+    // return () => {
+    //   window.removeEventListener("scroll", handleNavigation);
+    // };
+  
+  }, []);
+
+
+  const handleNavigation = (e) =>{
+    if(scrollYOffset == 0){
+        setTimeout(()=>{
+            handleClickScroll();
+        },100)
+        scrollYOffset = 1
+    }
+
+    // const window = e.currentTarget;
+    // console.log("YYY",scrollYOffset)
+    // console.log("window.scrollY",window.scrollY)
+    // handleClickScroll()
+//   if (scrollYOffset > window.scrollY) {
+//     console.log("scrolling up");
+//   } else if (scrollYOffset < window.scrollY) {
+//     console.log("scrolling down");
+//   }
+//   scrollYOffset = window.scrollY;
+  }
+  const handleClickScroll = () => {
+    console.log("handleClickScroll")
+    // alert("dd")
+    const element = document.getElementById('section-1');
+    if (element) {
+        // scrollYOffset = 1
+      // 👇 Will scroll smoothly to the top of the next section
+      element.scrollIntoView({ behavior: "smooth" });
+      scrollYOffset = 1
+    // element.scrollTo(({x:0,y:0}))
+      
+    }
+  };
+  return (
+    <div className={styles.container}>
+        <div style={{scrollSnapAlign:'start',display:'inline-block'}}>
+        <Banner />
+        </div>
+    
+<div id="section-1" style={{scrollSnapAlign:'start',display:'inline-block'}}>
+         <Header />
+        <AssuredInfo assuredInfo={kuwaUsps} />
+        <BestSellingProduct data={data} />
+        <BrandMustTry data={brandUMustTry}/>
+        <SecondaryBanner />
+        {
+          data.map((data,index)=>{
+            console.log("datatad",data)
+            return(
+              <ProductSlider data={data} index={index}/>
+            )
+          })
+        }
+        <MedicalExpert />
+        <Footer />
+        <Loader />
+        </div>
+    </div>
+
+  )
+}

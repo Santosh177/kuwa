@@ -1,0 +1,244 @@
+.deliveryStatusContainer{
+    background: #F1FAF8;
+    padding-top: 1px;
+    padding-bottom: 12px;
+    margin-top: 12px;
+}
+
+.headerTxt{
+    font-weight: 500;
+    font-size: 16px;
+    margin-left: 12px;
+    padding-top: 10px;
+    margin-bottom: -20px;
+    text-align: center;
+}
+
+
+.MainContainer{
+    width: 77%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 16px;
+    margin-top: 16px;
+    background: #F1FAF8;
+    padding-top: 18px;
+    padding-bottom: 39px;
+}
+
+.StepContainer{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.StepWrapper{
+    position: relative;
+  z-index: 1;
+  
+}
+.StepStyle{
+ width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #E6E7E7;
+  transition: 0.4s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  :after {
+    content: "";
+    position: absolute;
+    background: #E6E7E7;
+    height: 3px;
+    width: 195px;
+    top: 50%;
+    transition: 0.4s ease;
+    transform: translateY(-50%);
+    left: 38px;
+  }
+}
+.StepStyleAr{
+    width: 40px;
+     height: 40px;
+     border-radius: 50%;
+     background-color: #E6E7E7;
+     transition: 0.4s ease;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     :after {
+       content: "";
+       position: absolute;
+       background: #E6E7E7;
+       height: 3px;
+       width: 195px;
+       top: 50%;
+       transition: 0.4s ease;
+       transform: translateY(-50%);
+       right: 38px;
+     }
+   }
+.StepStyle3{
+    ::after{
+        display: none !important;
+    }
+}
+.StepStyleActive{
+    background-color: #247A81 !important;
+    
+}
+.StepStyleActiveTracker{
+    ::after{
+        background-color: #247A81 !important;
+    }
+}
+
+.StepCount{
+    font-size: 14px;
+    color: #f3e7f3;
+    .stepIcon{
+        height: 12px;
+        width: 12px;
+    }
+}
+
+
+.StepsLabelContainer{
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.StepLabel{
+    font-size: 12px;
+  color: #A0A0A0;
+  width: max-content;
+  text-align: center;
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
+}
+
+.cancelledOrderContainer{
+    background: #FDF9F8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 17px;
+    padding-bottom: 17px;
+    margin-top: 16px;
+    margin-bottom: 24px;
+    gap: 8px;
+    .crossIcon{
+        height: 24px;
+        width: 24px;
+    }
+
+    .txt{
+        font-weight: 500;
+        font-size: 12px;
+    }
+}
+
+
+
+@media(max-width:768px){
+    .MainContainer{
+        max-width: 290px;
+    }
+    .StepStyle{
+        width: 28px;
+        height: 28px;
+        ::after{
+            content: "";
+            position: absolute;
+            background: #E6E7E7;
+            height: 3px;
+            width: 70px;
+            top: 50%;
+            transition: 0.4s ease;
+            transform: translateY(-50%);
+            left: 37px;
+        }
+    }
+    .StepStyleAr{
+        width: 28px;
+        height: 28px;
+        ::after{
+            content: "";
+            position: absolute;
+            background: #E6E7E7;
+            height: 3px;
+            width: 70px;
+            top: 50%;
+            transition: 0.4s ease;
+            transform: translateY(-50%);
+            right: 37px;
+        }
+    }
+    .StepLabel{
+        font-size: 12px;
+    }
+    .StepCount{
+        .stepIcon{
+            height: 18px;
+            width: 18px;
+        }
+    }
+    .StepsLabelContainer{
+        top: 41px;
+    }
+}
+
+
+
+@media(min-width:990px){
+    .MainContainer{
+        // max-width: 349px;
+    }
+    
+    .StepStyle{
+        width: 24px;
+         height: 24px;
+         border-radius: 50%;
+         background-color: #E6E7E7;
+         transition: 0.4s ease;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         :after {
+           content: "";
+           position: absolute;
+           background: #E6E7E7;
+           height: 3px;
+            width: 72px;
+           top: 50%;
+           transition: 0.4s ease;
+           transform: translateY(-50%);
+           left: 38px;
+         }
+       }
+       .StepStyleAr{
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: #E6E7E7;
+        transition: 0.4s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        :after {
+          content: "";
+          position: absolute;
+          background: #E6E7E7;
+          height: 3px;
+           width: 72px;
+          top: 50%;
+          transition: 0.4s ease;
+          transform: translateY(-50%);
+          right: 38px;
+        }
+       }
+}
