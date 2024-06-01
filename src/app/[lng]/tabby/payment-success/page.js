@@ -2,9 +2,12 @@
 import { redirect } from 'next/navigation';
 
 export default async function PaymentSuccess(req,res) {
+  console.log("RequestParams",req.searchParams)
     const paymentId = req && req.searchParams && req.searchParams['payment_id'] || null;
+    const isBuyNow = req && req.searchParams && req.searchParams['is_buy_now'] || false
     if(paymentId){
-        const tabbyPaymentResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tabby/callback?paymentId=${paymentId}`, {
+      const endPointUrl = isBuyNow ? `${process.env.BACKEND_END_POINT_URL}/api/v2/tabby/callback?paymentId=${paymentId}` : `${process.env.BACKEND_END_POINT_URL}/api/v1/tabby/callback?paymentId=${paymentId}`
+        const tabbyPaymentResp  =  await fetch(endPointUrl, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -2,11 +2,14 @@
 import { redirect } from 'next/navigation';
 
 export default async function PaymentStatus(req,res) {
+  console.log("RequestParams",req.searchParams)
     const tapId = req && req.searchParams && req.searchParams['tap_id'] || null;
+    const isBuyNow = req && req.searchParams && req.searchParams['is_buy_now'] || false
     let tapPaymentStatusData = ""
     console.log("tap payment status")
     if(tapId){
-        const tapPaymentStatusResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tap/payment-status-inquiry?chargeId=${tapId}`, {
+      const endPointUrl = isBuyNow ? `${process.env.BACKEND_END_POINT_URL}/api/v2/tap/payment-status-inquiry?chargeId=${tapId}` : `${process.env.BACKEND_END_POINT_URL}/api/v1/tap/payment-status-inquiry?chargeId=${tapId}`
+        const tapPaymentStatusResp  =  await fetch(endPointUrl, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

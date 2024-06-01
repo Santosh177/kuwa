@@ -11,7 +11,7 @@ import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import PaymentFooterBtn from "./components/PaymentFooterBtn/PaymentFooterBtn";
 import { getCartItemDetails , createPayloadForCartItems , createPayloadForItems} from "@/utils";
-import { useRouter } from 'next/navigation';
+import { useRouter,useSearchParams} from 'next/navigation';
 import { useAddressData } from "@/context/address";
 import styles from './payment.module.scss';
 import { useState , useEffect} from "react";
@@ -203,6 +203,7 @@ const OrderSummayMobileLayout = ({priceDetails ={}, paymentMethodConfig={} , onP
 }
 
 export default function Payment({cartData,paymentModes,tamaraConfig}) {
+  console.log("paymentcartData", cartData)
   const router = useRouter();
   const {couponCodeData={}, selectedPaymentMethod=""} = usePaymentPageData();
   const countryList = useCountryList();
@@ -228,15 +229,21 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   let prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
   const codCharge = selectedCountry?.codCharge || 0;
 
+  const searchParams = useSearchParams();
+  let productId = searchParams.get('productId') || "" 
+  let variantId = searchParams.get('variantId') || ""
+
   useEffect(()=>{
+    console.log("listOfAddress",listOfAddress)
     if(Object.keys(selectedAddress).length == 0){
       const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
         const findSelectedAddress = listOfAddress.find((data) => data.id == JSON.parse(getAddressIdFromLocalStorage));
+        console.log("findSelectedAddress",findSelectedAddress)
         setSelectedAddress(findSelectedAddress)
     }
 
-  },[listOfAddress])
-  console.log()
+  },[listOfAddress,selectedAddress])
+
   useEffect(() => {
     const handleResize = () => {
       setPageType(getPageType());
@@ -256,7 +263,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     const getAddressIdFromLocalStorage = localStorage.getItem('addressId');
     if(!getAddressIdFromLocalStorage){
       if(selectedAddress && Object.keys(selectedAddress).length == 0){
-        const defaultAddress = listOfAddress.find((data) => data.isDefault);
+        const defaultAddress = listOfAddress.find((data) => data.isDefaultAddress);
         if(defaultAddress){
           setSelectedAddress(defaultAddress)
         }else{
@@ -265,7 +272,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   }
     }
   
-  },[listOfAddress])
+  },[listOfAddress,selectedAddress])
 
   useEffect(()=>{
     setData(cartData);
@@ -432,6 +439,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
  
 
     const onPayment = async(data,pMode="",) => {
+      console.log("BuyProductId",productId,variantId);
       console.log("prePaidDiscount",extraDiscount);
       const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
 
@@ -439,8 +447,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       console.log("pMode",pMode)
       setIsLoader(true);
       const userName = userData && userData['firstName'] || "";
-      const getCartItems = await getCartItem();
-      const cartItemsData = getCartItems && getCartItems['products'];
+      const getCartItems =  await getCartItem(productId,variantId);
+      const cartItemsData =  (getCartItems && getCartItems['products']);
+
       
       const cartItemPayload = await createPayloadForCartItems(cartItemsData);
       // const dealId = cartItemPayload.dealId || null
@@ -508,7 +517,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           else{
             mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
           }
-              const placeOrderResp  =  await fetch('/api/place-order-without-payment', {
+              const placeOrderResp  =  await fetch(`/api/place-order-without-payment?productId=${productId}&variantId=${variantId}`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
@@ -538,7 +547,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
             }
             console.log("CHECKOUT_CARD",payload)
-              const placeOrderResp  =  await fetch('/api/checkout-place-order', {
+              const placeOrderResp  =  await fetch(`/api/checkout-place-order?productId=${productId}&variantId=${variantId}`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
@@ -582,7 +591,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             //   console.log("Paylaof",payload)
 
 
-              const placeOrderResp  =  await fetch('/api/tamara-place-order', {
+              const placeOrderResp  =  await fetch(`/api/tamara-place-order?productId=${productId}&variantId=${variantId}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -617,7 +626,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               const finalPayload = {...payload,...tabbyPayload}
             console.log("TABBY",finalPayload)
               console.log("PAyloadd",tabbyPayload)
-                const placeOrderResp  =  await fetch('/api/tabby-place-order', {
+                const placeOrderResp  =  await fetch(`/api/tabby-place-order?productId=${productId}&variantId=${variantId}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -651,7 +660,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               }
               const finalPayload = {...payload,...tapPayload}
               console.log("TAP",finalPayload)
-                const placeOrderResp  =  await fetch('/api/tap-place-order', {
+                const placeOrderResp  =  await fetch(`/api/tap-place-order?productId=${productId}&variantId=${variantId}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -681,7 +690,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             else{
               mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
             }
-              const placeOrderResp  =  await fetch('/api/place-order-without-payment', {
+              const placeOrderResp  =  await fetch(`/api/place-order-without-payment?productId=${productId}&variantId=${variantId}`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
@@ -716,7 +725,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           else{
             mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData)
           }
-            const placeOrderResp  =  await fetch('/api/apple-pay-place-order', {
+            const placeOrderResp  =  await fetch(`/api/apple-pay-place-order?productId=${productId}&variantId=${variantId}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

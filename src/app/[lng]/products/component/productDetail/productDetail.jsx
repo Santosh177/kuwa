@@ -15,6 +15,7 @@ import { useCountryList } from '@/context/countryList';
 import { useAuth } from '@/context/userDetail';
 import { useCountry } from '@/context/contryDetails';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
+import { queryParams } from "@/services";
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 // import { mixPanelTrackEvent } from '../../../../app/page'
 import { mixPanelTrackEvent } from "@/app/[lng]/page";
@@ -322,6 +323,7 @@ const ProductDeatil = ({ productData = {} }) => {
     }
 
     const handelBuyNow = async () => {
+        payload["isGetBuyNow"] = true;
         const response = await addToCart(payload)
         clevertapEvent.onCleverTapEvent("kuwa_buy_now", trackData);
         if(isLogin){
@@ -333,11 +335,14 @@ const ProductDeatil = ({ productData = {} }) => {
        
         if (response === 200) {
             setNoOfProduct(1);
-            if (haveAdress) {
-                // router.push('/payment')
-                window.location.href = '/payment'
+            const queryString = queryParams(id,selectedVarients)
+            // router.push('/payment')
+            console.log("queryString",queryString)
+
+            if (haveAdress) {    
+                window.location.href = `/payment/?${queryString}`
             } else {
-                router.push('/address/add-address');
+                router.push(`/address/add-address/?${queryString}`);
             }
         }
     }

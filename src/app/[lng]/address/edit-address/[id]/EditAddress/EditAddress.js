@@ -9,11 +9,22 @@ import styles from './edit-address.module.scss';
 import Loader from "@/app/[lng]/components/Loader/Loader";
 
 
+import { queryParams } from "@/services";
+
+
 export default function AddAddress() {
   const router = useRouter()
   const params = useParams();
   const searchParams = useSearchParams();
   const refererPath = searchParams.get('referer');
+
+  const productId = searchParams.get('productId');
+  const variantId = searchParams.get('variantId')
+  let queryString = ''
+  if(productId){
+    queryString = queryParams(productId,variantId)
+  }
+
   console.log("searchParams",refererPath)
   const editAddressid = params.id;
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={},setListOfAddress={} } = useAddressData();
@@ -95,9 +106,9 @@ export default function AddAddress() {
         getAddress()
         if(refererPath){
           setIsUpdateSuccess(true)
-          router.replace(refererPath)
+          router.replace(`${refererPath}/?${queryString}`)
         }else{
-          router.replace('/payment')
+          router.replace(`/payment/?${queryString}`)
         }
     } catch (error) {
       console.error('An unexpected error happened occurred:', error)

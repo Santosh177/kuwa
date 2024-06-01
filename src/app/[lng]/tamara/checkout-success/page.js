@@ -2,11 +2,12 @@
 import { redirect } from 'next/navigation';
 
 export default async function PaymentSuccess(req,res) {
-
+  console.log("RequestParams",req.searchParams)
         const tamraSideOrderId = req && req.searchParams && req.searchParams.orderId || "";
-
+        const isBuyNow = req && req.searchParams && req.searchParams['is_buy_now'] || false
         if(tamraSideOrderId){
-                const getOrderIdResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/order-id?transactionReference=${tamraSideOrderId}`, {
+          const endPointUrl = isBuyNow ? `${process.env.BACKEND_END_POINT_URL}/api/v2/tamara/order-id?transactionReference=${tamraSideOrderId}` : `${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/order-id?transactionReference=${tamraSideOrderId}`
+                const getOrderIdResp  =  await fetch(endPointUrl, {
                   method: 'GET',
                   headers: {
                     'Content-Type': 'application/json',

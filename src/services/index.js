@@ -54,8 +54,9 @@ export const deleteCartItem = async(data) =>{
     
 }
 
-export const getCartItem = async() =>{
-    const getCartItemResp = await fetch('/api/get-cart-item', {
+export const getCartItem = async(productId="",variantId="") =>{
+  console.log("productIdserver",productId,variantId)
+    const getCartItemResp = await fetch(`/api/get-cart-item?productId=${productId}&variantId=${variantId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ export const getCartItem = async() =>{
     const getCartItemData = await getCartItemResp.json();
     return getCartItemData;
 }
-
+ 
 export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
   const getTamaraPaymentTypes = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/tamara/payment-types?countryCode=${selectedCountryCode}`, {
       method: 'GET',
@@ -232,6 +233,18 @@ cardData={
 return cardData;
 
 }
+
+export const queryParams = (productId, variantId) => {
+  const params = new URLSearchParams();
+  params.append('productId', productId);
+  if (variantId) {
+    params.append('variantId', variantId);
+  }
+  return params.toString();
+};
+
+
+
 
 
 

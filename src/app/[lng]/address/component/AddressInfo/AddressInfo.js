@@ -1,7 +1,9 @@
 'use client';
-import { useRouter,usePathname } from 'next/navigation';
+import { useRouter,usePathname,useSearchParams } from 'next/navigation';
 import styles from './address-info.module.scss';
 import { useLanguage } from '@/context/languageDetails';
+
+import { queryParams } from '@/services';
 
 const CheckBox = ({ isChecked=false }) => {
     return (
@@ -19,8 +21,13 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
   const { userName="",addressTxt="", mobNumber="",id="" } = data || {}
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-
-  
+  const searchParams = useSearchParams();
+  const productId = searchParams.get('productId');
+  const variantId = searchParams.get('variantId')
+  let queryString = ''
+  if(productId){
+    queryString = queryParams(productId,variantId)
+  }
       return (
         <div className={[styles.addressInfoCard,(isSelected)&&styles.isActive].join(" ")} onClick={(e)=>{
           // e.preventDefault();
@@ -31,7 +38,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
                 <div className={styles.actionWrapper}>
                     <div className={styles.action} onClick={(e)=>{
                      e.stopPropagation();
-                      router.push(`/address/edit-address/${id}?referer=${pathName}`)}}>
+                      router.push(`/address/edit-address/${id}?referer=${pathName}&${queryString}`)}}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
                         <div className={styles.actionTxt}>{isArabic ? "تعديل" : "Edit"}</div>
                     </div>

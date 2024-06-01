@@ -95,7 +95,7 @@ export const getCartItemDetails = async(data,currency) => {
 
 export const createPayloadForCartItems = async(cartData) => {
     let cartItems = [];
-      console.log("createPayloadForCartItems",createPayloadForCartItems)
+      console.log("createPayloadForCartItems",cartData)
       if(cartData && cartData.length > 0){
         cartData.map((data,index)=>{
           if(data.variants && data.variants.variants.id && data.variants.variants.quantity > 0){

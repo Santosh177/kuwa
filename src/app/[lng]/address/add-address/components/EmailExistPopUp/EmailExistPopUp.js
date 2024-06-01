@@ -4,12 +4,15 @@ import styles from './email-exist-popup.module.scss';
 import Loader from '@/app/[lng]/components/Loader/Loader';
 import Input from '@/app/[lng]/components/Input/Input';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
+import { useSearchParams } from 'next/navigation';
+import { queryParams } from '@/services';
 
 const EmailExistPopUp = ({ setIsShowEmailExistPopUp, email }) => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [pageType, setPageType] = useState(getPageType())
+  const searchParams = useSearchParams()
 
   const mergeCartItems = async () => {
     try {
@@ -63,6 +66,8 @@ const EmailExistPopUp = ({ setIsShowEmailExistPopUp, email }) => {
         return 'Desktop';
       }
     }
+    let productId = searchParams.get('productId');
+    let variantId = searchParams.get('variantId');
     try {
       setIsLoading(true);
       const deviceType = getDeviceType();
@@ -82,15 +87,36 @@ const EmailExistPopUp = ({ setIsShowEmailExistPopUp, email }) => {
       console.log("loginResp",loginResp.data)
 
       if (loginResp.status === "SUCCESS") {
-        mergeCartItems();
+        await mergeCartItems();
         if (loginResp.data.addressType === "single-address") {
-          window.location.replace('/payment')
+          if(productId){
+            const queryString = queryParams(productId,variantId);
+            window.location.replace(`/product?${queryString}`);
+          }
+          else{
+            window.location.replace('/payment')
+          }
+          
         }
         else if(loginResp.data.addressType == "multiple-address"){
-          window.location.replace('/address/select-address');
+          if(productId){
+            const queryString = queryParams(productId,variantId);
+            window.location.replace(`/address/select-address?${queryString}`);
+          }
+          else{
+            window.location.replace('/address/select-address');
+          }
+     
         }
         else{
-          window.location.href = '/address/add-address';
+          if(productId){
+            const queryString = queryParams(productId,variantId);
+            window.location.href(`/address/add-address?${queryString}`);
+          }
+          else{
+            window.location.href = '/address/add-address';
+          }
+         
         }
       }
       else{

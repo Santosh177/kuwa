@@ -1,8 +1,9 @@
-import { useRouter } from 'next/navigation';
+import { useRouter,useSearchParams } from 'next/navigation';
 import { useAddressData } from "@/context/address";
 import { useAuth } from '@/context/userDetail';
 import styles from './delivery-address.module.scss';
 import { useLanguage } from '@/context/languageDetails';
+import { queryParams } from '@/services';
 
 export default function DeliveryAddress() {
   const router = useRouter();
@@ -12,17 +13,26 @@ export default function DeliveryAddress() {
   const addressTxt1 = apartment+ " " +address
   const addressTxt2 = city + " " + (postalCode ? ` ${postalCode}` : "")+ " " +country;
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+const search = useSearchParams();
 
     console.log("deliverAddress",selectedAddress)
-  
+    const productId = search.get('productId');
+    const variantId = search.get('variantId');
+
+    const changeAddress = () => {
+    let queryString = '';
+    if (productId) {
+      queryString = queryParams(productId, variantId);
+    }
+    router.push(`/address/select-address/?${queryString}`);
+  }
       return (
         <div className={styles.deliveryAddress}> 
             <div className={styles.actionItem}>
                 <div className={styles.headerTxt}>{isArabic ? "عنوان الشحن" :  "Shipping address"}</div>
                 <div className={styles.changeAction}>
                     <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
-                    <div className={styles.changeTxt} onClick={()=>router.push('/address/select-address')}>{isArabic ? "تغيير" : "Change"}</div>
+                    <div className={styles.changeTxt} onClick={changeAddress}>{isArabic ? "تغيير" : "Change"}</div>
                 </div>
             </div>
             <div className={styles.name}>{userName}</div>

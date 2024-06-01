@@ -2,9 +2,12 @@
 import { redirect } from 'next/navigation';
 
 export default async function PaymentSuccess(req,res) {
+  console.log("RequestParams",req.searchParams)
     const sessionId = req && req.searchParams && req.searchParams['cko-session-id'] || null;
+    const isBuyNow = req && req.searchParams && req.searchParams['is_buy_now'] || false
     if(sessionId){
-        const checkoutResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/checkout/callback-success?cko-session-id=${sessionId}`, {
+      const endPointUrl = isBuyNow ? `${process.env.BACKEND_END_POINT_URL}/api/v2/checkout/callback-success?cko-session-id=${sessionId}` : `${process.env.BACKEND_END_POINT_URL}/api/v1/checkout/callback-success?cko-session-id=${sessionId}`
+        const checkoutResp  =  await fetch(endPointUrl, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

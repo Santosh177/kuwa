@@ -1,12 +1,14 @@
 'use client';
-import { useRouter,usePathname } from 'next/navigation';
-import Loader from '@/app/[lng]/components/Loader/Loader';
+import { useRouter,usePathname,useSearchParams } from 'next/navigation';
+import Loader from '@/components/Loader/Loader';
 import AddressInfo from '../AddressInfo/AddressInfo';
 import { useAddressData } from "@/context/address";
 import SubmitBtn from '../SubmitBtn/SubmitBtn';
 import styles from './list-of-address.module.scss'
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/context/languageDetails';
+
+import { queryParams } from '@/services';
 
 
 export default function ListOfAddress({addressList}) {
@@ -17,7 +19,7 @@ export default function ListOfAddress({addressList}) {
   const [ isLoading , setIsLoading] = useState(false)
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-
+  const search = useSearchParams();
   const onRemoveAddress = async(addressId) =>{
     setIsLoading(true)
     const removeAddressResp  =  await fetch(`/api/delete-address`, {
@@ -54,7 +56,18 @@ export default function ListOfAddress({addressList}) {
   }
 
   const onSelectAddress = () => {
-    window.location.href = '/payment'
+   
+    const productId = search.get('productId');
+    const variantId = search.get('variantId');
+    if(productId){
+      const queryString = queryParams(productId,variantId)
+      window.location.href = `/payment/?${queryString}`
+    }
+    else{
+      window.location.href = '/payment'
+      // router.push('/payment')
+    }
+    
     // router.push('/payment')
   }
  

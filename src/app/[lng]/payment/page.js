@@ -8,17 +8,27 @@ import { authHeader } from "../../../lib/auth-cookies"
 import { redirect } from 'next/navigation';
 import styles from './pages.module.scss';
 import { cookies } from "next/headers";
+import { useRouter,useSearchParams } from 'next/navigation';
+import { queryParams } from "@/services";
 
-export default async function PaymentPage() {
+
+export default async function PaymentPage( req ) {
   let getCartItems = [];
   let paymentModes = [];
   let tamaraConfig = [];
   const nextCookies = cookies();
   const language_code = nextCookies.get('language_code')?.value 
+  console.log("requestData",req)
+  const productId = req?.searchParams?.productId || "";
+  const variantId = req?.searchParams?.variantId || "";
+  console.log("paymentProduct",productId,variantId)
   try {
-    
+      const queryString =  queryParams(productId,variantId);
+      console.log("queryString",queryString)
+     
     const customHeader = await authHeader();
-    const getCartItemResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/cart`, {
+
+    const getCartItemResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/cart?${queryString}`, {
       method: 'GET',
       headers:{
         ...customHeader

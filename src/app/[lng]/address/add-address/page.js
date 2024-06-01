@@ -12,8 +12,8 @@ import { useAddressData } from "@/context/address";
 import { useCountry } from '@/context/contryDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
-// import { mixPanelTrackEvent } from '@/app/page';
-import { mixPanelTrackEvent } from '../../page';
+import { queryParams } from '@/services';
+import { mixPanelTrackEvent } from '@/app/page';
 
 export default function AddAddress() {
   const router = useRouter();
@@ -95,7 +95,7 @@ export default function AddAddress() {
             const email = signupRespData.data.email;
             const countryName = selectedCountry && selectedCountry.name ||  ""
             if(userId){
-              window.clevertap?.onUserLogin?.push({
+              window.clevertap.onUserLogin.push({
                 "Site": {
                   "Name": name,            // String
                   "Identity": userId,              // String or number
@@ -110,7 +110,7 @@ export default function AddAddress() {
                 "cart_items": []
                })
                
-               window.clevertap?.event.push("kuwa_user_add_address_signup_success", {
+               window.clevertap.event.push("kuwa_user_add_address_signup_success", {
                 "Country":countryName,
                 "Email":email,
                 "Name": name,
@@ -151,7 +151,16 @@ export default function AddAddress() {
             // router.replace(refererPath)
             window.location.replace(refererPath)
           }else{
-            window.location.replace('/payment')
+  let productId = searchParams.get('productId') || "" 
+  let variantId = searchParams.get('variantId') || ""
+  if(productId){
+    const queryString = queryParams(productId,variantId)
+    window.location.replace(`/payment?${queryString}`)
+  }
+  else{
+    window.location.replace('/payment')
+  }
+           
             // router.replace('/order-summary')
           }
           
