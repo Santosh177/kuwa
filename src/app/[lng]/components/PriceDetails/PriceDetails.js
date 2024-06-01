@@ -12,10 +12,23 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
     )
 }
 
-const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePaidDiscount,extraDiscount,setExtraDiscount,myPrePaidDiscount,codCharge,myCodCharge}) => {
+const CustumDutyInfo = ({setIsShowCustumDutyInfoPopup})=>{
+return(
+<div className={styles.custumDutyInfoPopupContainer}>
+    <div className={styles.custumDutyInfoPopupSection}>
+    <div className={styles.title}>Duty, Taxes, & Fees</div>
+    <div className={styles.subTxt}>Imported goods are subject to Bayan fee which is levied by the local government agency in Qatar. With DDP (Delivered Duties Paid), you do not have to pay any additional duty/tax at the time of delivery.</div>
+    <div className={styles.footer} onClick={(()=>setIsShowCustumDutyInfoPopup(false))}>Close</div>
+    </div>
+</div>
+)
+
+}
+
+const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePaidDiscount,extraDiscount,setExtraDiscount,myPrePaidDiscount,codCharge,myCodCharge,customFee=0,myCustomFee}) => {
     const { cartItemCount="", subTotal="" , totalAmount="", savedAmount="", discountAmount="" , currency="",deliveryFees=0,prepaidDiscountAmount=0} = data || {}
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+ const [isShowCustumDutyInfoPopup,setIsShowCustumDutyInfoPopup] = useState(false)
     useEffect(()=>{
         if(prePaidDiscount && (selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" ) ){
             if(discountAmount<0){
@@ -33,7 +46,7 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
         }
     },[selectedPaymentMethod,totalAmount,discountAmount]);
     console.log("selectedPaymentMethod",selectedPaymentMethod)
-    const FinalTotalAmount = extraDiscount > 0 ? totalAmount-extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalAmount + codCharge : totalAmount )  ;
+    const FinalTotalAmount = (extraDiscount > 0 ? totalAmount-extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalAmount + codCharge : totalAmount )) + customFee  ;
 
     return(
         <div className={styles.header}>
@@ -75,6 +88,15 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
                 <div className={styles.rowItemLeftText}>{isArabic ? "رسوم الشحن" : "Delivery Fee"}</div>
                 <div className={[styles.rowItemRightText,styles.freeDeliveryTxt].join(" ")}>{(deliveryFees>0)?"+ "+currency + " "+ deliveryFees:isArabic ? "مجاني" : "Free"}</div>
             </div>
+
+          {customFee > 0 &&  <div className={styles.rowItemContainer}>
+                <div className={styles.rowItemLeftText}>Custom Duty <span style={{cursor:"pointer"}} onClick={()=>setIsShowCustumDutyInfoPopup(true)}><img src="https://d25uasl7utydze.cloudfront.net/assets/tool_tip.svg"></img></span></div>
+                <div className={[styles.rowItemRightText].join(" ")}>{parseFloat(customFee).toFixed(2)}</div>
+            </div>}
+            {myCustomFee > 0 &&  <div className={styles.rowItemContainer}>
+                <div className={styles.rowItemLeftText}>Custom Duty <span style={{cursor:"pointer"}} onClick={()=>setIsShowCustumDutyInfoPopup(true)}><img src="https://d25uasl7utydze.cloudfront.net/assets/tool_tip.svg"></img></span></div>
+                <div className={[styles.rowItemRightText].join(" ")}>{parseFloat(myCustomFee).toFixed(2)}</div>
+            </div>}
             {discountAmount> 0 &&  <AmountSavedInfo savedAmount={discountAmount} currency={currency}/>}
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>{isArabic ? "المبلغ الإجمالي" : "Total Amount"}</div>
@@ -84,6 +106,10 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
            
        </div>
        </div>
+       {isShowCustumDutyInfoPopup &&  <div className={styles.custumDutyInfoPopup}>
+      <CustumDutyInfo setIsShowCustumDutyInfoPopup={setIsShowCustumDutyInfoPopup}/>
+      </div>}
+       </>
     )
 
 

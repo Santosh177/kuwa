@@ -399,6 +399,12 @@ const ProductDeatil = ({ productData = {} }) => {
               }
           ],
         };
+        if (customFee > 0) {
+            lineItems.push({
+                "label": "Custom Duty",
+                "amount": customFee
+            });
+        }
         if(!isLogin){
             request["requiredBillingContactFields"].push('phone')
             request["requiredBillingContactFields"].push('email')

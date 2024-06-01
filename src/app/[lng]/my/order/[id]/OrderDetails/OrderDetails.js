@@ -15,10 +15,10 @@ export default function OrderDetails({data}) {
   const myPrePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-
-  let { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0,prepaidDiscountAmount=0, codCharge} = data || {};
+  let { product = {}, orderId = "", price = {}, parentOrderId = "", billingAddress = {}, shippingAddress = {}, orderStatus = "", finalAmount = "", discount =0, currency = "", deliveryFee=0,prepaidDiscountAmount=0, codCharge,customFee=0} = data || {};
   // const orderStatus = product['status']
   const myCodCharge = codCharge;
+  const myCustomFee = customFee
   let address={}
       address["billingAddress"]=billingAddress;
       address["shippingAddress"]=shippingAddress
@@ -105,7 +105,7 @@ export default function OrderDetails({data}) {
             <OrderAddress address={address} />
         </div>
         <div className={styles.orderDetailsRightContainer}>
-            <PriceDetails data={priceDetailsData} isHidePriceDetails={false} myPrePaidDiscount={myPrePaidDiscount} myCodCharge={myCodCharge} />
+            <PriceDetails data={priceDetailsData} isHidePriceDetails={false} myPrePaidDiscount={myPrePaidDiscount} myCodCharge={myCodCharge} myCustomFee={myCustomFee}/>
             <div className={styles.needHelpTxt} onClick={()=>router.push('/contact-us')}>{isArabic ? "أحتاج مساعدة" : "Need help"} ? <span>{isArabic ? "اتصل بنا" : "Contact Us"}</span></div>
         {disableCancelBtn && <div className={styles.cancelError}>{cancelStatement}</div>}
         <div className={styles.cancelOrderBtn} style={disableStyle} onClick={() => handleCancelButton()}>{isArabic ? "إلغاء طلبي" : "Cancel my order"}</div>

@@ -25,6 +25,7 @@
         justify-content: space-between;
         margin-top: 16px;
         .rowItemLeftText{
+            display: flex;
             font-weight: 400;
             font-size: 14px;
         }
@@ -92,6 +93,66 @@
     margin-top: 16px;
 }
 
+.custumDutyInfoPopup{
+    background-color: rgba(0, 0, 0, .3);
+    bottom: 0;
+    color: #32445b;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
+
+.custumDutyInfoPopupContainer{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 200px;
+    position: relative;
+    .custumDutyInfoPopupSection{
+        width: 437px;
+        border-radius: 8px;
+background: #FFF;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 24px 24px 0px 24px;
+    }
+    .title{
+        color: #07141A;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+    }
+    .subTxt{
+        margin-top: 18px;
+        color: #000;
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+text-transform: capitalize;
+    }
+    .footer{
+        cursor: pointer;
+        margin-top: 56px;
+        color: #247A81;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+padding: 15px 197px;
+background-color: #F4FCF3;;
+    }
+}
+   
+}
+
 
 @media (max-width:990px){
     .priceDetailsWrapper{
@@ -114,6 +175,19 @@
             .extraPayment{
                 width: 150px !important;    
             }
+        }
+    }
+}
+
+@media(max-width:770px){
+    .custumDutyInfoPopup{
+        .custumDutyInfoPopupContainer{
+           .custumDutyInfoPopupSection{
+            width: 320px;
+            .footer{
+                padding: 15px 139px;
+            }
+           } 
         }
     }
 }

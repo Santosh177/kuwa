@@ -324,6 +324,7 @@ export default  function Cart({cartData}) {
       console.log("prePaidDiscountbb",prePaidDiscount);
       let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
       totalAmount = totalAmount - extraDiscount
+      const customFee = selectedCountry?.customFee || 0 ;
       console.log("finalAmount",extraDiscount)
       console.log("cartItemscartItems",cartItems)
       let labelData = [];
@@ -360,6 +361,13 @@ export default  function Cart({cartData}) {
           }
         ],
       };
+
+      if (customFee > 0) {
+        lineItems.push({
+            "label": "Custom Duty",
+            "amount": customFee
+        });
+    }
 
     console.log("request+++",request)
     
@@ -541,6 +549,7 @@ export default  function Cart({cartData}) {
       const taxAmount = await calculateVatPercentage(priceDetails['subTotal']);
       const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
       let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
+      const customFee = selectedCountry?.customFee || 0;
       let payload = {
           "cartId":getCartItems['id'] || "",
           "orderType": "one-time",
@@ -551,8 +560,8 @@ export default  function Cart({cartData}) {
           "countryCode": selectedCountry.code || "",
           "countryId": selectedCountry.id || "",
           "description": description,
-          "finalAmount": priceDetails['totalAmount'],
-          "totalAmount": priceDetails['totalAmount'],
+          "finalAmount": priceDetails['totalAmount'] + customFee,
+          "totalAmount": priceDetails['totalAmount'] + customFee,
           "currency": selectedCountry.currency || "",
           "orderSource": "WEBSITE",
           "orderCategory": "CART",
@@ -564,7 +573,8 @@ export default  function Cart({cartData}) {
           "shippingAmount": 0,
           "deliveryCharges":priceDetails['deliveryFees'],
           "cartItems": cartItemPayload,
-          "prepaidDiscountAmount":extraDiscount
+          "prepaidDiscountAmount":extraDiscount,
+          "customFee":customFee,
         }
         payload['token'] = token;
         payload['paymentMode'] = "APPLE_PAY";
@@ -596,8 +606,8 @@ export default  function Cart({cartData}) {
 
       //   console.log("payloadpayload",payload)
   }
- 
-    const totalPrice =(priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+priceDetails.totalAmount :""
+  const customFee = selectedCountry?.customFee || 0;
+    const totalPrice =((priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+(priceDetails.totalAmount + customFee) :"") 
     const subTotal = priceDetails.subTotal
     const minThreshold = deliveryFeesConfig?.minThreshold;
     const deliveryFee = deliveryFeesConfig?.deliveryFee
@@ -655,7 +665,7 @@ export default  function Cart({cartData}) {
             <div className={styles.priceDetailsContainer}>
               {/* <div className={styles.headerTxt}>Price Details</div> */}
               <div className={styles.priceInfo} ref={priceDetailsContainer}>
-                <PriceDetailsInfo data={priceDetails} />
+                <PriceDetailsInfo data={priceDetails} customFee={customFee} />
               </div>
               <CompanyInfo />
             </div>

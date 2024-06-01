@@ -4,7 +4,7 @@ import styles from './payment-footer-btn.module.scss';
 import { usePaymentPageData } from '@/context/payment';
 import { useLanguage } from '@/context/languageDetails';
 
-export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false,showViewDetails,prePaidDiscount="",extraDiscount,selectedPaymentMethod,setExtraDiscount,currency,codCharge,data}) {
+export default function PatmentFooterBtn({paymentMethodConfig={},onPayment={}, btnName="",totalPrice="",onProceed={}, isEnable = false,showViewDetails,prePaidDiscount="",extraDiscount,selectedPaymentMethod,setExtraDiscount,currency,codCharge,data,customFee}) {
 const {discountAmount="",subTotal=""} = data || {}
 const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
@@ -37,7 +37,7 @@ const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={
     }
    
 },[prePaidDiscount,selectedPaymentMethod,discountAmount])
-  const finalTotalAmount = extraDiscount ? totalPrice - extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalPrice + codCharge : totalPrice) 
+  const finalTotalAmount = (extraDiscount ? totalPrice - extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalPrice + codCharge : totalPrice))+ customFee
   
       return (
         <div className={styles.paymentFooterbtn} >
@@ -47,10 +47,10 @@ const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={
                    <div className={styles.subTxt} onClick={()=>showViewDetails()}>View price details</div> 
                 </div>
                 <div className={styles.paymentBtn}>
-                 {true && <div className={styles.applePayBtn} onClick={()=>{setSelectedPaymentMethod('APPLE_PAY');onProceed("APPLE_PAY")}}>
+                 {isApplePay && <div className={styles.applePayBtn} onClick={()=>{setSelectedPaymentMethod('APPLE_PAY');onProceed("APPLE_PAY")}}>
                     <div>Pay with</div>
                     <img className={styles.appleLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/image+122.png' alt='apple-pay'/>
-                    { true && prePaidDiscount > 0 && <span className={styles.prepaidDiscount}>{isArabic ? "إضافي" : "Extra"} {prePaidDiscount}% {isArabic ? "خصم" : "Off"}</span>}
+                    { isApplePay && prePaidDiscount > 0 && <span className={styles.prepaidDiscount}>Extra {prePaidDiscount}% Off</span>}
                   </div>
                   }
                    

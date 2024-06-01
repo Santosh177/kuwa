@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React,{useState} from 'react';
 import styles from './price-details-container.module.scss'
 import { useCountry } from '@/context/contryDetails';
 import { useLanguage } from '@/context/languageDetails';
@@ -11,6 +11,19 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
         <div className={styles.amountSavedInfo}>{isArabic ? "لقد وفرت" : "You saved"} : {currency +" " + savedAmount}</div>
     )
 }
+const CustumDutyInfo = ({setIsShowCustumDutyInfoPopup})=>{
+    return(
+    <div className={styles.custumDutyInfoPopupContainer}>
+        <div className={styles.custumDutyInfoPopupSection}>
+        <div className={styles.title}>Duty, Taxes, & Fees</div>
+        <div className={styles.subTxt}>Imported goods are subject to Bayan fee which is levied by the local government agency in Qatar. With DDP (Delivered Duties Paid), you do not have to pay any additional duty/tax at the time of delivery.</div>
+        <div className={styles.footer} onClick={(()=>setIsShowCustumDutyInfoPopup(false))}>Close</div>
+        </div>
+    </div>
+    )
+    
+    }
+
 const PriceDetailsContainer = ({orderDetailsData}) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
@@ -27,15 +40,17 @@ const PriceDetailsContainer = ({orderDetailsData}) => {
      currency="",
     deliveryFee=0,
     prepaidDiscountAmount = "",
-codCharge=0 } = orderDetailsData
+codCharge=0,
+customFee } = orderDetailsData
     const { selectedCountry={} } = useCountry();
     const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || ""
     const discountAmount = parseFloat(discount).toFixed(2);
     const totalQuantity = orderProducts.reduce((sum, data) => {
         return sum + data.productQuantity;
     }, 0);
-   
+    const [isShowCustumDutyInfoPopup,setIsShowCustumDutyInfoPopup] = useState(false)
     return(
+        <>
         <div className={styles.header}>
             <div classname={styles.headerTxt} >{isArabic ? "تفاصيل الأسعار" : "Price Details"}</div>
        <div className={styles.priceDetailsWrapper}>
@@ -75,6 +90,10 @@ codCharge=0 } = orderDetailsData
                       </div>
             </div>
            
+          {customFee > 0 &&  <div className={styles.rowItemContainer}>
+                <div className={styles.rowItemLeftText}>Custom Duty <span style={{cursor:"pointer"}} onClick={()=>setIsShowCustumDutyInfoPopup(true)}><img src="https://d25uasl7utydze.cloudfront.net/assets/tool_tip.svg"></img></span></div>
+                <div className={[styles.rowItemRightText].join(" ")}>{parseFloat(customFee).toFixed(2)}</div>
+            </div>}
             {discount> 0 &&  <AmountSavedInfo savedAmount={discountAmount} currency={currency}/>}
             <div className={styles.rowItemContainer}>
                 <div className={[styles.rowItemLeftText,styles.totalAmountTxt].join(" ")}>{isArabic ? "المبلغ الإجمالي" : "Total Amount"}</div>
@@ -94,6 +113,10 @@ codCharge=0 } = orderDetailsData
            
        </div>
        </div>
+         {isShowCustumDutyInfoPopup &&  <div className={styles.custumDutyInfoPopup}>
+         <CustumDutyInfo setIsShowCustumDutyInfoPopup={setIsShowCustumDutyInfoPopup}/>
+         </div>}
+         </>
     )
 }
 
