@@ -11,6 +11,7 @@ import PriceDetailsContainer from './price-details-Container/PriceDetailsContain
 import AccountDetails from './account-details/AccountDetails';
 import ProductCard from './product-card/ProductCard';
 import SuccessPopUp from './successPopUp/SuccessPopUp';
+import CodOtpCard from './cod-otp-card/CodOtpCard';
 
 import { useAuth } from '@/context/userDetail';
 // import { mixPanelTrackEvent } from '@/app/page';
@@ -40,7 +41,7 @@ export default function PaymentSuccess() {
   const totalPurchaseAmount = orderDetailsData && orderDetailsData.finalAmount || 0;
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-
+  const {mobNumber=""} = shippingAddress || {}
  
 
     useEffect(()=>{
@@ -167,7 +168,10 @@ export default function PaymentSuccess() {
          
         </div>
 
-       {!isLogin &&  <AccountDetails setIsSuccessPopup={setIsSuccessPopup}/>}
+       {!isLogin && paymentType!= "COD" && <AccountDetails setIsSuccessPopup={setIsSuccessPopup}/>}
+       <div className={styles.otpSection}>
+      {paymentType=="COD" && <CodOtpCard orderId={orderId} setIsSuccessPopup={setIsSuccessPopup} mobileNumber={mobNumber}/>}
+      </div>
         <div className={styles.productContainer}>
           <div className={styles.productTitle}>{isArabic ? "تفاصيل المنتج" : "Product Details"}</div>
         {

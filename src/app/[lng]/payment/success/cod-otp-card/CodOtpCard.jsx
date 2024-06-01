@@ -3,8 +3,11 @@ import styles from './cod-otp.module.scss'
 import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
 import { useAuth } from '@/context/userDetail';
 import Loader from '@/components/Loader/Loader';
+import {checkInternationalPhone} from "../../../../../utils/validation"
 
-const CodOtpCard = ({orderId,setIsSuccessPopup}) => {
+
+const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
+//    console.log("mobileNumber",mobileNumber)
     const {isLogin=false,userData = {} } = useAuth() || {};
     const [otp ,setOtp] = useState();
     const [mobNumber,setMobNumber] = useState(userData.mobNumber || "");
@@ -14,8 +17,14 @@ const CodOtpCard = ({orderId,setIsSuccessPopup}) => {
     const [time,setTime] = useState(30);
     const [otpError, setOtpError] = useState('');
     const [isLoading, setIsLoading] = useState(false)
+    const [mobNumberError,setMobNumberError] = useState("")
 
 
+    useEffect(() => {
+        if (mobileNumber) {
+            setMobNumber(mobileNumber);
+        }
+    }, [mobileNumber]);
     useEffect(() => {
         const timer = setInterval(() => {
             setTime(prevTime => prevTime - 1);
@@ -72,6 +81,14 @@ const CodOtpCard = ({orderId,setIsSuccessPopup}) => {
     }
 
     const handleSaveMob = ()=>{
+        if(!mobNumber){
+            setMobNumberError("Please enter mobile number")
+            return;
+        }
+        if(mobNumber && !checkInternationalPhone(mobNumber)){
+            setMobNumberError("Invalid mobile number")
+            return;
+        }
         setIsShowOtpDiv(true);
         setIsShowPhoneDiv(false)
         handleCreateOtp();
@@ -128,8 +145,8 @@ const CodOtpCard = ({orderId,setIsSuccessPopup}) => {
         <div className={styles.subTxt}>To expedite your order and avoid delays, please verify your phone number with the code sent. This ensures automatic processing without additional verification calls.</div>
         { isShowOtpDiv &&  <div className={styles.mobDiv}>
            <div className={styles.mobTxt}>Your mobile number :</div>
-           <div className={styles.mob}>{mobNumber}
-            <span onClick={handleEdit}>EDIT</span></div>
+          {mobNumber && <div className={styles.mob}>{mobNumber}
+            <span onClick={handleEdit}>EDIT</span></div>}
         </div>}
        {isShowOtpDiv && <div className={styles.otpDiv}>
         <div>
@@ -139,14 +156,15 @@ const CodOtpCard = ({orderId,setIsSuccessPopup}) => {
         <div className={styles.btn} onClick={handleVerifyOtp}>Verify</div>
            </div>}
            {
-            isShowPhoneDiv && <div className={styles.phoneDiv}>
+            isShowPhoneDiv && <div className={styles.phoneBox}>
                 <div className={styles.phoneTxt}>Enter phone number</div>
                 <div className={styles.phoneDiv}>
                 <div className={styles.phoneInput}>
                 <PhoneNumberInput type="text" fieldName="mobNumber" value={mobNumber} onInputChange={(e)=>setMobNumber(e)}/>
                 </div>
                 <div className={styles.button} onClick={handleSaveMob}>Confirm</div>
-                </div>
+                </div>  
+                {mobNumberError &&  <div className={styles.mobNumberError}>{mobNumberError}</div>}
             </div>
            }
        {isShowOtpDiv && !isShowResendOtp && <div className={styles.timerOtp}>Resend OTP (in {time} sec)</div>}
