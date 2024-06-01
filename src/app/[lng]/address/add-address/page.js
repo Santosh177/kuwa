@@ -13,7 +13,8 @@ import { useCountry } from '@/context/contryDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { queryParams } from '@/services';
-import { mixPanelTrackEvent } from '@/app/page';
+// import { mixPanelTrackEvent } from '@/app/page';
+import { mixPanelTrackEvent } from '../../page';
 
 export default function AddAddress() {
   const router = useRouter();

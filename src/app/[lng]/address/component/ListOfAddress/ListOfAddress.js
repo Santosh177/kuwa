@@ -1,6 +1,7 @@
 'use client';
 import { useRouter,usePathname,useSearchParams } from 'next/navigation';
-import Loader from '@/components/Loader/Loader';
+// import Loader from '@/components/Loader/Loader';
+import Loader from '@/app/[lng]/components/Loader/Loader';
 import AddressInfo from '../AddressInfo/AddressInfo';
 import { useAddressData } from "@/context/address";
 import SubmitBtn from '../SubmitBtn/SubmitBtn';
