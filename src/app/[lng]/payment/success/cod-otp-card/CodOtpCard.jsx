@@ -1,8 +1,10 @@
 import React , {useEffect, useState} from 'react'
 import styles from './cod-otp.module.scss'
-import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
+// import PhoneNumberInput from '@/components/PhoneNumberInput/PhoneNumberInput';
+import PhoneNumberInput from '@/app/[lng]/components/PhoneNumberInput/PhoneNumberInput';
 import { useAuth } from '@/context/userDetail';
-import Loader from '@/components/Loader/Loader';
+// import Loader from '@/components/Loader/Loader';
+import Loader from '@/app/[lng]/components/Loader/Loader';
 import {checkInternationalPhone} from "../../../../../utils/validation"
 
 
