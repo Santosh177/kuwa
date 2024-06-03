@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import styles from './price-details.module.scss';
 import { useLanguage } from '@/context/languageDetails';
 
@@ -49,6 +49,7 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
     const FinalTotalAmount = (extraDiscount > 0 ? totalAmount-extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalAmount + codCharge : totalAmount )) + customFee  ;
 
     return(
+        <>
         <div className={styles.header}>
             <div classname={styles.headerTxt} >{isArabic ? "تفاصيل الأسعار" : "Price Details"}</div>
        <div className={styles.priceDetailsWrapper}>
