@@ -3,8 +3,12 @@ import PageHeader from '@/app/[lng]/components/PageHeader/PageHeader';
 import ListOfAddress from './ListOfAddress/ListOfAddress';
 import { authHeader } from "../../../../lib/auth-cookies";
 import { redirect } from 'next/navigation';
+import { cookies } from "next/headers";
 
 export default async function SelectAddress() {
+
+  const nextCookies = cookies();
+  const language_code = nextCookies.get('language_code')?.value
 
   const customHeader = await authHeader();
   console.log("customHeader",customHeader)
@@ -23,7 +27,7 @@ export default async function SelectAddress() {
   
       return (
         <>
-            <PageHeader headerName='Manage Address' />
+            <PageHeader headerName={language_code == 'ar' ? " إدارة العنوان" : 'Manage Address'} />
             <ListOfAddress allAddress={getAddress}  addressList = {getAddress['shippingAddress'] || []}/>
         </>
        

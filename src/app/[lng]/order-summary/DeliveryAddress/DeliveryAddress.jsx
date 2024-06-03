@@ -38,7 +38,7 @@ const search = useSearchParams();
             <div className={styles.name}>{userName}</div>
             <div className={styles.txt}>{addressTxt1}</div>
             <div className={styles.txt}>{addressTxt2}</div>
-            <div className={styles.txt}>Phone no : {mobNumber}</div>
+            <div className={styles.txt}>{isArabic ?  "رقم الهاتف" : "Phone no"} : {mobNumber}</div>
         </div>
       )
     }

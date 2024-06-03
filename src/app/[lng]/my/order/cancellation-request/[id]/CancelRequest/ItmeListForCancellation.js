@@ -4,6 +4,7 @@ import OrderItemList from './OrderItemList';
 // import OrderItemList from './OrderItemList';
 import styles from './order-item-list.module.scss';
 import { useParams } from 'next/navigation';
+import { useLanguage } from '@/context/languageDetails';
 
 const ItmeListForCancellation = ({setPayloadData, payloadData=[] })=> {
     const [listOfMyOrder, setListOfMyOrder] = useState({});
@@ -11,6 +12,8 @@ const ItmeListForCancellation = ({setPayloadData, payloadData=[] })=> {
     const [isCheckedAll,setIsCheckedAll]=useState(false);
     const params = useParams();
     const orderId = params.id
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
     useEffect(() => {
        const fetchData=async ()=>{
            try {
@@ -71,10 +74,10 @@ const ItmeListForCancellation = ({setPayloadData, payloadData=[] })=> {
         { listOfMyOrder && listOfMyOrder.length>0 && 
         <div className={styles.subcontainer}>
             <div className={styles.selectItemTextHeader}>
-                <div className={styles.selectItemCancel} >Select Item to cancel</div>
+                <div className={styles.selectItemCancel} >{isArabic ?  "اختر العنصر للإلغاء" : "Select Item to cancel"}</div>
                 <div className={styles.selectAll}>
                     <input type="checkbox" checked={isCheckedAll} className={styles.checkboxAll} onChange={handleSelectAll} />
-                    <span>Select all</span>
+                    <span>{isArabic ? "تحديد الكل"  : "Select all"}</span>
                 </div>
             </div>
             {listOfMyOrder && listOfMyOrder.length > 0 && listOfMyOrder.map((data, index) =>{

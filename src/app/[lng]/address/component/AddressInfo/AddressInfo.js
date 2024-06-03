@@ -53,7 +53,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
                 
             </div>
             <div className={styles.addressDetail}>{addressTxt}</div>
-            <div className={styles.phoneNo}>Phone no : {mobNumber}</div>
+            <div className={styles.phoneNo}>{isArabic ? "رقم الهاتف" : "Phone no"}: {mobNumber}</div>
             <div className={styles.delivereHere}>
                 <CheckBox isChecked={isSelected}/>
                 <div className={styles.txt}>{isArabic  ? "التوصيل هنا" : "Deliver here"}</div>

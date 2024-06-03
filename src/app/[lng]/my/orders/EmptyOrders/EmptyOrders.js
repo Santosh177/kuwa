@@ -22,8 +22,8 @@ export default function EmptyOrder(){
             <div className={styles.emptyOrderWrapper}>
                 <div>  <Lottie options={defaultOptions}/></div>
            
-                <div className={styles.txt}>Oops! No Orders</div>
-                <div className={styles.subTxt}>It seems like there are no orders to display at the moment.</div>
+                <div className={styles.txt}>{isArabic ?  "عذرًا! لا توجد طلبات" : "Oops! No Orders"}</div>
+                <div className={styles.subTxt}>{isArabic ?  "يبدو أنه لا توجد طلبات لعرضها في الوقت الحالي" : "It seems like there are no orders to display at the moment"}.</div>
                 <div className={styles.btn} onClick={()=>router.push("/")}>{isArabic ? "استمر في التسوق" :"Continue Shopping"}</div>
             </div>
         </>

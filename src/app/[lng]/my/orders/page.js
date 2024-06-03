@@ -8,9 +8,11 @@ import EmptyOrder from './EmptyOrders/EmptyOrders';
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation'
-export default async function MyOrders({}) {
 
+export default async function MyOrders({}) {
+ 
     const token = cookies().get('token');
+    const language_code = cookies().get('language_code').value
     if(token && token.value){
     }else{
         redirect("/sign-up?referer=/my/orders")
@@ -52,7 +54,7 @@ let groupedOrders = {};
   return (
     <>
       
-  <PageHeader headerName="My Orders" />
+  <PageHeader headerName={language_code == "ar" ?  "طلباتي": "My Orders"} />
 
   {isNonEmptyOrder ? (
               Object.values(groupedOrders) && Object.values(groupedOrders).length > 0 && Object.values(groupedOrders).map((order,index)=>{

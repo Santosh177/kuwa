@@ -1,15 +1,18 @@
 import styles from './order-address.module.scss';
+import { useLanguage } from '@/context/languageDetails';
 
 
 const AddressInfoCard = ({data}) => {
     const { headerTitle="", userName="" , address="" , phoneNo="" } = data || {}
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
 
     return (
         <div className={styles.addressInfoCard}>
             <div className={styles.headerTitle}>{headerTitle}</div>
             <div className={styles.userName}>{userName}</div>
             <div className={styles.addressInfo}>{address}</div>
-            <div className={styles.phoneno}>Phone no : {phoneNo}</div>
+            <div className={styles.phoneno}>{isArabic ? "رقم الهاتف" : "Phone no "}: {phoneNo}</div>
         </div>
     )
 }

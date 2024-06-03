@@ -41,6 +41,7 @@ const validatePersonalForm = (formData) => {
     }
     return errors;
   };
+  
 const validateShippingAddressForm = (formData) => {
     const errors = {};
     if (!formData.address) {
@@ -250,7 +251,7 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
               onChange(!values['orderUpdate'],'orderUpdate')
           }}>
                 <CheckBox isChecked={values['orderUpdate']}/>
-                <div className={styles.txt}>Get order updates on WhatsApp</div>
+                <div className={styles.txt}>{isArabic ? "احصل على تحديثات الطلب عبر واتساب" : "Get order updates on WhatsApp"}</div>
             </div>
             <div id="email" ref={emailInputRef}>
             <Input type="email" fieldName="email" placeHolder={isArabic ? "البريد الإلكتروني (مثال: abc@gmail.com)" : "Email ID (ex. abc@gmail.com)"} value={values['email']} 

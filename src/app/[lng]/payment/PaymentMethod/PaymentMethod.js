@@ -94,8 +94,8 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
                 <div className={styles.paymentOptionInfo}>
                   <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>
                   <div className={styles.desc}>
-                    <div className={styles.txt}>Just pay {currency} {splittedPrice} now</div>
-                    <div className={styles.subTxt}>Rest in {tamaraInstallment - 1} interest free payments of {currency} {splittedPrice}</div>
+                    <div className={styles.txt}>{isArabic ? "ادفع فقط" : "Just pay"} {currency} {splittedPrice} {isArabic ?  "الآن" : "now"}</div>
+                    <div className={styles.subTxt}>{isArabic ? "الباقي في" : "Rest in"} {tamaraInstallment - 1} {isArabic ?  "دفعات بدون فوائد من" : "interest free payments of"} {currency} {splittedPrice}</div>
                   </div>
                 </div>
                 <CheckBox  isChecked={selectedPaymentMethod === 'TAMARA'}/>
@@ -104,8 +104,8 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
                 <div className={styles.paymentOptionInfo}>
                   <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tabby.png' alt='logo'/>
                   <div className={styles.desc}>
-                    <div className={styles.txt}>Just pay  {currency} {splittedPriceTabby} now</div>
-                    <div className={styles.subTxt}>Rest in {tabbyInstallment - 1} interest free payments of {currency} {splittedPriceTabby}</div>
+                    <div className={styles.txt}>{isArabic ? "ادفع فقط" : "Just pay"} {currency} {splittedPriceTabby} {isArabic ?  "الآن" : "now"}</div>
+                    <div className={styles.subTxt}>{isArabic ? "الباقي في" : "Rest in"} {tabbyInstallment - 1}  {isArabic ?  "دفعات بدون فوائد من" : "interest free payments of"} {currency} {splittedPriceTabby}</div>
                   </div>
                 </div>
                 <CheckBox  isChecked={selectedPaymentMethod === 'TABBY'}/>
@@ -140,7 +140,7 @@ const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
               <div className={styles.paymentOptionInfo}>
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/apple_pay.png' alt='logo'/>
                 <div className={styles.desc}>
-                   <div className={styles.txt}>Apple Pay</div>
+                   <div className={styles.txt}>{isArabic ? "أبل باي" : "Apple Pay"}</div>
                 </div>
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'APPLE_PAY'}/>
@@ -150,7 +150,7 @@ const OtherPaymentMethod = ({isApplePay="",isCod="",onPayment={}}) => {
                 <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cash_on_delivery.png' alt='logo'/>
                 <div className={styles.desc}>
                    <div className={styles.txt}>{isArabic ? "الدفع عند الاستلام" : "Cash On Delivery"}</div>
-                  {codCharge > 0 ? <div className={styles.codChargeTxt}>Additional {codCharge} {currency} fee applicable on COD</div> : <div className={styles.subTxt}>{isArabic ? "ادفع عند استلام طلبك" : "Pay when you receive your order"}</div> } 
+                  {codCharge > 0 ? <div className={styles.codChargeTxt}>{isArabic ?  "إضافي" : "Additional"} {codCharge} {currency} {isArabic ? "رسوم مطبقة على الدفع عند الاستلام" : "fee applicable on COD"}</div> : <div className={styles.subTxt}>{isArabic ? "ادفع عند استلام طلبك" : "Pay when you receive your order"}</div> } 
                 </div>
               </div>
               <CheckBox  isChecked={selectedPaymentMethod === 'COD'}/>

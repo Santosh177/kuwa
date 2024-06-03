@@ -106,8 +106,8 @@ customFee } = orderDetailsData
                     </div>
             </div>
             <div className={styles.rowItemContainer}>
-                <div className={[styles.rowItemLeftText,styles.paymentTypeTxt].join(" ")}>Payment Method</div>
-                <div className={[styles.rowItemRightText,styles.paymentType].join(" ")}>Using {paymentType}</div>
+                <div className={[styles.rowItemLeftText,styles.paymentTypeTxt].join(" ")}>{isArabic ? "طريقة الدفع" : "Payment Method"}</div>
+                <div className={[styles.rowItemRightText,styles.paymentType].join(" ")}>{isArabic ? "باستخدام" : "Using"} {paymentType}</div>
             </div>
             </>}
            

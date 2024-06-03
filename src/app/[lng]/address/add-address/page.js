@@ -15,6 +15,7 @@ import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { queryParams } from '@/services';
 // import { mixPanelTrackEvent } from '@/app/page';
 import { mixPanelTrackEvent } from '../../page';
+import { useLanguage } from '@/context/languageDetails';
 
 export default function AddAddress() {
   const router = useRouter();
@@ -29,6 +30,8 @@ export default function AddAddress() {
   const [error,setError] = useState({})
   const clevertapEvent = useCleverTapEvents();
   const [pageType, setPageType] = useState(getPageType())
+  const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
 
 
 
@@ -186,7 +189,7 @@ export default function AddAddress() {
   
       return (
         <>
-          <PageHeader headerName="Add Address" />
+          <PageHeader headerName={isArabic ? "إضافة عنوان" : "Add Address"} />
          {!refererPath && <PageStepTracker stepCount={1} />}
           <div className={styles.addAddressWrapper}> 
               <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>

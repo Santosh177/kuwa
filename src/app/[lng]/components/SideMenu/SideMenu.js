@@ -14,7 +14,7 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
 
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-    
+        console.log("sidemenuData",data)
  
 
     return(
@@ -32,7 +32,7 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
                         return
                     return(
                         <>
-                            <div onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data.name)}`} className={styles.item} key={index}>{data.name}</div>
+                            <div onClick={()=>window.location.href =`/collections?category=${ isArabic ? encodeURIComponent(data.descriptionArabic) :   encodeURIComponent(data.name)}`} className={styles.item} key={index}>{data.name}</div>
                             <div className={styles.horizontalLine}></div>
                         </>
                     )
@@ -98,8 +98,8 @@ const MainMenuData = ({data,onClick}) =>{
                             <div className={styles.sideMenuItem}>
                                 <img className={styles.icon} src={data.icon} alt=''/>
                                 <div className={`${styles.itemInfo} ${isArabic ? styles['itemInfo-ar'] : ''}`}>
-                                    <div className={styles.itemTxt}>{data.txt}</div>
-                                    <div className={styles.itemSubTxt}>{data.subTxt}</div>
+                                    <div className={styles.itemTxt}>{isArabic ? data.txtArabic : data.txt}</div>
+                                    <div className={styles.itemSubTxt}>{isArabic ? data.subTxtArabic : data.subTxt}</div>
                                 </div>
                             </div>
                             <img className={`${styles.arrowIcon} ${isArabic ? styles['arrowIcon-ar'] : styles['arrowIcon-en']}` } src='https://production-website-builds.s3.ap-south-1.amazonaws.com/next.png' alt='arrow-icon'/>
@@ -183,7 +183,7 @@ const MyAccount = ({onBack={},onclose={}}) =>{
             <div className={styles.myAccount}>
                     <div className={styles.headerTxt}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/back_arrow.png' alt='arrow-icon' onClick={()=>onBack()}/>
-                        <div className={styles.txt}>My account</div>
+                        <div className={styles.txt}>{isArabic ? "حسابي" : "My account"}</div>
                     </div>
                     <img className={styles.closeIcon} style={{top:'unset'}} onClick={onclose}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
             </div>
@@ -230,7 +230,7 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
           console.log("getProductTypeData",getProductTypeData);
           getProductTypeData['list'].map((data,index)=>{
             const {description={} , id="" } = data || {}
-            childMenuData.push({name:description && description.name,id:id})
+            childMenuData.push({name:description && isArabic ? description.nameArabic : description.name,id:id})
           })
           setChildMenuData(childMenuData)
     }
@@ -249,7 +249,7 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
                 )
             case "Brands":
                 return(
-                    <SideMenuData  title='Brands' data={childMenuData}  onclose={onclose} onBack={()=>setKey("")}/>
+                    <SideMenuData  title={isArabic ? "العلامات التجارية" : 'Brands'} data={childMenuData}  onclose={onclose} onBack={()=>setKey("")}/>
                 )
             default:
                 return(<>

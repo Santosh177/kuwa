@@ -63,12 +63,12 @@ export default function OrderDetails({data}) {
       cancelStatement=""
     }
     else if (orderStatusSet.has("FULFILLED")){
-      cancelStatement ="Order has been dispatched cannot be cancelled"
+      cancelStatement = isArabic ? "لا يمكن إلغاء الطلب بعد أن تم شحنه" : "Order has been dispatched cannot be cancelled"
       orderStatus = "FULFILLED";
     }
     else if (orderStatusSet.has("DELIVERED")){
       orderStatus = "DELIVERED";
-      cancelStatement ="Order has been delivered cannot be cancelled"
+      cancelStatement = isArabic ?  "لا يمكن إلغاء الطلب بعد إرساله" : "Order has been delivered cannot be cancelled"
     }
   }
   if (cancelStatusSet.size<=0){

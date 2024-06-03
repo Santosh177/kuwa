@@ -5,6 +5,8 @@ import { useLanguage } from '@/context/languageDetails';
 
 const AddressInfoCard = ({data}) => {
     const { headerTitle="", userName="" , address1="" , phoneNo="",address2 } = data || {}
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
 
     return (
         <div className={styles.addressInfoCard}>
@@ -12,7 +14,7 @@ const AddressInfoCard = ({data}) => {
             <div className={styles.userName}>{userName}</div>
             <div className={styles.addressInfo}>{address1}</div>
             <div className={styles.addressInfo}>{address2}</div>
-            <div className={styles.phoneno}>Phone no : {phoneNo}</div>
+            <div className={styles.phoneno}>{isArabic ?  "رقم الهاتف" : "Phone no"} : {phoneNo}</div>
         </div>
     )
 }
@@ -27,7 +29,7 @@ export default function OrderAddress({address}) {
     let billingAddressData= {};
     if(shippingAddress && Object.keys(shippingAddress).length > 0){
         shippingAddressData = {
-            headerTitle:"Shipping Address",
+            headerTitle: isArabic ?  "عنوان الشحن" : "Shipping Address",
             userName:shippingAddress['firstName'] || "",
             address1: shippingAddress['address'] +" "+ shippingAddress['apartment'] ,
             address2: shippingAddress['city'] + " " + (shippingAddress['postalCode'] ? `${shippingAddress['postalCode']}` : "") + " " + shippingAddress['country'] || "",

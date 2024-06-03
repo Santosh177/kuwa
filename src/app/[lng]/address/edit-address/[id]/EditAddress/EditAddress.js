@@ -7,9 +7,8 @@ import AddressForm from "../../../add-address/address-form/address-form";
 import SubmitBtn from "../../../component/SubmitBtn/SubmitBtn";
 import styles from './edit-address.module.scss';
 import Loader from "@/app/[lng]/components/Loader/Loader";
-
-
 import { queryParams } from "@/services";
+import { useLanguage } from "@/context/languageDetails";
 
 
 export default function AddAddress() {
@@ -20,11 +19,13 @@ export default function AddAddress() {
 
   const productId = searchParams.get('productId');
   const variantId = searchParams.get('variantId')
+  const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
   let queryString = ''
   if(productId){
     queryString = queryParams(productId,variantId)
   }
-
+  
   console.log("searchParams",refererPath)
   const editAddressid = params.id;
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={},setListOfAddress={} } = useAddressData();
@@ -130,7 +131,7 @@ export default function AddAddress() {
         <>
           <div className={styles.editAddressWrapper}> 
               <AddressForm getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={(formData)=>onFormData(formData)} formData={addressData} isEdit={true}/>
-              <SubmitBtn isUpdateSuccess={isUpdateSuccess}  btnName="Update Address" onClick={onUpdateAddress}/>
+              <SubmitBtn isUpdateSuccess={isUpdateSuccess}  btnName={isArabic ?  "تحديث العنوان" : "Update Address"} onClick={onUpdateAddress}/>
               <Loader  isShow={isLoading}/>
           </div>
         </>

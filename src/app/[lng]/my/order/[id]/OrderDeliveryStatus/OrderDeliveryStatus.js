@@ -67,7 +67,7 @@ const OrderDeliveryStatus = ({orderStatus=""}) => {
         </div>}
        {orderStatus ==="CANCELED" && <div className={styles.cancelledOrderContainer}>
                 <img className={styles.crossIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_cancel.png' alt='order-canceled'/>
-                <div className={styles.txt}>Order Cancelled</div>
+                <div className={styles.txt}>{isArabic ? "تم إلغاء الطلب" : "Order Cancelled"}</div>
         </div>}
     </>
     )

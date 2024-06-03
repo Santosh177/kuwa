@@ -6,6 +6,7 @@ import { useAddressData } from "@/context/address";
 import SubmitBtn from '../../component/SubmitBtn/SubmitBtn';
 import styles from './list-of-address.module.scss'
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@/context/languageDetails';
 
 export default function ListOfAddress({allAddress,addressList}) {
   console.log("allAddressallAddress",addressList)
@@ -14,6 +15,8 @@ export default function ListOfAddress({allAddress,addressList}) {
   const { selectedAddress ={},listOfAddress={},setSelectedAddress={} , setListOfAddress={} } = useAddressData();
   const [selectedAdddressId, setSelectedAddressId] = useState(null);
   const [ isLoading , setIsLoading] = useState(false);
+  const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
 
   useEffect(()=>{
     if(addressList && addressList.length == 0){
@@ -125,7 +128,7 @@ export default function ListOfAddress({allAddress,addressList}) {
       return (
         <>
           <div className={styles.addressListWrapper}>
-            <div className={styles.addNewAddressTxt} onClick={()=> router.push(`/address/add-address?referer=${pathName}`)}>+ Add new address</div>
+            <div className={styles.addNewAddressTxt} onClick={()=> router.push(`/address/add-address?referer=${pathName}`)}>+ {isArabic ? "أضف عنوانًا جديدًا" : "Add new address"}</div>
             <div className={styles.addressInfoContainer}>
                 {
                     listOfAddress.map((data,index)=>{

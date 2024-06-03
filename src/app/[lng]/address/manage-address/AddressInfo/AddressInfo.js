@@ -1,6 +1,7 @@
 'use client';
 import { useRouter,usePathname } from 'next/navigation';
 import styles from './address-info.module.scss';
+import { useLanguage } from '@/context/languageDetails';
 
 const CheckBox = ({ isChecked=false }) => {
     return (
@@ -14,6 +15,8 @@ export default function AddressInfo({data={},isSelected=false,onSelectDefaultAdd
   const router = useRouter();
   const pathName = usePathname();
   console.log("PathBane",pathName)
+  const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
 
   const { userName="",addressTxt="", mobNumber="",id="" } = data || {}
 
@@ -30,20 +33,20 @@ export default function AddressInfo({data={},isSelected=false,onSelectDefaultAdd
                      e.stopPropagation();
                       router.push(`/address/edit-address/${id}?referer=${pathName}`)}}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
-                        <div className={styles.actionTxt}>Edit</div>
+                        <div className={styles.actionTxt}>{isArabic ? "تعديل" : "Edit"}</div>
                     </div>
                     <div className={styles.action} onClick={(e)=>{
                      e.stopPropagation();
                       onRemoveAddress()
                       }}>
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
-                        <div className={styles.actionTxt}>Remove</div>
+                        <div className={styles.actionTxt}>{isArabic ? "إزالة" : "Remove"}</div>
                     </div>
                 </div>
                 
             </div>
             <div className={styles.addressDetail}>{addressTxt}</div>
-            <div className={styles.phoneNo}>Phone no : {mobNumber}</div>
+            <div className={styles.phoneNo}>{isArabic ? "رقم الهاتف" : "Phone no "}: {mobNumber}</div>
             <div className={styles.delivereHere}>
                 <CheckBox isChecked={isSelected}/>
                 <div className={styles.txt}>Default address</div>
