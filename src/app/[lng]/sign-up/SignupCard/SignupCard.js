@@ -156,7 +156,7 @@ export default function SignupCard() {
                 const countryName = selectedCountry && selectedCountry.name ||  ""
                 if(userId){
                 console.log("rahul")
-                  window.clevertap.onUserLogin.push({
+                  window.clevertap?.onUserLogin?.push({
                     "Site": {
                       "Name": name,            // String
                       "Identity": userId,              // String or number

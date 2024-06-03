@@ -262,10 +262,12 @@ export const createPayloadForTabby = async (cartItems) => {
 export const createCouponPayload = async(cartItems) => {
   let supplements = [];
   if(cartItems && cartItems.length > 0){
-    cartItems.filter(item => item.normalInventory> 0)
-    .map((item,index)=>{
+    console.log("couponPayloadProductData",cartItems)
+    // cartItems.filter(item => item.normalInventory> 0)
+    
+    cartItems.map((item,index)=>{
       console.log("itemitem",item)
-      if(item.variants && item.variants.variants.id){
+      if(item.variants && item.variants.variants.id && item.variants.variants.quantity > 0){
         if(item?.variants?.pricings[0].dealId && item.variants?.pricings[0].isDealActive && item?.variants?.pricings[0].isTimerActive 
           && item?.variants?.pricings[0].currentTimerStatus == 'in-between'){
           supplements.push({"id":item.id,"quantity":item.quantity ,"isVariant":true,"variantId":item.variants.variants.id,"dealId":item?.variants?.pricings[0].dealId })
@@ -277,14 +279,17 @@ export const createCouponPayload = async(cartItems) => {
     
       }
       else{
-        if(item.dealId && item.isDealActive && item.isTimerActive && item.currentTimerStatus == 'in-between'  ){
+        if(item.normalInventory> 0){
+     if(item.dealId && item.isDealActive && item.isTimerActive && item.currentTimerStatus == 'in-between'  ){
       supplements.push({"id":item.id,"quantity":item.quantity , "isVariant":false,dealId:item.dealId})
-
       }
       else{
         supplements.push({"id":item.id,"quantity":item.quantity , "isVariant":false})
       }
+    }
+    else{
 
+    }
 
 
     }

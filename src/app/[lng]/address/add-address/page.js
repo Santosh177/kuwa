@@ -99,7 +99,7 @@ export default function AddAddress() {
             const email = signupRespData.data.email;
             const countryName = selectedCountry && selectedCountry.name ||  ""
             if(userId){
-              window.clevertap.onUserLogin.push({
+              window.clevertap?.onUserLogin?.push({
                 "Site": {
                   "Name": name,            // String
                   "Identity": userId,              // String or number
