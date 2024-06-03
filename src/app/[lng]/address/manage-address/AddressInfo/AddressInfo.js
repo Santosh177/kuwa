@@ -11,7 +11,7 @@ const CheckBox = ({ isChecked=false }) => {
       </div>
     );
   };
-export default function AddressInfo({data={},isSelected=false,onSelectDefaultAddress={},onEditAddress={},onRemoveAddress={}}) {
+export default function AddressInfo({data={},isSelected=false,onSelectDefaultAddress={},onEditAddress={},onRemoveAddress={},onSelectAddress={}}) {
   const router = useRouter();
   const pathName = usePathname();
   console.log("PathBane",pathName)
@@ -25,6 +25,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectDefaultAdd
         <div className={[styles.addressInfoCard,(isSelected)&&styles.isActive].join(" ")} onClick={(e)=>{
           // e.preventDefault();
           onSelectDefaultAddress(data)
+          onSelectAddress(data)
           }}>
             <div className={styles.addressInfo}>
                 <div className={styles.name}>{userName}</div>

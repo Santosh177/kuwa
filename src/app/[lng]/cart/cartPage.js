@@ -484,7 +484,7 @@ export default  function Cart({cartData}) {
                   "cart_items": []
                  })
                  
-                 window.clevertap.event.push("kuwa_user_add_address_signup_success", {
+                 window.clevertap?.event?.push("kuwa_user_add_address_signup_success", {
                   "Country":countryName,
                   "Email":email,
                   "Name": name,

@@ -23,6 +23,7 @@ export const AddressProvider = ({ children, countryCode }) => {
 
 
  useEffect(()=>{
+  console.log("manageSelectedAddress",selectedAddress)
     if(selectedAddress && selectedAddress.id){
       localStorage.setItem("addressId",JSON.stringify(selectedAddress.id))
     }
@@ -44,9 +45,12 @@ export const AddressProvider = ({ children, countryCode }) => {
     })
     const addressData = await getAddressResp.json();
     const addressList = addressData && addressData['shippingAddress'] && addressData['shippingAddress'];
+    const seletedDefaultAddress = addressData && addressData['shippingAddress'] && (addressData['shippingAddress']).find(data=>data.isDefaultAddress == true)
+    console.log("bhabha",seletedDefaultAddress)
     console.log("addressList",addressList)
     if(addressList && addressList.length > 0){
       setListOfAddress(addressList);
+      setSelectedAddress(seletedDefaultAddress)
     }
   }
 
