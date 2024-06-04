@@ -227,9 +227,11 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                 id: 18,
                 img:null,
                 subTxt: "Edit profile, Manage address, My orders",
-                txt: isArabic ? "حسابي" :  "My Account",
+                txt:"My Account",
                 type: "My Account",
-                typeId: null
+                typeId: null,
+                subTxtArabic:"",
+                txtArabic:"حسابي"
             }
             if(isLogin){
                 getSideMenuData?.push(additionData)
@@ -238,11 +240,13 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                     icon: "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/truck.png",
                     id: 18,
                     img:null,
-                    subTxt: isArabic ? "تتبّع طلبك هنا" : "Track your order here",
-                    txt: isArabic ? "ابحث عن طلبي" :"Find My Order",
+                    subTxt: "Track your order here",
+                    txt: "Find My Order",
                     type: "Find my order",
                     typeId: null,
-                    redirectionLink:'my/find-order'
+                    redirectionLink:'my/find-order',
+                    subTxtArabic:"تتبّع طلبك هنا",
+                    txtArabic:"ابحث عن طلبي"
                 }
                 getSideMenuData.push(findMyOrderData)
             }
