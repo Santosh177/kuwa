@@ -50,7 +50,8 @@
 
 "use client"
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter,usePathname  } from 'next/navigation';
+import Loader from '@/app/[lng]/components/Loader/Loader';
 
 const LanguageContext = createContext();
 
@@ -61,6 +62,9 @@ export const LanguageProvider = ({ children }) => {
   ];
 
   const router = useRouter();
+  const pathname = usePathname();
+
+  console.log("routerProperty",router)
 
   const getInitialLanguage = () => {
     if (typeof window !== 'undefined') {
@@ -70,13 +74,18 @@ export const LanguageProvider = ({ children }) => {
     return listOfLanguages[0];
   };
 
+  console.log("initialLanguage",getInitialLanguage())
+
   const [selectedLanguage, setSelectedLanguage] = useState(getInitialLanguage);
   const [isArabic, setIsArabic] = useState(selectedLanguage.language_code === 'ar');
   const [isEnglish, setIsEnglish] = useState(selectedLanguage.language_code === 'en');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
-      const langCode = url.split('/')[1];
+    const handleRouteChange = () => {
+      const langCode = window.location.pathname.split('/')[1];
+      console.log("bjhbjq",langCode)
+
       const langData = listOfLanguages.find(lang => lang.language_code === langCode);
       if (langData) {
         setSelectedLanguage(langData);
@@ -85,12 +94,8 @@ export const LanguageProvider = ({ children }) => {
         localStorage.setItem('selectedLanguage', langData.language_code);
       }
     };
-
-    router.events?.on('routeChangeComplete', handleRouteChange);
-    return () => {
-      router.events?.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events]);
+     handleRouteChange()
+  }, []);
 
   const changeLanguage = (id) => {
     const langData = listOfLanguages.find(lang => lang.id == id);

@@ -49,6 +49,7 @@ const AccountInfo = ({onclose}) => {
     const {isLogin=false, userData={}} = useAuth();
     const userName = userData && userData.firstName || "";
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+    const [isLoading, setIsLoading] = useState(false);
 
     const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
     const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
@@ -64,9 +65,12 @@ const AccountInfo = ({onclose}) => {
     const  toggleLanguage = async() => {
         const newLanguageId = isArabic ? '1' : '2';
        await changeLanguage(newLanguageId);
+       setIsLoading(true)
+
     }
 
     return(
+        <>
         <div className={styles.accountInfoWrapper}>
             <img className={styles.profileIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/profile.png' alt='profile-icon'></img>
             <div className={styles.profileInfo}>
@@ -77,6 +81,8 @@ const AccountInfo = ({onclose}) => {
             <div className={styles.languageTxt} onClick={toggleLanguage}>{otherLanguageName}</div>
             <img className={`${styles.closeIcon} ${isArabic ? styles['closeIcon-ar'] : styles['closeIcon-en']}` } onClick={()=>onclose()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
         </div>
+        <Loader isShow={isLoading}/>
+        </>
     )
 }
 
@@ -85,12 +91,14 @@ const AccountInfo = ({onclose}) => {
 const MainMenuData = ({data,onClick}) =>{
     const {isLogin=false, userData={}} = useAuth();
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
+    console.log("sideMainMenuData",data)
     return(
         <>
 
                 {
                     data.map((data,index)=>{
-                        console.log("sideMenu")
+                        console.log("sideMenu",data)
                         if(data.key == "My Account" && !isLogin)
                         return
                         return(
