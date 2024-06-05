@@ -22,7 +22,7 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
             <div className={styles.myAccount}>
                     <div className={styles.headerTxt}>
                         <img className={`${styles.sideImgArrow} ${isArabic ? styles['sideImgArrow-ar'] : styles['sideImgArrow-en']}` } src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/back_arrow.png' alt='arrow-icon' onClick={()=>onBack()}/>
-                        <div className={styles.txt}>{title}</div>
+                        <div className={`${styles.txt} ${isArabic ? styles['txt-ar'] : styles['txt-en']}`}>{title}</div>
                     </div>
                     <img className={`${styles.closeIcon} ${isArabic ? styles['closeIcon-ar'] : styles['closeIcon-en']}` } style={{top:'unset'}} onClick={onclose}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
             </div>
@@ -128,11 +128,11 @@ const OtherInfo = () =>{
         <div className={styles.OtherInfo}>
             {/* <div className={styles.txt}>Blog</div>
             <div className={styles.infoLine}> | </div> */}
-            <div className={styles.txt} onClick={()=>window.location.href='/blog'}>{isArabic ? "المدونة" : "Blog"}</div>
+            <div className={`${styles.txt} ${isArabic ? styles['txt-ar'] : styles['txt-en']}`} onClick={()=>window.location.href='/blog'}>{isArabic ? "المدونة" : "Blog"}</div>
             <div className={styles.infoLine}> | </div>
-            <div className={styles.txt} onClick={()=>window.location.href='/contact-us'}>{isArabic ? "اتصل بنا" : "Contact Us"}</div>
+            <div className={`${styles.txt} ${isArabic ? styles['txt-ar'] : styles['txt-en']}`} onClick={()=>window.location.href='/contact-us'}>{isArabic ? "اتصل بنا" : "Contact Us"}</div>
             <div className={styles.infoLine}> | </div>
-            <div className={styles.txt} onClick={()=>window.location.href='/terms-of-service'}>{isArabic ? "شروط الخدمة" :"Terms of Service"}</div>
+            <div className={`${styles.txt} ${isArabic ? styles['txt-ar'] : styles['txt-en']}`} onClick={()=>window.location.href='/terms-of-service'}>{isArabic ? "شروط الخدمة" :"Terms of Service"}</div>
         </div>
     )
 }
@@ -174,7 +174,7 @@ const LogOut = () =>{
         <>
             <div className={styles.logoutContainer} onClick={onLogout}>
                 <img className={`${styles.logoutImg} ${isArabic ? styles['logoutImg-ar'] : ''}`} src={'https://production-website-builds.s3.ap-south-1.amazonaws.com/logout.png'} alt='logout'/>
-                <div className={styles.txt}>{isArabic ? "تسجيل الخروج" : "Logout"}</div>
+                <div className={`${styles.txt} ${isArabic ? styles['txt-ar'] : styles['txt-en']}`}>{isArabic ? "تسجيل الخروج" : "Logout"}</div>
             </div>
             <Loader isShow={isLoading}/>
         </>
@@ -190,10 +190,10 @@ const MyAccount = ({onBack={},onclose={}}) =>{
         <div className={styles.myAccountContainer}>
             <div className={styles.myAccount}>
                     <div className={styles.headerTxt}>
-                        <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/back_arrow.png' alt='arrow-icon' onClick={()=>onBack()}/>
-                        <div className={styles.txt}>{isArabic ? "حسابي" : "My account"}</div>
+                        <img style={{transform: isArabic ? "rotate(180deg)" :""}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/back_arrow.png' alt='arrow-icon' onClick={()=>onBack()}/>
+                        <div className={`${styles.txt} ${isArabic ? styles['txt-ar'] : styles['txt-en']}`}>{isArabic ? "حسابي" : "My account"}</div>
                     </div>
-                    <img className={styles.closeIcon} style={{top:'unset'}} onClick={onclose}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
+                    <img className={`${styles.closeIcon} ${isArabic ? styles['closeIcon-ar'] : styles['closeIcon-en']}`} style={{top:'unset'}} onClick={onclose}  src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
             </div>
             <div className={styles.item} onClick={()=>router.push('/my-account')}>{isArabic ? " تعديل الملف الشخصي" : "Edit Profile"}</div>
             <div className={styles.horizontalLine}></div>

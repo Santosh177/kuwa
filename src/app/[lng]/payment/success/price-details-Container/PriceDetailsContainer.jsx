@@ -61,7 +61,7 @@ customFee } = orderDetailsData
             </div>
            { <>
             {discount > 0 &&<div className={styles.rowItemContainer}>
-                <div className={styles.rowItemLeftText}>Coupon Discount</div>
+                <div className={styles.rowItemLeftText}>{isArabic ?  "خصم الكوبون" : "Coupon Discount"}</div>
                 <div  className={[styles.rowItemLeftText,styles.discount].join(" ")}>
                     <div style={{display:"flex",gap:"5px",justifyContent:"flex-end"}}>
                         <div>- {currency}</div>
