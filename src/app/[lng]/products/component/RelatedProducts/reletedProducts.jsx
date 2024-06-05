@@ -52,7 +52,7 @@ const RelatedProducts = ({ productData = {} }) => {
         return (
             <div className={style.relatedProductContiner}>
                 <div className={style.relatedProduct}>
-                    <div className={style.relatatedTxt}>{isArabic ? "" :"Related Products"}</div>
+                    <div className={style.relatatedTxt}>{isArabic ? "منتجات ذات صلة" :"Related Products"}</div>
                     <div className={style.productContainer}>
                         <div className={`${style.leftArrow} ${isArabic ? style['leftArrow-ar'] : style['leftArrow-en']}` } onClick={()=>handelArrow(-220)}>
                             <img src="https://d25uasl7utydze.cloudfront.net/kuwa/right%20arrow.png" alt="" />

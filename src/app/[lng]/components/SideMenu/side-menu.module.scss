@@ -44,6 +44,7 @@
         top: 23px;
         cursor: pointer;
         z-index: 9999999999999;
+      
     }
     .closeIcon-en {
         right: 12px;
@@ -169,6 +170,12 @@
             .txt{
                 font-weight: 500;
                 font-size: 16px; 
+              
+            }
+            .txt-ar{
+                padding-right: 13px;
+            }
+            .txt-en{
                 padding-left: 13px;
             }
         
@@ -180,11 +187,13 @@
             top: 23px;
             z-index: 99999999;
             cursor: pointer;
+           
         }
         .closeIcon-en {
             right: 12px;
         }
         .closeIcon-ar {
+           
             left: 12px;
         }
 

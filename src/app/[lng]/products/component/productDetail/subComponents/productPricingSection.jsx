@@ -166,7 +166,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
            {avgRating && totalRating && <div className={styles.ratingSection}>
            <div className={styles.avgRatingValue}>{`${avgRating.toFixed(1)}`}</div>
               <div className={styles.avgRating}>{renderStars()}</div>
-              <div className={styles.totalNumberRating}>{`(${totalRating}  ratings)`}</div>
+              <div className={styles.totalNumberRating}>{`(${totalRating} ${isArabic ? "التقييمات" : "ratings"})`}</div>
             </div>}
             <div className={styles.pricingConatiner}>
             <div className={styles.price}>
@@ -268,7 +268,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
              <div id="tabbyDetail" className={styles.tabbyDetailMain}></div>
              <div
                 className="tamara-product-widget"
-                data-lang="en"
+                data-lang= {isArabic ? "ar" : "en"}
                 data-price={finalPrice}
                 data-currency={currency}
                 data-number-of-installments="3"
