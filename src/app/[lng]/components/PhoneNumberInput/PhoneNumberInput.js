@@ -2,6 +2,7 @@
 import styles from './phone-number-input.scss';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import { useLanguage } from '@/context/languageDetails';
 
 
 /* 
@@ -28,9 +29,10 @@ onChange={(e,value) => handleInput(e,value, "phone-no")} */}
 
 const PhoneNumberInput = ({ countryCode="ae", onInputChange={},type="text",fieldName="",value="",placeHolder="phoneNumber *",isError="",errorMsg="",isDisabled="",style={}}) => {
 
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
     return(
-        <div className={styles.inputWrapper} style={{...style}}>
+        <div className={styles.inputWrapper} style={{direction: isArabic ? "ltr" : ""}}>
            <PhoneInput
                     country={countryCode.toLowerCase()}
                     value={value}

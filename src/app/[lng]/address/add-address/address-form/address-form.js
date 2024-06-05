@@ -20,38 +20,39 @@ const validatePersonalForm = (formData) => {
   console.log("validatePersonalForm",formData)
     const errors = {};
     if (!formData.firstName) {
-      errors.firstName = 'First name is required.';
+      errors.firstName = formData.isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
     }
     if (!formData.lastName) {
-      errors.lastName = 'Last name is required.';
+      errors.lastName = formData.isArabic ? "اسم العائلة مطلوب" : 'Last name is required.';
     }
     if(("mobNoValidation" in formData) && !formData.mobNoValidation){
-      errors.mobNumber = "Mobile number is required";
+      errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
     }
     if(!formData.mobNumber){
-        errors.mobNumber = "Mobile number is required";
+      errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
     }
     else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
       errors.mobNumber = "Invalid mobile number";
     }
     if(!formData.email){
-      errors.email = "Email is required";
+      errors.email = formData.isArabic ? "البريد الإلكتروني مطلوب" :  "Email is required";
     }else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Invalid email address.';
+      errors.email = formData.isArabic ? "عنوان بريد إلكتروني غير صالح." : 'Invalid email address.';
     }
     return errors;
   };
   
-const validateShippingAddressForm = (formData) => {
+const validateShippingAddressForm = (formData,isArabic=false) => {
+  console.log("bebjbjb",formData ,isArabic)
     const errors = {};
     if (!formData.address) {
       errors.address =
-      //  formData.isArabic ? "المنطقة مطلوبة" :
+       isArabic ? "المنطقة مطلوبة" :
        'Area is required.';
     }
     if (!formData.apartment) {
       errors.apartment =
-      //  formData.isArabic ? "الشقة مطلوبة" :
+       isArabic ? "الشقة مطلوبة" :
        'Apartment is required.';
     }
     if(!formData.country){
@@ -59,7 +60,7 @@ const validateShippingAddressForm = (formData) => {
     }
     if(!formData.city){
       errors.city = 
-      // formData.isArabic ? "المدينة مطلوبة":
+      isArabic ? "المدينة مطلوبة":
         "City is required";
     }
     // if(!formData.postalCode){
@@ -72,16 +73,16 @@ const validateShippingAddressForm = (formData) => {
   };
 
 
-const validateBillingAddressForm = (formData) => {
+const validateBillingAddressForm = (formData,isArabic) => {
     const errors = {};
     if (!formData.address) {
       errors.address = 
-      // formData.isArabic ? "المنطقة مطلوبة" : 
+      isArabic ? "المنطقة مطلوبة" : 
       'Area is required.';
     }
     if (!formData.apartment) {
       errors.apartment = 
-      // formData.isArabic ? "الشقة مطلوبة" :
+      isArabic ? "الشقة مطلوبة" :
        'Apartment is required.';
     }
     if(!formData.country){
@@ -89,7 +90,7 @@ const validateBillingAddressForm = (formData) => {
     }
     if(!formData.city){
       errors.city =
-      //  formData.isArabic ? "المدينة مطلوبة": 
+       isArabic ? "المدينة مطلوبة": 
         "City is required";
     }
     // if(!formData.postalCode){
@@ -276,9 +277,9 @@ const ShippingAddressForm = ({onChange={},values={},errors={}}) => {
          <div className={styles.headerTxt}>{isArabic ? "عنوان الشحن" : "Shipping Address"}</div>
             <div className={styles.areaInputText}>
                 <div className={styles.inputContainer}>
-                    <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")} />
+                    <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")}   className={isArabic ? styles['input-ar'] : ''} />
                     <label className={styles.placeholderText}>
-                        <div className={styles.text}>{isArabic ? "اسم المنطقة، الطريق، القطعة *" : "Area name, Road, Block *"}</div>
+                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? "اسم المنطقة، الطريق، القطعة *" : "Area name, Road, Block *"}</div>
                     </label>
                 </div>
                 {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
@@ -319,9 +320,9 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
          <div className={styles.headerTxt}>{isArabic ? "عنوان الفواتير" : "Billing Address"}</div>
             <div className={styles.areaInputText}>
                 <div className={styles.inputContainer}>
-                    <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")} />
+                    <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")} className={isArabic ? styles['input-ar'] : ''} />
                     <label className={styles.placeholderText}>
-                        <div className={styles.text}>{isArabic ? "اسم المنطقة، الطريق، القطعة *" : "Area name, Road, Block *"}</div>
+                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? "اسم المنطقة، الطريق، القطعة *" : "Area name, Road, Block *"}</div>
                     </label>
                 </div>
                 {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
@@ -355,7 +356,8 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
     )
 }
 
-const getShippingAddressData = (data) => {
+const getShippingAddressData = (data,isArabic) => {
+  console.log("kqhkhuua",data)
   return(
     {
       "firstName": data.firstName,
@@ -373,13 +375,14 @@ const getShippingAddressData = (data) => {
       "id":data.id,
       "city": data.city,
       "postalCode":data.postalCode,
-      // "isArabic" : isArabic
+      "isArabic" : isArabic
     }
   )
 }
 
-const getBillingAddressData = (data) => {
+const getBillingAddressData = (data,isArabic) => {
   // console.log("biii",data)
+  
   return(
     {
       "firstName": data.firstName,
@@ -394,7 +397,7 @@ const getBillingAddressData = (data) => {
       "isActive": data.isActive,
       "city": data.city,
       "postalCode":data.postalCode,
-      // "isArabic" : isArabic
+      "isArabic" : isArabic
     }
   )
 }
@@ -416,10 +419,10 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
  
   // console.log("personalInfoErrors",personalInfoErrors)
+  console.log("nwejknjkn",shippingAddress)
 
   useEffect(()=>{
-   
-
+  
   },[shippingAddress])
 
   useEffect(()=>{
@@ -433,8 +436,9 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         if(isEdit && formData && Object.keys(formData).length > 0){
           // console.log("formData",formData)
 
-            setShippingAddress(getShippingAddressData(formData['shippingAddress']));
-            setBillngAddress(getBillingAddressData(formData['billingAddress']));
+          console.log("lanhucjjsh",isArabic)
+            setShippingAddress(getShippingAddressData(formData['shippingAddress'],isArabic));
+            setBillngAddress(getBillingAddressData(formData['billingAddress'],isArabic));
             setIsSameBillingAddress(formData['shippingAddress'].sameAddressForBilling || false)
             const { firstName="", lastName="", email="", mobNumber="",orderUpdate=false } = formData['shippingAddress'] || {}
             const userObject = {
@@ -442,7 +446,8 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
                 'lastName':lastName,
                 'mobNumber':mobNumber,
                 'email':email,
-                'orderUpdate':orderUpdate
+                'orderUpdate':orderUpdate,
+                'isArabic':isArabic
     
             }
             setPersonalInfo(userObject)
@@ -456,7 +461,8 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
             'firstName':firstName,
             'lastName':lastName,
             'mobNumber':mobNumber,
-            'email':emailAddress
+            'email':emailAddress,
+            'isArabic':isArabic
 
         }
         if(!isEdit)
@@ -465,8 +471,8 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
       const addressValidation = () => {
         const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
-        const validationShippingErrors = validateShippingAddressForm(shippingAddress);
-        const validationBillingErrors = validateBillingAddressForm(billngAddress);
+        const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic);
+        const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic);
        
         if (Object.keys(validationPersonalInfoErrors).length === 0 && Object.keys(validationShippingErrors).length === 0 && isSameBillingAddress ){
           return true
@@ -482,8 +488,8 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       useEffect(()=>{
       if(getFormValues){
         const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
-        const validationShippingErrors = validateShippingAddressForm(shippingAddress);
-        const validationBillingErrors = validateBillingAddressForm(billngAddress);
+        const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic);
+        const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic);
         if (addressValidation()) {
                 let combineFormData = {
                     "shippingAddress":{...shippingAddress,...personalInfo},

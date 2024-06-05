@@ -649,7 +649,7 @@ export default  function Cart({cartData}) {
             </div>
             <div className={ styles.freeShippingSection}>
               <div className={styles.content}>
-                 {deliveryFeeMinPrice > 0 ? <div className={styles.text}>You're only <span className={styles.feeText}>{deliveryFeeMinPrice+ " " + currency}</span> away from <span className={styles.shipTxt}>Free Shipping</span></div> 
+                 {deliveryFeeMinPrice > 0 ? <div className={styles.text}>{isArabic ? "أنت فقط": "You're only"} <span className={styles.feeText}>{deliveryFeeMinPrice+ " " + currency}</span> {isArabic ? "بعيد عن" : "away from "}<span className={styles.shipTxt}>{isArabic ? "الشحن المجاني" : "Free Shipping"}</span></div> 
                  : <div className={styles.text}> {isArabic ? "سلة التسوق مؤهلة لـ"  :"Your cart is eligible for"} <span className={styles.shipTxt}>{isArabic ? "توصيل مجاني" : "free delivery"}</span></div>}
                   <div className={styles.progressBar}></div>
                    <div style={activeProgressBar}>

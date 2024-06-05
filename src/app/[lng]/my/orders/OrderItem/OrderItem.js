@@ -30,7 +30,7 @@ export default  function OrderItem({data,index}) {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
     
-    const { orderId="",productName="",productImg="",orderStatus="",orderProductId="" , expDelivery="",productId="",rating="" } = data || {};
+    const { orderId="",productName="",productImg="",orderStatus="",orderProductId="" , expDelivery="",productId="",rating="",productNameArabic } = data || {};
 
 
     const updateRating = async(rating) =>{
@@ -79,7 +79,7 @@ export default  function OrderItem({data,index}) {
             case "DELIVERED":
                 return (
                     <div className={styles.orderInfoDelivered}>
-                        <div className={styles.ratingTxt}>{(rating)?"You have rated !":"Rate the product based on your experience."}</div>
+                        <div className={styles.ratingTxt}>{(rating)?(isArabic ? "لقد قمت بالتقييم" : "You have rated !"):(isArabic ? "قيم المنتج استنادًا إلى تجربتك" : "Rate the product based on your experience.")}</div>
                         <StarRating onUpdateRating={updateRating} rating={rating} />
                     </div>
                 
@@ -106,7 +106,7 @@ export default  function OrderItem({data,index}) {
                     {renderOrderStatus(orderStatus)}
                    {index===0 && <div className={styles.orderId}>{isArabic ? "رقم الطلب" : "Order ID"} : #{orderId}</div>}
                 </div>
-                <div className={styles.orderItemName}>{productName}</div>
+                <div className={styles.orderItemName}>{isArabic ? productName : productNameArabic}</div>
                 {renderOrderInfo(orderStatus)}
             </div>
         </div>

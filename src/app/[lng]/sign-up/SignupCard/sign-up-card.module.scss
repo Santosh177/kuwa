@@ -58,13 +58,17 @@
             position: relative;
             width: 49%;
         }
-        input{
-            height: 48px;
-            width: 100%;
-            border: 1px solid #E6E7E7;
-            border-radius: 8px;
-            padding-left: 16px;
-        }
+        // input{
+        //     height: 48px;
+        //     width: 100%;
+        //     border: 1px solid #E6E7E7;
+        //     border-radius: 8px;
+        //     padding-left: 16px;
+        //     &.input-ar{
+        //         padding-left: 0px;
+        //         padding-right: 16px; 
+        //     }
+        // }
         input:focus{
             outline: none;
             border-color: #247A81;

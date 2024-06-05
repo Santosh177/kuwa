@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styles from './find-my-order.module.scss';
 import OrderItemList from '../../orders/OrderItemList/OrderItemList';
 import Loader from '@/app/[lng]/components/Loader/Loader';
+import { useLanguage } from '@/context/languageDetails';
 
 export default function FindMyOrder({ setShowOrderInfo }) {
   const [searchOrderId, setSearchOrderId] = useState('');
@@ -11,9 +12,11 @@ export default function FindMyOrder({ setShowOrderInfo }) {
   const [error, setError] = useState('');
   const [idError, setIdError] = useState('');
 
+  const {listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
   const getOrderList = async () => {
     if (!searchOrderId) {
-      setError('Please enter your order ID');
+      setError(isArabic ? "يرجى إدخال رقم طلب صالح" : 'Please enter your order ID');
       setIdError('');
       setOrderList([])
     } else {
@@ -31,7 +34,7 @@ export default function FindMyOrder({ setShowOrderInfo }) {
           setIdError('');
         } else {
           setError('');
-          setIdError('Please enter a valid order ID');
+          setIdError(isArabic ? "يرجى إدخال رقم طلب صالح" : 'Please enter a valid order ID');
           setSearchOrderId('');
           setOrderList([])
         }
@@ -45,16 +48,16 @@ export default function FindMyOrder({ setShowOrderInfo }) {
   return (
     <>
       <div className={styles.findMyOrderWrapper}>
-        <div className={styles.orderStatusTxt}>Order Status</div>
+        <div className={styles.orderStatusTxt}>{isArabic ? "حالة الطلب" : "Order Status"}</div>
         <div className={styles.subTxt}>
-          Enter your <span>'Order ID'</span> to check the order status
+          {isArabic ? "أدخل" : "Enter your"} <span>{isArabic ? "'رقم الطلب'" : "'Order ID'"}</span> {isArabic ? "للتحقق من حالة الطلب" : "to check the order status"}
         </div>
         <div className={styles.orderIdContainer}>
         <div className={styles.orderIdSearchContainer}>
           <div className={styles.orderIdInputContainer}>
             <input
               type="text"
-              placeholder="Order ID"
+              placeholder= {isArabic ? "رقم الطلب" :  "Order ID"}
               className={styles.orderIdInput}
               value={searchOrderId}
               onChange={(e) => setSearchOrderId(e.target.value)}
@@ -69,7 +72,7 @@ export default function FindMyOrder({ setShowOrderInfo }) {
             )}
           </div>
           <div className={styles.findMyorderBtn} onClick={getOrderList}>
-            Find my order
+            {isArabic ? "ابحث عن طلبي" : "Find my order"}
           </div>
         </div>
         {error && <div className={styles.error}>{error}</div>}

@@ -6,6 +6,7 @@ import { useAuth } from '@/context/userDetail';
 // import Loader from '@/components/Loader/Loader';
 import Loader from '@/app/[lng]/components/Loader/Loader';
 import {checkInternationalPhone} from "../../../../../utils/validation"
+import { useLanguage } from '@/context/languageDetails';
 
 
 const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
@@ -21,12 +22,16 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [mobNumberError,setMobNumberError] = useState("")
 
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
+
 
     useEffect(() => {
         if (mobileNumber) {
             setMobNumber(mobileNumber);
         }
     }, [mobileNumber]);
+
     useEffect(() => {
         const timer = setInterval(() => {
             setTime(prevTime => prevTime - 1);
@@ -152,7 +157,7 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
         </div>}
        {isShowOtpDiv && <div className={styles.otpDiv}>
         <div>
-         <input type='text' placeholder='Enter OTP' onChange={(e)=>setOtp(e.target.value)}></input>
+         <input type='text' placeholder='Enter OTP' onChange={(e)=>setOtp(e.target.value)} className={isArabic ? "inputOtp-ar" : ""}></input>
          {otpError && <div className={styles.otperror}>{otpError}</div>}
          </div>
         <div className={styles.btn} onClick={handleVerifyOtp}>Verify</div>

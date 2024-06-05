@@ -8,6 +8,7 @@ import styles from './page.module.scss';
 import ProductCard from './ProductCard/ProductCard';
 import TrendingSearch from './TrendingSearch/TrendingSearch';
 import { mappingHomeSearchDealProducts } from '@/services';
+import { useLanguage } from '@/context/languageDetails';
 
 
 
@@ -23,6 +24,8 @@ export default function Search() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showTrendingSearch, setShowTrendingSearch] = useState(true);
   const inputBoxRef = useRef(null);
+  const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
 
   useEffect(() => {
     let timer;
@@ -167,7 +170,7 @@ export default function Search() {
 
       </div>
       <div className={styles.searchListWrapper}>
-        <div className={styles.resultFound}>{searchDataCount} Results found</div>
+        <div className={styles.resultFound}>{searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</div>
           <div className={styles.productCardMain}>
             {
               searchData.map((data, index) => {

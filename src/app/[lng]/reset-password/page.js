@@ -74,7 +74,7 @@ export default function ResetPassword() {
       }
       else{
         setIsLoading(false)
-        setError("Failed to update password. Please try again.");
+        setError( isArabic ? "فشل في تحديث كلمة المرور. يرجى المحاولة مرة أخرى" : "Failed to update password. Please try again.");
       }
      
     }
@@ -102,7 +102,7 @@ export default function ResetPassword() {
             <div className={styles.passwordInputBoxContainer}>
                 <Input lassName={styles.inputBox} type='password'  value={repeatNewPassword || ""} placeHolder={isArabic ? "أعد إدخال كلمة المرور الجديدة" : 'Repeat New Password'} onInputChange={(e) => setRepeatNewPassword(e.target.value)}  />
             </div>
-            {error && <div className={styles.error}>{error}</div>}
+            {error && <div className={`${styles.error} ${isArabic ? styles['error-ar'] :""}` }>{error}</div>}
             <div className={styles.resetPasswordBtn} onClick={updatePassword}>
             {isLoading ? <Loader isShow={isLoading}  /> : ''}
             {isArabic ? " حفظ" : "Save"}</div>

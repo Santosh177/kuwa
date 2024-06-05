@@ -8,6 +8,10 @@
             border: 1px solid #E6E7E7;
             border-radius: 8px;
             padding-left: 16px;
+            &.input-ar {
+                padding-left: 0;
+                padding-right: 16px;
+            }
         }
         
         input:focus{
@@ -20,6 +24,10 @@
             color: #A0A0A0;
             transform: translate(0, -180%);
             margin-left: 12px;
+            &.input-ar {
+                margin-left: 0;
+                margin-right: 12px;
+            }
         }
         .placeholderText{
             position: absolute;
@@ -33,6 +41,9 @@
             display: flex;
             align-items: center;
             color: #A0A0A0;
+            &.input-ar {
+                // justify-content: flex-end;
+            }
         }
         .eyeIcon {
             position: absolute;
@@ -61,6 +72,10 @@
             transform: translate(0);
             color: #A0A0A0;
             transition: transform 0.15s ease-out, font-size 0.15s ease-out, background-color 0.2s ease-out, color 0.15s ease-out;
+            &.text-ar {
+                padding-left: 0;
+                padding-right: 16px;
+            }
         }
         input, .placeholderText{
             font-weight: 500;

@@ -47,18 +47,18 @@ const PrepaidExtraDiscount = ({prePaidDiscount,paymentMethodConfig}) => {
     if (enabledMethods.length === 0) {
       return null;
     }
-    let text = "Valid on";
+    let text = isArabic ?  "صالح على": "Valid on";
     if (enabledMethods.includes("card_tap") || enabledMethods.includes("card_checkout")) {
-      text += " card payments";
+      text += isArabic ?  " مدفوعات البطاقة" : " card payments";
     }
     if (enabledMethods.includes("tabby")) {
-      text += ", tabby";
+      text += isArabic ? " تابي" : ", tabby";
     }
     if (enabledMethods.includes("tamara")) {
-      text += ", tamara";
+      text += isArabic ?  " تمارا" :  ", tamara";
     }
     if (enabledMethods.includes("applePay")) {
-      text += ", apple pay";
+      text +=  isArabic ?  " أبل باي" : ", apple pay";
     }
     return <div className={styles.txt}>{text}</div>;
   };

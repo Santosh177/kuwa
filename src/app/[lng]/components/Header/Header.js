@@ -49,7 +49,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
       // style={(isLogin) ? { right: isArabic ? '91px' :'173px' , paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: 'unset', paddingBottom: !isShowSeeAllBtn ? "" : "" }}
       style={style}>
                 <div className={styles.resultFound}>
-                  <span> {searchDataCount} Results found</span>
+                  <span> {searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</span>
                 </div>
                 <div className={styles.productCardMain} 
                 // style={{maxHeight:isShowSeeAllBtn?"":"522px"}}
