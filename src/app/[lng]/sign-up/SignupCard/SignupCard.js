@@ -11,28 +11,28 @@ import { checkInternationalPhone } from "../../../../utils/validation";
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { useLanguage } from '@/context/languageDetails';
 
-const validateForm = (formData) => {
+const validateForm = (formData,isArabic) => {
   const errors = {};
   if (!formData.firstName) {
-    errors.firstName = 'First name is required.';
+    errors.firstName = isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
   }
   if (!formData.lastName) {
-    errors.lastName = 'Last name is required.';
+    errors.lastName = isArabic ? "اسم العائلة مطلوب" :  'Last name is required.';
   }
   if(!formData.mobNoValidation){
-    errors.mobileNumber = "Mobile number is required";
+    errors.mobileNumber = isArabic ? "رقم الهاتف المحمول مطلوب": "Mobile number is required";
   }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
     errors.mobileNumber = "Invalid mobile number";
   }
   if(!formData.email){
-    errors.email = "Email is required";
+    errors.email = isArabic ? "البريد الإلكتروني مطلوب" : "Email is required";
   }else if (!/\S+@\S+\.\S+/.test(formData.email)) {
     errors.email = 'Invalid email address.';
   }
   if(!formData.password){
-    errors.password = "Password is required";
+    errors.password = isArabic ? "كلمة المرور مطلوبة" :  "Password is required";
   }else if(!(formData.password.length > 7)){
-    errors.password = "Passwords need to be a min. of 8 characters";
+    errors.password = isArabic ? "يجب أن تكون كلمة المرور على الأقل 8 أحرف" :  "Passwords need to be a min. of 8 characters";
   }
   return errors;
 };
@@ -59,7 +59,7 @@ const SignupForm = ({setFormData={},formData={},errors={},setErrors={}}) => {
         <div className={styles.signUpFormContainer}>
             <div className={styles.userNameContainer}>
                 <div className={styles.inputContain}>
-                    <Input type="text" id="fname" name="fname" placeHolder={isArabic ? "الاسم الأول مطلوب *" : 'First name *'  }value={formData.firstName || ""} onInputChange={(e)=>onInputChange(e,'firstName')}  />
+                    <Input type="text" id="fname" name="fname" placeHolder={isArabic ? "الاسم الأول مطلوب *" : 'First name *'  }value={formData.firstName || ""} onInputChange={(e)=>onInputChange(e,'firstName')} />
                     {errors.firstName && <span className={styles.errorMsg}>{errors.firstName}</span>}
                 </div>
                 <div className={styles.inputContain}>
@@ -133,8 +133,8 @@ export default function SignupCard() {
       return window.innerWidth > 770 ? 'web' : 'mWeb';
     }
 
-      const onSignup = async() =>{
-        const validationErrors = validateForm(formData);
+      const onSignup = async(isArabic) =>{
+        const validationErrors = validateForm(formData,isArabic);
         if (Object.keys(validationErrors).length === 0) {
        
             try {

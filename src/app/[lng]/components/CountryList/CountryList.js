@@ -19,7 +19,7 @@ const CountryList = ({onSelectCountry={},onclose={}}) => {
                 <div className={styles.backDrop} onClick={()=>onclose()}></div>
                 <div className={styles.countryContainer}>
                     <img className={styles.closeIcon} src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_country.png" alt="close" onClick={()=>onclose()}/>
-                    <div className={styles.countryTitle}>{isArabic ? "" : "Select Country"}</div>
+                    <div className={styles.countryTitle}>{isArabic ? " اختر الدولة" : "Select Country"}</div>
                     <div className={styles.countryListItem}>
                         {
                             countryList.map((data,index)=>{

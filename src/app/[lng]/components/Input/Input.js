@@ -28,13 +28,13 @@ const Input = ({onInputChange={},type="text",fieldName="",value="",placeHolder="
     return(
         <div className={styles.inputWrapper} style={...style}>
             <div className={styles.inputContainer}>
-                <input autoComplete='off'  type={type === 'password' && showPassword ? 'text' : type} id={fieldName} name={fieldName} autoComplete='off'  value={value} onChange={(e)=>onInputChange(e,fieldName)}  disabled={isDisabled}/>
+                <input autoComplete='off'  type={type === 'password' && showPassword ? 'text' : type} id={fieldName} name={fieldName} autoComplete='off'  value={value} onChange={(e)=>onInputChange(e,fieldName)}  disabled={isDisabled}  className={isArabic ? styles['input-ar'] : ''}/>
                 <label className={styles.placeholderText}>
-                    <div className={styles.text}>{placeHolder}</div>
+                    <div  className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{placeHolder}</div>
                 </label>
                 {type === 'password' && (
-        <div
-          className={`${styles.eyeIcon} ${isArabic ? styles['eyeIcon-ar'] : styles['eyeIcon-en']}` }
+        <div 
+          className={`${styles.eyeIcon} ${isArabic ? styles['eyeIcon-ar'] : styles['eyeIcon-en']}`}
           onClick={togglePasswordVisibility}
         >
           <img 

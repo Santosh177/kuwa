@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 
 
 export default function OrderItemList({ data, index}) {
+  console.log("OrderItemList",OrderItemList)
   const router = useRouter();
   const orderItemData = { 
     orderId:data.orderId,
@@ -17,7 +18,8 @@ export default function OrderItemList({ data, index}) {
     orderStatus: data.orderProductStatus,
     orderProductId:data.orderProductId,
     expDelivery: data.expectedDelivery,
-    rating: data.avgRating
+    rating: data.avgRating,
+    productNameArabic:data.orderProductNameArabic
   }
 
 

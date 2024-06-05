@@ -23,7 +23,10 @@ padding-bottom: 12px;
             display: flex;
             flex-direction: column;
             margin-left: 8px;
-            margin-left: 8px;
+            &.item-ar{
+                margin-left: 0px;
+                margin-right: 8px;
+            }
         .itemName{
            
             width:201px;
@@ -43,6 +46,10 @@ padding-bottom: 12px;
        .priceContainer{
         padding-right: 16px;
         font-size: 12px;
+        &.priceContainer-ar{
+            padding-right: 0px;
+            padding-left: 16px;
+        }
                 
 
                 .finalPrice{

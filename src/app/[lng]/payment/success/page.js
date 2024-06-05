@@ -187,7 +187,7 @@ export default function PaymentSuccess() {
       <div className={styles.rightSection}>
         <div className={styles.deliveryContainer}><DeliveryAddress shippingAddress={shippingAddress} /></div>
         <div className={styles.priceDetailsContainer}><PriceDetailsContainer orderDetailsData={orderDetailsData} /></div>
-        <div className={styles.btn} onClick={()=>window.location.href='/'}>{isArabic ? "استمر في التسوق" : "Continue Shopping"}</div>
+        <div className={`${styles.btn} ${isArabic ? styles['btn-ar'] : styles['btn-en']}` } onClick={()=>window.location.href='/'}>{isArabic ? "استمر في التسوق" : "Continue Shopping"}</div>
         <div className={styles.socialMedialContainer}><SocialMedia/></div>
       </div>
         </div>
