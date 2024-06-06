@@ -32,6 +32,10 @@
             margin-left: 16px;
             margin-top: 14px;
             margin-bottom: 14px;
+            &.FilterTabOptionMobile-ar{
+                margin-left: 0px;
+                margin-right: 16px;
+            }
 
             .FilterTabOption {
                 display: flex;

@@ -99,7 +99,7 @@ export default function AddAddress() {
             const email = signupRespData.data.email;
             const countryName = selectedCountry && selectedCountry.name ||  ""
             if(userId){
-              window.clevertap.onUserLogin.push({
+              window.clevertap?.onUserLogin?.push({
                 "Site": {
                   "Name": name,            // String
                   "Identity": userId,              // String or number
@@ -114,7 +114,7 @@ export default function AddAddress() {
                 "cart_items": []
                })
                
-               window.clevertap.event.push("kuwa_user_add_address_signup_success", {
+               window.clevertap?.event?.push("kuwa_user_add_address_signup_success", {
                 "Country":countryName,
                 "Email":email,
                 "Name": name,

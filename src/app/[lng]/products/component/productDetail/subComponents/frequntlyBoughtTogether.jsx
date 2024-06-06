@@ -167,7 +167,7 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
         return (
             <div className={style.frequntlyBoughtTogetherConatiner}>
                 <div className={style.outer}>
-                    <div className={style.headingTxt} >Frequently Bought Together</div>
+                    <div className={style.headingTxt} >{isArabic ? "المشتريات المتكررة معاً" : "Frequently Bought Together"}</div>
                     <div className={style.imageSection} >{data.map((item, i) => {
                         return (
                             <>
@@ -203,7 +203,7 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
                             </div>
                         )
                     })}</div>
-                    <div className={style.totalPrice} ><span className={style.txt}>Total price :</span><span className={style.price} >{currency + " "+totalPrice}</span></div>
+                    <div className={style.totalPrice} ><span className={style.txt}>{isArabic ? "السعر الإجمالي" : "Total price"} :</span><span className={style.price} >{currency + " "+totalPrice}</span></div>
                     <div onClick={()=>addToCart()} className={[style.buttonAddToCart, (totalPrice == 0.00 ? style.opacityLow : "")].join(" ")} ><span>{isArabic ? "أضف إلى السلة" : "Add to Cart"}</span></div>
                 </div>
                 <Loader isShow={isLoading} />

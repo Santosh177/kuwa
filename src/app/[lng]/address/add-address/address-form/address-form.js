@@ -32,7 +32,7 @@ const validatePersonalForm = (formData) => {
       errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
     }
     else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
-      errors.mobNumber = "Invalid mobile number";
+      errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
     }
     if(!formData.email){
       errors.email = formData.isArabic ? "البريد الإلكتروني مطلوب" :  "Email is required";

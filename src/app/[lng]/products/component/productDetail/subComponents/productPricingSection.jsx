@@ -195,7 +195,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
           {(normalInventory >0 || selectedVariantQuantity > 0) && <div className={styles.deliveryDate}>{isArabic ? "اطلب الآن واحصل عليه بحلول" : "Order now and get it by"}<span> {deliveryDateString}</span></div>}
             <div className={styles.freeShippingSection}>
               <div className={styles.freeShippingDiv}>
-                <div className={styles.truckImg}><img src="https://d25uasl7utydze.cloudfront.net/assets/truck.svg"></img></div>
+                <div className={styles.truckImg}><img src={isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/truck_green.svg" : "https://d25uasl7utydze.cloudfront.net/assets/truck.svg"}></img></div>
                 <div className={styles.text}>{isArabic ? "توصيل مجاني للطلبات أعلى من" :"Free Delivery above "}<span>{currency + " " +mininmumDeliveryThreshold}</span></div>
                 
                 </div>

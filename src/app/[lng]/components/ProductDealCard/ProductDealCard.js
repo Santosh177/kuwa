@@ -9,7 +9,7 @@ const ProductDealCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNo
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus="",normalInventory,tagArabic} = cardData || {}
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus="",normalInventory,tagArabic,productNameArabic=""} = cardData || {}
     // console.log("cardData++++",cardData)
     const btnName = normalInventory > 0 ? ( isArabic ? "أضف إلى السلة" : "Add to cart") : (isArabic ? "اعلمني " : "Notify me")
 
@@ -37,9 +37,9 @@ const ProductDealCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNo
                 </div>
                 <div className={styles.textContent}>
                   
-                   <div className={styles.dealInventory}>{dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory? (dealInventory+ " " + "left in stock"): ""}</div>
+                   <div className={styles.dealInventory}>{dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory? (dealInventory+ " " + (isArabic ? "المتبقي في المخزون" :  "left in stock")): ""}</div>
                    
-                <div className={styles.productName}>{productName}</div>
+                <div className={styles.productName}>{isArabic ? productNameArabic  :productName}</div>
     {dealId && isDealActive && isTimerActive
     && currentTimerStatus=="in-between"
                   ? (

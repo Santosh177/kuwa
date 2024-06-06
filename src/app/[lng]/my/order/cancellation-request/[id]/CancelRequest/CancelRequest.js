@@ -21,7 +21,7 @@ const ReasonCard = ({data,onSelect,cancelReason}) => {
 
    const isSelected = data.reason == cancelReason;
     return(
-        <div className={styles.reasonCard} onClick={()=>onSelect(data)} style={(isSelected)?{backgroundColor:'#F1FAF8'}:{}}>
+        <div className={`${styles.reasonCard} ${isArabic ? styles['reasonCard-ar'] : styles['reasonCard-en']}` } onClick={()=>onSelect(data)} style={(isSelected)?{backgroundColor:'#F1FAF8'}:{}}>
             <CheckBox isChecked={isSelected}/>
             <div className={styles.reasonTxt}>{ isArabic ? data.reasonArabic: data.reason}</div>
         </div>

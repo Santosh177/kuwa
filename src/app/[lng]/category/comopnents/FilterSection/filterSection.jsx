@@ -130,13 +130,13 @@ const FilterSectionDesktop = ({ setSelectedOptionsHead , responseData , paramsDa
             })}
             
             {multiSelect?.map((item) => {
-                const { superCollectionName = '', category = [] } = item || {}
+                const { superCollectionName = '', category = [],superCollectionNameArabic = "" } = item || {}
                 const [isCollapse, setIsCollapse] = useState(true)
                 if (superCollectionName) {
                     return (
                         <div className={style.filterSectionCategory}>
                             <div className={style.Txt} onClick={() => setIsCollapse(!isCollapse)}>
-                                <div className={style.cat} >{superCollectionName}</div>
+                                <div className={style.cat} >{isArabic ? superCollectionNameArabic : superCollectionName}</div>
                                 <div className={style.arrrow}><img src={colapseImage} alt="collapse image" style={(!isCollapse)?{WebkitTransform:'rotate(180deg)'}:{}} /></div>
                             </div>
                             {isCollapse && <div className={style.options}>
@@ -283,14 +283,14 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
     if (slectedFilter === "Filter") {
         return (
             <>
-                <PageHeader headerName="Filter" backButtonAction={() => setSelectedFilter("NOT_SELCTED")} />
+                <PageHeader headerName={isArabic ? "فلتر" : "Filter"} backButtonAction={() => setSelectedFilter("NOT_SELCTED")} />
                 <div className={style.mobileFiltration} >
                     <div className={style.mobileCategories} >
                         <div className={style.categories} >
                         {stockSelect.map((item) => {
                                 const { cat , options } = item || {};
                                 if (cat) {
-                                    return (<div className={[style.Txt, (cat === selectedTab ? style.slectedTab : "")].join(" ")} onClick={() => handleStockFilter(options, cat) }>
+                                    return (<div className={[style.Txt, isArabic ? style["Txt-ar"] : "", (cat === selectedTab ? style.slectedTab : "")].join(" ")} onClick={() => handleStockFilter(options, cat) }>
                                         <div className={style.cat} >{cat}</div>
                                     </div>)
                                 } else {
@@ -299,10 +299,10 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 
                             })}
                             {multiSelect.map((item) => {
-                                const { superCollectionName, category } = item || {};
+                                const { superCollectionName, category ,superCollectionNameArabic=""} = item || {};
                                 if (superCollectionName) {
-                                    return (<div className={[style.Txt, (superCollectionName === selectedTab ? style.slectedTab : "")].join(" ")} onClick={() => handelOnclick(category, superCollectionName)} >
-                                        <div className={style.cat} >{superCollectionName}</div>
+                                    return (<div className={[style.Txt ,  isArabic ? style["Txt-ar"] : "", (superCollectionName === selectedTab ? style.slectedTab : "")].join(" ")} onClick={() => handelOnclick(category, superCollectionName)} >
+                                        <div className={style.cat} >{isArabic ? superCollectionNameArabic : superCollectionName}</div>
                                     </div>)
                                 } else {
                                     return <></>
@@ -352,8 +352,8 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                         </div>
                     </div>
                     <div className={style.footerButton} >
-                        <div onClick={() => handelCancel()} className={style.cancel}><span>cancel</span></div>
-                        <div onClick={() => handelApply()} className={style.filterApply}><span>ApplyFilter</span></div>
+                        <div onClick={() => handelCancel()} className={style.cancel}><span>{isArabic ? "إلغاء" : "cancel"}</span></div>
+                        <div onClick={() => handelApply()} className={style.filterApply}><span>{isArabic ? "تطبيق الفلتر" : "ApplyFilter"}</span></div>
                     </div>
                 </div>
             </>
@@ -363,7 +363,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
             <div className={style.singleSelctedContainer}>
                 <div className={style.allOptions}>
                     <div className={style.crossConatainer}>
-                        <div className={style.sortBy} >Sort By</div>
+                        <div className={style.sortBy} >{isArabic ? "ترتيب حسب" : "Sort By"}</div>
                         <div className={style.cross} onClick={()=>setSelectedFilter("NOT_SELCTED")} ><img src="https://d25uasl7utydze.cloudfront.net/kuwa/X.svg" alt="cross" /></div>
                     </div>
                     {singleSelect.map((item) => {

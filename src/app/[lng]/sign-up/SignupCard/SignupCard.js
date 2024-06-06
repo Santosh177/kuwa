@@ -22,12 +22,12 @@ const validateForm = (formData,isArabic) => {
   if(!formData.mobNoValidation){
     errors.mobileNumber = isArabic ? "رقم الهاتف المحمول مطلوب": "Mobile number is required";
   }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
-    errors.mobileNumber = "Invalid mobile number";
+    errors.mobileNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
   }
   if(!formData.email){
     errors.email = isArabic ? "البريد الإلكتروني مطلوب" : "Email is required";
   }else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-    errors.email = 'Invalid email address.';
+    errors.email = isArabic ? "عنوان بريد إلكتروني غير صالح." :  'Invalid email address.';
   }
   if(!formData.password){
     errors.password = isArabic ? "كلمة المرور مطلوبة" :  "Password is required";
@@ -179,7 +179,7 @@ export default function SignupCard() {
                 }
               }
               if(data && data.status_code && data.status_code == 400){
-                setErrors({email:'This email address already exists. Please try logging in'})
+                setErrors({email:isArabic ? "عنوان البريد الإلكتروني هذا موجود بالفعل. يرجى محاولة تسجيل الدخول" : 'This email address already exists. Please try logging in'})
                 setIsLoading(false)
               }else{
                 console.log("santo")

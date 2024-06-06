@@ -24,6 +24,7 @@ export default function TrendingSearch({ isLogin=false, isShowSeeAllBtn=true,set
         }
         getTrendingList()
     }, [])
+
     const handleChip = (couponBanner, searchQuery) => {
         if (!isShowSeeAllBtn){
             if (setParamsData){
@@ -41,7 +42,7 @@ export default function TrendingSearch({ isLogin=false, isShowSeeAllBtn=true,set
         style={isLogin?{right: isArabic? "122px": "173px"}:{}} 
         >
             <div  className='trending-search-cont'>
-                <div  className='heading'>Trending search</div>
+                <div  className='heading'>{isArabic ? "البحث الرائج" : "Trending search"}</div>
                 <div  className='trending-list-wraper'>
                     {
                         trendingList && trendingList.length > 0 && trendingList.map((item, index) =><div id="trending-search" className='trending-list-chip' onClick={() => handleChip(couponBanner,item)}>{item}</div>)

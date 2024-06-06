@@ -232,6 +232,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   const searchParams = useSearchParams();
   let productId = searchParams.get('productId') || "" 
   let variantId = searchParams.get('variantId') || ""
+  const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
 
   useEffect(()=>{
     console.log("listOfAddress",listOfAddress)
@@ -442,7 +444,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       console.log("BuyProductId",productId,variantId);
       console.log("prePaidDiscount",extraDiscount);
       const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
-
+      console.log("njnqqnk",isArabic)
       const discountAmount = (parseFloat((((priceDetails['totalAmount']-priceDetails['deliveryFees']) * prePaidDiscount)/100).toFixed(2)));
       console.log("pMode",pMode)
       setIsLoader(true);
@@ -583,7 +585,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               let tamaraPayload = {
                 "paymentMode":"TAMARA",
                 "paymentType":"PAY_BY_INSTALMENTS",
-                "locale":"en_BH",
+                "locale":isArabic ? "ar_BH" :"en_BH",
                 "installments":3,
                 "items": items
               }
@@ -620,7 +622,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               let tabbyPayload = {
                 "paymentMode":"TABBY",
                 "paymentType":"PAY_BY_INSTALMENTS",
-                "locale":"en",  
+                "locale":isArabic ? "ar" :"en",  
                 "installments":4,
                 "items": items
               }
@@ -655,7 +657,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               let tapPayload = {
                 "paymentMode":"TAP",
                 "paymentType":"PAY_BY_INSTALMENTS",
-                "locale":"en",  
+                "locale":isArabic ? "ar" : "en",  
                 "installments":4,
                 "items": items
               }

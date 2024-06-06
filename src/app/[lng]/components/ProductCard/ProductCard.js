@@ -42,7 +42,7 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
                 </div>
                 <div className={styles.textContent}>
 
-                <div className={styles.dealInventory}>{ dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory ? (dealInventory+ " " + "left in stock"): ""}</div>
+                <div className={styles.dealInventory}>{ dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory ? (dealInventory+ " " + isArabic ? "المتبقي في المخزون" : "left in stock"): ""}</div>
                    
                 <div className={styles.productName}>{isArabic ? productNameArabic: productName}</div>
                 {dealId && isDealActive && isTimerActive
