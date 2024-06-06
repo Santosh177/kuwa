@@ -11,7 +11,7 @@ export default function PatmentFooterBtn({isApplePaySession=false,btnName="",tot
             <div className={styles.paymentFooterBtnContainer} style={(!isApplePaySession)?{justifyContent:'center'}:{}}>
                 <div className={styles.paymentInfo}>
                 {isAllOutOfStockProducts ? "" :     <div className={styles.txt}>{isArabic ? "المجموع" : "Total"} : <span className={styles.price}>{(totalPrice != undefined)?totalPrice:""}</span></div>}
-                    <div className={styles.subTxt} onClick={()=>showViewDetails()}>View price details</div>
+                    <div className={styles.subTxt} onClick={()=>showViewDetails()}>{isArabic ? "عرض تفاصيل السعر" : "View price details"}</div>
                 </div>
                 <div className={styles.paymentBtnContainer}>
                   { isApplePaySession  &&

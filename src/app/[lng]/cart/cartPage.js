@@ -654,7 +654,7 @@ export default  function Cart({cartData}) {
                   <div className={styles.progressBar}></div>
                    <div style={activeProgressBar}>
                    <div className={styles.roundDiv}></div>
-                   <div className={styles.image}><img src="https://d25uasl7utydze.cloudfront.net/assets/truck%20(1).svg"></img></div>
+                   <div className={styles.image}><img src={isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/truck_white.svg" : "https://d25uasl7utydze.cloudfront.net/assets/truck%20(1).svg"}></img></div>
                    </div>
                   {deliveryFeeMinPrice > 0 ? "" : <div className={styles.saveTxt}>{isArabic ? "لقد وفرت" :"You saved"} {deliveryFee + " " + currency} {isArabic ? "على رسوم التوصيل" : "on delivery fee"}</div>} 
                

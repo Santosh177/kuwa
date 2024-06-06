@@ -93,6 +93,10 @@
     gap: 10px;
     margin-top: 8px;
     cursor: pointer;
+    &.reasonCard-ar{
+        padding-left: 0px;
+        padding-right: 15px;
+    }
     .reasonTxt{
         font-weight: 400;
         font-size: 14px;

@@ -1,6 +1,7 @@
-
+'use client'
 import FooterData from './FooterData';
 import styles from './footer.module.scss';
+import { useLanguage } from '@/context/languageDetails';
 
 
 
@@ -59,12 +60,16 @@ const SocialIcon = () => (
     </ul>
 )
 
-const CopyRightInfo = () => (
+const CopyRightInfo = () => {
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+return(
     <div className={styles.copyRightInfoWrapper}>
-        <div className={styles.copyRightTxt}>Copyright 2023 © GetKuwa</div>
-        <img className={styles.copyRightCardImg} src='https://d25uasl7utydze.cloudfront.net/kuwa/card-info.png' alt='card-info' />
-    </div>
+    <div className={styles.copyRightTxt}>{isArabic ? "حقوق النشر 2023 © جيت كوا" : "Copyright 2023 © GetKuwa"}</div>
+    <img className={styles.copyRightCardImg} src='https://d25uasl7utydze.cloudfront.net/kuwa/card-info.png' alt='card-info' />
+</div>
 )
+   
+}
 
 const Footer = () => {
     

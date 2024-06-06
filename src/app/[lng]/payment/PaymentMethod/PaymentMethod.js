@@ -54,7 +54,7 @@ const CardOption = ({cardConfig={},isCheckoutCard=false , isTapCard=false,onPaym
               </div>
                 {isShowCard && 
                 <><CheckoutFrames publicKey ={cardConfig.publicKey || ""} onPayment={(data)=>onPayment(data)}/>
-                <div className={styles.security}><img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/security.png' alt='safe' /> <span>Safe & Secured</span></div>
+                <div className={styles.security}><img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/security.png' alt='safe' /> <span>{isArabic ? "آمن ومضمون" : "Safe & Secured"}</span></div>
                 </>
                 }
             </div>

@@ -16,9 +16,9 @@ const CustumDutyInfo = ({setIsShowCustumDutyInfoPopup})=>{
 return(
 <div className={styles.custumDutyInfoPopupContainer}>
     <div className={styles.custumDutyInfoPopupSection}>
-    <div className={styles.title}>Duty, Taxes, & Fees</div>
-    <div className={styles.subTxt}>Imported goods are subject to Bayan fee which is levied by the local government agency in Qatar. With DDP (Delivered Duties Paid), you do not have to pay any additional duty/tax at the time of delivery.</div>
-    <div className={styles.footer} onClick={(()=>setIsShowCustumDutyInfoPopup(false))}>Close</div>
+    <div className={styles.title}>{isArabic ? "الرسوم، الضرائب، والمصاريف" : "Duty, Taxes, & Fees"}</div>
+    <div className={styles.subTxt}>{isArabic ? "البضائع المستوردة خاضعة لرسوم البيان التي تفرضها الهيئة الحكومية المحلية في قطر. مع خدمة DDP (الرسوم المدفوعة عند التسليم)، لن تحتاج إلى دفع أي رسوم أو ضرائب إضافية عند الاستلام." : "Imported goods are subject to Bayan fee which is levied by the local government agency in Qatar. With DDP (Delivered Duties Paid), you do not have to pay any additional duty/tax at the time of delivery"}.</div>
+    <div className={styles.footer} onClick={(()=>setIsShowCustumDutyInfoPopup(false))}>{isArabic ? "إغلاق" : "Close"}</div>
     </div>
 </div>
 )
@@ -60,7 +60,7 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
             </div>
            {!isHidePriceDetails && <>
             {discountAmount > 0 &&<div className={styles.rowItemContainer}>
-                <div className={styles.rowItemLeftText}>Discount</div>
+                <div className={styles.rowItemLeftText}>{isArabic ? "خصم" : "Discount"}</div>
                 <div  className={[styles.rowItemRightText,styles.discountAmount].join(" ")}>- {currency + " "+ discountAmount} </div>
             </div>}
             {(selectedPaymentMethod == "TAP" || selectedPaymentMethod == "TABBY" || selectedPaymentMethod == "CHECKOUT_CARD" || selectedPaymentMethod == "TAMARA" || selectedPaymentMethod == "APPLE_PAY" ) &&
@@ -91,11 +91,11 @@ const PriceDetails = ({data,isHidePriceDetails=false,selectedPaymentMethod,prePa
             </div>
 
           {customFee > 0 &&  <div className={styles.rowItemContainer}>
-                <div className={styles.rowItemLeftText}>Custom Duty <span style={{cursor:"pointer"}} onClick={()=>setIsShowCustumDutyInfoPopup(true)}><img src="https://d25uasl7utydze.cloudfront.net/assets/tool_tip.svg"></img></span></div>
+                <div className={styles.rowItemLeftText}>{isArabic ? "رسوم جمركية" : "Custom Duty"} <span style={{cursor:"pointer"}} onClick={()=>setIsShowCustumDutyInfoPopup(true)}><img src="https://d25uasl7utydze.cloudfront.net/assets/tool_tip.svg"></img></span></div>
                 <div className={[styles.rowItemRightText].join(" ")}>{parseFloat(customFee).toFixed(2)}</div>
             </div>}
             {myCustomFee > 0 &&  <div className={styles.rowItemContainer}>
-                <div className={styles.rowItemLeftText}>Custom Duty <span style={{cursor:"pointer"}} onClick={()=>setIsShowCustumDutyInfoPopup(true)}><img src="https://d25uasl7utydze.cloudfront.net/assets/tool_tip.svg"></img></span></div>
+                <div className={styles.rowItemLeftText}>{isArabic ? "رسوم جمركية" : "Custom Duty"} <span style={{cursor:"pointer"}} onClick={()=>setIsShowCustumDutyInfoPopup(true)}><img src="https://d25uasl7utydze.cloudfront.net/assets/tool_tip.svg"></img></span></div>
                 <div className={[styles.rowItemRightText].join(" ")}>{parseFloat(myCustomFee).toFixed(2)}</div>
             </div>}
             {discountAmount> 0 &&  <AmountSavedInfo savedAmount={discountAmount} currency={currency}/>}

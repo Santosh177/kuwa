@@ -11,6 +11,7 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useCountry } from "@/context/contryDetails";
 const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
+import { useLanguage } from "@/context/languageDetails";
 
 
 const MainCategory = ({ isDealPage }) => {
@@ -29,6 +30,7 @@ const MainCategory = ({ isDealPage }) => {
     const [paramsData, setParamsData] = useState({})
     const params = useParams();
     const dealSeoUrl = params.id || "";
+    const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
 
     useEffect(() => {
 
@@ -255,20 +257,20 @@ const MainCategory = ({ isDealPage }) => {
 
             {isHide && <Header setParamsData={setParamsData} paramsData={paramsData} isShowSeeAllBtn={false} />}
 
-            {isHide && <div className={style.FilterTabOptionMobile} >
+            {isHide && <div className={`${style.FilterTabOptionMobile} ${isArabic ? style['FilterTabOptionMobile-ar'] : style['FilterTabOptionMobile-en']}` } >
                 <div className={style.FilterTabOption}>
                     <div className={style.filterContainer} onClick={() => setSelectedFilter("Filter")} >
                         {isShowDotForCat && <div className={style.dot}></div>}
                         <div className={style.filter}>
                             <img src={filterDataImg} alt="" />
-                            <span>Filter</span>
+                            <span>{isArabic ? "فلتر" : Filter}</span>
                         </div>
                     </div>
                     <div className={style.filterContainer}>
                         {isShowDotForSort && <div className={style.dot}></div>}
                         <div className={style.sortBy} onClick={() => setSelectedFilter("Sort By")}>
                             <img src={sortByImg} alt="" />
-                            <div>Sort By</div>
+                            <div>{isArabic ? "ترتيب حسب" : "Sort By"}</div>
                         </div>
                     </div>
 

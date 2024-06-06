@@ -13,7 +13,7 @@ const ProductFaq = ({productData}) =>{
     if(faqs.length > 0){
         return(
             <>
-            <div className={style.FrequentlyAskQuestions}>{isArabic ? "" :"Frequently Ask Questions"}</div>
+            <div className={style.FrequentlyAskQuestions}>{isArabic ? "الأسئلة المتكررة" :"Frequently Ask Questions"}</div>
             <Faq faqs={faqs} />
             </>
         )

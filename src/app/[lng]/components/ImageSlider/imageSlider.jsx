@@ -28,9 +28,9 @@ const ImageSlider = ({ images,normalInventory ,selectedVariantQuantity}) => {
         <section >
         {
             selectedVariantQuantity == null ? (
-            normalInventory <= 0 && <div className='outOfStockTxt'>{isArabic ? "غير متوفر" : "Out of stock"}</div>
+            normalInventory <= 0 && <div className={`${"outOfStockTxt"} ${isArabic ? "outOfStockTxt-ar" : ""}`} >{isArabic ? "غير متوفر" : "Out of stock"}</div>
             ) : (
-            selectedVariantQuantity <= 0 && <div className='outOfStockTxt'>{isArabic ? "غير متوفر" : "Out of stock"}</div>
+            selectedVariantQuantity <= 0 && <div className={`${"outOfStockTxt"} ${isArabic ? "outOfStockTxt-ar" : ""}`} >{isArabic ? "غير متوفر" : "Out of stock"}</div>
             )
         }
 

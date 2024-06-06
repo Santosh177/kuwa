@@ -16,6 +16,7 @@ export default function CheckoutFrames({onPayment,publicKey=""}) {
       const [showLoader, setIsShowLoader] = useState(false)
       const [token , setToken] = useState("")
 
+      const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
       useEffect(()=>{
         if(token){
@@ -28,7 +29,7 @@ export default function CheckoutFrames({onPayment,publicKey=""}) {
       const PUBLIC_KEY = 'pk_sbox_y4kryfiio2emn57e2pdayxfpre5';
 
 
-      const cvvTxt = "Security code";
+      const cvvTxt = isArabic ? "رمز الأمان" : "Security code";
       const placeHolderExpiryDate = "MM";
       const placeholderExpiryYY = "YY";
     
@@ -41,7 +42,7 @@ export default function CheckoutFrames({onPayment,publicKey=""}) {
             debug: true,
             publicKey: publicKey,
             localization: {
-                cardNumberPlaceholder: 'Card number',
+                cardNumberPlaceholder: isArabic ? "رقم البطاقة" : 'Card number',
                 expiryMonthPlaceholder: `${placeHolderExpiryDate}    `,
                 expiryYearPlaceholder: `    ${placeholderExpiryYY}`,
                 cvvPlaceholder: cvvTxt,

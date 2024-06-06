@@ -66,9 +66,9 @@ const ProductImageSection = ({ allImages, dealTag, dealIconUrl, isDealActive, is
                                 <div className={styles.imageSection} key={i}>
                                 {
             selectedVariantQuantity == null ? (
-            normalInventory <= 0 && <div className={styles.outOfStockTxtMob}>{isArabic ? "غير متوفر" :"Out of stock"}</div>
+            normalInventory <= 0 && <div className={`${styles.outOfStockTxtMob} ${isArabic ? styles['outOfStockTxtMob-ar'] : styles['outOfStockTxtMob-en']}` }>{isArabic ? "غير متوفر" :"Out of stock"}</div>
             ) : (
-            selectedVariantQuantity <= 0 && <div className={styles.outOfStockTxtMob}>{isArabic ? "غير متوفر" :"Out of stock"}</div>
+            selectedVariantQuantity <= 0 && <div className={`${styles.outOfStockTxtMob} ${isArabic ? styles['outOfStockTxtMob-ar'] : styles['outOfStockTxtMob-en']}` }>{isArabic ? "غير متوفر" :"Out of stock"}</div>
             )
         }
                             { isDealActive && isTimerActive && currentTimerStatus == "in-between" &&  

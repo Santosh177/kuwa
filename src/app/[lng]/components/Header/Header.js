@@ -38,11 +38,11 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   const style = isLogin
   ? {
       right: isArabic ? calculateRightValue() : '173px',
-      paddingBottom: isShowSeeAllBtn ? '' : '',
+      paddingBottom: !isShowSeeAllBtn ? '' : '',
     }
   : {
       left: 'unset',
-      paddingBottom: isShowSeeAllBtn ? '' : '',
+      paddingBottom: !isShowSeeAllBtn ? '' : '',
     };
     return(
       <div className={`${styles.searchListWrapper} ${isArabic ? styles['searchListWrapper-ar'] : ''}`} 
@@ -84,7 +84,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                     }
                 </div>
         {searchData && searchData.length>0  && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBannerData, searchQuery)}>
-                    See all
+                    {isArabic ? "استعرض الكل" : "See all"}
                 </div>
         }       
             </div>
@@ -230,14 +230,14 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                 txt:"My Account",
                 type: "My Account",
                 typeId: null,
-                subTxtArabic:"",
+                subTxtArabic: "تعديل الملف الشخصي  إدارة العنوان طلباتي",
                 txtArabic:"حسابي"
             }
             if(isLogin){
                 getSideMenuData?.push(additionData)
             }else{
                 let findMyOrderData =    {
-                    icon: "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/truck.png",
+                    icon: isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/truck_green.svg" : "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/truck.png",
                     id: 18,
                     img:null,
                     subTxt: "Track your order here",

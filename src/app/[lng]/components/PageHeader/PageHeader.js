@@ -41,7 +41,7 @@ const PageHeader = ({headerName="",backButtonAction="" , ishideBackButton= false
             <img className={styles.mobHeaderBackgroundImg} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/header_background+(1).png' />
             <div className={styles.headerContent}>
                 {!ishideBackButton &&<img className={`${styles.backArrow} ${isArabic ? styles['backArrow-ar'] : ''}`} onClick={()=>handelBakButton()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow+%281%29.png' alt='back-arrow'/>}
-                <div className={styles.headerTxt}>{headerName}</div>
+                <div className={`${styles.headerTxt} ${isArabic ? styles['headerTxt-ar'] : styles['headerTxt-en']}` }>{headerName}</div>
                 {isHideLogo ?<img className={styles.crossIcon} onClick={onCrossIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/cross_icon.png' alt='cross-icon'/> :<img onClick={()=>window.location.href="/"} className={styles.kuwaLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/kuwa_logo.png' alt='kuwa-logo'/>}
             </div>
         </div>

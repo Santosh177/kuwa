@@ -44,7 +44,7 @@ const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={
             <div className={styles.paymentFooterBtnContainer}>
                 <div className={styles.paymentInfo}>
                     <div className={styles.txt}>{isArabic ? "المجموع" :"Total"} : <span className={styles.price}>{currency + " " +parseFloat(finalTotalAmount).toFixed(2)}</span></div>
-                   <div className={styles.subTxt} onClick={()=>showViewDetails()}>View price details</div> 
+                   <div className={styles.subTxt} onClick={()=>showViewDetails()}>{isArabic ? "عرض تفاصيل السعر" : "View price details"}</div> 
                 </div>
                 <div className={styles.paymentBtn}>
                  {isApplePay && <div className={styles.applePayBtn} onClick={()=>{setSelectedPaymentMethod('APPLE_PAY');onProceed("APPLE_PAY")}}>

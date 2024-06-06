@@ -56,7 +56,7 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index,ou
             <div className={styles.cartItemContainer}>
                 <img src={variants=== null || variants == undefined  ? image : variants?.variants?.image}></img>
                 {normalInventory<=0 ? 
-                 <div className={styles.outOfStockTxt}>{isArabic ? "غير متوفر" : "Out of stock"}</div>
+                 <div className={`${styles.outOfStockTxt} ${isArabic ? styles['outOfStockTxt-ar'] : styles['outOfStockTxt-en']}` }>{isArabic ? "غير متوفر" : "Out of stock"}</div>
                   : 
                   <div className={styles.quantityContainer}>
                     <div className={styles.quantityBtn} onClick={()=>(qty > 1) && onUpdateItem(payloadDataDecrement)}>-</div>

@@ -5,10 +5,12 @@ import { useCartItems } from '@/context/cartItems';
 import EmptyCartAnimation from './empty_bag.json'
 import Lottie from "react-lottie";
 import styles from './empty-cart.module.scss';
+import { useLanguage } from '@/context/languageDetails';
 
 export default function EmptyCart() {
     const router = useRouter();
     const {setCartItemCount={} } = useCartItems();
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
     useEffect(()=>{
         setCartItemCount(0)
@@ -24,9 +26,9 @@ export default function EmptyCart() {
             <div>
                 <Lottie options={defaultOptions}/>
             </div>
-                <div className={styles.txt}>Your cart is empty</div>
-                <div className={styles.subTxt}>You don’t have any items in your cart now start adding items to get exciting offers.</div>
-                <div className={styles.btn} onClick={()=>router.push("/")}>Continue Shopping</div>
+                <div className={styles.txt}>{isArabic ? "سلة التسوق فارغة" : "Your cart is empty"}</div>
+                <div className={styles.subTxt}>{isArabic ? "سلتك فارغة  الآن، ابدأ بإضافة منتجات  للاستفادة من العروض الرائعة" : "You don’t have any items in your cart now start adding items to get exciting offers"}.</div>
+                <div className={styles.btn} onClick={()=>router.push("/")}>{isArabic ? "استمر في التسوق" : "Continue Shopping"}</div>
             </div>
         </>
       )
