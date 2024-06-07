@@ -157,7 +157,7 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
         </div>}
        {isShowOtpDiv && <div className={styles.otpDiv}>
         <div>
-         <input type='text' placeholder='Enter OTP' onChange={(e)=>setOtp(e.target.value)} className={isArabic ? "inputOtp-ar" : ""}></input>
+         <input type='text' placeholder='Enter OTP' onChange={(e)=>setOtp(e.target.value)} style={{paddingRight : isArabic ? "8px" : "0px"}} className={isArabic ? "inputOtp-ar" : "inputOtp-en"}></input>
          {otpError && <div className={styles.otperror}>{otpError}</div>}
          </div>
         <div className={styles.btn} onClick={handleVerifyOtp}>{isArabic ? "تحقق" : "Verify"}</div>
