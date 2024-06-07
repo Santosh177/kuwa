@@ -31,6 +31,11 @@
             left: 23px;
             cursor: pointer;
         }
+        .backArrow-ar{
+            left: 0px;
+            right: 23px;
+            transform: rotate(180deg);
+        }
         .crossIcon{
             height: 22px;
             width: 22px;

@@ -61,6 +61,14 @@
             }
         }
     }
+    .trending-search-main-ar{
+        top: 78px;
+        // left: 50%;
+        right: auto;
+        transform: translate(-50%,0px);
+        width: 90%;
+        max-width: 449px;
+    }
 }
 
 @media (min-width: 990px) and (max-width: 1200px){
