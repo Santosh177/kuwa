@@ -111,7 +111,7 @@ margin-bottom: -34px;
         // justify-content: center;
         align-items: baseline;
 
-        input {
+        input{
             border-radius: 8px;
             border: 1px solid #E6E7E7;
             background: #FFF;
@@ -123,10 +123,11 @@ margin-bottom: -34px;
             padding-top: 10px;
             padding-bottom: 10px;
             padding-left: 8px;
-            &.inputOtp-ar{
-                // padding-left: 0px;
-                padding-right: 8px;
-            }
+           
+        }
+        .inputOtp-ar{
+          
+            padding-right: 8px;
         }
        
         .otperror{

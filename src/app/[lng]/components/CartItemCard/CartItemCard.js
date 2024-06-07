@@ -37,7 +37,7 @@ const CartItemCard = ({data,onUpdateItem={},onDeleteItem={},paymentPage,index,ou
                 <div className={styles.Paymentindex + " " + "."}>{index+1}</div>
                 <img src={ variants===null ? image : variants.variants.image}></img>
                 <div className={`${styles.paymentItem} ${isArabic ? styles['paymentItem-ar'] : styles['paymentItem-en'] }`}>
-                <div className={styles.PaymentitemName}>{isArabic ? productNameArabic : productName}</div>
+                <div className={`${styles.PaymentitemName} ${isArabic ? styles['PaymentitemName-ar'] : styles['PaymentitemName-en'] }`}>{isArabic ? productNameArabic : productName}</div>
                 <div className={styles.quantity}>{isArabic ? "الكمية" : "qty"}: {qty}</div>
                 </div>
                  </div>
