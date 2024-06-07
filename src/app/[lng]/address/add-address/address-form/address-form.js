@@ -203,12 +203,21 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
           console.log("emailPayload",emailPayload)
           try{
             setIsLoading(true)
-            const signUpResp = await fetch('/api/signup', {
-              method: 'POST',
-              body:JSON.stringify(emailPayload)
-            })
-            const signupRespData = await signUpResp.json();
-            if (signupRespData.status_code !== 200) {
+            // const signUpResp = await fetch('/api/signup', {
+            //   method: 'POST',
+            //   body:JSON.stringify(emailPayload)
+            // })
+            // const signupRespData = await signUpResp.json();
+            // if (signupRespData.status_code !== 200) {
+            //   setIsLoading(false)
+            //   setIsShowEmailExistPopUp(true);
+             
+            // }
+            const isExistEmail = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/exists?email=${values['email']}`);
+           
+            const res= await isExistEmail.json();
+            console.log("isExistEmail",res)
+            if(res.message == "true"){
               setIsLoading(false)
               setIsShowEmailExistPopUp(true);
              
