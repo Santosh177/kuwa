@@ -263,7 +263,7 @@ const MainCategory = ({ isDealPage }) => {
                         {isShowDotForCat && <div className={style.dot}></div>}
                         <div className={style.filter}>
                             <img src={filterDataImg} alt="" />
-                            <span>{isArabic ? "فلتر" : Filter}</span>
+                            <span>{isArabic ? "فلتر" : "Filter"}</span>
                         </div>
                     </div>
                     <div className={style.filterContainer}>
