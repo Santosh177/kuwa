@@ -12,6 +12,7 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
     )
 }
 const CustumDutyInfo = ({setIsShowCustumDutyInfoPopup})=>{
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     return(
     <div className={styles.custumDutyInfoPopupContainer}>
         <div className={styles.custumDutyInfoPopupSection}>
