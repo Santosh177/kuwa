@@ -28,20 +28,22 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
     window.location.href=`/collections?search_key=${searchQuery}`
   }
 
-  const calculateRightValue = () => {
-    if (window.innerWidth < 1200 && window.innerWidth > 990) {
-      return '91px';
-    } else {
-      return '';
-    }
-  };
+  // const calculateRightValue = () => {
+  //   if (window.innerWidth < 1200 && window.innerWidth > 990) {
+  //     return '-85px';
+  //   } else {
+  //     return '';
+  //   }
+  // };
   const style = isLogin
   ? {
-      right: isArabic ? calculateRightValue() : '173px',
+      right: isArabic ? "-86px" : '173px',
+      left: isArabic ? "0px" : "",
       paddingBottom: !isShowSeeAllBtn ? '' : '',
     }
   : {
-      left: 'unset',
+      left: isArabic ? "" : 'unset',
+      right: isArabic ? "unset" : "",
       paddingBottom: !isShowSeeAllBtn ? '' : '',
     };
     return(

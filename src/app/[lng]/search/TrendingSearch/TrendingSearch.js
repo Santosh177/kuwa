@@ -39,7 +39,7 @@ export default function TrendingSearch({ isLogin=false, isShowSeeAllBtn=true,set
     }
     return (
         <div id="trending-search"   className={`trending-search-main ${isArabic ? "trending-search-main-ar" : "trending-search-main-en"}`}
-        style={isLogin?{right: isArabic? "122px": "173px"}:{}} 
+        style={isLogin?{right: isArabic? "119px": "173px"}:{}} 
         >
             <div  className='trending-search-cont'>
                 <div  className='heading'>{isArabic ? "البحث الرائج" : "Trending search"}</div>
