@@ -27,10 +27,10 @@ const NotifyEmailPopup = ({setIsShowNotifyEmailPopup,setIsShowNotifySuccessPopup
     <div className={styles.NotifyEmailPopup}>
         <div className={styles.content}>
           <div className={styles.crossIcon} onClick={()=>setIsShowNotifyEmailPopup(false)}><img src="https://d25uasl7utydze.cloudfront.net/assets/cross_icon%20(2).svg"/></div>
-            <div className={styles.txt}>{isArabic ? "": "We will notify you when the product is back in stock"}</div>
+            <div className={styles.txt}>{isArabic ? " سنُعلمك عندما يعود المنتج إلى المخزون": "We will notify you when the product is back in stock"}</div>
             <div><input type="email" placeholder={isArabic ? "البريد الإلكتروني (مثال: abc@gmail.com)" : 'Email ID * (ex. abc@gmail.com)'} value={emailId} onChange={(e)=>setEmailId(e.target.value)} ></input>
             {error && <div className={styles.error}>{error}</div>}</div>
-            <div className={styles.btn} onClick={handleSubmit}>{isArabic ? "" : "Submit"}</div>
+            <div className={styles.btn} onClick={handleSubmit}>{isArabic ? "إرسال" : "Submit"}</div>
         </div>
 
     </div>
