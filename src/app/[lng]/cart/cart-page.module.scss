@@ -13,6 +13,8 @@
 
 }
 
+
+
 @media (max-width:990px){
     .cartPage{
         width: 90%;
@@ -102,6 +104,37 @@
         }
         .priceDetailsContainer{
             margin-top: 25px;
+        }
+        .CartPageProductCardContainer{
+            width: 100%;
+            .headerPart{
+                display: flex;
+                // justify-content: center;
+                align-items: center;
+                .arrowPart{
+                    img{
+
+                    }
+                }
+                .heading{
+                    color: #07141A;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 28px;
+                } 
+                .arrowPart{
+         display: none;
+                }
+             }
+            .cartPageProductList{
+                // width: 396px;
+                display: flex;
+                // justify-content: center;
+                align-items: center;
+                gap: 16px;
+                overflow-x: scroll;
+        }
         }
     }
 }
@@ -202,6 +235,49 @@ line-height: normal;
 margin-bottom: 10px;
                 }
             }
+            .CartPageProductCardContainer{
+                width: 396px;
+                margin-top: 20px;
+                .headerPart{
+                    display: flex;
+                    justify-content:space-between;
+                    align-items: center;
+                    .arrowPart{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .leftArrow{
+                            img{
+                                cursor: pointer;
+                            }
+                           
+                        }
+                        .rightArrow{
+                            img{
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                    .heading{
+                        color: #07141A;
+                        font-size: 18px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 28px;
+                    } 
+                    .arrowPart{
+             
+                    }
+                 }
+                 .cartPageProductList{
+                    // width: 396px;
+                    display: flex;
+                    // justify-content: center;
+                    align-items: center;
+                    gap: 16px;
+                    overflow-x: scroll;
+            }
+        }
             
         }
        
