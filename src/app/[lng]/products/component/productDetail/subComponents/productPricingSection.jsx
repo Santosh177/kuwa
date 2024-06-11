@@ -53,7 +53,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         if(window && window.TamaraProductWidget && Object.keys(tamaraConfig).length > 0 ){
             window.TamaraProductWidget.render()
         }
-    },[(typeof window !== "undefined") && window && window.TamaraProductWidget,finalPrice,currency,tamaraConfig])
+    },[(typeof window !== "undefined") && window && window.TamaraProductWidget,finalPrice,currency,tamaraConfig,noOfProduct])
 
 
     const tamaraMinAmount = tamaraConfig && Object.keys(tamaraConfig).length> 0 ? tamaraConfig&&tamaraConfig[0] && tamaraConfig[0].min_limit && tamaraConfig[0].min_limit.amount:0
@@ -269,7 +269,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
              <div
                 className="tamara-product-widget"
                 data-lang= {isArabic ? "ar" : "en"}
-                data-price={finalPrice}
+                data-price={finalPrice * noOfProduct}
                 data-currency={currency}
                 data-number-of-installments="3"
                 data-payment-type="installment"
