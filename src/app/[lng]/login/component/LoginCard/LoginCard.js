@@ -61,8 +61,7 @@ export default function Login() {
           const countryName = selectedCountry && selectedCountry.name ||  ""
           setIsLoading(false)
           if(userId){
-            console.log("bjwbjwbh")
-            window.clevertap.onUserLogin.push({
+            window.clevertap?.onUserLogin?.push({
               "Site": {
                 "Name": name,            // String
                 "Identity": userId,              // String or number

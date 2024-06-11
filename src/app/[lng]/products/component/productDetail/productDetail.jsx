@@ -733,7 +733,7 @@ const ProductDeatil = ({ productData = {} }) => {
     return (
         <div className={style.productPricingContainerOuter}>
             <div className={style.routeSection}>
-                <span onClick={() => handelRoute("home")}>{isArabic ? "" : "Home"}</span> / 
+                <span onClick={() => handelRoute("home")}>{isArabic ? "الرئيسية" : "Home"}</span> / 
                 {/* <span onClick={() => handelRoute("cat")} ></span> / */}
                 <span onClick={() => handelRoute("product")}> {isArabic ? nameArabic : name}</span>
             </div>
