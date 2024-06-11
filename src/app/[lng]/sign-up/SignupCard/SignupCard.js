@@ -100,8 +100,6 @@ export default function SignupCard() {
     const refererPath = searchParams.get('referer');
     const [pageType, setPageType] = useState(getPageType())
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
-    
     console.log("useCountry",selectedCountry)
   
     function getDeviceType() {
@@ -133,7 +131,7 @@ export default function SignupCard() {
       return window.innerWidth > 770 ? 'web' : 'mWeb';
     }
 
-      const onSignup = async(isArabic) =>{
+      const onSignup = async() =>{
         const validationErrors = validateForm(formData,isArabic);
         if (Object.keys(validationErrors).length === 0) {
        
@@ -155,7 +153,6 @@ export default function SignupCard() {
                 const email = formData.email;
                 const countryName = selectedCountry && selectedCountry.name ||  ""
                 if(userId){
-                console.log("rahul")
                   window.clevertap?.onUserLogin?.push({
                     "Site": {
                       "Name": name,            // String
@@ -170,13 +167,14 @@ export default function SignupCard() {
                     },
                     "cart_items": []
                    })
-                   window.clevertap.event.push("kuwa_user_signup_success", {
+                   window.clevertap?.event?.push("kuwa_user_signup_success", {
                     "Country":countryName,
                     "Email":email,
                     "Name": name,
                     "Phone": phone
                   });
                 }
+              
               }
               if(data && data.status_code && data.status_code == 400){
                 setErrors({email:isArabic ? "عنوان البريد الإلكتروني هذا موجود بالفعل. يرجى محاولة تسجيل الدخول" : 'This email address already exists. Please try logging in'})
