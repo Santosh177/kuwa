@@ -670,7 +670,6 @@ const ProductDeatil = ({ productData = {} }) => {
             "cartItems": cartItemPayload,
             "prepaidDiscountAmount":extraDiscount
           }
-
           payload['token'] = token;
           payload['paymentMode'] = "APPLE_PAY";
         //   trackData['Payment Type'] = 'Apple pay' || ''

@@ -247,16 +247,18 @@ margin-bottom: 10px;
                         justify-content: center;
                         align-items: center;
                         .leftArrow{
-                            img{
-                                cursor: pointer;
-                            }
+                           cursor: pointer;
                            
                         }
+                        // .leftArrow-ar{
+                        //     transform: rotate(180deg);
+                        // }
                         .rightArrow{
-                            img{
-                                cursor: pointer;
-                            }
+                            cursor: pointer;
                         }
+                        // .rightArrow-ar{
+                        //     transform: rotate(180deg);
+                        // }
                     }
                     .heading{
                         color: #07141A;

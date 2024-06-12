@@ -22,7 +22,9 @@ const CartPageProductCard = ({cardData = {}, handleAddtoProduct={},handleNotifyM
        dealTagArabic="",
         dealIconUrl="",
        dealInventory="",
-       currency=""
+       currency="",
+      productImage
+
         } = cardData
         
     const btnName = productAvailableQuantity > 0 ? ( isArabic ? "أضف إلى السلة" : "Add to cart") : (isArabic ? "اعلمني " : "Notify me")
@@ -40,12 +42,12 @@ const CartPageProductCard = ({cardData = {}, handleAddtoProduct={},handleNotifyM
                     </div>}
                  {productAvailableQuantity <= 0 && <div className={styles.outOfStockTxt}>{isArabic ? "غير متوفر" :"Out of stock"}</div>}
 
-                <div className={styles.productImage}><img src="https://dcngmd8umaj1u.cloudfront.net/01B_1707810446957.jpg"/></div>
+                <div className={styles.productImage}><img src={productImage}/></div>
                 <div className={styles.productInfo}>
-                   {dealInventory && <div className={styles.dealInventory}>{(dealInventory+ " " + (isArabic ? "المتبقي في المخزون" : "left in stock"))}</div>}
+                    <div className={styles.dealInventory}>{dealInventory ? (dealInventory+ " " + (isArabic ? "المتبقي في المخزون" : "left in stock")) : ""}</div>
                     <div className={styles.cartProductName}>{isArabic ? productNameArabic : productName} </div>
                     <div className={styles.productPriceInfo}>
-                        <div className={styles.discount}><span>{isArabic ?  "" :  "Save"}</span> { currency + " " + productDiscount}</div>
+                        <div className={styles.discount} style={{ opacity: productDiscount > 0 ? 1 : 0 }}><span>{ isArabic ?  "حفظ" :  "Save"}</span> { currency + " " + productDiscount}</div>
                         <div className={styles.finalPrice}>{currency + " " + productFinalPrice}
                         <span className={styles.retailPrice}>{currency + " " + productListPrice}</span></div>
                     </div>

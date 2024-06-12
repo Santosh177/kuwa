@@ -58,143 +58,10 @@ export default  function Cart({cartData}) {
     const [nonloginProductId,setNonLoginProductId] = useState("");
     const [nonLoginVariantId,setNonLoginVariantId] = useState("");
     const emailAddress = userData && userData.emailAddress;
-    const [leftArrow, setLeftArrow] = useState("https://d25uasl7utydze.cloudfront.net/assets/inactive_right%20arrow-1.svg");
-    const [rightArrow, setRightArrow] = useState("https://d25uasl7utydze.cloudfront.net/assets/active_right%20arrow.svg");
+    const [leftArrow, setLeftArrow] = useState(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/inactive_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/inactive_left_arrow.svg");
+    const [rightArrow, setRightArrow] = useState(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/active_left_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/active_right_arrow.svg");
 
-    const [cartProducts,setCartProducts] = useState([{"cartPageId": 1,
-  "currency": "USD",
-  "rank": 10,
-  "productId": 8131249900066,
-  "productName": "Sample Product",
-  "productNameArabic": "منتج عينة",
-  "productAvailableQuantity": 0,
-  "productListPrice": 100.0,
-  "productFinalPrice": 80.0,
-  "productDiscount": 20.0,
-  "variantId": 987654321,
-  "variantName": "Sample Variant",
-  "variantImage": "http://example.com/image.jpg",
-  "variantListPrice": 90.0,
-  "variantFinalPrice": 70.0,
-  "variantDiscount": 20.0,
-  "dealId": 5678,
-  "dealTag": "Special Offer",
-  "dealTagArabic": "عرض خاص",
-  "dealHeading": "Huge Discount",
-  "dealHeadingArabic": "خصم كبير",
-  "isDealActive": true,
-  "isTimerActive": true,
-  "dealIconUrl": "https://dcngmd8umaj1u.cloudfront.net/fireIcon_1708274204839.svg",
-  "countDownStartsAt": "2024-06-01T00:00:00Z",
-  "countDownEndsAt": "2024-06-30T23:59:59Z",
-  "currentTimerValue": "00:00:00",
-  "currentTimerStatus": "in-between",
-  "currentDateTime": "2024-05-30T12:00:00Z",
-  "dealInventory": 100,
-  "dealListPrice": 150.0,
-  "dealFinalPrice": 120.0,
-  "dealDiscountPrice": 30.0},
-
-  {"cartPageId": 1,
-    "currency": "USD",
-    "rank": 10,
-    "productId": 8131249900066,
-    "productName": "Sample Product",
-    "productNameArabic": "منتج عينة",
-    "productAvailableQuantity": 0,
-    "productListPrice": 100.0,
-    "productFinalPrice": 80.0,
-    "productDiscount": 20.0,
-    "variantId": 987654321,
-    "variantName": "Sample Variant",
-    "variantImage": "http://example.com/image.jpg",
-    "variantListPrice": 90.0,
-    "variantFinalPrice": 70.0,
-    "variantDiscount": 20.0,
-    "dealId": 5678,
-    "dealTag": "Special Offer",
-    "dealTagArabic": "عرض خاص",
-    "dealHeading": "Huge Discount",
-    "dealHeadingArabic": "خصم كبير",
-    "isDealActive": true,
-    "isTimerActive": true,
-    "dealIconUrl": "https://dcngmd8umaj1u.cloudfront.net/fireIcon_1708274204839.svg",
-    "countDownStartsAt": "2024-06-01T00:00:00Z",
-    "countDownEndsAt": "2024-06-30T23:59:59Z",
-    "currentTimerValue": "00:00:00",
-    "currentTimerStatus": "in-between",
-    "currentDateTime": "2024-05-30T12:00:00Z",
-    "dealInventory": 100,
-    "dealListPrice": 150.0,
-    "dealFinalPrice": 120.0,
-    "dealDiscountPrice": 30.0},
-    {"cartPageId": 1,
-      "currency": "USD",
-      "rank": 10,
-      "productId": 8131249900066,
-      "productName": "Sample Product",
-      "productNameArabic": "منتج عينة",
-      "productAvailableQuantity": 0,
-      "productListPrice": 100.0,
-      "productFinalPrice": 80.0,
-      "productDiscount": 20.0,
-      "variantId": 987654321,
-      "variantName": "Sample Variant",
-      "variantImage": "http://example.com/image.jpg",
-      "variantListPrice": 90.0,
-      "variantFinalPrice": 70.0,
-      "variantDiscount": 20.0,
-      "dealId": 5678,
-      "dealTag": "Special Offer",
-      "dealTagArabic": "عرض خاص",
-      "dealHeading": "Huge Discount",
-      "dealHeadingArabic": "خصم كبير",
-      "isDealActive": true,
-      "isTimerActive": true,
-      "dealIconUrl": "https://dcngmd8umaj1u.cloudfront.net/fireIcon_1708274204839.svg",
-      "countDownStartsAt": "2024-06-01T00:00:00Z",
-      "countDownEndsAt": "2024-06-30T23:59:59Z",
-      "currentTimerValue": "00:00:00",
-      "currentTimerStatus": "in-between",
-      "currentDateTime": "2024-05-30T12:00:00Z",
-      "dealInventory": 100,
-      "dealListPrice": 150.0,
-      "dealFinalPrice": 120.0,
-      "dealDiscountPrice": 30.0},
-      {"cartPageId": 1,
-        "currency": "USD",
-        "rank": 10,
-        "productId": 8131249900066,
-        "productName": "Sample Product",
-        "productNameArabic": "منتج عينة",
-        "productAvailableQuantity": 0,
-        "productListPrice": 100.0,
-        "productFinalPrice": 80.0,
-        "productDiscount": 20.0,
-        "variantId": 987654321,
-        "variantName": "Sample Variant",
-        "variantImage": "http://example.com/image.jpg",
-        "variantListPrice": 90.0,
-        "variantFinalPrice": 70.0,
-        "variantDiscount": 20.0,
-        "dealId": 5678,
-        "dealTag": "Special Offer",
-        "dealTagArabic": "عرض خاص",
-        "dealHeading": "Huge Discount",
-        "dealHeadingArabic": "خصم كبير",
-        "isDealActive": true,
-        "isTimerActive": true,
-        "dealIconUrl": "https://dcngmd8umaj1u.cloudfront.net/fireIcon_1708274204839.svg",
-        "countDownStartsAt": "2024-06-01T00:00:00Z",
-        "countDownEndsAt": "2024-06-30T23:59:59Z",
-        "currentTimerValue": "00:00:00",
-        "currentTimerStatus": "in-between",
-        "currentDateTime": "2024-05-30T12:00:00Z",
-        "dealInventory": 100,
-        "dealListPrice": 150.0,
-        "dealFinalPrice": 120.0,
-        "dealDiscountPrice": 30.0}
-      ])
+    const [cartProducts,setCartProducts] = useState([])
 
     let appleSession;
 
@@ -464,6 +331,37 @@ export default  function Cart({cartData}) {
       priceDetailsContainer.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     }
 
+    const getCartPageProducts = async() => {
+      try{
+        setIsLoading(true)
+        const getCartPageProducts  =  await fetch('/api/get-cart-page-products', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        if(getCartPageProducts.status == 200){
+          setIsLoading(false)
+          const cartPageProducts = await getCartPageProducts.json();
+          setCartProducts(cartPageProducts)
+          console.log("cartPageProducts",cartPageProducts)
+        }
+        else{
+          setIsLoading(false)
+          console.log("error to fetch the data")
+        }
+       
+      }
+      catch(error){
+        setIsLoading(false)
+        console.log("error",error)
+      }
+     
+    }
+    useEffect(()=>{
+      getCartPageProducts()
+    },[])
+
     const handleNonLogin = (id,variantId)=>{
       console.log("id, variantId", id, variantId);
        setIsShowNotifyEmailPopup(true);
@@ -547,28 +445,30 @@ export default  function Cart({cartData}) {
 
     }
     const checkArrows = () => {
-      if (productScroll.current.scrollLeft <= 0) {
-        setLeftArrow("https://d25uasl7utydze.cloudfront.net/assets/inactive_right%20arrow-1.svg");
+      if (isArabic ? productScroll.current.scrollLeft >= 0 : productScroll.current.scrollLeft <= 0) {
+        console.log("leftInactive")
+        setLeftArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/inactive_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/inactive_left_arrow.svg");
       } else {
-        setLeftArrow("https://d25uasl7utydze.cloudfront.net/assets/active_right%20arrow-1.svg");
+        console.log("rightInactive")
+       setLeftArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/active_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/active_right%20arrow-1.svg");
       }
-  
-      if (productScroll.current.scrollLeft + productScroll.current.clientWidth >= productScroll.current.scrollWidth) {
-        setRightArrow("https://d25uasl7utydze.cloudfront.net/assets/inactive_right%20arrow.svg");
+      console.log("width",productScroll.current.scrollLeft,productScroll.current.clientWidth,productScroll.current.scrollWidth)
+      if (isArabic ? productScroll.current.scrollLeft + productScroll.current.scrollWidth > productScroll.current.clientWidth : productScroll.current.scrollLeft + productScroll.current.clientWidth >= productScroll.current.scrollWidth) {
+        setRightArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/active_left_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/inactive_right_arrow.svg");
       } else {
-        setRightArrow("https://d25uasl7utydze.cloudfront.net/assets/active_right%20arrow.svg");
+        setRightArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/inactive_left_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/active_right_arrow.svg");
       }
     };
   
     useEffect(() => {
       checkArrows();
-    }, []);
+    }, [cartProducts]);
     const handleLeft = () =>{
-      productScroll.current.scrollLeft+=-138;
+      productScroll.current.scrollLeft+=-154;
       checkArrows();
     }
     const handleRight = () =>{
-      productScroll.current.scrollLeft+=138;
+      productScroll.current.scrollLeft+=154;
       checkArrows();
     }
 
@@ -877,6 +777,8 @@ export default  function Cart({cartData}) {
     const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
     const colorPerc = `${(207 * progressBarColor)/100}px`
 
+    const cartPageProductSHeading = isArabic ? cartProducts[0]?.cartPageHeadingArabic : cartProducts[0]?.cartPageHeading
+
     const activeProgressBar={
       width:colorPerc,
       height:"4px",
@@ -922,14 +824,14 @@ export default  function Cart({cartData}) {
             </div>
             <div className={styles.CartPageProductCardContainer}>
             <div className={styles.headerPart}>
-            <div className={styles.heading}>Daily Must-Have</div>
+            <div className={styles.heading}>{cartPageProductSHeading}</div>
             <div className={styles.arrowPart}>
-              <div className={styles.leftArrow} onClick={handleLeft}><img src={leftArrow}/></div><br/>
-              <div className={styles.rightArrow} onClick={handleRight}><img src={rightArrow}/></div>
+              <div className={`${styles.leftArrow} ${isArabic ? styles['leftArrow-ar'] : styles['leftArrow-en']}`} onClick={isArabic ? handleRight : handleLeft  }><img src={leftArrow}/></div><br/>
+              <div className={`${styles.rightArrow} ${isArabic ? styles['rightArrow-ar'] : styles['rightArrow-en']}`} onClick={isArabic ? handleLeft : handleRight}><img src={rightArrow}/></div>
             </div>
           </div>
          <div className={styles.cartPageProductList} ref={productScroll}>
-        { cartProducts.map((data,index)=>{ 
+        { cartProducts &&  cartProducts?.map((data,index)=>{ 
 
 const {
   cartPageId = "",
@@ -942,6 +844,7 @@ const {
   productListPrice = 0.0,
   productFinalPrice = 0.0,
   productDiscount = 0.0,
+  productImage="",
   variantId = "",
   variantName = "",
   variantImage = "",
@@ -984,7 +887,8 @@ if(variantId){
       "dealTagArabic":dealTagArabic,
       "dealIconUrl":dealIconUrl,
       "dealInventory":dealInventory,
-      "currency":currency
+      "currency":currency,
+      "productImage":variantImage
       }
   }
   else{
@@ -997,7 +901,8 @@ if(variantId){
     "productFinalPrice":variantFinalPrice,
     "productDiscount":variantDiscount,
     "variantId":variantId,
-    "currency":currency
+    "currency":currency,
+    "productImage":variantImage
 
     }
   }
@@ -1018,7 +923,8 @@ else{
       "dealTagArabic":dealTagArabic,
       "dealIconUrl":dealIconUrl,
       "dealInventory":dealInventory,
-      "currency":currency
+      "currency":currency,
+      "productImage":productImage
 
       }
   }
@@ -1031,9 +937,50 @@ else{
       "productListPrice":productListPrice,
       "productFinalPrice":productFinalPrice,
       "productDiscount":productDiscount,
-      "currency":currency
+      "currency":currency,
+      "productImage":productImage
 
       }
+  }
+}
+
+let cardPayloadData = {}
+if(variantId){
+if(dealId && isDealActive && isTimerActive && currentTimerStatus == "in-between" ){
+  cardPayloadData={
+    product:productId,
+    quantity:1,
+    dealId,
+    variantId,
+    isVariant:true
+  }
+}
+else{
+  cardPayloadData={
+    product:productId,
+    quantity:1,
+    dealId,
+    isVariant:true
+  }
+}
+}
+else{
+  if(dealId && isDealActive && isTimerActive && currentTimerStatus == "in-between" ){
+    cardPayloadData={
+      product:productId,
+      quantity:1,
+      dealId,
+      isVariant:false,
+      variantId:null
+    }
+  }
+  else{
+    cardPayloadData={
+      product:productId,
+      quantity:1,
+      isVariant:false,
+      variantId:null
+    }
   }
 }
 
@@ -1041,7 +988,7 @@ else{
        
          
           return( 
-            <CartPageProductCard key={index} cardData = {cardData} handleAddtoProduct={()=>handleAddtoProduct({ product:productId, quantity: 1,})} handleNotifyMe={()=>handleNotifyMe(productId)} handleNonLogin={()=>handleNonLogin(productId)} />
+            <CartPageProductCard key={index} cardData = {cardData} handleAddtoProduct={()=>handleAddtoProduct(cardPayloadData)} handleNotifyMe={()=>handleNotifyMe(productId)} handleNonLogin={()=>handleNonLogin(productId)} />
           )})
         
            
