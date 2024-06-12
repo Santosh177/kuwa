@@ -1,0 +1,131 @@
+ .cartPageProductCard{
+            display: flex;
+    flex-direction: column;
+    // align-items: center;
+    justify-content: center;
+            width: 138px;
+            border-radius: 4px;
+            background: #FFF;
+            box-shadow: 0px 12px 12px 0px rgba(36, 122, 129, 0.08);
+            margin-top: 12px;
+            padding-bottom: 2px;
+            position: relative;
+            .tagSection{
+                height: 16px;
+                font-size: 8px;
+                position: absolute;
+                top: 0;
+                left: 0;
+              .tagDiv{
+                padding: 4px 6px;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    align-items: center;
+    background-color: #2e7cf6;
+    border-radius: 6px;
+    
+                img{
+                    width: 12px;
+                    height: 12px;
+                }
+                .tagTxt{
+                    color: #FFF;
+                }
+              }  
+            }
+            .outOfStockTxt{
+                width: 138px;
+                font-size: 12px;
+                padding: 8px 10px;
+                font-weight: 500;
+    position: absolute;
+    top: 55px;
+    color: #ce4224;
+    border-radius: 8px;
+    background: #fff;
+    text-align: center;
+            }
+            .productImage{
+                img{
+                    height: 120px;
+                    width: 138px;
+                    object-fit: contain;
+                }
+            }
+                .productInfo{
+                    margin-top: 5px;
+                    padding-left: 8px;
+                    padding-right: 8px;
+                    .dealInventory{
+                        height: 15px;
+                        color: #ce4224;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                    }
+                  .cartProductName{
+                    color: #07141A;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    height: 46px;
+                    line-height: normal;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    white-space: normal;
+                    overflow: hidden;
+                  } 
+                  .productPriceInfo{
+                    .discount{
+                        span{
+                            font-weight: 600;
+                        }
+                        width: 76px;
+                        padding: 2px 6px;
+                        background-color: #CE4224;
+                        color: #FFF;
+                        font-size: 10px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: normal;
+                        border-radius: 4px;
+                        margin-top: 2px;
+                    }
+                  
+                    .finalPrice{
+                        margin-top: 2px;
+                        color: #07141A;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: normal;
+                        .retailPrice{
+                            margin-left: 4px;
+                            color: #A0A0A0;
+                            font-size: 10px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: normal;
+                           text-decoration: line-through;
+                        }
+                    }
+                  } 
+                }
+                
+                .btn{
+                    margin: 2px 8px;
+                    color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+border-radius: 4px;
+background: #247A81;
+padding: 4px 27px;
+                cursor: pointer;
+            }
+        }
+    

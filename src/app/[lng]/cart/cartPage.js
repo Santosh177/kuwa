@@ -26,6 +26,11 @@ import OutOfStockProductsPopUp from "../components/OutOfStockProductsPopUp/OutOf
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { mixPanelTrackEvent } from "../../[lng]/page.js";
 import { useLanguage } from "@/context/languageDetails";
+import CartPageProductCard from "../components/CartPageProductCard/CartPageProductCard";
+import { addToCart } from "@/services";
+import NotifyEmailPopup from "../components/NotifyEmailPopup/NotifyEmailPopup";
+import NotifySuccessPopup from "../components/NotifySuccessPopup/NotifySuccessPopup";
+
 export default  function Cart({cartData}) {
     console.log("to check")
     const router = useRouter();
@@ -46,6 +51,17 @@ export default  function Cart({cartData}) {
     const [outOfStockProducts,setOutOfStockProducts] = useState([]);
     const [IsShowOutOfStockProductsPopUp,setIsShowOutOfStockProductsPopUp] = useState(false);
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
+    const [isShowNotifySuccessPopup, setIsShowNotifySuccessPopup] = useState(false);
+    const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
+    const [emailId,setEmailId] = useState("")
+    const [nonloginProductId,setNonLoginProductId] = useState("");
+    const [nonLoginVariantId,setNonLoginVariantId] = useState("");
+    const emailAddress = userData && userData.emailAddress;
+    const [leftArrow, setLeftArrow] = useState(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/inactive_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/inactive_left_arrow.svg");
+    const [rightArrow, setRightArrow] = useState(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/active_left_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/active_right_arrow.svg");
+
+    const [cartProducts,setCartProducts] = useState([])
 
     let appleSession;
 
@@ -162,7 +178,7 @@ export default  function Cart({cartData}) {
 
       }
 
-    },[cartItems,]);
+    },[cartItems]);
 
     function getDeviceType() {
       if (isMobile) {
@@ -310,9 +326,152 @@ export default  function Cart({cartData}) {
     }
      
     const priceDetailsContainer = useRef();
+    const productScroll = useRef();
     const showViewDetails = ()=>{
       priceDetailsContainer.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     }
+
+    const getCartPageProducts = async() => {
+      try{
+        setIsLoading(true)
+        const getCartPageProducts  =  await fetch('/api/get-cart-page-products', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        if(getCartPageProducts.status == 200){
+          setIsLoading(false)
+          const cartPageProducts = await getCartPageProducts.json();
+          setCartProducts(cartPageProducts)
+          console.log("cartPageProducts",cartPageProducts)
+        }
+        else{
+          setIsLoading(false)
+          console.log("error to fetch the data")
+        }
+       
+      }
+      catch(error){
+        setIsLoading(false)
+        console.log("error",error)
+      }
+     
+    }
+    useEffect(()=>{
+      getCartPageProducts()
+    },[])
+
+    const handleNonLogin = (id,variantId)=>{
+      console.log("id, variantId", id, variantId);
+       setIsShowNotifyEmailPopup(true);
+       setNonLoginProductId(id);
+       setNonLoginVariantId(variantId);
+    }
+    
+    const handleNotify = async() =>{
+      const payload={
+           productId:nonloginProductId|| null,
+           variantId:nonLoginVariantId || null,
+           email: emailId 
+         }
+         try {
+          setIsLoading(true)
+           const res = await fetch(`/api/out-of-stock`, {
+             method: 'POST',
+             headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(payload),
+           });
+           if(res.status == 200){
+            setIsLoading(false)
+             setIsShowNotifySuccessPopup(true);
+           }
+           else{
+            setIsLoading(false)
+            console.log(error)
+           }
+           
+           
+         } catch (error) {
+          setIsLoading(false)
+           console.error('Error:', error);
+         }
+       }
+    
+       const handleNotifyMe = async(productId, variantId)=>{
+        console.log("variantId",variantId)
+        const payload={
+          productId:productId || null,
+          variantId:variantId || null,
+          email: emailAddress 
+        }
+        try {
+          setIsLoading(true)
+          const res = await fetch(`/api/out-of-stock`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+          if(res.status == 200){
+            setIsLoading(false)
+            setIsShowNotifySuccessPopup(true);
+          }
+          else{
+            setIsLoading(true)
+            console.log(error)
+          }
+         
+          
+        } catch (error) {
+          setIsLoading(false)
+          console.error('Error:', error);
+        }
+      }
+
+    const handleAddtoProduct = async(data)=>{
+      try{
+        setIsLoading(false)
+        const cardData =await addToCart(data)
+        window.location.reload();
+      }
+      catch{
+
+      }
+     
+
+    }
+    const checkArrows = () => {
+      if (isArabic ? productScroll.current.scrollLeft >= 0 : productScroll.current.scrollLeft <= 0) {
+        console.log("leftInactive")
+        setLeftArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/inactive_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/inactive_left_arrow.svg");
+      } else {
+        console.log("rightInactive")
+       setLeftArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/active_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/active_right%20arrow-1.svg");
+      }
+      console.log("width",productScroll.current.scrollLeft,productScroll.current.clientWidth,productScroll.current.scrollWidth)
+      if (isArabic ? productScroll.current.scrollLeft + productScroll.current.scrollWidth > productScroll.current.clientWidth : productScroll.current.scrollLeft + productScroll.current.clientWidth >= productScroll.current.scrollWidth) {
+        setRightArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/active_left_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/inactive_right_arrow.svg");
+      } else {
+        setRightArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/inactive_left_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/active_right_arrow.svg");
+      }
+    };
+  
+    useEffect(() => {
+      checkArrows();
+    }, [cartProducts]);
+    const handleLeft = () =>{
+      productScroll.current.scrollLeft+=-154;
+      checkArrows();
+    }
+    const handleRight = () =>{
+      productScroll.current.scrollLeft+=154;
+      checkArrows();
+    }
+
   
     const onHandleApplePay = () => {
       // console.log("userDatauserData",userData)
@@ -618,6 +777,8 @@ export default  function Cart({cartData}) {
     const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
     const colorPerc = `${(207 * progressBarColor)/100}px`
 
+    const cartPageProductSHeading = isArabic ? cartProducts[0]?.cartPageHeadingArabic : cartProducts[0]?.cartPageHeading
+
     const activeProgressBar={
       width:colorPerc,
       height:"4px",
@@ -661,6 +822,182 @@ export default  function Cart({cartData}) {
               </div>
               <div className={styles.btn} onClick={redirectAllProduct}>{isArabic ? "إضافة" : "Add"}</div>
             </div>
+            <div className={styles.CartPageProductCardContainer}>
+            <div className={styles.headerPart}>
+            <div className={styles.heading}>{cartPageProductSHeading}</div>
+            <div className={styles.arrowPart}>
+              <div className={`${styles.leftArrow} ${isArabic ? styles['leftArrow-ar'] : styles['leftArrow-en']}`} onClick={isArabic ? handleRight : handleLeft  }><img src={leftArrow}/></div><br/>
+              <div className={`${styles.rightArrow} ${isArabic ? styles['rightArrow-ar'] : styles['rightArrow-en']}`} onClick={isArabic ? handleLeft : handleRight}><img src={rightArrow}/></div>
+            </div>
+          </div>
+         <div className={styles.cartPageProductList} ref={productScroll}>
+        { cartProducts &&  cartProducts?.map((data,index)=>{ 
+
+const {
+  cartPageId = "",
+  currency = "",
+  rank = 0,
+  productId = "",
+  productName = "",
+  productNameArabic = "",
+  productAvailableQuantity = 0,
+  productListPrice = 0.0,
+  productFinalPrice = 0.0,
+  productDiscount = 0.0,
+  productImage="",
+  variantId = "",
+  variantName = "",
+  variantImage = "",
+  variantListPrice = 0.0,
+  variantFinalPrice = 0.0,
+  variantDiscount = 0.0,
+  dealId = "",
+  dealTag = "",
+  dealTagArabic = "",
+  dealHeading = "",
+  dealHeadingArabic = "",
+  isDealActive = false,
+  isTimerActive = false,
+  dealIconUrl = "",
+  countDownStartsAt = "",
+  countDownEndsAt = "",
+  currentTimerValue = "",
+  currentTimerStatus = "",
+  currentDateTime = "",
+  dealInventory = 0,
+  dealListPrice = 0.0,
+  dealFinalPrice = 0.0,
+  dealDiscountPrice = 0.0
+} = data 
+
+let cardData = {};
+if(variantId){
+  if(dealId && isDealActive && isTimerActive && currentTimerStatus == "in-between" ){
+    cardData={
+      "productId":productId,
+      "productName":productName,
+      "productNameArabic":productNameArabic,
+      "productAvailableQuantity":productAvailableQuantity,
+      "productListPrice":dealListPrice,
+      "productFinalPrice":dealFinalPrice,
+      "productDiscount":dealDiscountPrice,
+      "variantId":variantId,
+      "dealId":dealId,
+      "dealTag":dealTag,
+      "dealTagArabic":dealTagArabic,
+      "dealIconUrl":dealIconUrl,
+      "dealInventory":dealInventory,
+      "currency":currency,
+      "productImage":variantImage
+      }
+  }
+  else{
+    cardData={
+    "productId":productId,
+    "productName":productName,
+    "productNameArabic":productNameArabic,
+    "productAvailableQuantity":productAvailableQuantity,
+    "productListPrice":variantListPrice,
+    "productFinalPrice":variantFinalPrice,
+    "productDiscount":variantDiscount,
+    "variantId":variantId,
+    "currency":currency,
+    "productImage":variantImage
+
+    }
+  }
+}
+else{
+  if(dealId && isDealActive && isTimerActive && currentTimerStatus == "in-between" ){
+    cardData={
+      "productId":productId,
+      "productName":productName,
+      "productNameArabic":productNameArabic,
+      "productAvailableQuantity":productAvailableQuantity,
+      "productListPrice":dealListPrice,
+      "productFinalPrice":dealFinalPrice,
+      "productDiscount":dealDiscountPrice,
+      "variantId":variantId,
+      "dealId":dealId,
+      "dealTag":dealTag,
+      "dealTagArabic":dealTagArabic,
+      "dealIconUrl":dealIconUrl,
+      "dealInventory":dealInventory,
+      "currency":currency,
+      "productImage":productImage
+
+      }
+  }
+  else{
+    cardData={
+      "productId":productId,
+      "productName":productName,
+      "productNameArabic":productNameArabic,
+      "productAvailableQuantity":productAvailableQuantity,
+      "productListPrice":productListPrice,
+      "productFinalPrice":productFinalPrice,
+      "productDiscount":productDiscount,
+      "currency":currency,
+      "productImage":productImage
+
+      }
+  }
+}
+
+let cardPayloadData = {}
+if(variantId){
+if(dealId && isDealActive && isTimerActive && currentTimerStatus == "in-between" ){
+  cardPayloadData={
+    product:productId,
+    quantity:1,
+    dealId,
+    variantId,
+    isVariant:true
+  }
+}
+else{
+  cardPayloadData={
+    product:productId,
+    quantity:1,
+    dealId,
+    isVariant:true
+  }
+}
+}
+else{
+  if(dealId && isDealActive && isTimerActive && currentTimerStatus == "in-between" ){
+    cardPayloadData={
+      product:productId,
+      quantity:1,
+      dealId,
+      isVariant:false,
+      variantId:null
+    }
+  }
+  else{
+    cardPayloadData={
+      product:productId,
+      quantity:1,
+      isVariant:false,
+      variantId:null
+    }
+  }
+}
+
+ 
+       
+         
+          return( 
+            <CartPageProductCard key={index} cardData = {cardData} handleAddtoProduct={()=>handleAddtoProduct(cardPayloadData)} handleNotifyMe={()=>handleNotifyMe(productId)} handleNonLogin={()=>handleNonLogin(productId)} />
+          )})
+        
+           
+          } 
+          </div>
+        
+        
+             
+            </div>
             </div>
             <div className={styles.priceDetailsContainer}>
               {/* <div className={styles.headerTxt}>Price Details</div> */}
@@ -672,6 +1009,8 @@ export default  function Cart({cartData}) {
           </div>
         {isAllOutOfStockProducts ? <PaymentFooterBtn isAllOutOfStockProducts={isAllOutOfStockProducts}  btnName={isArabic ? "استمر في التسوق" : "Continue shopping"} onProceed={()=>window.location.href="./"} /> :  <PaymentFooterBtn showViewDetails={showViewDetails} isApplePaySession={isApplePaySession} btnName={isArabic ? "المتابعة إلى الدفع" : "Proceed To Checkout"} totalPrice={totalPrice} onHandleApplePay={()=>onHandleApplePay()} onProceed={onProceed} prePaidDiscount={prePaidDiscount} />}
          {IsShowOutOfStockProductsPopUp &&  <OutOfStockProductsPopUp outOfStockProducts={outOfStockProducts} setIsShowOutOfStockProductsPopUp={setIsShowOutOfStockProductsPopUp} haveAddress={haveAddress}/>}
+         <div className={styles.NotifySuccessPopup}>{isShowNotifySuccessPopup && <NotifySuccessPopup setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}/>}</div>
+         <div>{isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}  emailId={emailId} setEmailId={setEmailId} handleNotify={handleNotify}/>}</div>
           <Loader isShow={isLoading}/>
         </>
       )
