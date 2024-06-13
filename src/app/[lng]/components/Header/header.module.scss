@@ -141,7 +141,10 @@
                 font-size: 12px;
                 color: #FFFFFF;
                 padding-left: 6px;
-
+                &.countryTxt-ar{
+                    padding-left: 0px;
+                    padding-right: 6px;
+                    }
                 span {
                     display: block;
                     color: #F6F3EF;
@@ -448,6 +451,10 @@
                     font-size: 12px;
                     color: #FFFFFF;
                     padding-left: 6px;
+                    &.countryTxt-ar{
+                    padding-left: 0px;
+                    padding-right: 6px;
+                    }
     
                     span {
                         display: hidden;

@@ -410,7 +410,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                         <div className={styles.countryImg}>
                             <img src={selectedCountry.flagIcon} alt='country-img'/>
                         </div>
-                        <div className={styles.countryTxt}> <span>{isArabic ? "البلد": "Country"}</span>{isArabic ? selectedCountry.shortNameArabic : selectedCountry.shortName}</div>
+                        <div className={`${styles.countryTxt} ${isArabic ? styles['countryTxt-ar'] : styles['countryTxt-en']}` }> <span>{isArabic ? "البلد": "Country"}</span>{isArabic ? selectedCountry.shortNameArabic : selectedCountry.shortName}</div>
                         <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown_icon_country.png' alt='drop-down-icon'/>
                     </div>
                     {/* <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
