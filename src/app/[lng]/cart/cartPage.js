@@ -960,7 +960,8 @@ else{
     product:productId,
     quantity:1,
     dealId,
-    isVariant:true
+    isVariant:true,
+    variantId
   }
 }
 }
