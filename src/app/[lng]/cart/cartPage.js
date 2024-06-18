@@ -445,15 +445,14 @@ export default  function Cart({cartData}) {
 
     }
     const checkArrows = () => {
-      if (isArabic ? productScroll.current.scrollLeft >= 0 : productScroll.current.scrollLeft <= 0) {
+      if (isArabic ? productScroll?.current?.scrollLeft >= 0 : productScroll?.current?.scrollLeft <= 0) {
         console.log("leftInactive")
         setLeftArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/inactive_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/inactive_left_arrow.svg");
       } else {
         console.log("rightInactive")
        setLeftArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/active_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/active_right%20arrow-1.svg");
       }
-      console.log("width",productScroll.current.scrollLeft,productScroll.current.clientWidth,productScroll.current.scrollWidth)
-      if (isArabic ? productScroll.current.scrollLeft + productScroll.current.scrollWidth > productScroll.current.clientWidth : productScroll.current.scrollLeft + productScroll.current.clientWidth >= productScroll.current.scrollWidth) {
+      if (isArabic ? productScroll?.current?.scrollLeft + productScroll?.current?.scrollWidth > productScroll?.current?.clientWidth : productScroll?.current?.scrollLeft + productScroll?.current?.clientWidth >= productScroll?.current?.scrollWidth) {
         setRightArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/active_left_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/inactive_right_arrow.svg");
       } else {
         setRightArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/inactive_left_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/active_right_arrow.svg");
@@ -822,7 +821,8 @@ export default  function Cart({cartData}) {
               </div>
               <div className={styles.btn} onClick={redirectAllProduct}>{isArabic ? "إضافة" : "Add"}</div>
             </div>
-            <div className={styles.CartPageProductCardContainer}>
+
+            {cartProducts && cartProducts .length > 0 && <div className={styles.CartPageProductCardContainer}>
             <div className={styles.headerPart}>
             <div className={styles.heading}>{cartPageProductSHeading}</div>
             <div className={styles.arrowPart}>
@@ -997,8 +997,10 @@ else{
         
         
              
+            </div>}
+
             </div>
-            </div>
+
             <div className={styles.priceDetailsContainer}>
               {/* <div className={styles.headerTxt}>Price Details</div> */}
               <div className={styles.priceInfo} ref={priceDetailsContainer}>
