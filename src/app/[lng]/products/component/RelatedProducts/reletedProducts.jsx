@@ -11,6 +11,10 @@ import useCleverTapEvents from "@/hooks/useCleverTapEvents"
 import { mixPanelTrackEvent } from "@/app/[lng]/page"
 import { useAuth } from "@/context/userDetail"
 import { useLanguage } from "@/context/languageDetails"
+import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmailPopup"
+import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/NotifySuccessPopup"
+
+
 
 
 const RelatedProducts = ({ productData = {} }) => {
@@ -22,6 +26,15 @@ const RelatedProducts = ({ productData = {} }) => {
     const { isLogin=false ,userData = {}} = useAuth();
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
+
+    
+    const [emailId,setEmailId] = useState("")
+    const [nonloginProductId,setNonLoginProductId] = useState("");
+    const [nonLoginVariantId,setNonLoginVariantId] = useState("");
+    const [isShowNotifySuccessPopup, setIsShowNotifySuccessPopup] = useState(false);
+    const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
+
+    const emailAddress = userData && userData.emailAddress;
     let trackData={}
     const onAddToCart = async (data) => {
         const trackingData = {
@@ -48,6 +61,77 @@ const RelatedProducts = ({ productData = {} }) => {
     const handelArrow = (shift) =>{
         leftArrow.current.scrollLeft += shift;
     }
+
+    const handleNonLogin = (id,variantId)=>{
+        console.log("id, variantId", id, variantId);
+         setIsShowNotifyEmailPopup(true);
+         setNonLoginProductId(id);
+         setNonLoginVariantId(variantId);
+      }
+      
+      const handleNotify = async() =>{
+        const payload={
+             productId:nonloginProductId|| null,
+             variantId:nonLoginVariantId || null,
+             email: emailId 
+           }
+           try {
+            setIsLoading(true)
+             const res = await fetch(`/api/out-of-stock`, {
+               method: 'POST',
+               headers: {
+                 'Content-Type': 'application/json',
+               },
+               body: JSON.stringify(payload),
+             });
+             if(res.status == 200){
+              setIsLoading(false)
+               setIsShowNotifySuccessPopup(true);
+             }
+             else{
+              setIsLoading(false)
+              console.log(error)
+             }
+             
+             
+           } catch (error) {
+            setIsLoading(false)
+             console.error('Error:', error);
+           }
+         }
+      
+         const handleNotifyMe = async(productId, variantId)=>{
+          console.log("variantId",variantId)
+          const payload={
+            productId:productId || null,
+            variantId:variantId || null,
+            email: emailAddress 
+          }
+          try {
+            setIsLoading(true)
+            const res = await fetch(`/api/out-of-stock`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(payload),
+            });
+            if(res.status == 200){
+              setIsLoading(false)
+              setIsShowNotifySuccessPopup(true);
+            }
+            else{
+              setIsLoading(true)
+              console.log(error)
+            }
+           
+            
+          } catch (error) {
+            setIsLoading(false)
+            console.error('Error:', error);
+          }
+        }
+
     if (relatedProduct && relatedProduct.length > 0) {
         return (
             <div className={style.relatedProductContiner}>
@@ -59,11 +143,12 @@ const RelatedProducts = ({ productData = {} }) => {
                         </div>
                         <div ref={leftArrow} className={style.allProducts}>
                             {relatedProduct.map((item, index) => {
-                                const { id = '', image = '', name = '', price = {}, seoUrl = '', title = '' } = item || {};
+                                const { id = '', image = '', name = '',nameArabic='', price = {}, seoUrl = '', title = '' } = item || {};
                                 const {dealId, isTimerActive,isDealActive,currentTimerStatus='',dealInventory='',dealIconUrl='',dealTag='',dealDiscountPrice='',dealFinalPrice='',dealListPrice='',normalQuantity=""}= item || {}
                                 const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
                                 const cardData = {
                                     productName: name,
+                                    productNameArabic: nameArabic,
                                     finalPrice: finalPrice,
                                     retailPrice: retailPrice,
                                     currency: currency,
@@ -98,7 +183,7 @@ const RelatedProducts = ({ productData = {} }) => {
                                     addToCartPayload = {"product":id, "quantity":1,productName:name}
                                 }
                                 return (
-                                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart(addToCartPayload)} />
+                                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart(addToCartPayload)} handleNotifyMe={()=>handleNotifyMe(id)} handleNonLogin={()=>handleNonLogin(id)} />
                                 )
                             })}
                         </div>
@@ -107,6 +192,8 @@ const RelatedProducts = ({ productData = {} }) => {
                         </div>
                     </div>
                 </div>
+                <div className={style.NotifySuccessPopup}>{isShowNotifySuccessPopup && <NotifySuccessPopup setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}/>}</div>
+                <div>{isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}  emailId={emailId} setEmailId={setEmailId} handleNotify={handleNotify}/>}</div>
                 <Loader isShow={isLodaing} />
             </div>
         )
