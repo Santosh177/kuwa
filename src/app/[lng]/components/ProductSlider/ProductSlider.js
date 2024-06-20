@@ -242,6 +242,7 @@ const handleNotify = async() =>{
                     id= "",
                     title="",
                     name= "",
+                    nameArabic= "",
                     countDownStartsAt="",
                     countDownEndsAt="",
                     dealId="",
@@ -304,7 +305,9 @@ const handleNotify = async() =>{
                           currentTimerValue:variantPrices[0].currentTimerValue,
                           tag:variantPrices[0].dealTag,
                           tagIconUrl:variantPrices[0].dealIconUrl,
-                          normalInventory:data.variants[0].quantity
+                          normalInventory:data.variants[0].quantity,
+                        productNameArabic: data && data.nameArabic || "",
+
 
                         }
                     }
@@ -321,7 +324,8 @@ const handleNotify = async() =>{
                         image: image || "",
                         variantId: variantPrices[0].variantId || "",
                         seoUrl: data.seoUrl || "",
-                        normalInventory:data.variants[0].quantity
+                        normalInventory:data.variants[0].quantity,
+                        productNameArabic: data && data.nameArabic || "",
                       }
                    }
                   }
@@ -337,6 +341,7 @@ const handleNotify = async() =>{
                         "dealId":dealId || "",
                         "productId":id || "",
                         "productName":name,
+                        "productNameArabic":nameArabic,
                         "productImage":image || "",
                         "seoUrl":seoUrl || "",
                         "dealListPrice":dealListPrice,
@@ -365,7 +370,8 @@ const handleNotify = async() =>{
                         image: data.image || "",
                         productId: data.id || "",
                         seoUrl: data.seoUrl || "",
-                        normalInventory:data.normalQuantity
+                        normalInventory:data.normalQuantity,
+                        productNameArabic: data && data.nameArabic || "",
                       }
                     }
                   }
