@@ -279,6 +279,15 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 data-installment-maximum-amount= {tamaraMaxAmount}
                 data-installment-available-amount={tamaraMinAmount}
                 />
+                <div className={`${styles.prePaidDiscount} ${isArabic ? styles['prePaidDiscount-ar'] : styles['prePaidDiscount-en']}` }>
+                  <div className={styles.offerIcon}>
+                    <img src="https://d25uasl7utydze.cloudfront.net/assets/offer_yicon.svg"/>
+                  </div>
+                  <div className={styles.offerInfoDiv}>
+                    <div className={styles.offerTxt}>{isArabic ? "إضافي" : "Extra"} {prePaidDiscount}{isArabic ? "% خصم" : "% OFF"}</div>
+                    <div className={styles.offerSubTxt}>{isArabic ? "صالح على مدفوعات البطاقة وتابي وأبل باي" : "Valid on card payments, tabby, apple pay"}</div>
+                  </div>
+                </div>
               <div className={styles.benefitsLogoSection}>
                   <div className={styles.logoDiv}>
                     <img src="https://d25uasl7utydze.cloudfront.net/assets/kuwa_cash.svg" alt="benefits-logo" />

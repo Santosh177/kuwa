@@ -24,6 +24,8 @@ const CardOption = ({cardConfig={},isCheckoutCard=false , isTapCard=false,onPaym
   const [ isShowCard , setIsShowCard] = useState(false);
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
+  const { selectedCountry={} } = useCountry();
+  const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
 
   useEffect(()=>{
     const isShowCard = (selectedPaymentMethod === "CHECKOUT_CARD" )
@@ -38,6 +40,8 @@ const CardOption = ({cardConfig={},isCheckoutCard=false , isTapCard=false,onPaym
                 <div className={styles.txt}>{isArabic ? "الدفع ببطاقة الائتمان أو بطاقة الخصم" : "Pay with Credit card or Debit card"}</div>
             </div>
             <div className={styles.paymentInfoWrapper} >
+            <div className={`${styles.prepaidDiscountInfo} ${isArabic ? styles['prepaidDiscountInfo-ar'] : styles['prepaidDiscountInfo-en']}` }>{isArabic ? "إضافي" : "Extra"} {prePaidDiscount}{isArabic ? "% خصم" : "% OFF"}</div>
+            
               <div className={styles.paymentInfoContainer} onClick={(e)=>{
                 if(isCheckoutCard){
                   setIsShowCard(true)
@@ -68,6 +72,7 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
   const { selectedCountry={} } = useCountry();
+  const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
   const currency =  selectedCountry.currency || ""
   const { maxLimit:tamaraMaxLimit,minLimit:tamaraMinLimit,installment:tamaraInstallment } = paymentMethodConfig && paymentMethodConfig['tamara'] || {};
 
@@ -90,6 +95,8 @@ const PayWithEmi = ({ paymentMethodConfig={}, isTamara=false,isTabby=false,price
           <div className={styles.txt}>{isArabic ? "الدفع بالتقسيط" : "Pay by installment"}</div>
         </div>
         <div className={styles.paymentOptionsList}>
+        <div className={`${styles.prepaidDiscountInfo} ${isArabic ? styles['prepaidDiscountInfo-ar'] : styles['prepaidDiscountInfo-en']}` }>{isArabic ? "إضافي" : "Extra"} {prePaidDiscount}{isArabic ? "% خصم" : "% OFF"}</div>
+
             {(isTamara && isShow) && <div className={styles.paymentOptionItem} onClick={()=> setSelectedPaymentMethod("TAMARA")}>
                 <div className={styles.paymentOptionInfo}>
                   <img className={styles.paymentOptionLogo} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/tamaraLogo.png' alt='logo'/>

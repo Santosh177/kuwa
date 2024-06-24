@@ -276,6 +276,38 @@ font-weight: 600;
         margin-top: 24px;
         margin-bottom: 12px;
     }
+    .prePaidDiscount{
+        display: flex;
+        gap: 18px;
+        border-radius: 8px;
+background: #F1F4F9;
+padding-left: 16px;
+&.prePaidDiscount-ar{
+    padding-left: 0px;
+    padding-right: 16px;
+}
+.offerIcon{
+
+}
+.offerInfoDiv{
+    .offerTxt{
+        padding-top: 14px;
+        color: #247A81;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+    .offerSubTxt{
+        color: #98A1AC;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        padding-bottom: 14px;
+    }
+}
+    }
     .benefitsLogoSection{
         display: flex;
         justify-content: center;

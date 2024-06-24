@@ -86,6 +86,25 @@
         margin-top: 15px;
         border: 1px solid #E6E7E7;
         border-radius: 16px;
+        position: relative;
+        .prepaidDiscountInfo{
+            width: 110px;
+            border-radius: 10px;
+background: #F1FAF8;
+            color: #247A81;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+position: absolute;
+left: 24px;
+top: -7px;
+text-align: center;
+&.prepaidDiscountInfo-ar{
+    left: 0px;
+    right: 24px;
+}
+        }
 
         .paymentInfoContainer {
             display: flex;
@@ -152,6 +171,25 @@
         margin-top: 20px;
         border: 1px solid #E6E7E7;
         border-radius: 16px;
+        position: relative;
+        .prepaidDiscountInfo{
+            width: 110px;
+            border-radius: 10px;
+background: #F1FAF8;
+            color: #247A81;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+position: absolute;
+left: 24px;
+top: -7px;
+text-align: center;
+&.prepaidDiscountInfo-ar{
+    left: 0px;
+    right: 24px;
+}
+        }
 
         .paymentOptionItem {
             border-bottom: 1px solid #E6E7E7;
