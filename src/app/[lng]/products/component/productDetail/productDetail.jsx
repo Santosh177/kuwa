@@ -77,7 +77,8 @@ const ProductDeatil = ({ productData = {} }) => {
             productTitle:title,
             productId:id,
             landing_page_url:window.location.pathname,
-            device: deviceType
+            device: deviceType,
+            Logged:isLogin
         }
         // clevertapEvent.onCleverTapEvent("kuwa_page_view",trackData)
        setTimeout(()=>{

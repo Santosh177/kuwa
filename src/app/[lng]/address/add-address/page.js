@@ -179,10 +179,10 @@ export default function AddAddress() {
     useEffect(()=>{
       clevertapEvent.onCleverTapEvent("kuwa_add_address_landing"); 
       if(isLogin){
-        mixPanelTrackEvent("kuwa_add_address_landing",{},userData.id)
+        mixPanelTrackEvent("kuwa_add_address_landing",{Logged:isLogin},userData.id)
       } 
       else{
-        mixPanelTrackEvent("kuwa_add_address_landing",{})
+        mixPanelTrackEvent("kuwa_add_address_landing",{Logged:isLogin})
       }
     },[])
 

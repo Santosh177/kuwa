@@ -366,7 +366,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
   useEffect(() => {
     clevertapEvent.onCleverTapEvent("kuwa_payments_landing"); 
-      mixPanelTrackEvent("kuwa_payments_landing",{},userData.id)
+      mixPanelTrackEvent("kuwa_payments_landing",{Logged:isLogin},userData.id)
     
   }, [])
 

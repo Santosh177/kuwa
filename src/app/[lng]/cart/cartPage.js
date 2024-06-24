@@ -200,7 +200,8 @@ export default  function Cart({cartData}) {
     const deviceType = getDeviceType();
     const trackData = {
         userId:userData?.id,
-        device: deviceType
+        device: deviceType,
+        Logged:isLogin
     }
     setTimeout(()=>{
       clevertapEvent.onCleverTapEvent("kuwa_cart_landing",trackData)

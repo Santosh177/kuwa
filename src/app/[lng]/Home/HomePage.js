@@ -82,6 +82,7 @@ export default function Home(homePageData) {
             country:selectedCountry.name,
             currency:selectedCountry.currency,
             countryId:selectedCountry.id,
+            logged:isLogin
         }
         if(isLogin){
             mixPanelTrackEvent("kuwa_home_page_landing",trackData, userData.id,clientIpAddress)
