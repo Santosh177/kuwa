@@ -53,6 +53,11 @@ const CardOption = ({cardConfig={},isCheckoutCard=false , isTapCard=false,onPaym
                 <div className={styles.paymentInfo}>
                     <img className={styles.visa} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/visa.png'/>
                     <img className={styles.masterCard} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/mastercard.png' />
+                    <img className={styles.discover} src=''/>
+                    <img className={styles.jcb} src=''/>
+                    <img className={styles.americanExpress} src=''/>
+                    <img className={styles.payLogo} src=''/>
+
                   </div>
                   <CheckBox isChecked={selectedPaymentMethod === "CHECKOUT_CARD" || selectedPaymentMethod==="TAP"} />
               </div>

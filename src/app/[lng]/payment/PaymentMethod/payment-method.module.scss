@@ -116,14 +116,43 @@ text-align: center;
             padding-bottom: 12px;
 
             .paymentInfo {
+                display: flex;
+                gap: 7px;
                 .visa {
-                    width: 70px;
-                    height: 28px;
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
                 }
 
                 .masterCard {
-                    width: 70px;
-                    height: 28px;
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
+                }
+                .discover {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
+                }
+                .jcb {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
+                }
+                .americanExpress {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
+                }
+                .payLogo {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
                 }
             }
 
@@ -234,6 +263,55 @@ text-align: center;
                 }
 
             }
+        }
+    }
+}
+
+@media(max-width:769px){
+    .creditCardOption{
+        .paymentInfoWrapper{
+          .paymentInfoContainer{
+            .paymentInfo {
+                display: flex;
+                gap: 7px;
+                .visa {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+                }
+
+                .masterCard {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
+                }
+                .discover {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
+                }
+                .jcb {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
+                }
+                .americanExpress {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
+                }
+                .payLogo {
+                    width: 42px;
+                    height: 24px;
+                    object-fit: contain;
+
+                }
+            }
+          }  
         }
     }
 }
