@@ -282,6 +282,7 @@ font-weight: 600;
         border-radius: 8px;
 background: #F1F4F9;
 padding-left: 16px;
+margin-top: 24px;
 &.prePaidDiscount-ar{
     padding-left: 0px;
     padding-right: 16px;
@@ -305,6 +306,7 @@ padding-left: 16px;
         font-weight: 500;
         line-height: normal;
         padding-bottom: 14px;
+        padding-top: 3px;
     }
 }
     }
@@ -421,6 +423,9 @@ padding-left: 16px;
         .tabbyDetailMain {
             margin-top: 16px;
             margin-bottom: 8px;
+        }
+        .prePaidDiscount{
+            margin-top: 16px;
         }
     }
 
