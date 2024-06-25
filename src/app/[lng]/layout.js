@@ -136,6 +136,10 @@ export default async function RootLayout({ children, params: {
       {/* <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
 /></noscript> */}
+<Script type="text/javascript" src="/meta-pixel-code.js" strategy="lazyOnload"/>
+      <noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1140387997169713&ev=PageView&noscript=1"
+/></noscript>
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDHHJWPJ"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      <LanguageProvider>

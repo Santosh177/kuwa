@@ -131,13 +131,16 @@ line-height: normal;
     .subTxt{
         margin-top: 18px;
         color: #000;
-text-align: center;
 font-size: 14px;
 font-style: normal;
 font-weight: 300;
 line-height: normal;
 text-transform: capitalize;
-    }
+text-align: left;
+&.subTxt-ar{
+    text-align: right;
+}
+   }
     .footer{
         cursor: pointer;
         margin-top: 56px;

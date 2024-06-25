@@ -766,7 +766,7 @@ export default  function Cart({cartData}) {
       //   console.log("payloadpayload",payload)
   }
   const customFee = selectedCountry?.customFee || 0;
-    const totalPrice =((priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+(priceDetails.totalAmount + customFee) :"") 
+    const totalPrice =((priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+(priceDetails.totalAmount) :"") 
     const subTotal = priceDetails.subTotal
     const minThreshold = deliveryFeesConfig?.minThreshold;
     const deliveryFee = deliveryFeesConfig?.deliveryFee
@@ -1006,7 +1006,7 @@ else{
             <div className={styles.priceDetailsContainer}>
               {/* <div className={styles.headerTxt}>Price Details</div> */}
               <div className={styles.priceInfo} ref={priceDetailsContainer}>
-                <PriceDetailsInfo data={priceDetails} customFee={customFee} />
+                <PriceDetailsInfo data={priceDetails} />
               </div>
               <CompanyInfo />
             </div>

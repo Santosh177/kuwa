@@ -13,11 +13,17 @@ const AmountSavedInfo = ({savedAmount=0,currency=""}) => {
 }
 const CustumDutyInfo = ({setIsShowCustumDutyInfoPopup})=>{
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+    const { selectedCountry={} } = useCountry();
+    const countryName = selectedCountry.shortName
+    const countryNameArabic = selectedCountry.shortNameArabic
     return(
     <div className={styles.custumDutyInfoPopupContainer}>
         <div className={styles.custumDutyInfoPopupSection}>
         <div className={styles.title}>{isArabic ? "الرسوم، الضرائب، والمصاريف" : "Duty, Taxes, & Fees"}</div>
-        <div className={styles.subTxt}>{isArabic ? "البضائع المستوردة خاضعة لرسوم البيان التي تفرضها الهيئة الحكومية المحلية في قطر. مع خدمة DDP (الرسوم المدفوعة عند التسليم)، لن تحتاج إلى دفع أي رسوم أو ضرائب إضافية عند الاستلام." : "Imported goods are subject to Bayan fee which is levied by the local government agency in Qatar. With DDP (Delivered Duties Paid), you do not have to pay any additional duty/tax at the time of delivery."}</div>
+        <div className={`${styles.subTxt} ${isArabic ? styles['subTxt-ar'] : styles['subTxt-en']}` }>
+  {isArabic ? `البضائع المستوردة خاضعة لرسوم البيان التي تفرضها الهيئة الحكومية المحلية في ${countryNameArabic}. مع خدمة DDP (الرسوم المدفوعة عند التسليم)، لن تحتاج إلى دفع أي رسوم أو ضرائب إضافية عند الاستلام.` : `Imported goods are subject to Bayan fee which is levied by the local government agency in ${countryName}. With DDP (Delivered Duties Paid), you do not have to pay any additional duty/tax at the time of delivery.`}
+</div>
+
         <div className={styles.footer} onClick={(()=>setIsShowCustumDutyInfoPopup(false))}>{isArabic ? "إغلاق" : "Close"}</div>
         </div>
     </div>
