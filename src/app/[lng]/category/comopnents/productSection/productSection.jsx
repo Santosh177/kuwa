@@ -10,6 +10,8 @@ import { mappingDealProducts } from "@/services"
 import { mixPanelTrackEvent } from "@/app/[lng]/page"
 import { useAuth } from "@/context/userDetail"
 import { useLanguage } from "@/context/languageDetails"
+import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmailPopup"
+import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/NotifySuccessPopup"
 
 const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
@@ -25,7 +27,14 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
     const [remainingMin, setRemainingMin] = useState("00")
     const [remainingSec, setRemainingSec] = useState("00")
 
+    const [isShowNotifySuccessPopup, setIsShowNotifySuccessPopup] = useState(false);
+    const [isShowNotifyEmailPopup, setIsShowNotifyEmailPopup] = useState(false);
+    const [emailId,setEmailId] = useState("")
+    const [nonloginProductId,setNonLoginProductId] = useState("");
+    const [nonLoginVariantId,setNonLoginVariantId] = useState("");
+    const emailAddress = userData && userData.emailAddress;
     const [timer, setTimer] = useState(0); 
+
     const onAddToCart = async (data) => {
         const trackingData = {
             "product Name": data.productName,
@@ -89,9 +98,80 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
         setRemainingSec(seconds.toString().padStart(2, '0'));
     }
 }, [timer]);
+
+const handleNonLogin = (id,variantId)=>{
+    console.log("id, variantId", id, variantId);
+     setIsShowNotifyEmailPopup(true);
+     setNonLoginProductId(id);
+     setNonLoginVariantId(variantId);
+  }
+  
+  const handleNotify = async() =>{
+    const payload={
+         productId:nonloginProductId|| null,
+         variantId:nonLoginVariantId || null,
+         email: emailId 
+       }
+       try {
+        setIsLoading(true)
+         const res = await fetch(`/api/out-of-stock`, {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(payload),
+         });
+         if(res.status == 200){
+          setIsLoading(false)
+           setIsShowNotifySuccessPopup(true);
+         }
+         else{
+          setIsLoading(false)
+          console.log(error)
+         }
+         
+         
+       } catch (error) {
+        setIsLoading(false)
+         console.error('Error:', error);
+       }
+     }
+  
+     const handleNotifyMe = async(productId, variantId)=>{
+      console.log("variantId",variantId)
+      const payload={
+        productId:productId || null,
+        variantId:variantId || null,
+        email: emailAddress 
+      }
+      try {
+        setIsLoading(true)
+        const res = await fetch(`/api/out-of-stock`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+        if(res.status == 200){
+          setIsLoading(false)
+          setIsShowNotifySuccessPopup(true);
+        }
+        else{
+          setIsLoading(true)
+          console.log(error)
+        }
+       
+        
+      } catch (error) {
+        setIsLoading(false)
+        console.error('Error:', error);
+      }
+    }
     if (resposneValue && resposneValue.length > 0) {
         return (
-            <div className={style.productSectionContainer}>
+            <>
+            <div  className={style.productSectionContainer}>
         {isDealPage  &&
               <div className={style.headingContent}>
               <div className={style.dealHeading}>{isArabic ? resposneValue[0]?.dealHeadingArabic : resposneValue[0]?.dealHeading}</div>
@@ -141,13 +221,17 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
                         }
                         return (
                             <div className={style.product}>
-                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice,productName })} />
+                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice,productName })} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} />
                             </div>
                         )
                     })}
                 </div>
+
                 <Loader isShow={isLodaing} />
             </div>
+                    <div style={{position:"absolute"}} className={style.NotifySuccessPopup}>{isShowNotifySuccessPopup && <NotifySuccessPopup setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}/>}</div>
+                    <div style={{position:"absolute"}}>{isShowNotifyEmailPopup && <NotifyEmailPopup setIsShowNotifyEmailPopup={setIsShowNotifyEmailPopup} setIsShowNotifySuccessPopup={setIsShowNotifySuccessPopup}  emailId={emailId} setEmailId={setEmailId} handleNotify={handleNotify}/>}</div>
+                    </>
         )
     } else {
         return <></>
