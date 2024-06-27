@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useLanguage } from '@/context/languageDetails';
 
 import { useAuth } from '@/context/userDetail';
-const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLogin}) => {
+const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLogin={}}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
 
