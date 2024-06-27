@@ -145,7 +145,7 @@ export default function Login() {
               // window.location.href = '/'
           }else {
               setIsLoading(false)
-              setLoginFailureTxt('Wrong email or password. Try again or click Forgot password to reset it')
+              setLoginFailureTxt(isArabic ? "البريد الإلكتروني أو كلمة المرور غير صحيحة. حاول مرة أخرى أو اضغط على 'نسيت كلمة المرور' لإعادة تعيينها" : 'Wrong email or password. Try again or click Forgot password to reset it')
           }
         } catch (error) {
           console.error('An unexpected error happened occurred:', error)
