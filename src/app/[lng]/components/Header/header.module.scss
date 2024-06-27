@@ -177,6 +177,16 @@
             }
 
         }
+        
+        .languageTxt{
+            cursor: pointer;
+            color: #FFF;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+        }
+    
 
         .searchIcon {
 
@@ -369,6 +379,9 @@
             // max-width: 1070px;
             .headerInfo {
                 gap: 24px;
+                .languageTxt{
+                    font-size: 16px;
+                }
             }
             .profileIconPlus {
                 cursor: pointer;
@@ -728,7 +741,7 @@
     }
     .searchListWrapper{
         width: 470px;
-        left: 132px;
+        left: 63px;
     }
     .searchListWrapper-ar{
         left: 253px;

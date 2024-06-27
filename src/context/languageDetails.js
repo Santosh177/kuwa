@@ -58,7 +58,7 @@ const LanguageContext = createContext();
 export const LanguageProvider = ({ children }) => {
   const listOfLanguages = [
     { id: '1', language_code: 'en', language_name: 'English' },
-    { id: '2', language_code: 'ar', language_name: 'Arabic' },
+    { id: '2', language_code: 'ar', language_name: 'العربية' },
   ];
 
   const router = useRouter();

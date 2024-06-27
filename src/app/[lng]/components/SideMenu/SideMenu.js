@@ -7,6 +7,10 @@ import { useAuth } from '@/context/userDetail';
 import Loader from '../Loader/Loader';
 import styles from './side-menu.module.scss';
 import { useLanguage } from '@/context/languageDetails';
+// import { useLanguage } from '@/context/languageDetails';
+import CountryList from '../CountryList/CountryList';
+import { useCountry } from '@/context/contryDetails';
+
 
 
 const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
@@ -66,7 +70,6 @@ const AccountInfo = ({onclose}) => {
         const newLanguageId = isArabic ? '1' : '2';
        await changeLanguage(newLanguageId);
        setIsLoading(true)
-
     }
 
     return(
@@ -78,7 +81,7 @@ const AccountInfo = ({onclose}) => {
                 {(isLogin)?<div className={styles.userName}>{userName}</div>:
                 <div className={styles.notLoginTxt}><span onClick={()=>router.push('/sign-up')}>{isArabic ? "التسجيل" : "Sign Up"}</span> / <span onClick={()=>router.push('/login')}>{isArabic ? " تسجيل الدخول" : "Login"}</span></div>}
             </div>
-            <div className={styles.languageTxt} onClick={toggleLanguage}>{otherLanguageName}</div>
+            {/* <div className={styles.languageTxt} onClick={toggleLanguage}>{otherLanguageName}</div> */}
             <img className={`${styles.closeIcon} ${isArabic ? styles['closeIcon-ar'] : styles['closeIcon-en']}` } onClick={()=>onclose()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
         </div>
         <Loader isShow={isLoading}/>
@@ -205,13 +208,38 @@ const MyAccount = ({onBack={},onclose={}}) =>{
     )
 }
 
-const SideMenu = ({onclose={},sideMenuData=[]}) => {
+const CountryInfo = ({setIsShowCountry})=>{
+    const {selectedCountry={},setSelectedCountry={}} = useCountry();
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
+    return (
+     <div className={styles.countryInfo} onClick={()=>setIsShowCountry(true)}>
+
+        <div className={styles.country}>
+        <img src="https://d25uasl7utydze.cloudfront.net/assets/CountryIcon.svg"/>
+        <div className={`${styles.countryTxt} ${isArabic ? styles['countryTxt-ar'] : styles['countryTxt-en']}` }>{isArabic ? "البلد": "Country"}</div>
+        </div>
+        <div className={styles.selectedCountry}>
+        <div className={styles.countryImg}>
+            <img src={selectedCountry.flagIcon} alt='country-img'/>
+        </div>
+        <div className={`${styles.countryName} ${isArabic ? styles['countryTxt-ar'] : styles['countryTxt-en']}` }> {isArabic ? selectedCountry.shortNameArabic : selectedCountry.shortName}</div>
+        <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/next.png' alt='drop-down-icon'/>
+    </div> 
+    </div>
+    )
+}
+
+const SideMenu = ({onclose={},sideMenuData=[]}) => {
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+    const {selectedCountry={},setSelectedCountry={}} = useCountry();
     const {isLogin=false, userData={}} = useAuth();
     const router = useRouter();
     const [ key , setKey ] = useState("");
     const [ childMenuData , setChildMenuData ] = useState([]);
+    const [isShowCountry, setIsShowCountry] = useState(false);
+    const [isLoading,setIsLoading] = useState(false)
+
     const onClick = (data) => {
         if(data && data.redirectionLink){
             // router.push(data.redirectionLink)
@@ -242,6 +270,25 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
           })
           setChildMenuData(childMenuData)
     }
+    
+    const onSelectCountry = async(data) =>{
+        setSelectedCountry(data);
+        setIsLoading(true)
+        const coutryApiResp = await fetch('/api/update-country', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({countryId:data.id})
+          })
+        const coutryApiData = await coutryApiResp.json();
+        setIsShowCountry(false)
+        setIsLoading(false)
+        window.location.href = '/'
+    }
+    const onCloseCountry = () =>{
+        setIsShowCountry(false)
+    }
 
 
 
@@ -263,12 +310,15 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
                 return(<>
                     <AccountInfo  onclose={onclose} />
                         <MainMenuData data={sideMenuData} onClick={onClick}  />
-                    <OtherInfo />
+                        <CountryInfo setIsShowCountry={setIsShowCountry}/>
+                    <OtherInfo /> 
                     {isLogin && <LogOut />}
                 </>)
         }
     }
+
     return(
+        <>
         <SideMenuWrapper onclose={onclose}>
             <>
             {
@@ -276,6 +326,8 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
             }
             </>
         </SideMenuWrapper>
+        {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
+        </>
     )
 }
 

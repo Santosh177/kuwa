@@ -37,7 +37,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   // };
   const style = isLogin
   ? {
-      right: isArabic ? "-86px" : '173px',
+      right: isArabic ? "-124px" : '173px',
       left: isArabic ? "0px" : "",
       paddingBottom: !isShowSeeAllBtn ? '' : '',
     }
@@ -121,6 +121,9 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
 
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
+  
+  const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
+  const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
 
   useEffect(() => {
     document.addEventListener("mousedown", (e) => {
@@ -390,6 +393,13 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
   
   }
 
+  const  toggleLanguage = async() => {
+    const newLanguageId = isArabic ? '1' : '2';
+   await changeLanguage(newLanguageId);
+   setIsLoading(true)
+
+}
+
     return(
         <>
         
@@ -406,13 +416,17 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                 </d>
                
                 <div className={styles.headerInfo}>
-                    <div className={styles.countryInfo} onClick={()=>setIsShowCountry(true)}>
+                    {/* <div className={styles.countryInfo} onClick={()=>setIsShowCountry(true)}>
                         <div className={styles.countryImg}>
                             <img src={selectedCountry.flagIcon} alt='country-img'/>
                         </div>
                         <div className={`${styles.countryTxt} ${isArabic ? styles['countryTxt-ar'] : styles['countryTxt-en']}` }> <span>{isArabic ? "البلد": "Country"}</span>{isArabic ? selectedCountry.shortNameArabic : selectedCountry.shortName}</div>
                         <img className={styles.dropDownIcon} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/droppdown_icon_country.png' alt='drop-down-icon'/>
-                    </div>
+                    </div> */}
+                    <div className={styles.languageTxt} onClick={toggleLanguage}>{otherLanguageName}</div>
+
+
+
                     {/* <div className={styles.searchIcon} onClick={()=>router.push('/search')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/search.png" alt='search-icon'></img>
                     </div> */}
