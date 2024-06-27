@@ -30,9 +30,9 @@ const search = useSearchParams();
         <div className={styles.deliveryAddress}> 
             <div className={styles.actionItem}>
                 <div className={styles.headerTxt}>{isArabic ? "عنوان الشحن" :  "Shipping address"}</div>
-                <div className={styles.changeAction}>
+                <div className={styles.changeAction} onClick={changeAddress}>
                     <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/edit.png' alt="edit"/>
-                    <div className={styles.changeTxt} onClick={changeAddress}>{isArabic ? "تغيير" : "Change"}</div>
+                    <div className={styles.changeTxt} >{isArabic ? "تغيير" : "Change"}</div>
                 </div>
             </div>
             <div className={styles.name}>{userName}</div>
