@@ -4,8 +4,8 @@ import { AddressProvider } from "@/context/address";
 import { CartItemProvider } from "@/context/cartItems";
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
-import { getUserDetails } from '../lib/auth';
-import { getTokenCookie , getCountryCookie} from '../lib/auth-cookies';
+// import { getUserDetails } from '../lib/auth';
+import { getTokenCookie , getCountryCookie} from '../../lib/auth-cookies';
 import { cookies } from 'next/headers';
 import { CountryListProvider } from "@/context/countryList";
 import Script from 'next/script'
@@ -66,7 +66,7 @@ const getCountryList = async() => {
   const countryListData = await getCountryListResp.json();
   console.log("countryListDatacountryListData",countryListData)
   if(countryListData && countryListData.length > 0){
-    return countryListData.filter((data)=>data.id ==8);
+    return countryListData;
   }
 }
 
@@ -113,7 +113,7 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       </head>
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
-      <script type="text/javascript" src={"/clevertap-prod.js"} async />
+      <script type="text/javascript" src={"/clevertap-stage.js"} async />
       {/* <script type="text/javascript" src={"https://d2r1yp2w7bby2u.cloudfront.net/js/clevertap.min.js"} async></script> */}
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />

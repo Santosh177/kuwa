@@ -37,7 +37,7 @@ const getCountryList = async() => {
   })
   const countryListData = await getCountryListResp.json();
   if(countryListData && countryListData.length > 0){
-    return countryListData.filter((data)=>data.id == 6);;
+    return countryListData;
   }
 }
 
