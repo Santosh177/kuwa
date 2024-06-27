@@ -4,35 +4,25 @@ import { AddressProvider } from "@/context/address";
 import { CartItemProvider } from "@/context/cartItems";
 import './globals.css'
 import { Work_Sans } from 'next/font/google';
-import { getUserDetails } from "@/lib/auth";
-import { getTokenCookie , getCountryCookie} from '../../lib/auth-cookies';
+import { getUserDetails } from '../lib/auth';
+import { getTokenCookie , getCountryCookie} from '../lib/auth-cookies';
 import { cookies } from 'next/headers';
 import { CountryListProvider } from "@/context/countryList";
 import Script from 'next/script'
-// import { Work_Sans } from 'next/font/google';
-import Head from 'next/head';
 import { LanguageProvider } from "@/context/languageDetails";
 import { dir } from 'i18next';
 import { languages } from "../i18n/settings";
-// export const dynamic = "force-dynamic";
-
-// export async function generateStaticParams() {
-//   return languages.map((lng) => ({ lng }))
-// }
-
-
+// import { Work_Sans } from 'next/font/google';
 
 const workSans = Work_Sans({ weight: ['400','500','600', '700'],
 style: ['normal', 'italic'],
 subsets: ['latin'],})
 
+
 export const metadata = {
   title: 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain',
-  description: 'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!',
+  description: 'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in bahrain. Shop now and enjoy the benefits!',
 }
-
-// let title = 'GetKuwa: Supplements, Health &amp; Nutrition in bahrain'
-// let description =  'GetKuwa helps you buy the best quality health supplements to boost your nutrition and fitness in UAE. Shop now and enjoy the benefits!'
 
 
 const getUser = async () => {
@@ -65,6 +55,7 @@ const getUser = async () => {
 };
 
 const getCountryList = async() => {
+  console.log("testt")
   const getCountryListResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/active/countries/`, {
     method: 'GET',
     next: { revalidate: 300 } ,
@@ -73,8 +64,9 @@ const getCountryList = async() => {
     },
   })
   const countryListData = await getCountryListResp.json();
+  console.log("countryListDatacountryListData",countryListData)
   if(countryListData && countryListData.length > 0){
-      return countryListData;
+    return countryListData.filter((data)=>data.id ==8);
   }
 }
 
@@ -84,18 +76,17 @@ export default async function RootLayout({ children, params: {
 } }) {
   const userData = await getUser();
   const countryList = await getCountryList();
-  const { isLogin= false,  } = userData || {}
+  console.log("countryListcountryList,",countryList)
+  const { isLogin= false, } = userData || {}
   let selectedCountryData = {};
-
   if(isLogin){
-    const filteredCountry = countryList.find((data,index)=>data.id == userData.userData.country)
+    const filteredCountry = countryList.find((data,index)=>data.id == 8)
     if(filteredCountry){
       selectedCountryData = filteredCountry;
     }else{
       selectedCountryData = countryList && countryList[0] 
     }
     
-
    
   }else{
     const countryIdFromCookie = getCountryCookie();
@@ -108,47 +99,40 @@ export default async function RootLayout({ children, params: {
       }
     }
   }
-  
 
-  
- 
+
   const isProd = (process.env.NODE_ENV === 'pre-prod') || (process.env.NODE_ENV === 'prod')
+
+console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
 
   return (
     <html lang={lng} dir={dir(lng)}>
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
       <head>
         <script type="text/javascript" src={"/gtm.js"}></script>
-        {/* <title>{title}</title>
-        <meta name="title" content={title} />
-        <meta name="description" content={description} /> */}
       </head>
-      
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
-      <script type="text/javascript" src={"/clevertap-stage.js"} async />
+      <script type="text/javascript" src={"/clevertap-prod.js"} async />
       {/* <script type="text/javascript" src={"https://d2r1yp2w7bby2u.cloudfront.net/js/clevertap.min.js"} async></script> */}
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />
       <Script src="/tamara-script.js" strategy="lazyOnload" />
-      {/* <Script type="text/javascript" src="/meta-pixel-code.js" strategy="lazyOnload" /> */}
-      {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZH5J03SH9"></script> */}
+      <Script type="text/javascript" src="/meta-pixel-code.js" strategy="lazyOnload" />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZH5J03SH9"></script>
       {/* <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
 /></noscript> */}
-<Script type="text/javascript" src="/meta-pixel-code.js" strategy="lazyOnload"/>
-      <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1140387997169713&ev=PageView&noscript=1"
-/></noscript>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10835495332"></script>
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDHHJWPJ"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-     <LanguageProvider>
+         <LanguageProvider>
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
           <AuthProvider authData={userData}>
             <CartItemProvider>
             <AddressProvider >
-                  {children}
+            {children}
             </AddressProvider> 
             </CartItemProvider>       
           </AuthProvider>

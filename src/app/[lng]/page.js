@@ -24,7 +24,7 @@ export const mixPanelIdentifyUser = (userId, userProperties) => {
 }
 
 
-const mixpanel = Mixpanel.init('d670cab0105c2c17aaea07a016f2d46f',
+const mixpanel = Mixpanel.init('fd32fde56940d1b4118cc3c508f7729f',
 {  
   geolocate: true 
   // track_pageview: true,
