@@ -1,6 +1,6 @@
 
 import styles from './input.module.scss';
-import React, { useState } from 'react';
+import React, { useState,forwardRef} from 'react';
 import { useLanguage } from '@/context/languageDetails';
 
 
@@ -17,7 +17,7 @@ style = {}
 
 
 
-const Input = ({onInputChange={},type="text",fieldName="",value="",placeHolder="",isError="",errorMsg="",isDisabled="",style={},icon={}}) => {
+const Input =forwardRef(({onInputChange={},type="text",fieldName="",value="",placeHolder="",isError="",errorMsg="",isDisabled="",style={},icon={}},ref) => {
     const [showPassword, setShowPassword] = useState(false);
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
@@ -28,7 +28,7 @@ const Input = ({onInputChange={},type="text",fieldName="",value="",placeHolder="
     return(
         <div className={styles.inputWrapper} style={...style}>
             <div className={styles.inputContainer}>
-                <input autoComplete='off'  type={type === 'password' && showPassword ? 'text' : type} id={fieldName} name={fieldName} autoComplete='off'  value={value} onChange={(e)=>onInputChange(e,fieldName)}  disabled={isDisabled}  className={isArabic ? styles['input-ar'] : ''}/>
+                <input autoComplete='off'  type={type === 'password' && showPassword ? 'text' : type} id={fieldName} name={fieldName} autoComplete='off'  value={value} onChange={(e)=>onInputChange(e,fieldName)}  disabled={isDisabled}  className={isArabic ? styles['input-ar'] : ''}  ref={ref}/>
                 <label className={styles.placeholderText}>
                     <div  className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{placeHolder}</div>
                 </label>
@@ -53,7 +53,7 @@ const Input = ({onInputChange={},type="text",fieldName="",value="",placeHolder="
 
 
 
-}
+})
 
 
 export default Input;

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState ,useEffect} from 'react';
+import React, { useState ,useEffect,useRef} from 'react';
 import styles from './email-exist-popup.module.scss';
 import Loader from '@/app/[lng]/components/Loader/Loader';
 import Input from '@/app/[lng]/components/Input/Input';
@@ -14,6 +14,8 @@ const EmailExistPopUp = ({ setIsShowEmailExistPopUp, email }) => {
   const [pageType, setPageType] = useState(getPageType())
   const searchParams = useSearchParams()
 
+  const inputRef = useRef(null);
+  
   const mergeCartItems = async () => {
     try {
       const response = await fetch('/api/merge-cart-items', {
@@ -30,6 +32,12 @@ const EmailExistPopUp = ({ setIsShowEmailExistPopUp, email }) => {
       setIsLoading(false); 
     }
   };
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -140,7 +148,7 @@ const EmailExistPopUp = ({ setIsShowEmailExistPopUp, email }) => {
           <div className={styles.existTxt}>Email already exists</div>
           <div className={styles.passwordTxt}>Enter password to login</div>
           <div className={styles.passwordInput}>
-       <div className={styles.inputDiv}><Input className={styles.guestPassword} type='password'  value={password || ""} placeHolder='Password' onInputChange={(e)=>setPassword(e.target.value) }/></div> 
+       <div className={styles.inputDiv}  ><Input ref={inputRef} className={styles.guestPassword} type='password'  value={password || ""} placeHolder='Password' onInputChange={(e)=>setPassword(e.target.value) }/></div> 
            {passwordError && <div className={styles.passwordError}>{passwordError}</div>}
           </div>
           <div className={styles.forgetPasswordTxt}onClick={()=> window.location.href='/forget-password'}>Forgot Password</div>
