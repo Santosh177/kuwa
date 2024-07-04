@@ -11,7 +11,8 @@ const Varients = ({ setselectedVarients, variants,selectedVarients,currency, onR
                 const { variants, pricings = {} } = item || {};
                 const {id='',image='',name='',productId='',quantity=''} = variants || {}
                 const {countryId='',discount='',finalPrice='',retailPrice='',variantId=NaN} = pricings[0] || {}
-                const discountAmount = retailPrice-finalPrice
+                // const discountAmount = retailPrice-finalPrice
+                const discountAmount = parseFloat(retailPrice-finalPrice).toFixed(2)
                 console.log("variantDiscountAmount", discountAmount)
                 return (
                     <div className={[style.VarientBox, ((selectedVarients === variantId)?  style.variantsSelcted : "")].join(" ")} onClick={()=>
