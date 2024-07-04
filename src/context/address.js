@@ -50,7 +50,7 @@ export const AddressProvider = ({ children, countryCode }) => {
     console.log("addressList",addressList)
     if(addressList && addressList.length > 0){
       setListOfAddress(addressList);
-      setSelectedAddress(seletedDefaultAddress)
+      // setSelectedAddress(seletedDefaultAddress)
     }
   }
 
