@@ -832,7 +832,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         appleSession.onvalidatemerchant = async (event) => {
           const appleValidationURL = event && event.validationURL;
           // alert("va"+JSON.stringify(appleValidationURL))
-          const validateData = {"apple_url":appleValidationURL,"merchant_name":'checkout'};
+          const validateData = {"apple_url":appleValidationURL,"merchant_name":'checkout',"country_code":selectedCountry?.code};
           console.log("validateDatavalidateData",validateData)
           const validateSessionResp  =  await fetch('/api/validate-apple-pay-session', {
             method: 'POST',
