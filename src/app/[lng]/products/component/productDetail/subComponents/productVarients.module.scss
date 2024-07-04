@@ -1,6 +1,7 @@
 .varientsContainer {
     display: flex;
     gap: 18px;
+    overflow-x: scroll;
 
     .VarientBox {
         display: flex;
@@ -10,7 +11,7 @@
         background: #FFFFFF;
         border: 1px solid #E6E7E7;
         border-radius: 8px;
-        width: 112px;
+        min-width: 112px;
         height: 44px;
         cursor: pointer;
 

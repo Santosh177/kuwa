@@ -9,8 +9,7 @@ const ProductCard = ({ cardData={}, addToCart = {}, style = {} }) => {
     const { productName =0, finalPrice =0, retailPrice = "", currency = "", image = "", id = "", seoUrl = "",dealId="",isDealActive="",isTimerActive="",tag="",tagIconUrl="",productNameArabic="" } = cardData || {}
     console.log("shbhhaa",cardData)
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
-    let discount=retailPrice-finalPrice;
+    let discount = parseFloat(retailPrice-finalPrice).toFixed(2);
     return (
         <div id="search-container" className={styles.productCardItem} onClick={() => { window.location.href = `/products/` + seoUrl}}>
               {
