@@ -365,14 +365,14 @@ const ProductDeatil = ({ productData = {} }) => {
         let devliveryFees = 0
         const productName = name;
         const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
-        console.log("sajhaj",prePaidDiscount)
+        const customFee = selectedCountry?.customFee || 0 ;
+
         if(productPrice < minThreshold){
             devliveryFees =  deliveryFeesConfig.deliveryFee;
             totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
         }
         let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
-        console.log("hvahah",extraDiscount)
-        totalAmount = totalAmount - extraDiscount
+        totalAmount = totalAmount - extraDiscount + customFee
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {
           merchantCapabilities: ['supports3DS'],
@@ -397,15 +397,13 @@ const ProductDeatil = ({ productData = {} }) => {
               {
                 "label": "Additional Discount",
                 "amount": - extraDiscount
-              }
-          ],
-        };
-        if (customFee > 0) {
-            lineItems.push({
+              },
+              ...(customFee > 0 ? [{
                 "label": "Custom Duty",
                 "amount": customFee
-            });
-        }
+              }] : [])
+          ],
+        };
         if(!isLogin){
             request["requiredBillingContactFields"].push('phone')
             request["requiredBillingContactFields"].push('email')
