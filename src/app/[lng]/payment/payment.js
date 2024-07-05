@@ -818,12 +818,16 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           supportedNetworks: applePaySupportednetworks.split(", "),
           countryCode: selectedCountry.code || "",
           currencyCode:  selectedCountry.currency || "",
-          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-discountAmount  },
+          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-discountAmount + customFee },
         "lineItems":[
           {
             "label": "Additional Discount",
             "amount": - discountAmount
-          }
+          },
+          ...(customFee > 0 ? [{
+            "label": "Custom Duty",
+            "amount": customFee
+          }] : [])
         ]
         
         };
