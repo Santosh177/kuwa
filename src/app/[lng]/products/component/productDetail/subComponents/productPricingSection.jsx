@@ -145,6 +145,9 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
       const month = monthNames[monthIndex];
       console.log("Delivery Date: " + deliveryDate)
       const deliveryDateString = `${month} ${day}`;
+
+      const prepaidDiscountTxt = selectedCountry.code == "QA" ? "Valid on prepaid payments (cards, Apple Pay)" : "Valid on card payments, tabby, apple pay";
+      const prepaidDiscountTxtArabic = selectedCountry.code == "QA" ? "صالحة على الدفعات المسبقة (البطاقات، Apple Pay)" :  "صالح على مدفوعات البطاقة وتابي وأبل باي"
     return (
       <>
         <div className={styles.pricingSectionContainer}>
@@ -265,8 +268,8 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                     <img onClick={() => handelShareOption("FaceBook")} src="https://d25uasl7utydze.cloudfront.net/kuwa/facebook%20(1).svg" alt="facebook" />
                 </div>
             </div> */}
-             <div id="tabbyDetail" className={styles.tabbyDetailMain}></div>
-             <div
+            { selectedCountry.code !== "QA" && <div id="tabbyDetail" className={styles.tabbyDetailMain}></div>}
+            {selectedCountry.code !== "QA" && <div
                 className="tamara-product-widget"
                 data-lang= {isArabic ? "ar" : "en"}
                 data-price={finalPrice * noOfProduct}
@@ -278,14 +281,14 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 data-installment-minimum-amount= {tamaraMinAmount}
                 data-installment-maximum-amount= {tamaraMaxAmount}
                 data-installment-available-amount={tamaraMinAmount}
-                />
+                />}
                 <div className={`${styles.prePaidDiscount} ${isArabic ? styles['prePaidDiscount-ar'] : styles['prePaidDiscount-en']}` }>
                   <div className={styles.offerIcon}>
                     <img src="https://d25uasl7utydze.cloudfront.net/assets/offer_yicon.svg"/>
                   </div>
                   <div className={styles.offerInfoDiv}>
                     <div className={styles.offerTxt}>{isArabic ? "إضافي" : "Extra"} {prePaidDiscount}{isArabic ? "% خصم" : "% OFF"}</div>
-                    <div className={styles.offerSubTxt}>{isArabic ? "صالح على مدفوعات البطاقة وتابي وأبل باي" : "Valid on card payments, tabby, apple pay"}</div>
+                    <div className={styles.offerSubTxt}>{isArabic ? prepaidDiscountTxtArabic :prepaidDiscountTxt}</div>
                   </div>
                 </div>
               <div className={styles.benefitsLogoSection}>
