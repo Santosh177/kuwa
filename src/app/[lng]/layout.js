@@ -80,7 +80,7 @@ export default async function RootLayout({ children, params: {
   const { isLogin= false, } = userData || {}
   let selectedCountryData = {};
   if(isLogin){
-    const filteredCountry = countryList.find((data,index)=>data.id == 8)
+    const filteredCountry = countryList.find((data,index)=>data.id == userData.userData.country)
     if(filteredCountry){
       selectedCountryData = filteredCountry;
     }else{
