@@ -60,10 +60,21 @@
         background-color: #F4FCF3;
         margin-left: 16px;
         // margin-right: 16px;
-        
+        .marqueecontainer{
+            overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: row !important;
+    position: relative;
+    width: var(--width);
+    transform: var(--transform);
+    &.marqueecontainer-ar{
+    flex-direction: row-reverse !important;
+
+    }
+        }
        
     }
-   
+ 
 
 }
 
