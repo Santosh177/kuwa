@@ -33,6 +33,7 @@ const AssuredInfoCard = ({ data = {} }) => {
 
 
 const AssuredInfo = ({ assuredInfo = [] }) => {
+    const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     
     return (
         <>
@@ -50,7 +51,7 @@ const AssuredInfo = ({ assuredInfo = [] }) => {
                         horizontal={true}
                         className={styles.assuredIfoContainer}
                     >
-                        <Marquee pauseOnHover={true} pauseOnClick={true} speed={100} gradient={false}>
+                        <Marquee className={`${styles.marqueecontainer} ${isArabic ? styles['marqueecontainer-ar'] : styles['marqueecontainer-en']}` }style={{display:'flex',flexDirection:isArabic? "row-reverse !important" : "row"}} pauseOnHover={true} pauseOnClick={true} speed={100} gradient={false}>
                             {assuredInfo.map((data, index) => (
                                 <AssuredInfoCard key={index} data={data} />
                             ))}
