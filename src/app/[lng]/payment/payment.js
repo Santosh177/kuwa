@@ -444,6 +444,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
       console.log("BuyProductId",productId,variantId);
       console.log("prePaidDiscount",extraDiscount);
       const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+      const customFee = selectedCountry?.customFee || 0;
       console.log("njnqqnk",isArabic)
       const discountAmount = (parseFloat((((priceDetails['totalAmount']-priceDetails['deliveryFees']) * prePaidDiscount)/100).toFixed(2)));
       console.log("pMode",pMode)
@@ -817,7 +818,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           supportedNetworks: applePaySupportednetworks.split(", "),
           countryCode: selectedCountry.code || "",
           currencyCode:  selectedCountry.currency || "",
-          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-discountAmount },
+          total: { label: "For " + "Multiple_Package", amount: priceDetails['totalAmount']-discountAmount  },
         "lineItems":[
           {
             "label": "Additional Discount",

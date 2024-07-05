@@ -480,10 +480,10 @@ export default  function Cart({cartData}) {
       let devliveryFees = priceDetails['deliveryFees'];
       const cartItemCount = cartItems && cartItems.length;
       const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
+      const customFee = selectedCountry?.customFee || 0 ;
       console.log("prePaidDiscountbb",prePaidDiscount);
       let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
-      totalAmount = totalAmount - extraDiscount
-      const customFee = selectedCountry?.customFee || 0 ;
+      totalAmount = totalAmount - extraDiscount + customFee 
       console.log("finalAmount",extraDiscount)
       console.log("cartItemscartItems",cartItems)
       let labelData = [];
@@ -517,16 +517,20 @@ export default  function Cart({cartData}) {
           {
             "label": "Additional Discount",
             "amount": - extraDiscount
-          }
+          },
+          ...(customFee > 0 ? [{
+            "label": "Custom Duty",
+            "amount": customFee
+          }] : [])
         ],
       };
 
-      if (customFee > 0) {
-        lineItems.push({
-            "label": "Custom Duty",
-            "amount": customFee
-        });
-    }
+    //   if (customFee > 0) {
+    //     lineItems.push({
+    //         "label": "Custom Duty",
+    //         "amount": customFee
+    //     });
+    // }
 
     console.log("request+++",request)
     
