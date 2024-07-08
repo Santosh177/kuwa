@@ -3,10 +3,11 @@ import { useRouter } from 'next/navigation';
 import styles from './page-header.module.scss';
 import { useEffect } from 'react';
 import { useLanguage } from '@/context/languageDetails';
+import { useCountry } from '@/context/contryDetails';
 
 const PageHeader = ({headerName="",backButtonAction="" , ishideBackButton= false , isHideLogo=false, onCrossIcon={}}) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+    const {selectedCountry={},setSelectedCountry={}} = useCountry();
     const router = useRouter()
     const handelBakButton = () =>{
         if(backButtonAction){
@@ -21,7 +22,7 @@ const PageHeader = ({headerName="",backButtonAction="" , ishideBackButton= false
             window.dataLayer = window.dataLayer || [];
             function gtag() { dataLayer.push(arguments); }
             gtag('js', new Date());
-            gtag('config', 'G-9ZH5J03SH9'); 
+            gtag('config', selectedCountry.code == "QA" ? 'G-8N5W1WCFQP' : 'G-9ZH5J03SH9'); 
             window.dataLayer.push({
                 'event': 'pageview',
                 'pagePath': window.location.pathname,
