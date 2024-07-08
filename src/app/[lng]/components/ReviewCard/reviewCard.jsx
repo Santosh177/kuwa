@@ -35,7 +35,7 @@ const ReviewCard = ({ item }) => {
             </div>
             <div className={style.rating}>
               <img src="https://d25uasl7utydze.cloudfront.net/kuwa/stars.png" alt="star" />
-              <span>{rating}</span>
+              <span>{parseFloat(rating).toFixed(2)}</span>
             </div>
           </div>
         </div>

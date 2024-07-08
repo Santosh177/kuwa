@@ -67,7 +67,7 @@ const ProductRating = ({rating,productId,images,title}) => {
        {Object.keys(rating).length >0 && isShowRating && <div className={style.header}>
         <div className={style.Title}>{isArabic ? "التقييمات والمراجعات" : "Reviews and ratings"}</div>
         <div className={style.totalRatingDiv}>
-        <div className={style.totalRating}>{overAllRating}</div>
+        <div className={style.totalRating}>{parseFloat(overAllRating).toFixed(2)}</div>
         <div className={style.starImage}>
         {renderStars()}
         </div>
@@ -80,7 +80,7 @@ const ProductRating = ({rating,productId,images,title}) => {
             <div key={index} className={style.ratingRow}>
                 <div className={style.ratingHeading}>
             <div className={style.ratingLabel}>{data.label}</div>
-            <div className={style.ratingValue}>{data.rating}</div>
+            <div className={style.ratingValue}>{parseFloat(data.rating).toFixed(2)}</div>
             </div>
             <div className={style.ratingBarContainer}>
               <div
