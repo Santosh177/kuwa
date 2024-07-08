@@ -6,6 +6,7 @@ import Loader from '@/app/[lng]/components/Loader/Loader';
 import { useCountry } from '@/context/contryDetails';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { useLanguage } from '@/context/languageDetails';
+import { useSearchParams } from 'next/navigation';
 
 const validateForm = (formData) => {
   const errors = {};
@@ -36,7 +37,11 @@ export default function Login() {
     const [pageType, setPageType] = useState(getPageType())
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
+    const searchParams = useSearchParams()
 
+    const isReview = searchParams.get('review')
+
+console.log("isReview",isReview)
     const togglePasswordVisibility = () => {
       setIsPasswordVisible(!isPasswordVisible);
     };
@@ -75,8 +80,9 @@ export default function Login() {
               },
               "cart_items": []
              })
-             window.location.href = '/'
-          }
+            //  debugger
+             window.location.href = isReview == "true" ? window.history.back() :  '/'
+          } 
           else{
             
           }

@@ -1,0 +1,157 @@
+.ratingContainer{
+    width: 400px;
+    .header{
+        .Title{
+            color: #07141A;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+        }
+        .totalRatingDiv{
+            padding-top: 8px;
+            display: flex;
+            // justify-content: center;
+            align-items: center;
+            .totalRating{
+                color: #07141A;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+               
+               }
+               .starImage{
+                display: flex;
+
+                img{
+                    width: 48px;
+                    height: 48px;
+                } 
+            }
+        }
+        .totalRatingCount{
+            text-align: center;
+            color: #98A1AC;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+        }
+    }
+
+.ratingRow{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+    margin: 16px 0;
+    .ratingHeading{
+        display: flex;
+        justify-content: space-between;
+        color: #07141A;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+margin-bottom: 8px;
+        .ratingLabel{
+        }
+        .ratingValue{
+
+        }
+    }
+  
+       .ratingBarContainer{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        background-color: #EEF5F5;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        
+        .ratingBar{
+            
+            height: 12px;
+            background-color: #247A81;
+            border-radius: 8px;
+        }
+       
+       } 
+    
+}
+.btnDiv{
+    border-radius: 24px;
+    border: 1px solid #247A81;
+    display: flex;
+// width: 400px;
+padding-top: 16px;
+padding-bottom: 16px;
+justify-content: center;
+align-items: center;
+gap: 4px;
+cursor: pointer;
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   color: #247A81;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+}
+}
+
+@media(max-width:990px){
+    .ratingContainer{
+        width: 100%;
+        .header{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .Title{
+               
+                font-size: 16px;
+            }
+            .totalRatingDiv{
+                padding-top: 2px;
+              .totalRating{
+                font-size: 16px;
+              } 
+              .starImage{
+               
+                .reviewStar{
+                    width: 32px;
+                    height: 32px;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                
+              } 
+            }
+
+        }
+        .ratingRow{
+            .ratingHeading{
+                font-size: 12px;
+                margin-bottom: 4px;
+            }
+            .ratingBarContainer{
+               .ratingBar{
+                height: 8px;
+               } 
+            }
+        }
+        .btnDiv{
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+       
+    }
+}

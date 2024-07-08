@@ -73,7 +73,12 @@
             font-style: normal;
             font-weight: 500;
             margin-bottom: 3px;
-            // border-bottom: 1px solid #2E7CF6 ;
+     
+            cursor: pointer;
+            
+        }
+        .totalNumberRating:hover{
+       border-bottom: 1px solid #2E7CF6 ;
         }
     }
 

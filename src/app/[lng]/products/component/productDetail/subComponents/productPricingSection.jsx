@@ -11,7 +11,7 @@ import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/Notify
 import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmailPopup";
 import { useAuth } from '@/context/userDetail';
 import { useLanguage } from "@/context/languageDetails";
-const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId,avgRating="",totalRating="" }) => {
+const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId,avgRating="",totalRating="",showProductReview }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory,productId,selectedVariantQuantity,shortDescription=""} = pricingSectionVariables;
     const {nameArabic="",titleArabic="",shortDescriptionArabic=""} = pricingSectionVariables || {}
     console.log("pricingSectionVariables",pricingSectionVariables)
@@ -166,7 +166,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
            {avgRating && totalRating && <div className={styles.ratingSection}>
            <div className={styles.avgRatingValue}>{`${avgRating.toFixed(1)}`}</div>
               <div className={styles.avgRating}>{renderStars()}</div>
-              <div className={styles.totalNumberRating}>{`(${totalRating} ${isArabic ? "التقييمات" : "ratings"})`}</div>
+              <div className={styles.totalNumberRating} onClick={showProductReview}>{`(${totalRating} ${isArabic ? "التقييمات" : "ratings"})`}</div>
             </div>}
             <div className={styles.pricingConatiner}>
             <div className={styles.price}>

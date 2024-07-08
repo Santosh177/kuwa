@@ -20,7 +20,7 @@ import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 // import { mixPanelTrackEvent } from '../../../../app/page'
 import { mixPanelTrackEvent } from "@/app/[lng]/page";
 import { useLanguage } from "@/context/languageDetails";
-const ProductDeatil = ({ productData = {} }) => {
+const ProductDeatil = ({ productData = {},showProductReview }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating="",shortDescription=""} = productData || {};
    const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive=false,dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = productData || {}
@@ -738,7 +738,7 @@ const ProductDeatil = ({ productData = {} }) => {
             </div>
             <div className={style.productPricingContainer}>
                 <ProductImageSection allImages={allImages} dealTag={isArabic ? dealTagArabic : dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} seleVariantIcon={seleVariantIcon} selectedVariantTag={selectedVariantTag} normalInventory={normalInventory} selectedVariantQuantity={selectedVariantQuantity} />
-                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf}  isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus}  isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} avgRating={avgRating} totalRating={totalRating} />
+                <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf}  isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus}  isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} avgRating={avgRating} totalRating={totalRating} showProductReview={showProductReview} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>
                 <FrequntlyBoughtTogether currency={currency} productData={frequentlyBoughtTogether} />

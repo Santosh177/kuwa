@@ -1,0 +1,70 @@
+.ReviewsOverlay{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    position:fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 100000;
+    background: rgba(7, 20, 26, 0.40);
+
+backdrop-filter: blur(4px);
+
+    .ReviewsSuccessPopup{
+        width:370px;
+        border-radius: 16px;
+        background: #FFF;
+        padding: 24px;
+        .content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            // .crossIcon{
+            //     position: relative;
+            //     left: 150px;
+            //     cursor: pointer;
+            // }
+           .rightArrowImg{
+            img{
+                width:72px;
+                height:72px;
+            }
+           } 
+           .title{
+            color: #07141A;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-align: center;
+           }
+           .txt{
+            color: #9AA1AB;
+             text-align: center;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            width: 286px;
+           }
+           .btn{
+            width: 287px;
+            padding: 8px 50px;
+            margin-top: 13px;
+            border-radius: 24px;
+            text-align: center;
+            cursor: pointer;
+background: #247A81;
+color: #FFF;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px;
+           }
+        }
+    }
+}
