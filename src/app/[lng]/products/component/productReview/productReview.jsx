@@ -22,20 +22,20 @@ const splitAndPush = (intialProduct, currentQueue) => {
 }
 const ProductReview = ({ productData }) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-    const { reviews = [],id="",images=[],title,rating={} } = productData || {}
+    const { reviewList = [],id="",images=[],title,rating={} } = productData || {}
   
     const [currentQueue, setCurrentQueue] = useState([]);
     const {isLogin=false, userData={}} = useAuth();
 
     useEffect(() => {
-        setCurrentQueue(splitAndPush(reviews, currentQueue))
+        setCurrentQueue(splitAndPush(reviewList, currentQueue))
     }, [])
 
     const handelOnCLick = () => {
-        setCurrentQueue(splitAndPush(reviews, currentQueue))
+        setCurrentQueue(splitAndPush(reviewList, currentQueue))
     }
-    const totalReviews  = productData  && reviews?.length || 0;
-    const isShowMore = (reviews && reviews?.length > 8 && currentQueue.length < totalReviews );
+    const totalReviews  = productData  && reviewList?.length || 0;
+    const isShowMore = (reviewList && reviewList?.length > 8 && currentQueue.length < totalReviews );
     // if (currentQueue && currentQueue.length > 0) {
         return (
             <>
