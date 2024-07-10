@@ -135,6 +135,11 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         }
       }
 
+      const handleAddToCart = () => {
+        handelAddToCart();
+        fbq('track', 'AddToCart');
+    };
+
       const currentDate = new Date();
       const deliveryDate = new Date(currentDate);
       deliveryDate.setDate(deliveryDate.getDate() + 4);
@@ -210,7 +215,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         {isArabic ? "اعلمني " :"NotifyMe"}
       </div>
     ) : (
-      <div>
+      <>
         {isAddedToCart ? (
           <div className={styles.addToCart} onClick={() => handelViewCart()}>
             {/* <span> */}
@@ -218,7 +223,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
               {/* </span> */}
           </div>
         ) : (
-          <div className={styles.addToCart} onClick={() => handelAddToCart()}>
+          <div className={styles.addToCart} onClick={handleAddToCart}>
             {/* <span> */}
               {isArabic ? "أضف إلى السلة" :"Add to Cart"}
               {/* </span> */}
@@ -229,7 +234,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
             {isArabic ? "اشترِ الآن" :"Buy Now"}
             {/* </span> */}
         </div>
-        </div>
+        </>
     )
   ) : (
     selectedVariantQuantity <= 0 ? (
@@ -245,7 +250,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
               {/* </span> */}
           </div>
         ) : (
-          <div className={styles.addToCart} onClick={() => handelAddToCart()}>
+          <div className={styles.addToCart} onClick={handleAddToCart}>
             {/* <span> */}
               {isArabic ? "أضف إلى السلة" :"Add to Cart"}
               {/* </span> */}
