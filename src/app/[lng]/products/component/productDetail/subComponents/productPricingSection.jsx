@@ -213,15 +213,21 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
       <>
         {isAddedToCart ? (
           <div className={styles.addToCart} onClick={() => handelViewCart()}>
-            <span>{isArabic ? "عرض السلة" :"View Cart"}</span>
+            {/* <span> */}
+              {isArabic ? "عرض السلة" :"View Cart"}
+              {/* </span> */}
           </div>
         ) : (
           <div className={styles.addToCart} onClick={() => handelAddToCart()}>
-            <span>{isArabic ? "أضف إلى السلة" :"Add to Cart"}</span>
+            {/* <span> */}
+              {isArabic ? "أضف إلى السلة" :"Add to Cart"}
+              {/* </span> */}
           </div>
         )}
         <div className={styles.buyNow} onClick={() => handelBuyNow()}>
-          <span>{isArabic ? "اشترِ الآن" :"Buy Now"}</span>
+          {/* <span> */}
+            {isArabic ? "اشترِ الآن" :"Buy Now"}
+            {/* </span> */}
         </div>
       </>
     )
@@ -234,15 +240,22 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
       <>
         {isAddedToCart ? (
           <div className={styles.addToCart} onClick={() => handelViewCart()}>
-            <span>{isArabic ? "عرض السلة" : "View Cart"}</span>
+            {/* <span> */}
+              {isArabic ? "عرض السلة" : "View Cart"}
+              {/* </span> */}
           </div>
         ) : (
           <div className={styles.addToCart} onClick={() => handelAddToCart()}>
-            <span>{isArabic ? "أضف إلى السلة" :"Add to Cart"}</span>
+            {/* <span> */}
+              {isArabic ? "أضف إلى السلة" :"Add to Cart"}
+              {/* </span> */}
           </div>
         )}
         <div className={styles.buyNow} onClick={() => handelBuyNow()}>
-          <span>{isArabic ? "اشترِ الآن" :"Buy Now"}</span>
+          {/* <span> */}
+            {isArabic ? "اشترِ الآن" :"Buy Now"}
+
+          {/* </span> */}
         </div>
       </>
     )
