@@ -10,9 +10,9 @@ const AddReviewsSuccessPopup = () => {
         <div className={styles.content}>
       
          <div className={styles.rightArrowImg}><img src='https://d25uasl7utydze.cloudfront.net/assets/check_uncheck.svg'></img></div>
-         <div className={styles.title}>{isArabic ? "" : "Review submitted - Thank you!"}</div>
-            <div className={styles.txt}>{isArabic ? "": "We are processing your review. This might take several days, so we appreciate your patience. We will email you when this is complete."}</div>
-            <div className={styles.btn} onClick={()=> window.location.href = '/'}>{isArabic ? " حسنًا" : "Back to homepage"}</div>
+         <div className={styles.title}>{isArabic ? "تم إرسال المراجعة - شكراً لك!" : "Review submitted - Thank you!"}</div>
+            <div className={styles.txt}>{isArabic ? "نحن نقوم بمعالجة مراجعتك. قد يستغرق ذلك عدة أيام، لذا نقدر صبرك. سنرسل لك بريدًا إلكترونيًا عند الانتهاء." : "We are processing your review. This might take several days, so we appreciate your patience. We will email you when this is complete."}</div>
+            <div className={styles.btn} onClick={()=> window.location.href = '/'}>{isArabic ? "العودة إلى الصفحة الرئيسية" : "Back to homepage"}</div>
         </div>
 
     </div>
