@@ -223,7 +223,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
               {/* </span> */}
           </div>
         )}
-        <div className={styles.buyNow} onClick={() => handelBuyNow()}>
+        <div className={styles.buyNowBtn} onClick={() => handelBuyNow()}>
           {/* <span> */}
             {isArabic ? "اشترِ الآن" :"Buy Now"}
             {/* </span> */}
@@ -250,7 +250,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
               {/* </span> */}
           </div>
         )}
-        <div className={styles.buyNow} onClick={() => handelBuyNow()}>
+        <div className={styles.buyNowBtn} onClick={() => handelBuyNow()}>
           {/* <span> */}
             {isArabic ? "اشترِ الآن" :"Buy Now"}
 

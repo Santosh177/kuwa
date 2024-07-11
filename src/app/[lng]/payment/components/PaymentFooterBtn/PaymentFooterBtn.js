@@ -40,7 +40,7 @@ const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={
   const finalTotalAmount = (extraDiscount ? totalPrice - extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalPrice + codCharge : totalPrice))+ customFee
   
       return (
-        <div className={styles.paymentFooterbtn} >
+        <div className={styles.paymentFooterSection} >
             <div className={styles.paymentFooterBtnContainer}>
                 <div className={styles.paymentInfo}>
                     <div className={styles.txt}>{isArabic ? "المجموع" :"Total"} : <span className={styles.price}>{currency + " " +parseFloat(finalTotalAmount).toFixed(2)}</span></div>

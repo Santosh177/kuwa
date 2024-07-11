@@ -7,7 +7,7 @@ export default function PatmentFooterBtn({isApplePaySession=false,btnName="",tot
 
   
       return (
-        <div className={styles.paymentFooterbtn} >
+        <div className={styles.paymentFooterSection} >
             <div className={styles.paymentFooterBtnContainer} style={(!isApplePaySession)?{justifyContent:'center'}:{}}>
                 <div className={styles.paymentInfo}>
                 {isAllOutOfStockProducts ? "" :     <div className={styles.txt}>{isArabic ? "المجموع" : "Total"} : <span className={styles.price}>{(totalPrice != undefined)?totalPrice:""}</span></div>}

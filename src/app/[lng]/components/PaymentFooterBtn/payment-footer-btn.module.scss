@@ -1,4 +1,4 @@
-.paymentFooterbtn{
+.paymentFooterSection{
     position: fixed;
     bottom: 0px;
     width: 100%;
@@ -82,7 +82,7 @@
 }
 
 @media(max-width:990px){
-    .paymentFooterbtn{
+    .paymentFooterSection{
         .paymentFooterBtnContainer{
             .btn{
                 // padding-right: 12px;
@@ -101,7 +101,7 @@
 }
 
 @media(min-width:990px){
-    .paymentFooterbtn{
+    .paymentFooterSection{
         .paymentFooterBtnContainer{
             margin: 0 auto;
             // width: 30%;
