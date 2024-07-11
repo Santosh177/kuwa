@@ -42,7 +42,7 @@ const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={
   
       return (
         <div className={styles.paymentFooterSection} >
-            <div className={styles.paymentFooterBtnContainer}>
+            <div className={styles.paymentFooterContainer}>
                 <div className={styles.paymentInfo}>
                     <div className={styles.txt}>{isArabic ? "المجموع" :"Total"} : <span className={styles.price}>{currency + " " +parseFloat(finalTotalAmount).toFixed(2)}</span></div>
                    <div className={styles.subTxt} onClick={()=>showViewDetails()}>{isArabic ? "عرض تفاصيل السعر" : "View price details"}</div> 

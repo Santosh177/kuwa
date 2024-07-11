@@ -9,7 +9,7 @@
     background-color: #FFFFFF;
     left: 0;
     box-shadow: 0px -6px 7px rgba(173, 173, 173, 0.16);
-    .paymentFooterBtnContainer{
+    .paymentFooterContainer{
         display: flex;
         justify-content: space-between;
         gap: 10px;
@@ -62,7 +62,7 @@
 
 @media(max-width:990px){
     .paymentFooterSection{
-        .paymentFooterBtnContainer{
+        .paymentFooterContainer{
             flex-direction: column;
             .btn{
                 padding-left: 12px;
@@ -113,7 +113,7 @@
 
 @media(min-width:990px){
     .paymentFooterSection{
-        .paymentFooterBtnContainer{
+        .paymentFooterContainer{
             margin: 0 auto;
             align-items: center;
             justify-content: center;
