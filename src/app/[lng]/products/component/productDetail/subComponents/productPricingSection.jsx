@@ -236,7 +236,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         {isArabic ? "اعلمني " :"NotifyMe"}
       </div>
     ) : (
-      <div>
+     <>
         {isAddedToCart ? (
           <div className={styles.addToCartBtn} onClick={() => handelViewCart()}>
             {/* <span> */}
@@ -256,7 +256,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
 
           {/* </span> */}
         </div>
-        </div>
+        </>
     )
   )}
 </div>

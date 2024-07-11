@@ -118,7 +118,7 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
       <script type="text/javascript" src="https://checkout.tabby.ai/tabby-promo.js" async></script>
       <Script src="https://cdn.tamara.co/widget/product-widget.min.js" strategy="lazyOnload" />
       <Script src="/tamara-script.js" strategy="lazyOnload" />
-      <Script type="text/javascript" src="/meta-pixel-code.js" strategy="lazyOnload" />
+      {/* <Script type="text/javascript" src="/meta-pixel-code.js" strategy="lazyOnload" /> */}
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZH5J03SH9"></script>
       {/* <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
