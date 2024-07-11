@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
-import styles from './payment-footer-btn.module.scss';
+// import styles from './payment-footer-btn.module.scss';
+import styles from './payment-footer.module.scss'
 import { usePaymentPageData } from '@/context/payment';
 import { useLanguage } from '@/context/languageDetails';
 
