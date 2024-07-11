@@ -1,5 +1,6 @@
 
-import styles from './payment-footer-btn.module.scss';
+// import styles from './payment-footer-btn.module.scss';
+import styles from './payment-footer.module.scss'
 import { useLanguage } from '@/context/languageDetails';
 
 export default function PatmentFooterBtn({isApplePaySession=false,btnName="",totalPrice="",onProceed={},onHandleApplePay={},showViewDetails, prePaidDiscount="",isAllOutOfStockProducts}) {
@@ -7,13 +8,13 @@ export default function PatmentFooterBtn({isApplePaySession=false,btnName="",tot
 
   
       return (
-        <div className={styles.paymentFooterbtn} >
-            <div className={styles.paymentFooterBtnContainer} style={(!isApplePaySession)?{justifyContent:'center'}:{}}>
+        <div className={styles.paymentFooterSection} >
+            <div className={styles.paymentFooterContainer} style={(!isApplePaySession)?{justifyContent:'center'}:{}}>
                 <div className={styles.paymentInfo}>
                 {isAllOutOfStockProducts ? "" :     <div className={styles.txt}>{isArabic ? "المجموع" : "Total"} : <span className={styles.price}>{(totalPrice != undefined)?totalPrice:""}</span></div>}
                     <div className={styles.subTxt} onClick={()=>showViewDetails()}>{isArabic ? "عرض تفاصيل السعر" : "View price details"}</div>
                 </div>
-                <div className={styles.paymentBtnContainer}>
+                <div className={styles.paymentContainer}>
                   { isApplePaySession  &&
                    <div  className={styles.applePayContainer} style={{cursor:'pointer',height:'48px',}} onClick={()=>onHandleApplePay()}>
                     <img className={styles.applePayImg} style={{height:'100%'}} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/default.png' alt='apple-pay' />

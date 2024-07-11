@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
-import styles from './payment-footer-btn.module.scss';
+// import styles from './payment-footer-btn.module.scss';
+import styles from './payment-footer.module.scss'
 import { usePaymentPageData } from '@/context/payment';
 import { useLanguage } from '@/context/languageDetails';
 
@@ -40,8 +41,8 @@ const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={
   const finalTotalAmount = (extraDiscount ? totalPrice - extraDiscount : ((codCharge > 0 && selectedPaymentMethod=="COD") ? totalPrice + codCharge : totalPrice))+ customFee
   
       return (
-        <div className={styles.paymentFooterbtn} >
-            <div className={styles.paymentFooterBtnContainer}>
+        <div className={styles.paymentFooterSection} >
+            <div className={styles.paymentFooterContainer}>
                 <div className={styles.paymentInfo}>
                     <div className={styles.txt}>{isArabic ? "المجموع" :"Total"} : <span className={styles.price}>{currency + " " +parseFloat(finalTotalAmount).toFixed(2)}</span></div>
                    <div className={styles.subTxt} onClick={()=>showViewDetails()}>{isArabic ? "عرض تفاصيل السعر" : "View price details"}</div> 

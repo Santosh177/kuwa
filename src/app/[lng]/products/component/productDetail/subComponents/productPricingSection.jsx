@@ -134,7 +134,6 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
           console.error('Error:', error);
         }
       }
-
       const currentDate = new Date();
       const deliveryDate = new Date(currentDate);
       deliveryDate.setDate(deliveryDate.getDate() + 4);
@@ -212,18 +211,24 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     ) : (
       <>
         {isAddedToCart ? (
-          <div className={styles.addToCart} onClick={() => handelViewCart()}>
-            <span>{isArabic ? "عرض السلة" :"View Cart"}</span>
+          <div className={styles.addToCartBtn} onClick={() => handelViewCart()}>
+            {/* <span> */}
+              {isArabic ? "عرض السلة" :"View Cart"}
+              {/* </span> */}
           </div>
         ) : (
-          <div className={styles.addToCart} onClick={() => handelAddToCart()}>
-            <span>{isArabic ? "أضف إلى السلة" :"Add to Cart"}</span>
+          <div className={styles.addToCartBtn} onClick={()=>handelAddToCart()}>
+            {/* <span> */}
+              {isArabic ? "أضف إلى السلة" :"Add to Cart"}
+              {/* </span> */}
           </div>
         )}
-        <div className={styles.buyNow} onClick={() => handelBuyNow()}>
-          <span>{isArabic ? "اشترِ الآن" :"Buy Now"}</span>
+        <div className={styles.buyNowBtn} onClick={() => handelBuyNow()}>
+          {/* <span> */}
+            {isArabic ? "اشترِ الآن" :"Buy Now"}
+            {/* </span> */}
         </div>
-      </>
+        </>
     )
   ) : (
     selectedVariantQuantity <= 0 ? (
@@ -231,20 +236,27 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
         {isArabic ? "اعلمني " :"NotifyMe"}
       </div>
     ) : (
-      <>
+      <div>
         {isAddedToCart ? (
-          <div className={styles.addToCart} onClick={() => handelViewCart()}>
-            <span>{isArabic ? "عرض السلة" : "View Cart"}</span>
+          <div className={styles.addToCartBtn} onClick={() => handelViewCart()}>
+            {/* <span> */}
+              {isArabic ? "عرض السلة" : "View Cart"}
+              {/* </span> */}
           </div>
         ) : (
-          <div className={styles.addToCart} onClick={() => handelAddToCart()}>
-            <span>{isArabic ? "أضف إلى السلة" :"Add to Cart"}</span>
+          <div className={styles.addToCartBtn} onClick={()=>handelAddToCart()}>
+            {/* <span> */}
+              {isArabic ? "أضف إلى السلة" :"Add to Cart"}
+              {/* </span> */}
           </div>
         )}
-        <div className={styles.buyNow} onClick={() => handelBuyNow()}>
-          <span>{isArabic ? "اشترِ الآن" :"Buy Now"}</span>
+        <div className={styles.buyNowBtn} onClick={() => handelBuyNow()}>
+          {/* <span> */}
+            {isArabic ? "اشترِ الآن" :"Buy Now"}
+
+          {/* </span> */}
         </div>
-      </>
+        </div>
     )
   )}
 </div>
