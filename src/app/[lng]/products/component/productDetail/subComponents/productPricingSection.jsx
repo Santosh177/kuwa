@@ -134,12 +134,6 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
           console.error('Error:', error);
         }
       }
-
-      const handleAddToCart = () => {
-        handelAddToCart();
-        fbq('track', 'AddToCart');
-    };
-
       const currentDate = new Date();
       const deliveryDate = new Date(currentDate);
       deliveryDate.setDate(deliveryDate.getDate() + 4);
@@ -217,13 +211,13 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     ) : (
       <>
         {isAddedToCart ? (
-          <div className={styles.addToCart} onClick={() => handelViewCart()}>
+          <div className={styles.addToCartBtn} onClick={() => handelViewCart()}>
             {/* <span> */}
               {isArabic ? "عرض السلة" :"View Cart"}
               {/* </span> */}
           </div>
         ) : (
-          <div className={styles.addToCart} onClick={handleAddToCart}>
+          <div className={styles.addToCartBtn} onClick={()=>handelAddToCart()}>
             {/* <span> */}
               {isArabic ? "أضف إلى السلة" :"Add to Cart"}
               {/* </span> */}
@@ -244,13 +238,13 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
     ) : (
       <div>
         {isAddedToCart ? (
-          <div className={styles.addToCart} onClick={() => handelViewCart()}>
+          <div className={styles.addToCartBtn} onClick={() => handelViewCart()}>
             {/* <span> */}
               {isArabic ? "عرض السلة" : "View Cart"}
               {/* </span> */}
           </div>
         ) : (
-          <div className={styles.addToCart} onClick={handleAddToCart}>
+          <div className={styles.addToCartBtn} onClick={()=>handelAddToCart()}>
             {/* <span> */}
               {isArabic ? "أضف إلى السلة" :"Add to Cart"}
               {/* </span> */}
