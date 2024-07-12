@@ -21,7 +21,7 @@ const  AllProduct=({req}) =>{
     const [isLoading, setIsLoading] = useState(false);
     const productID = req && req.params && req.params.id || "";
   
-    const productReview = useRef()
+    const productReviewRef = useRef()
     useEffect(() => {
       const fetchProductData = async () => {
         try {
@@ -51,9 +51,16 @@ const  AllProduct=({req}) =>{
       fetchProductData();
     }, [productID]);
   
-    const showProductReview = ()=>{
-      productReview.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "end" }); 
-    }
+    const showProductReview = () => {
+      if (productReviewRef.current) {
+          console.log("Scrolling to product review", productReviewRef.current);
+          productReviewRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+          setTimeout(() => {
+              window.scrollBy(0, -50);
+          }, 500);
+      }
+  }
+
   
     return (
       
@@ -71,9 +78,7 @@ const  AllProduct=({req}) =>{
           <div className={style.allDetailDisciptionContainer}>
             <ProductDiscription productData={productData} />
           </div>
-          <div id="product-review" ref={productReview}>
-          <ProductReview productData={productData}  />
-          </div>
+          <ProductReview productData={productData} ref={productReviewRef}  />
           <RelatedProducts productData={productData}  />
           <ProductFaq productData={productData} />
           <Footer />

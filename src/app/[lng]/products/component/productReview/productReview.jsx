@@ -1,7 +1,7 @@
 "use client"
 // import ReviewCard from "@/app/[lng]/components/ReviewCard/ReviewCard";
 import ReviewCard from "@/app/[lng]/components/ReviewCard/reviewCard";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,forwardRef} from "react";
 import style from "./ProductReview.module.scss"
 import { useLanguage } from "@/context/languageDetails";
 import ProductRating from "../productRating/ProductRating";
@@ -20,7 +20,7 @@ const splitAndPush = (intialProduct, currentQueue) => {
     
     return ([...currentQueue, ...finalResult])
 }
-const ProductReview = ({ productData }) => {
+const ProductReview = forwardRef(({ productData},ref) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     const { reviewList = [],id="",images=[],title,rating={} } = productData || {}
   
@@ -39,8 +39,8 @@ const ProductReview = ({ productData }) => {
     // if (currentQueue && currentQueue.length > 0) {
         return (
             <>
-            <div className={style.reviewsSection} >
-                <div className={style.ratingSection}>
+            <div className={style.reviewsSection} ref={ref}>
+                <div className={style.ratingSection} >
                     <ProductRating rating = {rating} productId={id} images={images} title={title}/>
                 </div>
                 <div className={style.reviewsContainerOuter}>
@@ -67,6 +67,6 @@ const ProductReview = ({ productData }) => {
     // else{
     //     return <></>
     // }
-}
+})
 
 export default ProductReview

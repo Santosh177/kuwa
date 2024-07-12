@@ -46,7 +46,7 @@ const StarRating = ({ id, label, rating, setRating }) => {
               src={
                 value <= (hoverRating || rating)
                   ? 'https://d25uasl7utydze.cloudfront.net/assets/star-filled.svg'
-                  : 'https://d25uasl7utydze.cloudfront.net/assets/star.svg'
+                  : 'https://d25uasl7utydze.cloudfront.net/assets/bright_star.svg'
               }
               alt="star"
             />
