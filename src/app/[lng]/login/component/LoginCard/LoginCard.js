@@ -80,14 +80,26 @@ console.log("isReview",isReview)
               },
               "cart_items": []
              })
-            //  debugger
-             window.location.href = isReview == "true" ? window.history.back() :  '/'
-          } 
-          else{
-            
-          }
-         } catch (err) {
-         }
+          
+      const fallbackUrl = '/'; // Fallback URL
+
+      if (isReview === "true") {
+        const previousUrl = document.referrer; // Get the referrer URL
+        console.log("previousUrl",previousUrl)
+        if (previousUrl && previousUrl !== window.location.href) {
+          window.location.href = previousUrl; // Navigate to the referrer URL
+        } else {
+          window.location.href = fallbackUrl; // Fallback to home if no referrer
+        }
+      } else {
+        window.location.href = fallbackUrl; // Default to home
+      }
+    } else {
+      console.log("fetching the login data")
+    }
+  } catch (err) {
+    console.log(err)
+  }
     
     }
     useEffect(() => {
