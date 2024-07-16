@@ -39,9 +39,12 @@ export default function Login() {
 
     const searchParams = useSearchParams()
 
-    const isReview = searchParams.get('review')
+    const productId = searchParams.get('productId') || "";
+    const productName = searchParams.get('productName') || "";
+    const imagesString = searchParams.get('images');
+    const images = imagesString ? JSON.parse(decodeURIComponent(imagesString)) : [];
+    const encodedImages = encodeURIComponent(JSON.stringify(images));
 
-console.log("isReview",isReview)
     const togglePasswordVisibility = () => {
       setIsPasswordVisible(!isPasswordVisible);
     };
@@ -81,19 +84,13 @@ console.log("isReview",isReview)
               "cart_items": []
              })
           
-      const fallbackUrl = '/'; // Fallback URL
-
-      if (isReview === "true") {
-        const previousUrl = document.referrer; // Get the referrer URL
-        console.log("previousUrl",previousUrl)
-        if (previousUrl && previousUrl !== window.location.href) {
-          window.location.href = previousUrl; // Navigate to the referrer URL
-        } else {
-          window.location.href = fallbackUrl; // Fallback to home if no referrer
-        }
-      } else {
-        window.location.href = fallbackUrl; // Default to home
-      }
+             if(productId){
+        
+              window.location.href = ( `/reviews-ratings?productId=${productId}&productName=${productName}&images=${encodedImages}` ) 
+             }
+             else{
+              window.location.href = '/'
+             }
     } else {
       console.log("fetching the login data")
     }
@@ -217,7 +214,7 @@ console.log("isReview",isReview)
               <div className={styles.loginBtn} onClick={onLogin}>{isArabic ? "تسجيل الدخول" : "Login"}</div>
           </div>
            
-            <div className={styles.signUpTxt}>{isArabic ? "ليس لديك حساب؟" : "Don’t have an account"} ? <span className={styles.createAccountTxt} onClick={()=>router.push('/sign-up')}>{isArabic ? "إنشاء حساب" : "Create account"}</span></div>
+            <div className={styles.signUpTxt}>{isArabic ? "ليس لديك حساب؟" : "Don’t have an account"} ? <span className={styles.createAccountTxt} onClick={()=>router.push(productId ? (`/sign-up?productId=${productId}&productName=${productName}&images=${encodedImages}`) :  '/sign-up')}>{isArabic ? "إنشاء حساب" : "Create account"}</span></div>
         </div>
         
         <Loader isShow={isLoading} />

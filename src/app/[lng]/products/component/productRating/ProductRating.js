@@ -53,13 +53,11 @@ const ProductRating = ({rating,productId,images,title}) => {
       const writeReview = () =>{
 
         const encodedImages = encodeURIComponent(JSON.stringify(images));
-        window.location.href = isLogin ?( `/reviews-ratings?productId=${productId}&productName=${title}&images=${encodedImages}` ) : '/login?review=true' 
+        window.location.href = isLogin ?( `/reviews-ratings?productId=${productId}&productName=${title}&images=${encodedImages}` ) : (`/login?productId=${productId}&productName=${title}&images=${encodedImages}`)
       }
       
       let isShowRating = true;
-      isShowRating = !Object.entries(rating).every(([key, value]) => isNaN(value) || value === 0);
-
-      
+      isShowRating = !Object.entries(rating).every(([key, value]) => isNaN(value) || value === 0);  
 
   return (
     <div className={style.ratingContainer}>
