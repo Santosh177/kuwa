@@ -76,6 +76,7 @@ export default function Login() {
               "cart_items": []
              })
              window.location.href = '/'
+             localStorage.removeItem("addressId");
           }
           else{
             
