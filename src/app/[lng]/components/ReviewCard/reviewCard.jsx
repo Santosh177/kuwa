@@ -49,13 +49,13 @@ const ReviewCard = ({ item }) => {
             {reviewBody}
             {!isExpanded && isTruncated && (
               <span className={style.seeMore} onClick={toggleExpand}>
-                ... See more
+                ... {isArabic ? "شاهد المزيد" : "See more"}
               </span>
             )}
           </p>
           {isExpanded && (
             <button className={style.toggleButton} onClick={toggleExpand}>
-              See less
+             {isArabic ? "شاهد أقل" : "See less"}
             </button>
           )}
         </div>
