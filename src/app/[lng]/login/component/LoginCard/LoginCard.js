@@ -87,9 +87,11 @@ export default function Login() {
              if(productId){
         
               window.location.href = ( `/reviews-ratings?productId=${productId}&productName=${productName}&images=${encodedImages}` ) 
+              localStorage.removeItem("addressId");
              }
              else{
               window.location.href = '/'
+              localStorage.removeItem("addressId");
              }
     } else {
       console.log("fetching the login data")
