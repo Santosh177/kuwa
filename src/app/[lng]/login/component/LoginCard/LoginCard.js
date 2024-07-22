@@ -6,6 +6,7 @@ import Loader from '@/app/[lng]/components/Loader/Loader';
 import { useCountry } from '@/context/contryDetails';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { useLanguage } from '@/context/languageDetails';
+import { useSearchParams } from 'next/navigation';
 
 const validateForm = (formData) => {
   const errors = {};
@@ -36,6 +37,13 @@ export default function Login() {
     const [pageType, setPageType] = useState(getPageType())
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
+    const searchParams = useSearchParams()
+
+    const productId = searchParams.get('productId') || "";
+    const productName = searchParams.get('productName') || "";
+    const imagesString = searchParams.get('images');
+    const images = imagesString ? JSON.parse(decodeURIComponent(imagesString)) : [];
+    const encodedImages = encodeURIComponent(JSON.stringify(images));
 
     const togglePasswordVisibility = () => {
       setIsPasswordVisible(!isPasswordVisible);
@@ -75,13 +83,20 @@ export default function Login() {
               },
               "cart_items": []
              })
-             window.location.href = '/'
-          }
-          else{
-            
-          }
-         } catch (err) {
-         }
+          
+             if(productId){
+        
+              window.location.href = ( `/reviews-ratings?productId=${productId}&productName=${productName}&images=${encodedImages}` ) 
+             }
+             else{
+              window.location.href = '/'
+             }
+    } else {
+      console.log("fetching the login data")
+    }
+  } catch (err) {
+    console.log(err)
+  }
     
     }
     useEffect(() => {
@@ -199,7 +214,7 @@ export default function Login() {
               <div className={styles.loginBtn} onClick={onLogin}>{isArabic ? "تسجيل الدخول" : "Login"}</div>
           </div>
            
-            <div className={styles.signUpTxt}>{isArabic ? "ليس لديك حساب؟" : "Don’t have an account"} ? <span className={styles.createAccountTxt} onClick={()=>router.push('/sign-up')}>{isArabic ? "إنشاء حساب" : "Create account"}</span></div>
+            <div className={styles.signUpTxt}>{isArabic ? "ليس لديك حساب؟" : "Don’t have an account"} ? <span className={styles.createAccountTxt} onClick={()=>router.push(productId ? (`/sign-up?productId=${productId}&productName=${productName}&images=${encodedImages}`) :  '/sign-up')}>{isArabic ? "إنشاء حساب" : "Create account"}</span></div>
         </div>
         
         <Loader isShow={isLoading} />
