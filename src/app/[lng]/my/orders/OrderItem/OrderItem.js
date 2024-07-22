@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import StarRating from '../StarRating/StarRating';
 import styles from './order-item.module.scss';
 import { useLanguage } from '@/context/languageDetails';
+import { useAuth } from '@/context/userDetail';
 
 const MONTHS = ["Jan","Feb","Mar","April","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
 
@@ -28,7 +29,7 @@ export default  function OrderItem({data,index}) {
 
     console.log("orderData",data)
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+    const {isLogin=false, userData={}} = useAuth()
     
     const { orderId="",productName="",productImg="",orderStatus="",orderProductId="" , expDelivery="",productId="",rating="",productNameArabic } = data || {};
 
@@ -79,8 +80,8 @@ export default  function OrderItem({data,index}) {
             case "DELIVERED":
                 return (
                     <div className={styles.orderInfoDelivered}>
-                        <div className={styles.ratingTxt}>{(rating)?(isArabic ? "لقد قمت بالتقييم" : "You have rated !"):(isArabic ? "قيم المنتج استنادًا إلى تجربتك" : "Rate the product based on your experience.")}</div>
-                        <StarRating onUpdateRating={updateRating} rating={rating} />
+                        {/* <div className={styles.ratingTxt}>{(rating)?(isArabic ? "لقد قمت بالتقييم" : "You have rated !"):(isArabic ? "قيم المنتج استنادًا إلى تجربتك" : "Rate the product based on your experience.")}</div> */}
+                        {/* <StarRating onUpdateRating={updateRating} rating={rating} /> */}
                     </div>
                 
                 )
@@ -91,7 +92,11 @@ export default  function OrderItem({data,index}) {
         }
     }
 
-
+const writeReview = (e) =>{
+    e.stopPropagation();
+    const encodedImages = encodeURIComponent(JSON.stringify([{ imageUrl: productImg }]));
+    window.location.href = isLogin ?( `/reviews-ratings?productId=${productId}&productName=${productName}&images=${encodedImages}` ) : '/login?review=true' 
+}
    
     return (
       <>
@@ -108,6 +113,10 @@ export default  function OrderItem({data,index}) {
                 </div>
                 <div className={styles.orderItemName}>{isArabic ? productName : productNameArabic}</div>
                 {renderOrderInfo(orderStatus)}
+                <div className={styles.btn} onClick={(e)=>writeReview(e)}>
+                <img src="https://d25uasl7utydze.cloudfront.net/assets/writing.svg"/>
+                <span>{isArabic ? "اكتب تقييمك" : "Write a review"}</span>
+            </div>
             </div>
         </div>
       </>

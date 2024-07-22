@@ -1,55 +1,67 @@
-"use client"
-import React from "react";
-import style from "./ReviewCard.module.scss"
-const ReviewCard = ({item}) => {
- 
-    const { reviewBody = "", headLine = "", customerName = "", id = "", rating= "",isActive } = item || {}
-    const getStarImage = (index) => {
-        if (index < rating) {
-          return "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/stars.png"; 
-        } else {
-          return "https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/dull_stars+1.png"; 
-        }
-      };
-    const renderStars = () => {
-        const stars = [];
-        for (let i = 0; i < 5; i++) {
-          const starImage = getStarImage(i);
-          stars.push(
-            <div className={style.reviewStar} key={i}>
-              <img src={starImage} alt="star" />
+"use client";
+import React, { useState, useRef, useEffect } from "react";
+import style from "./ReviewCard.module.scss";
+import { useLanguage } from "@/context/languageDetails";
+
+const ReviewCard = ({ item }) => {
+  const { customerName = "", userLocation = "", rating = "", headLine = "", reviewBody = "" } = item;
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isTruncated, setIsTruncated] = useState(false);
+  const reviewBodyRef = useRef(null);
+
+  const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage(); 
+
+  useEffect(() => {
+    if (reviewBodyRef.current) {
+      setIsTruncated(reviewBodyRef.current.scrollHeight > reviewBodyRef.current.clientHeight);
+    }
+  }, [reviewBody]);
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  return (
+    <>
+      <div className={style.reviewCardContainer}>
+        <div className={style.customer}>
+          <div className={style.customerName}>
+            {customerName} <span>{userLocation}</span>
+          </div>
+          <div className={style.ratingDiv}>
+            <div className={style.verified}>
+              <img src="https://d25uasl7utydze.cloudfront.net/assets/tick_new.svg" alt="security" />
+              <span>{isArabic ? "موثق" : "Verified"}</span>
             </div>
-          );
-        }
-        return stars;
-      };
-    
-    return (
-      <>
-        <div className={style.reviewCardConatiner}>
-        <h2 className={style.heading}>{headLine}</h2>
-          <div className={style.reviewStarConatiner}>
-            {renderStars()}
+            <div className={style.rating}>
+              <img src="https://d25uasl7utydze.cloudfront.net/kuwa/stars.png" alt="star" />
+              <span>{parseFloat(rating).toFixed(2)}</span>
             </div>
-         
-            <p className={style.reviewBody}>{reviewBody}</p>
-            <div className={style.bottomContainer}>
-                <div className={style.customer}>
-                    <div className={style.customerName}>{customerName}</div>
-                    <div className={style.verfied}>
-                        <img src="https://d25uasl7utydze.cloudfront.net/kuwa/security.svg" alt="security" />
-                        <span>Verified Customer</span>
-                    </div>
-                </div>
-               
-            </div>
+          </div>
         </div>
-    
+
+        <div className={style.bottomContainer}>
+          <h2 className={style.heading}>{headLine}</h2>
+          <p
+            className={`${style.reviewBody} ${isExpanded ? style.expanded : style.collapsed}`}
+            ref={reviewBodyRef}
+          >
+            {reviewBody}
+            {!isExpanded && isTruncated && (
+              <span className={style.seeMore} onClick={toggleExpand}>
+                ... {isArabic ? "شاهد المزيد" : "See more"}
+              </span>
+            )}
+          </p>
+          {isExpanded && (
+            <button className={style.toggleButton} onClick={toggleExpand}>
+             {isArabic ? "شاهد أقل" : "See less"}
+            </button>
+          )}
+        </div>
+      </div>
     </>
-    )
-}
+  );
+};
 
-export default ReviewCard
-
-
-
+export default ReviewCard;

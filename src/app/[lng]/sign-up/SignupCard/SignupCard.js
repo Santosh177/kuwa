@@ -101,6 +101,13 @@ export default function SignupCard() {
     const [pageType, setPageType] = useState(getPageType())
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     console.log("useCountry",selectedCountry)
+
+    
+    const productId = searchParams.get('productId') || "";
+    const productName = searchParams.get('productName') || "";
+    const imagesString = searchParams.get('images');
+    const images = imagesString ? JSON.parse(decodeURIComponent(imagesString)) : [];
+    const encodedImages = encodeURIComponent(JSON.stringify(images));
   
     function getDeviceType() {
       if (isMobile) {
@@ -183,6 +190,9 @@ export default function SignupCard() {
                 console.log("santo")
                 if(refererPath){
                   window.location.href = refererPath;
+                }
+                else if(productId){
+                  window.location.href = ( `/reviews-ratings?productId=${productId}&productName=${productName}&images=${encodedImages}` ) 
                 }else{
                   window.location.href = '/'
                 }
