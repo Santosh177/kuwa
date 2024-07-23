@@ -220,6 +220,12 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         "isVariant": selectedVarients ? true : false,
         "variantId": selectedVarients,
     }
+
+    const addGoogleEvent =()=>{
+        window.dataLayer.push({...trackData,'event':'add_to_cart'});
+        debugger
+        console.log("google datalayer",window.dataLayer)
+    }
     
     const addToCart = async (payload) => {
         console.log("addToCartaddToCart",payload)
@@ -232,6 +238,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
                 body: JSON.stringify(payload)
             })
             if (res.status === 200) {
+                addGoogleEvent()
                 return res.status
             } else {
                 throw new Error(await res.text())
@@ -258,7 +265,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         getAddress();
         getCartItems();
     }, [])
-
+    
     useEffect(()=>{
         console.log("noOfProductnoOfProduct",noOfProduct)
         // setIsAddedToCart(false)

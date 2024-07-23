@@ -514,6 +514,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         if(priceDetails['totalAmount'] == 0){
           payload['paymentMode'] = "100%";
           trackData['Payment Type'] = 'Zero final Amount' || ''
+          window.dataLayer.push({'event':'initiate_checkout',...trackData})
           clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
           if(isLogin){
             mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
@@ -543,6 +544,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             payload['paymentMode'] = "CARD";
             trackData['Payment Type'] = 'card' || '';
             trackData['Payment Gateway'] = 'checkout' || '';
+          window.dataLayer.push({'event':'initiate_checkout',...trackData})
+
             clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
             if(isLogin){
               mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
@@ -575,6 +578,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
               }
         }else if(selectedPaymentMethod == "TAMARA"){
               trackData['Payment Type'] = 'tamara' || '';
+          window.dataLayer.push({'event':'initiate_checkout',...trackData})
+
               clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
               if(isLogin){
                 mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
@@ -612,6 +617,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
         }else if(selectedPaymentMethod == "TABBY"){
               trackData['Payment Type'] = 'TABBY' || ''
+          window.dataLayer.push({'event':'initiate_checkout',...trackData})
+
               clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData);
               if(isLogin){
                 mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
@@ -647,6 +654,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
 
         }else if(selectedPaymentMethod == "TAP"){
               trackData['Payment Type'] = 'TAP' || ''
+          window.dataLayer.push({'event':'initiate_checkout',...trackData})
+
               clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
               if(isLogin){
                 mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
@@ -686,6 +695,9 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             payload['totalAmount'] = Number((TotalAmount).toFixed(2));
             payload['finalAmount'] = Number((finalAmount).toFixed(2))
             trackData['Payment Type'] = 'Cod' || ''
+            debugger
+          window.dataLayer.push({'event':'initiate_checkout',...trackData})
+
             clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
 
             if(isLogin){
@@ -722,6 +734,8 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           payload['prepaidDiscountAmount'] = discountAmount || "",
           payload['finalAmount'] = Number((priceDetails['totalAmount']-discountAmount + customFee).toFixed(2))
           trackData['Payment Type'] = 'Apple pay' || ''
+          window.dataLayer.push({'event':'initiate_checkout',...trackData})
+
           clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
           if(isLogin){
             mixPanelTrackEvent("kuwa_payments_proceed_to_pay", trackData,userData.id)
