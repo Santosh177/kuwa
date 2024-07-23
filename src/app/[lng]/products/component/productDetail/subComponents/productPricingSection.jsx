@@ -163,7 +163,7 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
                 <div className={styles.imageReview}><img src="" alt="" /></div>
                 {numberOfProductReview && <div className={styles.numberOfReview}>({numberOfProductReview})</div>}
             </div>} */}
-           {avgRating && totalRating && <div className={styles.ratingSection}>
+           {avgRating > 0 && totalRating > 0 && <div className={styles.ratingSection}>
            <div className={styles.avgRatingValue}>{`${parseFloat(avgRating).toFixed(2)}`}</div>
               <div className={styles.avgRating}>{renderStars()}</div>
               <div className={styles.totalNumberRating} onClick={showProductReview}>{`(${totalRating} ${isArabic ? "التقييمات" : "ratings"})`}</div>
