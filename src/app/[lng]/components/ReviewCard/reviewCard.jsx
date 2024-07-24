@@ -4,7 +4,7 @@ import style from "./ReviewCard.module.scss";
 import { useLanguage } from "@/context/languageDetails";
 
 const ReviewCard = ({ item }) => {
-  const { customerName = "", userLocation = "", rating = "", headLine = "", reviewBody = "" } = item;
+  const { customerName = "", userLocation = "", rating = "", headLine = "", reviewBody = "",isVerified=false } = item;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isTruncated, setIsTruncated] = useState(false);
   const reviewBodyRef = useRef(null);
@@ -29,10 +29,10 @@ const ReviewCard = ({ item }) => {
             {customerName} <span>{userLocation}</span>
           </div>
           <div className={style.ratingDiv}>
-            <div className={style.verified}>
+          { isVerified && <div className={style.verified}>
               <img src="https://d25uasl7utydze.cloudfront.net/assets/tick_new.svg" alt="security" />
               <span>{isArabic ? "موثق" : "Verified"}</span>
-            </div>
+            </div>}
             <div className={style.rating}>
               <img src="https://d25uasl7utydze.cloudfront.net/kuwa/stars.png" alt="star" />
               <span>{parseFloat(rating).toFixed(2)}</span>
