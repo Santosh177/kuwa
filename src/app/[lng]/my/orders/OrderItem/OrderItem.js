@@ -111,7 +111,7 @@ const writeReview = (e) =>{
                     {renderOrderStatus(orderStatus)}
                    {index===0 && <div className={styles.orderId}>{isArabic ? "رقم الطلب" : "Order ID"} : #{orderId}</div>}
                 </div>
-                <div className={styles.orderItemName}>{isArabic ? productName : productNameArabic}</div>
+                <div className={styles.orderItemName}>{isArabic ? productNameArabic : productName }</div>
                 {renderOrderInfo(orderStatus)}
                 <div className={styles.btn} onClick={(e)=>writeReview(e)}>
                 <img src="https://d25uasl7utydze.cloudfront.net/assets/writing.svg"/>
