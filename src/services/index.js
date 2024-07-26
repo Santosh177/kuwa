@@ -243,6 +243,12 @@ export const queryParams = (productId, variantId) => {
   return params.toString();
 };
 
+export const addGoogleEvent = (data)=>{
+  console.log("ga4trackData",data)
+  window.dataLayer.push({...data,'event':'add_to_cart'});
+  console.log("google datalayer",window.dataLayer)
+}
+
 
 
 

@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useRouter } from 'next/navigation';
 import ProductDealCard from '@/app/[lng]/components/ProductDealCard/ProductDealCard';
-import { addToCart } from '@/services'
+import { addToCart,addGoogleEvent } from '@/services'
 import { useCartItems } from '@/context/cartItems';
 import Glider from 'react-glider';
 import Loader from '@/app/[lng]/components/Loader/Loader';
@@ -42,6 +42,7 @@ console.log("DEAL PRODUCT SLIDER")
     try {
       setIsLoading(true)
       const res = await addToCart(data);
+      addGoogleEvent(trackingData)
       setIsLoading(false)
       clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData);  
       if(isLogin){

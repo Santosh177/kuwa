@@ -2,7 +2,7 @@
 import React,{useState, useEffect} from 'react';
 import { useRouter } from 'next/navigation';
 import ProductCard from '@/app/[lng]/components/ProductCard/ProductCard';
-import { addToCart } from '@/services'
+import { addToCart, addGoogleEvent } from '@/services'
 import { useCartItems } from '@/context/cartItems';
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
@@ -59,6 +59,7 @@ const ProductSlider = ({data}) => {
         try{
             setIsLoading(true);
             const res = await addToCart(data);
+            addGoogleEvent(trackingData)
             setIsLoading(false)
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData); 
            if(isLogin){

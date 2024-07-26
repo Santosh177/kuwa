@@ -1,7 +1,7 @@
 'use client'
 import React,{useState,useEffect} from 'react';
 import { useRouter } from 'next/navigation';
-import { addToCart } from '@/services'
+import { addToCart,addGoogleEvent } from '@/services'
 import { useCartItems } from '@/context/cartItems';
 import Loader from '../Loader/Loader';
 // import ProductCard from '@/app/[lng]/components/ProductCard/ProductCard';
@@ -109,6 +109,7 @@ let trackData={};
     try {
       setIsLoading(true)
       const res = await addToCart(data);
+      addGoogleEvent(trackingData)
       setIsLoading(false)
       clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData);
       if(isLogin){
