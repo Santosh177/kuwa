@@ -393,11 +393,30 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
   
   }
 
+  const getUserLanguage = async () => {
+    
+    try {
+      const getLanguage = await fetch('/api/get-language', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const languageData = await getLanguage.json();
+      console.log("getUserLanguage", getLanguage, languageData);
+    } catch (error) {
+      console.error("Error fetching language:", error);
+    }
+  };
+
   const  toggleLanguage = async() => {
     const newLanguageId = isArabic ? '1' : '2';
    await changeLanguage(newLanguageId);
    setIsLoading(true)
-
+   console.log("userDetails", isLogin,userData)
+    if(userData && Object.keys(userData).length > 0 ){
+      getUserLanguage()
+    }
 }
 
     return(
