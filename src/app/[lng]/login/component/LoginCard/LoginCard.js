@@ -53,7 +53,8 @@ export default function Login() {
       console.log("datadata",data)
 
         try {
-          const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${data.userId}`, {
+          // const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${data.userId}`, {
+          const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/private/customer/profile/${data.userId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ export default function Login() {
           const userData = await userLoginResp.json();
           console.log("userDatauserData",userData)
           const name = userData.firstName+ ' ' +userData.lastName;
-          const userId = userData && userData && userData.id || null
+          const userId = userData && userData && userData.customerId || null
           const phone = userData.mobNumber ;
           const email = userData.emailAddress;
           const countryName = selectedCountry && selectedCountry.name ||  ""
