@@ -109,7 +109,7 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
     <html lang={lng} dir={dir(lng)}>
       <link rel="shortcut icon" href="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/Kuwa-Favicon-32x32_32x32.png" type="image/png"></link>
       <head>
-        <script type="text/javascript" src={"/gtm.js"}></script>
+        {/* <script type="text/javascript" src={"/gtm.js"} async></script> */}
       </head>
       <body className={workSans.className}>
       <script type="text/javascript" src="https://cdn.checkout.com/js/framesv2.min.js" async></script>
