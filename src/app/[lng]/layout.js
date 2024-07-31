@@ -124,8 +124,8 @@ console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
 src="https://www.facebook.com/tr?id=292517813040924&ev=PageView&noscript=1"
 /></noscript> */}
       <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10835495332"></script>
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDHHJWPJ"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      {/* <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KHHPFNZW "
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> */}
          <LanguageProvider>
       <CountryListProvider countryList={countryList}>
         <CountryProvider countryCode={"AE"} selectedCountryData={selectedCountryData} countryList={countryList}>
