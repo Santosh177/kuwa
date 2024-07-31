@@ -64,7 +64,7 @@ export default function Login() {
           const userData = await userLoginResp.json();
           console.log("userDatauserData",userData)
           const name = userData.firstName+ ' ' +userData.lastName;
-          const userId = userData && userData && userData.customerId || null
+          const userId = userData && userData && userData.id || null
           const phone = userData.mobNumber ;
           const email = userData.emailAddress;
           const countryName = selectedCountry && selectedCountry.name ||  ""
