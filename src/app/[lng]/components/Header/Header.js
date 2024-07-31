@@ -415,7 +415,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
    setIsLoading(true)
    console.log("userDetails", isLogin,userData)
     if(userData && Object.keys(userData).length > 0 ){
-      getUserLanguage()
+     await getUserLanguage()
     }
 }
 
