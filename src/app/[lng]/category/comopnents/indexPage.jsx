@@ -88,9 +88,9 @@ const MainCategory = ({ isDealPage }) => {
 
         if (searchKey) {
             if (!sort && category.length === 0) {
-                query = `search_key=${encodeURIComponent(searchKey)}`;
+                query = `search_key=${(searchKey)}`;
             } else {
-                query += `&search_key=${encodeURIComponent(searchKey)}`;
+                query += `&search_key=${(searchKey)}`;
             }
         }
 

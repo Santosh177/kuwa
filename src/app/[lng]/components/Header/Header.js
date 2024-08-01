@@ -22,10 +22,10 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-  console.log("searchData",searchData)
+  console.log("searchData",searchData,searchQuery)
     const searchDataCount = searchData && searchData.length || 0;
   const handleSeeAll=(couponBannerData,searchQuery)=>{
-    window.location.href=`/collections?search_key=${searchQuery}`
+    window.location.href=`/collections?search_key=${encodeURIComponent(searchQuery)}`
   }
 
   // const calculateRightValue = () => {
