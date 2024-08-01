@@ -105,43 +105,77 @@ export default  function Cart({cartData}) {
     },[data]);
 
 
-    useEffect(() => {
-      if ( cartData && cartData.products && cartData.products.length > 0) {
-          let trackData = []
-          cartData.products.map((item) => {
-              const productId = item && item.id || "";
-              const productName = item && item.description && item.description.name || "";
-              const qty = item && item.quantity || 1;
-              let variantId = null;
-              let track = {
-                  productId: productId,
-                  productName: productName,
-                  quantity: qty,
-              }
-              if(item && item.variants && item.variants.variants){
-                 variantId = item.variants.variants.id;
-              }
-              if(variantId){
-                track['variantId'] = variantId;
-              }
-              trackData.push(track)
-          })
-          try {
-              if (window.clevertap) {
-                  window.clevertap.setMultiValuesForKey("cart_items", trackData);
-              }
-              if(isLogin){
-                mixPanelTrackEvent("cart_items", trackData,userData.id)
-              }
-              else{
-                mixPanelTrackEvent("cart_items", trackData)
-              }
+  //   useEffect(() => {
+  //     if ( cartData && cartData.products && cartData.products.length > 0) {
+  //         let trackData = []
+  //         cartData.products.map((item) => {
+  //             const productId = item && item.id || "";
+  //             const productName = item && item.description && item.description.name || "";
+  //             const qty = item && item.quantity || 1;
+  //             let variantId = null;
+  //             let track = {
+  //                 productId: productId,
+  //                 productName: productName,
+  //                 quantity: qty,
+  //             }
+  //             if(item && item.variants && item.variants.variants){
+  //                variantId = item.variants.variants.id;
+  //             }
+  //             if(variantId){
+  //               track['variantId'] = variantId;
+  //             }
+  //             trackData.push(track)
+  //         })
+  //         try {
+  //             if (window.clevertap) {
+  //                 window.clevertap.setMultiValuesForKey("cart_items", trackData);
+  //             }
+  //             if(isLogin){
+  //               mixPanelTrackEvent("cart_items", trackData,userData.id)
+  //             }
+  //             else{
+  //               mixPanelTrackEvent("cart_items", trackData)
+  //             }
            
-          } catch (error) {
-              console.log(error, "not work for older user")
-          }
-      }
-  }, [cartData,(typeof window !== "undefined") && window.clevertap]);
+  //         } catch (error) {
+  //             console.log(error, "not work for older user")
+  //         }
+  //     }
+  // }, [cartData,(typeof window !== "undefined") && window.clevertap]);
+
+  useEffect(() => {
+    if (cartData && cartData.products && cartData.products.length > 0) {
+        let productIds = [];
+        let productNames = [];
+
+        cartData.products.forEach((item) => {
+            const productId = item?.id || "";
+            const productName = item?.description?.name || "";
+
+            if (productId) productIds.push(productId);
+            if (productName) productNames.push(productName);
+        });
+
+        try {
+            if (window.clevertap) {
+              console.log("wbjqbjdqw",productIds,productNames)
+                window.clevertap.setMultiValuesForKey("cart_items_id", productIds);
+                window.clevertap.setMultiValuesForKey("cart_items_name", productNames);
+            }
+            if (isLogin) {
+                mixPanelTrackEvent("cart_items_id", productIds, userData.id);
+                mixPanelTrackEvent("cart_items_name", productNames, userData.id);
+            } else {
+                mixPanelTrackEvent("cart_items_id", productIds);
+                mixPanelTrackEvent("cart_items_name", productNames);
+            }
+        } catch (error) {
+            console.log(error, "not work for older user");
+        }
+    }
+}, [cartData, (typeof window !== "undefined") && window.clevertap]);
+
+
 
 
     useEffect(()=>{
