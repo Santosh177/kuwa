@@ -32,8 +32,8 @@ const getUser = async () => {
   console.log("tokentoken",token)
   if((token && token.value) || (user && user.value)  ){
     try {
-      // const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${user.value}`, {
-        const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/private/customer/profile/${user.value}`, {
+      const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${user.value}`, {
+        // const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/private/customer/profile/${user.value}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
