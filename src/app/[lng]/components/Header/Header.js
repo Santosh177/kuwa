@@ -21,11 +21,11 @@ import { useLanguage } from '@/context/languageDetails';
 const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="" }) =>{
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+  const lng = localStorage.getItem("selectedLanguage") || 'en'
   console.log("searchData",searchData,searchQuery)
     const searchDataCount = searchData && searchData.length || 0;
   const handleSeeAll=(couponBannerData,searchQuery)=>{
-    window.location.href=`/collections?search_key=${encodeURIComponent(searchQuery)}`
+    window.location.href=`/${lng}/collections?search_key=${encodeURIComponent(searchQuery)}`
   }
 
   // const calculateRightValue = () => {
