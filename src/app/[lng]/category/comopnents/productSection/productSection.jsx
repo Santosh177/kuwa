@@ -4,7 +4,7 @@ import React,{useState,useEffect} from "react"
 import style from "./productSection.module.scss"
 import ProductCard from "@/app/[lng]/components/ProductCard/ProductCard"
 import Loader from "@/app/[lng]/components/Loader/Loader"
-import { addToCart } from "@/services"
+import { addToCart, addGoogleEvent } from "@/services"
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { mappingDealProducts } from "@/services"
 import { mixPanelTrackEvent } from "@/app/[lng]/page"
@@ -44,6 +44,7 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
         try {
             setIsLoading(true)
             const res = await addToCart(data);
+            addGoogleEvent(trackingData)
             setIsLoading(false)
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", trackData);
             if(isLogin){

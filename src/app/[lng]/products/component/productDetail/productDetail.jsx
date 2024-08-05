@@ -15,7 +15,7 @@ import { useCountryList } from '@/context/countryList';
 import { useAuth } from '@/context/userDetail';
 import { useCountry } from '@/context/contryDetails';
 import { createPayloadForCartItems,getDialCode } from "@/utils";
-import { queryParams } from "@/services";
+import { queryParams ,addGoogleEvent } from "@/services";
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 // import { mixPanelTrackEvent } from '../../../../app/page'
 import { mixPanelTrackEvent } from "@/app/[lng]/page";
@@ -213,7 +213,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         "variantId": selectedVarients,
         
     }
-   const trackData = {
+   let trackData = {
         "product Name": name,
         "quantity": noOfProduct,
         "product Id": id,
@@ -221,11 +221,10 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         "variantId": selectedVarients,
     }
 
-    const addGoogleEvent =()=>{
-        window.dataLayer.push({...trackData,'event':'add_to_cart'});
-        debugger
-        console.log("google datalayer",window.dataLayer)
-    }
+    // const addGoogleEvent =()=>{
+    //     window.dataLayer.push({...trackData,'event':'add_to_cart'});
+    //     console.log("google datalayer",window.dataLayer)
+    // }
     
     const addToCart = async (payload) => {
         console.log("addToCartaddToCart",payload)
@@ -238,7 +237,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
                 body: JSON.stringify(payload)
             })
             if (res.status === 200) {
-                addGoogleEvent()
+                addGoogleEvent(trackData)
                 return res.status
             } else {
                 throw new Error(await res.text())

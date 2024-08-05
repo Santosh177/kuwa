@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Loader from '@/app/[lng]/components/ProductSlider/ProductSlider';
 import ProductCard from '@/app/[lng]/components/ProductCard/ProductCard';
-import { addToCart } from '@/services'
+import { addToCart,addGoogleEvent } from '@/services'
 import styles from './product-slider.module.scss';
 import Glider from 'react-glider';
 import "glider-js/glider.min.css";
@@ -25,6 +25,7 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
     try {
       setIsLoading(true);
       const res = await addToCart(data);
+      addGoogleEvent(trackData)
       setIsLoading(false);
       clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", trackData);
       window.location.href = '/cart';

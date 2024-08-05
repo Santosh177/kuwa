@@ -27,7 +27,7 @@ import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { mixPanelTrackEvent } from "../../[lng]/page.js";
 import { useLanguage } from "@/context/languageDetails";
 import CartPageProductCard from "../components/CartPageProductCard/CartPageProductCard";
-import { addToCart } from "@/services";
+import { addToCart,addGoogleEvent } from "@/services";
 import NotifyEmailPopup from "../components/NotifyEmailPopup/NotifyEmailPopup";
 import NotifySuccessPopup from "../components/NotifySuccessPopup/NotifySuccessPopup";
 
@@ -438,8 +438,17 @@ export default  function Cart({cartData}) {
 
     const handleAddtoProduct = async(data)=>{
       try{
-        setIsLoading(false)
+        setIsLoading(true)
         const cardData =await addToCart(data)
+        setIsLoading(false)
+        addGoogleEvent(data)
+        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", data);
+        if(isLogin){
+            mixPanelTrackEvent("kuwa_add_to_cart",data,userData.id )
+           }
+           else{
+            mixPanelTrackEvent("kuwa_add_to_cart",data )
+           }
         window.location.reload();
       }
       catch{
