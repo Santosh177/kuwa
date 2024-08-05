@@ -83,7 +83,7 @@ const  AllProduct=({req}) =>{
           <ProductFaq productData={productData} />
           <Footer />
         </>}
-        {(productData && Object.keys(productData).length == 0 && customHeader && Object.keys(customHeader).length !=0 )&& <PageNotFound productID={productID}/>}
+        {(productData && Object.keys(productData).length == 0)&& <PageNotFound productID={productID}/>}
       </div>
       <Loader isShow={isLoading}/>
       </>
