@@ -125,6 +125,8 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
   const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
   const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
 
+    const lng = localStorage.getItem("selectedLanguage") || 'en'
+
   useEffect(() => {
     document.addEventListener("mousedown", (e) => {
       if (dropDownOptionsRef && dropDownOptionsRef.current && !dropDownOptionsRef.current.contains(e.target) && dropDownOptionsProfileRef && dropDownOptionsProfileRef.current && !dropDownOptionsProfileRef.current.contains(e.target)) {
@@ -473,7 +475,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
         <div className={styles.searchInputContainer} style={!couponBannerData.isActive?{top:"56px"}:{}}>
-                        <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
+                        <div className={styles.searchInputWrapper} onClick={()=>window.location.href=`/${lng}/search`} >
                             <input  className={styles.searchInput}  value={searchQuery}  placeholder={isArabic ? "البحث بالاسم المنتج" : 'Search by product name'} type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                         </div>
