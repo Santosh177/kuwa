@@ -169,7 +169,7 @@ const MainCategory = ({ isDealPage }) => {
             }   
         }
 
-        let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}&${query}`;
+        let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}`;
 
         if (isDealPage) {
             endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealSeoUrl}?country_id=${selectedCountry.id}&${query}`;
@@ -177,10 +177,11 @@ const MainCategory = ({ isDealPage }) => {
 
         try {
             const response = await fetch(endpoint, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                }
+                },
+                body:query
             });
 
             if (!response.ok) {
