@@ -158,11 +158,12 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const makeApiCall = async () => {
       try {
         const countryId = selectedCountry && selectedCountry.id || "";
-        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchQuery}&country=${countryId}`, {
-            method: 'GET',
+        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify({ key: searchQuery })
           })
         const searchApiData = await searchApiResp.json();
         let searchData = []
