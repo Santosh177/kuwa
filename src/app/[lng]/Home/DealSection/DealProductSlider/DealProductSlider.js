@@ -37,7 +37,9 @@ console.log("DEAL PRODUCT SLIDER")
     const trackingData = {
       "product Name": data.productName,
       "quantity": 1,
-      "product Id":data.product
+      "product Id":data.product,
+      "Page URL":window.location.href,
+      "Screen":"Home"
     }
     try {
       setIsLoading(true)
@@ -155,6 +157,8 @@ const handleNotify = async() =>{
                     "product Name": data && data.productName || "",
                     "quantity": 1,
                     "product Id":data.productId || "",
+                    "Page URL":window.location.href,
+                    "Screen":"Home"
                   }
                 if(variantId==null){
                     cardData = {

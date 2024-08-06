@@ -104,7 +104,9 @@ let trackData={};
     const trackingData = {
       "product Name": data.productName,
       "quantity": 1,
-      "product Id":data.product
+      "product Id":data.product,
+      "Page URL":window.location.href,
+      "Screen":"Home"
     }
     try {
       setIsLoading(true)
@@ -278,6 +280,8 @@ const handleNotify = async() =>{
                     "product Name": data && data.name || "",
                     "quantity": 1,
                     "product Id":data.id || "",
+                    "Page URL":window.location.href,
+                    "Screen":"Home"
                   }
                  
                     if(variants && variants.length > 0 && data.variants[0].variantPrices.length>0)
