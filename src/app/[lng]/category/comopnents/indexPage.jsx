@@ -139,18 +139,18 @@ const MainCategory = ({ isDealPage }) => {
         let query = "";
         console.log("paramsData",paramsData)
         if (sort && category.length > 0) {
-            query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category.join(','))}`;
+            query = `sort_by=${(sort)}&category=${(category.join(','))}`;
         } else if (sort && category.length === 0) {
-            query = `sort_by=${encodeURIComponent(sort)}`;
+            query = `sort_by=${(sort)}`;
         } else if (!sort && category.length > 0) {
-            query = `category=${encodeURIComponent(category.join(','))}`;
+            query = `category=${(category.join(','))}`;
         }
 
         if (searchKey) {
             if (!sort && category.length === 0) {
-                query = `search_key=${encodeURIComponent(searchKey)}`;
+                query = `search_key=${(searchKey)}`;
             } else {
-                query += `&search_key=${encodeURIComponent(searchKey)}`;
+                query += `&search_key=${(searchKey)}`;
             }
         }
 
