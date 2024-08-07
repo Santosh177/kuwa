@@ -7,9 +7,11 @@ import { useAuth } from '@/context/userDetail';
 import Loader from '@/app/[lng]/components/Loader/Loader';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/context/languageDetails';
+import { checkInternationalPhone } from '@/utils/validation';
+import { useCountry } from '@/context/contryDetails';
 
 
-const validateForm = (formData) => {
+const validateForm = (formData,isArabic,selectedCountry) => {
   const errors = {};
   if (!formData.firstName) {
     errors.firstName = formData.isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
@@ -17,8 +19,10 @@ const validateForm = (formData) => {
   if (!formData.lastName) {
     errors.lastName = formData.isArabic ? "اسم العائلة مطلوب" :  'Last name is required.';
   }
-  if(!formData.mobNumber){
-    errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" : "Mobile number is required";
+  if(!formData.mobNoValidation){
+    errors.mobNumber = isArabic ? "رقم الهاتف المحمول مطلوب": "Mobile number is required";
+  }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
+    errors.mobNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
   }
   if(!formData.email){
     errors.email = formData.isArabic  ? "البريد الإلكتروني مطلوب" : "Email is required";
@@ -29,16 +33,18 @@ const validateForm = (formData) => {
 };
 
 
-const SignupForm = ({setFormData={},formData={},errors={}}) => {
+const SignupForm = ({setFormData={},formData={},errors={},setErrors={}}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-
-  const onInputChange = (event, labelId) =>{
+  const { selectedCountry={} } = useCountry();
+  const onInputChange = (event, labelId,data) =>{
     if(labelId === 'mobNumber'){
-      setFormData(inputs => ({ ...inputs, [labelId]: event}));
+      setFormData(inputs => ({ ...inputs, [labelId]: "+"+event,["mobNoValidation"]:event.slice(data.dialCode.length)}));
     }else{
       setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
     }
+    const { [labelId]: removedKey, ...newFormData } = errors;
+    setErrors(newFormData);
 
     
   }
@@ -78,7 +84,7 @@ export default function SignupCard() {
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false)
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+    const { selectedCountry={} } = useCountry();
 
     useEffect(()=>{
         const { firstName="", lastName="", emailAddress="", mobNumber="" } = userData || {}
@@ -96,16 +102,21 @@ export default function SignupCard() {
 
       const onSignup = async() =>{
        
-        const validationErrors = validateForm(formData);
+        const validationErrors = validateForm(formData,isArabic,selectedCountry);
         if (Object.keys(validationErrors).length === 0) {
-          setIsLoading(true);
+         
             try {
+              setIsLoading(true);
               const res = await fetch('/api/profile-update', {
                 method: 'POST',
                 body:JSON.stringify(formData)
               })
-              setIsLoading(false);
+              const data = await res.json();
+
+              console.log("profileupdateData", data);
+              // setIsLoading(false);
             if (res.status === 200) {
+              setIsLoading(false)
               setIsUpdateSuccess(true)
               window.location.href = '/'
             } else {
@@ -113,9 +124,11 @@ export default function SignupCard() {
             }
           } catch (error) {
             console.error('An unexpected error happened occurred:', error)
+            setIsLoading(false)
           }
         } else {
           setErrors(validationErrors);
+          // setIsLoading(false)
         }
 
       }
@@ -126,7 +139,7 @@ export default function SignupCard() {
          <div className={styles.signUpCardWrapper}>
          <img className={styles.personalProfile} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/personal_profile.png' alt='personal-profile'/>
           <div className={styles.signUpTxt}>{isArabic ? "المعلومات الشخصية" : "Personal Info"}</div>
-            <SignupForm setFormData={setFormData} formData={formData} errors={errors}/>
+            <SignupForm setFormData={setFormData} formData={formData} errors={errors}  setErrors={setErrors}/>
             <div className={styles.createAccountBtn} onClick={onSignup}>{isArabic ? "حفظ التفاصيل" : "Save details"}</div>
            {isUpdateSuccess && <div className={styles.updateMsg}>{isArabic ? "تم التحديث بنجاح" : "Updated Successfully!"}</div>}
           </div>
