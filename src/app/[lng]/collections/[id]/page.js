@@ -1,6 +1,6 @@
 
 import React from "react";
-import MainCategory from "../category/comopnents/indexPage";
+import MainCategory from "../../category/comopnents/indexPage";
 
 
 
