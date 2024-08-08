@@ -29,7 +29,9 @@ const MainCategory = ({ isDealPage }) => {
 
     const [paramsData, setParamsData] = useState({})
     const params = useParams();
-    const dealSeoUrl = params.id || "";
+    console.log("paramsData",params)
+    const dealSeoUrl = params.dealId || "";
+    const collection = params.id || ""
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
 
     useEffect(() => {
@@ -97,15 +99,15 @@ const MainCategory = ({ isDealPage }) => {
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
         if (category || sort || AVAILABLE) {
-            const params = {};
-            if (category) params.category = category.split(',');
-            if (sort) params.sort = sort;
-            if (AVAILABLE) params.AVAILABLE = AVAILABLE;
+            const paramsFilter = {};
+            if (category) paramsFilter.category = category.split(',');
+            if (sort) paramsFilter.sort = sort;
+            if (AVAILABLE) paramsFilter.AVAILABLE = AVAILABLE;
 
-            setParamsData(params);
+            setParamsData(paramsFilter);
         } else {
             setParamsData({
-                category: [],
+                category: collection ? [collection] : [],
                 sort: "",
                 AVAILABLE: []
             });
@@ -205,25 +207,29 @@ const MainCategory = ({ isDealPage }) => {
         let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}`;
 
         if (isDealPage) {
-            endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealSeoUrl}?country_id=${selectedCountry.id}&${query}`;
+            endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealSeoUrl}?country_id=${selectedCountry.id}`;
         }
 
         try {
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body:JSON.stringify(query)
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
+           
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify(query)
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                
+                const data = await response.json();
+                console.log("searchData",data)
+                setResponseValue(data);
             
-            const data = await response.json();
-            console.log("searchData",data)
-            setResponseValue(data);
+           
+
+          
         } catch (error) {
             console.error('Error fetching data:', error);
             // Handle error or set appropriate state

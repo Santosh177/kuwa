@@ -126,7 +126,7 @@ let trackData={};
 
 const handleAllProduct = () =>{
   const encodedHeaderTitle = encodeURIComponent(headerTitle);
-  window.location.href = `/collections?category=${encodedHeaderTitle}`
+  window.location.href = `/collections/${encodedHeaderTitle}`
 }
 
 const handleNonLogin = (id,variantId)=>{

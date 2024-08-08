@@ -36,7 +36,7 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
                         return
                     return(
                         <>
-                            <div onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data.name)}`} className={styles.item} key={index}>{isArabic ? data.nameArabic :data.name}</div>
+                            <div onClick={()=>window.location.href =`/collections/${encodeURIComponent(data.name)}`} className={styles.item} key={index}>{isArabic ? data.nameArabic :data.name}</div>
                             <div className={styles.horizontalLine}></div>
                         </>
                     )
