@@ -136,40 +136,73 @@ const MainCategory = ({ isDealPage }) => {
     const fetchFilterCollectionData = async () => {
         setIsLoadingProduct(true);
         const { category = [], sort = "", searchKey = "",AVAILABLE="" } = paramsData || {};
-        let query = "";
+        // let query = "";
+        let query = {}
         console.log("paramsData",paramsData)
         if (sort && category.length > 0) {
-            query = `sort_by=${encodeURIComponent(sort)}&category=${encodeURIComponent(category.join(','))}`;
+            // query = `sort_by=${(sort)}&category=${(category.join(','))}`;
+            query = {
+                sort_by: sort,
+                category: category
+            }
         } else if (sort && category.length === 0) {
-            query = `sort_by=${encodeURIComponent(sort)}`;
+
+            // query = `sort_by=${(sort)}`;
+            query = {
+                sort_by: sort,
+            }
         } else if (!sort && category.length > 0) {
-            query = `category=${encodeURIComponent(category.join(','))}`;
+            // query = `category=${(category.join(','))}`;
+            query = {
+                category: category
+            }
         }
 
         if (searchKey) {
             if (!sort && category.length === 0) {
-                query = `search_key=${encodeURIComponent(searchKey)}`;
+                // query = `search_key=${(searchKey)}`;
+                query = {
+                    search_key: searchKey,
+                }
             } else {
-                query += `&search_key=${encodeURIComponent(searchKey)}`;
+                // query += `&search_key=${(searchKey)}`;
+                query = {
+                   ...query,
+                    search_key: searchKey,
+                }
             }
         }
 
         if (AVAILABLE && AVAILABLE.length > 0 ) {
             if (!sort && category.length === 0 && !searchKey) {
-                query = `inStock=true`;
+                // query = `inStock=true`;
+                query = {
+                    inStock: true,
+                }
             } else {
-                query += `&inStock=true`;
+                // query += `&inStock=true`;
+                query = {
+                   ...query,
+                    inStock: true,
+                }
             }
         }
         if(!AVAILABLE || (AVAILABLE && AVAILABLE.length == 0)){
             if (!sort && category.length === 0 && !searchKey) {
-                query = `inStock=false`;
+                // query = `inStock=false`;
+                query = {
+                    inStock: false,
+                }
             } else {
-                query += `&inStock=false`;
+                // query += `&inStock=false`;
+                query = {
+                   ...query,
+                    inStock: false,
+                }
             }   
         }
 
-        let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}&${query}`;
+        let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}`;
 
         if (isDealPage) {
             endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealSeoUrl}?country_id=${selectedCountry.id}&${query}`;
@@ -177,17 +210,19 @@ const MainCategory = ({ isDealPage }) => {
 
         try {
             const response = await fetch(endpoint, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                }
+                },
+                body:JSON.stringify(query)
             });
 
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
-
+            
             const data = await response.json();
+            console.log("searchData",data)
             setResponseValue(data);
         } catch (error) {
             console.error('Error fetching data:', error);

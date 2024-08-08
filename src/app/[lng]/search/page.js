@@ -33,11 +33,12 @@ export default function Search() {
     const makeApiCall = async () => {
       try {
         const countryId = selectedCountry && selectedCountry.id || "";
-        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchQuery}&country=${countryId}`, {
-          method: 'GET',
+        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-          }
+          },
+          body: JSON.stringify({key: searchQuery})
         })
         const searchApiData = await searchApiResp.json();
         let searchData = []
@@ -93,37 +94,37 @@ export default function Search() {
     }
   },[searchQuery])
 
-  const onSearch1 = async (searchValue) => {
-    setSearchTxt(searchValue);
-    console.log("customHeadercustomHeader", selectedCountry)
-    const countryId = selectedCountry && selectedCountry.id || "";
-    const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchValue}&country=${countryId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-    const searchApiData = await searchApiResp.json();
-    let searchData = []
-    if (searchApiData && searchApiData.length > 0) {
-      searchApiData.map((data, index) => {
-        const sData = data['product'] || {}
-        if (sData) {
-          const productData = {
-            productImage: sData.productImage && sData.productImage.productImageUrl || "",
-            productName: sData.productDescription && sData.productDescription.name || "",
-            id: sData.id || "",
-            seoUrl: data.seoUrl || "",
-          }
-          searchData.push(productData);
-          setSearchData(searchData)
-        }
-      })
-    } else {
-      searchData.push([])
-      setSearchData([])
-    }
-  }
+  // const onSearch1 = async (searchValue) => {
+  //   setSearchTxt(searchValue);
+  //   console.log("customHeadercustomHeader", selectedCountry)
+  //   const countryId = selectedCountry && selectedCountry.id || "";
+  //   const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchValue}&country=${countryId}`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     }
+  //   })
+  //   const searchApiData = await searchApiResp.json();
+  //   let searchData = []
+  //   if (searchApiData && searchApiData.length > 0) {
+  //     searchApiData.map((data, index) => {
+  //       const sData = data['product'] || {}
+  //       if (sData) {
+  //         const productData = {
+  //           productImage: sData.productImage && sData.productImage.productImageUrl || "",
+  //           productName: sData.productDescription && sData.productDescription.name || "",
+  //           id: sData.id || "",
+  //           seoUrl: data.seoUrl || "",
+  //         }
+  //         searchData.push(productData);
+  //         setSearchData(searchData)
+  //       }
+  //     })
+  //   } else {
+  //     searchData.push([])
+  //     setSearchData([])
+  //   }
+  // }
 
   const onSearch = (event) => {
     setSearchQuery(event);
