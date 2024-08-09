@@ -504,7 +504,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
       useEffect(()=>{
       if(getFormValues){
-        const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
+        const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedCountry);
         const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedCountry);
         const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedCountry);
         if (addressValidation()) {
