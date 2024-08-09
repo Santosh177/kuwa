@@ -7,6 +7,7 @@ import { useAuth } from '@/context/userDetail';
 import Loader from '@/app/[lng]/components/Loader/Loader';
 import {checkInternationalPhone} from "../../../../../utils/validation"
 import { useLanguage } from '@/context/languageDetails';
+import { useCountry } from '@/context/contryDetails';
 
 
 const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
@@ -23,8 +24,7 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
     const [mobNumberError,setMobNumberError] = useState("")
 
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
-
+    const { selectedCountry={} } = useCountry();
 
     useEffect(() => {
         if (mobileNumber) {
@@ -92,7 +92,7 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
             setMobNumberError(isArabic ? "يرجى إدخال رقم الهاتف المحمول" :"Please enter mobile number")
             return;
         }
-        if(mobNumber && !checkInternationalPhone(mobNumber)){
+        if(mobNumber && !checkInternationalPhone(mobNumber,selectedCountry)){
             setMobNumberError(isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number")
             return;
         }

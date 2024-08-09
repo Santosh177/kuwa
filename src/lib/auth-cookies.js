@@ -97,6 +97,7 @@ export const authHeader = async() =>{
   const token = cookies().get('token')
   const user = cookies().get('userId');
   const country = cookies().get('countryId');
+  const language = cookies().get('language_code');
 
  
   if(token && token.value){
@@ -105,7 +106,8 @@ export const authHeader = async() =>{
         'Content-Type': 'application/json',
         'country':country &&parseInt(country.value) || 8,
         'Authorization':"Bearer "+token.value,
-        'user':parseInt(user.value)
+        'user':parseInt(user.value),
+        'preferredLanguage':language && language.value || 'en'
       }
     )
   }else{
@@ -127,7 +129,8 @@ export const authHeader = async() =>{
     let data = {
       'Content-Type': 'application/json',
       'country' : country && parseInt(country.value) || 8,
-      'device':cookies().get("deviceID").value || ""
+      'device':cookies().get("deviceID").value || "",
+      'preferredLanguage':language && language.value || 'en'
     }
 
     if(userId){

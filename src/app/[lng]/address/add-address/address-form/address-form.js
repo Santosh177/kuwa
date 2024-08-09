@@ -15,7 +15,7 @@ import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 
 import { useLanguage } from "@/context/languageDetails";
 
-const validatePersonalForm = (formData) => {
+const validatePersonalForm = (formData,selectedCountry) => {
 
   console.log("validatePersonalForm",formData)
     const errors = {};
@@ -31,7 +31,7 @@ const validatePersonalForm = (formData) => {
     if(!formData.mobNumber){
       errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
     }
-    else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
+    else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
       errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
     }
     if(!formData.email){
@@ -487,7 +487,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       },[userData])
 
       const addressValidation = () => {
-        const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
+        const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedCountry);
         const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedCountry);
         const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedCountry);
        

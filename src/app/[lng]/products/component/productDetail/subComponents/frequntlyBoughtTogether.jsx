@@ -147,6 +147,8 @@ const FrequntlyBoughtTogether = ({ productData = {},currency="" }) => {
             })
             trackData = {
                 "productList":[...payload],
+                 "Page URL":window.location.href,
+                    "Screen":"FBT"
             }
             const response = await addToCartAPI(payload);
             if(response){
