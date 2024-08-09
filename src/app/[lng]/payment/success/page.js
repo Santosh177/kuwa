@@ -20,14 +20,13 @@ import { useLanguage } from '@/context/languageDetails';
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
-  console.log("searchParamssearchParams",searchParams.get('orderId'))
+  
   const { selectedCountry = {} } = useCountry();
   const { name = "", id = "", currency="" }=selectedCountry||{}
   const orderId = searchParams.get('orderId')
   const totalPurchaseValue = searchParams.get('totalPurchaseValue')
   const couponDiscount = searchParams.get('couponDiscount');
   const paymentType = searchParams.get('paymentMode')
-  // console.log("paymentType",paymentType)
   const isIndividualProduct = searchParams.get('isIndividualProduct');
   const [isSuccessPopUp ,setIsSuccessPopup] = useState(false);
   const [orderDetailsData,setOrderDetailsData] = useState({});
@@ -55,20 +54,6 @@ export default function PaymentSuccess() {
     
     },[])
 
-
-    useEffect(()=>{
-      if(orderDetailsData && Object.keys(orderDetailsData).length>0){
-        getListOfOrder();
-      }
-    },[orderDetailsData])
-
-    useEffect(()=>{
-      getOrderDetails();
-    
-    },[])
-   
-   
-
     const getOrderDetails = async()=>{
       const orderDetails = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/order-summary/${orderId}`,{
         method:'GET'
@@ -78,40 +63,55 @@ export default function PaymentSuccess() {
       
     }
 
-    const getListOfOrder = async() =>{
-      const listOfMyOrderResp  =  await fetch(`/api/list-of-orders`, {
-        method: 'GET',
-      })
-      console.log("paymentType",paymentType)
-      const listOfMyOrder = await listOfMyOrderResp.json();
+    useEffect(()=>{
+      getOrderDetails();
+    },[])
 
-    if(listOfMyOrder && listOfMyOrder.length > 0){
-      const isFirstOrder = listOfMyOrder.length == 1;
-      const listOfOrder = listOfMyOrder[0];
+    useEffect(()=>{
+      if(orderDetailsData && Object.keys(orderDetailsData).length>0){
+        // getListOfOrder();
+        getOrderTrackData();
+      }
+    },[orderDetailsData])
+
+    const getOrderTrackData = () =>{
+      console.log("orderDetailsData",orderDetailsData)
+      const {orderProducts = [],isFirstOrder="",orderId,paymentType,finalAmount} = orderDetailsData || {}
+
+      const productNameList =  orderProducts.map((product)=>{
+        return product.productName
+      })
+      const productIdList =  orderProducts.map((product)=>{
+        return product.productId
+      })
+      const variantIdList =  orderProducts.map((product)=>{
+        return product.variantId
+      })
+      const orderProductIdList =  orderProducts.map((product)=>{
+        return product.orderProductId
+      })
       const track = {
-        first_order: isFirstOrder ? "YES" : "NO",
-        productId: listOfOrder.productId,
-        variantId: listOfOrder.variantId,
-        productName: listOfOrder.orderProductName,
-        orderId:listOfOrder.orderId,
-        orderProductId:listOfOrder.orderProductId,
+        first_order: isFirstOrder ,
+        orderId:orderId,
         paymentMode:paymentType,
         country:selectedCountry.name,
+        productIdList: productIdList.join() || null ,
+        variantIdList: variantIdList.join() || null,
+        productNameList:productNameList.join() || "",
+        orderProductIdList:orderProductIdList.join() || null,
+       
       }
       try {
-        console.log("totalPurchaseAmount",totalPurchaseAmount)
         window.dataLayer.push({
           'event': 'kuwa_order_confirmed',
           'pagePath': window.location.pathname,
           'pageTitle': document.title,
-          'productId':listOfOrder.productId,
-          'productName':listOfOrder.orderProductName,
-          'orderId':listOfOrder.orderId,
-          'orderProductId':listOfOrder.orderProductId,
+          'productId':productIdList.join() || null,
+          'productName':productNameList.orderProductName.join() || null,
+          'orderId':orderId,
+          'orderProductId':orderProductIdList.orderProductId.join(),
           'paymentMode':paymentType,
-          'purchaseValue':totalPurchaseAmount?totalPurchaseAmount:0
-
-          // Add more data as needed
+          'purchaseValue':finalAmount || 0
       });
 
       } catch (error) {
@@ -130,7 +130,63 @@ export default function PaymentSuccess() {
         mixPanelTrackEvent("kuwa_order_confirmed", track)
       }
     }
-  }
+   
+
+  //   const getListOfOrder = async() =>{
+      
+      
+  //     const listOfMyOrderResp  =  await fetch(`/api/list-of-orders`, {
+  //       method: 'GET',
+  //     })
+  //     const listOfMyOrder = await listOfMyOrderResp.json();
+    
+  //     console.log("productNameList",productNameList.join())
+  //   if(listOfMyOrder && listOfMyOrder.length > 0){
+  //     // const isFirstOrder = listOfMyOrder.length == 1;
+  //     const listOfOrder = listOfMyOrder[0];
+  //     const track = {
+  //       first_order: isFirstOrder ,
+  //       orderId:orderId,
+  //       paymentMode:paymentType,
+  //       country:selectedCountry.name,
+  //       productId: productIdList.join() || null ,
+  //       variantId: variantIdList.join() || null,
+  //       productName:productNameList.join() || "",
+  //       orderProductId:orderProductIdList.join() || null,
+       
+  //     }
+  //     try {
+  //       window.dataLayer.push({
+  //         'event': 'kuwa_order_confirmed',
+  //         'pagePath': window.location.pathname,
+  //         'pageTitle': document.title,
+  //         'productId':listOfOrder.productId,
+  //         'productName':listOfOrder.orderProductName,
+  //         'orderId':listOfOrder.orderId,
+  //         'orderProductId':listOfOrder.orderProductId,
+  //         'paymentMode':paymentType,
+  //         'purchaseValue':totalPurchaseAmount?totalPurchaseAmount:0
+
+  //         // Add more data as needed
+  //     });
+
+  //     } catch (error) {
+  //         console.log("ERROR", error)
+  //     }
+  //     if(window && window.clevertap){
+  //       window.clevertap.setMultiValuesForKey("cart_items", []);
+  //     }
+  //     setTimeout(()=>{
+  //       window.clevertap?.event?.push("kuwa_order_confirmed", track);
+  //     },2000)
+  //     if(isLogin){
+  //       mixPanelTrackEvent("kuwa_order_confirmed", track,userData.id)
+  //     }
+  //     else{
+  //       mixPanelTrackEvent("kuwa_order_confirmed", track)
+  //     }
+  //   }
+  // }
 
     const deleteAllItem = async() =>{
       const res = await fetch('/api/delete-all-item', {
@@ -149,7 +205,6 @@ export default function PaymentSuccess() {
     const monthIndex = deliveryDate.getMonth();
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const month = monthNames[monthIndex];
-    console.log("Delivery Date: " + deliveryDate)
     const deliveryDateString = `${month} ${day}`;
       return (
         <>
