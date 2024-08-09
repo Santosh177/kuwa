@@ -147,6 +147,8 @@ const ProductSlider = ({ backgroundColor, topColor, design, data, headerTextStyl
                   "product Name": data && data.name,
                   "quantity": 1,
                   "product Id": data?.id,
+                  "Page URL":window.location.href,
+                    "Screen":"Home"
                 }
 
                 let addToCartPayload = {}
