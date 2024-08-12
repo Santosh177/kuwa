@@ -17,6 +17,7 @@ import { useAuth } from '@/context/userDetail';
 // import { mixPanelTrackEvent } from '@/app/page';
 import { mixPanelTrackEvent } from '../../page';
 import { useLanguage } from '@/context/languageDetails';
+import Script from 'next/script';
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
@@ -208,7 +209,24 @@ export default function PaymentSuccess() {
     const deliveryDateString = `${month} ${day}`;
       return (
         <>
+          <head>
+        <Script
+          id="google-ads-conversion"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              gtag('event', 'conversion', {
+                'send_to': 'AW-10835495332/9uzKCNbz5Y4DEKST4q4o',
+                'value': ${totalPurchaseAmount},
+                'currency': ${selectedCountry.currency},
+                'transaction_id': ${orderId}
+              });
+            `,
+          }}
+        />
+          </head>
          <script type="text/javascript" src="/fresh-chat.js" async></script>
+       
         <div id="thankYouPage">
         <PageHeader backButtonAction={()=>window.location.href = '/'} />
         <div  className={styles.thankYouPage}>
