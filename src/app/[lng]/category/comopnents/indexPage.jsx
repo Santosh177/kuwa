@@ -140,7 +140,7 @@ const MainCategory = ({ isDealPage }) => {
         let query = {}
         console.log("paramsData",paramsData)
         if (sort && category.length > 0) {
-            dealQueryValue = `sort_by=${(sort)}&category=${(category.join(','))}`;
+            dealQueryValue = `sort_by=${(sort)}&category=${encodeURIComponent(category.join(','))}`;
             query = {
                 sort_by: sort,
                 category: category
@@ -152,7 +152,7 @@ const MainCategory = ({ isDealPage }) => {
                 sort_by: sort,
             }
         } else if (!sort && category.length > 0) {
-            dealQueryValue = `category=${(category.join(','))}`;
+            dealQueryValue = `category=${encodeURIComponent(category.join(','))}`;
             query = {
                 category: category
             }
