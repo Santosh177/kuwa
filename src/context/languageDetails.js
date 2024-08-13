@@ -84,7 +84,7 @@ export const LanguageProvider = ({ children }) => {
   useEffect(() => {
     const handleRouteChange = () => {
       const langCode = window.location.pathname.split('/')[1];
-      console.log("bjhbjq",langCode)
+    
 
       const langData = listOfLanguages.find(lang => lang.language_code === langCode);
       if (langData) {
@@ -92,24 +92,46 @@ export const LanguageProvider = ({ children }) => {
         setIsArabic(langData.language_code === 'ar');
         setIsEnglish(langData.language_code === 'en');
         localStorage.setItem('selectedLanguage', langData.language_code);
+        document.cookie = `language_code=${langData.language_code}; path=/;`;
       }
+      else {
+        // If langData is undefined, default to English
+        const defaultLangData = listOfLanguages.find(lang => lang.language_code === 'en');
+        setSelectedLanguage(defaultLangData);
+        setIsArabic(false);
+        setIsEnglish(true);
+        localStorage.setItem('selectedLanguage', 'en');
+        document.cookie = `language_code=en; path=/;`;
+    }
     };
      handleRouteChange()
   }, []);
 
   const changeLanguage = (id) => {
     const langData = listOfLanguages.find(lang => lang.id == id);
+  
     if (langData) {
       setSelectedLanguage(langData);
       setIsArabic(langData.language_code === 'ar');
       setIsEnglish(langData.language_code === 'en');
       localStorage.setItem('selectedLanguage', langData.language_code);
-
+      document.cookie = `language_code=${langData.language_code}; path=/;`;
+    
       const newLocale = langData.language_code;
       const currentPath = window.location.pathname;
-      const newPath = `/${newLocale}${currentPath.replace(/^\/(en|ar)/, '')}`;
-      
-      router.push(newPath);
+      let newPath;
+      console.log("langData",id,langData,newLocale,currentPath,newPath);
+      if(newLocale === "en"){
+        console.log("qwbjqb")
+        newPath = currentPath.replace(/^\/(en|ar)/, "");  
+        // newPath = `/${newLocale}${currentPath.replace(/^\/(en|ar)/, '')}`;
+      }
+      else{
+        newPath = `/${newLocale}${currentPath.replace(/^\/(en|ar)/, '')}`;
+      }
+      console.log("newPath",newPath)
+        router.push(newPath);
+      // window.location.href = newPath
     }
   };
 
