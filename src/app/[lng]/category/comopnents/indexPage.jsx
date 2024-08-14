@@ -29,7 +29,9 @@ const MainCategory = ({ isDealPage }) => {
 
     const [paramsData, setParamsData] = useState({})
     const params = useParams();
-    const dealSeoUrl = params.id || "";
+    console.log("paramsData",params)
+    const dealSeoUrl = params.dealId || "";
+    const collection = params.id || ""
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
 
     useEffect(() => {
@@ -97,15 +99,15 @@ const MainCategory = ({ isDealPage }) => {
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
         if (category || sort || AVAILABLE) {
-            const params = {};
-            if (category) params.category = category.split(',');
-            if (sort) params.sort = sort;
-            if (AVAILABLE) params.AVAILABLE = AVAILABLE;
+            const paramsFilter = {};
+            if (category) paramsFilter.category = category.split(',');
+            if (sort) paramsFilter.sort = sort;
+            if (AVAILABLE) paramsFilter.AVAILABLE = AVAILABLE;
 
-            setParamsData(params);
+            setParamsData(paramsFilter);
         } else {
             setParamsData({
-                category: [],
+                category: collection ? [collection] : [],
                 sort: "",
                 AVAILABLE: []
             });
