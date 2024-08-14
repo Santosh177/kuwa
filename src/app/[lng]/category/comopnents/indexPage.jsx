@@ -107,7 +107,7 @@ const MainCategory = ({ isDealPage }) => {
             setParamsData(paramsFilter);
         } else {
             setParamsData({
-                category: collection ? [collection] : [],
+                category: collection ? [decodeURIComponent(collection)] : [],
                 sort: "",
                 AVAILABLE: []
             });
