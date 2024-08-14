@@ -33,66 +33,6 @@ const MainCategory = ({ isDealPage }) => {
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
 
     useEffect(() => {
-
-        // if(searchParams.has('category') && searchParams.has('sort')){
-        //     const category = searchParams.get('category');
-        //     const sort = searchParams.get('sort');
-        //     if(category && sort){
-        //         setParamsData({
-        //             category: category.split(','),
-        //             sort:sort
-        //         })
-        //     }
-        //     else if(category){
-        //         setParamsData({
-        //             category: category.split(','),
-        //             sort:""
-        //         })
-        //     }
-        //     else if(sort){
-        //         setParamsData({
-        //             category: [],
-        //             sort:sort
-        //         })
-        //     }
-        //     else{
-        //         setParamsData({
-        //             category: [],
-        //             sort:""
-        //         })
-        //     }
-        // }
-        // else if(searchParams.has('category')){
-        //     const category = searchParams.get('category');
-        //     if(category){
-        //         setParamsData({
-        //             category: category.split(',')
-        //         })
-        //     }else{
-        //         setParamsData({
-        //             category: []
-        //         })
-        //     }
-        // }
-        // else if(searchParams.has('sort')){
-        //     const sort = searchParams.get('sort');
-        //     if(sort){
-        //         setParamsData({
-        //             sort: sort
-        //         })
-        //     }else{
-        //         setParamsData({
-        //             sort: ""
-        //         })
-        //     }
-        // }
-        // else{
-        //     setParamsData({
-        //         category: [],
-        //         sort:""
-        //     })
-        // }
-
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
@@ -114,7 +54,7 @@ const MainCategory = ({ isDealPage }) => {
         if (searchParams.has("search_key")) {
             const search = searchParams.get('search_key');
             setParamsData({ ...paramsData, searchKey: search })
-            router.replace(window.location.pathname);
+            // router.replace(window.location.pathname);
         }
 
     }, [])
@@ -148,9 +88,9 @@ const MainCategory = ({ isDealPage }) => {
 
         if (searchKey) {
             if (!sort && category.length === 0) {
-                query = `search_key=${encodeURIComponent(searchKey)}`;
+                query = `search_key=${(searchKey)}`;
             } else {
-                query += `&search_key=${encodeURIComponent(searchKey)}`;
+                query += `&search_key=${(searchKey)}`;
             }
         }
 
