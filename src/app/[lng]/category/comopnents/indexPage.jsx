@@ -29,77 +29,17 @@ const MainCategory = ({ isDealPage }) => {
 
     const [paramsData, setParamsData] = useState({})
     const params = useParams();
-    console.log("paramsData",params)
     const dealSeoUrl = params.dealId || "";
-    const collection = params.id || ""
+    const collectionSeoUrl = params.id || null
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
-
+    console.log("collectionSeoUrl",typeof collectionSeoUrl)
     useEffect(() => {
-
-        // if(searchParams.has('category') && searchParams.has('sort')){
-        //     const category = searchParams.get('category');
-        //     const sort = searchParams.get('sort');
-        //     if(category && sort){
-        //         setParamsData({
-        //             category: category.split(','),
-        //             sort:sort
-        //         })
-        //     }
-        //     else if(category){
-        //         setParamsData({
-        //             category: category.split(','),
-        //             sort:""
-        //         })
-        //     }
-        //     else if(sort){
-        //         setParamsData({
-        //             category: [],
-        //             sort:sort
-        //         })
-        //     }
-        //     else{
-        //         setParamsData({
-        //             category: [],
-        //             sort:""
-        //         })
-        //     }
-        // }
-        // else if(searchParams.has('category')){
-        //     const category = searchParams.get('category');
-        //     if(category){
-        //         setParamsData({
-        //             category: category.split(',')
-        //         })
-        //     }else{
-        //         setParamsData({
-        //             category: []
-        //         })
-        //     }
-        // }
-        // else if(searchParams.has('sort')){
-        //     const sort = searchParams.get('sort');
-        //     if(sort){
-        //         setParamsData({
-        //             sort: sort
-        //         })
-        //     }else{
-        //         setParamsData({
-        //             sort: ""
-        //         })
-        //     }
-        // }
-        // else{
-        //     setParamsData({
-        //         category: [],
-        //         sort:""
-        //     })
-        // }
 
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
         if (category || sort || AVAILABLE) {
-            const paramsFilter = {};
+            const paramsFilter = {categorySeoList: collectionSeoUrl !== "null" ? [collectionSeoUrl] : []};
             if (category) paramsFilter.category = category.split(',');
             if (sort) paramsFilter.sort = sort;
             if (AVAILABLE) paramsFilter.AVAILABLE = AVAILABLE;
@@ -107,9 +47,10 @@ const MainCategory = ({ isDealPage }) => {
             setParamsData(paramsFilter);
         } else {
             setParamsData({
-                category: collection ? [collection] : [],
+                category: [],
                 sort: "",
-                AVAILABLE: []
+                AVAILABLE: [],
+                categorySeoList: collectionSeoUrl !== "null" ? [collectionSeoUrl] : []
             });
         }
 
@@ -137,7 +78,7 @@ const MainCategory = ({ isDealPage }) => {
 
     const fetchFilterCollectionData = async () => {
         setIsLoadingProduct(true);
-        const { category = [], sort = "", searchKey = "",AVAILABLE="" } = paramsData || {};
+        const { category = [], sort = "", searchKey = "",AVAILABLE="",categorySeoList=[] } = paramsData || {};
         let dealQueryValue = "";
         let query = {}
         console.log("paramsData",paramsData)
@@ -145,18 +86,27 @@ const MainCategory = ({ isDealPage }) => {
             dealQueryValue = `sort_by=${(sort)}&category=${encodeURIComponent(category.join(','))}`;
             query = {
                 sort_by: sort,
-                category: category
+                category: category,
+                categorySeoList:categorySeoList
             }
         } else if (sort && category.length === 0) {
 
             dealQueryValue = `sort_by=${(sort)}`;
             query = {
                 sort_by: sort,
+                categorySeoList:categorySeoList
             }
         } else if (!sort && category.length > 0) {
             dealQueryValue = `category=${encodeURIComponent(category.join(','))}`;
             query = {
-                category: category
+                category: category,
+                categorySeoList:categorySeoList
+            }
+        }
+        else if (!sort && category.length === 0 ){
+            dealQueryValue = "";
+            query = {
+                categorySeoList:categorySeoList
             }
         }
 
@@ -165,6 +115,7 @@ const MainCategory = ({ isDealPage }) => {
                 dealQueryValue = `search_key=${(searchKey)}`;
                 query = {
                     search_key: searchKey,
+                    categorySeoList:categorySeoList
                 }
             } else {
                 dealQueryValue += `&search_key=${(searchKey)}`;
@@ -180,6 +131,7 @@ const MainCategory = ({ isDealPage }) => {
                 dealQueryValue = `inStock=true`;
                 query = {
                     inStock: true,
+                    categorySeoList:categorySeoList
                 }
             } else {
                 dealQueryValue += `&inStock=true`;
@@ -194,6 +146,7 @@ const MainCategory = ({ isDealPage }) => {
                 dealQueryValue = `inStock=false`;
                 query = {
                     inStock: false,
+                    categorySeoList:categorySeoList
                 }
             } else {
                 dealQueryValue += `&inStock=false`;
@@ -203,7 +156,7 @@ const MainCategory = ({ isDealPage }) => {
                 }
             }   
         }
-
+        console.log("payload",query)
         let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}`;
 
         if (isDealPage) {
