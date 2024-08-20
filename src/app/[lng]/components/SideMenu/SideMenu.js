@@ -265,8 +265,8 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
           const getProductTypeData = await getProductTypeRes.json();
           console.log("getProductTypeData",getProductTypeData);
           getProductTypeData.map((data,index)=>{
-            const {collectionTitle="" , collectionId="" ,collectionTitleArabic} = data || {}
-            childMenuData.push({ name:collectionTitle,id:collectionId,nameArabic:collectionTitleArabic})
+            const {collectionTitle="" , collectionId="" ,collectionTitleArabic,seoUrl=""} = data || {}
+            childMenuData.push({ name:collectionTitle,id:collectionId,nameArabic:collectionTitleArabic,seoUrl:seoUrl})
           })
           setChildMenuData(childMenuData)
     }
