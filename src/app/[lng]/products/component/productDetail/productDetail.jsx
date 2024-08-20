@@ -367,7 +367,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
     const onHandleApplePay = () => {
         console.log("userDatauserData",userData)
         const deliveryFeesConfig = countryList.find((data) => data.code == selectedCountry.code) || {}
-        const productPrice = parseInt(finalPrice) * parseInt(noOfProduct);
+        const productPrice = parseFloat((finalPrice).toFixed(2)) * parseFloat(noOfProduct);
         const minThreshold = deliveryFeesConfig.minThreshold || 0;
         let totalAmount = productPrice;
         let devliveryFees = 0
