@@ -7,12 +7,11 @@ export const dynamic = 'force-dynamic';
 export async function GET(req,res) {
   const headersList = headers();
   const ipAddress = headersList.get("x-forwarded-for");
-  console.log("ipAddress",ipAddress)
   const clientIpAddress = ipAddress ? ipAddress.split(',')[0] : '';
 
-console.log("ipAddress",ipAddress,clientIpAddress)
   try {
     const customHeader = await authHeader();
+    console.log("homepagecustomHeader",customHeader)
     const cartData =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/home-page`, {
       method: 'GET',
       headers: customHeader,

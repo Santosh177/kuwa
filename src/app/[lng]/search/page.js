@@ -145,8 +145,9 @@ export default function Search() {
   //     setShowTrendingSearch(true);
   //   }
   // };
+   const lng = localStorage.getItem("selectedLanguage") || 'en'
   const handleSeeAll = (searchQuery) => {
-    window.location.href = `/collections?search_key=${searchQuery}`
+    window.location.href = `/${lng}/collections?search_key=${encodeURIComponent(searchQuery)}`
   }
   // useEffect(() => {
   //   // Attach event listener for clicks outside the input box

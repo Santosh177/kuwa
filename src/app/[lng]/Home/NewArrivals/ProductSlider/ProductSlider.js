@@ -54,7 +54,9 @@ const ProductSlider = ({data}) => {
       const trackingData = {
         "product Name": data.productName,
         "quantity": 1,
-        "product Id":data.product
+        "product Id":data.product,
+        "Page URL":window.location.href,
+        "Screen":"Home"
       }
         try{
             setIsLoading(true);
@@ -187,7 +189,9 @@ const ProductSlider = ({data}) => {
                 trackData = {
                   "product Name": productName,
                   "quantity": 1,
-                  "product Id":productId
+                  "product Id":productId,
+                  "Page URL":window.location.href,
+                    "Screen":"Home"
                 }
                 return (
                     <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId,productName})} handleNotifyMe={()=>handleNotifyMe(productId)} handleNonLogin={()=>handleNonLogin(productId)} />

@@ -53,8 +53,8 @@ export default function Login() {
       console.log("datadata",data)
 
         try {
-          const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${data.userId}`, {
-          // const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/private/customer/profile/${data.userId}`, {
+          // const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/customer/${data.userId}`, {
+          const userLoginResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/private/customer/profile/${data.userId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',

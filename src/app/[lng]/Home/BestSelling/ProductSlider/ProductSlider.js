@@ -44,7 +44,9 @@ const ProductSlider = ({data}) => {
     const trackingData = {
       "product Name": data.productName,
       "quantity": 1,
-      "product Id":data.product
+      "product Id":data.product,
+      "Page URL":window.location.href,
+      "Screen":"Home"
     }
     try {
       setIsLoading(true);
@@ -240,6 +242,8 @@ const ProductSlider = ({data}) => {
                   "product Name": data && data.name,
                   "quantity": 1,
                   "product Id": data?.id,
+                  "Page URL":window.location.href,
+                  "Screen":"Home"
                 }
                let addToCartPayload={}
                if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
