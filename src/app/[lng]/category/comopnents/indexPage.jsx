@@ -163,41 +163,56 @@ const MainCategory = ({ isDealPage }) => {
         }
 
         try {
-            if(isDealPage){
-                const response = await fetch(endpoint, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    // body:JSON.stringify(query)
-                });
+            // if(isDealPage){
+            //     const response = await fetch(endpoint, {
+            //         method: 'GET',
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //         },
+            //         // body:JSON.stringify(query)
+            //     });
     
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
+            //     if (!response.ok) {
+            //         throw new Error('Failed to fetch data');
+            //     }
                 
-                const data = await response.json();
-                console.log("searchData",data)
-                setResponseValue(data);
+            //     const data = await response.json();
+            //     console.log("searchData",data)
+            //     setResponseValue(data);
 
-            }
-            else{
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body:JSON.stringify(query)
-                });
+            // }
+            // else{
+                // const response = await fetch(endpoint, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body:JSON.stringify(query)
+                // });
     
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
+            //     if (!response.ok) {
+            //         throw new Error('Failed to fetch data');
+            //     }
                 
-                const data = await response.json();
-                console.log("searchData",data)
-                setResponseValue(data);
+            //     const data = await response.json();
+            //     console.log("searchData",data)
+            //     setResponseValue(data);
+            // }
+
+            const response = await fetch('/api/elastic-search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(query)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
             }
+            
+            const data = await response.json();
+            console.log("searchData",data)
+            setResponseValue(data);
            
         } catch (error) {
             console.error('Error fetching data:', error);

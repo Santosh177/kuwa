@@ -161,24 +161,22 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
       try {
         const countryId = selectedCountry && selectedCountry.id || "";
         const payload = {
-          "userId":userData.id || null ,
           "source": "website",
-          "search_key": searchQuery,
+          "searchKey": searchQuery,
           "categoryList": [],
-          "sort_by":"",
+          "sortBy":"relevance",
           "inStock": true,
-          "deal_seo_url":"",
-          "categorySeoList":"",
-          "country":countryId
+          "deal_seo_url":null,
+          "categorySeoList":[],
         }
-        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/elastic-search/search`,{
+        const searchApiResp = await fetch('/api/elastic-search',{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(payload)
         })
-        console.log("ElasticSearch",searchApiResp)
+        console.log("searchApiResp",searchApiResp)
         // const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
         //     method: 'POST',
         //     headers: {
