@@ -160,13 +160,33 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const makeApiCall = async () => {
       try {
         const countryId = selectedCountry && selectedCountry.id || "";
-        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ key: searchQuery })
-          })
+        const payload = {
+          "userId":userData.id || null ,
+          "source": "website",
+          "search_key": searchQuery,
+          "categoryList": [],
+          "sort_by":"",
+          "inStock": true,
+          "deal_seo_url":"",
+          "categorySeoList":"",
+          "country":countryId
+        }
+        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/elastic-search/search`,{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload)
+        })
+        console.log("ElasticSearch",searchApiResp)
+        // const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ key: searchQuery })
+        //   })
+
         const searchApiData = await searchApiResp.json();
         let searchData = []
         if(searchApiData && searchApiData.length > 0 ){
