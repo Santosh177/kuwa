@@ -79,7 +79,15 @@ const MainCategory = ({ isDealPage }) => {
         setIsLoadingProduct(true);
         const { category = [], sort = "", searchKey = "",AVAILABLE="",categorySeoList=[] } = paramsData || {};
         let dealQueryValue = "";
-        let query = {}
+        let query = {
+            "source": "website",
+            // "searchKey": searchQuery,
+            "categoryList": null,
+            "sortBy":"relevance",
+            // "inStock": true,
+            "deal_seo_url":null,
+            // "categorySeoList":null,
+        }
         console.log("paramsData",paramsData)
         if (sort && category.length > 0) {
             dealQueryValue = `sort_by=${(sort)}&category=${encodeURIComponent(category.join(','))}`;

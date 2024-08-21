@@ -163,11 +163,11 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
         const payload = {
           "source": "website",
           "searchKey": searchQuery,
-          "categoryList": [],
+          "categoryList": null,
           "sortBy":"relevance",
           "inStock": true,
           "deal_seo_url":null,
-          "categorySeoList":[],
+          "categorySeoList":null,
         }
         const searchApiResp = await fetch('/api/elastic-search',{
           method: 'POST',
@@ -176,7 +176,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
           },
           body: JSON.stringify(payload)
         })
-        console.log("searchApiResp",searchApiResp)
+       
         // const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
         //     method: 'POST',
         //     headers: {
@@ -186,6 +186,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
         //   })
 
         const searchApiData = await searchApiResp.json();
+        console.log("searchApiResp",searchApiResp)
         let searchData = []
         if(searchApiData && searchApiData.length > 0 ){
             searchData = []
