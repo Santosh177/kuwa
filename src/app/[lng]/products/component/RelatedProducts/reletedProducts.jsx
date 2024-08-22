@@ -40,7 +40,9 @@ const RelatedProducts = ({ productData = {} }) => {
         const trackingData = {
             "product Name": data.productName,
             "quantity": 1,
-            "product Id":data.product
+            "product Id":data.product,
+             "Page URL":window.location.href,
+             "Screen":"PDP/RelatedProduct"
           }
         try {
             setIsLoading(true)
@@ -175,6 +177,8 @@ const RelatedProducts = ({ productData = {} }) => {
                                     "product Name": name,
                                     "quantity": 1,
                                     "product Id": id,
+                                     "Page URL":window.location.href,
+                                      "Screen":"PDP/RelatedProduct"
                                 }
                                 let addToCartPayload = {};
                                 if(dealId && isDealActive && isTimerActive,currentTimerStatus=="in-between"){

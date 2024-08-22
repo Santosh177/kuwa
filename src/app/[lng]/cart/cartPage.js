@@ -32,7 +32,6 @@ import NotifyEmailPopup from "../components/NotifyEmailPopup/NotifyEmailPopup";
 import NotifySuccessPopup from "../components/NotifySuccessPopup/NotifySuccessPopup";
 
 export default  function Cart({cartData}) {
-    console.log("to check")
     const router = useRouter();
     const countryList = useCountryList();
     const {setCartItemCount={} } = useCartItems();
@@ -171,9 +170,6 @@ export default  function Cart({cartData}) {
       const getOutOfStockProductsData= await getOutOfStockProduct(data[`products`],data.currency);
       setOutOfStockProducts(getOutOfStockProductsData)
     }
-
-   console.log("outOfStockProducts++++",outOfStockProducts)
-   console.log("isAllOutOfStockProducts",isAllOutOfStockProducts)
 
     useEffect(()=>{
       if(cartItems && cartItems.length > 0){
@@ -348,7 +344,6 @@ export default  function Cart({cartData}) {
           setIsLoading(false)
           const cartPageProducts = await getCartPageProducts.json();
           setCartProducts(cartPageProducts)
-          console.log("cartPageProducts",cartPageProducts)
         }
         else{
           setIsLoading(false)
@@ -367,7 +362,6 @@ export default  function Cart({cartData}) {
     },[])
 
     const handleNonLogin = (id,variantId)=>{
-      console.log("id, variantId", id, variantId);
        setIsShowNotifyEmailPopup(true);
        setNonLoginProductId(id);
        setNonLoginVariantId(variantId);
@@ -405,7 +399,6 @@ export default  function Cart({cartData}) {
        }
     
        const handleNotifyMe = async(productId, variantId)=>{
-        console.log("variantId",variantId)
         const payload={
           productId:productId || null,
           variantId:variantId || null,
@@ -459,10 +452,8 @@ export default  function Cart({cartData}) {
     }
     const checkArrows = () => {
       if (isArabic ? productScroll?.current?.scrollLeft >= 0 : productScroll?.current?.scrollLeft <= 0) {
-        console.log("leftInactive")
         setLeftArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/inactive_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/inactive_left_arrow.svg");
       } else {
-        console.log("rightInactive")
        setLeftArrow(isArabic ? "https://d25uasl7utydze.cloudfront.net/assets/active_right_arrow.svg" : "https://d25uasl7utydze.cloudfront.net/assets/active_right%20arrow-1.svg");
       }
       if (isArabic ? productScroll?.current?.scrollLeft + productScroll?.current?.scrollWidth > productScroll?.current?.clientWidth : productScroll?.current?.scrollLeft + productScroll?.current?.clientWidth >= productScroll?.current?.scrollWidth) {
@@ -486,18 +477,13 @@ export default  function Cart({cartData}) {
 
   
     const onHandleApplePay = () => {
-      // console.log("userDatauserData",userData)
-      // const deliveryFeesConfig = countryList.find((data) => data.code == selectedCountry.code) || {}
       let totalAmount = priceDetails['totalAmount'];
       let devliveryFees = priceDetails['deliveryFees'];
       const cartItemCount = cartItems && cartItems.length;
       const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
       const customFee = selectedCountry?.customFee || 0 ;
-      console.log("prePaidDiscountbb",prePaidDiscount);
       let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
       totalAmount = totalAmount - extraDiscount + customFee 
-      console.log("finalAmount",extraDiscount)
-      console.log("cartItemscartItems",cartItems)
       let labelData = [];
 
       cartItems.map((data,index)=>{
@@ -537,14 +523,6 @@ export default  function Cart({cartData}) {
         ],
       };
 
-    //   if (customFee > 0) {
-    //     lineItems.push({
-    //         "label": "Custom Duty",
-    //         "amount": customFee
-    //     });
-    // }
-
-    console.log("request+++",request)
     
       if(!isLogin){
           request["requiredBillingContactFields"].push('phone')
@@ -552,11 +530,9 @@ export default  function Cart({cartData}) {
           request["requiredShippingContactFields"].push('phone')
           request["requiredShippingContactFields"].push('email')
       }
-      console.log("requestrequest",request)
       appleSession = new ApplePaySession(3, request);
       appleSession.begin();
       appleSession.onshippingmethodselected = function (event) {
-          console.log("eventevent",event)
           var newTotal = {
               type: 'final',
               label: "config.shop.shop_name",
@@ -778,8 +754,6 @@ export default  function Cart({cartData}) {
             // router.push(`/payment/success?orderId=${placeOrder.order_id}`)
             window.location.href = `/payment/success?orderId=${placeOrder.order_id}`
           }
-
-      //   console.log("payloadpayload",payload)
   }
   const customFee = selectedCountry?.customFee || 0;
     const totalPrice =((priceDetails && priceDetails.totalAmount)? priceDetails.currency +" "+(priceDetails.totalAmount) :"") 
@@ -969,7 +943,9 @@ if(dealId && isDealActive && isTimerActive && currentTimerStatus == "in-between"
     quantity:1,
     dealId,
     variantId,
-    isVariant:true
+    isVariant:true,
+    "Screen":"CartPage",
+   "Page URL": window.location.href
   }
 }
 else{
@@ -978,7 +954,9 @@ else{
     quantity:1,
     dealId,
     isVariant:true,
-    variantId
+    variantId,
+    "Screen":"CartPage",
+    "Page URL": window.location.href
   }
 }
 }
@@ -989,7 +967,9 @@ else{
       quantity:1,
       dealId,
       isVariant:false,
-      variantId:null
+      variantId:null,
+      "Screen":"CartPage",
+      "Page URL": window.location.href
     }
   }
   else{
@@ -997,7 +977,9 @@ else{
       product:productId,
       quantity:1,
       isVariant:false,
-      variantId:null
+      variantId:null,
+      "Screen":"CartPage",
+      "Page URL": window.location.href
     }
   }
 }

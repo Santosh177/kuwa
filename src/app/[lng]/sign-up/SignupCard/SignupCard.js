@@ -11,7 +11,7 @@ import { checkInternationalPhone } from "../../../../utils/validation";
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { useLanguage } from '@/context/languageDetails';
 
-const validateForm = (formData,isArabic) => {
+const validateForm = (formData,isArabic,selectedCountry) => {
   const errors = {};
   if (!formData.firstName) {
     errors.firstName = isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
@@ -21,7 +21,7 @@ const validateForm = (formData,isArabic) => {
   }
   if(!formData.mobNoValidation){
     errors.mobileNumber = isArabic ? "رقم الهاتف المحمول مطلوب": "Mobile number is required";
-  }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
+  }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
     errors.mobileNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
   }
   if(!formData.email){
@@ -139,7 +139,7 @@ export default function SignupCard() {
     }
 
       const onSignup = async() =>{
-        const validationErrors = validateForm(formData,isArabic);
+        const validationErrors = validateForm(formData,isArabic,selectedCountry);
         if (Object.keys(validationErrors).length === 0) {
        
             try {

@@ -219,6 +219,8 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         "product Id": id,
         "isVariant": selectedVarients ? true : false,
         "variantId": selectedVarients,
+        "Page URL":window.location.href,
+        "Screen":"PDP"
     }
 
     // const addGoogleEvent =()=>{

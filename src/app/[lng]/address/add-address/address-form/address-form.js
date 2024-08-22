@@ -15,7 +15,7 @@ import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 
 import { useLanguage } from "@/context/languageDetails";
 
-const validatePersonalForm = (formData) => {
+const validatePersonalForm = (formData,selectedCountry) => {
 
   console.log("validatePersonalForm",formData)
     const errors = {};
@@ -31,7 +31,7 @@ const validatePersonalForm = (formData) => {
     if(!formData.mobNumber){
       errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
     }
-    else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation)){
+    else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
       errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
     }
     if(!formData.email){
@@ -42,18 +42,20 @@ const validatePersonalForm = (formData) => {
     return errors;
   };
   
-const validateShippingAddressForm = (formData,isArabic=false) => {
-  console.log("bebjbjb",formData ,isArabic)
+const validateShippingAddressForm = (formData,isArabic=false,selectedCountry={}) => {
+ 
     const errors = {};
     if (!formData.address) {
       errors.address =
        isArabic ? "المنطقة مطلوبة" :
-       'Area is required.';
+       'Address is required.';
     }
-    if (!formData.apartment) {
-      errors.apartment =
-       isArabic ? "الشقة مطلوبة" :
-       'Apartment is required.';
+    if(selectedCountry.code !== "QA"){
+      if (!formData.apartment) {
+        errors.apartment = 
+        isArabic ? "الشقة مطلوبة" :
+         'Apartment is required.';
+      }
     }
     if(!formData.country){
       errors.country = "Country is required";
@@ -73,18 +75,21 @@ const validateShippingAddressForm = (formData,isArabic=false) => {
   };
 
 
-const validateBillingAddressForm = (formData,isArabic) => {
+const validateBillingAddressForm = (formData,isArabic,selectedCountry={}) => {
     const errors = {};
     if (!formData.address) {
       errors.address = 
       isArabic ? "المنطقة مطلوبة" : 
-      'Area is required.';
+      'Address is required.';
     }
-    if (!formData.apartment) {
-      errors.apartment = 
-      isArabic ? "الشقة مطلوبة" :
-       'Apartment is required.';
+    if(selectedCountry.code !== "QA"){
+      if (!formData.apartment) {
+        errors.apartment = 
+        isArabic ? "الشقة مطلوبة" :
+         'Apartment is required.';
+      }
     }
+   
     if(!formData.country){
       errors.country = "Country is required";
     }
@@ -247,11 +252,11 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
            {/* {(!isEdit && !isLogin) && <CreateAccountBox />} */}
             <div className={styles.userNameContainer}>
                 <div className={styles.nameField}>
-                    <Input type="text" fieldName="firstName" placeHolder={isArabic ? "الاسم الأول *" : "First name *" }  value={values['firstName']} onInputChange={onChange}  />
+                    <Input type="text" fieldName="firstName" placeHolder={isArabic ? "الاسم الأول *" : "First Name *" }  value={values['firstName']} onInputChange={onChange}  />
                     {errors.firstName && <span className={styles.errorMsg}>{errors.firstName}</span>}
                 </div>
                 <div className={styles.nameField}>
-                    <Input type="text" fieldName="lastName" placeHolder={isArabic ? "الاسم الأخير *" :"Last name *"}  value={values['lastName']} onInputChange={onChange} />
+                    <Input type="text" fieldName="lastName" placeHolder={isArabic ? "الاسم الأخير *" :"Last Name *"}  value={values['lastName']} onInputChange={onChange} />
                     {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
                 </div>
             </div>
@@ -280,7 +285,7 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
 
 const ShippingAddressForm = ({onChange={},values={},errors={}}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+  const {selectedCountry = {}} = useCountry();
     return (
         <div className={[styles.addressInfoForm,styles.shippingAddressForm].join(" ")}>
          <div className={styles.headerTxt}>{isArabic ? "عنوان الشحن" : "Shipping Address"}</div>
@@ -288,33 +293,34 @@ const ShippingAddressForm = ({onChange={},values={},errors={}}) => {
                 <div className={styles.inputContainer}>
                     <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")}   className={isArabic ? styles['input-ar'] : ''} />
                     <label className={styles.placeholderText}>
-                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? "اسم المنطقة، الطريق، القطعة *" : "Area name, Road, Block *"}</div>
+                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? (selectedCountry.code == "QA" ? "حقل العنوان 1 *" : "اسم المنطقة، الطريق، القطعة *") : (selectedCountry.code == "QA" ? "Address Field 1 *" : "Area name, Road, Block *")}</div>
                     </label>
                 </div>
                 {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
             </div>
-            <Input type="text" fieldName="apartment" placeHolder={isArabic ? "اسم البناء/الفيلا، الطابق، رقم الشقة *" : "Building/Villa name, Floor, Flat no. *"} value={values['apartment']} onInputChange={onChange}  />
+            <Input type="text" fieldName="apartment" placeHolder={isArabic ? (selectedCountry.code == "QA" ? "حقل العنوان 2 (اختياري)" :  "اسم البناء/الفيلا، الطابق، رقم الشقة *" ): (selectedCountry.code == "QA" ? "Address Field 2 (Optional)" : "Building/Villa name, Floor, Flat no. *")} value={values['apartment']} onInputChange={onChange}  />
             {errors.apartment && <span className={styles.errorMsg}>{errors.apartment}</span>}
             <div className={styles.countryContainer}>
               <div className={styles.addressDiv}>
+              <div className={styles.countryInfoField}>
+                    <Input type="text" fieldName="city" placeHolder={isArabic ? "المدينة *" : "City *"}  value={values['city']} onInputChange={onChange}  />
+                    {errors.city && <span className={styles.errorMsg}>{errors.city}</span>}
+                </div>
                 <div className={styles.countryInfoField}>
                     <Input type="text" fieldName="country" placeHolder={isArabic ? "البلد" : "Country *"}  value={values['country']} onInputChange={onChange} isDisabled={true} />
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
-                <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="city" placeHolder={isArabic ? "المدينة *" : "City *"}  value={values['city']} onInputChange={onChange}  />
-                    {errors.city && <span className={styles.errorMsg}>{errors.city}</span>}
-                </div>
+               
                 </div>
                 <div className={styles.addressDiv}>
-                <div className={styles.countryInfoField}>
+              { selectedCountry.code !== "QA" && <div className={styles.countryInfoField}>
                     <Input type="text" fieldName="stateProvince" placeHolder={isArabic ? "المحافظة/الولاية" : "State/Province"}  value={values['stateProvince']} onInputChange={onChange}   />
                     {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
-                </div>
-                <div className={styles.countryInfoField}>
+                </div>}
+               {selectedCountry.code !== "QA" && <div className={styles.countryInfoField}>
                     <Input type="text" fieldName="postalCode" placeHolder={isArabic ? "الرمز البريدي" : "Postal code "}  value={values['postalCode']} onInputChange={onChange}   />
                     {errors.postalCode && <span className={styles.errorMsg}>{errors.postalCode}</span>}
-                </div>
+                </div>}
                 </div>
             </div>
         </div>
@@ -323,7 +329,7 @@ const ShippingAddressForm = ({onChange={},values={},errors={}}) => {
 
 const BillingAddressForm = ({onChange={},values={},errors={}}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+  const {selectedCountry = {}} = useCountry();
     return (
         <div className={[styles.addressInfoForm,styles.billingAddressForm].join(" ")}>
          <div className={styles.headerTxt}>{isArabic ? "عنوان الفواتير" : "Billing Address"}</div>
@@ -331,34 +337,35 @@ const BillingAddressForm = ({onChange={},values={},errors={}}) => {
                 <div className={styles.inputContainer}>
                     <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")} className={isArabic ? styles['input-ar'] : ''} />
                     <label className={styles.placeholderText}>
-                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? "اسم المنطقة، الطريق، القطعة *" : "Area name, Road, Block *"}</div>
+                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? (selectedCountry.code == "QA" ? "حقل العنوان 1 *" : "اسم المنطقة، الطريق، القطعة *") : (selectedCountry.code == "QA" ? "Address Field 1 *" : "Area name, Road, Block *")}</div>
                     </label>
                 </div>
                 {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
             </div>
-            <Input type="text" fieldName="apartment" placeHolder={isArabic ? "اسم البناء/الفيلا، الطابق، رقم الشقة *" : "Building/Villa name, Floor, Flat no. *"} value={values['apartment']} onInputChange={onChange}  />
+            <Input type="text" fieldName="apartment" placeHolder={isArabic ? (selectedCountry.code == "QA" ? "حقل العنوان 2 (اختياري)" :  "اسم البناء/الفيلا، الطابق، رقم الشقة *" ): (selectedCountry.code == "QA" ? "Address Field 2 (Optional)" : "Building/Villa name, Floor, Flat no. *")} value={values['apartment']} onInputChange={onChange}  />
             {errors.apartment && <span className={styles.errorMsg}>{errors.apartment}</span>}
             <div className={styles.countryContainer}>
             <div className={styles.addressDiv}>
+            <div className={styles.countryInfoField}>
+                    <Input type="text" fieldName="city" placeHolder={isArabic ? "المدينة *" : "City *"}  value={values['city']} onInputChange={onChange}  />
+                    {errors.city && <span className={styles.errorMsg}>{errors.city}</span>}
+                </div>
                 <div className={styles.countryInfoField}>
              
                     <Input type="text" fieldName="country" placeHolder={isArabic ? "البلد" : "Country *"}  value={values['country']} onInputChange={onChange} isDisabled={true} />
                     {errors.country && <span className={styles.errorMsg}>{errors.country}</span>}
                 </div>
-                <div className={styles.countryInfoField}>
-                    <Input type="text" fieldName="city" placeHolder={isArabic ? "المدينة *" : "City *"}  value={values['city']} onInputChange={onChange}  />
-                    {errors.city && <span className={styles.errorMsg}>{errors.city}</span>}
-                </div>
+               
                 </div>
                 <div className={styles.addressDiv}>
-                <div className={styles.countryInfoField}>
+              {selectedCountry.code !== "QA" && <div className={styles.countryInfoField}>
                     <Input type="text" fieldName="stateProvince" placeHolder={isArabic ? "المحافظة/الولاية" : "State/Province"}  value={values['stateProvince']} onInputChange={onChange}   />
                     {/* {errors.stateProvince && <span className={styles.errorMsg}>{errors.stateProvince}</span>} */}
-                </div>
-                <div className={styles.countryInfoField}>
+                </div>}
+              {selectedCountry.code !== "QA" &&  <div className={styles.countryInfoField}>
                     <Input type="text" fieldName="postalCode" placeHolder={isArabic ? "الرمز البريدي" : "Postal code "}  value={values['postalCode']} onInputChange={onChange}   />
                     {errors.postalCode && <span className={styles.errorMsg}>{errors.postalCode}</span>}
-                </div>
+                </div>}
                 </div>
             </div>
         </div>
@@ -425,6 +432,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const [billingAddressErrors, setBillingAddressErrors] = useState({});
       const [isShowEmailExistPopUp, setIsShowEmailExistPopUp] = useState(false)
       const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+     
 
  
   // console.log("personalInfoErrors",personalInfoErrors)
@@ -479,9 +487,9 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       },[userData])
 
       const addressValidation = () => {
-        const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
-        const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic);
-        const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic);
+        const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedCountry);
+        const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedCountry);
+        const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedCountry);
        
         if (Object.keys(validationPersonalInfoErrors).length === 0 && Object.keys(validationShippingErrors).length === 0 && isSameBillingAddress ){
           return true
@@ -496,9 +504,9 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
       useEffect(()=>{
       if(getFormValues){
-        const validationPersonalInfoErrors = validatePersonalForm(personalInfo);
-        const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic);
-        const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic);
+        const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedCountry);
+        const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedCountry);
+        const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedCountry);
         if (addressValidation()) {
                 let combineFormData = {
                     "shippingAddress":{...shippingAddress,...personalInfo},

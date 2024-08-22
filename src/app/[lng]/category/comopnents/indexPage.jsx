@@ -35,66 +35,6 @@ const MainCategory = ({ isDealPage }) => {
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
 
     useEffect(() => {
-
-        // if(searchParams.has('category') && searchParams.has('sort')){
-        //     const category = searchParams.get('category');
-        //     const sort = searchParams.get('sort');
-        //     if(category && sort){
-        //         setParamsData({
-        //             category: category.split(','),
-        //             sort:sort
-        //         })
-        //     }
-        //     else if(category){
-        //         setParamsData({
-        //             category: category.split(','),
-        //             sort:""
-        //         })
-        //     }
-        //     else if(sort){
-        //         setParamsData({
-        //             category: [],
-        //             sort:sort
-        //         })
-        //     }
-        //     else{
-        //         setParamsData({
-        //             category: [],
-        //             sort:""
-        //         })
-        //     }
-        // }
-        // else if(searchParams.has('category')){
-        //     const category = searchParams.get('category');
-        //     if(category){
-        //         setParamsData({
-        //             category: category.split(',')
-        //         })
-        //     }else{
-        //         setParamsData({
-        //             category: []
-        //         })
-        //     }
-        // }
-        // else if(searchParams.has('sort')){
-        //     const sort = searchParams.get('sort');
-        //     if(sort){
-        //         setParamsData({
-        //             sort: sort
-        //         })
-        //     }else{
-        //         setParamsData({
-        //             sort: ""
-        //         })
-        //     }
-        // }
-        // else{
-        //     setParamsData({
-        //         category: [],
-        //         sort:""
-        //     })
-        // }
-
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
@@ -116,7 +56,7 @@ const MainCategory = ({ isDealPage }) => {
         if (searchParams.has("search_key")) {
             const search = searchParams.get('search_key');
             setParamsData({ ...paramsData, searchKey: search })
-            router.replace(window.location.pathname);
+            // router.replace(window.location.pathname);
         }
 
     }, [])
@@ -138,23 +78,23 @@ const MainCategory = ({ isDealPage }) => {
     const fetchFilterCollectionData = async () => {
         setIsLoadingProduct(true);
         const { category = [], sort = "", searchKey = "",AVAILABLE="" } = paramsData || {};
-        // let query = "";
+        let dealQueryValue = "";
         let query = {}
         console.log("paramsData",paramsData)
         if (sort && category.length > 0) {
-            // query = `sort_by=${(sort)}&category=${(category.join(','))}`;
+            dealQueryValue = `sort_by=${(sort)}&category=${encodeURIComponent(category.join(','))}`;
             query = {
                 sort_by: sort,
                 category: category
             }
         } else if (sort && category.length === 0) {
 
-            // query = `sort_by=${(sort)}`;
+            dealQueryValue = `sort_by=${(sort)}`;
             query = {
                 sort_by: sort,
             }
         } else if (!sort && category.length > 0) {
-            // query = `category=${(category.join(','))}`;
+            dealQueryValue = `category=${encodeURIComponent(category.join(','))}`;
             query = {
                 category: category
             }
@@ -162,12 +102,12 @@ const MainCategory = ({ isDealPage }) => {
 
         if (searchKey) {
             if (!sort && category.length === 0) {
-                // query = `search_key=${(searchKey)}`;
+                dealQueryValue = `search_key=${(searchKey)}`;
                 query = {
                     search_key: searchKey,
                 }
             } else {
-                // query += `&search_key=${(searchKey)}`;
+                dealQueryValue += `&search_key=${(searchKey)}`;
                 query = {
                    ...query,
                     search_key: searchKey,
@@ -177,12 +117,12 @@ const MainCategory = ({ isDealPage }) => {
 
         if (AVAILABLE && AVAILABLE.length > 0 ) {
             if (!sort && category.length === 0 && !searchKey) {
-                // query = `inStock=true`;
+                dealQueryValue = `inStock=true`;
                 query = {
                     inStock: true,
                 }
             } else {
-                // query += `&inStock=true`;
+                dealQueryValue += `&inStock=true`;
                 query = {
                    ...query,
                     inStock: true,
@@ -191,12 +131,12 @@ const MainCategory = ({ isDealPage }) => {
         }
         if(!AVAILABLE || (AVAILABLE && AVAILABLE.length == 0)){
             if (!sort && category.length === 0 && !searchKey) {
-                // query = `inStock=false`;
+                dealQueryValue = `inStock=false`;
                 query = {
                     inStock: false,
                 }
             } else {
-                // query += `&inStock=false`;
+                dealQueryValue += `&inStock=false`;
                 query = {
                    ...query,
                     inStock: false,
@@ -207,18 +147,19 @@ const MainCategory = ({ isDealPage }) => {
         let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}`;
 
         if (isDealPage) {
-            endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealSeoUrl}?country_id=${selectedCountry.id}`;
+            endpoint = `${process.env.BACKEND_END_POINT_URL}/api/v1/deals/${dealSeoUrl}?country_id=${selectedCountry.id}&${dealQueryValue}`;
         }
 
         try {
-           
+            if(isDealPage){
                 const response = await fetch(endpoint, {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body:JSON.stringify(query)
+                    // body:JSON.stringify(query)
                 });
+    
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
@@ -226,10 +167,26 @@ const MainCategory = ({ isDealPage }) => {
                 const data = await response.json();
                 console.log("searchData",data)
                 setResponseValue(data);
-            
-           
 
-          
+            }
+            else{
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify(query)
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                
+                const data = await response.json();
+                console.log("searchData",data)
+                setResponseValue(data);
+            }
+           
         } catch (error) {
             console.error('Error fetching data:', error);
             // Handle error or set appropriate state
