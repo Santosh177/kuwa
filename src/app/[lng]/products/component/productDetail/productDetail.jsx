@@ -47,6 +47,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
    const[selectedVariantTag,setSelectedVariantTag] = useState();
    const[seleVariantIcon,setSeleVariantIcon] = useState();
    const [selectedVariantQuantity,setSelectedVariantQuantity] = useState(null);
+   const [selectedVariantName,setSelectedVariantName] = useState("")
     const router = useRouter()
     const clevertapEvent = useCleverTapEvents();
     let normalInventory = quantity
@@ -74,7 +75,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             userId:userData?.id,
             country:selectedCountry.name,
             email:userData?.emailAddress,
-            productTitle:title,
+            "product Name":title,
             productId:id,
             landing_page_url:window.location.pathname,
             device: deviceType,
@@ -156,6 +157,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             setSeleVariantIcon(dealIconUrl);
             setSelectedVariantTag(dealTag);
             setSelectedVariantQuantity(quantity);
+            setSelectedVariantName(name)
             if(selectedVariantdealId && isVariantDealActive && isVariantTimerActive 
                 && currentVariantTimerStatus == "in-between"
                 ){
@@ -220,14 +222,10 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         "isVariant": selectedVarients ? true : false,
         "variantId": selectedVarients,
         "Page URL":window.location.href,
-        "Screen":"PDP"
+        "Screen":"PDP",
+        "Variant Name": `Pack Of ${selectedVariantName}`
     }
 
-    // const addGoogleEvent =()=>{
-    //     window.dataLayer.push({...trackData,'event':'add_to_cart'});
-    //     console.log("google datalayer",window.dataLayer)
-    // }
-    
     const addToCart = async (payload) => {
         console.log("addToCartaddToCart",payload)
         try {

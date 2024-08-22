@@ -1,6 +1,5 @@
 'use client';
 import { useRouter , useSearchParams} from 'next/navigation';
-
 import Input from "@/app/[lng]/components/Input/Input";
 import PhoneNumberInput from '@/app/[lng]/components/PhoneNumberInput/PhoneNumberInput';
 import Loader from '@/app/[lng]/components/Loader/Loader';
@@ -10,6 +9,8 @@ import { useState,useEffect } from 'react';
 import { checkInternationalPhone } from "../../../../utils/validation";
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { useLanguage } from '@/context/languageDetails';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { mixPanelTrackEvent } from '../../page';
 
 const validateForm = (formData,isArabic,selectedCountry) => {
   const errors = {};
@@ -100,6 +101,7 @@ export default function SignupCard() {
     const refererPath = searchParams.get('referer');
     const [pageType, setPageType] = useState(getPageType())
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+    const clevertapEvent = useCleverTapEvents();
     console.log("useCountry",selectedCountry)
 
     
@@ -174,12 +176,23 @@ export default function SignupCard() {
                     },
                     "cart_items": []
                    })
-                   window.clevertap?.event?.push("kuwa_user_signup_success", {
-                    "Country":countryName,
-                    "Email":email,
+                  //  window.clevertap?.event?.push("kuwa_user_signup_success", {
+                  //   "Country":countryName,
+                  //   "Email":email,
+                  //   "Name": name,
+                  //   "Phone": phone
+                  // });
+                  const trackData = {
+                    "country":countryName,
+                    "Email": email,
                     "Name": name,
-                    "Phone": phone
-                  });
+                    "Phone": phone,
+                    "Page URL":window.location.href,
+                    // "Source":pageType,
+                    // "Device":getDeviceType()
+                  }
+                  clevertapEvent.onCleverTapEvent("kuwa_user_signup_success",trackData)
+                  mixPanelTrackEvent("kuwa_user_signup_success",trackData)
                 }
               
               }

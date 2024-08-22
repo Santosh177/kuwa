@@ -135,11 +135,11 @@ export default  function Cart({cartData}) {
             window.clevertap.setMultiValuesForKey("cart_items_id", productIds);
             window.clevertap.setMultiValuesForKey("cart_items_name", productNames);
           }
-          if (isLogin) {
-            mixPanelTrackEvent("cart_items", trackData, userData.id);
-          } else {
-            mixPanelTrackEvent("cart_items", trackData);
-          }
+          // if (isLogin) {
+          //   mixPanelTrackEvent("cart_items", trackData, userData.id);
+          // } else {
+          //   mixPanelTrackEvent("cart_items", trackData);
+          // }
         } catch (error) {
           console.log(error, "not work for older user");
         }
@@ -199,8 +199,8 @@ export default  function Cart({cartData}) {
     const deviceType = getDeviceType();
     const trackData = {
         userId:userData?.id,
-        device: deviceType,
-        Logged:isLogin
+        // device: deviceType,
+        // Logged:isLogin
     }
     setTimeout(()=>{
       clevertapEvent.onCleverTapEvent("kuwa_cart_landing",trackData)
