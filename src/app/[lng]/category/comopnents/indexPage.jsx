@@ -32,13 +32,14 @@ const MainCategory = ({ isDealPage }) => {
     const dealSeoUrl = params.dealId || "";
     const collectionSeoUrl = params.id || null
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
-    console.log("collectionSeoUrl",typeof collectionSeoUrl)
+    console.log("collectionSeoUrl", collectionSeoUrl)
     useEffect(() => {
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
-        if (category || sort || AVAILABLE) {
-            const paramsFilter = {categorySeoList: collectionSeoUrl !== "null" ? [collectionSeoUrl] : []};
+        if (category || sort || AVAILABLE || collectionSeoUrl) {
+            const paramsFilter = {};
+            if(collectionSeoUrl) paramsFilter.categorySeoList = [collectionSeoUrl]
             if (category) paramsFilter.category = category.split(',');
             if (sort) paramsFilter.sort = sort;
             if (AVAILABLE) paramsFilter.AVAILABLE = AVAILABLE;
@@ -49,7 +50,7 @@ const MainCategory = ({ isDealPage }) => {
                 category: [],
                 sort: "",
                 AVAILABLE: [],
-                categorySeoList: collectionSeoUrl !== "null" ? [collectionSeoUrl] : []
+                categorySeoList: []
             });
         }
 
@@ -81,38 +82,38 @@ const MainCategory = ({ isDealPage }) => {
         let dealQueryValue = "";
         let query = {
             "source": "website",
-            // "searchKey": searchQuery,
+            "searchKey": "",
             "categoryList": null,
             "sortBy":"relevance",
-            // "inStock": true,
+            "inStock": true,
             "deal_seo_url":null,
-            // "categorySeoList":null,
+            "categorySeoList":null,
         }
         console.log("paramsData",paramsData)
         if (sort && category.length > 0) {
             dealQueryValue = `sort_by=${(sort)}&category=${encodeURIComponent(category.join(','))}`;
-            query = {
-                sort_by: sort,
-                category: category,
+            query = {...query,
+                sortBy: sort,
+                categoryList: category,
                 categorySeoList:categorySeoList
             }
         } else if (sort && category.length === 0) {
 
             dealQueryValue = `sort_by=${(sort)}`;
-            query = {
-                sort_by: sort,
+            query = {...query,
+                sortBy: sort,
                 categorySeoList:categorySeoList
             }
         } else if (!sort && category.length > 0) {
             dealQueryValue = `category=${encodeURIComponent(category.join(','))}`;
-            query = {
-                category: category,
+            query = {...query,
+                categoryList: category,
                 categorySeoList:categorySeoList
             }
         }
         else if (!sort && category.length === 0 ){
             dealQueryValue = "";
-            query = {
+            query = {...query,
                 categorySeoList:categorySeoList
             }
         }
@@ -120,15 +121,15 @@ const MainCategory = ({ isDealPage }) => {
         if (searchKey) {
             if (!sort && category.length === 0) {
                 dealQueryValue = `search_key=${(searchKey)}`;
-                query = {
-                    search_key: searchKey,
+                query = {...query,
+                    searchKey: searchKey,
                     categorySeoList:categorySeoList
                 }
             } else {
                 dealQueryValue += `&search_key=${(searchKey)}`;
                 query = {
                    ...query,
-                    search_key: searchKey,
+                   searchKey: searchKey,
                 }
             }
         }
@@ -136,7 +137,7 @@ const MainCategory = ({ isDealPage }) => {
         if (AVAILABLE && AVAILABLE.length > 0 ) {
             if (!sort && category.length === 0 && !searchKey) {
                 dealQueryValue = `inStock=true`;
-                query = {
+                query = {...query,
                     inStock: true,
                     categorySeoList:categorySeoList
                 }
@@ -151,7 +152,7 @@ const MainCategory = ({ isDealPage }) => {
         if(!AVAILABLE || (AVAILABLE && AVAILABLE.length == 0)){
             if (!sort && category.length === 0 && !searchKey) {
                 dealQueryValue = `inStock=false`;
-                query = {
+                query = {...query,
                     inStock: false,
                     categorySeoList:categorySeoList
                 }
