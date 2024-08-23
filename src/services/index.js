@@ -105,10 +105,7 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
       "tag":dealTag,
       "currentTimerStatus":currentTimerStatus,
       "productNameArabic":nameArabic
-      }
-
-
-   
+      } 
   }
     else{
       cardData = {
