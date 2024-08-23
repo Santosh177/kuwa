@@ -482,7 +482,7 @@ export default  function Cart({cartData}) {
       const cartItemCount = cartItems && cartItems.length;
       const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
       const customFee = selectedCountry?.customFee || 0 ;
-      let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
+      let extraDiscount = prePaidDiscount > 0 ? parseFloat((((totalAmount -devliveryFees) * prePaidDiscount)/100).toFixed(2)) : 0;
       totalAmount = totalAmount - extraDiscount + customFee 
       let labelData = [];
 

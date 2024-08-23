@@ -108,9 +108,9 @@ export default function PaymentSuccess() {
           'pagePath': window.location.pathname,
           'pageTitle': document.title,
           'productId':productIdList.join() || null,
-          'productName':productNameList.orderProductName.join() || null,
+          'productName':productNameList.join() || null,
           'orderId':orderId,
-          'orderProductId':orderProductIdList.orderProductId.join(),
+          'orderProductId':orderProductIdList.join(),
           'paymentMode':paymentType,
           'purchaseValue':finalAmount || 0
       });
