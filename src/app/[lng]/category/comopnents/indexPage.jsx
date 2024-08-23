@@ -37,7 +37,7 @@ const MainCategory = ({ isDealPage }) => {
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
-        if (category || sort || AVAILABLE || collectionSeoUrl) {
+        if (category || sort || AVAILABLE || (collectionSeoUrl && collectionSeoUrl !== "null" )) {
             const paramsFilter = {};
             if(collectionSeoUrl) paramsFilter.categorySeoList = [collectionSeoUrl]
             if (category) paramsFilter.category = category.split(',');
