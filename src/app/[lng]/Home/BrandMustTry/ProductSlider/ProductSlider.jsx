@@ -41,7 +41,7 @@ const ProductSlider = ({data}) => {
             {
                 brand.map((data,index)=>{
                     return(
-                        <div className={styles.brand} onClick={()=>window.location.href =`/collections/${encodeURIComponent(data?.brandName)}`}>
+                        <div className={styles.brand} onClick={()=>window.location.href =`/collections/${encodeURIComponent(data?.seoUrl)}`}>
                             <div className={styles.brandImg}>
                                 <img src={data?.image}></img>
                             </div>
