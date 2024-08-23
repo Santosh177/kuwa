@@ -147,7 +147,7 @@ export default function Search() {
   // };
    const lng = localStorage.getItem("selectedLanguage") || 'en'
   const handleSeeAll = (searchQuery) => {
-    window.location.href = `/${lng}/collections?search_key=${encodeURIComponent(searchQuery)}`
+    window.location.href = `/collections?search_key=${encodeURIComponent(searchQuery)}`
   }
   // useEffect(() => {
   //   // Attach event listener for clicks outside the input box

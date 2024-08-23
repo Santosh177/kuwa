@@ -74,25 +74,43 @@ export async function middleware(req) {
     }
   }
 
+  const pathname = req.nextUrl.pathname;
+  // if (
+  //   !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
+  //   !req.nextUrl.pathname.startsWith('/_next')
+  // ) {
+   
+  //     // return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url))
+  //     return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url));
+    
+  // }
   if (
     !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
     !req.nextUrl.pathname.startsWith('/_next')
   ) {
-   
-      // return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url))
-      return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url));
     
+    if (lng === 'en') {
+      console.log('englishLanguage');
+      // e.g. incoming request is /en/about
+      // The new URL is now /about
+      return NextResponse.rewrite(
+        new URL(`/${fallbackLng}${pathname}${req.nextUrl.search}`, req.url)
+      );
+    } else {
+      console.log("arabicLanguage")
+      return NextResponse.redirect(new URL(`/${lng}${pathname}${req.nextUrl.search}`, req.url));
+    }
   }
 
  
 
-  if (req.headers.has('referer')) {
-    const refererUrl = new URL(req.headers.get('referer'))
-    const lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`))
-    const response = NextResponse.next()
-    if (lngInReferer) response.cookies.set(cookieName, lngInReferer)
-    return response
-  }
+  // if (req.headers.has('referer')) {
+  //   const refererUrl = new URL(req.headers.get('referer'))
+  //   const lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`))
+  //   const response = NextResponse.next()
+  //   if (lngInReferer) response.cookies.set(cookieName, lngInReferer)
+  //   return response
+  // }
 
   return response;
 }
