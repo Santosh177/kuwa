@@ -37,8 +37,9 @@ const MainCategory = ({ isDealPage }) => {
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
-        if (category || sort || AVAILABLE) {
-            const paramsFilter = {categorySeoList: collectionSeoUrl !== "null" ? [collectionSeoUrl] : []};
+        if (category || sort || AVAILABLE || collectionSeoUrl) {
+            const paramsFilter = {};
+            if(collectionSeoUrl) paramsFilter.categorySeoList = [collectionSeoUrl]
             if (category) paramsFilter.category = category.split(',');
             if (sort) paramsFilter.sort = sort;
             if (AVAILABLE) paramsFilter.AVAILABLE = AVAILABLE;
@@ -49,7 +50,7 @@ const MainCategory = ({ isDealPage }) => {
                 category: [],
                 sort: "",
                 AVAILABLE: [],
-                categorySeoList: collectionSeoUrl !== "null" ? [collectionSeoUrl] : []
+                categorySeoList:[]
             });
         }
 
