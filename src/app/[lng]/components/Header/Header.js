@@ -165,7 +165,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
           "searchKey": searchQuery,
           "categoryList": null,
           "sortBy":"relevance",
-          "inStock": true,
+          "inStock": false,
           "deal_seo_url":null,
           "categorySeoList":null,
         }
