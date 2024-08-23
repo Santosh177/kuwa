@@ -20,7 +20,7 @@ style = {}
 const Input =forwardRef(({onInputChange={},type="text",fieldName="",value="",placeHolder="",isError="",errorMsg="",isDisabled="",style={},icon={}},ref) => {
     const [showPassword, setShowPassword] = useState(false);
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+      console.log("placeHolder",placeHolder)
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState);
       };

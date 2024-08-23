@@ -16,6 +16,7 @@ import { queryParams } from '@/services';
 // import { mixPanelTrackEvent } from '@/app/page';
 import { mixPanelTrackEvent } from '../../page';
 import { useLanguage } from '@/context/languageDetails';
+import QatarAddressForm from './components/QatarAddressForm/QatarAddressForm';
 
 export default function AddAddress() {
   const router = useRouter();
@@ -74,6 +75,7 @@ export default function AddAddress() {
     }
 
     const onGetFormValues = async(data) => {
+      console.log("onGetFormValues",data)
       if(isLogin){
         onAddAddress(data)
       }else{
@@ -192,7 +194,8 @@ export default function AddAddress() {
           <PageHeader headerName={isArabic ? "إضافة عنوان" : "Add Address"} />
          {!refererPath && <PageStepTracker stepCount={1} />}
           <div className={styles.addAddressWrapper}> 
-              <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>
+              {selectedCountry.code !== "QA" && <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>}
+              {selectedCountry.code == "QA" && <QatarAddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>}
               <SubmitBtn onSaveAddress={onSaveAddress}/>
           </div>
           <Loader  isShow={isLoading}/>
