@@ -34,7 +34,6 @@ const MainCategory = ({ isDealPage }) => {
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
     console.log("collectionSeoUrl",typeof collectionSeoUrl)
     useEffect(() => {
-
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
         const AVAILABLE = searchParams.get('AVAILABLE');
@@ -57,7 +56,7 @@ const MainCategory = ({ isDealPage }) => {
         if (searchParams.has("search_key")) {
             const search = searchParams.get('search_key');
             setParamsData({ ...paramsData, searchKey: search })
-            router.replace(window.location.pathname);
+            // router.replace(window.location.pathname);
         }
 
     }, [])

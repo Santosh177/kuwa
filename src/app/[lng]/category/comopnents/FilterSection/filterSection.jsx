@@ -193,11 +193,13 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
 
     const handelOnclick = (options, cat) => {
         setSelectedCatogries(options);
+        setSelectedStockFilter([])
         setSelectedTab(cat)
     };
     const handleStockFilter = (options, cat) => {
         console.log("stockFilter", options, cat);
         setSelectedStockFilter(options);
+        setSelectedCatogries([]);
         setSelectedTab(cat)
     }
     const addQuryPrams = (type,data)=>{
@@ -311,7 +313,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                            
                         </div>
                         <div className={style.options}>
-                        {selectedStockFilter.map((item) => {
+                        {selectedStockFilter && selectedStockFilter .length > 0 && selectedStockFilter.map((item) => {
                                 const { name = "", value = "" } = item || {};
                                 let isOptionSelected = false
                                 if (selectedStock && selectedStock.length > 0 && selectedStock.includes(name)){
@@ -353,7 +355,7 @@ const FilterSectionMobile = ({ setSelectedOptionsHead, responseData, slectedFilt
                     </div>
                     <div className={style.footerButton} >
                         <div onClick={() => handelCancel()} className={style.cancel}><span>{isArabic ? "إلغاء" : "cancel"}</span></div>
-                        <div onClick={() => handelApply()} className={style.filterApply}><span>{isArabic ? "تطبيق الفلتر" : "ApplyFilter"}</span></div>
+                        <div onClick={() => handelApply()} className={style.filterApply}><span>{isArabic ? "تطبيق الفلتر" : "Apply Filter"}</span></div>
                     </div>
                 </div>
             </>

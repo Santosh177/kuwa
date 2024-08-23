@@ -21,11 +21,11 @@ import { useLanguage } from '@/context/languageDetails';
 const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="" }) =>{
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
-  console.log("searchData",searchData)
+  const lng = localStorage.getItem("selectedLanguage") || 'en'
+  console.log("searchData",searchData,searchQuery)
     const searchDataCount = searchData && searchData.length || 0;
   const handleSeeAll=(couponBannerData,searchQuery)=>{
-    window.location.href=`/collections?search_key=${searchQuery}`
+    window.location.href=`/collections?search_key=${encodeURIComponent(searchQuery)}`
   }
 
   // const calculateRightValue = () => {
@@ -124,6 +124,8 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
   
   const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
   const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
+
+    const lng = localStorage.getItem("selectedLanguage") || 'en'
 
   useEffect(() => {
     document.addEventListener("mousedown", (e) => {
@@ -493,7 +495,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
         <div className={styles.searchInputContainer} style={!couponBannerData.isActive?{top:"56px"}:{}}>
-                        <div className={styles.searchInputWrapper} onClick={()=>window.location.href="/search"} >
+                        <div className={styles.searchInputWrapper} onClick={()=>window.location.href=`/search`} >
                             <input  className={styles.searchInput}  value={searchQuery}  placeholder={isArabic ? "البحث بالاسم المنتج" : 'Search by product name'} type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                         </div>
