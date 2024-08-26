@@ -109,7 +109,7 @@ const validateBillingAddressForm = (formData,isArabic,selectedCountry={}) => {
 
 
 
-const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={},setIsShowEmailExistPopUp,isShowEmailExistPopUp}) => {
+const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={},setIsShowEmailExistPopUp,isShowEmailExistPopUp,setIsOldEmail=()=>{}}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
 
@@ -222,10 +222,19 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
            
             const res= await isExistEmail.json();
             console.log("isExistEmail",res)
-            if(res.message == "true"){
+            if(res.email == "true" && email.password == "true"){
               setIsLoading(false)
               setIsShowEmailExistPopUp(true);
              
+            }
+            else if(res.isOldEmail){
+              if(res.email==true && res.password==true){
+              setIsLoading(false)
+              setIsShowEmailExistPopUp(true);
+                }
+                else{
+                  setIsOldEmail(true)
+                }
             }
             document.removeEventListener("mousedown", handleClickOutside); 
             // else if(signupRespData.status_code ==200){
@@ -419,7 +428,7 @@ const getBillingAddressData = (data,isArabic) => {
 }
 
 
-export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues,error}) {
+export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues,error,setIsOldEmail}) {
      const {isLogin=false, userData={}} = useAuth();
      const { selectedCountry={} } = useCountry();
       const countryCode = selectedCountry && selectedCountry.code || "";
@@ -597,7 +606,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       return (
         <>
           <div className={styles.addressForm}> 
-            <PersonalInfoFrom countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} setIsShowEmailExistPopUp={setIsShowEmailExistPopUp} isShowEmailExistPopUp={isShowEmailExistPopUp}  />
+            <PersonalInfoFrom countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} setIsShowEmailExistPopUp={setIsShowEmailExistPopUp} isShowEmailExistPopUp={isShowEmailExistPopUp} setIsOldEmail={setIsOldEmail} />
             <div className={styles.addressContainer}>
                 <ShippingAddressForm onChange={onShippingAddress} values={shippingAddress} errors={shippingAddressErrors} />
                 <div className={styles.selectBillingAddressBtn} onClick={()=> onSelectBillngAddress()}>

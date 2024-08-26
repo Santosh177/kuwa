@@ -31,6 +31,7 @@ export default function AddAddress() {
   const clevertapEvent = useCleverTapEvents();
   const [pageType, setPageType] = useState(getPageType())
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+  const [isOldEmail,setIsOldEmail] = useState(false);
 
 
 
@@ -76,7 +77,11 @@ export default function AddAddress() {
     const onGetFormValues = async(data) => {
       if(isLogin){
         onAddAddress(data)
-      }else{
+      }
+      else if(isOldEmail){
+        onAddAddress(data)
+      }
+      else{
         const { firstName="" , lastName="" , mobNumber="" ,email="" } = data && data['shippingAddress']
         const nonSignupUser = {
             "email": email,
@@ -192,7 +197,7 @@ export default function AddAddress() {
           <PageHeader headerName={isArabic ? "إضافة عنوان" : "Add Address"} />
          {!refererPath && <PageStepTracker stepCount={1} />}
           <div className={styles.addAddressWrapper}> 
-              <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>
+              <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData} setIsOldEmail={setIsOldEmail}/>
               <SubmitBtn onSaveAddress={onSaveAddress}/>
           </div>
           <Loader  isShow={isLoading}/>
