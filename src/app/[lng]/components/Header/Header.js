@@ -380,7 +380,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
   },[])
 
   const getCouponData = async() =>{
-    const getCouponResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/cms/coupon-banner?country=${selectedCountry.id}`, {
+    const getCouponResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/cms/coupon-banner?country=${selectedCountry.id || 8}`, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
