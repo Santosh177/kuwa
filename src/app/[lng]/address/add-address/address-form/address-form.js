@@ -228,7 +228,7 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
              
             }
             else if(res.isOldEmail){
-              if(res.email==true && res.password==true){
+              if(res.email=="true" && res.password=="true"){
               setIsLoading(false)
               setIsShowEmailExistPopUp(true);
                 }
