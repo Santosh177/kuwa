@@ -194,14 +194,21 @@ const MainCategory = ({ isDealPage }) => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
+                console.log("response",response)
                 
                 const data = await response.json();
                 console.log("searchData",data)
+                if(data && data.length === 0){
+                    window.location.href = '/'
+                    return;
+                }
+                
                 setResponseValue(data);
             }
            
         } catch (error) {
             console.error('Error fetching data:', error);
+            // window.location.href = '/'
             // Handle error or set appropriate state
         } finally {
             setIsLoadingProduct(false);
