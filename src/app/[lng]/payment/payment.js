@@ -365,8 +365,17 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
   },[cartItems,]);
 
   useEffect(() => {
-    clevertapEvent.onCleverTapEvent("kuwa_payments_landing"); 
-      mixPanelTrackEvent("kuwa_payments_landing",{Logged:isLogin},userData.id)
+    const trackData={
+      "Logged":isLogin
+    }
+    clevertapEvent.onCleverTapEvent("kuwa_payments_landing",trackData); 
+    if(isLogin){
+
+      mixPanelTrackEvent("kuwa_payments_landing",trackData,userData.id)
+    }
+    else{
+      mixPanelTrackEvent("kuwa_payments_landing",trackData)
+    }
     
   }, [])
 
@@ -505,7 +514,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           // "dealId" :dealId
         }
       const trackData = {
-        'Order Amount': payload['finalAmount'],
+        'purchaseValue': payload['finalAmount'],
       }
       if (payload && payload['couponCode']) {
         trackData['Promo Code'] = payload['couponCode'] || '';
@@ -544,6 +553,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             payload['paymentMode'] = "CARD";
             trackData['Payment Type'] = 'card' || '';
             trackData['Payment Gateway'] = 'checkout' || '';
+            trackData['purchaseValue'] =  Number((priceDetails['totalAmount']-discountAmount + customFee).toFixed(2))
           window.dataLayer.push({'event':'initiate_checkout',...trackData})
 
             clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
@@ -695,7 +705,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             payload['totalAmount'] = Number((TotalAmount).toFixed(2));
             payload['finalAmount'] = Number((finalAmount).toFixed(2))
             trackData['Payment Type'] = 'Cod' || ''
-            debugger
+            trackData['purchaseValue'] = Number((finalAmount).toFixed(2))
           window.dataLayer.push({'event':'initiate_checkout',...trackData})
 
             clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 
@@ -734,6 +744,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
           payload['prepaidDiscountAmount'] = discountAmount || "",
           payload['finalAmount'] = Number((priceDetails['totalAmount']-discountAmount + customFee).toFixed(2))
           trackData['Payment Type'] = 'Apple pay' || ''
+          trackData['purchaseValue'] = Number((priceDetails['totalAmount']-discountAmount + customFee).toFixed(2))
           window.dataLayer.push({'event':'initiate_checkout',...trackData})
 
           clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 

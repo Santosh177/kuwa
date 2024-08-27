@@ -82,8 +82,17 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             Logged:isLogin
         }
         // clevertapEvent.onCleverTapEvent("kuwa_page_view",trackData)
+    //    setTimeout(()=>{
+    //     window.clevertap?.event?.push("kuwa_page_view", trackData);
+    //    },5000)
+    //    if(isLogin){
+    //     mixPanelTrackEvent("kuwa_page_view", trackData,userData.id)
+    //    }
+    //    else{
+    //     mixPanelTrackEvent("kuwa_page_view", trackData)
+    //    }
        setTimeout(()=>{
-        window.clevertap?.event?.push("kuwa_page_view", trackData);
+       clevertapEvent.onCleverTapEvent("kuwa_page_view", trackData);
        },5000)
        if(isLogin){
         mixPanelTrackEvent("kuwa_page_view", trackData,userData.id)
@@ -218,9 +227,9 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
    let trackData = {
         "product Name": name,
         "quantity": noOfProduct,
-        "product Id": id,
+        "Product ID": id,
         "isVariant": selectedVarients ? true : false,
-        "variantId": selectedVarients,
+        "Variant ID": selectedVarients,
         "Page URL":window.location.href,
         "Screen":"PDP",
         "Variant Name": `Pack Of ${selectedVariantName}`
@@ -326,6 +335,16 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
     }
 
     const handelViewCart = () => {
+        const track = {
+            "Logged":isLogin
+        }
+        clevertapEvent.onCleverTapEvent("kuwa_view_cart", track);
+        if(isLogin){
+            mixPanelTrackEvent("kuwa_view_cart", track,userData.id)
+        }
+        else{
+            mixPanelTrackEvent("kuwa_view_cart", track,)
+        }
         window.location.href = "/cart";
     }
 
@@ -585,7 +604,17 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         const countryName = selectedCountry && selectedCountry.name ||  ""
         const dialCodeForSelectedCountry = getDialCode(selectedCountry.code)
         const { givenName="", familyName = "" , phoneNumber="",emailAddress="" ,addressLines=[],subLocality="",locality="",postalCode="",country=""} =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
-        clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});
+        // clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});
+        const appleTrackData = {
+            "Page URL":window.location.href,
+          }
+          clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",appleTrackData);
+          if(isLogin){
+            mixPanelTrackEvent("kuwa_add_address_save_and_proceed",appleTrackData,userData.id)
+          }
+          else{
+            mixPanelTrackEvent("kuwa_add_address_save_and_proceed",appleTrackData)
+          }
         const address = addressLines.toLocaleString()+" "+subLocality + " " +locality+ " " + postalCode;
         const apartment = locality;
         const billingAddressPayload =  {"country":countryName,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":dialCodeForSelectedCountry+phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
@@ -679,6 +708,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
           payload['paymentMode'] = "APPLE_PAY";
         //   trackData['Payment Type'] = 'Apple pay' || ''
         //   clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData);
+       
         console.log("payloadpayload",payload) 
             const placeOrderResp  =  await fetch('/api/apple-pay-get-buy-now', {
                 method: 'POST',
@@ -693,10 +723,23 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             // setIsLoader(false);
             if(placeOrder && placeOrder.status_code == 200){
             const countryName = selectedCountry && selectedCountry.name ||  ""
-            window.clevertap.event.push("kuwa_applepay", {
-                    "Country":countryName,
-                    "productName":name
-                });
+            // window.clevertap.event.push("kuwa_applepay", {
+            //         "Country":countryName,
+            //         "productName":name
+            //     });
+            const applePayTrackData = {
+                "Page URL":window.location.href,
+                "purchaseValue":priceDetails['totalAmount'] + customFee,
+                'Payment Type':'Apple pay' || ""
+              }
+              // trackData['Payment Type'] = 'Apple pay' || ''
+              clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", applePayTrackData);
+              if(isLogin){
+                mixPanelTrackEvent("kuwa_payments_proceed_to_pay", applePayTrackData,userData.id)
+              }
+              else{
+                mixPanelTrackEvent("kuwa_payments_proceed_to_pay", applePayTrackData)
+              }
               appleSession.completePayment(ApplePaySession.STATUS_SUCCESS);
                 const deletePayload = {cartItemId:cartItemIdForIndividualProduct}
                 const deleteCartItemResp = await fetch('/api/delete-cart-item', {

@@ -14,9 +14,10 @@ const mixpanel = Mixpanel.init('d670cab0105c2c17aaea07a016f2d46f',
 export const mixPanelTrackEvent=(eventName, eventData,userId,clientIpAddress) => {
   console.log("clientIp",clientIpAddress)
   const nextCookies = cookies();
+  console.log("cookiesData",nextCookies)
   const deviceId = nextCookies.get('deviceID').value; 
   const countryId = nextCookies.get('countryId').value;
-  eventData['countryId'] = countryId
+  eventData['countryId'] = countryId || null
   // eventData['Device'] = deviceType;
   // eventData['Source'] = pageType;
   mixpanel.track(eventName,

@@ -17,6 +17,8 @@ import TrendingSearch from '@/app/[lng]/search/TrendingSearch/TrendingSearch';
 import ProductCard from '../../search/ProductCard/ProductCard';
 import { mappingHomeSearchDealProducts } from '@/services';
 import { useLanguage } from '@/context/languageDetails';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { mixPanelTrackEvent } from '../../page';
 
 const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="" }) =>{
   const router = useRouter();
@@ -126,6 +128,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
   const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
 
     const lng = localStorage.getItem("selectedLanguage") || 'en'
+    const clevertapEvent = useCleverTapEvents()
 
   useEffect(() => {
     document.addEventListener("mousedown", (e) => {
@@ -323,6 +326,16 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     }
     else{
       setShowTrendingSearch(true);
+      const trackData = {
+        "Source Page URL":window.location.href
+      }
+      clevertapEvent.onCleverTapEvent("kuwa_clicked_search",trackData);
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_clicked_search",trackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_clicked_search",trackData)
+      }
     }
   };
 
@@ -345,26 +358,26 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     }
   },[])
 
-  const onScroll = () => {
-    try {
-            const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
-            const topHeaderContainer = document.getElementById('top-header-container');
-            const couponContainer = document.getElementById('coupon-container');
-            if(topHeaderContainer || couponContainer ){
-              if(yscroll < -80 ){
-                topHeaderContainer.style.position = 'fixed';
-                couponContainer.style.position = 'fixed';
-              }else{
-                topHeaderContainer.style.position = 'sticky'
-                couponContainer.style.position = 'sticky';
-              }
-            }
+//   const onScroll = () => {
+//     try {
+//             const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
+//             const topHeaderContainer = document.getElementById('top-header-container');
+//             const couponContainer = document.getElementById('coupon-container');
+//             if(topHeaderContainer || couponContainer ){
+//               if(yscroll < -80 ){
+//                 topHeaderContainer.style.position = 'fixed';
+//                 couponContainer.style.position = 'fixed';
+//               }else{
+//                 topHeaderContainer.style.position = 'sticky'
+//                 couponContainer.style.position = 'sticky';
+//               }
+//             }
       
 
-    } catch (error) {
+//     } catch (error) {
 
-    }
-}
+//     }
+// }
 
   const handleKeyPress = (event) => {
     if (event.key==='Enter' || event.key===' ') {
@@ -420,6 +433,35 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     if(userData && Object.keys(userData).length > 0 ){
      await getUserLanguage()
     }
+}
+
+const getCartPage = ()=>{
+  const trackData = {
+    "Logged":isLogin
+  }
+  clevertapEvent.onCleverTapEvent("kuwa_view_cart",trackData);
+  if(isLogin){
+    mixPanelTrackEvent("kuwa_view_cart",trackData,userData.id)
+  }
+  else{
+    mixPanelTrackEvent("kuwa_view_cart",trackData)
+  }
+
+  router.push('/cart')
+}
+
+const handleSearch = () =>{
+  window.location.href=`/search`
+  const trackData = {
+    "Source Page URL":window.location.href
+  }
+  clevertapEvent.onCleverTapEvent("kuwa_clicked_search",trackData);
+  if(isLogin){
+    mixPanelTrackEvent("kuwa_clicked_search",trackData,userData.id)
+  }
+  else{
+    mixPanelTrackEvent("kuwa_clicked_search",trackData)
+  }
 }
 
     return(
@@ -481,7 +523,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                     
                    
                    
-                    <div className={styles.cartIcon} onClick={()=>router.push('/cart')}>
+                    <div className={styles.cartIcon}  onClick = {getCartPage}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img><span>{isArabic? "سلة التسوق" : "Cart"}</span>
                         {cartItemCount > 0 && <div className={styles.cartCount}>{cartItemCount}</div>}
                     </div>
@@ -495,7 +537,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
         <div className={styles.searchInputContainer} style={!couponBannerData.isActive?{top:"56px"}:{}}>
-                        <div className={styles.searchInputWrapper} onClick={()=>window.location.href=`/${lng}/search`} >
+                        <div className={styles.searchInputWrapper} onClick={handleSearch} >
                             <input  className={styles.searchInput}  value={searchQuery}  placeholder={isArabic ? "البحث بالاسم المنتج" : 'Search by product name'} type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                         </div>

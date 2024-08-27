@@ -47,7 +47,7 @@ export const CartItemProvider = ({ children, countryCode }) => {
 
   
   
-  return <CartItemContext.Provider value={{cartItemCount,setCartItemData,setCartItemCount}}>{children}</CartItemContext.Provider>
+  return <CartItemContext.Provider value={{cartItemCount,cartItemsData,setCartItemData,setCartItemCount}}>{children}</CartItemContext.Provider>
 }
 
 

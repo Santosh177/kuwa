@@ -653,7 +653,16 @@ export default  function Cart({cartData}) {
       const countryName = selectedCountry && selectedCountry.name ||  ""
       const dialCodeForSelectedCountry = getDialCode(selectedCountry.code)
       const { givenName="", familyName = "" , phoneNumber="",emailAddress="" ,addressLines=[],subLocality="",locality="",postalCode="",country=""} =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
-      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});
+      const appleTrackData = {
+        "Page URL":window.location.href,
+      }
+      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",appleTrackData);
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",appleTrackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",appleTrackData)
+      }
       const address = addressLines.toLocaleString()+" "+subLocality + " " +locality+ " " + postalCode;
       const apartment = locality;
       const billingAddressPayload =  {"country":countryName,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":dialCodeForSelectedCountry+phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
@@ -730,8 +739,19 @@ export default  function Cart({cartData}) {
         payload['token'] = token;
         payload['paymentMode'] = "APPLE_PAY";
         
-      //   trackData['Payment Type'] = 'Apple pay' || ''
-      //   clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData);
+        const applePayTrackData = {
+          "Page URL":window.location.href,
+          "purchaseValue":priceDetails['totalAmount'] + customFee,
+          'Payment Type':'Apple pay' || ""
+        }
+        // trackData['Payment Type'] = 'Apple pay' || ''
+        clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", applePayTrackData);
+        if(isLogin){
+          mixPanelTrackEvent("kuwa_payments_proceed_to_pay", applePayTrackData,userData.id)
+        }
+        else{
+          mixPanelTrackEvent("kuwa_payments_proceed_to_pay", applePayTrackData)
+        }
       console.log("payloadpayload",payload) 
           const placeOrderResp  =  await fetch('/api/apple-pay-place-order', {
               method: 'POST',
