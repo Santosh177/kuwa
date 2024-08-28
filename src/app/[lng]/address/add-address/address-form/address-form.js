@@ -222,7 +222,7 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
            
             const res= await isExistEmail.json();
             console.log("isExistEmail",res)
-            if(res.email == "true" && email.password == "true"){
+            if(res.email == "true" && res.password == "true"){
               setIsLoading(false)
               setIsShowEmailExistPopUp(true);
              
