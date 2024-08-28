@@ -91,7 +91,7 @@ const validateBillingAddressForm = (formData,isArabic=false,selectedCountry={}) 
        }
        return errors;
      };
-const EmailAddress = ({countryCode="" ,onChange={},values={},isEdit,errors={},setIsShowEmailExistPopUp,isShowEmailExistPopUp})=>{
+const EmailAddress = ({countryCode="" ,onChange={},values={},isEdit,errors={},setIsShowEmailExistPopUp,isShowEmailExistPopUp,setIsOldEmail=()=>{}})=>{
     
       const [emailError,setEmailError] = useState("");
       const [isLoading,setIsLoading] = useState(false)
@@ -201,10 +201,19 @@ const EmailAddress = ({countryCode="" ,onChange={},values={},isEdit,errors={},se
              
               const res= await isExistEmail.json();
               console.log("isExistEmail",res)
-              if(res.message == "true"){
+              if(res.email == "true" && email.password == "true"){
                 setIsLoading(false)
                 setIsShowEmailExistPopUp(true);
                
+              }
+              else if(res.isOldEmail == "true"){
+                if(res.email=="true" && res.password=="true"){
+                setIsLoading(false)
+                setIsShowEmailExistPopUp(true);
+                  }
+                  else{
+                    setIsOldEmail(true)
+                  }
               }
               document.removeEventListener("mousedown", handleClickOutside); 
               // else if(signupRespData.status_code ==200){
@@ -372,7 +381,7 @@ const getShippingAddressData = (data,isArabic) => {
 
   
 
-const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,getFormValues,error}) => {
+const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,getFormValues,error,setIsOldEmail}) => {
   const {isLogin=false, userData={}} = useAuth();
   const { selectedCountry={} } = useCountry();
   const countryCode = selectedCountry && selectedCountry.code || "";
@@ -544,7 +553,7 @@ const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,get
     <>
    
     <div className={styles.qatarAddressContainer}>
-      <EmailAddress countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} setIsShowEmailExistPopUp={setIsShowEmailExistPopUp} isShowEmailExistPopUp={isShowEmailExistPopUp} />
+      <EmailAddress countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} setIsShowEmailExistPopUp={setIsShowEmailExistPopUp} isShowEmailExistPopUp={isShowEmailExistPopUp} setIsOldEmail={setIsOldEmail} />
       <ShippingAddressForm onChange={onShippingAddress} values={shippingAddress} errors={shippingAddressErrors} countryCode={countryCode}  isEdit={isEdit} setIsShowEmailExistPopUp={setIsShowEmailExistPopUp} isShowEmailExistPopUp={isShowEmailExistPopUp}  />
       <div className={styles.selectBillingAddressBtn} onClick={()=> onSelectBillngAddress()}>
       <CheckBox isChecked={isSameBillingAddress}/>
