@@ -443,10 +443,6 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
      
 
- 
-  // console.log("personalInfoErrors",personalInfoErrors)
-  console.log("nwejknjkn",shippingAddress)
-
   useEffect(()=>{
   
   },[shippingAddress])
@@ -462,7 +458,6 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         if(isEdit && formData && Object.keys(formData).length > 0){
           // console.log("formData",formData)
 
-          console.log("lanhucjjsh",isArabic)
             setShippingAddress(getShippingAddressData(formData['shippingAddress'],isArabic));
             setBillngAddress(getBillingAddressData(formData['billingAddress'],isArabic));
             setIsSameBillingAddress(formData['shippingAddress'].sameAddressForBilling || false)
