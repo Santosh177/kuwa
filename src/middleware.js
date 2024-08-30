@@ -12,12 +12,12 @@ const redirects = [
   { source: '/module/product-page/seo/mamaearth-hydragel-indian-sunscreen-for-sun-protection-50gm', destination: '/products/mamaearth-hydragel-indian-sunscreen-for-sun-protection-50gm'},
   { source: '/cart/change', destination: '/' },
   { source: '/pages/spurit-invoices-cancelled', destination: '/' },
-  { source: '/static/', destination: '/' },
+  { source: '/static', destination: '/' },
   { source: '/customers/pid', destination: '/' },
   { source: '/collections/all/Biotics-Research', destination: '/' },
   { source: '/blogs/news', destination: '/' },
   { source: '/collections/all/Goli', destination: '/' },
-  { source: '/all/Viridian', destination: '/' },
+  { source: '/collections/all/Viridian', destination: '/' },
   { source: '/sandbox/worker', destination: '/' },
   { source: '/web-pixel-', destination: '/' },
   { source: '/contact', destination: '/' },
@@ -27,7 +27,7 @@ const redirects = [
   { source: '/collections/protein-category/1000', destination: '/collections/proteins' },
   { source: '/collections/skin-category/1000', destination: '/collections/skin-care' },
   { source: '/collections/all/Wellbeing-Nutrition', destination: '/collections/wellbeing-nutrition' },
-  { source: '/collections/vendors?q=Dabur', destination: '/collections/dabur' },
+  // { source: '/collections/vendors', destination: '/collections/dabur' },
   { source: '/collections/melts/1000', destination: '/collections/wellbeing-nutrition' },
   { source: '/collections/for-him', destination: '/collections/mens-performance' },
   { source: '/collections/all/ProHealth', destination: '/' },
@@ -108,20 +108,15 @@ export async function middleware(req) {
     }
   }
 
-  const pathname = req.nextUrl.pathname + req.nextUrl.search;
-  // if (
-  //   !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
-  //   !req.nextUrl.pathname.startsWith('/_next')
-  // ) {
-   
-  //     // return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url))
-  //     return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url));
-    
-  // }
+  const pathname = req.nextUrl.pathname
+ 
 console.log("pathname++++" , pathname);
-  const redirectRule = redirects.find(rule => pathname === rule.source);
+  let redirectRule = redirects.find(rule => pathname === rule.source);
   if (redirectRule) {
     return NextResponse.redirect(new URL(redirectRule.destination, req.url));
+  }
+  if(pathname == "/collections/vendors"){
+    return NextResponse.redirect(new URL("/collections/dabur", req.url));
   }
   if (
     !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
