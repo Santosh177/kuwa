@@ -6,7 +6,7 @@ import ProductCard from "@/app/[lng]/components/ProductCard/ProductCard"
 import Loader from "@/app/[lng]/components/Loader/Loader"
 import { addToCart, addGoogleEvent } from "@/services"
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
-import { mappingDealProducts } from "@/services"
+import { mappingDealProducts ,mappingHomeSearchDealProducts } from "@/services"
 import { mixPanelTrackEvent } from "@/app/[lng]/page"
 import { useAuth } from "@/context/userDetail"
 import { useLanguage } from "@/context/languageDetails"
@@ -209,7 +209,7 @@ const handleNonLogin = (id,variantId)=>{
                         //     id: id || "",
                         //     seoUrl:seoUrl || ""
                         // }
-                        const cardData = mappingDealProducts(item);
+                        const cardData = mappingHomeSearchDealProducts(item);
                         // console.log("allProduct",cardData)
                         const productName = cardData.productName;
                         const productId = cardData.productId;

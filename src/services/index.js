@@ -82,7 +82,7 @@ export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
 }
 
 export const mappingHomeSearchDealProducts = (data)=>{
-const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue="",nameArabic} = data || {}
+const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue="",nameArabic,normalInventory="",} = data || {}
   console.log("mappingHomeSearchDealProducts",data)
 
   let cardData={}
@@ -104,11 +104,9 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
       "tagIconUrl":tagIconUrl,
       "tag":dealTag,
       "currentTimerStatus":currentTimerStatus,
-      "productNameArabic":nameArabic
-      }
-
-
-   
+      "productNameArabic":nameArabic,
+      "normalInventory":normalInventory,
+      } 
   }
     else{
       cardData = {
@@ -122,7 +120,8 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
         "discount":discount || 0,
         "currency":currency,
         "discountType":"",
-        "productNameArabic":nameArabic
+        "productNameArabic":nameArabic,
+        "normalInventory":normalInventory,
       }
       
     }

@@ -160,14 +160,33 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const makeApiCall = async () => {
       try {
         const countryId = selectedCountry && selectedCountry.id || "";
-        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ key: searchQuery })
-          })
+        const payload = {
+          "source": "website",
+          "searchKey": searchQuery,
+          "categoryList": null,
+          "sortBy":"relevance",
+          "inStock": false,
+          "deal_seo_url":null,
+          "categorySeoList":null,
+        }
+        const searchApiResp = await fetch('/api/elastic-search',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload)
+        })
+       
+        // const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ key: searchQuery })
+        //   })
+
         const searchApiData = await searchApiResp.json();
+        console.log("searchApiResp",searchApiResp)
         let searchData = []
         if(searchApiData && searchApiData.length > 0 ){
             searchData = []
