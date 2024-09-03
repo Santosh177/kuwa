@@ -514,11 +514,15 @@ const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,get
  
     }  
 
-  const onShippingAddress = (e,fieldName) => {
+  const onShippingAddress = (e,fieldName,data) => {
     let value = ""
     if(fieldName === 'mobNumber'){
         value = "+"+e
-    }else{
+    }
+    if(fieldName === 'mobNumber'){
+      setShippingAddress(currentValues =>({...currentValues,[fieldName]:value,["mobNoValidation"]:e.slice(data.dialCode.length)}))
+    }
+    else{
         value = e.target.value;
     }
     setShippingAddress(currentValues =>({...currentValues,[fieldName]:value}))
@@ -526,11 +530,15 @@ const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,get
     setShippingAddressErrors(newFormData);
   }
 
-  const onBillngAddress = (e,fieldName) => {
+  const onBillngAddress = (e,fieldName,data) => {
     let value = ""
     if(fieldName === 'mobNumber'){
         value = "+"+e
-    }else{
+    }
+    if(fieldName === 'mobNumber'){
+      setBillngAddress(currentValues =>({...currentValues,[fieldName]:value,["mobNoValidation"]:e.slice(data.dialCode.length)}))
+    }
+    else{
         value = e.target.value;
     }
     setBillngAddress(currentValues =>({...currentValues,[fieldName]:value}))
