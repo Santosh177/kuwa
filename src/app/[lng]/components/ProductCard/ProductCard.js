@@ -23,7 +23,7 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
         "category":null,
         "sort_by":"relevance",
         "inStock":false,
-   "noOfSearchResult":"",
+   "noOfSearchResult":0,
    "productId":id,
    "productName":productName,
    "productFinalPrice":finalPrice,
