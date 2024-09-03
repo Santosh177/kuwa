@@ -4,22 +4,43 @@ import { useState } from 'react';
 import { useLanguage } from '@/context/languageDetails';
 
 import { useAuth } from '@/context/userDetail';
-const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLogin={}}) => {
+import { saveSearchData } from '@/services';
+const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLogin={},searchKey}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
 
     const { isLogin=false ,userData = {}} = useAuth();
     const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="" } = cardData || {}
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="",id="" } = cardData || {}
     const {productNameArabic="",tagArabic=""} = cardData || {}
     // console.log("productCard+++++",cardData)
     const btnName = normalInventory > 0 ? ( isArabic ? "أضف إلى السلة" : "Add to cart") : (isArabic ? "اعلمني " : "Notify me")
    
+    const handleRedirect = () =>{
+      const payloadForSaveData = {
+        "source":"website",
+        "search_key":searchKey,
+        "category":null,
+        "sort_by":"relevance",
+        "inStock":false,
+   "noOfSearchResult":"",
+   "productId":id,
+   "productName":productName,
+   "productFinalPrice":finalPrice,
+   "productIdList":[],
+   "productNameList":[]
+        }
+    window.location.href = `/products/${seoUrl}`
+    if(searchKey){
+      saveSearchData(payloadForSaveData)
+
+    }
+}
 
 
     return(
         <>
-        <div className={styles.productCardItem} onClick={()=>window.location.href=`/products/`+seoUrl}>
+        <div className={styles.productCardItem} onClick={()=>handleRedirect()}>
 
             <div className={styles.productCardWrapper} style={{...style}}>
             {dealId && isDealActive

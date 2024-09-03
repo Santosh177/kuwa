@@ -9,6 +9,7 @@ import ProductCard from './ProductCard/ProductCard';
 import TrendingSearch from './TrendingSearch/TrendingSearch';
 import { mappingHomeSearchDealProducts } from '@/services';
 import { useLanguage } from '@/context/languageDetails';
+import { saveSearchData } from '@/services';
 
 
 
@@ -89,6 +90,32 @@ export default function Search() {
         console.error('API request failed:', error);
       }
     };
+
+    console.log("searchData",searchData)
+    const handleKeyDown = (event) => {
+      const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
+      const productNameList = searchData && searchData?.map((data) => data.productName) || [];
+      const payloadForSaveData = {
+        
+        "source":"website",
+        "search_key":searchQuery,
+        "category":null,
+        "sort_by":"relevance",
+        "inStock":false,
+   "noOfSearchResult":searchData.length ,
+   "productId":"",
+   "productName":"",
+   "productFinalPrice":"",
+   "productIdList":ProductIdList,
+   "productNameList":productNameList
+        }
+      if (event.key === 'Enter') {
+        // If Enter key is pressed, make the API call immediately
+        // makeApiCall();
+         window.location.href=`/collections?search_key=${encodeURIComponent(searchQuery)}`
+        saveSearchData(payloadForSaveData);
+      }
+    };
     if (searchQuery) {
       // Clear the previous timer if it exists
       if (timer) {
@@ -97,11 +124,14 @@ export default function Search() {
       // Set a new timer to make the API call after a delay (e.g., 500 milliseconds)
       timer = setTimeout(makeApiCall, 500);
     }
+
+    window.addEventListener('keydown', handleKeyDown);
     // Cleanup the timer when the component unmounts
     return () => {
       if (timer) {
         clearTimeout(timer);
       }
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [searchQuery]);
   useEffect(()=>{
@@ -147,6 +177,8 @@ export default function Search() {
   };
 
   const searchDataCount = searchData && searchData.length || 0;
+  const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
+  const productNameList = searchData && searchData?.map((data) => data.productName) || [];
   // const handleOutsideClick = (event) => {
   //   if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && (event.target.id != 'trending-search')) {
   //     // Clicked outside the input box
@@ -163,7 +195,57 @@ export default function Search() {
   // };
    const lng = localStorage.getItem("selectedLanguage") || 'en'
   const handleSeeAll = (searchQuery) => {
+    const payloadForSaveData ={
+      "source":"website",
+      "search_key":searchQuery,
+      "category":null,
+      "sort_by":"relevance",
+      "inStock":false,
+ "noOfSearchResult":searchDataCount,
+ "productId":"",
+ "productName":"",
+ "productFinalPrice":"",
+ "productIdList":ProductIdList,
+ "productNameList":productNameList
+      }
     window.location.href = `/collections?search_key=${encodeURIComponent(searchQuery)}`
+    saveSearchData(payloadForSaveData)
+  }
+  const handleBack = () =>{
+    const payloadForSaveData ={
+      "source":"website",
+      "search_key":searchQuery,
+      "category":null,
+      "sort_by":"relevance",
+      "inStock":false,
+ "noOfSearchResult":searchDataCount,
+ "productId":"",
+ "productName":"",
+ "productFinalPrice":"",
+ "productIdList":[],
+ "productNameList":[]
+      }
+    router.back();
+    saveSearchData(payloadForSaveData)
+
+  }
+
+  const handleCrossSearch = ()=>{
+    const payloadForSaveData ={
+      "source":"website",
+      "search_key":searchQuery,
+      "category":null,
+      "sort_by":"relevance",
+      "inStock":false,
+ "noOfSearchResult":searchDataCount,
+ "productId":"",
+ "productName":"",
+ "productFinalPrice":"",
+ "productIdList":[],
+ "productNameList":[]
+      }
+   setSearchQuery("")
+    saveSearchData(payloadForSaveData)
   }
   // useEffect(() => {
   //   // Attach event listener for clicks outside the input box
@@ -183,15 +265,15 @@ export default function Search() {
       <div className={styles.searchInputBox}>
         <input ref={inputBoxRef} className={styles.searchInput} autoFocus type="text" value={searchQuery} onChange={(e) =>
           onSearch(e.target.value)} />
-        <img className={`${styles.backArrow} ${isArabic ? styles['backArrow-ar'] : styles['backArrow-en']}` } src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow_search.png" alt="back-arrow" onClick={() => router.back()} />
-        {searchQuery != "" && <img id="cross-btn" className={styles.crossIcon} src=" https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_search.png" alt="back-arrow" onClick={() => setSearchQuery("")} />}
+        <img className={`${styles.backArrow} ${isArabic ? styles['backArrow-ar'] : styles['backArrow-en']}` } src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow_search.png" alt="back-arrow" onClick={() => handleBack()} />
+        {searchQuery != "" && <img id="cross-btn" className={styles.crossIcon} src=" https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_search.png" alt="back-arrow" onClick={() => handleCrossSearch()} />}
 
       </div>
       <div className={styles.searchListWrapper}>
-        <div className={styles.resultFound}>{searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</div>
+       {searchDataCount> 0 && <div className={styles.resultFound}>{searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</div>}
           <div className={styles.productCardMain}>
             {
-              searchData.map((data, index) => {
+              searchData && searchData.length > 0 && searchData.slice(0,12).map((data, index) => {
 
                 const { id = '', productImage: image, productName:name, seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag="",productNameArabic=""} = data || {};
                   const cardData = {

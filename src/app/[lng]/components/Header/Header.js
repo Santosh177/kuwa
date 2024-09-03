@@ -17,15 +17,33 @@ import TrendingSearch from '@/app/[lng]/search/TrendingSearch/TrendingSearch';
 import ProductCard from '../../search/ProductCard/ProductCard';
 import { mappingHomeSearchDealProducts } from '@/services';
 import { useLanguage } from '@/context/languageDetails';
+import { saveSearchData } from '@/services';
 
 const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="" }) =>{
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
   const lng = localStorage.getItem("selectedLanguage") || 'en'
-  console.log("searchData",searchData,searchQuery)
+  
     const searchDataCount = searchData && searchData.length || 0;
+    const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
+    const productNameList = searchData && searchData?.map((data) => data.productName) || [];
+    console.log("searchData",searchData,searchQuery,ProductIdList)
   const handleSeeAll=(couponBannerData,searchQuery)=>{
+    const payloadForSaveData ={
+      "source":"website",
+      "search_key":searchQuery,
+      "category":null,
+      "sort_by":"relevance",
+      "inStock":false,
+ "noOfSearchResult":searchDataCount,
+ "productId":"",
+ "productName":"",
+ "productFinalPrice":"",
+ "productIdList":ProductIdList,
+ "productNameList":productNameList
+      }
     window.location.href=`/collections?search_key=${encodeURIComponent(searchQuery)}`
+    saveSearchData(payloadForSaveData)
   }
 
   // const calculateRightValue = () => {
@@ -51,14 +69,14 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
       // style={(isLogin) ? { right: isArabic ? '91px' :'173px' , paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: 'unset', paddingBottom: !isShowSeeAllBtn ? "" : "" }}
       style={style}>
                 <div className={styles.resultFound}>
-                  <span> {searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</span>
+                  {searchDataCount > 0 && <span> {searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</span>}
                 </div>
                 <div className={styles.productCardMain} 
                 // style={{maxHeight:isShowSeeAllBtn?"":"522px"}}
                  >
                     {
-                        searchData.map((data, index)=>{
-                          console.log("ahbabh",data)
+                       searchData && searchData.length > 0 && searchData.slice(0,12).map((data, index)=>{
+
                           const { id = '', productImage="", productName="", seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag="",currentTimerStatus="",productNameArabic=""} = data || {};
                           // const {  } = price || {}
                           const cardData = {
@@ -80,7 +98,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                             productNameArabic:productNameArabic
                           }
                             return(
-                                <ProductCard cardData={cardData} />
+                                <ProductCard cardData={cardData}searchQuery={searchQuery} />
                             )
                         })
                     }
@@ -211,6 +229,31 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
       }
     };
 
+    const handleKeyDown = (event) => {
+      const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
+      const productNameList = searchData && searchData?.map((data) => data.productName) || [];
+      const payloadForSaveData = {
+        
+        "source":"website",
+        "search_key":searchQuery,
+        "category":null,
+        "sort_by":"relevance",
+        "inStock":false,
+   "noOfSearchResult":searchData.length ,
+   "productId":"",
+   "productName":"",
+   "productFinalPrice":"",
+   "productIdList":ProductIdList,
+   "productNameList":productNameList
+        }
+      if (event.key === 'Enter') {
+        // If Enter key is pressed, make the API call immediately
+        // makeApiCall();
+         window.location.href=`/collections?search_key=${encodeURIComponent(searchQuery)}`
+        saveSearchData(payloadForSaveData);
+      }
+    };
+
     if (searchQuery) {
       // Clear the previous timer if it exists
       if (timer) {
@@ -221,11 +264,14 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
       timer = setTimeout(makeApiCall, 500);
     }
 
+    window.addEventListener('keydown', handleKeyDown);
+
     // Cleanup the timer when the component unmounts
     return () => {
       if (timer) {
         clearTimeout(timer);
       }
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [searchQuery]);
 
@@ -234,6 +280,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     setIsShowSearchList(true);
     setSearchQuery(event);
   };
+  
 
 
     useEffect(()=>{
@@ -364,26 +411,26 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     }
   },[])
 
-  const onScroll = () => {
-    try {
-            const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
-            const topHeaderContainer = document.getElementById('top-header-container');
-            const couponContainer = document.getElementById('coupon-container');
-            if(topHeaderContainer || couponContainer ){
-              if(yscroll < -80 ){
-                topHeaderContainer.style.position = 'fixed';
-                couponContainer.style.position = 'fixed';
-              }else{
-                topHeaderContainer.style.position = 'sticky'
-                couponContainer.style.position = 'sticky';
-              }
-            }
+//   const onScroll = () => {
+//     try {
+//             const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
+//             const topHeaderContainer = document.getElementById('top-header-container');
+//             const couponContainer = document.getElementById('coupon-container');
+//             if(topHeaderContainer || couponContainer ){
+//               if(yscroll < -80 ){
+//                 topHeaderContainer.style.position = 'fixed';
+//                 couponContainer.style.position = 'fixed';
+//               }else{
+//                 topHeaderContainer.style.position = 'sticky'
+//                 couponContainer.style.position = 'sticky';
+//               }
+//             }
       
 
-    } catch (error) {
+//     } catch (error) {
 
-    }
-}
+//     }
+// }
 
   const handleKeyPress = (event) => {
     if (event.key==='Enter' || event.key===' ') {

@@ -248,6 +248,25 @@ export const addGoogleEvent = (data)=>{
   console.log("google datalayer",window.dataLayer)
 }
 
+export const saveSearchData = async(payloaddata)=>{
+
+  
+  try{
+    const data = await fetch('/api/store-search-data',{
+      method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payloaddata)
+      })
+      const searchApiDataSave = await data.json();
+  }
+
+  catch(error){
+    console.error("Error saving search data", error)
+  }
+}
+
 
 
 
