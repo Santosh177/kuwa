@@ -80,7 +80,8 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             "product Name":title,
             "Product ID":id,
             "Product Name":name,
-            landing_page_url:window.location.pathname,
+            "Source URL":window.document.referrer,
+            // landing_page_url:window.location.pathname,
             device: deviceType,
             Logged:isLogin,
             "In Stock":isStock
