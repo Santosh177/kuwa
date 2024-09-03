@@ -70,16 +70,20 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         }
       }
     useEffect(()=>{
+        const isStock = normalInventory > 0 ? "Yes" : "No";
         const deviceType = getDeviceType();
         const trackData = {
             userId:userData?.id,
             country:selectedCountry.name,
             email:userData?.emailAddress,
+            'Page URL':window.location.href,
             "product Name":title,
-            productId:id,
+            "Product ID":id,
+            "Product Name":name,
             landing_page_url:window.location.pathname,
             device: deviceType,
-            Logged:isLogin
+            Logged:isLogin,
+            "In Stock":isStock
         }
         // clevertapEvent.onCleverTapEvent("kuwa_page_view",trackData)
     //    setTimeout(()=>{
