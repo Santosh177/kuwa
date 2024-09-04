@@ -28,19 +28,19 @@ const validateShippingAddressForm = (formData,isArabic=false,selectedCountry={})
  console.log("validateShippingAddressForm",formData)
     const errors = {};
     if (!formData.firstName) {
-        errors.firstName = formData.isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
+        errors.firstName = isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
       }
       if (!formData.lastName) {
-        errors.lastName = formData.isArabic ? "اسم العائلة مطلوب" : 'Last name is required.';
+        errors.lastName = isArabic ? "اسم العائلة مطلوب" : 'Last name is required.';
       }
       if(("mobNoValidation" in formData) && !formData.mobNoValidation){
-        errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
+        errors.mobNumber = isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
       }
       if(!formData.mobNumber){
-        errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
+        errors.mobNumber = isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
       }
       else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
-        errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
+        errors.mobNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
       }
     if (!formData.address) {
       errors.address =
@@ -62,19 +62,19 @@ const validateBillingAddressForm = (formData,isArabic=false,selectedCountry={}) 
     console.log("validateShippingAddressForm",formData)
        const errors = {};
        if (!formData.firstName) {
-        errors.firstName = formData.isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
+        errors.firstName = isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
       }
       if (!formData.lastName) {
-        errors.lastName = formData.isArabic ? "اسم العائلة مطلوب" : 'Last name is required.';
+        errors.lastName = isArabic ? "اسم العائلة مطلوب" : 'Last name is required.';
       }
       if(("mobNoValidation" in formData) && !formData.mobNoValidation){
-        errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
+        errors.mobNumber = isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
       }
       if(!formData.mobNumber){
-        errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
+        errors.mobNumber = isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
       }
       else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
-        errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
+        errors.mobNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
       }
        if (!formData.address) {
          errors.address =
@@ -250,6 +250,8 @@ const EmailAddress = ({countryCode="" ,onChange={},values={},isEdit,errors={},se
 const ShippingAddressForm = ({onChange={},values={},errors={},countryCode="",isEdit,setIsShowEmailExistPopUp,isShowEmailExistPopUp}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
   const {selectedCountry = {}} = useCountry();
+
+  console.log("bwbqwjqb",values)
     return (
         <div className={[styles.addressInfoForm,styles.shippingAddressForm].join(" ")}>
          <div className={styles.headerTxt}>{isArabic ? "عنوان الشحن" : "Shipping Address"}</div>
@@ -263,9 +265,9 @@ const ShippingAddressForm = ({onChange={},values={},errors={},countryCode="",isE
                     {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
                 </div>
             </div>
-            <div className={styles.areaInputText}>
+            <div className={styles.areaInputText} >
                 <div className={styles.inputContainer}>
-                    <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")}   className={isArabic ? styles['input-ar'] : ''} />
+                    <input type="text" id='address' name='address'  value={values['address'] || ""} onChange={(e)=>onChange(e,"address")}   className={isArabic ? styles['input-ar'] : ''} />
                     <label className={styles.placeholderText}>
                         <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? ("أدخل العنوان *") : ( "Current Address *")}</div>
                     </label>
@@ -311,7 +313,7 @@ const BillingAddressForm = ({onChange={},values={},errors={},countryCode="",isEd
 
             <div className={styles.areaInputText}>
                 <div className={styles.inputContainer}>
-                    <input type="text" id='address' name='address'  value={values['address']} onChange={(e)=>onChange(e,"address")}   className={isArabic ? styles['input-ar'] : ''} />
+                    <input type="text" id='address' name='address'  value={values['address'] || ""} onChange={(e)=>onChange(e,"address")}   className={isArabic ? styles['input-ar'] : ''} />
                     <label className={styles.placeholderText}>
                         <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? ("أدخل العنوان *") : ( "Current Address *")}</div>
                     </label>
