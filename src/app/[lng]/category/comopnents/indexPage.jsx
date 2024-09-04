@@ -33,6 +33,7 @@ const MainCategory = ({ isDealPage }) => {
     const collectionSeoUrl = params.id || null
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
     console.log("collectionSeoUrl", collectionSeoUrl)
+
     useEffect(() => {
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
@@ -172,42 +173,6 @@ const MainCategory = ({ isDealPage }) => {
         }
 
         try {
-            // if(isDealPage){
-            //     const response = await fetch(endpoint, {
-            //         method: 'GET',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //         },
-            //         // body:JSON.stringify(query)
-            //     });
-    
-            //     if (!response.ok) {
-            //         throw new Error('Failed to fetch data');
-            //     }
-                
-            //     const data = await response.json();
-            //     console.log("searchData",data)
-            //     setResponseValue(data);
-
-            // }
-            // else{
-                // const response = await fetch(endpoint, {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body:JSON.stringify(query)
-                // });
-    
-            //     if (!response.ok) {
-            //         throw new Error('Failed to fetch data');
-            //     }
-                
-            //     const data = await response.json();
-            //     console.log("searchData",data)
-            //     setResponseValue(data);
-            // }
-
             const response = await fetch('/api/elastic-search', {
                 method: 'POST',
                 headers: {
@@ -261,6 +226,7 @@ const MainCategory = ({ isDealPage }) => {
         }
         setIsLOading(false)
     }
+
     useEffect(() => {
         if (isDealPage) {
             fetchDealFilterData();

@@ -28,31 +28,25 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
     const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
     const productNameList = searchData && searchData?.map((data) => data.productName) || [];
     console.log("searchData",searchData,searchQuery,ProductIdList)
-  const handleSeeAll=(couponBannerData,searchQuery)=>{
+ 
+    const handleSeeAll=(couponBannerData,searchQuery)=>{
     const payloadForSaveData ={
       "source":"website",
       "search_key":searchQuery,
       "category":null,
       "sort_by":"relevance",
       "inStock":false,
- "noOfSearchResult":searchDataCount,
- "productId":"",
- "productName":"",
- "productFinalPrice":"",
- "productIdList":ProductIdList,
- "productNameList":productNameList
+      "noOfSearchResult":searchDataCount,
+      "productId":"",
+      "productName":"",
+      "productFinalPrice":0,
+      "productIdList":ProductIdList,
+      "productNameList":productNameList
       }
     window.location.href=`/collections?search_key=${encodeURIComponent(searchQuery)}`
     saveSearchData(payloadForSaveData)
   }
 
-  // const calculateRightValue = () => {
-  //   if (window.innerWidth < 1200 && window.innerWidth > 990) {
-  //     return '-85px';
-  //   } else {
-  //     return '';
-  //   }
-  // };
   const style = isLogin
   ? {
       right: isArabic ? "-124px" : '173px',
@@ -139,7 +133,9 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
 
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-  
+  const searchDataCount = searchData && searchData.length || 0;
+  const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
+  const productNameList = searchData && searchData?.map((data) => data.productName) || [];
   const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
   const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
 
@@ -194,14 +190,6 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
           },
           body: JSON.stringify(payload)
         })
-       
-        // const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ key: searchQuery })
-        //   })
 
         const searchApiData = await searchApiResp.json();
         console.log("searchApiResp",searchApiResp)
@@ -229,31 +217,6 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
       }
     };
 
-    const handleKeyDown = (event) => {
-      const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
-      const productNameList = searchData && searchData?.map((data) => data.productName) || [];
-      const payloadForSaveData = {
-        
-        "source":"website",
-        "search_key":searchQuery,
-        "category":null,
-        "sort_by":"relevance",
-        "inStock":false,
-   "noOfSearchResult":searchData.length ,
-   "productId":"",
-   "productName":"",
-   "productFinalPrice":"",
-   "productIdList":ProductIdList,
-   "productNameList":productNameList
-        }
-      if (event.key === 'Enter') {
-        // If Enter key is pressed, make the API call immediately
-        // makeApiCall();
-         window.location.href=`/collections?search_key=${encodeURIComponent(searchQuery)}`
-        saveSearchData(payloadForSaveData);
-      }
-    };
-
     if (searchQuery) {
       // Clear the previous timer if it exists
       if (timer) {
@@ -263,17 +226,46 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
       // Set a new timer to make the API call after a delay (e.g., 500 milliseconds)
       timer = setTimeout(makeApiCall, 500);
     }
-
-    window.addEventListener('keydown', handleKeyDown);
-
     // Cleanup the timer when the component unmounts
     return () => {
       if (timer) {
         clearTimeout(timer);
       }
-      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [searchQuery]);
+
+
+  useEffect(() => {
+    const handleKeyDown = async (event) => {
+      const payloadForSaveData = {
+        "source": "website",
+        "search_key": searchQuery,
+        "category": null,
+        "sort_by": "relevance",
+        "inStock": false,
+        "noOfSearchResult": searchDataCount,
+        "productId": "",
+        "productName": "",
+        "productFinalPrice": 0,
+        "productIdList": ProductIdList,
+        "productNameList": productNameList,
+      };
+  
+      if (event.key === 'Enter') {
+        // Save the search data and redirect
+        await saveSearchData(payloadForSaveData);
+        window.location.href = `/collections?search_key=${encodeURIComponent(searchQuery)}`;
+      }
+    };
+  
+    window.addEventListener('keydown', handleKeyDown);
+  
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [searchQuery, searchData]);
+
 
   const onSearch = (event) => {
 
@@ -411,29 +403,10 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     }
   },[])
 
-//   const onScroll = () => {
-//     try {
-//             const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
-//             const topHeaderContainer = document.getElementById('top-header-container');
-//             const couponContainer = document.getElementById('coupon-container');
-//             if(topHeaderContainer || couponContainer ){
-//               if(yscroll < -80 ){
-//                 topHeaderContainer.style.position = 'fixed';
-//                 couponContainer.style.position = 'fixed';
-//               }else{
-//                 topHeaderContainer.style.position = 'sticky'
-//                 couponContainer.style.position = 'sticky';
-//               }
-//             }
-      
 
-//     } catch (error) {
-
-//     }
-// }
 
   const handleKeyPress = (event) => {
-    if (event.key==='Enter' || event.key===' ') {
+    if (event.key===' ') {
       if (setParamsData) {
         setIsShowSearchList(false);
         setParamsData((previous) => ({ ...previous, searchKey:searchQuery }));
