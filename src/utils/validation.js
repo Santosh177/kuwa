@@ -59,7 +59,7 @@ function stripCharsInBag(s, bag) {
   return returnString;
 }
 
-export function checkInternationalPhone(strPhone,selectedPhoneCode={}) {
+export function checkInternationalPhone(strPhone,selectedPhoneCode="") {
 
   console.log("checkInternationalPhone",strPhone,selectedPhoneCode);
   let bracket = 3;

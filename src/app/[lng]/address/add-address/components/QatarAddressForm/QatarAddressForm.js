@@ -24,7 +24,7 @@ const validatePersonalForm = (formData,selectedCountry) => {
     return errors;
   };
 
-const validateShippingAddressForm = (formData,isArabic=false,selectedCountry={}) => {
+const validateShippingAddressForm = (formData,isArabic=false,selectedPhoneCode={}) => {
  console.log("validateShippingAddressForm",formData)
     const errors = {};
     if (!formData.firstName) {
@@ -39,7 +39,7 @@ const validateShippingAddressForm = (formData,isArabic=false,selectedCountry={})
       if(!formData.mobNumber){
         errors.mobNumber = isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
       }
-      else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
+      else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedPhoneCode)){
         errors.mobNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
       }
     if (!formData.address) {
@@ -58,7 +58,7 @@ const validateShippingAddressForm = (formData,isArabic=false,selectedCountry={})
     return errors;
   };
 
-const validateBillingAddressForm = (formData,isArabic=false,selectedCountry={}) => {
+const validateBillingAddressForm = (formData,isArabic=false,selectedPhoneCode={}) => {
     console.log("validateShippingAddressForm",formData)
        const errors = {};
        if (!formData.firstName) {
@@ -73,7 +73,7 @@ const validateBillingAddressForm = (formData,isArabic=false,selectedCountry={}) 
       if(!formData.mobNumber){
         errors.mobNumber = isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
       }
-      else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
+      else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedPhoneCode)){
         errors.mobNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
       }
        if (!formData.address) {
@@ -396,6 +396,7 @@ const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,get
   const [billingAddressErrors, setBillingAddressErrors] = useState({});
   const [isShowEmailExistPopUp, setIsShowEmailExistPopUp] = useState(false);
   const [isSameBillingAddress, setIsSameBillingAddress ] = useState(true);
+  const [selectedPhoneCode,setSelectedPhoneCode] = useState(countryCode)
 
 
   useEffect(()=>{
@@ -442,9 +443,9 @@ const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,get
       },[userData])
       console.log("formData",formData)
   const addressValidation = () => {
-    const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedCountry);
-    const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedCountry);
-    const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedCountry);
+    const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedPhoneCode);
+    const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedPhoneCode);
+    const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedPhoneCode);
    
     if (Object.keys(validationPersonalInfoErrors).length === 0 && Object.keys(validationShippingErrors).length === 0 && isSameBillingAddress ){
       return true
@@ -459,8 +460,8 @@ const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,get
   useEffect(()=>{
     if(getFormValues){
       const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedCountry);
-      const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedCountry);
-      const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedCountry);
+      const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedPhoneCode);
+      const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedPhoneCode);
 
       if (addressValidation()) {
               let combineFormData = {
@@ -523,6 +524,7 @@ const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,get
     }
     if(fieldName === 'mobNumber'){
       setShippingAddress(currentValues =>({...currentValues,[fieldName]:value,["mobNoValidation"]:e.slice(data.dialCode.length)}))
+      setSelectedPhoneCode(data.countryCode)
     }
     else{
         value = e.target.value;
@@ -539,6 +541,7 @@ const QatarAddressForm = ({onFormData,formData, isEdit=false,onGetFormValues,get
     }
     if(fieldName === 'mobNumber'){
       setBillngAddress(currentValues =>({...currentValues,[fieldName]:value,["mobNoValidation"]:e.slice(data.dialCode.length)}))
+      setSelectedPhoneCode(data.countryCode)
     }
     else{
         value = e.target.value;
