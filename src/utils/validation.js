@@ -59,11 +59,11 @@ function stripCharsInBag(s, bag) {
   return returnString;
 }
 
-export function checkInternationalPhone(strPhone,selectedCountry={}) {
+export function checkInternationalPhone(strPhone,selectedPhoneCode={}) {
 
-  console.log("checkInternationalPhone",strPhone,selectedCountry);
+  console.log("checkInternationalPhone",strPhone,selectedPhoneCode);
   let bracket = 3;
-  let maxDigitsInIPhoneNumber = selectedCountry.code == "BH" ? maxDigitsInIPhoneNumberForBhrain : maxDigitsInIPhoneNumberForAll
+  let maxDigitsInIPhoneNumber = selectedPhoneCode.toLowerCase() == "bh" ? maxDigitsInIPhoneNumberForBhrain : maxDigitsInIPhoneNumberForAll
   strPhone = trim(strPhone);
 
   if (strPhone.indexOf("+") > 1) {

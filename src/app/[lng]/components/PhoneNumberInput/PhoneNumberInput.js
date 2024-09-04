@@ -30,7 +30,6 @@ onChange={(e,value) => handleInput(e,value, "phone-no")} */}
 const PhoneNumberInput = ({ countryCode="ae", onInputChange={},type="text",fieldName="",value="",placeHolder="phoneNumber *",isError="",errorMsg="",isDisabled="",style={}}) => {
 
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
     return(
         <div className={styles.inputWrapper} style={{direction: isArabic ? "ltr" : ""}}>
            <PhoneInput
@@ -40,6 +39,7 @@ const PhoneNumberInput = ({ countryCode="ae", onInputChange={},type="text",field
                     onChange={(phone,dialCode) => onInputChange(phone,fieldName,dialCode)}
                     placeholder='fieldName'
                     searchPlaceholder="ss"
+                    countryCodeEditable={false}
                     />
          {isError && <span className={styles.errorMsg}>{errorMsg}</span>}
          </div>
