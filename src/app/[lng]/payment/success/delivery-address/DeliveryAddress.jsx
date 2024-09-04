@@ -16,7 +16,7 @@ const DeliveryAddress = ({shippingAddress}) => {
        address="",
        country="",city="",postalCode=""} = shippingAddress || {}
     const userName = firstName + " " +lastName;
-    const addressTxt1 = apartment+ " " +address 
+    const addressTxt1 = (apartment ? ` ${apartment}` : "")+ " " +address
     const addressTxt2 = city+ " " + (postalCode ? ` ${postalCode}` : "") + " " +country;
   return (
     <div className={styles.deliveryAddress}> 
