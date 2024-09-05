@@ -83,16 +83,16 @@ export default function Home(homePageData) {
             logged:isLogin,
             "Page URL":window.location.href
         }
-        // setTimeout(()=>{
+        setTimeout(()=>{
             clevertapEvent.onCleverTapEvent("kuwa_home_page_landing",trackData);
-        // },2000)
+       
         if(isLogin){
             mixPanelTrackEvent("kuwa_home_page_landing",trackData, userData.id,clientIpAddress)
         }
         else{
             mixPanelTrackEvent("kuwa_home_page_landing",trackData,"",clientIpAddress)
         }
-       
+    },2000)
     },[selectedCountry])
 
     useEffect(()=>{

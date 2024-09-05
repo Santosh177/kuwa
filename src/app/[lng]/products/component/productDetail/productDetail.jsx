@@ -96,16 +96,16 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
     //    else{
     //     mixPanelTrackEvent("kuwa_page_view", trackData)
     //    }
-      //  setTimeout(()=>{
+       setTimeout(()=>{
        clevertapEvent.onCleverTapEvent("kuwa_page_view", trackData);
-      //  },5000)
+     
        if(isLogin){
         mixPanelTrackEvent("kuwa_page_view", trackData,userData.id)
        }
        else{
         mixPanelTrackEvent("kuwa_page_view", trackData)
        }
-      
+        },2000)
     },[])
 
 

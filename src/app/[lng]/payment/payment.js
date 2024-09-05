@@ -368,14 +368,17 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
     const trackData={
       "Logged":isLogin
     }
-    clevertapEvent.onCleverTapEvent("kuwa_payments_landing",trackData); 
-    if(isLogin){
-
-      mixPanelTrackEvent("kuwa_payments_landing",trackData,userData.id)
-    }
-    else{
-      mixPanelTrackEvent("kuwa_payments_landing",trackData)
-    }
+    setTimeout(()=>{
+      clevertapEvent.onCleverTapEvent("kuwa_payments_landing",trackData); 
+      if(isLogin){
+  
+        mixPanelTrackEvent("kuwa_payments_landing",trackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_payments_landing",trackData)
+      }
+    },2000)
+   
     
   }, [])
 

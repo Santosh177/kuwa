@@ -42,9 +42,6 @@ function useCleverTapEvents(initialValue) {
    
     const onCleverTapEvent = (eventName="",data={}) => {
 
-      console.log("hbwdhqbwh",selectedLanguage)
-        console.log("cleverTap_event_name",eventName,data)
-        console.log("wbjkq",isLogin)
         data['country'] = name || '';
         data['countryId'] = id || '';
         data['currency'] = currency || '';
@@ -52,6 +49,7 @@ function useCleverTapEvents(initialValue) {
         data['Device'] = getDeviceType();
         data['Source']= pageType;
         data['language'] = selectedLanguage.language_name
+        console.log("cleverTap_event_name",eventName,data)
         try{
             window.clevertap.event.push(eventName, data)
         }catch(error){

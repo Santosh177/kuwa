@@ -179,41 +179,30 @@ export default  function Cart({cartData}) {
 
     },[cartItems]);
 
-    function getDeviceType() {
-      if (isMobile) {
-        if (isAndroid) {
-          return 'Android';
-        } else if (isIOS) {
-          return 'iOS';
-        } else {
-          return 'Mobile';
-        }
-      } else if (isTablet) {
-        return 'Tablet';
-      } else {
-        return 'Desktop';
-      }
-    }
+    // function getDeviceType() {
+    //   if (isMobile) {
+    //     if (isAndroid) {
+    //       return 'Android';
+    //     } else if (isIOS) {
+    //       return 'iOS';
+    //     } else {
+    //       return 'Mobile';
+    //     }
+    //   } else if (isTablet) {
+    //     return 'Tablet';
+    //   } else {
+    //     return 'Desktop';
+    //   }
+    // }
     
+
    useEffect(()=>{
-    const deviceType = getDeviceType();
-    const trackData = {
-        userId:userData?.id,
-        // device: deviceType,
-        // Logged:isLogin
-    }
     setTimeout(()=>{
-      clevertapEvent.onCleverTapEvent("kuwa_cart_landing",trackData)
-      if(isLogin){
-        mixPanelTrackEvent("kuwa_cart_landing",trackData, userData.id)
-      }
-      else{
-        mixPanelTrackEvent("kuwa_cart_landing",trackData,)
-      }
-     
+      trcakcData()
     },2000)
    
    },[])
+
     const calculatePriceDetails = () => {
       const { total=0, subtotal=0, currency = "" } = data || {};
       const minThreshold = deliveryFeesConfig.minThreshold || 0;
@@ -258,36 +247,68 @@ export default  function Cart({cartData}) {
       }
     }
       
-  let trackData = []
+  
   function trcakcData() {
     if (cartData && cartData.products && cartData.products.length > 0) {
-      cartData.products.map((item) => {
-        const productId = item && item.id || "";
-        const productName = item && item.description && item.description.name || "";
-        const qty = item && item.quantity || 1;
-        let variantId = null;
-        let track = {
-          productId: productId,
-          productName: productName,
-          quantity: qty,
-        }
-        if (item && item.variants && item.variants.variants) {
-          variantId = item.variants.variants.id;
-        }
-        if (variantId) {
-          track['variantId'] = variantId;
-        }
-        trackData.push(track)
+      // cartData.products.map((item) => {
+      //   const productId = item && item.id || "";
+      //   const productName = item && item.description && item.description.name || "";
+      //   const qty = item && item.quantity || 1;
+      //   let variantId = null;
+      //   let track = {
+      //     productId: productId,
+      //     productName: productName,
+      //     quantity: qty,
+      //   }
+      //   if (item && item.variants && item.variants.variants) {
+      //     variantId = item.variants.variants.id;
+      //   }
+      //   if (variantId) {
+      //     track['variantId'] = variantId;
+      //   }
+      //   trackData.push(track)
+      // })
+      const productNameList =  cartData.products.map((product)=>{
+        return product?.description?.name
       })
-        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_checkout",trackData);
+      const productIdList =  cartData.products.map((product)=>{
+        return product?.id
+      })
+      const variantIdList =  cartData.products.map((product)=>{
+        return product?.variants?.variants?.id
+      })
+      const trackData = {
+        productIdList: productIdList.join(),
+        productNameList: productNameList.join(),
+        variantIdList : variantIdList.join()
+      }
+        clevertapEvent.onCleverTapEvent("kuwa_cart_landing",trackData);
         if(isLogin){
-          mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData, userData.id) 
+          mixPanelTrackEvent("kuwa_cart_landing",trackData, userData.id) 
         } 
         else{
-          mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData,) 
+          mixPanelTrackEvent("kuwa_cart_landing",trackData,) 
         }
        
     }
+  }
+
+  const cartCheckoutTrack =() => {
+    const trackData = {
+      userId:userData?.id,
+      // device: deviceType,
+      // Logged:isLogin
+  }
+  setTimeout(()=>{
+    clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_checkout",trackData)
+    if(isLogin){
+      mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData, userData.id)
+    }
+    else{
+      mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData,)
+    }
+   
+  },2000)
   }
 
     const onProceed = async() => {
@@ -303,7 +324,7 @@ export default  function Cart({cartData}) {
       else{
         setIsShowOutOfStockProductsPopUp(true)
       }
-      trcakcData();
+      cartCheckoutTrack();
     }
 
       
