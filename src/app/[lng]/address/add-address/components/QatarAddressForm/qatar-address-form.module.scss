@@ -5,7 +5,7 @@
     // justify-content: center;
     // align-items: center;
     margin:0 auto;
-    padding-bottom: 150px;
+    padding-bottom: 130px;
     .addressInfoForm{
         margin-top: 24px;
         width: 100%;
@@ -117,4 +117,10 @@
         font-weight: 500;
         font-size: 16px;
     }
+}
+
+@media(max-width:770px){
+  .qatarAddressContainer{
+    padding-bottom: 0px;
+  }  
 }

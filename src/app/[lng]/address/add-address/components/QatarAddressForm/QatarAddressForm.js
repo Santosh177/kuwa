@@ -235,7 +235,7 @@ const EmailAddress = ({countryCode="" ,onChange={},values={},isEdit,errors={},se
   
       return (
         <div id="email" ref={emailInputRef}>
-             <div className={styles.emailHeaderTxt}>{isArabic ? "" : "Email ID*"}</div>
+             <div className={styles.emailHeaderTxt}>{isArabic ? "" : "Email ID"}</div>
         <Input type="email" fieldName="email" placeHolder={isArabic ? "البريد الإلكتروني (مثال: abc@gmail.com)" : "Email ID (ex. abc@gmail.com) *"} value={values['email']} 
         //  onInputChange={(e)=>handleChange(e)}
          onInputChange={onChange}
@@ -269,7 +269,7 @@ const ShippingAddressForm = ({onChange={},values={},errors={},countryCode="",isE
                 <div className={styles.inputContainer}>
                     <input type="text" id='address' name='address'  value={values['address'] || ""} onChange={(e)=>onChange(e,"address")}   className={isArabic ? styles['input-ar'] : ''} />
                     <label className={styles.placeholderText}>
-                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? ("أدخل العنوان *") : ( "Current Address *")}</div>
+                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? ("أدخل العنوان *") : ( "Enter Address *")}</div>
                     </label>
                 </div>
                 {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
@@ -315,7 +315,7 @@ const BillingAddressForm = ({onChange={},values={},errors={},countryCode="",isEd
                 <div className={styles.inputContainer}>
                     <input type="text" id='address' name='address'  value={values['address'] || ""} onChange={(e)=>onChange(e,"address")}   className={isArabic ? styles['input-ar'] : ''} />
                     <label className={styles.placeholderText}>
-                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? ("أدخل العنوان *") : ( "Current Address *")}</div>
+                        <div className={`${styles.text} ${isArabic ? styles['text-ar'] :""}`}>{isArabic ? ("أدخل العنوان *") : ( "Enter Address *")}</div>
                     </label>
                 </div>
                 {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
