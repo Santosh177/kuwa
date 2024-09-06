@@ -25,6 +25,7 @@ const MainCategory = ({ isDealPage }) => {
     const [isLoding, setIsLOading] = useState(false);
     const [isLodingProduct, setIsLoadingProduct] = useState(false);
     const [responseData, setResponseData] = useState({})
+    const [description,setDescription] = useState(null)
    
 
     const [paramsData, setParamsData] = useState({})
@@ -188,6 +189,7 @@ const MainCategory = ({ isDealPage }) => {
             console.log("searchAllData",data)
             const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList } = data || {}
             setResponseValue(productVariantDtoList);
+            setDescription(isArabic ? collectionDescriptionArabic : collectionDescription )
            
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -281,7 +283,7 @@ const MainCategory = ({ isDealPage }) => {
 
             {<div className={style.productAndFilter}>
                 {<FilterSection paramsData={paramsData} setParamsData={setParamsData} setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} slectedFilter={slectedFilter} responseData={responseData} />}
-                {isHide && <ProductSection resposneValue={resposneValue} isDealPage={isDealPage} />}
+                {isHide && <ProductSection resposneValue={resposneValue} isDealPage={isDealPage} description={description}/>}
             </div >}
             {isHide && responseData && Object.keys(responseData).length > 0 && <Footer />}
             <Loader isShow={isLoding} />

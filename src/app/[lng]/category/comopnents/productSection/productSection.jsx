@@ -13,9 +13,10 @@ import { useLanguage } from "@/context/languageDetails"
 import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmailPopup"
 import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/NotifySuccessPopup"
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import DescriptionSection from "../descriptionSection/DescriptionSection"
 
 
-const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
+const ProductSection = ({ resposneValue = [] ,isDealPage , description=null}) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
     // console.log("resposneValue",resposneValue[0])
@@ -235,6 +236,7 @@ const handleNonLogin = (id,variantId)=>{
                         )
                     })}
                 </div>
+                <DescriptionSection description={description} />
 
                 <Loader isShow={isLodaing} />
             </div>
