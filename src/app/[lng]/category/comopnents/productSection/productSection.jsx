@@ -6,12 +6,14 @@ import ProductCard from "@/app/[lng]/components/ProductCard/ProductCard"
 import Loader from "@/app/[lng]/components/Loader/Loader"
 import { addToCart, addGoogleEvent } from "@/services"
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
-import { mappingDealProducts } from "@/services"
+import { mappingDealProducts ,mappingHomeSearchDealProducts } from "@/services"
 import { mixPanelTrackEvent } from "@/app/[lng]/page"
 import { useAuth } from "@/context/userDetail"
 import { useLanguage } from "@/context/languageDetails"
 import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmailPopup"
 import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/NotifySuccessPopup"
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+
 
 const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
@@ -34,7 +36,9 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
     const [nonLoginVariantId,setNonLoginVariantId] = useState("");
     const emailAddress = userData && userData.emailAddress;
     const [timer, setTimer] = useState(0); 
-
+    const searchParams = useSearchParams();
+    const searchKey = searchParams.get('search_key') || "";
+    console.log("searchKey",searchKey)
     const onAddToCart = async (data) => {
         const trackingData = {
             "product Name": data.productName,
@@ -209,7 +213,7 @@ const handleNonLogin = (id,variantId)=>{
                         //     id: id || "",
                         //     seoUrl:seoUrl || ""
                         // }
-                        const cardData = mappingDealProducts(item);
+                        const cardData = mappingHomeSearchDealProducts(item);
                         // console.log("allProduct",cardData)
                         const productName = cardData.productName;
                         const productId = cardData.productId;
@@ -226,7 +230,7 @@ const handleNonLogin = (id,variantId)=>{
                         }
                         return (
                             <div className={style.product}>
-                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice,productName })} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} />
+                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice,productName })} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} searchKey={searchKey} />
                             </div>
                         )
                     })}
