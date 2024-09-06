@@ -185,8 +185,9 @@ const MainCategory = ({ isDealPage }) => {
             }
             
             const data = await response.json();
-            console.log("searchData",data)
-            setResponseValue(data);
+            console.log("searchAllData",data)
+            const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList } = data || {}
+            setResponseValue(productVariantDtoList);
            
         } catch (error) {
             console.error('Error fetching data:', error);

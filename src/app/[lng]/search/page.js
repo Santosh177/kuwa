@@ -53,10 +53,11 @@ export default function Search() {
           body: JSON.stringify(payload)
         })
         const searchApiData = await searchApiResp.json();
+        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList } = searchApiData || {}
         let searchData = []
-        if (searchApiData && searchApiData.length > 0) {
+        if (productVariantDtoList && productVariantDtoList.length > 0) {
           searchData = []
-          searchApiData.map((data, index) => {
+          productVariantDtoList.map((data, index) => {
             if (data && Object.keys(data).length > 0) {
               searchData.push(mappingHomeSearchDealProducts(data));
               setSearchData(searchData)
