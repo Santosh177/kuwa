@@ -16,6 +16,7 @@ import { queryParams } from '@/services';
 // import { mixPanelTrackEvent } from '@/app/page';
 import { mixPanelTrackEvent } from '../../page';
 import { useLanguage } from '@/context/languageDetails';
+import QatarAddressForm from './components/QatarAddressForm/QatarAddressForm';
 
 export default function AddAddress() {
   const router = useRouter();
@@ -31,6 +32,7 @@ export default function AddAddress() {
   const clevertapEvent = useCleverTapEvents();
   const [pageType, setPageType] = useState(getPageType())
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+  const [isOldEmail,setIsOldEmail] = useState(false);
 
 
 
@@ -74,9 +76,14 @@ export default function AddAddress() {
     }
 
     const onGetFormValues = async(data) => {
+      console.log("onGetFormValues",data)
       if(isLogin){
         onAddAddress(data)
-      }else{
+      }
+      else if(isOldEmail){
+        onAddAddress(data)
+      }
+      else{
         const { firstName="" , lastName="" , mobNumber="" ,email="" } = data && data['shippingAddress']
         const nonSignupUser = {
             "email": email,
@@ -192,7 +199,8 @@ export default function AddAddress() {
           <PageHeader headerName={isArabic ? "إضافة عنوان" : "Add Address"} />
          {!refererPath && <PageStepTracker stepCount={1} />}
           <div className={styles.addAddressWrapper}> 
-              <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>
+              {selectedCountry.code !== "QA" && <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData} setIsOldEmail={setIsOldEmail}/>}
+              {selectedCountry.code == "QA" && <QatarAddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData} setIsOldEmail={setIsOldEmail}/>}
               <SubmitBtn onSaveAddress={onSaveAddress}/>
           </div>
           <Loader  isShow={isLoading}/>

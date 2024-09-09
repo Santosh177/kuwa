@@ -31,7 +31,7 @@ export default function OrderAddress({address}) {
         shippingAddressData = {
             headerTitle: isArabic ?  "عنوان الشحن" : "Shipping Address",
             userName:shippingAddress['firstName'] || "",
-            address1: shippingAddress['address'] +" "+ shippingAddress['apartment'] ,
+            address1: shippingAddress['address'] +" "+ (shippingAddress['apartment'] ? shippingAddress['apartment'] : "") ,
             address2: shippingAddress['city'] + " " + (shippingAddress['postalCode'] ? `${shippingAddress['postalCode']}` : "") + " " + shippingAddress['country'] || "",
             phoneNo:shippingAddress['mobNumber'] || ""
         }
@@ -42,7 +42,7 @@ export default function OrderAddress({address}) {
         billingAddressData     = {
             headerTitle:isArabic ? "عنوان الفواتير" : "Billing Address",
             userName:billingAddress['firstName'],
-            address1:billingAddress['address'] +" "+ billingAddress['apartment'] ,
+            address1:billingAddress['address'] +" "+ (billingAddress['apartment'] ? `${billingAddress['apartment']}` : "") ,
             address2: billingAddress['city'] + " " + (billingAddress['postalCode'] ? `${billingAddress['postalCode']}` : "") + " " + billingAddress['country'] || "",
             phoneNo:billingAddress['mobNumber']
         }

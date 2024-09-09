@@ -695,7 +695,6 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
             payload['totalAmount'] = Number((TotalAmount).toFixed(2));
             payload['finalAmount'] = Number((finalAmount).toFixed(2))
             trackData['Payment Type'] = 'Cod' || ''
-            debugger
           window.dataLayer.push({'event':'initiate_checkout',...trackData})
 
             clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData); 

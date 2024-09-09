@@ -9,7 +9,8 @@ import styles from './edit-address.module.scss';
 import Loader from "@/app/[lng]/components/Loader/Loader";
 import { queryParams } from "@/services";
 import { useLanguage } from "@/context/languageDetails";
-
+import QatarAddressForm from "../../../add-address/components/QatarAddressForm/QatarAddressForm";
+import { useCountry } from '@/context/contryDetails';
 
 export default function AddAddress() {
   const router = useRouter()
@@ -20,7 +21,7 @@ export default function AddAddress() {
   const productId = searchParams.get('productId');
   const variantId = searchParams.get('variantId')
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
+  const { selectedCountry={} } = useCountry();
   let queryString = ''
   if(productId){
     queryString = queryParams(productId,variantId)
@@ -130,7 +131,8 @@ export default function AddAddress() {
       return (
         <>
           <div className={styles.editAddressWrapper}> 
-              <AddressForm getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={(formData)=>onFormData(formData)} formData={addressData} isEdit={true}/>
+            { selectedCountry.code !== "QA" && <AddressForm getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={(formData)=>onFormData(formData)} formData={addressData} isEdit={true}/>}
+             {selectedCountry.code  == "QA" &&<QatarAddressForm  getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={(formData)=>onFormData(formData)} formData={addressData} isEdit={true}/>} 
               <SubmitBtn isUpdateSuccess={isUpdateSuccess}  btnName={isArabic ?  "تحديث العنوان" : "Update Address"} onClick={onUpdateAddress}/>
               <Loader  isShow={isLoading}/>
           </div>
