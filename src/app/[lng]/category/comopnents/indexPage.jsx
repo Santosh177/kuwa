@@ -184,10 +184,15 @@ const MainCategory = ({ isDealPage }) => {
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
-            
+           
             const data = await response.json();
             console.log("searchAllData",data)
             const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList } = data || {}
+            
+            if(productVariantDtoList && productVariantDtoList.length === 0){
+                window.location.href = '/'
+                return;
+            }
             setResponseValue(productVariantDtoList);
             setDescription(isArabic ? collectionDescriptionArabic : collectionDescription )
            
