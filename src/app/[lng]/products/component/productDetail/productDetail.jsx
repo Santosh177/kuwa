@@ -20,6 +20,7 @@ import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 // import { mixPanelTrackEvent } from '../../../../app/page'
 import { mixPanelTrackEvent } from "@/app/[lng]/page";
 import { useLanguage } from "@/context/languageDetails";
+
 const ProductDeatil = ({ productData = {},showProductReview }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating="",shortDescription=""} = productData || {};
@@ -74,16 +75,20 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             userId:userData?.id,
             country:selectedCountry.name,
             email:userData?.emailAddress,
-            productTitle:title,
-            productId:id,
-            landing_page_url:window.location.pathname,
+            // productTitle:title,
+            "Product ID":id,
+            "Product Name":name,
+            // landing_page_url:window.location.pathname,
             device: deviceType,
-            Logged:isLogin
+            Logged:isLogin,
+            "Page URL":window.location.href,
+            "Source URL":window.document.referrer,
+            "In Stock" : normalInventory > 0 ? "Yes" : "No"
         }
-        // clevertapEvent.onCleverTapEvent("kuwa_page_view",trackData)
-       setTimeout(()=>{
-        window.clevertap?.event?.push("kuwa_page_view", trackData);
-       },5000)
+        clevertapEvent.onCleverTapEvent("kuwa_page_view",trackData)
+      //  setTimeout(()=>{
+      //   window.clevertap?.event?.push("kuwa_page_view", trackData);
+      //  },5000)
        if(isLogin){
         mixPanelTrackEvent("kuwa_page_view", trackData,userData.id)
        }
