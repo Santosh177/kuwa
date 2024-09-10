@@ -225,7 +225,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
       }
 
       // Set a new timer to make the API call after a delay (e.g., 500 milliseconds)
-      timer = setTimeout(makeApiCall, 1200);
+      timer = setTimeout(makeApiCall, 1000);
     }
     // Cleanup the timer when the component unmounts
     return () => {
