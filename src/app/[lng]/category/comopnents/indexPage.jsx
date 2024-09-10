@@ -25,6 +25,7 @@ const MainCategory = ({ isDealPage }) => {
     const [isLoding, setIsLOading] = useState(false);
     const [isLodingProduct, setIsLoadingProduct] = useState(false);
     const [responseData, setResponseData] = useState({})
+    const [description,setDescription] = useState(null)
    
 
     const [paramsData, setParamsData] = useState({})
@@ -32,7 +33,8 @@ const MainCategory = ({ isDealPage }) => {
     const dealSeoUrl = params.dealId || "";
     const collectionSeoUrl = params.id || null
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
-    console.log("collectionSeoUrl",typeof collectionSeoUrl)
+    console.log("collectionSeoUrl", collectionSeoUrl)
+
     useEffect(() => {
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
@@ -80,32 +82,40 @@ const MainCategory = ({ isDealPage }) => {
         setIsLoadingProduct(true);
         const { category = [], sort = "", searchKey = "",AVAILABLE="",categorySeoList=[] } = paramsData || {};
         let dealQueryValue = "";
-        let query = {}
+        let query = {
+            "source": "website",
+            "searchKey": "",
+            "categoryList": null,
+            "sortBy":"relevance",
+            "inStock": false,
+            "deal_seo_url":null,
+            "categorySeoList":null,
+        }
         console.log("paramsData",paramsData)
         if (sort && category.length > 0) {
             dealQueryValue = `sort_by=${(sort)}&category=${encodeURIComponent(category.join(','))}`;
-            query = {
-                sort_by: sort,
-                category: category,
+            query = {...query,
+                sortBy: sort,
+                categoryList: category,
                 categorySeoList:categorySeoList
             }
         } else if (sort && category.length === 0) {
 
             dealQueryValue = `sort_by=${(sort)}`;
-            query = {
-                sort_by: sort,
+            query = {...query,
+                sortBy: sort,
                 categorySeoList:categorySeoList
             }
         } else if (!sort && category.length > 0) {
             dealQueryValue = `category=${encodeURIComponent(category.join(','))}`;
-            query = {
-                category: category,
+            query = {...query,
+                categoryList: category,
                 categorySeoList:categorySeoList
             }
         }
         else if (!sort && category.length === 0 ){
             dealQueryValue = "";
-            query = {
+            query = {...query,
                 categorySeoList:categorySeoList
             }
         }
@@ -113,15 +123,15 @@ const MainCategory = ({ isDealPage }) => {
         if (searchKey) {
             if (!sort && category.length === 0) {
                 dealQueryValue = `search_key=${(searchKey)}`;
-                query = {
-                    search_key: searchKey,
+                query = {...query,
+                    searchKey: searchKey,
                     categorySeoList:categorySeoList
                 }
             } else {
                 dealQueryValue += `&search_key=${(searchKey)}`;
                 query = {
                    ...query,
-                    search_key: searchKey,
+                   searchKey: searchKey,
                 }
             }
         }
@@ -129,7 +139,7 @@ const MainCategory = ({ isDealPage }) => {
         if (AVAILABLE && AVAILABLE.length > 0 ) {
             if (!sort && category.length === 0 && !searchKey) {
                 dealQueryValue = `inStock=true`;
-                query = {
+                query = {...query,
                     inStock: true,
                     categorySeoList:categorySeoList
                 }
@@ -144,7 +154,7 @@ const MainCategory = ({ isDealPage }) => {
         if(!AVAILABLE || (AVAILABLE && AVAILABLE.length == 0)){
             if (!sort && category.length === 0 && !searchKey) {
                 dealQueryValue = `inStock=false`;
-                query = {
+                query = {...query,
                     inStock: false,
                     categorySeoList:categorySeoList
                 }
@@ -164,47 +174,27 @@ const MainCategory = ({ isDealPage }) => {
         }
 
         try {
-            if(isDealPage){
-                const response = await fetch(endpoint, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    // body:JSON.stringify(query)
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                
-                const data = await response.json();
-                console.log("searchData",data)
-                setResponseValue(data);
-
+            const response = await fetch('/api/elastic-search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(query)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
             }
-            else{
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body:JSON.stringify(query)
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                console.log("response",response)
-                
-                const data = await response.json();
-                console.log("searchData",data)
-                if(data && data.length === 0){
-                    window.location.href = '/'
-                    return;
-                }
-                
-                setResponseValue(data);
+           
+            const data = await response.json();
+            console.log("searchAllData",data)
+            const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList } = data || {}
+            
+            if(productVariantDtoList && productVariantDtoList.length === 0){
+                window.location.href = '/'
+                return;
             }
+            setResponseValue(productVariantDtoList);
+            setDescription(isArabic ? collectionDescriptionArabic : collectionDescription )
            
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -244,6 +234,7 @@ const MainCategory = ({ isDealPage }) => {
         }
         setIsLOading(false)
     }
+
     useEffect(() => {
         if (isDealPage) {
             fetchDealFilterData();
@@ -297,7 +288,7 @@ const MainCategory = ({ isDealPage }) => {
 
             {<div className={style.productAndFilter}>
                 {<FilterSection paramsData={paramsData} setParamsData={setParamsData} setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} slectedFilter={slectedFilter} responseData={responseData} />}
-                {isHide && <ProductSection resposneValue={resposneValue} isDealPage={isDealPage} />}
+                {isHide && <ProductSection resposneValue={resposneValue} isDealPage={isDealPage} description={description}/>}
             </div >}
             {isHide && responseData && Object.keys(responseData).length > 0 && <Footer />}
             <Loader isShow={isLoding} />
