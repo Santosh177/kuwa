@@ -40,7 +40,7 @@ const SignupForm = ({setFormData={},formData={},errors={},setErrors={},setSelect
   const onInputChange = (event, labelId,data) =>{
     if(labelId === 'mobNumber'){
       setFormData(inputs => ({ ...inputs, [labelId]: "+"+event,["mobNoValidation"]:event.slice(data.dialCode.length)}));
-      setSelectedPhoneCode(data.dialCode)
+      setSelectedPhoneCode(data.countryCode)
     }else{
       setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
     }

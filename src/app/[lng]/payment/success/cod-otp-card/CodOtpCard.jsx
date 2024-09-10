@@ -22,10 +22,13 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
     const [otpError, setOtpError] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const [mobNumberError,setMobNumberError] = useState("")
+    const [mobNoValidation,setMobNoValidation] = useState()
+
 
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     const { selectedCountry={} } = useCountry();
 
+    const [selectedPhoneCode, setSelectedPhoneCode] = useState(selectedCountry.code)
     useEffect(() => {
         if (mobileNumber) {
             setMobNumber(mobileNumber);
@@ -53,10 +56,11 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
         handleCreateOtp()
     };
     
-    console.log("userData++++",userData)
+    // console.log("userData++++",userData)
     const handleEdit = ()=>{
         setIsShowOtpDiv(false);
         setIsShowPhoneDiv(true)
+        setMobNumberError("")
     }
     
     const handleCreateOtp = async()=>{
@@ -92,7 +96,7 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
             setMobNumberError(isArabic ? "يرجى إدخال رقم الهاتف المحمول" :"Please enter mobile number")
             return;
         }
-        if(mobNumber && !checkInternationalPhone(mobNumber,selectedCountry)){
+        if(mobNumber && !checkInternationalPhone(mobNoValidation,selectedPhoneCode)){
             setMobNumberError(isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number")
             return;
         }
@@ -120,7 +124,7 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
                 },
                 body: JSON.stringify(payload)
             })
-            console.log("nkjbkja",res.status)
+            // console.log("nkjbkja",res.status)
             if (res.status==200) {
                 setIsLoading(false)
                 // const responseData = await res.json();
@@ -141,6 +145,18 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
             console.log("error",error)
         }
     }
+
+    const onInputChange = (event, labelId,data) => {
+        // console.log(first)
+        console.log("qvvqhjq",data)
+        if(labelId === 'mobNumber'){
+            setMobNumber("+"+event)
+            setSelectedPhoneCode(data.countryCode)
+            setMobNoValidation(event.slice(data.dialCode.length))
+        }
+    }
+
+    console.log("mobNumber",mobNumber)
 
    return (
     <>
@@ -167,7 +183,7 @@ const CodOtpCard = ({orderId,setIsSuccessPopup,mobileNumber}) => {
                 <div className={styles.phoneTxt}>{isArabic ? "أدخل رقم الهاتف" : "Enter phone number"}</div>
                 <div className={styles.phoneDiv}>
                 <div className={styles.phoneInput}>
-                <PhoneNumberInput type="text" fieldName="mobNumber" value={mobNumber} onInputChange={(e)=>setMobNumber(e)}/>
+                <PhoneNumberInput type="text" fieldName="mobNumber" value={mobNumber} onInputChange={onInputChange}/>
                 </div>
                 <div className={styles.button} onClick={handleSaveMob}>{isArabic ? "تأكيد" : "Confirm"}</div>
                 </div>  

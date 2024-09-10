@@ -558,7 +558,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         }
         if(fieldName === 'mobNumber'){
           setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value,["mobNoValidation"]:e.slice(data.dialCode.length)}))
-          setSelectedPhoneCode(data.dialCode)
+          setSelectedPhoneCode(data.countryCode)
         }else{
           setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value}))
         }
