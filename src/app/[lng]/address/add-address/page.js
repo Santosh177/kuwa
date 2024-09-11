@@ -85,7 +85,7 @@ export default function AddAddress() {
           },
             // body:JSON.stringify(formData)
         })
-   
+        
         const data = await res.json();
         console.log("updated user",res,data, data.message)
      
@@ -101,7 +101,7 @@ export default function AddAddress() {
         onAddAddress(data)
       }
       else if(isOldEmail){
-        updateUser()
+       await updateUser()
         onAddAddress(data)
       }
       else{
