@@ -75,12 +75,33 @@ export default function AddAddress() {
       return window.innerWidth > 770 ? 'web' : 'mWeb';
     }
 
+    const updateUser = async() =>{
+      try {
+        setIsLoading(true);
+        const res = await fetch('/api/update-user', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+            // body:JSON.stringify(formData)
+        })
+   
+        const data = await res.json();
+        console.log("updated user",res,data, data.message)
+     
+    }
+    catch(error){
+      console.log("Error updating user",error)
+    }
+  }
+
     const onGetFormValues = async(data) => {
       console.log("onGetFormValues",data)
       if(isLogin){
         onAddAddress(data)
       }
       else if(isOldEmail){
+        updateUser()
         onAddAddress(data)
       }
       else{
