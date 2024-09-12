@@ -72,7 +72,7 @@ const createBackgroundColors = (totalRow= 14) => {
 
 const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},index=0,totalRow=14}) => {
   const router = useRouter();
-  const { product=[],headerTitle= "",headerTitleArabic=""} = data || {};
+  const { product=[],headerTitle= "",headerTitleArabic="",seoUrl} = data || {};
   const [isLoading , setIsLoading] = useState(false);
   const { setCartItemData={},setCartItemCount={} } = useCartItems();
   const [ backgroundColors , setBackgroundColors] = useState(createBackgroundColors(totalRow));
@@ -127,8 +127,8 @@ let trackData={};
 }
 
 const handleAllProduct = () =>{
-  const encodedHeaderTitle = encodeURIComponent(headerTitle);
-  window.location.href = `/collections?category=${encodedHeaderTitle}`
+  const encodedSeoUrl = encodeURIComponent(seoUrl);
+  window.location.href = `/collections/${encodedSeoUrl}`
 }
 
 const handleNonLogin = (id,variantId)=>{

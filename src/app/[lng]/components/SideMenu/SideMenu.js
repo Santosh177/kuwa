@@ -36,7 +36,7 @@ const SideMenuData = ({title="" , data=[],onclose={},onBack={}}) => {
                         return
                     return(
                         <>
-                            <div onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data.name)}`} className={styles.item} key={index}>{isArabic ? data.nameArabic :data.name}</div>
+                            <div onClick={()=>window.location.href =`/collections/${encodeURIComponent(data.seoUrl)}`} className={styles.item} key={index}>{isArabic ? data.nameArabic :data.name}</div>
                             <div className={styles.horizontalLine}></div>
                         </>
                     )
@@ -265,8 +265,8 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
           const getProductTypeData = await getProductTypeRes.json();
           console.log("getProductTypeData",getProductTypeData);
           getProductTypeData.map((data,index)=>{
-            const {collectionTitle="" , collectionId="" ,collectionTitleArabic} = data || {}
-            childMenuData.push({ name:collectionTitle,id:collectionId,nameArabic:collectionTitleArabic})
+            const {collectionTitle="" , collectionId="" ,collectionTitleArabic,seoUrl=""} = data || {}
+            childMenuData.push({ name:collectionTitle,id:collectionId,nameArabic:collectionTitleArabic,seoUrl:seoUrl})
           })
           setChildMenuData(childMenuData)
     }

@@ -18,7 +18,7 @@ const ExploreCategory = ({exploreCategory}) => {
           exploreCategory.map((data,index)=>{
             return(
                 // <div className={styles.categorySection}>
-                <div className={styles.category} onClick={()=>window.location.href =`/collections?category=${encodeURIComponent(data.healthGoal)}`}>
+                <div className={styles.category} onClick={()=>window.location.href =`/collections/${encodeURIComponent(data.seoUrl)}`}>
                     <div className={styles.categoryImg}>
                         <img src={data.icon}></img>
                     </div>

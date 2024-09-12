@@ -20,6 +20,7 @@ import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 // import { mixPanelTrackEvent } from '../../../../app/page'
 import { mixPanelTrackEvent } from "@/app/[lng]/page";
 import { useLanguage } from "@/context/languageDetails";
+
 const ProductDeatil = ({ productData = {},showProductReview }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating="",shortDescription=""} = productData || {};
@@ -389,7 +390,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
     const onHandleApplePay = () => {
         console.log("userDatauserData",userData)
         const deliveryFeesConfig = countryList.find((data) => data.code == selectedCountry.code) || {}
-        const productPrice = parseInt(finalPrice) * parseInt(noOfProduct);
+        const productPrice = parseFloat((finalPrice).toFixed(2)) * parseFloat(noOfProduct);
         const minThreshold = deliveryFeesConfig.minThreshold || 0;
         let totalAmount = productPrice;
         let devliveryFees = 0
@@ -401,7 +402,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             devliveryFees =  deliveryFeesConfig.deliveryFee;
             totalAmount = totalAmount + deliveryFeesConfig.deliveryFee
         }
-        let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
+        let extraDiscount = prePaidDiscount > 0 ? parseFloat((((totalAmount - devliveryFees) * prePaidDiscount)/100).toFixed(2)) : 0;
         totalAmount = totalAmount - extraDiscount + customFee
         const applePaySupportednetworks = "visa, mastercard, amex";
         let request = {

@@ -9,6 +9,7 @@ import ProductCard from './ProductCard/ProductCard';
 import TrendingSearch from './TrendingSearch/TrendingSearch';
 import { mappingHomeSearchDealProducts } from '@/services';
 import { useLanguage } from '@/context/languageDetails';
+import { saveSearchData } from '@/services';
 
 
 
@@ -27,38 +28,37 @@ export default function Search() {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
 
+  const searchDataCount = searchData && searchData.length || 0;
+  const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
+  const productNameList = searchData && searchData?.map((data) => data.productName) || [];
   useEffect(() => {
     let timer;
 
     const makeApiCall = async () => {
       try {
-        const countryId = selectedCountry && selectedCountry.id || "";
-        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
+        const payload = {
+          "source": "website",
+          "searchKey": searchQuery,
+          "categoryList": null,
+          "sortBy":"relevance",
+          "inStock": false,
+          "deal_seo_url":null,
+          "categorySeoList":null,
+        }
+        const searchApiResp = await fetch('/api/elastic-search',{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({key: searchQuery})
+          body: JSON.stringify(payload)
         })
         const searchApiData = await searchApiResp.json();
+        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList } = searchApiData || {}
         let searchData = []
-        if (searchApiData && searchApiData.length > 0) {
+        if (productVariantDtoList && productVariantDtoList.length > 0) {
           searchData = []
-          searchApiData.map((data, index) => {
+          productVariantDtoList.map((data, index) => {
             if (data && Object.keys(data).length > 0) {
-              // const productData = {
-              //   productImage: data.productImageUrl || "",
-              //   productName: data.name || "",
-              //   id: data.id || "",
-              //   seoUrl: data.seoUrl || "",
-              //   price: {
-              //     finalPrice: data.specialPrice,
-              //     retailPrice: data.price,
-              //     currency: data.currency,
-              //     discount: data.discount,
-              //     discountType: data.discountType,
-              //   }
-              // }
               searchData.push(mappingHomeSearchDealProducts(data));
               setSearchData(searchData)
             }
@@ -67,19 +67,18 @@ export default function Search() {
           searchData.push([])
           setSearchData([])
         }
-        // Process the API response here
-        // setApiData(response.data);
       } catch (error) {
         console.error('API request failed:', error);
       }
     };
+
     if (searchQuery) {
       // Clear the previous timer if it exists
       if (timer) {
         clearTimeout(timer);
       }
       // Set a new timer to make the API call after a delay (e.g., 500 milliseconds)
-      timer = setTimeout(makeApiCall, 500);
+      timer = setTimeout(makeApiCall, 1000);
     }
     // Cleanup the timer when the component unmounts
     return () => {
@@ -88,94 +87,123 @@ export default function Search() {
       }
     };
   }, [searchQuery]);
+
+  useEffect(() => {
+    const handleKeyDown = async (event) => {
+      const payloadForSaveData = {
+        "source": "website",
+        "search_key": searchQuery,
+        "category": null,
+        "sort_by": "relevance",
+        "inStock": false,
+        "noOfSearchResult": searchDataCount,
+        "productId": "",
+        "productName": "",
+        "productFinalPrice": 0,
+        "productIdList": ProductIdList,
+        "productNameList": productNameList,
+      };
+  
+      if (event.key === 'Enter') {
+        // Save the search data and redirect
+        await saveSearchData(payloadForSaveData);
+        window.location.href = `/collections?search_key=${encodeURIComponent(searchQuery)}`;
+      }
+    };
+  
+    window.addEventListener('keydown', handleKeyDown);
+  
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [searchQuery, searchData]);
+
+
   useEffect(()=>{
     if(!searchQuery){
        setSearchData([])
     }
   },[searchQuery])
 
-  // const onSearch1 = async (searchValue) => {
-  //   setSearchTxt(searchValue);
-  //   console.log("customHeadercustomHeader", selectedCountry)
-  //   const countryId = selectedCountry && selectedCountry.id || "";
-  //   const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?key=${searchValue}&country=${countryId}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     }
-  //   })
-  //   const searchApiData = await searchApiResp.json();
-  //   let searchData = []
-  //   if (searchApiData && searchApiData.length > 0) {
-  //     searchApiData.map((data, index) => {
-  //       const sData = data['product'] || {}
-  //       if (sData) {
-  //         const productData = {
-  //           productImage: sData.productImage && sData.productImage.productImageUrl || "",
-  //           productName: sData.productDescription && sData.productDescription.name || "",
-  //           id: sData.id || "",
-  //           seoUrl: data.seoUrl || "",
-  //         }
-  //         searchData.push(productData);
-  //         setSearchData(searchData)
-  //       }
-  //     })
-  //   } else {
-  //     searchData.push([])
-  //     setSearchData([])
-  //   }
-  // }
-
   const onSearch = (event) => {
     setSearchQuery(event);
   };
 
-  const searchDataCount = searchData && searchData.length || 0;
-  // const handleOutsideClick = (event) => {
-  //   if (inputBoxRef.current && !inputBoxRef.current.contains(event.target) && event.target && (event.target.id != 'trending-search')) {
-  //     // Clicked outside the input box
-  //     // Close the popup
-  //     if (event.target.id==="cross-btn"){
-  //       setShowTrendingSearch(true);
-  //     }else{
-  //       setShowTrendingSearch(false);
-  //     }
-  //   }
-  //   else {
-  //     setShowTrendingSearch(true);
-  //   }
-  // };
-   const lng = localStorage.getItem("selectedLanguage") || 'en'
-  const handleSeeAll = (searchQuery) => {
-    window.location.href = `/${lng}/collections?search_key=${encodeURIComponent(searchQuery)}`
-  }
-  // useEffect(() => {
-  //   // Attach event listener for clicks outside the input box
-  //   document.addEventListener('click', handleOutsideClick);
 
-  //   // Cleanup the event listener when the component unmounts
-  //   return () => {
-  //     document.removeEventListener('click', handleOutsideClick);
-  //   };
-  // }, []);
-  // useEffect(()=>{
-  //   setShowTrendingSearch(true);
-  // },[])
+ 
+   const lng = localStorage.getItem("selectedLanguage") || 'en'
+
+  const handleSeeAll = (searchQuery) => {
+    const payloadForSaveData ={
+      "source":"website",
+      "search_key":searchQuery,
+      "category":null,
+      "sort_by":"relevance",
+      "inStock":false,
+ "noOfSearchResult":searchDataCount,
+ "productId":"",
+ "productName":"",
+ "productFinalPrice":0,
+ "productIdList":ProductIdList,
+ "productNameList":productNameList
+      }
+    window.location.href = `/collections?search_key=${encodeURIComponent(searchQuery)}`
+    saveSearchData(payloadForSaveData)
+  }
+
+  const handleBack = () =>{
+    const payloadForSaveData ={
+      "source":"website",
+      "search_key":searchQuery,
+      "category":null,
+      "sort_by":"relevance",
+      "inStock":false,
+ "noOfSearchResult":searchDataCount,
+ "productId":"",
+ "productName":"",
+ "productFinalPrice":0,
+ "productIdList":[],
+ "productNameList":[]
+      }
+    router.back();
+    saveSearchData(payloadForSaveData)
+
+  }
+
+  const handleCrossSearch = ()=>{
+    const payloadForSaveData ={
+      "source":"website",
+      "search_key":searchQuery,
+      "category":null,
+      "sort_by":"relevance",
+      "inStock":false,
+ "noOfSearchResult":searchDataCount,
+ "productId":"",
+ "productName":"",
+ "productFinalPrice":0,
+ "productIdList":[],
+ "productNameList":[]
+      }
+   setSearchQuery("")
+    saveSearchData(payloadForSaveData)
+  }
+
   return (
     <>
       {/* // <div className={styles.searchWrapper}> */}
       <div className={styles.searchInputBox}>
         <input ref={inputBoxRef} className={styles.searchInput} autoFocus type="text" value={searchQuery} onChange={(e) =>
-          onSearch(e.target.value)} />
-        <img className={`${styles.backArrow} ${isArabic ? styles['backArrow-ar'] : styles['backArrow-en']}` } src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow_search.png" alt="back-arrow" onClick={() => router.back()} />
-        {searchQuery != "" && <img id="cross-btn" className={styles.crossIcon} src=" https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_search.png" alt="back-arrow" onClick={() => setSearchQuery("")} />}
+          onSearch(e.target.value)}  style={{ fontSize: '16px' }}  enterKeyHint="search"/>
+        <img className={`${styles.backArrow} ${isArabic ? styles['backArrow-ar'] : styles['backArrow-en']}` } src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/back_arrow_search.png" alt="back-arrow" onClick={() => handleBack()} />
+        {searchQuery != "" && <img id="cross-btn" className={styles.crossIcon} src=" https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/cross_icon_search.png" alt="back-arrow" onClick={() => handleCrossSearch()} />}
 
       </div>
       <div className={styles.searchListWrapper}>
-        <div className={styles.resultFound}>{searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</div>
+       {searchDataCount> 0 && <div className={styles.resultFound}>{searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</div>}
           <div className={styles.productCardMain}>
             {
-              searchData.map((data, index) => {
+              searchData && searchData.length > 0 && searchData.slice(0,12).map((data, index) => {
 
                 const { id = '', productImage: image, productName:name, seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag="",productNameArabic=""} = data || {};
                   const cardData = {
@@ -196,7 +224,7 @@ export default function Search() {
                     productNameArabic: productNameArabic
                   }
                 return (
-                  <ProductCard cardData={cardData} />
+                  <ProductCard cardData={cardData} searchQuery={searchQuery} />
                 )
               })
             }
