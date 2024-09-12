@@ -12,7 +12,6 @@ import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmai
 import { useAuth } from '@/context/userDetail';
 import { useLanguage } from "@/context/languageDetails";
 import { mixPanelTrackEvent } from "@/app/[lng]/page";
-import useCleverTapEvents from "@/hooks/useCleverTapEvents";
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId,avgRating="",totalRating="",showProductReview }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory,productId,selectedVariantQuantity,shortDescription=""} = pricingSectionVariables;
     const {nameArabic="",titleArabic="",shortDescriptionArabic=""} = pricingSectionVariables || {}
