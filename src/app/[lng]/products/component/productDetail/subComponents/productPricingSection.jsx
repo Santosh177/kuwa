@@ -11,6 +11,8 @@ import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/Notify
 import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmailPopup";
 import { useAuth } from '@/context/userDetail';
 import { useLanguage } from "@/context/languageDetails";
+import { mixPanelTrackEvent } from "@/app/[lng]/page";
+import useCleverTapEvents from "@/hooks/useCleverTapEvents";
 const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, onChangeItemQty={} ,onResetViewCartState={} ,isDealActive,isTimerActive,currentTimerStatus,isVariantCurrenTimeStatus,isVariantDealActive,isVariantTimeActive,variantdealId,avgRating="",totalRating="",showProductReview }) => {
     const { currency = "", name = "", numberOfProductReview = "", title = "", variants = [], setselectedVarients ={}, selectedVarients = "", retailPrice = 0, finalPrice = 0, discount = 0,onHandleApplePay={}, handelAddToCart={}, handelBuyNow ={}, handelShareOption = {}, setNoOfProduct = {}, noOfProduct = 0 , handelViewCart={},mininmumDeliveryThreshold,normalInventory,productId,selectedVariantQuantity,shortDescription=""} = pricingSectionVariables;
     const {nameArabic="",titleArabic="",shortDescriptionArabic=""} = pricingSectionVariables || {}
@@ -267,6 +269,17 @@ const ProductPricingSection = ({ pricingSectionVariables, isAddedToCart=false, o
             onClick={()=>{
               if(normalInventory > 0 || selectedVariantQuantity > 0){
                 onHandleApplePay()
+                const trackData = {
+                  "Logged": isLogin ? "YES" : "NO",
+                  "Screen":"PDP"
+                }
+                clevertapEvent.onCleverTapEvent("kuwa_apple_pay_click", trackData)
+                if(isLogin){
+                  mixPanelTrackEvent("kuwa_apple_pay_click", trackData,userData.id)
+                }
+                else{
+                  mixPanelTrackEvent("kuwa_apple_pay_click", trackData)
+                }
               }
             }
            }>

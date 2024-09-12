@@ -836,6 +836,7 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         }
     }
     const onProceed = (pMode) => {
+    
       if(selectedPaymentMethod === "APPLE_PAY" || pMode === "APPLE_PAY"){
         console.log("extradiscountttt",extraDiscount)
         console.log("prePaidDiscount++++",prePaidDiscount)
@@ -859,6 +860,17 @@ export default function Payment({cartData,paymentModes,tamaraConfig}) {
         ]
         
         };
+        const trackData = {
+          "Logged": isLogin ? "YES" : "NO",
+          "Screen":"PAYMENT"
+        }
+        clevertapEvent.onCleverTapEvent("kuwa_apple_pay_click", trackData)
+        if(isLogin){
+          mixPanelTrackEvent("kuwa_apple_pay_click", trackData,userData.id)
+        }
+        else{
+          mixPanelTrackEvent("kuwa_apple_pay_click", trackData)
+        }
         console.log("hvahjavha",request)
         appleSession = new ApplePaySession(3, request);
         appleSession.begin();

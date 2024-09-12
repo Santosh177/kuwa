@@ -510,6 +510,18 @@ export default  function Cart({cartData}) {
       cartItems.map((data,index)=>{
         labelData.push({"label": isArabic ? data.productNameArabic : data.productName,"amount":(data.finalPrice)*(data.qty)})
       })
+
+      const trackData = {
+        "Logged": isLogin ? "YES" : "NO",
+        "Screen":"CART"
+      }
+      clevertapEvent.onCleverTapEvent("kuwa_apple_pay_click", trackData)
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_apple_pay_click", trackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_apple_pay_click", trackData)
+      }
     
       const applePaySupportednetworks = "visa, mastercard, amex";
       let request = {
