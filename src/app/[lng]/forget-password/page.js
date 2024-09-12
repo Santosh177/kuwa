@@ -8,6 +8,9 @@ import styles from './page.module.scss';
 import { useState } from 'react';
 import { useCountry } from '@/context/contryDetails';
 import { useLanguage } from '@/context/languageDetails';
+import { mixPanelTrackEvent } from '../page';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { useAuth } from '@/context/userDetail';
 
 const validateForm = (formData) => {
   const errors = {};
@@ -49,6 +52,9 @@ export default function ForgetPassword() {
     const { selectedCountry={} } = useCountry();
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
+    const clevertapEvent = useCleverTapEvents();
+    const {isLogin=false, userData={}} = useAuth();
+
     const onInputChange =(e)=>{
         setEmail(e.target.value)
     }
@@ -66,10 +72,20 @@ export default function ForgetPassword() {
         const response = await res.json();
         const countryName = selectedCountry && selectedCountry.name || "";
         if(response.statusCode === 200){
-          window.clevertap.event.push("kuwa_password_reset", {
-            "Country":countryName,
-            "Email":email,
-          });
+          // window.clevertap.event.push("kuwa_password_reset", {
+          //   "Country":countryName,
+          //   "Email":email,
+          // });
+          const trackData = {
+            "Page URL":window.location.href
+          }
+          clevertapEvent.onCleverTapEvent("kuwa_password_reset",trackData)
+          if(isLogin){
+            mixPanelTrackEvent("kuwa_password_reset",trackData,userData.id)
+          }
+          else{
+            mixPanelTrackEvent("kuwa_password_reset",trackData)
+          }
           setIsEmailSent(true);
           setSuccessMsg('A link has been sent to your mail ID. If not found check spam folder.')
           setErrorMsg("")

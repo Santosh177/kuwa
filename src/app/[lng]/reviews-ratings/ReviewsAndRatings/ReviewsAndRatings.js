@@ -135,10 +135,11 @@ const ReviewForm = () => {
         }
 
         const trackData={
-          "customer_email":userEmail,
-          "product_id":productId,
-          "product_name":productName,
-          "country":countryName
+          // "customer_email":userEmail,
+          "Product ID":productId,
+          "Product Name ":productName,
+          // "country":countryName,
+          "Page URL":window.location.href
         }
    const payload = {
      "reviewTitle":reviewTitle,
@@ -156,8 +157,13 @@ const ReviewForm = () => {
         }
       })
       const reviewsData = await reviews.json();
-      clevertapEvent.onCleverTapEvent("write_a_review_web", trackData); 
-        mixPanelTrackEvent("write_a_review_web", trackData,userId)
+      clevertapEvent.onCleverTapEvent("Kuwa_submit_review", trackData); 
+      if(isLogin){
+        mixPanelTrackEvent("Kuwa_submit_review", trackData,userId)
+      }
+      else{
+        mixPanelTrackEvent("Kuwa_submit_review", trackData)
+      }
       console.log("reviewsData",reviewsData)
         setIsShowSuccessPopup(true)
    }
