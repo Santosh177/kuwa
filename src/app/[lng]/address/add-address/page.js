@@ -87,7 +87,7 @@ export default function AddAddress() {
         })
         
         const data = await res.json();
-        console.log("updated user",res,data, data.message)
+        console.log("updated user",res,data.data,)
      
     }
     catch(error){
