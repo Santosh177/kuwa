@@ -47,9 +47,14 @@
 import React, { useEffect, useState } from "react";
 import style from "./ProductDiscription.module.scss"
 import { useLanguage } from "@/context/languageDetails";
+import useCleverTapEvents from "@/hooks/useCleverTapEvents";
+import { mixPanelTrackEvent } from "@/app/[lng]/page";
+import { useAuth } from "@/context/userDetail";
 
 const ProductDiscription = ({ productData }) => {
   const {
+    name="",
+    id="",
     benefits = "",
     description = "",
     ingredients = "",
@@ -61,19 +66,48 @@ const ProductDiscription = ({ productData }) => {
   const [selectedTabData, setSelectedTabData] = useState("");
   const [selectedTab, setSelectedTab] = useState("");
   const { isArabic } = useLanguage();
+  const clevertapEvent = useCleverTapEvents();
+  const {isLogin=false,userData={}} = useAuth();
 
   const handelOnclick = (action) => {
+    const trackData = {
+      "Product Name":name,
+      "Product ID":id,
+      "Page URL":window.location.href
+    }
     if (action === "description") {
       setSelectedTab("description");
       setSelectedTabData(isArabic ? descriptionArabic : description);
+      clevertapEvent.onCleverTapEvent("kuwa_pdp_description",trackData)
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_pdp_description",trackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_pdp_description",trackData)
+      }
+
     }
     if (action === "ingredients") {
       setSelectedTab("ingredients");
       setSelectedTabData(isArabic ? ingredientsArabic : ingredients);
+      clevertapEvent.onCleverTapEvent("kuwa_pdp_ingredients",trackData)
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_pdp_ingredients",trackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_pdp_ingredients",trackData)
+      }
     }
     if (action === "benefits") {
       setSelectedTab("benefits");
       setSelectedTabData(isArabic ? benefitsArabic : benefits);
+      clevertapEvent.onCleverTapEvent("kuwa_pdp_benefits",trackData)
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_pdp_benefits",trackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_pdp_benefits",trackData)
+      }
     }
   };
 

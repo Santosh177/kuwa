@@ -17,6 +17,7 @@ import { queryParams } from '@/services';
 import { mixPanelTrackEvent } from '../../page';
 import { useLanguage } from '@/context/languageDetails';
 import QatarAddressForm from './components/QatarAddressForm/QatarAddressForm';
+import { useCartItems } from '@/context/cartItems';
 
 export default function AddAddress() {
   const router = useRouter();
@@ -33,9 +34,11 @@ export default function AddAddress() {
   const [pageType, setPageType] = useState(getPageType())
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
   const [isOldEmail,setIsOldEmail] = useState(false);
+  const {cartItemCount="",cartItemsData = []} = useCartItems();
+// console.log("useCartItems+++",useCartItems())
 
 
-
+console.log("cartItemsData",cartItemsData)
 
     const onFormData = (formData) => {
       setAddressData(formData)
@@ -157,13 +160,16 @@ export default function AddAddress() {
     }
 
     const onAddAddress = async(data) =>{
+      const trackData = {
+        Logged:isLogin
+      }
    
-      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{}); 
+      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",trackData); 
       if(isLogin) {
-        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",{},userData.id)
+        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",trackData,userData.id)
       }
       else{
-        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",{})
+        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",trackData)
       }
       try {
         setIsLoading(true)
@@ -205,12 +211,15 @@ export default function AddAddress() {
     }
 
     useEffect(()=>{
-      clevertapEvent.onCleverTapEvent("kuwa_add_address_landing"); 
+      const trackData = {
+        Logged:isLogin
+      }
+      clevertapEvent.onCleverTapEvent("kuwa_add_address_landing",trackData); 
       if(isLogin){
-        mixPanelTrackEvent("kuwa_add_address_landing",{Logged:isLogin},userData.id)
+        mixPanelTrackEvent("kuwa_add_address_landing",trackData,userData.id)
       } 
       else{
-        mixPanelTrackEvent("kuwa_add_address_landing",{Logged:isLogin})
+        mixPanelTrackEvent("kuwa_add_address_landing",trackData)
       }
     },[])
 

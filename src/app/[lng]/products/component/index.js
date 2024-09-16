@@ -14,6 +14,9 @@ import PageNotFound from "./PageNotFound/PageNotFound";
 // import Loader from '../../components/Loader/Loader';
 import Loader from "@/app/[lng]/components/Loader/Loader";
 import { useLanguage } from '@/context/languageDetails';
+import  useCleverTapEvents  from '@/hooks/useCleverTapEvents';
+import { mixPanelTrackEvent } from '../../page';
+import { useAuth } from '@/context/userDetail';
 
 
 const  AllProduct=({req}) =>{
@@ -22,6 +25,8 @@ const  AllProduct=({req}) =>{
     const productID = req && req.params && req.params.id || "";
   
     const productReviewRef = useRef()
+    const clevertapEvent = useCleverTapEvents();
+    const {isLogin=false, userData={}} = useAuth();
     useEffect(() => {
       const fetchProductData = async () => {
         try {
@@ -52,7 +57,21 @@ const  AllProduct=({req}) =>{
     }, [productID]);
   
     const showProductReview = () => {
+
+      const trackData = {
+        "Page URL": window.location.href,
+        "Product Name":productData?.name,
+        "Product ID":productData?.id
+      }
+      
       if (productReviewRef.current) {
+        clevertapEvent.onCleverTapEvent("kuwa_pdp_clicked_rating",trackData);
+        if(isLogin){
+          mixPanelTrackEvent("kuwa_pdp_clicked_rating",trackData,userData.id)  // for tracking the user id
+        }
+        else{
+          mixPanelTrackEvent("kuwa_pdp_clicked_rating",trackData)
+        }
           console.log("Scrolling to product review", productReviewRef.current);
           productReviewRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
           setTimeout(() => {

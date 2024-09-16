@@ -5,6 +5,8 @@ import StarRating from '../StarRating/StarRating';
 import styles from './order-item.module.scss';
 import { useLanguage } from '@/context/languageDetails';
 import { useAuth } from '@/context/userDetail';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { mixPanelTrackEvent } from '@/app/[lng]/page';
 
 const MONTHS = ["Jan","Feb","Mar","April","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
 
@@ -30,6 +32,7 @@ export default  function OrderItem({data,index}) {
     console.log("orderData",data)
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     const {isLogin=false, userData={}} = useAuth()
+    const clevertapEvent = useCleverTapEvents();
     
     const { orderId="",productName="",productImg="",orderStatus="",orderProductId="" , expDelivery="",productId="",rating="",productNameArabic } = data || {};
 
@@ -94,6 +97,18 @@ export default  function OrderItem({data,index}) {
 
 const writeReview = (e) =>{
     e.stopPropagation();
+    const trackData = {
+        "Page URL":window.location.href,
+        "Product Name":productName,
+        "Product ID":productId
+      }
+      clevertapEvent.onCleverTapEvent("Kuwa_write_a_review",trackData)
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_write_a_review",trackData,userData.id )
+      }
+      else{
+        mixPanelTrackEvent("kuwa_write_a_review",trackData)
+      }
     const encodedImages = encodeURIComponent(JSON.stringify([{ imageUrl: productImg }]));
     window.location.href = isLogin ?( `/reviews-ratings?productId=${productId}&productName=${productName}&images=${encodedImages}` ) : '/login?review=true' 
 }

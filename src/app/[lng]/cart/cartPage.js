@@ -135,11 +135,11 @@ export default  function Cart({cartData}) {
             window.clevertap.setMultiValuesForKey("cart_items_id", productIds);
             window.clevertap.setMultiValuesForKey("cart_items_name", productNames);
           }
-          if (isLogin) {
-            mixPanelTrackEvent("cart_items", trackData, userData.id);
-          } else {
-            mixPanelTrackEvent("cart_items", trackData);
-          }
+          // if (isLogin) {
+          //   mixPanelTrackEvent("cart_items", trackData, userData.id);
+          // } else {
+          //   mixPanelTrackEvent("cart_items", trackData);
+          // }
         } catch (error) {
           console.log(error, "not work for older user");
         }
@@ -179,41 +179,30 @@ export default  function Cart({cartData}) {
 
     },[cartItems]);
 
-    function getDeviceType() {
-      if (isMobile) {
-        if (isAndroid) {
-          return 'Android';
-        } else if (isIOS) {
-          return 'iOS';
-        } else {
-          return 'Mobile';
-        }
-      } else if (isTablet) {
-        return 'Tablet';
-      } else {
-        return 'Desktop';
-      }
-    }
+    // function getDeviceType() {
+    //   if (isMobile) {
+    //     if (isAndroid) {
+    //       return 'Android';
+    //     } else if (isIOS) {
+    //       return 'iOS';
+    //     } else {
+    //       return 'Mobile';
+    //     }
+    //   } else if (isTablet) {
+    //     return 'Tablet';
+    //   } else {
+    //     return 'Desktop';
+    //   }
+    // }
     
+
    useEffect(()=>{
-    const deviceType = getDeviceType();
-    const trackData = {
-        userId:userData?.id,
-        device: deviceType,
-        Logged:isLogin
-    }
     setTimeout(()=>{
-      clevertapEvent.onCleverTapEvent("kuwa_cart_landing",trackData)
-      if(isLogin){
-        mixPanelTrackEvent("kuwa_cart_landing",trackData, userData.id)
-      }
-      else{
-        mixPanelTrackEvent("kuwa_cart_landing",trackData,)
-      }
-     
+      trcakcData()
     },2000)
    
    },[])
+
     const calculatePriceDetails = () => {
       const { total=0, subtotal=0, currency = "" } = data || {};
       const minThreshold = deliveryFeesConfig.minThreshold || 0;
@@ -258,36 +247,68 @@ export default  function Cart({cartData}) {
       }
     }
       
-  let trackData = []
+  
   function trcakcData() {
     if (cartData && cartData.products && cartData.products.length > 0) {
-      cartData.products.map((item) => {
-        const productId = item && item.id || "";
-        const productName = item && item.description && item.description.name || "";
-        const qty = item && item.quantity || 1;
-        let variantId = null;
-        let track = {
-          productId: productId,
-          productName: productName,
-          quantity: qty,
-        }
-        if (item && item.variants && item.variants.variants) {
-          variantId = item.variants.variants.id;
-        }
-        if (variantId) {
-          track['variantId'] = variantId;
-        }
-        trackData.push(track)
+      // cartData.products.map((item) => {
+      //   const productId = item && item.id || "";
+      //   const productName = item && item.description && item.description.name || "";
+      //   const qty = item && item.quantity || 1;
+      //   let variantId = null;
+      //   let track = {
+      //     productId: productId,
+      //     productName: productName,
+      //     quantity: qty,
+      //   }
+      //   if (item && item.variants && item.variants.variants) {
+      //     variantId = item.variants.variants.id;
+      //   }
+      //   if (variantId) {
+      //     track['variantId'] = variantId;
+      //   }
+      //   trackData.push(track)
+      // })
+      const productNameList =  cartData.products.map((product)=>{
+        return product?.description?.name
       })
-        clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_checkout",trackData);
+      const productIdList =  cartData.products.map((product)=>{
+        return product?.id
+      })
+      const variantIdList =  cartData.products.map((product)=>{
+        return product?.variants?.variants?.id
+      })
+      const trackData = {
+        productIdList: productIdList.join(),
+        productNameList: productNameList.join(),
+        variantIdList : variantIdList.join()
+      }
+        clevertapEvent.onCleverTapEvent("kuwa_cart_landing",trackData);
         if(isLogin){
-          mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData, userData.id) 
+          mixPanelTrackEvent("kuwa_cart_landing",trackData, userData.id) 
         } 
         else{
-          mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData,) 
+          mixPanelTrackEvent("kuwa_cart_landing",trackData,) 
         }
        
     }
+  }
+
+  const cartCheckoutTrack =() => {
+    const trackData = {
+      userId:userData?.id,
+      // device: deviceType,
+      // Logged:isLogin
+  }
+  setTimeout(()=>{
+    clevertapEvent.onCleverTapEvent("kuwa_add_to_cart_checkout",trackData)
+    if(isLogin){
+      mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData, userData.id)
+    }
+    else{
+      mixPanelTrackEvent("kuwa_add_to_cart_checkout",trackData,)
+    }
+   
+  },2000)
   }
 
     const onProceed = async() => {
@@ -303,7 +324,7 @@ export default  function Cart({cartData}) {
       else{
         setIsShowOutOfStockProductsPopUp(true)
       }
-      trcakcData();
+      cartCheckoutTrack();
     }
 
       
@@ -489,6 +510,18 @@ export default  function Cart({cartData}) {
       cartItems.map((data,index)=>{
         labelData.push({"label": isArabic ? data.productNameArabic : data.productName,"amount":(data.finalPrice)*(data.qty)})
       })
+
+      const trackData = {
+        "Logged": isLogin ? "YES" : "NO",
+        "Screen":"CART"
+      }
+      clevertapEvent.onCleverTapEvent("kuwa_apple_pay_click", trackData)
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_apple_pay_click", trackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_apple_pay_click", trackData)
+      }
     
       const applePaySupportednetworks = "visa, mastercard, amex";
       let request = {
@@ -653,7 +686,16 @@ export default  function Cart({cartData}) {
       const countryName = selectedCountry && selectedCountry.name ||  ""
       const dialCodeForSelectedCountry = getDialCode(selectedCountry.code)
       const { givenName="", familyName = "" , phoneNumber="",emailAddress="" ,addressLines=[],subLocality="",locality="",postalCode="",country=""} =  applePayData && applePayData.payment && applePayData.payment.shippingContact || {}
-      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",{});
+      const appleTrackData = {
+        "Page URL":window.location.href,
+      }
+      clevertapEvent.onCleverTapEvent("kuwa_add_address_save_and_proceed",appleTrackData);
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",appleTrackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_add_address_save_and_proceed",appleTrackData)
+      }
       const address = addressLines.toLocaleString()+" "+subLocality + " " +locality+ " " + postalCode;
       const apartment = locality;
       const billingAddressPayload =  {"country":countryName,"address":address,"apartment":apartment,"stateProvince":"","firstName":givenName,"lastName":familyName,"mobNumber":dialCodeForSelectedCountry+phoneNumber,"email":emailAddress,"sameAddressForBilling":true,"billingAddress":true,"isActive":true,"isDefaultAddress":true}
@@ -730,8 +772,19 @@ export default  function Cart({cartData}) {
         payload['token'] = token;
         payload['paymentMode'] = "APPLE_PAY";
         
-      //   trackData['Payment Type'] = 'Apple pay' || ''
-      //   clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", trackData);
+        const applePayTrackData = {
+          "Page URL":window.location.href,
+          "purchaseValue":priceDetails['totalAmount'] + customFee,
+          'Payment Type':'Apple pay' || ""
+        }
+        // trackData['Payment Type'] = 'Apple pay' || ''
+        clevertapEvent.onCleverTapEvent("kuwa_payments_proceed_to_pay", applePayTrackData);
+        if(isLogin){
+          mixPanelTrackEvent("kuwa_payments_proceed_to_pay", applePayTrackData,userData.id)
+        }
+        else{
+          mixPanelTrackEvent("kuwa_payments_proceed_to_pay", applePayTrackData)
+        }
       console.log("payloadpayload",payload) 
           const placeOrderResp  =  await fetch('/api/apple-pay-place-order', {
               method: 'POST',

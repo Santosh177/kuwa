@@ -3,10 +3,14 @@ import React from 'react'
 import style from './product-rating.module.scss'
 import { useLanguage } from '@/context/languageDetails'
 import { useAuth } from '@/context/userDetail'
+import useCleverTapEvents from '@/hooks/useCleverTapEvents'
+import { mixPanelTrackEvent } from '@/app/[lng]/page'
 
 const ProductRating = ({rating,productId,images,title}) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     const {isLogin=false, userData={}} = useAuth();
+
+    const clevertapEvent = useCleverTapEvents();
   
     const {
         overAllRating="",
@@ -51,6 +55,18 @@ const ProductRating = ({rating,productId,images,title}) => {
       };
       
       const writeReview = () =>{
+        const trackData = {
+          "Page URL":window.location.href,
+          "Product Name":title,
+          "Product ID":productId
+        }
+        clevertapEvent.onCleverTapEvent("Kuwa_write_a_review",trackData)
+        if(isLogin){
+          mixPanelTrackEvent("kuwa_write_a_review",trackData,userData.id )
+        }
+        else{
+          mixPanelTrackEvent("kuwa_write_a_review",trackData)
+        }
 
         const encodedImages = encodeURIComponent(JSON.stringify(images));
         window.location.href = isLogin ?( `/reviews-ratings?productId=${productId}&productName=${title}&images=${encodedImages}` ) : (`/login?productId=${productId}&productName=${title}&images=${encodedImages}`)
