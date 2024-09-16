@@ -18,7 +18,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectDefaultAdd
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
 
-  const { userName="",addressTxt="", mobNumber="",id="" } = data || {}
+  const { userName="",addressTxt1="", addressTxt2="", mobNumber="",id="" } = data || {}
 
   
       return (
@@ -46,7 +46,8 @@ export default function AddressInfo({data={},isSelected=false,onSelectDefaultAdd
                 </div>
                 
             </div>
-            <div className={styles.addressDetail}>{addressTxt}</div>
+            <div className={styles.addressDetail}>{addressTxt1}</div>
+            <div className={styles.addressDetail2}>{addressTxt2}</div>
             <div className={styles.phoneNo}>{isArabic ? "رقم الهاتف" : "Phone no "}: {mobNumber}</div>
             <div className={styles.delivereHere}>
                 <CheckBox isChecked={isSelected}/>

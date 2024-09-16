@@ -109,7 +109,7 @@ const validateBillingAddressForm = (formData,isArabic,selectedCountry={}) => {
 
 
 
-const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={},setIsShowEmailExistPopUp,isShowEmailExistPopUp}) => {
+const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={},setIsShowEmailExistPopUp,isShowEmailExistPopUp,setIsOldEmail=()=>{}}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
 
@@ -158,7 +158,7 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
       }
     }
 
-    
+  
 
 
     useEffect(()=>{
@@ -222,10 +222,20 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
            
             const res= await isExistEmail.json();
             console.log("isExistEmail",res)
-            if(res.message == "true"){
+            if(res.email == "true" && res.password == "true"){
               setIsLoading(false)
               setIsShowEmailExistPopUp(true);
              
+            }
+            else if(res.isOldEmail == "true"){
+              if(res.email=="true" && res.password=="true"){
+              setIsLoading(false)
+              setIsShowEmailExistPopUp(true);
+                }
+                else{
+                  setIsOldEmail(true)
+                  document.cookie = `userId=${res.userId}`;
+                }
             }
             document.removeEventListener("mousedown", handleClickOutside); 
             // else if(signupRespData.status_code ==200){
@@ -419,7 +429,7 @@ const getBillingAddressData = (data,isArabic) => {
 }
 
 
-export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues,error}) {
+export default function AddressForm({onFormData,formData, isEdit=false,onGetFormValues,getFormValues,error,setIsOldEmail}) {
      const {isLogin=false, userData={}} = useAuth();
      const { selectedCountry={} } = useCountry();
       const countryCode = selectedCountry && selectedCountry.code || "";
@@ -433,10 +443,6 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const [isShowEmailExistPopUp, setIsShowEmailExistPopUp] = useState(false)
       const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
      
-
- 
-  // console.log("personalInfoErrors",personalInfoErrors)
-  console.log("nwejknjkn",shippingAddress)
 
   useEffect(()=>{
   
@@ -453,7 +459,6 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         if(isEdit && formData && Object.keys(formData).length > 0){
           // console.log("formData",formData)
 
-          console.log("lanhucjjsh",isArabic)
             setShippingAddress(getShippingAddressData(formData['shippingAddress'],isArabic));
             setBillngAddress(getBillingAddressData(formData['billingAddress'],isArabic));
             setIsSameBillingAddress(formData['shippingAddress'].sameAddressForBilling || false)
@@ -597,7 +602,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       return (
         <>
           <div className={styles.addressForm}> 
-            <PersonalInfoFrom countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} setIsShowEmailExistPopUp={setIsShowEmailExistPopUp} isShowEmailExistPopUp={isShowEmailExistPopUp}  />
+            <PersonalInfoFrom countryCode={countryCode} onChange={onPersonalInfo} values={personalInfo} isEdit={isEdit} errors={personalInfoErrors} setIsShowEmailExistPopUp={setIsShowEmailExistPopUp} isShowEmailExistPopUp={isShowEmailExistPopUp} setIsOldEmail={setIsOldEmail} />
             <div className={styles.addressContainer}>
                 <ShippingAddressForm onChange={onShippingAddress} values={shippingAddress} errors={shippingAddressErrors} />
                 <div className={styles.selectBillingAddressBtn} onClick={()=> onSelectBillngAddress()}>

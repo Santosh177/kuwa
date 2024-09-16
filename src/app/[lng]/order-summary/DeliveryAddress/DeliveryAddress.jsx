@@ -10,7 +10,7 @@ export default function DeliveryAddress() {
   const { selectedAddress ={}} = useAddressData();
   const { firstName="", lastName="" , mobNumber="" , apartment="", address="",country="",city="",postalCode=""} = selectedAddress || {};
   const userName = firstName + " " +lastName;
-  const addressTxt1 = apartment+ " " +address
+  const addressTxt1 = (apartment ? ` ${apartment}` : "")+ " " +address
   const addressTxt2 = city + " " + (postalCode ? ` ${postalCode}` : "")+ " " +country;
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 const search = useSearchParams();

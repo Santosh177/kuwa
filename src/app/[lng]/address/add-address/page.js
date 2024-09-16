@@ -16,6 +16,7 @@ import { queryParams } from '@/services';
 // import { mixPanelTrackEvent } from '@/app/page';
 import { mixPanelTrackEvent } from '../../page';
 import { useLanguage } from '@/context/languageDetails';
+import QatarAddressForm from './components/QatarAddressForm/QatarAddressForm';
 import { useCartItems } from '@/context/cartItems';
 
 export default function AddAddress() {
@@ -32,6 +33,7 @@ export default function AddAddress() {
   const clevertapEvent = useCleverTapEvents();
   const [pageType, setPageType] = useState(getPageType())
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+  const [isOldEmail,setIsOldEmail] = useState(false);
   const {cartItemCount="",cartItemsData = []} = useCartItems();
 // console.log("useCartItems+++",useCartItems())
 
@@ -76,10 +78,36 @@ console.log("cartItemsData",cartItemsData)
       return window.innerWidth > 770 ? 'web' : 'mWeb';
     }
 
+    const updateUser = async() =>{
+      try {
+        setIsLoading(true);
+        const res = await fetch('/api/update-user', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+            // body:JSON.stringify(formData)
+        })
+        
+        const data = await res.json();
+        console.log("updated user",res,data.data,)
+     
+    }
+    catch(error){
+      console.log("Error updating user",error)
+    }
+  }
+
     const onGetFormValues = async(data) => {
+      console.log("onGetFormValues",data)
       if(isLogin){
         onAddAddress(data)
-      }else{
+      }
+      else if(isOldEmail){
+       await updateUser()
+        onAddAddress(data)
+      }
+      else{
         const { firstName="" , lastName="" , mobNumber="" ,email="" } = data && data['shippingAddress']
         const nonSignupUser = {
             "email": email,
@@ -201,7 +229,8 @@ console.log("cartItemsData",cartItemsData)
           <PageHeader headerName={isArabic ? "إضافة عنوان" : "Add Address"} />
          {!refererPath && <PageStepTracker stepCount={1} />}
           <div className={styles.addAddressWrapper}> 
-              <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData}/>
+              {selectedCountry.code !== "QA" && <AddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData} setIsOldEmail={setIsOldEmail}/>}
+              {selectedCountry.code == "QA" && <QatarAddressForm error={error} getFormValues={getFormValues} onGetFormValues={onGetFormValues} onFormData={onFormData} formData={addressData} setIsOldEmail={setIsOldEmail}/>}
               <SubmitBtn onSaveAddress={onSaveAddress}/>
           </div>
           <Loader  isShow={isLoading}/>

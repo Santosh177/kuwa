@@ -18,7 +18,7 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
   const pathName = usePathname();
   console.log("PathBane",pathName)
   console.log("onSelectAddress",onSelectAddress,data)
-  const { userName="",addressTxt="", mobNumber="",id="" } = data || {}
+  const { userName="",addressTxt1="",addressTxt2="", mobNumber="",id="" } = data || {}
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
   const searchParams = useSearchParams();
@@ -52,7 +52,8 @@ export default function AddressInfo({data={},isSelected=false,onSelectAddress={}
                 </div>
                 
             </div>
-            <div className={styles.addressDetail}>{addressTxt}</div>
+            <div className={styles.addressDetail}>{addressTxt1}</div>
+            <div className={styles.addressDetail2}>{addressTxt2}</div>
             <div className={styles.phoneNo}>{isArabic ? "رقم الهاتف" : "Phone no"}: {mobNumber}</div>
             <div className={styles.delivereHere}>
                 <CheckBox isChecked={isSelected}/>

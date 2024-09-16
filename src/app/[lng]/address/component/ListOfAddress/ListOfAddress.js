@@ -83,10 +83,12 @@ export default function ListOfAddress({addressList}) {
             <div className={styles.addressInfoContainer}>
                 {
                     listOfAddress.map((data,index)=>{
-                        const addressTxt = data.address +" " +data.apartment + " " +data.country || "";
+                        const addressTxt1 = (data.apartment ? data.apartment : "" ) + " " + data.address || "";
+                        const addressTxt2 = data.city+ " " + (data.postalCode? ` ${data.postalCode}` : "") + " " +data.country;
                         const addressData = {
                             userName:data.firstName + " " + data.lastName,
-                            addressTxt:addressTxt,
+                            addressTxt1:addressTxt1,
+                            addressTxt2:addressTxt2,
                             mobNumber:data.mobNumber || "",
                             id:data.id
                         }
