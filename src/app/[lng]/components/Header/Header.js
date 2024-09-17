@@ -27,8 +27,8 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
   const lng = localStorage.getItem("selectedLanguage") || 'en'
   
     const searchDataCount = searchData && searchData.length || 0;
-    const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
-    const productNameList = searchData && searchData?.map((data) => data.productName) || [];
+    const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
+    const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
     console.log("searchData",searchData,searchQuery,ProductIdList)
  
     const handleSeeAll=(couponBannerData,searchQuery)=>{
@@ -136,8 +136,8 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
   const searchDataCount = searchData && searchData.length || 0;
-  const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
-  const productNameList = searchData && searchData?.map((data) => data.productName) || [];
+  const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
+  const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
   const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
   const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
 

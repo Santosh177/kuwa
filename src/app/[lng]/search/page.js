@@ -29,8 +29,8 @@ export default function Search() {
 
 
   const searchDataCount = searchData && searchData.length || 0;
-  const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
-  const productNameList = searchData && searchData?.map((data) => data.productName) || [];
+  const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
+  const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
   useEffect(() => {
     let timer;
 
