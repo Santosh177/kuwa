@@ -21,15 +21,17 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { mixPanelTrackEvent } from '../../page';
 import { saveSearchData } from '@/services';
 
-const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="" }) =>{
+const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="",isNoResults ,isSearchLoading}) =>{
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
   const lng = localStorage.getItem("selectedLanguage") || 'en'
+ 
   
     const searchDataCount = searchData && searchData.length || 0;
     const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
     const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
     console.log("searchData",searchData,searchQuery,ProductIdList)
+    console.log("dqwkqh",isNoResults)
  
     const handleSeeAll=(couponBannerData,searchQuery)=>{
     const payloadForSaveData ={
@@ -65,7 +67,11 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
       // style={(isLogin) ? { right: isArabic ? '91px' :'173px' , paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: 'unset', paddingBottom: !isShowSeeAllBtn ? "" : "" }}
       style={style}>
                 <div className={styles.resultFound}>
-                  {searchDataCount > 0 && <span> {searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</span>}
+                  {isNoResults == "No results found"  ?
+                   (<span>{isArabic ? "لم يتم العثور على نتائج" : "No Results Found" }</span>)
+                   :
+                   (searchDataCount > 0 && <span> {searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"} </span>)
+                   }
                 </div>
                 <div className={styles.productCardMain} 
                 // style={{maxHeight:isShowSeeAllBtn?"":"522px"}}
@@ -102,7 +108,8 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
         {searchData && searchData.length>0  && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBannerData, searchQuery)}>
                     {isArabic ? "استعرض الكل" : "See all"}
                 </div>
-        }       
+        }    
+        <Loader isShow ={isSearchLoading}/>   
             </div>
     )
 }
@@ -126,6 +133,8 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const [isTopHeaderFixed, setIsTopHeaderFixed] = useState(false)
     const [showTrendingSearch,setShowTrendingSearch]=useState(false);
     const [couponBannerData,setCouponBannerData]=useState({});
+    const [isNoResults, setIsNoResults] = useState("")
+    const [isSearchLoading, setIsSearchLoading] = useState(false)
     const inputBoxRef = useRef(null);
     const dropDownOptionsRef = useRef(null);
     const dropDownOptionsProfileRef = useRef(null);
@@ -175,6 +184,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     let timer;
 
     const makeApiCall = async () => {
+      setIsSearchLoading(true)
       try {
         const countryId = selectedCountry && selectedCountry.id || "";
         const payload = {
@@ -196,10 +206,12 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
 
         const searchApiData = await searchApiResp.json();
         console.log("elasticsearchRes",searchApiResp,searchApiData)
-        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList } = searchApiData || {}
+        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList, message } = searchApiData || {}
         let searchData = []
         if(productVariantDtoList && productVariantDtoList.length > 0 ){
+          setIsSearchLoading(false)
             searchData = []
+            setIsNoResults("")
             productVariantDtoList.map((data,index)=>{
             
                 if(data && Object.keys(data).length > 0){
@@ -211,12 +223,15 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
             })
 
         }else{
+          setIsSearchLoading(false)
             searchData.push([])
             setSearchData([])
+            setIsNoResults(message)
         }
         // Process the API response here
         // setApiData(response.data);
       } catch (error) {
+        setIsSearchLoading(false)
         console.error('API request failed:', error);
       }
     };
@@ -541,7 +556,7 @@ const handleSearch = () =>{
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
                 {showTrendingSearch && !searchQuery && <TrendingSearch isLogin={isLogin} isShowSeeAllBtn={isShowSeeAllBtn} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData)||couponBannerData } setParamsData={setParamsData} setSearchQuery={setSearchQuery} />}
-                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData) || couponBannerData} searchQuery={searchQuery} />}
+                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData) || couponBannerData} searchQuery={searchQuery} isNoResults={isNoResults}  isSearchLoading={isSearchLoading}/>}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img><span>{isArabic ? "تسجيل الدخول" : "Login"}</span>
