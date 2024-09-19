@@ -82,16 +82,16 @@ export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
 }
 
 export const mappingHomeSearchDealProducts = (data)=>{
-const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue="",nameArabic,normalInventory="",} = data || {}
+const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",dealActive="",timerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue="",nameArabic,normalInventory="",} = data || {}
   console.log("mappingHomeSearchDealProducts",data)
 
   let cardData={}
-  if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between" ){
+  if(dealId && dealActive && timerActive &&  currentTimerStatus == "in-between" ){
     cardData={
       "id":id || "",
       "dealId":dealId || "",
-      "isDealActive":isDealActive,
-      "isTimerActive":isTimerActive,
+      "isDealActive":dealActive,
+      "isTimerActive":timerActive,
       "productImage":productImageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
       "productName":name || "",
       "seoUrl":seoUrl ,

@@ -10,6 +10,7 @@ import TrendingSearch from './TrendingSearch/TrendingSearch';
 import { mappingHomeSearchDealProducts } from '@/services';
 import { useLanguage } from '@/context/languageDetails';
 import { saveSearchData } from '@/services';
+import Loader from '../components/Loader/Loader';
 
 
 
@@ -26,16 +27,22 @@ export default function Search() {
   const [showTrendingSearch, setShowTrendingSearch] = useState(true);
   const inputBoxRef = useRef(null);
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+  const [isNoResult,setIsNoResult] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+
 
 
   const searchDataCount = searchData && searchData.length || 0;
-  const ProductIdList = searchData && searchData?.map((data)=> data.id) || [];
-  const productNameList = searchData && searchData?.map((data) => data.productName) || [];
+  const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
+  const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
+ 
   useEffect(() => {
     let timer;
 
     const makeApiCall = async () => {
+      setIsLoading(true)
       try {
+       
         const payload = {
           "source": "website",
           "searchKey": searchQuery,
@@ -53,10 +60,14 @@ export default function Search() {
           body: JSON.stringify(payload)
         })
         const searchApiData = await searchApiResp.json();
-        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList } = searchApiData || {}
+        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList,message } = searchApiData || {}
+
         let searchData = []
         if (productVariantDtoList && productVariantDtoList.length > 0) {
           searchData = []
+          setIsLoading(false)
+          // setIsNoResult(false)
+          setIsNoResult("")
           productVariantDtoList.map((data, index) => {
             if (data && Object.keys(data).length > 0) {
               searchData.push(mappingHomeSearchDealProducts(data));
@@ -64,10 +75,15 @@ export default function Search() {
             }
           })
         } else {
+          setIsLoading(false)
           searchData.push([])
           setSearchData([])
+          if(message){
+            setIsNoResult(message)
+          }
         }
       } catch (error) {
+        setIsLoading(false)
         console.error('API request failed:', error);
       }
     };
@@ -119,7 +135,7 @@ export default function Search() {
     };
   }, [searchQuery, searchData]);
 
-
+console.log("isNoResults",isNoResult)
   useEffect(()=>{
     if(!searchQuery){
        setSearchData([])
@@ -189,8 +205,10 @@ export default function Search() {
     saveSearchData(payloadForSaveData)
   }
 
+  console.log("isNoResults",isNoResult)
   return (
     <>
+    {/* <div> */}
       {/* // <div className={styles.searchWrapper}> */}
       <div className={styles.searchInputBox}>
         <input ref={inputBoxRef} className={styles.searchInput} autoFocus type="text" value={searchQuery} onChange={(e) =>
@@ -200,7 +218,20 @@ export default function Search() {
 
       </div>
       <div className={styles.searchListWrapper}>
-       {searchDataCount> 0 && <div className={styles.resultFound}>{searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</div>}
+      {isNoResult === "No results found" ? 
+  (
+    <div className={styles.resultFound}>
+      {isArabic ? "لم يتم العثور على نتائج" : "No Results Found"}
+    </div>
+  ) : 
+  (
+    searchDataCount > 0 && 
+    <div className={styles.resultFound}>
+      {searchDataCount} {isArabic ? "نتائج تم العثور عليها" : "Results found"}
+    </div>
+  )
+}
+
           <div className={styles.productCardMain}>
             {
               searchData && searchData.length > 0 && searchData.slice(0,12).map((data, index) => {
@@ -243,6 +274,9 @@ export default function Search() {
         {showTrendingSearch && !searchQuery && <TrendingSearch isShowSeeAllBtn={true} setSearchQuery={setSearchQuery} couponBanner={{}} />}
         {/* {(showTrendingSearch && !searchQuery) && <div className={styles.searchOverlay}></div>} */}
       </div>
+    
+      {/* </div> */}
+      {<Loader isShow={isLoading} />}
     </>
   )
 }

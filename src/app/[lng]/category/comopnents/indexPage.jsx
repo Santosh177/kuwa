@@ -88,7 +88,7 @@ const MainCategory = ({ isDealPage }) => {
             "categoryList": null,
             "sortBy":"relevance",
             "inStock": false,
-            "deal_seo_url":null,
+            "deal_seo_url":isDealPage ? dealSeoUrl : null,
             "categorySeoList":null,
         }
         console.log("paramsData",paramsData)
