@@ -10,6 +10,8 @@ import { useLanguage } from '@/context/languageDetails';
 // import { useLanguage } from '@/context/languageDetails';
 import CountryList from '../CountryList/CountryList';
 import { useCountry } from '@/context/contryDetails';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { mixPanelTrackEvent } from '../../page';
 
 
 
@@ -58,18 +60,44 @@ const AccountInfo = ({onclose}) => {
     const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
     const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
    
-    const onRedirect = () => {
-        if(!isLogin){
-            router.push('/login')
-        }
-    }
+    const clevertapEvent = useCleverTapEvents();
+    // const onRedirect = () => {
+    //     if(!isLogin){
+    //         router.push('/login')
+    //     }
+    // }
     
 
-   
-    const  toggleLanguage = async() => {
-        const newLanguageId = isArabic ? '1' : '2';
-       await changeLanguage(newLanguageId);
-       setIsLoading(true)
+    // const  toggleLanguage = async() => {
+    //     const newLanguageId = isArabic ? '1' : '2';
+    //    await changeLanguage(newLanguageId);
+    //    setIsLoading(true)
+    // }
+
+    let trackData = {
+        "Source Page URL": window.location.href
+    }
+    const redirectTosignUp = () => {
+        router.push('/sign-up')
+        clevertapEvent.onCleverTapEvent("kuwa_side_menu_SignUp", trackData)
+        if(isLogin){
+            mixPanelTrackEvent("kuwa_side_menu_SignUp", trackData, userData.id)
+        }
+        else{
+            mixPanelTrackEvent("kuwa_side_menu_SignUp", trackData)
+        }
+    }
+
+    const redirectToLogin = () => {
+        router.push('/login')
+        clevertapEvent.onCleverTapEvent("kuwa_side_menu_login", trackData)
+        if(isLogin){
+            mixPanelTrackEvent("kuwa_side_menu_login", trackData, userData.id)
+        }
+        else{
+            mixPanelTrackEvent("kuwa_side_menu_login", trackData)
+        }
+       
     }
 
     return(
@@ -79,7 +107,7 @@ const AccountInfo = ({onclose}) => {
             <div className={styles.profileInfo}>
                 <div className={styles.infoTxt}>{isArabic ? "مرحبًا," : "Hi there,"}</div>
                 {(isLogin)?<div className={styles.userName}>{userName}</div>:
-                <div className={styles.notLoginTxt}><span onClick={()=>router.push('/sign-up')}>{isArabic ? "التسجيل" : "Sign Up"}</span> / <span onClick={()=>router.push('/login')}>{isArabic ? " تسجيل الدخول" : "Login"}</span></div>}
+                <div className={styles.notLoginTxt}><span onClick={redirectTosignUp}>{isArabic ? "التسجيل" : "Sign Up"}</span> / <span onClick={redirectToLogin}>{isArabic ? " تسجيل الدخول" : "Login"}</span></div>}
             </div>
             {/* <div className={styles.languageTxt} onClick={toggleLanguage}>{otherLanguageName}</div> */}
             <img className={`${styles.closeIcon} ${isArabic ? styles['closeIcon-ar'] : styles['closeIcon-en']}` } onClick={()=>onclose()} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cross_icon.png' alt='cross-icon'></img>
@@ -94,6 +122,8 @@ const AccountInfo = ({onclose}) => {
 const MainMenuData = ({data,onClick}) =>{
     const {isLogin=false, userData={}} = useAuth();
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+
+    const clevertapEvent = useCleverTapEvents();
 
     console.log("sideMainMenuData",data)
     return(
@@ -211,9 +241,29 @@ const MyAccount = ({onBack={},onclose={}}) =>{
 const CountryInfo = ({setIsShowCountry})=>{
     const {selectedCountry={},setSelectedCountry={}} = useCountry();
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+    const {isLogin=false, userData={}} = useAuth();
+
+    const clevertapEvent = useCleverTapEvents();
+
+    const showCountryListPopUp = () =>{
+
+        setIsShowCountry(true)
+        const trackData = {
+            "Source Page URL": window.location.href,
+        }
+        clevertapEvent.onCleverTapEvent("kuwa_side_menu_country",trackData);
+        if(isLogin){
+            mixPanelTrackEvent("kuwa_side_menu_country",trackData,userData.id)
+        }
+        else{
+            mixPanelTrackEvent("kuwa_side_menu_country",trackData)
+        }
+    }
+
+
 
     return (
-     <div className={styles.countryInfo} onClick={()=>setIsShowCountry(true)}>
+     <div className={styles.countryInfo} onClick={showCountryListPopUp}>
 
         <div className={styles.country}>
         <img src="https://d25uasl7utydze.cloudfront.net/assets/CountryIcon.svg"/>
@@ -240,13 +290,28 @@ const SideMenu = ({onclose={},sideMenuData=[]}) => {
     const [isShowCountry, setIsShowCountry] = useState(false);
     const [isLoading,setIsLoading] = useState(false)
 
+    const clevertapEvent = useCleverTapEvents();
+
+    let trackData = {
+        "Source Page URL":window.location.href
+    }
+
     const onClick = (data) => {
         if(data && data.redirectionLink){
             // router.push(data.redirectionLink)
             window.location.href = data.redirectionLink
+           
         }else{
             setKey(data);
             getProductTypesData(data.txt)
+        }
+        
+        clevertapEvent.onCleverTapEvent(`kuwa_side_menu_${data.txt}`,trackData)
+        if(isLogin){
+            mixPanelTrackEvent(`kuwa_side_menu_${data.txt}`,trackData,userData.id)
+        }
+        else{
+            mixPanelTrackEvent(`kuwa_side_menu_${data.txt}`,trackData,userData.id)  
         }
          
     }

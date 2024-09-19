@@ -373,6 +373,16 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const onOpenSideMenu = () => {
         console.log("isShowSideMenu",isShowSideMenu)
         setIsShowSideMenu(!isShowSideMenu)
+        const trackData = {
+          "Source Page URL": window.location.href,
+        }
+        clevertapEvent.onCleverTapEvent("kuwa_clicked_side_menu",trackData)
+        if(isLogin){
+          mixPanelTrackEvent("kuwa_clicked_side_menu",trackData,userData.id)
+        }
+        else{
+          mixPanelTrackEvent("kuwa_clicked_side_menu",trackData)
+        }
     }
     
     const onCloseCountry = () =>{
