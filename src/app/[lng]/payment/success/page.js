@@ -50,10 +50,12 @@ export default function PaymentSuccess() {
       if(!isIndividualProduct){
         deleteAllItem();
       }
-   
-      if(window && window.clevertap){
-        window.clevertap.setMultiValuesForKey("cart_items", []);
-      }
+
+      setTimeout(()=>{
+        if(window && window.clevertap){
+          window?.clevertap?.setMultiValuesForKey("cart_items", []);
+        }
+      },2000)
     
     },[])
 
@@ -120,10 +122,11 @@ export default function PaymentSuccess() {
       } catch (error) {
           console.log("ERROR", error)
       }
-      if(window && window.clevertap){
-        window.clevertap.setMultiValuesForKey("cart_items", []);
-      }
+    
       setTimeout(()=>{
+        if(window && window.clevertap){
+          window?.clevertap?.setMultiValuesForKey("cart_items", []);
+        }
         clevertapEvent.onCleverTapEvent("kuwa_order_confirmed", track);
      
       if(isLogin){
