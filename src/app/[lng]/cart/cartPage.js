@@ -315,10 +315,12 @@ export default  function Cart({cartData}) {
 
       if(isNoOutOfStockProducts){
         if(haveAddress){
-          router.push('./payment')
+          // router.push('./payment')
+          window.location.href = '/payment'
         }
         else{
-          router.push('/address/add-address')
+          // router.push('/address/add-address')
+          window.location.href = '/address/add-address'
         }
       }
       else{

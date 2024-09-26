@@ -501,7 +501,8 @@ const getCartPage = ()=>{
     mixPanelTrackEvent("kuwa_view_cart",trackData)
   }
 
-  router.push('/cart')
+  // router.push('/cart')
+  window.location.href = '/cart'
 }
 
 const handleSearch = () =>{
