@@ -12,7 +12,7 @@ import { useLanguage } from '@/context/languageDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { mixPanelTrackEvent } from '../../page';
 
-const validateForm = (formData,isArabic,selectedCountry) => {
+const validateForm = (formData,isArabic,selectedPhoneCode) => {
   const errors = {};
   if (!formData.firstName) {
     errors.firstName = isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
@@ -22,7 +22,7 @@ const validateForm = (formData,isArabic,selectedCountry) => {
   }
   if(!formData.mobNoValidation){
     errors.mobileNumber = isArabic ? "رقم الهاتف المحمول مطلوب": "Mobile number is required";
-  }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
+  }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedPhoneCode)){
     errors.mobileNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
   }
   if(!formData.email){
@@ -39,14 +39,16 @@ const validateForm = (formData,isArabic,selectedCountry) => {
 };
 
 
-const SignupForm = ({setFormData={},formData={},errors={},setErrors={}}) => {
+const SignupForm = ({setFormData={},formData={},errors={},setErrors={},setSelectedPhoneCode}) => {
   const { selectedCountry={} } = useCountry();
   const countryCode = selectedCountry && selectedCountry.code || "";
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
   const onInputChange = (event, labelId, data) =>{
+    console.log("onInputChange", event, labelId, data)
     if(labelId === 'mobileNumber'){
       setFormData(inputs => ({ ...inputs, [labelId]: "+"+event,["mobNoValidation"]:event.slice(data.dialCode.length)}));
+      setSelectedPhoneCode(data.countryCode)
     }else{
       setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
     }
@@ -101,6 +103,8 @@ export default function SignupCard() {
     const refererPath = searchParams.get('referer');
     const [pageType, setPageType] = useState(getPageType())
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+    const [selectedPhoneCode,setSelectedPhoneCode] = useState(selectedCountry.code)
+
     const clevertapEvent = useCleverTapEvents();
     console.log("useCountry",selectedCountry)
 
@@ -110,7 +114,8 @@ export default function SignupCard() {
     const imagesString = searchParams.get('images');
     const images = imagesString ? JSON.parse(decodeURIComponent(imagesString)) : [];
     const encodedImages = encodeURIComponent(JSON.stringify(images));
-  
+
+    console.log("selectedPhoneCode",selectedPhoneCode)
     function getDeviceType() {
       if (isMobile) {
         if (isAndroid) {
@@ -140,8 +145,9 @@ export default function SignupCard() {
       return window.innerWidth > 770 ? 'web' : 'mWeb';
     }
 
+    useEffect(()=>{})
       const onSignup = async() =>{
-        const validationErrors = validateForm(formData,isArabic,selectedCountry);
+        const validationErrors = validateForm(formData,isArabic,selectedPhoneCode);
         if (Object.keys(validationErrors).length === 0) {
        
             try {
@@ -227,7 +233,7 @@ export default function SignupCard() {
           <div className={styles.signUpCardWrapper}>
             <div className={styles.signUpTxt}>{isArabic ? "إنشاء حساب" : "Create an account"}</div>
             <div className={styles.descTxt}>{isArabic ? "إنشاء حساب أو تسجيل الدخول للاستمتاع بمزايا حصرية" : "Create or login to enjoy exclusive benefits"}.</div>
-              <SignupForm setFormData={setFormData} formData={formData} errors={errors} setErrors={setErrors}/>
+              <SignupForm setFormData={setFormData} formData={formData} errors={errors} setErrors={setErrors} setSelectedPhoneCode={setSelectedPhoneCode}/>
               <div className={styles.createAccountBtn} onClick={onSignup}>{isArabic ? "إنشاء حساب" : "Create account"}</div>
               <div className={styles.loginTxt} onClick={()=> router.push('/login')}>{isArabic ? "هل لديك حساب بالفعل" : "Already have an account"} ? <span className={styles.loginSubTxt} >{isArabic ? "تسجيل الدخول" : "Login"}</span></div>
           </div>

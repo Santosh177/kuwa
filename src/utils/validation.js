@@ -13,7 +13,8 @@ var validWorldPhoneChars = phoneNumberDelimiters + "+";
 // Minimum no of digits in an international phone no without the country code.
 var minDigitsInIPhoneNumber = 3;
 var maxDigitsInIPhoneNumberForBhrain = 9;
-var maxDigitsInIPhoneNumberForAll = 8
+var maxDigitsInIPhoneNumberForQatar = 8
+var maxDigitsInIPhoneNumberForAll = 10
 
 
 function isInteger(s) {
@@ -59,11 +60,20 @@ function stripCharsInBag(s, bag) {
   return returnString;
 }
 
-export function checkInternationalPhone(strPhone,selectedCountry={}) {
+export function checkInternationalPhone(strPhone,selectedPhoneCode="") {
 
-  console.log("checkInternationalPhone",strPhone,selectedCountry);
+  console.log("checkInternationalPhone",strPhone,selectedPhoneCode);
   let bracket = 3;
-  let maxDigitsInIPhoneNumber = selectedCountry.code == "BH" ? maxDigitsInIPhoneNumberForBhrain : maxDigitsInIPhoneNumberForAll
+  let maxDigitsInIPhoneNumber;
+  if(selectedPhoneCode.toLowerCase() == "bh"){
+    maxDigitsInIPhoneNumber = maxDigitsInIPhoneNumberForBhrain
+  }
+  else if (selectedPhoneCode.toLowerCase() == "qa"){
+    maxDigitsInIPhoneNumber = maxDigitsInIPhoneNumberForQatar
+  }
+  else{
+    maxDigitsInIPhoneNumber = maxDigitsInIPhoneNumberForAll
+  }
   strPhone = trim(strPhone);
 
   if (strPhone.indexOf("+") > 1) {

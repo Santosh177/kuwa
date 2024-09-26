@@ -15,7 +15,7 @@ import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 
 import { useLanguage } from "@/context/languageDetails";
 
-const validatePersonalForm = (formData,selectedCountry) => {
+const validatePersonalForm = (formData,selectedPhoneCode) => {
 
   console.log("validatePersonalForm",formData)
     const errors = {};
@@ -31,7 +31,7 @@ const validatePersonalForm = (formData,selectedCountry) => {
     if(!formData.mobNumber){
       errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
     }
-    else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
+    else if(formData &&  ("mobNoValidation" in formData) && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedPhoneCode)){
       errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
     }
     if(!formData.email){
@@ -443,6 +443,9 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       const [isShowEmailExistPopUp, setIsShowEmailExistPopUp] = useState(false)
       const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
      
+      const [selectedPhoneCode,setSelectedPhoneCode] = useState(countryCode)
+ 
+
 
   useEffect(()=>{
   
@@ -492,7 +495,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
       },[userData])
 
       const addressValidation = () => {
-        const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedCountry);
+        const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedPhoneCode);
         const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedCountry);
         const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedCountry);
        
@@ -509,7 +512,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
 
       useEffect(()=>{
       if(getFormValues){
-        const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedCountry);
+        const validationPersonalInfoErrors = validatePersonalForm(personalInfo,selectedPhoneCode);
         const validationShippingErrors = validateShippingAddressForm(shippingAddress,isArabic,selectedCountry);
         const validationBillingErrors = validateBillingAddressForm(billngAddress,isArabic,selectedCountry);
         if (addressValidation()) {
@@ -556,6 +559,7 @@ export default function AddressForm({onFormData,formData, isEdit=false,onGetForm
         }
         if(fieldName === 'mobNumber'){
           setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value,["mobNoValidation"]:e.slice(data.dialCode.length)}))
+          setSelectedPhoneCode(data.countryCode)
         }else{
           setPersonalInfo(currentValues =>({...currentValues,[fieldName]:value}))
         }

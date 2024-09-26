@@ -83,7 +83,7 @@ margin-bottom: -34px;
         align-items: baseline;
         .phoneInput{
             height: 32px;
-            width: 172px;
+            width: 190px;
             border-radius: 8px;
            }
            .button{
@@ -99,6 +99,12 @@ margin-bottom: -34px;
             align-items: center;
             font-size: 14px;
            }
+       }
+       .mobNumberError{
+        display: block;
+        color: #ce4224;
+        padding-top: 12px;
+        font-size: 14px;
        }
       
     }
@@ -196,9 +202,16 @@ line-height: normal;
     }
 }
 
-@media(max-width:440px){
+@media(max-width:370px){
     .codOtpCard{
+      .phoneBox{
+       .phoneDiv{
+        .button{
+            padding: 4px 18px;
+        }
        
+       } 
+      } 
     }
 
 

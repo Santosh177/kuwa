@@ -11,7 +11,7 @@ import { checkInternationalPhone } from '@/utils/validation';
 import { useCountry } from '@/context/contryDetails';
 
 
-const validateForm = (formData,isArabic,selectedCountry) => {
+const validateForm = (formData,isArabic,selectedPhoneCode) => {
   const errors = {};
   if (!formData.firstName) {
     errors.firstName = formData.isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
@@ -21,7 +21,7 @@ const validateForm = (formData,isArabic,selectedCountry) => {
   }
   if(!formData.mobNoValidation){
     errors.mobNumber = isArabic ? "رقم الهاتف المحمول مطلوب": "Mobile number is required";
-  }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedCountry)){
+  }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedPhoneCode)){
     errors.mobNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
   }
   if(!formData.email){
@@ -33,13 +33,14 @@ const validateForm = (formData,isArabic,selectedCountry) => {
 };
 
 
-const SignupForm = ({setFormData={},formData={},errors={},setErrors={}}) => {
+const SignupForm = ({setFormData={},formData={},errors={},setErrors={},setSelectedPhoneCode={}}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
   const { selectedCountry={} } = useCountry();
   const onInputChange = (event, labelId,data) =>{
     if(labelId === 'mobNumber'){
       setFormData(inputs => ({ ...inputs, [labelId]: "+"+event,["mobNoValidation"]:event.slice(data.dialCode.length)}));
+      setSelectedPhoneCode(data.countryCode)
     }else{
       setFormData(inputs => ({ ...inputs, [labelId]: event.target.value }));
     }
@@ -85,7 +86,7 @@ export default function SignupCard() {
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false)
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     const { selectedCountry={} } = useCountry();
-
+    const [selectedPhoneCode,setSelectedPhoneCode] = useState(selectedCountry.code)
     useEffect(()=>{
         const { firstName="", lastName="", emailAddress="", mobNumber="" } = userData || {}
         const userObject = {
@@ -139,7 +140,7 @@ export default function SignupCard() {
          <div className={styles.signUpCardWrapper}>
          <img className={styles.personalProfile} src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/personal_profile.png' alt='personal-profile'/>
           <div className={styles.signUpTxt}>{isArabic ? "المعلومات الشخصية" : "Personal Info"}</div>
-            <SignupForm setFormData={setFormData} formData={formData} errors={errors}  setErrors={setErrors}/>
+            <SignupForm setFormData={setFormData} formData={formData} errors={errors}  setErrors={setErrors} setSelectedPhoneCode={setSelectedPhoneCode}/>
             <div className={styles.createAccountBtn} onClick={onSignup}>{isArabic ? "حفظ التفاصيل" : "Save details"}</div>
            {isUpdateSuccess && <div className={styles.updateMsg}>{isArabic ? "تم التحديث بنجاح" : "Updated Successfully!"}</div>}
           </div>
