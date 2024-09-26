@@ -8,7 +8,6 @@ import { useCountry } from '@/context/contryDetails';
 
 export default function Home() {
 
-
   const [homePageData, setHomePageData] = useState({});
   const { selectedCountry={} }=useCountry()||{};
   useEffect(()=>{

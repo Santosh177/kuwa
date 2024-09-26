@@ -213,6 +213,7 @@ const EmailAddress = ({countryCode="" ,onChange={},values={},isEdit,errors={},se
                   }
                   else{
                     setIsOldEmail(true)
+                    document.cookie = `userId=${res.userId}`;
                   }
               }
               document.removeEventListener("mousedown", handleClickOutside); 

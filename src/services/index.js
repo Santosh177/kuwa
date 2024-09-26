@@ -82,16 +82,16 @@ export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
 }
 
 export const mappingHomeSearchDealProducts = (data)=>{
-const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",isDealActive="",isTimerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue="",nameArabic} = data || {}
+const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",dealActive="",timerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue="",nameArabic,normalInventory="",} = data || {}
   console.log("mappingHomeSearchDealProducts",data)
 
   let cardData={}
-  if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between" ){
+  if(dealId && dealActive && timerActive &&  currentTimerStatus == "in-between" ){
     cardData={
       "id":id || "",
       "dealId":dealId || "",
-      "isDealActive":isDealActive,
-      "isTimerActive":isTimerActive,
+      "isDealActive":dealActive,
+      "isTimerActive":timerActive,
       "productImage":productImageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
       "productName":name || "",
       "seoUrl":seoUrl ,
@@ -104,11 +104,9 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
       "tagIconUrl":tagIconUrl,
       "tag":dealTag,
       "currentTimerStatus":currentTimerStatus,
-      "productNameArabic":nameArabic
-      }
-
-
-   
+      "productNameArabic":nameArabic,
+      "normalInventory":normalInventory,
+      } 
   }
     else{
       cardData = {
@@ -122,7 +120,8 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
         "discount":discount || 0,
         "currency":currency,
         "discountType":"",
-        "productNameArabic":nameArabic
+        "productNameArabic":nameArabic,
+        "normalInventory":normalInventory,
       }
       
     }
@@ -247,6 +246,25 @@ export const addGoogleEvent = (data)=>{
   console.log("ga4trackData",data)
   window.dataLayer.push({...data,'event':'add_to_cart'});
   console.log("google datalayer",window.dataLayer)
+}
+
+export const saveSearchData = async(payloaddata)=>{
+
+  
+  try{
+    const data = await fetch('/api/store-search-data',{
+      method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payloaddata)
+      })
+      const searchApiDataSave = await data.json();
+  }
+
+  catch(error){
+    console.error("Error saving search data", error)
+  }
 }
 
 

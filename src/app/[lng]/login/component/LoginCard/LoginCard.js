@@ -7,6 +7,9 @@ import { useCountry } from '@/context/contryDetails';
 import { isMobile, isTablet, isAndroid, isIOS } from 'react-device-detect';
 import { useLanguage } from '@/context/languageDetails';
 import { useSearchParams } from 'next/navigation';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { mixPanelTrackEvent } from '@/app/[lng]/page';
+import { useAuth } from '@/context/userDetail';
 
 const validateForm = (formData) => {
   const errors = {};
@@ -38,6 +41,8 @@ export default function Login() {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
     const searchParams = useSearchParams()
+    const clevertapEvent  = useCleverTapEvents();
+    const {isLogin=false,userData={}} = useAuth();
 
     const productId = searchParams.get('productId') || "";
     const productName = searchParams.get('productName') || "";
@@ -48,6 +53,24 @@ export default function Login() {
     const togglePasswordVisibility = () => {
       setIsPasswordVisible(!isPasswordVisible);
     };
+
+    useEffect(()=>{
+      getTrackData();
+    },[])
+
+    const getTrackData = () =>{
+      const trackData ={
+      "country":selectedCountry.name,
+      }
+      clevertapEvent.onCleverTapEvent("kuwa_login _landing",trackData)
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_login _landing",trackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_login _landing",trackData)
+      }
+     
+    }
 
     const getUserData = async(data) =>{
       console.log("datadata",data)

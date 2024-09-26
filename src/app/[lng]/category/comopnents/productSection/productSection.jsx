@@ -6,14 +6,17 @@ import ProductCard from "@/app/[lng]/components/ProductCard/ProductCard"
 import Loader from "@/app/[lng]/components/Loader/Loader"
 import { addToCart, addGoogleEvent } from "@/services"
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
-import { mappingDealProducts } from "@/services"
+import { mappingDealProducts ,mappingHomeSearchDealProducts } from "@/services"
 import { mixPanelTrackEvent } from "@/app/[lng]/page"
 import { useAuth } from "@/context/userDetail"
 import { useLanguage } from "@/context/languageDetails"
 import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmailPopup"
 import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/NotifySuccessPopup"
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import DescriptionSection from "../descriptionSection/DescriptionSection"
 
-const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
+
+const ProductSection = ({ resposneValue = [] ,isDealPage , description=null}) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
     // console.log("resposneValue",resposneValue[0])
@@ -34,26 +37,28 @@ const ProductSection = ({ resposneValue = [] ,isDealPage }) => {
     const [nonLoginVariantId,setNonLoginVariantId] = useState("");
     const emailAddress = userData && userData.emailAddress;
     const [timer, setTimer] = useState(0); 
-
+    const searchParams = useSearchParams();
+    const searchKey = searchParams.get('search_key') || "";
+    console.log("searchKey",searchKey)
     const onAddToCart = async (data) => {
-        const trackingData = {
-            "product Name": data.productName,
-            "quantity": 1,
-            "product Id":data.product,
-            "Page URL":window.location.href,
-            "Screen":"Collection"
-          }
+        // const trackingData = {
+        //     "product Name": data.productName,
+        //     "quantity": 1,
+        //     "product Id":data.product,
+        //     "Page URL":window.location.href,
+        //     "Screen":"Collection"
+        //   }
         try {
             setIsLoading(true)
             const res = await addToCart(data);
-            addGoogleEvent(trackingData)
+            addGoogleEvent(trackData)
             setIsLoading(false)
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart", trackData);
             if(isLogin){
-                mixPanelTrackEvent("kuwa_add_to_cart",trackingData,userData.id )
+                mixPanelTrackEvent("kuwa_add_to_cart",trackData,userData.id )
                }
                else{
-                mixPanelTrackEvent("kuwa_add_to_cart",trackingData )
+                mixPanelTrackEvent("kuwa_add_to_cart",trackData )
                }
             window.location.href = '/cart';
         } catch (error) {
@@ -209,10 +214,10 @@ const handleNonLogin = (id,variantId)=>{
                         //     id: id || "",
                         //     seoUrl:seoUrl || ""
                         // }
-                        const cardData = mappingDealProducts(item);
-                        // console.log("allProduct",cardData)
+                        const cardData = mappingHomeSearchDealProducts(item);
+                        console.log("allProduct",cardData)
                         const productName = cardData.productName;
-                        const productId = cardData.productId;
+                        const productId = cardData.id;
                         const dealId = cardData.dealId;
                         const variantId = cardData.variantId;
                         const isVariant = variantId ? true : false;
@@ -226,11 +231,12 @@ const handleNonLogin = (id,variantId)=>{
                         }
                         return (
                             <div className={style.product}>
-                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice,productName })} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} />
+                                <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice,productName })} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} searchKey={searchKey} />
                             </div>
                         )
                     })}
                 </div>
+                <DescriptionSection description={description} />
 
                 <Loader isShow={isLodaing} />
             </div>

@@ -34,6 +34,8 @@ const redirects = [
   { source: '/collections/all/Terra-Origin', destination: '/' },
   { source: '/collections/all/Kapiva', destination: '/collections/kapiva' },
   { source: '/collections/tru-niagen', destination: '/' },
+  { source: '/collections/mens-performance', destination: '/collections/male-vitality' },
+  
 
 
 

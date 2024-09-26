@@ -17,24 +17,40 @@ import TrendingSearch from '@/app/[lng]/search/TrendingSearch/TrendingSearch';
 import ProductCard from '../../search/ProductCard/ProductCard';
 import { mappingHomeSearchDealProducts } from '@/services';
 import { useLanguage } from '@/context/languageDetails';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
+import { mixPanelTrackEvent } from '../../page';
+import { saveSearchData } from '@/services';
 
-const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="" }) =>{
+const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="",isNoResults ,isSearchLoading}) =>{
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
   const lng = localStorage.getItem("selectedLanguage") || 'en'
-  console.log("searchData",searchData,searchQuery)
+ 
+  
     const searchDataCount = searchData && searchData.length || 0;
-  const handleSeeAll=(couponBannerData,searchQuery)=>{
+    const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
+    const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
+    console.log("searchData",searchData,searchQuery,ProductIdList)
+    console.log("dqwkqh",isNoResults)
+ 
+    const handleSeeAll=(couponBannerData,searchQuery)=>{
+    const payloadForSaveData ={
+      "source":"website",
+      "search_key":searchQuery,
+      "category":null,
+      "sort_by":"relevance",
+      "inStock":false,
+      "noOfSearchResult":searchDataCount,
+      "productId":"",
+      "productName":"",
+      "productFinalPrice":0,
+      "productIdList":ProductIdList,
+      "productNameList":productNameList
+      }
     window.location.href=`/collections?search_key=${encodeURIComponent(searchQuery)}`
+    saveSearchData(payloadForSaveData)
   }
 
-  // const calculateRightValue = () => {
-  //   if (window.innerWidth < 1200 && window.innerWidth > 990) {
-  //     return '-85px';
-  //   } else {
-  //     return '';
-  //   }
-  // };
   const style = isLogin
   ? {
       right: isArabic ? "-124px" : '173px',
@@ -51,14 +67,18 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
       // style={(isLogin) ? { right: isArabic ? '91px' :'173px' , paddingBottom: !isShowSeeAllBtn ? "" : "" } : { left: 'unset', paddingBottom: !isShowSeeAllBtn ? "" : "" }}
       style={style}>
                 <div className={styles.resultFound}>
-                  <span> {searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"}</span>
+                  {isNoResults == "No results found"  ?
+                   (<span>{isArabic ? "لم يتم العثور على نتائج" : "No Results Found" }</span>)
+                   :
+                   (searchDataCount > 0 && <span> {searchDataCount} {isArabic ? " تم العثور على نتائج" : "Results found"} </span>)
+                   }
                 </div>
                 <div className={styles.productCardMain} 
                 // style={{maxHeight:isShowSeeAllBtn?"":"522px"}}
                  >
                     {
-                        searchData.map((data, index)=>{
-                          console.log("ahbabh",data)
+                       searchData && searchData.length > 0 && searchData.slice(0,12).map((data, index)=>{
+
                           const { id = '', productImage="", productName="", seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag="",currentTimerStatus="",productNameArabic=""} = data || {};
                           // const {  } = price || {}
                           const cardData = {
@@ -80,7 +100,7 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                             productNameArabic:productNameArabic
                           }
                             return(
-                                <ProductCard cardData={cardData} />
+                                <ProductCard cardData={cardData}searchQuery={searchQuery} />
                             )
                         })
                     }
@@ -88,7 +108,8 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
         {searchData && searchData.length>0  && <div id="search-container" className={styles.seeAll} onClick={() => handleSeeAll(couponBannerData, searchQuery)}>
                     {isArabic ? "استعرض الكل" : "See all"}
                 </div>
-        }       
+        }    
+        <Loader isShow ={isSearchLoading}/>   
             </div>
     )
 }
@@ -112,6 +133,8 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const [isTopHeaderFixed, setIsTopHeaderFixed] = useState(false)
     const [showTrendingSearch,setShowTrendingSearch]=useState(false);
     const [couponBannerData,setCouponBannerData]=useState({});
+    const [isNoResults, setIsNoResults] = useState("")
+    const [isSearchLoading, setIsSearchLoading] = useState(false)
     const inputBoxRef = useRef(null);
     const dropDownOptionsRef = useRef(null);
     const dropDownOptionsProfileRef = useRef(null);
@@ -121,11 +144,14 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
 
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-  
+  const searchDataCount = searchData && searchData.length || 0;
+  const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
+  const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
   const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
   const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
 
     const lng = localStorage.getItem("selectedLanguage") || 'en'
+    const clevertapEvent = useCleverTapEvents()
 
   useEffect(() => {
     document.addEventListener("mousedown", (e) => {
@@ -158,20 +184,35 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     let timer;
 
     const makeApiCall = async () => {
+      setIsSearchLoading(true)
       try {
         const countryId = selectedCountry && selectedCountry.id || "";
-        const searchApiResp = await fetch(`${process.env.BACKEND_END_POINT_URL}/module/search/product/?country=${countryId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ key: searchQuery })
-          })
+        const payload = {
+          "source": "website",
+          "searchKey": searchQuery,
+          "categoryList": null,
+          "sortBy":"relevance",
+          "inStock": false,
+          "deal_seo_url":null,
+          "categorySeoList":null,
+        }
+        const searchApiResp = await fetch('/api/elastic-search',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload)
+        })
+
         const searchApiData = await searchApiResp.json();
+        console.log("elasticsearchRes",searchApiResp,searchApiData)
+        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList, message } = searchApiData || {}
         let searchData = []
-        if(searchApiData && searchApiData.length > 0 ){
+        if(productVariantDtoList && productVariantDtoList.length > 0 ){
+          setIsSearchLoading(false)
             searchData = []
-            searchApiData.map((data,index)=>{
+            setIsNoResults("")
+            productVariantDtoList.map((data,index)=>{
             
                 if(data && Object.keys(data).length > 0){
                     const productData = mappingHomeSearchDealProducts(data);
@@ -182,12 +223,15 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
             })
 
         }else{
+          setIsSearchLoading(false)
             searchData.push([])
             setSearchData([])
+            setIsNoResults(message)
         }
         // Process the API response here
         // setApiData(response.data);
       } catch (error) {
+        setIsSearchLoading(false)
         console.error('API request failed:', error);
       }
     };
@@ -199,9 +243,8 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
       }
 
       // Set a new timer to make the API call after a delay (e.g., 500 milliseconds)
-      timer = setTimeout(makeApiCall, 500);
+      timer = setTimeout(makeApiCall, 1000);
     }
-
     // Cleanup the timer when the component unmounts
     return () => {
       if (timer) {
@@ -210,11 +253,45 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     };
   }, [searchQuery]);
 
+
+  useEffect(() => {
+    const handleKeyDown = async (event) => {
+      const payloadForSaveData = {
+        "source": "website",
+        "search_key": searchQuery,
+        "category": null,
+        "sort_by": "relevance",
+        "inStock": false,
+        "noOfSearchResult": searchDataCount,
+        "productId": "",
+        "productName": "",
+        "productFinalPrice": 0,
+        "productIdList": ProductIdList,
+        "productNameList": productNameList,
+      };
+  
+      if (event.key === 'Enter') {
+        // Save the search data and redirect
+        await saveSearchData(payloadForSaveData);
+        window.location.href = `/collections?search_key=${encodeURIComponent(searchQuery)}`;
+      }
+    };
+  
+    window.addEventListener('keydown', handleKeyDown);
+  
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [searchQuery, searchData]);
+
+
   const onSearch = (event) => {
 
     setIsShowSearchList(true);
     setSearchQuery(event);
   };
+  
 
 
     useEffect(()=>{
@@ -323,6 +400,16 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     }
     else{
       setShowTrendingSearch(true);
+      const trackData = {
+        "Source Page URL":window.location.href
+      }
+      clevertapEvent.onCleverTapEvent("kuwa_clicked_search",trackData);
+      if(isLogin){
+        mixPanelTrackEvent("kuwa_clicked_search",trackData,userData.id)
+      }
+      else{
+        mixPanelTrackEvent("kuwa_clicked_search",trackData)
+      }
     }
   };
 
@@ -345,29 +432,9 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     }
   },[])
 
-  const onScroll = () => {
-    try {
-            const yscroll = document.getElementById('scoll-image').getBoundingClientRect().y;
-            const topHeaderContainer = document.getElementById('top-header-container');
-            const couponContainer = document.getElementById('coupon-container');
-            if(topHeaderContainer || couponContainer ){
-              if(yscroll < -80 ){
-                topHeaderContainer.style.position = 'fixed';
-                couponContainer.style.position = 'fixed';
-              }else{
-                topHeaderContainer.style.position = 'sticky'
-                couponContainer.style.position = 'sticky';
-              }
-            }
-      
-
-    } catch (error) {
-
-    }
-}
 
   const handleKeyPress = (event) => {
-    if (event.key==='Enter' || event.key===' ') {
+    if (event.key===' ') {
       if (setParamsData) {
         setIsShowSearchList(false);
         setParamsData((previous) => ({ ...previous, searchKey:searchQuery }));
@@ -422,6 +489,35 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     }
 }
 
+const getCartPage = ()=>{
+  const trackData = {
+    "Logged":isLogin
+  }
+  clevertapEvent.onCleverTapEvent("kuwa_view_cart",trackData);
+  if(isLogin){
+    mixPanelTrackEvent("kuwa_view_cart",trackData,userData.id)
+  }
+  else{
+    mixPanelTrackEvent("kuwa_view_cart",trackData)
+  }
+
+  router.push('/cart')
+}
+
+const handleSearch = () =>{
+  window.location.href=`/search`
+  const trackData = {
+    "Source Page URL":window.location.href
+  }
+  clevertapEvent.onCleverTapEvent("kuwa_clicked_search",trackData);
+  if(isLogin){
+    mixPanelTrackEvent("kuwa_clicked_search",trackData,userData.id)
+  }
+  else{
+    mixPanelTrackEvent("kuwa_clicked_search",trackData)
+  }
+}
+
     return(
         <>
         
@@ -460,7 +556,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
                 {showTrendingSearch && !searchQuery && <TrendingSearch isLogin={isLogin} isShowSeeAllBtn={isShowSeeAllBtn} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData)||couponBannerData } setParamsData={setParamsData} setSearchQuery={setSearchQuery} />}
-                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData) || couponBannerData} searchQuery={searchQuery} />}
+                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData) || couponBannerData} searchQuery={searchQuery} isNoResults={isNoResults}  isSearchLoading={isSearchLoading}/>}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img><span>{isArabic ? "تسجيل الدخول" : "Login"}</span>
@@ -481,7 +577,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                     
                    
                    
-                    <div className={styles.cartIcon} onClick={()=>router.push('/cart')}>
+                    <div className={styles.cartIcon}  onClick = {getCartPage}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/assets/cart.png" alt='cart-icon'></img><span>{isArabic? "سلة التسوق" : "Cart"}</span>
                         {cartItemCount > 0 && <div className={styles.cartCount}>{cartItemCount}</div>}
                     </div>
@@ -495,7 +591,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
         {isShowCountry && <CountryList onSelectCountry={onSelectCountry} onclose={onCloseCountry}/>}
         {isLoading && <Loader isShow={true} />}
         <div className={styles.searchInputContainer} style={!couponBannerData.isActive?{top:"56px"}:{}}>
-                        <div className={styles.searchInputWrapper} onClick={()=>window.location.href=`/search`} >
+                        <div className={styles.searchInputWrapper} onClick={handleSearch} >
                             <input  className={styles.searchInput}  value={searchQuery}  placeholder={isArabic ? "البحث بالاسم المنتج" : 'Search by product name'} type='text' />
                             <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                         </div>

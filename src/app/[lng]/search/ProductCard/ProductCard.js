@@ -1,17 +1,36 @@
 import { useRouter } from 'next/navigation';
 import styles from './product-card.module.scss';
 import { useLanguage } from '@/context/languageDetails';
+import { saveSearchData } from '@/services';
 
 
 
-const ProductCard = ({ cardData={}, addToCart = {}, style = {} }) => {
+const ProductCard = ({ cardData={}, searchQuery="" , addToCart = {}, style = {} }) => {
     const router = useRouter();
     const { productName =0, finalPrice =0, retailPrice = "", currency = "", image = "", id = "", seoUrl = "",dealId="",isDealActive="",isTimerActive="",tag="",tagIconUrl="",productNameArabic="" } = cardData || {}
     console.log("shbhhaa",cardData)
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     let discount = parseFloat(retailPrice-finalPrice).toFixed(2);
+
+    const handleRedirect = () =>{
+        const payloadForSaveData = {
+            "source":"website",
+            "search_key":searchQuery,
+            "category":null,
+            "sort_by":"relevance",
+            "inStock":false,
+       "noOfSearchResult":0,
+       "productId":id,
+       "productName":productName,
+       "productFinalPrice":finalPrice,
+       "productIdList":[],
+       "productNameList":[]
+            }
+        window.location.href = `/products/${seoUrl}`
+        saveSearchData(payloadForSaveData)
+    }
     return (
-        <div id="search-container" className={styles.productCardItem} onClick={() => { window.location.href = `/products/` + seoUrl}}>
+        <div id="search-container" className={styles.productCardItem} onClick={() => {handleRedirect()}}>
               {
             (tag || tagIconUrl) && 
             <div className={styles.tagContainer}>

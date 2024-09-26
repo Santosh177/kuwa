@@ -17,7 +17,6 @@ import { mixPanelTrackEvent } from '../../../../[lng]/page';
 import { useLanguage } from '@/context/languageDetails';
 
 const ProductSlider = ({data}) => {
-    console.log("newArrivals",data);
     const router = useRouter();
     const { product = [], headerTitle = "" } = data || {};
     const [isLoading, setIsLoading] = useState(false);
@@ -50,25 +49,24 @@ const ProductSlider = ({data}) => {
     let trackData={};
 
     const onAddToCart = async(data) =>{
-      console.log("addtocart", data)
-      const trackingData = {
-        "product Name": data.productName,
-        "quantity": 1,
-        "product Id":data.product,
-        "Page URL":window.location.href,
-        "Screen":"Home"
-      }
+      // const trackingData = {
+      //   "product Name": data.productName,
+      //   "quantity": 1,
+      //   "product Id":data.product,
+      //   "Page URL":window.location.href,
+      //   "Screen":"Home"
+      // }
         try{
             setIsLoading(true);
             const res = await addToCart(data);
-            addGoogleEvent(trackingData)
+            addGoogleEvent(trackData)
             setIsLoading(false)
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData); 
            if(isLogin){
-            mixPanelTrackEvent("kuwa_add_to_cart",trackingData,userData.id )
+            mixPanelTrackEvent("kuwa_add_to_cart",trackData,userData.id )
            }
            else{
-            mixPanelTrackEvent("kuwa_add_to_cart",trackingData )
+            mixPanelTrackEvent("kuwa_add_to_cart",trackData )
            }
            
             window.location.href =  '/cart';
@@ -82,7 +80,6 @@ const ProductSlider = ({data}) => {
     }
 
     const handleNonLogin = (id,variantId)=>{
-      console.log("id, variantId", id, variantId);
        setIsShowNotifyEmailPopup(true);
        setNonLoginProductId(id);
        setNonLoginVariantId(variantId);
@@ -120,7 +117,6 @@ const ProductSlider = ({data}) => {
        }
     
        const handleNotifyMe = async(productId, variantId)=>{
-        console.log("variantId",variantId)
         const payload={
           productId:productId || null,
           variantId:variantId || null,
@@ -191,7 +187,7 @@ const ProductSlider = ({data}) => {
                   "quantity": 1,
                   "product Id":productId,
                   "Page URL":window.location.href,
-                    "Screen":"Home"
+                  "Screen":"Home"
                 }
                 return (
                     <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId,productName})} handleNotifyMe={()=>handleNotifyMe(productId)} handleNonLogin={()=>handleNonLogin(productId)} />

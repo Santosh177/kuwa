@@ -37,24 +37,24 @@ const RelatedProducts = ({ productData = {} }) => {
     const emailAddress = userData && userData.emailAddress;
     let trackData={}
     const onAddToCart = async (data) => {
-        const trackingData = {
-            "product Name": data.productName,
-            "quantity": 1,
-            "product Id":data.product,
-             "Page URL":window.location.href,
-             "Screen":"PDP/RelatedProduct"
-          }
+        // const trackingData = {
+        //     "product Name": data.productName,
+        //     "quantity": 1,
+        //     "product Id":data.product,
+        //      "Page URL":window.location.href,
+        //      "Screen":"PDP/RelatedProduct"
+        //   }
         try {
             setIsLoading(true)
             const res = await addToCart(data);
-            addGoogleEvent(trackingData)
+            addGoogleEvent(trackData)
             setIsLoading(false)
             clevertapEvent.onCleverTapEvent("kuwa_add_to_cart",trackData);  
             if(isLogin){
-                mixPanelTrackEvent("kuwa_add_to_cart",trackingData,userData.id )
+                mixPanelTrackEvent("kuwa_add_to_cart",trackData,userData.id )
                }
                else{
-                mixPanelTrackEvent("kuwa_add_to_cart",trackingData )
+                mixPanelTrackEvent("kuwa_add_to_cart",trackData )
                }
             window.location.href = '/cart';
         } catch (error) {

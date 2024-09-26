@@ -18,6 +18,7 @@ import { useAuth } from '@/context/userDetail';
 import { mixPanelTrackEvent } from '../../page';
 import { useLanguage } from '@/context/languageDetails';
 import Script from 'next/script';
+import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
@@ -42,16 +43,19 @@ export default function PaymentSuccess() {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
   const {mobNumber=""} = shippingAddress || {}
+  const clevertapEvent = useCleverTapEvents();
  
 
     useEffect(()=>{
       if(!isIndividualProduct){
         deleteAllItem();
       }
-   
-      if(window && window.clevertap){
-        window.clevertap.setMultiValuesForKey("cart_items", []);
-      }
+
+      setTimeout(()=>{
+        if(window && window.clevertap){
+          window?.clevertap?.setMultiValuesForKey("cart_items", []);
+        }
+      },2000)
     
     },[])
 
@@ -118,18 +122,20 @@ export default function PaymentSuccess() {
       } catch (error) {
           console.log("ERROR", error)
       }
-      if(window && window.clevertap){
-        window.clevertap.setMultiValuesForKey("cart_items", []);
-      }
+    
       setTimeout(()=>{
-        window.clevertap?.event?.push("kuwa_order_confirmed", track);
-      },2000)
+        if(window && window.clevertap){
+          window?.clevertap?.setMultiValuesForKey("cart_items", []);
+        }
+        clevertapEvent.onCleverTapEvent("kuwa_order_confirmed", track);
+     
       if(isLogin){
         mixPanelTrackEvent("kuwa_order_confirmed", track,userData.id)
       }
       else{
         mixPanelTrackEvent("kuwa_order_confirmed", track)
       }
+    },2000)
     }
    
 
