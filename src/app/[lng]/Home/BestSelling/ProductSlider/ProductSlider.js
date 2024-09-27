@@ -12,6 +12,7 @@ import NotifyEmailPopup from '@/app/[lng]/components/NotifyEmailPopup/NotifyEmai
 import NotifySuccessPopup from '@/app/[lng]/components/NotifySuccessPopup/NotifySuccessPopup';
 import { useAuth } from '@/context/userDetail';
 import { mixPanelTrackEvent } from '../../../../[lng]/page'
+import { mappingDealProducts } from '@/services';
 
 
 const ProductSlider = ({data}) => {
@@ -158,102 +159,23 @@ const ProductSlider = ({data}) => {
           >
             {
               product.map((data, index) => {
-
-               const {
-                image= "",
-                id= "",
-                title="",
-                name= "",
-                nameArabic= "",
-                countDownStartsAt="",
-                countDownEndsAt="",
-                dealId="",
-                dealListPrice="",
-                dealDiscountPrice="",
-                dealFinalPrice= "",
-                dealInventory="",
-                rank="",
-                seoUrl="",
-                productListPrice= "",
-                productFinalPrice = "",
-                productDiscount = "",
-                normalInventory = "",
-                variantId="",
-                variantName = "",
-                variantImage = "",
-                variantListPrice = "",
-                variantFinalPrice = "",
-                variantDiscount = "",
-                isDealActive="",
-                isTimerActive="",
-                dealTag="",
-                dealTagArabic="",
-                dealIconUrl="",
-                currentTimerStatus="",
-                currentTimerValue="",
-                currentDateTime=""} = data || {}
-
-                console.log("dealData",data)
-                const { finalPrice = "", retailPrice = "", currency = "", discount = "", discountType = "" } = data && data?.price || {}
-                let cardData = {}
-                if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
-                   cardData={
-                    "dealId":dealId || "",
-                    "id":id || "",
-                    "productName":name,
-                    "productNameArabic":nameArabic,
-                    "productImage":image || "",
-                    "seoUrl":seoUrl || "",
-                    "dealListPrice":dealListPrice,
-                  'dealFinalPrice':dealFinalPrice,
-                  'discountType':"fixed",
-                  "dealDiscountPrice":dealDiscountPrice || 0,
-                  "currency":currency,
-                  "dealInventory":dealInventory,
-                  "tag":dealTag,
-                  "tagArabic":dealTagArabic,
-                  "tagIconUrl":dealIconUrl,
-                  "isDealActive":isDealActive,
-                  "isTimerActive":isTimerActive,
-                  "currentTimerStatus":currentTimerStatus,
-                  "currentTimerValue":currentTimerValue,
-                  "currentDateTime":currentDateTime,
-                  "normalInventory":normalInventory
-                  }
-                }
-                else{
-
-                
-                 cardData = {
-                  "productName": data && data.name || "",
-                  "productNameArabic":data && data.nameArabic || "",
-                  "finalPrice": finalPrice,
-                  "retailPrice": retailPrice,
-                  "currency": currency,
-                  "discount": discount,
-                  "discountType": discountType,
-                  "image": data?.image || "",
-                  "id": data?.id || "",
-                  "seoUrl": data?.seoUrl || "",
-                  "normalInventory":normalInventory
-                }
-              }
+                const cardData = mappingDealProducts(data);
+                const productName = cardData.productName || ""
+                const productId = cardData.productId || ""
+                const dealPrice = cardData.dealFinalPrice || ""
+                const dealId = cardData.dealId || null
+                const variantId = cardData.variantId || null
+                const isVariant = cardData.variantId ?  true : false
                 trackData = {
-                  "product Name": data && data.name,
+                  "product Name": productName,
                   "quantity": 1,
-                  "product Id": data?.id,
+                  "product Id": productId,
                   "Page URL":window.location.href,
-                  "Screen":"Home"
+                  "Screen":"Home",
+                  "Variant Id":variantId
                 }
-               let addToCartPayload={}
-               if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
-                addToCartPayload = { product: data.id, quantity: 1,dealId:data.dealId,dealPrice:data.dealFinalPrice,productName:data.name }
-              }
-               else{
-                addToCartPayload = { product: data.id, quantity: 1,productName:data.name}
-               }
                 return (
-                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart(addToCartPayload)} handleNotifyMe={()=>handleNotifyMe(id)} handleNonLogin={()=>handleNonLogin(id)} />
+                  <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId,productName,variantId,isVariant})} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} />
                 )
               })
             }

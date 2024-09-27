@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import "glider-js/glider.min.css";
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 const ProductSlider = ({data}) => {
-    console.log("brands",data)
-    const brand = data?.brand || [];
+   
+    const brand = data || []
     const router = useRouter();
     const [width, setWidth] = useState(0);
     const clevertapEvent = useCleverTapEvents();

@@ -184,7 +184,8 @@ const handleNotify = async() =>{
                         isTimerActive:isTimerActive,
                         currentTimerStatus:currentTimeStatus,
                         tagArabic: tagArabic,
-                        productNameArabic: data?.productNameArabic
+                        productNameArabic: data?.productNameArabic,
+                        isProductBestSeller: data?.isProductBestSeller
                       }
                 }else{
                     cardData = {
@@ -209,7 +210,8 @@ const handleNotify = async() =>{
                       isTimerActive:isTimerActive,
                       currentTimerStatus:currentTimeStatus,
                       tagArabic:tagArabic,
-                      productNameArabic: data?.productNameArabic
+                      productNameArabic: data?.productNameArabic,
+                      isProductBestSeller: data?.isProductBestSeller
 
 
                     }

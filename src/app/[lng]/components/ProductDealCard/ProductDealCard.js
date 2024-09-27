@@ -9,7 +9,7 @@ const ProductDealCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNo
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus="",normalInventory,tagArabic,productNameArabic=""} = cardData || {}
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus="",normalInventory,tagArabic,productNameArabic="",isProductBestSeller=false} = cardData || {}
     // console.log("cardData++++",cardData)
     const btnName = normalInventory > 0 ? ( isArabic ? "أضف إلى السلة" : "Add to cart") : (isArabic ? "اعلمني " : "Notify me")
 
@@ -27,6 +27,9 @@ const ProductDealCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNo
                   {tag &&  <div className={styles.tagTxt}>{isArabic ? tagArabic : tag}</div>}
                     </div>
                     </div>}
+                    {isProductBestSeller &&  <div className={styles.bestSelleSection}>
+                      <div className={styles.bestSelleTag}>{isArabic ? "" : "Best seller"}</div> 
+                      </div>}
                 {normalInventory <= 0 && <div className={styles.outOfStockTxt}>{isArabic ? "غير متوفر" :"Out of stock"}</div>}
                 <div className={styles.productImgWrapper}>
             

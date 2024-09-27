@@ -30,13 +30,14 @@ const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isSafariOniOS = /iP(hone|ad|od).+Version\/[\d.]+.*Safari/i.test(navigator.userAgent);
 
 export default function Home(homePageData) {
-    const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[], clientIpAddress="" } = homePageData.homePageData || {};
+    // const { kuwaUsps = [], data = [], brandUMustTry = [], secondryBanners = [], bestSellings = [], bannerImage = {}, primaryBanner = [], couponBanner = {}, menuItemsHealths=[],bestSellerCollectioWithProducts=[], newArrivals=[],brandMain={},dealDtoList=[], clientIpAddress="" } = homePageData.homePageData || {};
+    console.log("homePageData++++",homePageData)
+
+    const { bannerImage = {}, bestSellerHomePageDto ={}, brandList=[], clientIpAddress="" ,collectionsAndItsProducts=[], couponBanner={}, dealDtoList=[], kuwaUsps=[], menuItemsHealths=[], newArrivals=[], primaryBanner=[], secondaryBanners=[] } = homePageData.homePageData || {};
     const { selectedCountry={}}=useCountry() || {};
     const {selectedLanguage= {}, isArabic , isEnglish} = useLanguage() || {};
     const clevertapEvent=useCleverTapEvents();
 
-    console.log("homeLanguage",selectedLanguage,isArabic)
-    console.log("clientIpAddress",clientIpAddress)
     const {isLogin=false, userData={}} = useAuth();
     useEffect(() => {
         const elem = document.getElementById("homePage");
@@ -149,11 +150,11 @@ export default function Home(homePageData) {
                     <Carousel data={primaryBanner}/>
                     <AssuredInfo assuredInfo={kuwaUsps} />
                     <ExploreCategory exploreCategory={menuItemsHealths}/>
-                    <BestSelling bestSellerCollectioWithProducts={bestSellerCollectioWithProducts}/>
-                    <SecondaryBanner data={secondryBanners.slice(0,3)} />
-                    <BrandMustTry data={brandMain} />
+                    <BestSelling bestSellerHomePageDto={bestSellerHomePageDto}/>
+                    <SecondaryBanner data={secondaryBanners.slice(0,3)} />
+                    <BrandMustTry data={brandList} />
                     <NewArrivals data={newArrivals.slice(0,12)}/>
-                   {secondryBanners.length>3 ?<SecondaryBanner data={secondryBanners.slice(3)} /> : "" } 
+                   {secondaryBanners.length>3 ?<SecondaryBanner data={secondaryBanners.slice(3)} /> : "" } 
                     {/* <BestSellingProduct data={bestSellings} /> */}
                    
                    {
@@ -166,9 +167,9 @@ export default function Home(homePageData) {
                   
 
                     {
-                        data.map((product, index) => {
+                        collectionsAndItsProducts.map((product, index) => {
                             return (
-                                <ProductSlider data={product} index={index} key={index} totalRow={data.length || 1} />
+                                <ProductSlider data={product} index={index} key={index} totalRow={collectionsAndItsProducts.length || 1} />
                             )
                         })
                     }

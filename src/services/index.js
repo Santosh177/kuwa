@@ -129,105 +129,211 @@ const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountP
   }
 
 export const  mappingDealProducts = (data)=>{
- const {
-    currency= "",
-    productImage= "",
-    productId= "",
-    productName= "",
-    productNameArabic = "",
-    countDownStartsAt="",
-    countDownEndsAt="",
-    dealId="",
-    dealListPrice="",
-    dealDiscountPrice="",
-    dealFinalPrice= "",
-    dealInventory="",
-    rank="",
-    productSeoUrl="",
-    productListPrice= "",
-    productFinalPrice = "",
-    productDiscount = "",
+  console.log("bdqjbjdb",data)
+  const {
+    countDownEndsAt = "",
+    countDownStartsAt = "",
+    currency = "",
+    currentDateTime = "",
+    currentTimerStatus = "",
+    currentTimerValue = "",
+    dealDiscountPrice = "",
+    dealFinalPrice = "",
+    dealHeading = "",
+    dealHeadingArabic = "",
+    dealIconUrl = "",
+    dealId = "",
+    dealInventory = "",
+    dealListPrice = "",
+    dealTag = "",
+    dealTagArabic = "",
+    isDealActive = "",
+    isProductBestSeller = false,
+    isTimerActive = "",
+    isVariantRecommended = "",
     normalInventory = "",
-    variantId="",
-    variantName = "",
+    productDiscount = "",
+    productFinalPrice = "",
+    productId = "",
+    productImage = "",
+    productListPrice = "",
+    productName = "",
+    productNameArabic = "",
+    productSeoUrl = "",
+    rank = "",
+    variantAvailableQuantity = "",
+    variantDiscount = "",
+    variantFinalPrice = "",
+    variantId = "",
     variantImage = "",
     variantListPrice = "",
-    variantFinalPrice = "",
-    variantDiscount = "",
-    isDealActive="",
-    isTimerActive="",
-    dealTag="",
-    dealTagArabic="",
-    dealIconUrl="",
-    currentTimerStatus="",
-    currentTimerValue="",
-    currentDateTime=""
-  } = data || {}
+    variantName = ""
+  } = data || {};
   let cardData = {}
-if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
- cardData = {
-    "dealId":dealId || "",
-    "productId":productId || "",
-    "variantId":variantId,
-    "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
-    "productName":productName || "",
-    "productNameArabic":productNameArabic || "",
-    "seoUrl":productSeoUrl,
-    "dealListPrice":dealListPrice,
-    'dealFinalPrice':dealFinalPrice,
-    'discountType':"fixed",
-    "dealDiscountPrice":dealDiscountPrice || 0,
-    "currency":currency,
-    "discountType":"",
-    "tagIconUrl":dealIconUrl,
-    "tag":dealTag,
-    "tagArabic":dealTagArabic,
-    "dealInventory":dealInventory,
-    "rank": rank,
-    "normalInventory":normalInventory,
-    "currentTimerStatus":currentTimerStatus,
-    "isDealActive":isDealActive,
-    "isTimerActive":isTimerActive
-  }
-  
- 
-}
-else{
+
   if(variantId){
-   cardData={
-      "variantId":variantId,
-      "productId":productId,
-      "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
-      "productName":productName || "",
-      "productNameArabic":productNameArabic || "",
-      "seoUrl":productSeoUrl,
-      "retailPrice":variantListPrice,
-      'finalPrice':variantFinalPrice,
-      'discountType':"fixed",
-      "discount":variantDiscount || 0,
-      "currency":currency,
-      "variantName": variantName,
-      "variantImage":variantImage,
-      "normalInventory":normalInventory,
-   }
+    if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
+      cardData = {
+        "dealId":dealId || "",
+        "productId":productId || "",
+        "variantId":variantId,
+        "productImage":variantImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":productName || "",
+        "productNameArabic":productNameArabic || "",
+        "seoUrl":productSeoUrl,
+        "dealListPrice":dealListPrice,
+        'dealFinalPrice':dealFinalPrice,
+        'discountType':"fixed",
+        "dealDiscountPrice":dealDiscountPrice || 0,
+        "currency":currency,
+        "discountType":"",
+        "tagIconUrl":dealIconUrl,
+        "tag":dealTag,
+        "tagArabic":dealTagArabic,
+        "dealInventory":dealInventory,
+        "rank": rank,
+        "normalInventory":variantAvailableQuantity,
+        "currentTimerStatus":currentTimerStatus,
+        "isDealActive":isDealActive,
+        "isTimerActive":isTimerActive,
+        "isProductBestSeller":isProductBestSeller
+      }
+    }
+    else{
+      cardData={
+        "variantId":variantId,
+        "productId":productId,
+        "productImage":variantImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":productName || "",
+        "productNameArabic":productNameArabic || "",
+        "seoUrl":productSeoUrl,
+        "retailPrice":variantListPrice,
+        'finalPrice':variantFinalPrice,
+        'discountType':"fixed",
+        "discount":variantDiscount || 0,
+        "currency":currency,
+        "variantName": variantName,
+        "variantImage":variantImage,
+        "normalInventory":variantAvailableQuantity,
+        "isProductBestSeller":isProductBestSeller
+     }
+    }
   }
   else{
-cardData={
-  "variantId":variantId,
-      "productId":productId,
-      "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
-      "productName":productName || "",
-      "productNameArabic":productNameArabic || "",
-      "seoUrl":productSeoUrl,
-      "retailPrice":productListPrice,
-      'finalPrice':productFinalPrice,
-      'discountType':"fixed",
-      "discount":productDiscount || 0,
-      "currency":currency,
-      "normalInventory":normalInventory,
-}
+    if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
+      cardData = {
+        "dealId":dealId || "",
+        "productId":productId || "",
+        "variantId":variantId,
+        "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":productName || "",
+        "productNameArabic":productNameArabic || "",
+        "seoUrl":productSeoUrl,
+        "dealListPrice":dealListPrice,
+        'dealFinalPrice':dealFinalPrice,
+        'discountType':"fixed",
+        "dealDiscountPrice":dealDiscountPrice || 0,
+        "currency":currency,
+        "discountType":"",
+        "tagIconUrl":dealIconUrl,
+        "tag":dealTag,
+        "tagArabic":dealTagArabic,
+        "dealInventory":dealInventory,
+        "rank": rank,
+        "normalInventory":normalInventory,
+        "currentTimerStatus":currentTimerStatus,
+        "isDealActive":isDealActive,
+        "isTimerActive":isTimerActive,
+        "isProductBestSeller":isProductBestSeller
+      }
+    }
+    else{
+      cardData={
+        "variantId":variantId,
+        "productId":productId,
+        "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":productName || "",
+        "productNameArabic":productNameArabic || "",
+        "seoUrl":productSeoUrl,
+        "retailPrice":productListPrice,
+        'finalPrice':productFinalPrice,
+        'discountType':"fixed",
+        "discount":productDiscount || 0,
+        "currency":currency,
+        "variantName": variantName,
+        "variantImage":variantImage,
+        "normalInventory":normalInventory,
+        "isProductBestSeller":isProductBestSeller
+     }
+    }
   }
-}
+
+
+
+// if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
+//  cardData = {
+//     "dealId":dealId || "",
+//     "productId":productId || "",
+//     "variantId":variantId,
+//     "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+//     "productName":productName || "",
+//     "productNameArabic":productNameArabic || "",
+//     "seoUrl":productSeoUrl,
+//     "dealListPrice":dealListPrice,
+//     'dealFinalPrice':dealFinalPrice,
+//     'discountType':"fixed",
+//     "dealDiscountPrice":dealDiscountPrice || 0,
+//     "currency":currency,
+//     "discountType":"",
+//     "tagIconUrl":dealIconUrl,
+//     "tag":dealTag,
+//     "tagArabic":dealTagArabic,
+//     "dealInventory":dealInventory,
+//     "rank": rank,
+//     "normalInventory":normalInventory,
+//     "currentTimerStatus":currentTimerStatus,
+//     "isDealActive":isDealActive,
+//     "isTimerActive":isTimerActive
+//   }
+  
+ 
+// }
+// else{
+//   if(variantId){
+//    cardData={
+//       "variantId":variantId,
+//       "productId":productId,
+//       "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+//       "productName":productName || "",
+//       "productNameArabic":productNameArabic || "",
+//       "seoUrl":productSeoUrl,
+//       "retailPrice":variantListPrice,
+//       'finalPrice':variantFinalPrice,
+//       'discountType':"fixed",
+//       "discount":variantDiscount || 0,
+//       "currency":currency,
+//       "variantName": variantName,
+//       "variantImage":variantImage,
+//       "normalInventory":normalInventory,
+//    }
+//   }
+//   else{
+// cardData={
+//   "variantId":variantId,
+//       "productId":productId,
+//       "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+//       "productName":productName || "",
+//       "productNameArabic":productNameArabic || "",
+//       "seoUrl":productSeoUrl,
+//       "retailPrice":productListPrice,
+//       'finalPrice':productFinalPrice,
+//       'discountType':"fixed",
+//       "discount":productDiscount || 0,
+//       "currency":currency,
+//       "normalInventory":normalInventory,
+// }
+//   }
+// }
 
 return cardData;
 

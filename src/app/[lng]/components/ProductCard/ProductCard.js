@@ -11,9 +11,9 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
 
     const { isLogin=false ,userData = {}} = useAuth();
     const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="",id="" } = cardData || {}
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="",isProductBestSeller } = cardData || {}
     const {productNameArabic="",tagArabic=""} = cardData || {}
-    // console.log("productCard+++++",cardData)
+    console.log("productCard+++++",cardData)
     const btnName = normalInventory > 0 ? ( isArabic ? "أضف إلى السلة" : "Add to cart") : (isArabic ? "اعلمني " : "Notify me")
    
     const handleRedirect = () =>{
@@ -24,7 +24,7 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
         "sort_by":"relevance",
         "inStock":false,
    "noOfSearchResult":0,
-   "productId":id,
+   "productId":productId,
    "productName":productName,
    "productFinalPrice":finalPrice,
    "productIdList":[],
@@ -53,6 +53,9 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
                 {tag &&   <div className={styles.tagTxt}>{isArabic ? tagArabic: tag}</div>}
                     </div>
                     </div>}
+                    {isProductBestSeller &&  <div className={styles.bestSelleSection}>
+                      <div className={styles.bestSelleTag}>{isArabic ? "" : "Best seller"}</div> 
+                      </div>}
                  {normalInventory <= 0 && <div className={styles.outOfStockTxt}>{isArabic ? "غير متوفر" :"Out of stock"}</div>}
                 <div className={styles.productImgWrapper}>
             

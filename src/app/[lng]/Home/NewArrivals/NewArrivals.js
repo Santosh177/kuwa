@@ -4,6 +4,7 @@ import { useLanguage } from '@/context/languageDetails';
 
 const NewArrivals = ({data}) => {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
+  
 
  const newArrivals = {
         product : data,

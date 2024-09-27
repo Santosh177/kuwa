@@ -12,6 +12,7 @@ import { useCountry } from "@/context/contryDetails";
 const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 import { useLanguage } from "@/context/languageDetails";
+import { mappingDealProducts } from "@/services";
 
 
 const MainCategory = ({ isDealPage }) => {
