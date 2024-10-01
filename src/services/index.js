@@ -82,54 +82,150 @@ export const getTamaraPaymentTypes = async(selectedCountryCode="Bh") =>{
 }
 
 export const mappingHomeSearchDealProducts = (data)=>{
-const {countDownEndsAt="",countDownStartsAt="",currency="",name="",dealDiscountPrice="",dealFinalPrice="",dealId="",id="",dealListPrice="",seoUrl="",productImageUrl="",price="",specialPrice="",dealActive="",timerActive="",tagIconUrl="",discount="",dealTag="",currentTimerStatus="",currentTimerValue="",nameArabic,normalInventory="",} = data || {}
+  const {
+    countDownEndsAt = "",
+    countDownStartsAt = "",
+    currency = "",
+    currentDateTime = "",
+    currentTimerStatus = "",
+    currentTimerValue = "",
+    dealDiscountPrice = "",
+    dealFinalPrice = "",
+    dealHeading = "",
+    dealHeadingArabic = "",
+    dealIconUrl = "",
+    dealId = "",
+    dealInventory = "",
+    dealListPrice = "",
+    dealTag = "",
+    dealTagArabic = "",
+    isDealActive = "",
+    isProductBestSeller = false,
+    isTimerActive = "",
+    isVariantRecommended = "",
+    normalInventory = "",
+    productDiscount = "",
+    productFinalPrice = "",
+    productId = "",
+    productImage = "",
+    productListPrice = "",
+    productName = "",
+    productNameArabic = "",
+    productSeoUrl = "",
+    rank = "",
+    variantAvailableQuantity = "",
+    variantDiscount = "",
+    variantFinalPrice = "",
+    variantId = "",
+    variantImage = "",
+    variantListPrice = "",
+    variantName = ""
+  } = data || {};
+  let cardData = {}
   console.log("mappingHomeSearchDealProducts",data)
 
-  let cardData={}
-  if(dealId && dealActive && timerActive &&  currentTimerStatus == "in-between" ){
-    cardData={
-      "id":id || "",
-      "dealId":dealId || "",
-      "isDealActive":dealActive,
-      "isTimerActive":timerActive,
-      "productImage":productImageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
-      "productName":name || "",
-      "seoUrl":seoUrl ,
-      "retailPrice":dealListPrice,
-      'finalPrice':dealFinalPrice,
-      'discountType':"fixed",
-      "discount":dealDiscountPrice || 0,
-      "currency":currency,
-      "discountType":"",
-      "tagIconUrl":tagIconUrl,
-      "tag":dealTag,
-      "currentTimerStatus":currentTimerStatus,
-      "productNameArabic":nameArabic,
-      "normalInventory":normalInventory,
-      } 
-  }
-    else{
+  if(variantId){
+    if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
       cardData = {
-        "id":id || "",
-        "productImage":productImageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
-        "productName":name || "",
-        "seoUrl":seoUrl ,
-        "retailPrice":price,
-        'finalPrice':specialPrice,
+        "dealId":dealId || "",
+        "productId":productId || "",
+        "variantId":variantId,
+        "productImage":variantImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":productName || "",
+        "productNameArabic":productNameArabic || "",
+        "seoUrl":productSeoUrl,
+        "retailPrice":dealListPrice,
+        'finalPrice':dealFinalPrice,
         'discountType':"fixed",
-        "discount":discount || 0,
+        "discount":dealDiscountPrice || 0,
         "currency":currency,
         "discountType":"",
-        "productNameArabic":nameArabic,
-        "normalInventory":normalInventory,
+        "tagIconUrl":dealIconUrl,
+        "tag":dealTag,
+        "tagArabic":dealTagArabic,
+        "dealInventory":dealInventory,
+        "rank": rank,
+        "normalInventory":variantAvailableQuantity,
+        "currentTimerStatus":currentTimerStatus,
+        "isDealActive":isDealActive,
+        "isTimerActive":isTimerActive,
+        "isProductBestSeller":isProductBestSeller
       }
-      
     }
+    else{
+      cardData={
+        "variantId":variantId,
+        "productId":productId,
+        "productImage":variantImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":productName || "",
+        "productNameArabic":productNameArabic || "",
+        "seoUrl":productSeoUrl,
+        "retailPrice":variantListPrice,
+        'finalPrice':variantFinalPrice,
+        'discountType':"fixed",
+        "discount":variantDiscount || 0,
+        "currency":currency,
+        "variantName": variantName,
+        "variantImage":variantImage,
+        "normalInventory":variantAvailableQuantity,
+        "isProductBestSeller":isProductBestSeller
+     }
+    }
+
+  }
+  else{
+    if(dealId && isDealActive && isTimerActive &&  currentTimerStatus == "in-between"){
+      cardData = {
+        "dealId":dealId || "",
+        "productId":productId || "",
+        "variantId":variantId,
+        "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":productName || "",
+        "productNameArabic":productNameArabic || "",
+        "seoUrl":productSeoUrl,
+        "retailPrice":dealListPrice,
+        'finalPrice':dealFinalPrice,
+        'discountType':"fixed",
+        "discount":dealDiscountPrice || 0,
+        "currency":currency,
+        "discountType":"",
+        "tagIconUrl":dealIconUrl,
+        "tag":dealTag,
+        "tagArabic":dealTagArabic,
+        "dealInventory":dealInventory,
+        "rank": rank,
+        "normalInventory":normalInventory,
+        "currentTimerStatus":currentTimerStatus,
+        "isDealActive":isDealActive,
+        "isTimerActive":isTimerActive,
+        "isProductBestSeller":isProductBestSeller
+      }
+    }
+    else{
+      cardData={
+        "variantId":variantId,
+        "productId":productId,
+        "productImage":productImage || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+        "productName":productName || "",
+        "productNameArabic":productNameArabic || "",
+        "seoUrl":productSeoUrl,
+        "retailPrice":productListPrice,
+        'finalPrice':productFinalPrice,
+        'discountType':"fixed",
+        "discount":productDiscount || 0,
+        "currency":currency,
+        "variantName": variantName,
+        "variantImage":variantImage,
+        "normalInventory":normalInventory,
+        "isProductBestSeller":isProductBestSeller
+     }
+    }
+  }
+
     return cardData;
   }
 
 export const  mappingDealProducts = (data)=>{
-  console.log("bdqjbjdb",data)
   const {
     countDownEndsAt = "",
     countDownStartsAt = "",

@@ -145,6 +145,32 @@
                 }
             }
         }
+        .bestSelleSection{
+            max-width: 150px;
+            
+            height: 18px;
+           
+          
+            color: #FFF;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            position: absolute;
+            top:30px !important;
+            left:0;
+            .bestSelleTag{
+                display: flex;
+    height: 16px;
+    padding: 3px 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 0px 4px 4px 0px;
+    background: #F79E1B;
+            }
+        }
        
 
         .productCardWrapper {
@@ -279,6 +305,33 @@
                     }
                 }
                
+            }
+        }
+        .bestSelleSection{
+            max-width: 150px;
+            
+            height: 18px;
+           
+          
+            color: #FFF;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            position: absolute;
+            top:0px !important;
+            left:0;
+            z-index: 20;
+            .bestSelleTag{
+                display: flex;
+    height: 16px;
+    padding: 3px 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 0px 4px 4px 0px;
+    background: #F79E1B;
             }
         }
        

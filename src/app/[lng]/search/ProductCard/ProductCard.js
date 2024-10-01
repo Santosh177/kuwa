@@ -7,10 +7,12 @@ import { saveSearchData } from '@/services';
 
 const ProductCard = ({ cardData={}, searchQuery="" , addToCart = {}, style = {} }) => {
     const router = useRouter();
-    const { productName =0, finalPrice =0, retailPrice = "", currency = "", image = "", id = "", seoUrl = "",dealId="",isDealActive="",isTimerActive="",tag="",tagIconUrl="",productNameArabic="" } = cardData || {}
-    console.log("shbhhaa",cardData)
+    console.log("wbejw",cardData)
+    // const { productName =0, finalPrice =0, retailPrice = "", currency = "", image = "", id = "", seoUrl = "",dealId="",isDealActive="",isTimerActive="",tag="",tagIconUrl="",productNameArabic="" } = cardData || {}
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" , tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="",isProductBestSeller = true } = cardData || {}
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-    let discount = parseFloat(retailPrice-finalPrice).toFixed(2);
+    // let discount = parseFloat(retailPrice-finalPrice).toFixed(2);
+    console.log("isProductBestSeller",isProductBestSeller)
 
     const handleRedirect = () =>{
         const payloadForSaveData = {
@@ -20,7 +22,7 @@ const ProductCard = ({ cardData={}, searchQuery="" , addToCart = {}, style = {} 
             "sort_by":"relevance",
             "inStock":false,
        "noOfSearchResult":0,
-       "productId":id,
+       "productId":productId,
        "productName":productName,
        "productFinalPrice":finalPrice,
        "productIdList":[],
@@ -41,11 +43,16 @@ const ProductCard = ({ cardData={}, searchQuery="" , addToCart = {}, style = {} 
                         </div>
                         </div>
                     </div>}
+                    {/* {isProductBestSeller &&   */}
+                    <div className={styles.bestSelleSection}>
+                      <div className={styles.bestSelleTag}>{isArabic ? "" : "Best seller"}</div> 
+                      </div>
+                      {/* } */}
             <div id="search-container" className={styles.productCardWrapper}>
           
                 <div id="search-container" className={styles.productImgWrapper}>
                     <div id="search-container" className={styles.productImgContainer}>
-                        <img id="search-container" className={styles.productImg} src={image} alt='product-name' />
+                        <img id="search-container" className={styles.productImg} src={productImage} alt='product-name' />
                     </div>
                 </div>
                 <div id="search-container" className={styles.productName}>{isArabic ? productNameArabic : productName}</div>
