@@ -29,10 +29,11 @@ export default function Search() {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
   const [isNoResult,setIsNoResult] = useState("")
   const [isLoading, setIsLoading] = useState(false);
+  const [totalResultCount, setTotalResultCount] = useState(0)
 
 
 
-  const searchDataCount = searchData && searchData.length || 0;
+  const searchDataCount = totalResultCount || 0;
   const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
   const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
  
@@ -51,6 +52,7 @@ export default function Search() {
           "inStock": false,
           "deal_seo_url":null,
           "categorySeoList":null,
+          "limit":20
         }
         const searchApiResp = await fetch('/api/elastic-search',{
           method: 'POST',
@@ -60,7 +62,7 @@ export default function Search() {
           body: JSON.stringify(payload)
         })
         const searchApiData = await searchApiResp.json();
-        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList,message } = searchApiData || {}
+        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList,message,totalResultCount } = searchApiData || {}
 
         let searchData = []
         if (productVariantDtoList && productVariantDtoList.length > 0) {
@@ -72,6 +74,7 @@ export default function Search() {
             if (data && Object.keys(data).length > 0) {
               searchData.push(mappingHomeSearchDealProducts(data));
               setSearchData(searchData)
+              setTotalResultCount(totalResultCount)
             }
           })
         } else {
