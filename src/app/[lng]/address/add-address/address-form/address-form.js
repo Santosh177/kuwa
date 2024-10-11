@@ -234,7 +234,7 @@ const PersonalInfoFrom = ({countryCode="" ,onChange={},values={},isEdit,errors={
                 }
                 else{
                   setIsOldEmail(true)
-                  document.cookie = `userId=${res.userId}`;
+                  document.cookie = `userId=${res.userId}; path=/;`;
                 }
             }
             document.removeEventListener("mousedown", handleClickOutside); 
