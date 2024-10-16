@@ -43,20 +43,6 @@ const { redirect } = require('next/dist/server/api-utils')
     // next.config.js object
     
     return {
-      async rewrites() {
-        return [
-          {
-            source: "/sitemap_products_:id.xml",
-            destination: "/api/sitemap/products/:id", // Correctly mapping for product sitemap
-            // permanent: false
-          },
-          {
-            source: "/sitemap_collections_:id.xml",
-            destination: "/api/collections/:id", // Correctly mapping for collections sitemap
-            // permanent: false
-          },
-        ];
-      },
       experimental: {
         serverActions: true,
       },

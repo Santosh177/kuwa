@@ -120,6 +120,23 @@ console.log("pathname++++" , pathname);
   if(pathname == "/collections/vendors"){
     return NextResponse.redirect(new URL("/collections/dabur", req.url));
   }
+
+  const rewrites = [
+    { source: '/sitemap_products_:id.xml', destination: '/api/sitemap/products/:id' },
+    { source: '/sitemap_collections_:id.xml', destination: '/api/sitemap/collections/:id' },
+  ];
+
+  let rewriteRule = rewrites.find((rule) => pathname.match(new RegExp(rule.source.replace(':id', '[^/]+'))));
+  if (rewriteRule) {
+    const matched = pathname.match(new RegExp(rewriteRule.source.replace(':id', '([^/]+)')));
+    if (matched) {
+      const id = matched[1];
+      const destination = rewriteRule.destination.replace(':id', id);
+      console.log("Rewriting", id, destination);
+      return NextResponse.rewrite(new URL(destination, req.url));
+    }
+  }
+
   if (
     !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
     !req.nextUrl.pathname.startsWith('/_next')
