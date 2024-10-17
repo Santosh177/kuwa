@@ -1,20 +1,20 @@
 import { NextResponse } from "next/server";
-import { ProductListSeo } from "@/app/[lng]/(sitemap)/sitemap.xml/route";
+import { CollectonListSeo } from "@/app/[lng]/(sitemap)/sitemap.xml/route";
 
   export async function GET(req, { params }) {
-    const products = await ProductListSeo();
-  
-    const sitemapDataForProducts = products?.map((ele) => {
+    console.log("sitemap-Params", params);
+    const collectons = await CollectonListSeo();  
+    const sitemapDataForcollectons = collectons?.map((ele) => {
       return {
-        loc: `${process.env.NEXT_WEBSITE_URL}/products/${ele.seoUrl}`,
-         lastmod: ele.lastModified || new Date().toISOString(), // Default to current date if lastModified is unavailable
+        loc: `${process.env.NEXT_WEBSITE_URL}/ar/collections/${ele.seoUrl}`,
+        lastmod: ele.lastModified || new Date().toISOString(), // Default to current date if lastModified is unavailable
         changefreq: ele.changefreq || 'daily'
       };
     });
 
-    const pagesSitemapXMLForProducts = await buildPagesSitemap(sitemapDataForProducts);
+    const pagesSitemapXMLForcollectons = await buildPagesSitemap(sitemapDataForcollectons);
     
-    return new NextResponse(pagesSitemapXMLForProducts, {
+    return new NextResponse(pagesSitemapXMLForcollectons, {
       headers: {
         "Content-Type": "application/xml",
       },

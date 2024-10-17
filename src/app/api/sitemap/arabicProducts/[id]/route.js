@@ -6,7 +6,7 @@ import { ProductListSeo } from "@/app/[lng]/(sitemap)/sitemap.xml/route";
   
     const sitemapDataForProducts = products?.map((ele) => {
       return {
-        loc: `${process.env.NEXT_WEBSITE_URL}/products/${ele.seoUrl}`,
+        loc: `${process.env.NEXT_WEBSITE_URL}/ar/products/${ele.seoUrl}`,
          lastmod: ele.lastModified || new Date().toISOString(), // Default to current date if lastModified is unavailable
         changefreq: ele.changefreq || 'daily'
       };

@@ -47,16 +47,26 @@ export async function generateSitemaps() {
     id: index,
     url: `${process.env.NEXT_WEBSITE_URL}/sitemap_products_${index}.xml`,
   }));
+  const sitemapsForProductsArabic = Array.from({ length: sitemapsCountForProducts }, (_, index) => ({
+    id: index,
+    url: `${process.env.NEXT_WEBSITE_URL}/ar/sitemap_products_${index}.xml`,
+  }));
 
   // Generate collection sitemap URLs
   const sitemapsForCollections = Array.from({ length: sitemapsCountForCollections }, (_, index) => ({
     id: index,
     url: `${process.env.NEXT_WEBSITE_URL}/sitemap_collections_${index}.xml`,
   }));
+  const sitemapsForCollectionsArabic = Array.from({ length: sitemapsCountForCollections }, (_, index) => ({
+    id: index,
+    url: `${process.env.NEXT_WEBSITE_URL}/ar/sitemap_collections_${index}.xml`,
+  }));
 
   return {
     sitemapsForProducts,
     sitemapsForCollections,
+    sitemapsForProductsArabic,
+    sitemapsForCollectionsArabic
   };
 }
 
@@ -64,13 +74,18 @@ export async function GET() {
   try {
     // Generate dynamic sitemaps
     const dynamicSiteMaps = await generateSitemaps();
-    const { sitemapsForProducts, sitemapsForCollections } = dynamicSiteMaps;
+    const { sitemapsForProducts, sitemapsForCollections, sitemapsForProductsArabic, sitemapsForCollectionsArabic } = dynamicSiteMaps;
 
     // Create a list of all sitemap URLs
     const sitemaps = [
+      `${process.env.NEXT_WEBSITE_URL}/`,
       ...sitemapsForProducts.map((sitemap) => sitemap.url),
       ...sitemapsForCollections.map((sitemap) => sitemap.url),
       `${process.env.NEXT_WEBSITE_URL}/blog.xml`,
+      `${process.env.NEXT_WEBSITE_URL}/ar/`,
+      ...sitemapsForProductsArabic.map((sitemap) => sitemap.url),
+      ...sitemapsForCollectionsArabic.map((sitemap) => sitemap.url),
+      `${process.env.NEXT_WEBSITE_URL}/ar/blog.xml`,
     ];
 
     console.log("Generated sitemaps", dynamicSiteMaps);

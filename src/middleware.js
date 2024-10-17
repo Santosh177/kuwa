@@ -123,19 +123,30 @@ console.log("pathname++++" , pathname);
 
   const rewrites = [
     { source: '/sitemap_products_:id.xml', destination: '/api/sitemap/products/:id' },
+    { source: '/ar/sitemap_products_:id.xml', destination: '/api/sitemap/arabicProducts/:id' },
     { source: '/sitemap_collections_:id.xml', destination: '/api/sitemap/collections/:id' },
+    { source: '/ar/sitemap_collections_:id.xml', destination: '/api/sitemap/arabicCollections/:id' },
   ];
-
-  let rewriteRule = rewrites.find((rule) => pathname.match(new RegExp(rule.source.replace(':id', '[^/]+'))));
+  
+  // Helper to escape special characters in paths
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+  
+  let rewriteRule = rewrites.find((rule) => {
+    const escapedSource = escapeRegExp(rule.source).replace(':id', '[^/]+');
+    return pathname.match(new RegExp(`^${escapedSource}$`));
+  });
+  
   if (rewriteRule) {
-    const matched = pathname.match(new RegExp(rewriteRule.source.replace(':id', '([^/]+)')));
+    const matched = pathname.match(new RegExp(escapeRegExp(rewriteRule.source).replace(':id', '([^/]+)')));
     if (matched) {
       const id = matched[1];
       const destination = rewriteRule.destination.replace(':id', id);
-      console.log("Rewriting", id, destination);
       return NextResponse.rewrite(new URL(destination, req.url));
     }
   }
+  
 
   if (
     !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&

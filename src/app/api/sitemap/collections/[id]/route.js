@@ -2,13 +2,10 @@ import { NextResponse } from "next/server";
 import { CollectonListSeo } from "@/app/[lng]/(sitemap)/sitemap.xml/route";
 
   export async function GET(req, { params }) {
-    console.log("sitemap-Params", params);
     const collectons = await CollectonListSeo();
-    console.log("CollectonListSeo", collectons);
-   
     const sitemapDataForcollectons = collectons?.map((ele) => {
       return {
-        loc: `${process.env.NEXT_WEBSITE_URL}/${ele.seoUrl}`,
+        loc: `${process.env.NEXT_WEBSITE_URL}/collections/${ele.seoUrl}`,
         lastmod: ele.lastModified || new Date().toISOString(), // Default to current date if lastModified is unavailable
         changefreq: ele.changefreq || 'daily'
       };

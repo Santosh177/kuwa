@@ -26,7 +26,7 @@ const { redirect } = require('next/dist/server/api-utils')
       BACKEND_END_POINT_URL: isDev?"https://api.kuwa.bevaleo.dev":(isStaging)?'https://api.kuwa.bevaleo.dev':(isPreProd)?"https://falcon.getkuwa.com":(isProd)?"https://falcon.getkuwa.com":"https://api.kuwa.bevaleo.dev",
       BACKEND_END_DJANGO_API_URL:isDev?"https://api.bevaleo.dev":(isStaging)?'https://api.bevaleo.dev':(isPreProd)?"https://bevaleo.me":(isProd)?"https://bevaleo.me":"https://api.bevaleo.dev",
       CLEVER_TAP_FILE_CONFIG:(isProd || isPreProd )?"/clevertap-prod.js":'/clevertap-stage.js',
-      NEXT_WEBSITE_URL: isDev?"http://localhost:3000":(isStaging) ? "https://kuwa.bevaleo.dev" :(isPreProd) ? "https://preprod.kuwa.bevaleo.dev" : (isProd) ? "https://bh.getkuwa.com" : "https://kuwa.bevaleo.dev" 
+      NEXT_WEBSITE_URL:  "https://bh.getkuwa.com"
     }
   
     // const headers = [
