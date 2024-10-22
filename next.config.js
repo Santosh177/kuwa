@@ -2,6 +2,7 @@ const {
     PHASE_DEVELOPMENT_SERVER,
     PHASE_PRODUCTION_BUILD,
   } = require('next/constants')
+const { redirect } = require('next/dist/server/api-utils')
 
 
   
@@ -24,7 +25,8 @@ const {
     const env = {
       BACKEND_END_POINT_URL: isDev?"https://api.kuwa.bevaleo.dev":(isStaging)?'https://api.kuwa.bevaleo.dev':(isPreProd)?"https://falcon.getkuwa.com":(isProd)?"https://falcon.getkuwa.com":"https://api.kuwa.bevaleo.dev",
       BACKEND_END_DJANGO_API_URL:isDev?"https://api.bevaleo.dev":(isStaging)?'https://api.bevaleo.dev':(isPreProd)?"https://bevaleo.me":(isProd)?"https://bevaleo.me":"https://api.bevaleo.dev",
-      CLEVER_TAP_FILE_CONFIG:(isProd || isPreProd )?"/clevertap-prod.js":'/clevertap-stage.js'
+      CLEVER_TAP_FILE_CONFIG:(isProd || isPreProd )?"/clevertap-prod.js":'/clevertap-stage.js',
+      NEXT_WEBSITE_URL:  "https://bh.getkuwa.com"
     }
   
     // const headers = [
@@ -45,6 +47,7 @@ const {
         serverActions: true,
       },
       env,
+    
     //   headers
     }
   }
