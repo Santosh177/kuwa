@@ -43,11 +43,13 @@ const ProductCard = ({ cardData={}, searchQuery="" , addToCart = {}, style = {} 
                         </div>
                         </div>
                     </div>}
-                    {/* {isProductBestSeller &&   */}
+                    {isProductBestSeller && 
+                    <div className={styles.bestSelleContainer}>
                     <div className={styles.bestSelleSection}>
-                      <div className={styles.bestSelleTag}>{isArabic ? "" : "Best seller"}</div> 
+                      <div className={styles.bestSelleTag}>{isArabic ? "الأكثر مبيعًا" : "Best seller"}</div> 
                       </div>
-                      {/* } */}
+                      </div> 
+                      }
             <div id="search-container" className={styles.productCardWrapper}>
           
                 <div id="search-container" className={styles.productImgWrapper}>

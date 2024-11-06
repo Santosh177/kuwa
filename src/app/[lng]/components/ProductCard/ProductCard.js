@@ -54,7 +54,7 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
                     </div>
                     </div>}
                     {isProductBestSeller &&  <div className={styles.bestSelleSection}>
-                      <div className={styles.bestSelleTag}>{isArabic ? "" : "Best seller"}</div> 
+                      <div className={styles.bestSelleTag}>{isArabic ? "الأكثر مبيعًا" : "Best seller"}</div> 
                       </div>}
                  {normalInventory <= 0 && <div className={styles.outOfStockTxt}>{isArabic ? "غير متوفر" :"Out of stock"}</div>}
                 <div className={styles.productImgWrapper}>
