@@ -11,6 +11,7 @@ import { mappingHomeSearchDealProducts } from '@/services';
 import { useLanguage } from '@/context/languageDetails';
 import { saveSearchData } from '@/services';
 import Loader from '../components/Loader/Loader';
+import { useParams } from 'next/navigation';
 
 
 
@@ -29,6 +30,9 @@ export default function Search() {
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
   const [isNoResult,setIsNoResult] = useState("")
   const [isLoading, setIsLoading] = useState(false);
+
+  const params = useParams();
+  const dealSeoUrl = params.dealId || null;
 
 
 

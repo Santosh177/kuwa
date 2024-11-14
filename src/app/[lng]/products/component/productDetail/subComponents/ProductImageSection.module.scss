@@ -44,6 +44,35 @@
             }
         }
     }
+
+    .bestSelleSection{
+        position: relative;
+       
+                 
+        height: 18px;
+       
+      
+        color: #FFF;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+       
+        .bestSelleTag{
+            max-width: 150px;
+            position: absolute;
+            top: 44px;
+            left: 0px;
+            z-index: 2;
+            padding: 4px 10px;
+            display: flex;
+            justify-content: center;
+            gap:2px;
+            align-items: center;
+            border-radius: 4px;
+            background: #F79E1B;
+        }
+      }
    
     .imageSectionOuter {
         display: flex;
@@ -106,6 +135,11 @@
     .imageSectionContainer {
         width: 100%;
         margin: auto;
+        .bestSelleSection{
+            font-size: 12px;
+            .bestSelleTag{
+            }
+          }
         .imageSection{
         .tagSection{
             max-width: 100px;
@@ -132,6 +166,7 @@
             }
         }
       }
+     
         .outOfStockTxtMob{
             position: relative;
             top: 50%;

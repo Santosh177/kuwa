@@ -25,7 +25,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
     let appleSession;
     const { benefits = "", frequentlyBoughtTogether = "", currency = "", description = "", id = "", images = [], ingredients = "", name = "", numberOfProductReview = "", price = null, quantity = 0, title = "", variants = [],mininmumDeliveryThreshold,avgRating="",totalRating="",shortDescription=""} = productData || {};
    const {dealId="",dealListPrice="",dealDiscountPrice="",dealFinalPrice="",dealInventory="",isDealActive="",isTimerActive=false,dealTag="",dealIconUrl="",countDownStartsAt="",countDownEndsAt="",currentTimerValue="",currentTimerStatus=""} = productData || {}
-    const {nameArabic="",shortDescriptionArabic="", descriptionArabic="",benefitsArabic="",ingredientsArabic = "",titleArabic = "",dealTagArabic=""} = productData || {}
+    const {nameArabic="",shortDescriptionArabic="", descriptionArabic="",benefitsArabic="",ingredientsArabic = "",titleArabic = "",dealTagArabic="",bestSeller=false} = productData || {}
    console.log("productdetails",productData)
    const [noOfProduct, setNoOfProduct] = useState(1);
     const countryList = useCountryList();
@@ -791,7 +791,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
                 <span onClick={() => handelRoute("product")}> {isArabic ? nameArabic : name}</span>
             </div>
             <div className={style.productPricingContainer}>
-                <ProductImageSection allImages={allImages} dealTag={isArabic ? dealTagArabic : dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} seleVariantIcon={seleVariantIcon} selectedVariantTag={selectedVariantTag} normalInventory={normalInventory} selectedVariantQuantity={selectedVariantQuantity} />
+                <ProductImageSection allImages={allImages} dealTag={isArabic ? dealTagArabic : dealTag} dealIconUrl={dealIconUrl} isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus} isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} seleVariantIcon={seleVariantIcon} selectedVariantTag={selectedVariantTag} normalInventory={normalInventory} selectedVariantQuantity={selectedVariantQuantity} bestSeller={bestSeller} />
                 <ProductPricingSection pricingSectionVariables={pricingSectionVariables} isAddedToCart={isAddedToCart} onChangeItemQty={onChangeItemQty} onResetViewCartState= {onChangePackOf}  isDealActive={isDealActive} isTimerActive={isTimerActive} currentTimerStatus={currentTimerStatus}  isVariantCurrenTimeStatus={isVariantCurrenTimeStatus} isVariantDealActive={isVariantDealActive} isVariantTimeActive={isVariantTimeActive} variantdealId={variantdealId} avgRating={avgRating} totalRating={totalRating} showProductReview={showProductReview} />
             </div>
             {frequentlyBoughtTogether && <div className={style.FrequntlyBoughtTogetherBox}>

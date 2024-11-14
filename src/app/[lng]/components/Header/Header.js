@@ -21,6 +21,7 @@ import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { mixPanelTrackEvent } from '../../page';
 import { saveSearchData } from '@/services';
 import { mappingDealProducts } from '@/services';
+import { useParams } from "next/navigation";
 
 const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="",isNoResults ,isSearchLoading}) =>{
   const router = useRouter();
@@ -121,6 +122,10 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const [searchQuery, setSearchQuery] = useState('');
   const [apiData, setApiData] = useState(null);
 
+  const params = useParams();
+  const dealSeoUrl = params.dealId || null;
+  console.log("hbdwjqb",dealSeoUrl)
+
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
   const searchDataCount = searchData && searchData.length || 0;
@@ -168,7 +173,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
           "categoryList": null,
           "sortBy":"relevance",
           "inStock": false,
-          "deal_seo_url":null,
+          "deal_seo_url":dealSeoUrl,
           "categorySeoList":null,
         }
         const searchApiResp = await fetch('/api/elastic-search',{

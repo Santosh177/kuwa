@@ -119,7 +119,9 @@ export const mappingHomeSearchDealProducts = (data)=>{
     variantId = "",
     variantImage = "",
     variantListPrice = "",
-    variantName = ""
+    variantName = "",
+    ratingsCount,
+    overallRating
   } = data || {};
   let cardData = {}
   console.log("mappingHomeSearchDealProducts",data)
@@ -149,7 +151,9 @@ export const mappingHomeSearchDealProducts = (data)=>{
         "currentTimerStatus":currentTimerStatus,
         "isDealActive":isDealActive,
         "isTimerActive":isTimerActive,
-        "isProductBestSeller":isProductBestSeller
+        "isProductBestSeller":isProductBestSeller,
+        "overallRating":overallRating,
+        "ratingsCount":ratingsCount
       }
     }
     else{
@@ -168,7 +172,9 @@ export const mappingHomeSearchDealProducts = (data)=>{
         "variantName": variantName,
         "variantImage":variantImage,
         "normalInventory":variantAvailableQuantity,
-        "isProductBestSeller":isProductBestSeller
+        "isProductBestSeller":isProductBestSeller,
+        "overallRating":overallRating,
+        "ratingsCount":ratingsCount
      }
     }
 
@@ -198,7 +204,9 @@ export const mappingHomeSearchDealProducts = (data)=>{
         "currentTimerStatus":currentTimerStatus,
         "isDealActive":isDealActive,
         "isTimerActive":isTimerActive,
-        "isProductBestSeller":isProductBestSeller
+        "isProductBestSeller":isProductBestSeller,
+        "overallRating":overallRating,
+        "ratingsCount":ratingsCount
       }
     }
     else{
@@ -217,7 +225,9 @@ export const mappingHomeSearchDealProducts = (data)=>{
         "variantName": variantName,
         "variantImage":variantImage,
         "normalInventory":normalInventory,
-        "isProductBestSeller":isProductBestSeller
+        "isProductBestSeller":isProductBestSeller,
+        "overallRating":overallRating,
+        "ratingsCount":ratingsCount
      }
     }
   }
@@ -263,7 +273,9 @@ export const  mappingDealProducts = (data)=>{
     variantId = "",
     variantImage = "",
     variantListPrice = "",
-    variantName = ""
+    variantName = "",
+    overallRating,
+    ratingsCount
   } = data || {};
   let cardData = {}
 
@@ -292,7 +304,9 @@ export const  mappingDealProducts = (data)=>{
         "currentTimerStatus":currentTimerStatus,
         "isDealActive":isDealActive,
         "isTimerActive":isTimerActive,
-        "isProductBestSeller":isProductBestSeller
+        "isProductBestSeller":isProductBestSeller,
+        "overallRating":overallRating,
+        "ratingsCount":ratingsCount
       }
     }
     else{
@@ -311,7 +325,9 @@ export const  mappingDealProducts = (data)=>{
         "variantName": variantName,
         "variantImage":variantImage,
         "normalInventory":variantAvailableQuantity,
-        "isProductBestSeller":isProductBestSeller
+        "isProductBestSeller":isProductBestSeller,
+        "overallRating":overallRating,
+        "ratingsCount":ratingsCount
      }
     }
   }
@@ -340,7 +356,9 @@ export const  mappingDealProducts = (data)=>{
         "currentTimerStatus":currentTimerStatus,
         "isDealActive":isDealActive,
         "isTimerActive":isTimerActive,
-        "isProductBestSeller":isProductBestSeller
+        "isProductBestSeller":isProductBestSeller,
+        "overallRating":overallRating,
+        "ratingsCount":ratingsCount
       }
     }
     else{
@@ -359,7 +377,9 @@ export const  mappingDealProducts = (data)=>{
         "variantName": variantName,
         "variantImage":variantImage,
         "normalInventory":normalInventory,
-        "isProductBestSeller":isProductBestSeller
+        "isProductBestSeller":isProductBestSeller,
+        "overallRating":overallRating,
+        "ratingsCount":ratingsCount
      }
     }
   }

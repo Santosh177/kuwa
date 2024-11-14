@@ -11,7 +11,7 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
 
     const { isLogin=false ,userData = {}} = useAuth();
     const router = useRouter();
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="",isProductBestSeller } = cardData || {}
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="",isProductBestSeller, ratingsCount, overallRating } = cardData || {}
     const {productNameArabic="",tagArabic=""} = cardData || {}
     console.log("productCard+++++",cardData)
     const btnName = normalInventory > 0 ? ( isArabic ? "أضف إلى السلة" : "Add to cart") : (isArabic ? "اعلمني " : "Notify me")
@@ -43,6 +43,9 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
         <div className={styles.productCardItem} onClick={()=>handleRedirect()}>
 
             <div className={styles.productCardWrapper} style={{...style}}>
+            {isProductBestSeller &&  <div className={styles.bestSelleSection}>
+                      <div className={styles.bestSelleTag}>{isArabic ? "الأكثر مبيعًا" : "Best seller"}</div> 
+                      </div>}
             {dealId && isDealActive
              && 
               isTimerActive && currentTimerStatus=="in-between" &&
@@ -53,9 +56,7 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
                 {tag &&   <div className={styles.tagTxt}>{isArabic ? tagArabic: tag}</div>}
                     </div>
                     </div>}
-                    {isProductBestSeller &&  <div className={styles.bestSelleSection}>
-                      <div className={styles.bestSelleTag}>{isArabic ? "الأكثر مبيعًا" : "Best seller"}</div> 
-                      </div>}
+                    
                  {normalInventory <= 0 && <div className={styles.outOfStockTxt}>{isArabic ? "غير متوفر" :"Out of stock"}</div>}
                 <div className={styles.productImgWrapper}>
             
@@ -65,17 +66,26 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
                    
                 </div>
                 <div className={styles.textContent}>
-
-                <div className={styles.dealInventory}>{ dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory ? (dealInventory+ " " + isArabic ? "المتبقي في المخزون" : "left in stock"): ""}</div>
+                <div className={styles.productDetails}>
+                {dealId && isDealActive && isTimerActive && currentTimerStatus=="in-between" && dealInventory && <div className={styles.dealInventory}>{dealInventory+ " " + (isArabic ? "المتبقي في المخزون" : "left in stock")}</div>}
                    
                 <div className={styles.productName}>{isArabic ? productNameArabic: productName}</div>
+                {ratingsCount > 0 && (
+                <div className={styles.ratingDiv}>
+                  <img
+                  src="https://d25uasl7utydze.cloudfront.net/assets/star-filled.svg"
+                  alt="Star Rating"
+                  />
+                {overallRating} <span>({ratingsCount} {isArabic ? "تقييم" : "ratings"})</span>
+                </div>
+                )}
                 {dealId && isDealActive && isTimerActive
                  && currentTimerStatus=="in-between"
                   ? (
         <>
-          <div className={styles.discountTag} style={{ opacity: dealDiscountPrice > 0 ? 1 : 0 }}>
-            <span>{isArabic ? " حفظ" : "Save"}</span> {currency} {dealDiscountPrice}
-          </div>
+         {dealDiscountPrice >0 && <div className={styles.discountTag} style={{ opacity: dealDiscountPrice > 0 ? 1 : 0 }}>
+            <span>{isArabic ? " حفظ" : "Save"}</span> {currency} {(dealDiscountPrice)}
+          </div>}
           {dealDiscountPrice > 0 ? (
             <div  className={styles.price}>
              <span>{isArabic ? " حصرياً في" : "Only at"}</span> {currency} {dealFinalPrice}{' '}
@@ -87,9 +97,9 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
         </>
       ) : (
         <>
-          <div className={styles.discountTag} style={{ opacity: discount > 0 ? 1 : 0 }}>
+       { discount > 0 &&  <div className={styles.discountTag} style={{ opacity: discount > 0 ? 1 : 0 }}>
             <span>{isArabic ? " حفظ" :"Save"}</span> {currency} {discount}
-          </div>
+          </div>}
           {discount > 0 ? (
             <div className={styles.price}>
               {currency} {finalPrice}{' '}
@@ -100,6 +110,7 @@ const ProductCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNonLog
           )}
         </>
       )}
+      </div>
                 <div className={styles.btn} 
                  style={{ 
                   backgroundColor: btnName === (isArabic ? "اعلمني " : "Notify me") ? "#fff" : "", 
