@@ -173,7 +173,7 @@ const handleNotify = async() =>{
                         discount: data.productDiscount,
                         dealDiscountPrice:data.dealDiscountPrice,
                         // discountType: discountType,
-                        image: data?.productImageUrl || "",
+                        image: data?.productImage|| "",
                         id: data?.productId || "",
                         seoUrl: data?.productSeoUrl || "",
                         dealInventory:data?.dealInventory,
