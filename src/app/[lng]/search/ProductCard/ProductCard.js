@@ -9,7 +9,7 @@ const ProductCard = ({ cardData={}, searchQuery="" , addToCart = {}, style = {} 
     const router = useRouter();
     console.log("wbejw",cardData)
     // const { productName =0, finalPrice =0, retailPrice = "", currency = "", image = "", id = "", seoUrl = "",dealId="",isDealActive="",isTimerActive="",tag="",tagIconUrl="",productNameArabic="" } = cardData || {}
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" , tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="",isProductBestSeller = true } = cardData || {}
+    const { productName="",productNameArabic="", finalPrice="" , retailPrice="", currency="", discount="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" , tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="",currentTimerStatus="",normalInventory="",isProductBestSeller = true } = cardData || {}
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
     // let discount = parseFloat(retailPrice-finalPrice).toFixed(2);
     console.log("isProductBestSeller",isProductBestSeller)
