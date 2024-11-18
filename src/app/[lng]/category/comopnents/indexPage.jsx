@@ -35,7 +35,7 @@ const MainCategory = ({ isDealPage }) => {
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
     console.log("collectionSeoUrl", collectionSeoUrl)
 
-    const collectionUrl = window.location.href;
+    const collectionUrl = window.location.origin + window.location.pathname;
 
     useEffect(() => {
         const category = searchParams.get('category');
