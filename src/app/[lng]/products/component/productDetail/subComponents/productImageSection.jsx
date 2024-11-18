@@ -56,7 +56,7 @@ const ProductImageSection = ({ allImages, dealTag, dealIconUrl, isDealActive, is
 
                 <div className={styles.isMobile}>
                 {bestSeller &&  <div className={styles.bestSelleSection}>
-                                                        <div className={styles.bestSelleTag}>{isArabic ? "الأكثر مبيعًا" : "Best seller"}</div> 
+                                                        <div className={`${styles.bestSelleTag} ${isArabic ? styles['bestSelleTag-ar'] : '' }`}>{isArabic ? "الأكثر مبيعًا" : "Best seller"}</div> 
                                                         </div>}
                     <Glider
                         slidesToShow={"auto"}

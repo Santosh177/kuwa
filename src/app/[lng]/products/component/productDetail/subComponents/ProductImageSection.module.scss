@@ -71,6 +71,9 @@
             align-items: center;
             border-radius: 4px;
             background: #F79E1B;
+            // &.bestSelleTag-ar{
+            //     left: 0px;
+            // }
         }
       }
    
@@ -138,7 +141,12 @@
         .bestSelleSection{
             font-size: 12px;
             .bestSelleTag{
+                &.bestSelleTag-ar{
+                    right: 0px !important;
+                    left: auto;
+                }
             }
+           
           }
         .imageSection{
         .tagSection{
