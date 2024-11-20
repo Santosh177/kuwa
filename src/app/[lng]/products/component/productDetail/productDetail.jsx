@@ -436,10 +436,12 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
               }] : [])
           ],
         };
+        request["requiredBillingContactFields"].push('phone');
+        request["requiredShippingContactFields"].push('phone')
         if(!isLogin){
-            request["requiredBillingContactFields"].push('phone')
+          
             request["requiredBillingContactFields"].push('email')
-            request["requiredShippingContactFields"].push('phone')
+
             request["requiredShippingContactFields"].push('email')
         }
         console.log("requestrequest",request)

@@ -557,12 +557,12 @@ export default  function Cart({cartData}) {
           }] : [])
         ],
       };
-
-    
+      request["requiredBillingContactFields"].push('phone')
+      request["requiredShippingContactFields"].push('phone')
       if(!isLogin){
-          request["requiredBillingContactFields"].push('phone')
+         
           request["requiredBillingContactFields"].push('email')
-          request["requiredShippingContactFields"].push('phone')
+       
           request["requiredShippingContactFields"].push('email')
       }
       appleSession = new ApplePaySession(3, request);
@@ -627,6 +627,7 @@ export default  function Cart({cartData}) {
               let data = {
                 token: getCheckoutToken.token
               } 
+              console.log("applePayData++++",applePayData)
               placeApplePayOrderFlow({applePayData:applePayData,token:getCheckoutToken.token})
             }
         }
