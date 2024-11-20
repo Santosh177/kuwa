@@ -755,8 +755,8 @@ export default  function Cart({cartData}) {
           "countryCode": selectedCountry.code || "",
           "countryId": selectedCountry.id || "",
           "description": description,
-          "finalAmount": priceDetails['totalAmount'] + customFee,
-          "totalAmount": priceDetails['totalAmount'] + customFee,
+          "finalAmount": priceDetails['totalAmount'] - extraDiscount + customFee,
+          "totalAmount": priceDetails['totalAmount']  + customFee,
           "currency": selectedCountry.currency || "",
           "orderSource": "WEBSITE",
           "orderCategory": "CART",
@@ -776,7 +776,7 @@ export default  function Cart({cartData}) {
         
         const applePayTrackData = {
           "Page URL":window.location.href,
-          "purchaseValue":priceDetails['totalAmount'] + customFee,
+          "purchaseValue":priceDetails['totalAmount'] - extraDiscount + customFee,
           'Payment Type':'Apple pay' || ""
         }
         // trackData['Payment Type'] = 'Apple pay' || ''

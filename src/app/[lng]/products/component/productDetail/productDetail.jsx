@@ -686,6 +686,8 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         const taxAmount = await calculateVatPercentage(productPrice);
         const prePaidDiscount = selectedCountry?.prepaidDiscountPercentage || "";
         let extraDiscount = prePaidDiscount > 0 ? parseFloat(((totalAmount * prePaidDiscount)/100).toFixed(2)) : 0;
+        const customFee = selectedCountry.customFee;
+
         let payload = {
             "cartId":getCartItems['id'] || "",
             "orderType": "one-time",
@@ -696,8 +698,8 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             "countryCode": selectedCountry.code || "",
             "countryId": selectedCountry.id || "",
             "description": description,
-            "finalAmount": totalAmount,
-            "totalAmount": totalAmount,
+            "finalAmount": totalAmount - extraDiscount + customFee,
+            "totalAmount": totalAmount + customFee,
             "currency": selectedCountry.currency || "",
             "orderSource": "WEBSITE",
             "orderCategory": "CART",
