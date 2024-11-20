@@ -14,6 +14,7 @@ import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmai
 import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/NotifySuccessPopup"
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import DescriptionSection from "../descriptionSection/DescriptionSection"
+import BannerSection from "../BannerSection/BannerSection"
 
 
 const ProductSection = ({ resposneValue = [] ,isDealPage , description=null}) => {
