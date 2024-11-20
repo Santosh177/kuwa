@@ -374,7 +374,8 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             if (haveAdress) {    
                 window.location.href = `/payment/?${queryString}`
             } else {
-                router.push(`/address/add-address/?${queryString}`);
+                // router.push(`/address/add-address/?${queryString}`);
+                window.location.href = `/address/add-address/?${queryString}`
             }
         }
     }

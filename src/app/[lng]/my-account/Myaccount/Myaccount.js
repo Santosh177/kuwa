@@ -12,6 +12,7 @@ import { useCountry } from '@/context/contryDetails';
 
 
 const validateForm = (formData,isArabic,selectedPhoneCode) => {
+  console.log("validateForm", formData)
   const errors = {};
   if (!formData.firstName) {
     errors.firstName = formData.isArabic ? "الاسم الأول مطلوب" : 'First name is required.';
@@ -19,9 +20,12 @@ const validateForm = (formData,isArabic,selectedPhoneCode) => {
   if (!formData.lastName) {
     errors.lastName = formData.isArabic ? "اسم العائلة مطلوب" :  'Last name is required.';
   }
-  if(!formData.mobNoValidation){
+  if(("mobNoValidation" in formData) && !formData.mobNoValidation){
+    errors.mobNumber = formData.isArabic ? "رقم الهاتف المحمول مطلوب" :  "Mobile number is required";
+  }
+  if(!formData.mobNumber){
     errors.mobNumber = isArabic ? "رقم الهاتف المحمول مطلوب": "Mobile number is required";
-  }else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedPhoneCode)){
+  } else if(formData && formData.mobNoValidation && !checkInternationalPhone(formData.mobNoValidation,selectedPhoneCode)){
     errors.mobNumber = isArabic ? "رقم الهاتف المحمول غير صحيح" : "Invalid mobile number";
   }
   if(!formData.email){
@@ -103,7 +107,7 @@ export default function SignupCard() {
 
       const onSignup = async() =>{
        
-        const validationErrors = validateForm(formData,isArabic,selectedCountry);
+        const validationErrors = validateForm(formData,isArabic,selectedPhoneCode);
         if (Object.keys(validationErrors).length === 0) {
          
             try {

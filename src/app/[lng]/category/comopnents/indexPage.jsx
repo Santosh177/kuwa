@@ -36,6 +36,8 @@ const MainCategory = ({ isDealPage }) => {
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
     console.log("collectionSeoUrl", collectionSeoUrl)
 
+    const collectionUrl = window.location.origin + window.location.pathname;
+
     useEffect(() => {
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
@@ -263,6 +265,10 @@ const MainCategory = ({ isDealPage }) => {
     console.log(isShowDotForSort, "slectedFilter");
 
     return (
+        <>
+        <head>
+        <link rel="canonical" href={collectionUrl}/>
+        </head>
         <div className={style.CategoryIndexPage}>
 
             {isHide && <Header setParamsData={setParamsData} paramsData={paramsData} isShowSeeAllBtn={false} />}
@@ -295,6 +301,7 @@ const MainCategory = ({ isDealPage }) => {
             <Loader isShow={isLoding} />
             <Loader isShow={isLodingProduct} />
         </div>
+        </>
     )
 }
 export default MainCategory

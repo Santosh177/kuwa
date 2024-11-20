@@ -23,13 +23,13 @@ import { saveSearchData } from '@/services';
 import { mappingDealProducts } from '@/services';
 import { useParams } from "next/navigation";
 
-const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="",isNoResults ,isSearchLoading}) =>{
+const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="",isNoResults ,isSearchLoading, totalResultCount}) =>{
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
   const lng = localStorage.getItem("selectedLanguage") || 'en'
  
   
-    const searchDataCount = searchData && searchData.length || 0;
+    const searchDataCount = totalResultCount || 0;
     const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.productId) || [];
     const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
  
@@ -118,6 +118,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const inputBoxRef = useRef(null);
     const dropDownOptionsRef = useRef(null);
     const dropDownOptionsProfileRef = useRef(null);
+    const [totalResultCount, setTotalResultCount] = useState(0)
 
     const [searchQuery, setSearchQuery] = useState('');
   const [apiData, setApiData] = useState(null);
@@ -128,7 +129,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
 
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-  const searchDataCount = searchData && searchData.length || 0;
+  const searchDataCount = totalResultCount || 0;
   const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.productId) || [];
   const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
   const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
@@ -175,6 +176,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
           "inStock": false,
           "deal_seo_url":dealSeoUrl,
           "categorySeoList":null,
+          "limit":20
         }
         const searchApiResp = await fetch('/api/elastic-search',{
           method: 'POST',
@@ -185,7 +187,8 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
         })
 
         const searchApiData = await searchApiResp.json();
-        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList, message } = searchApiData || {}
+        console.log("elasticsearchRes",searchApiResp,searchApiData)
+        const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList, message, totalResultCount } = searchApiData || {}
         let searchData = []
         if(productVariantDtoList && productVariantDtoList.length > 0 ){
           setIsSearchLoading(false)
@@ -197,6 +200,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
                     const productData = mappingHomeSearchDealProducts(data);
                     searchData.push(productData);
                     setSearchData(searchData)
+                    setTotalResultCount(totalResultCount)
                 }
                
             })
@@ -351,6 +355,16 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
 
     const onOpenSideMenu = () => {
         setIsShowSideMenu(!isShowSideMenu)
+        const trackData = {
+          "Source Page URL": window.location.href,
+        }
+        clevertapEvent.onCleverTapEvent("kuwa_clicked_side_menu",trackData)
+        if(isLogin){
+          mixPanelTrackEvent("kuwa_clicked_side_menu",trackData,userData.id)
+        }
+        else{
+          mixPanelTrackEvent("kuwa_clicked_side_menu",trackData)
+        }
     }
     
     const onCloseCountry = () =>{
@@ -477,7 +491,8 @@ const getCartPage = ()=>{
     mixPanelTrackEvent("kuwa_view_cart",trackData)
   }
 
-  router.push('/cart')
+  // router.push('/cart')
+  window.location.href = '/cart'
 }
 
 const handleSearch = () =>{
@@ -532,7 +547,7 @@ const handleSearch = () =>{
                         <img src='https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/search.png' alt='search-icon'/>
                     </div>
                 {showTrendingSearch && !searchQuery && <TrendingSearch isLogin={isLogin} isShowSeeAllBtn={isShowSeeAllBtn} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData)||couponBannerData } setParamsData={setParamsData} setSearchQuery={setSearchQuery} />}
-                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData) || couponBannerData} searchQuery={searchQuery} isNoResults={isNoResults}  isSearchLoading={isSearchLoading}/>}
+                {(searchQuery && isShowSearchList) && <SearchList isShowSeeAllBtn={isShowSeeAllBtn} isLogin={isLogin} searchData={searchData} couponBannerData={(couponBannerData && couponBannerData.redirectionLink && couponBannerData) || couponBannerData} searchQuery={searchQuery} isNoResults={isNoResults}  isSearchLoading={isSearchLoading} totalResultCount={totalResultCount}/>}
                     </>
                     {!isLogin &&<div className={styles.profileIconPlus} onClick={()=>router.push('/login')}>
                         <img src="https://production-website-builds.s3.ap-south-1.amazonaws.com/kuwa/profile_plus.png" alt='profile-plus-icon'></img><span>{isArabic ? "تسجيل الدخول" : "Login"}</span>
