@@ -8,7 +8,7 @@ export async function POST(request,res) {
 
     console.log("customHeaderelast",customHeader)
     console.log("requestBodyrequestBody",requestBody)
-    const elasticSearch = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/elastic-search/search`, {
+    const elasticSearch = await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/elastic-search/search/products-variants`, {
         method: 'POST',
         headers: {...customHeader},
         body:JSON.stringify(requestBody)

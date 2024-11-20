@@ -20,6 +20,8 @@ import { useLanguage } from '@/context/languageDetails';
 import useCleverTapEvents from '@/hooks/useCleverTapEvents';
 import { mixPanelTrackEvent } from '../../page';
 import { saveSearchData } from '@/services';
+import { mappingDealProducts } from '@/services';
+import { useParams } from "next/navigation";
 
 const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, couponBannerData={},searchQuery="",isNoResults ,isSearchLoading, totalResultCount}) =>{
   const router = useRouter();
@@ -28,10 +30,8 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
  
   
     const searchDataCount = totalResultCount || 0;
-    const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
+    const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.productId) || [];
     const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
-    console.log("searchData",searchData,searchQuery,ProductIdList)
-    console.log("dqwkqh",isNoResults)
  
     const handleSeeAll=(couponBannerData,searchQuery)=>{
     const payloadForSaveData ={
@@ -79,28 +79,8 @@ const SearchList = ({ isShowSeeAllBtn=true, searchData = [], isLogin = false, co
                     {
                        searchData && searchData.length > 0 && searchData.slice(0,12).map((data, index)=>{
 
-                          const { id = '', productImage="", productName="", seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag="",currentTimerStatus="",productNameArabic=""} = data || {};
-                          // const {  } = price || {}
-                          const cardData = {
-                            productName: productName,
-                            finalPrice: finalPrice,
-                            retailPrice: retailPrice,
-                            currency: currency,
-                            discount: discount,
-                            discountType: discountType,
-                            image: productImage || "",
-                            id: id || "",
-                            seoUrl: seoUrl || "",
-                            dealId:dealId,
-                            isDealActive:isDealActive,
-                            isTimerActive:isTimerActive,
-                            tagIconUrl:tagIconUrl,
-                            tag:tag,
-                            currentTimerStatus:currentTimerStatus,
-                            productNameArabic:productNameArabic
-                          }
-                            return(
-                                <ProductCard cardData={cardData}searchQuery={searchQuery} />
+                        return(
+                                <ProductCard cardData={data}searchQuery={searchQuery} />
                             )
                         })
                     }
@@ -143,10 +123,14 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const [searchQuery, setSearchQuery] = useState('');
   const [apiData, setApiData] = useState(null);
 
+  const params = useParams();
+  const dealSeoUrl = params.dealId || null;
+  console.log("hbdwjqb",dealSeoUrl)
+
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
   const searchDataCount = totalResultCount || 0;
-  const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
+  const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.productId) || [];
   const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
   const otherLanguage = listOfLanguages.find(lang => lang.id !== selectedLanguage.id);
   const otherLanguageName = otherLanguage ? otherLanguage.language_name : '';
@@ -177,10 +161,6 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
   }
   }, [])
 
- 
-
-  console.log("searchDatasearchData",searchData)
-
   useEffect(() => {
     let timer;
 
@@ -194,7 +174,7 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
           "categoryList": null,
           "sortBy":"relevance",
           "inStock": false,
-          "deal_seo_url":null,
+          "deal_seo_url":dealSeoUrl,
           "categorySeoList":null,
           "limit":20
         }
@@ -374,7 +354,6 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     }
 
     const onOpenSideMenu = () => {
-        console.log("isShowSideMenu",isShowSideMenu)
         setIsShowSideMenu(!isShowSideMenu)
         const trackData = {
           "Source Page URL": window.location.href,
@@ -486,7 +465,6 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
         },
       });
       const languageData = await getLanguage.json();
-      console.log("getUserLanguage", getLanguage, languageData);
     } catch (error) {
       console.error("Error fetching language:", error);
     }
@@ -496,7 +474,6 @@ const Header = ({ isShowSeeAllBtn=true, setParamsData}) => {
     const newLanguageId = isArabic ? '1' : '2';
    await changeLanguage(newLanguageId);
    setIsLoading(true)
-   console.log("userDetails", isLogin,userData)
     if(userData && Object.keys(userData).length > 0 ){
      await getUserLanguage()
     }

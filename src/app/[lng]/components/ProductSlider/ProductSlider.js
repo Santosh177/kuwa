@@ -16,6 +16,7 @@ import { useAuth } from '@/context/userDetail';
 // import { mixPanelTrackEvent } from '../../app/[lng]/page';
 import { mixPanelTrackEvent } from '../../page';
 import { useLanguage } from '@/context/languageDetails';
+import { mappingDealProducts } from '@/services';
 
 
   const BACKGROUND_COLORS = [
@@ -72,7 +73,7 @@ const createBackgroundColors = (totalRow= 14) => {
 
 const ProductSlider = ({backgroundColor,topColor,design,data,headerTextStyle={},index=0,totalRow=14}) => {
   const router = useRouter();
-  const { product=[],headerTitle= "",headerTitleArabic="",seoUrl} = data || {};
+  const { productVariantDtoList=[],collectionName= "",collectionNameArabic="",collectionSeoUrl} = data || {};
   const [isLoading , setIsLoading] = useState(false);
   const { setCartItemData={},setCartItemCount={} } = useCartItems();
   const [ backgroundColors , setBackgroundColors] = useState(createBackgroundColors(totalRow));
@@ -127,7 +128,7 @@ let trackData={};
 }
 
 const handleAllProduct = () =>{
-  const encodedSeoUrl = encodeURIComponent(seoUrl);
+  const encodedSeoUrl = encodeURIComponent(collectionSeoUrl);
   window.location.href = `/collections/${encodedSeoUrl}`
 }
 
@@ -214,7 +215,7 @@ const handleNotify = async() =>{
           </div> */}
           <div className={styles.container} style={{backgroundImage:backgroundColors[index].backgroundImage}}>
           <div className={styles.headerContainer}>
-            <div className={styles.headerTxt} style={{...headerTextStyle}}>{isArabic ? headerTitleArabic:headerTitle}</div>
+            <div className={styles.headerTxt} style={{...headerTextStyle}}>{isArabic ? collectionNameArabic:collectionName}</div>
             <div className={`${styles.seeAllDiv} ${isArabic ? styles['seeAllDiv-ar'] : styles['seeAllDiv-en']}` } onClick={handleAllProduct}>
           <div className={styles.txt}>{isArabic ? "اعرض المزيد " : "See all"}</div>
           <div className={`${styles.arrowImg} ${isArabic ? styles['arrowImg-ar'] : ''}`}><img src='https://d25uasl7utydze.cloudfront.net/assets/right%20arrow.svg'/></div>
@@ -239,181 +240,25 @@ const handleNotify = async() =>{
             >
 
               {
-                product.slice(0, 12).map((data,index)=>{
-                  const {
-                    image= "",
-                    id= "",
-                    title="",
-                    name= "",
-                    nameArabic= "",
-                    countDownStartsAt="",
-                    countDownEndsAt="",
-                    dealId="",
-                    dealListPrice="",
-                    dealDiscountPrice="",
-                    dealFinalPrice= "",
-                    dealInventory="",
-                    rank="",
-                    seoUrl="",
-                    productListPrice= "",
-                    productFinalPrice = "",
-                    productDiscount = "",
-                    normalInventory = "",
-                    variantName = "",
-                    variantImage = "",
-                    variantListPrice = "",
-                    variantFinalPrice = "",
-                    variantDiscount = "",
-                    isDealActive="",
-                    isTimerActive="",
-                    dealTag="",
-                    dealIconUrl="",
-                    currentTimerStatus="",
-                    currentTimerValue="",
-                    currentDateTime=""} = data || {}
-                  const { variants=[]} = data  || {};
-                 const variantId= data.variants[0]?.variantPrices[0]?.variantId || ""
-                  const {finalPrice="", retailPrice="",currency="", discount="", discountType="" } = data && data.price ||  {}
-                  let cardData = {
-                  }
+                productVariantDtoList.slice(0, 12).map((data,index)=>{
+                  const cardData = mappingDealProducts(data);
+                  const productName = cardData.productName || ""
+                  const productId = cardData.productId || ""
+                  const dealPrice = cardData.dealFinalPrice || ""
+                  const dealId = cardData.dealId || null
+                  const variantId = cardData.variantId || null
+                  const isVariant = cardData.variantId ?  true : false
                   trackData = {
-                    "product Name": data && data.name || "",
+                    "product Name": productName,
                     "quantity": 1,
-                    "product Id":data.id || "",
+                    "product Id":productId,
                     "Page URL":window.location.href,
-                    "Screen":"Home"
+                    "Screen":"Home",
+                    "Variant Id":variantId
                   }
                  
-                    if(variants && variants.length > 0 && data.variants[0].variantPrices.length>0)
-                    
-                    {
-                      if(data.variants[0].variantPrices[0].dealId
-                        && data.variants[0].variantPrices[0].isDealActive
-                        && data.variants[0].variantPrices[0].isTimerActive
-                        && data.variants[0].variantPrices[0].currentTimerStatus == "in-between"
-                        ){
-                          const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
-                        cardData = {
-                          dealId:variantPrices[0].dealId,
-                          productName: data && data.name || "",
-                          dealFinalPrice: variantPrices[0].dealFinalPrice,
-                          dealListPrice: variantPrices[0].dealListPrice,
-                          currency: currency,
-                          dealDiscountPrice: variantPrices[0].dealDiscountPrice,
-                          discountType: discountType || "",
-                          image: image || "",
-                          variantId: variantPrices[0].variantId || "",
-                          seoUrl: data.seoUrl || "",
-                          isDealActive:variantPrices[0].isDealActive,
-                          isTimerActive:variantPrices[0].isTimerActive,
-                          currentTimerStatus:variantPrices[0].currentTimerStatus,
-                          currentTimerValue:variantPrices[0].currentTimerValue,
-                          tag:variantPrices[0].dealTag,
-                          tagIconUrl:variantPrices[0].dealIconUrl,
-                          normalInventory:data.variants[0].quantity,
-                        productNameArabic: data && data.nameArabic || "",
-
-
-                        }
-                    }
-                    else
-                    {
-                      const { variantPrices = [] ,name="",image=""} = data.variants[0] || {};
-                      cardData = {
-                        productName: data && data.name || "",
-                        finalPrice: variantPrices[0].finalPrice,
-                        retailPrice: variantPrices[0].retailPrice,
-                        currency: currency,
-                        discount: variantPrices[0].discount,
-                        discountType: discountType || "",
-                        image: image || "",
-                        variantId: variantPrices[0].variantId || "",
-                        seoUrl: data.seoUrl || "",
-                        normalInventory:data.variants[0].quantity,
-                        productNameArabic: data && data.nameArabic || "",
-                      }
-                   }
-                  }
-
-                 else{
-
-                    if(dealId &&
-                      isDealActive && isTimerActive
-                      &&  currentTimerStatus == "in-between"
-                    ) {
-
-                      cardData={
-                        "dealId":dealId || "",
-                        "productId":id || "",
-                        "productName":name,
-                        "productNameArabic":nameArabic,
-                        "productImage":image || "",
-                        "seoUrl":seoUrl || "",
-                        "dealListPrice":dealListPrice,
-                        'dealFinalPrice':dealFinalPrice,
-                        'discountType':"fixed",
-                        "dealDiscountPrice":dealDiscountPrice || 0,
-                        "currency":currency,
-                        "tag":dealTag,
-                        "tagIconUrl":dealIconUrl,
-                        "dealInventory":dealInventory,
-                        "isDealActive":isDealActive,
-                        "isTimerActive":isTimerActive,
-                        "currentTimerStatus":currentTimerStatus,
-                        "currentTimerValue":currentTimerValue,
-                        "currentDateTime":currentDateTime,
-                        "normalInventory":data.normalQuantity
-                      }
-                     }else{
-                      cardData = {
-                        productName: data && data.name || "",
-                        finalPrice: finalPrice,
-                        retailPrice: retailPrice,
-                        currency: currency,
-                        discount: discount,
-                        discountType: discountType,
-                        image: data.image || "",
-                        productId: data.id || "",
-                        seoUrl: data.seoUrl || "",
-                        normalInventory:data.normalQuantity,
-                        productNameArabic: data && data.nameArabic || "",
-                      }
-                    }
-                  }
-                 
-                  let addToCartPayload = {}
-                  if(variants && variants.length > 0){
-                    const { variantPrices = [] ,name="",image="",id=""} = data.variants[0] || {};
-                    let variantId ;
-                    let variantDealPrice = "";
-                    let variantDealId = ''
-                    if(variantPrices && variantPrices.length > 0){
-                      variantId = variantPrices[0].variantId;
-                      variantDealPrice = variantPrices[0].dealFinalPrice;
-                      variantDealId = variantPrices[0].dealId;
-                    }
-                    if( variantPrices[0]?.dealId &&  variantPrices[0]?.isDealActive && variantPrices[0]?.isTimerActive
-                        && variantPrices[0].currentTimerStatus == "in-between"
-                     ){
-                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":variantId? true : false,"variantId":variantId,dealId:variantDealId,dealPrice:variantDealPrice,productName:data.name}
-
-                    }
-                    else{
-                    addToCartPayload= {"product":data.id,"quantity":1,"isVariant":variantId? true : false,"variantId":variantId,productName:data.name}
-                    }
- 
-                  }
-                  else{
-                    if(dealId && isDealActive && isTimerActive  &&  currentTimerStatus == "in-between" ){
-                    addToCartPayload = { product: data.id, quantity: 1,dealId:dealId ,dealPrice:dealFinalPrice,productName:data.name}
-
-                    }
-                    else{
-                    addToCartPayload = { product: data.id, quantity: 1,productName:data.name}
-                      }
-                  }
                   return(
-                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart(addToCartPayload)} key={index} handleNotifyMe={()=>handleNotifyMe(id,variantId)} handleNonLogin={()=>handleNonLogin(id,variantId)}  />
+                    <ProductCard  cardData={cardData} addToCart={()=>onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId,productName,variantId,isVariant})} key={index} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)}  />
                   )
                 })
               }
