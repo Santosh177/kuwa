@@ -152,7 +152,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         if (selectedVarients) {
 
             const selectedVarientsData = variants.filter((item) => item?.pricings[0]?.variantId === selectedVarients);
-            const { id = '', image = '', name = '', productId = '', quantity = '' } = selectedVarientsData[0].variants || {}
+            const { id = '', image = '', name = '', productId = '', quantity = '',availableQuantity } = selectedVarientsData[0].variants || {}
             let selectedVariantdealId = selectedVarientsData[0].pricings[0].dealId
          
             let isVariantDealActive = selectedVarientsData[0].pricings[0].isDealActive 
@@ -171,7 +171,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             setIsVariantDealActive(isVariantDealActive);
             setSeleVariantIcon(dealIconUrl);
             setSelectedVariantTag(dealTag);
-            setSelectedVariantQuantity(quantity);
+            setSelectedVariantQuantity(availableQuantity);
             setSelectedVariantName(name)
             if(selectedVariantdealId && isVariantDealActive && isVariantTimerActive 
                 && currentVariantTimerStatus == "in-between"
