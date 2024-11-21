@@ -25,7 +25,7 @@ export const getCartItemDetails = async(data,currency) => {
               "id":id,
               "cartItemId":cartItemId,
               "variants":variants,
-              "normalInventory":variants?.variants?.quantity || 0,
+              "normalInventory":variants?.variants?.availableQuantity || 0,
               "productNameArabic" : description.nameArabic || ""
           }
           }
@@ -42,7 +42,7 @@ export const getCartItemDetails = async(data,currency) => {
             "id":id,
             "cartItemId":cartItemId,
             "variants":variants,
-            "normalInventory":variants?.variants?.quantity || 0,
+            "normalInventory":variants?.variants?.availableQuantity || 0,
             "productNameArabic" : description.nameArabic || ""
         }
         }
@@ -98,7 +98,7 @@ export const createPayloadForCartItems = async(cartData) => {
       console.log("createPayloadForCartItems",cartData)
       if(cartData && cartData.length > 0){
         cartData.map((data,index)=>{
-          if(data.variants && data.variants.variants.id && data.variants.variants.quantity > 0){
+          if(data.variants && data.variants.variants.id && data.variants.variants.availableQuantity > 0){
             if(data?.variants?.pricings[0].dealId && data.variants?.pricings[0].isDealActive && data?.variants?.pricings[0].isTimerActive 
               && data?.variants?.pricings[0].currentTimerStatus == 'in-between'){
               cartItems.push({
@@ -267,7 +267,7 @@ export const createCouponPayload = async(cartItems) => {
     
     cartItems.map((item,index)=>{
       console.log("itemitem",item)
-      if(item.variants && item.variants.variants.id && item.variants.variants.quantity > 0){
+      if(item.variants && item.variants.variants.id && item.variants.variants.availableQuantity > 0){
         if(item?.variants?.pricings[0].dealId && item.variants?.pricings[0].isDealActive && item?.variants?.pricings[0].isTimerActive 
           && item?.variants?.pricings[0].currentTimerStatus == 'in-between'){
           supplements.push({"id":item.id,"quantity":item.quantity ,"isVariant":true,"variantId":item.variants.variants.id,"dealId":item?.variants?.pricings[0].dealId })
@@ -306,7 +306,7 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
       const { image = {}, quantity = 1, price = "", originalPrice = "", finalPrice = "", description = {}, id = "", cartItemId = "", variants, normalInventory } = item || {};
       const discountAmount = parseInt(originalPrice) - parseInt(finalPrice);
       if(variants && variants.pricings.length > 0){
-        if(variants.variants.quantity == 0){
+        if(variants.variants.availableQuantity == 0){
           const { pricings=[]} = variants || {}
           let item ={
             "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
@@ -320,7 +320,7 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
             "id":id,
             "cartItemId":cartItemId,
             "variants":variants,
-            "normalInventory":variants?.variants?.quantity || 0,
+            "normalInventory":variants?.variants?.availableQuantity || 0,
             "productNameArabic" : description.nameArabic || ""
           }
           outOfStockProducts.push(item);
