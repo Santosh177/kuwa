@@ -37,7 +37,7 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
     const [retailPrice, setRetailPrice] = useState(0);
     const [finalPrice, setFinalPrice] = useState(0);
     const [discount, setDiscount] = useState(0);
-    const [allImages, setAllImages] = useState([]);
+    const [allImages, setAllImages] = useState(['https://d25uasl7utydze.cloudfront.net/assets/no_image.png']);
     const [haveAdress, setHaveAddress] = useState(false);
     const [ isAddedToCart , setIsAddedToCart ] = useState(false);
     const [ isLoading , setIsLoading] = useState(false)
@@ -143,9 +143,11 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
         }
        
        
-        let bulkImage = [];
-        images.map((data)=> bulkImage.push(data.imageUrl))
-        setAllImages(bulkImage)
+        if(images.length > 0 ){
+          let bulkImage = [];
+          images.map((data)=> bulkImage.push(data.imageUrl))
+          setAllImages(bulkImage)
+        }
     }, [dealId])
     
     useEffect(() => {
@@ -215,9 +217,11 @@ const ProductDeatil = ({ productData = {},showProductReview }) => {
             }
             }
             
-            let bulkImage = [];
-            images.map((data)=> bulkImage.push(data.imageUrl))
-            setAllImages(bulkImage)
+            if(images.length > 0 ){
+              let bulkImage = [];
+              images.map((data)=> bulkImage.push(data.imageUrl))
+              setAllImages(bulkImage)
+            }
         }
 
     }, [selectedVarients,dealId])

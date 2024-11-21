@@ -14,7 +14,7 @@ export const getCartItemDetails = async(data,currency) => {
             console.log("bhvah",variants.pricings[0].dealId)
             item ={
               "dealId":variants.pricings[0].dealId,
-              "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+              "image":image && image.imageUrl || "https://d25uasl7utydze.cloudfront.net/assets/no_image.png",
               "qty":quantity,
               "productName":description.name || "",
               "retailPrice":variants?.pricings[0]?.dealListPrice,
@@ -31,7 +31,7 @@ export const getCartItemDetails = async(data,currency) => {
           }
           else{
           item ={
-            "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+            "image":image && image.imageUrl || "https://d25uasl7utydze.cloudfront.net/assets/no_image.png",
             "qty":quantity,
             "productName":description.name || "",
             "retailPrice":variants.pricings[0].retailPrice,
@@ -53,7 +53,7 @@ export const getCartItemDetails = async(data,currency) => {
                ){
             item ={
               "dealId":dealId,
-              "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+              "image":image && image.imageUrl || "https://d25uasl7utydze.cloudfront.net/assets/no_image.png",
               "qty":quantity,
               "productName":description.name || "",
               "retailPrice":dealListPrice,
@@ -70,7 +70,7 @@ export const getCartItemDetails = async(data,currency) => {
         }
         else{
           item ={
-            "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+            "image":image && image.imageUrl || "https://d25uasl7utydze.cloudfront.net/assets/no_image.png",
             "qty":quantity,
             "productName":description.name || "",
             "retailPrice":originalPrice,
@@ -309,7 +309,7 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
         if(variants.variants.availableQuantity == 0){
           const { pricings=[]} = variants || {}
           let item ={
-            "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+            "image":image && image.imageUrl || "https://d25uasl7utydze.cloudfront.net/assets/no_image.png",
             "qty":quantity,
             "productName":description.name || "",
             "retailPrice":pricings[0]?.retailPrice,
@@ -330,7 +330,7 @@ export const getOutOfStockProduct = async(cartItems,currency) => {
       {
       if (normalInventory === 0) {
         let item ={
-          "image":image && image.imageUrl || "https://production-website-builds.s3.ap-south-1.amazonaws.com/aadar.png",
+          "image":image && image.imageUrl || "https://d25uasl7utydze.cloudfront.net/assets/no_image.png",
           "qty":quantity,
           "productName":description.name || "",
           "retailPrice":originalPrice,

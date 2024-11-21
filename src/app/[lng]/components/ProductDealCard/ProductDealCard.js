@@ -9,7 +9,7 @@ const ProductDealCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNo
   const router = useRouter();
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",productImage="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus="",normalInventory,tagArabic,productNameArabic="",isProductBestSeller=false, ratingsCount, overallRating} = cardData || {}
+    const { productName="", finalPrice="" , retailPrice="", currency="", discount="", image="",dealId="" ,productId="", variantId="" ,seoUrl="" ,dealListPrice="",dealDiscountPrice="",dealFinalPrice="", tag="",tagIconUrl="",dealInventory="",isDealActive="",isTimerActive="", currentTimerStatus="",normalInventory,tagArabic,productNameArabic="",isProductBestSeller=false, ratingsCount, overallRating} = cardData || {}
     // console.log("cardData++++",cardData)
     const btnName = normalInventory > 0 ? ( isArabic ? "أضف إلى السلة" : "Add to cart") : (isArabic ? "اعلمني " : "Notify me")
 
@@ -35,7 +35,7 @@ const ProductDealCard = ({cardData,addToCart={},style={},handleNotifyMe,handleNo
                 <div className={styles.productImgWrapper}>
             
                     <div className={styles.productImgContainer}>
-                        <img className={styles.productImg} src={image||productImage} alt='product-name' />
+                        <img className={styles.productImg} src={image || 'https://d25uasl7utydze.cloudfront.net/assets/no_image.png'} alt='product-name' />
                     </div>
                    
                 </div>

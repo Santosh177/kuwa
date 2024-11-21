@@ -119,7 +119,7 @@ const writeReview = (e) =>{
             // onClick={() => router.push(`/my/order/${orderId}`)}
             >
             <div className={styles.orderItemImage}>
-                <img src={productImg} alt='product-img'/>
+                <img src={productImg || 'https://d25uasl7utydze.cloudfront.net/assets/no_image.png'} alt='product-img'/>
             </div>
             <div className={styles.orderItemInfo}>
                 <div className={styles.orderItemStatus}>

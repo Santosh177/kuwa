@@ -12,7 +12,7 @@ const ProductCard = ({data, currency,index}) => {
            
             <div className={styles.cartItemInfo}>
                 <div className={styles.index + " " + "."}>{index+1}</div>
-                <img src={productImage}></img>
+                <img src={productImage || 'https://d25uasl7utydze.cloudfront.net/assets/no_image.png'}></img>
                 <div className={`${styles.item} ${isArabic ? styles['item-ar'] : styles['item-en']}` }>
                 <div className={`${styles.itemName} ${isArabic ? styles['itemName-ar'] : styles['itemName-en']}` }>{isArabic ? productNameArabic : productName}</div>
                 <div className={styles.quantity}>qty: {productQuantity || ""}</div>

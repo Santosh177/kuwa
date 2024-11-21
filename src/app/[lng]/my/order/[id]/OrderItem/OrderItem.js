@@ -21,7 +21,7 @@ export default  function OrderItem({product={},orderId="",currency=""}) {
             {/* <div className={styles.orderId}>Order ID : #{orderId}</div> */}
             <div className={styles.orderItem}>
                 <div className={styles.orderItemImg}>
-                    <img src={product.image} alt='product-img'/>
+                    <img src={product.image || 'https://d25uasl7utydze.cloudfront.net/assets/no_image.png'} alt='product-img'/>
                 </div>
                 <div className={styles.orderItemInfoContainer}>
                     <div className={styles.orderItemInfo}>
