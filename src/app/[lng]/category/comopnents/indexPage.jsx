@@ -13,6 +13,7 @@ const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 import { useLanguage } from "@/context/languageDetails";
 import BannerSection from "./BannerSection/BannerSection";
+import Carousel from "../../Home/Carousel/Carousel";
 
 
 const MainCategory = ({ isDealPage }) => {
@@ -27,8 +28,6 @@ const MainCategory = ({ isDealPage }) => {
     const [isLodingProduct, setIsLoadingProduct] = useState(false);
     const [responseData, setResponseData] = useState({})
     const [description,setDescription] = useState(null)
-   
-
     const [paramsData, setParamsData] = useState({})
     const params = useParams();
     const dealSeoUrl = params.dealId || "";
@@ -37,6 +36,29 @@ const MainCategory = ({ isDealPage }) => {
     console.log("collectionSeoUrl", collectionSeoUrl)
 
     const collectionUrl = window.location.origin + window.location.pathname;
+
+    const collectionBanner = [{
+        "id": 12,
+        "createdAt": "2024-03-11T09:17:14",
+        "modifiedAt": "2024-11-14T14:16:48",
+        "isActive": true,
+        "updatedBy": null,
+        "image": "https://dcngmd8umaj1u.cloudfront.net/secondary_%282%29_1710072780303.png",
+        "redirectionLink": "/products/products-elete-electrolytes-citrilyte-hydration-drops-60ml-refill-bottle-makes-20-litres-of-electrolyte-drink-with-a-lemon-twist",
+        "rank": 1,
+        "countryId": 8
+    },
+    {
+        "id": 14,
+        "createdAt": null,
+        "modifiedAt": "2024-11-14T14:16:48",
+        "isActive": true,
+        "updatedBy": null,
+        "image": "https://dcngmd8umaj1u.cloudfront.net/primary_banner_1_1727365870340.jpg",
+        "redirectionLink": "/collections",
+        "rank": 2,
+        "countryId": 8
+    }]
 
     useEffect(() => {
         const category = searchParams.get('category');
@@ -270,9 +292,10 @@ const MainCategory = ({ isDealPage }) => {
         <link rel="canonical" href={collectionUrl}/>
         </head>
         <div className={style.CategoryIndexPage}>
+       
 
             {isHide && <Header setParamsData={setParamsData} paramsData={paramsData} isShowSeeAllBtn={false} />}
-
+            <div className={style.collectionBannerDiv}><Carousel data={collectionBanner}/></div>
             {isHide && <div className={`${style.FilterTabOptionMobile} ${isArabic ? style['FilterTabOptionMobile-ar'] : style['FilterTabOptionMobile-en']}` } >
                 <div className={style.FilterTabOption}>
                     <div className={style.filterContainer} onClick={() => setSelectedFilter("Filter")} >

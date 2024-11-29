@@ -17,6 +17,7 @@ import DescriptionSection from "../descriptionSection/DescriptionSection"
 import BannerSection from "../BannerSection/BannerSection"
 
 
+
 const ProductSection = ({ resposneValue = [] ,isDealPage , description=null}) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
@@ -41,6 +42,41 @@ const ProductSection = ({ resposneValue = [] ,isDealPage , description=null}) =>
     const searchParams = useSearchParams();
     const searchKey = searchParams.get('search_key') || "";
     console.log("searchKey",searchKey)
+
+    const collectionBanner = [{
+      "id": 12,
+      "createdAt": "2024-03-11T09:17:14",
+      "modifiedAt": "2024-11-14T14:16:48",
+      "isActive": true,
+      "updatedBy": null,
+      "image": "https://dcngmd8umaj1u.cloudfront.net/secondary_%282%29_1710072780303.png",
+      "redirectionLink": "/products/products-elete-electrolytes-citrilyte-hydration-drops-60ml-refill-bottle-makes-20-litres-of-electrolyte-drink-with-a-lemon-twist",
+      "rank": 1,
+      "countryId": 8
+  },
+  {
+      "id": 14,
+      "createdAt": null,
+      "modifiedAt": "2024-11-14T14:16:48",
+      "isActive": true,
+      "updatedBy": null,
+      "image": "https://dcngmd8umaj1u.cloudfront.net/primary_banner_1_1727365870340.jpg",
+      "redirectionLink": "/collections",
+      "rank": 2,
+      "countryId": 8
+  },
+  {
+    "id": 14,
+    "createdAt": null,
+    "modifiedAt": "2024-11-14T14:16:48",
+    "isActive": true,
+    "updatedBy": null,
+    "image": "https://dcngmd8umaj1u.cloudfront.net/primary_banner_1_1727365870340.jpg",
+    "redirectionLink": "/collections",
+    "rank": 2,
+    "countryId": 8
+},
+]
     const onAddToCart = async (data) => {
         // const trackingData = {
         //     "product Name": data.productName,
@@ -181,6 +217,7 @@ const handleNonLogin = (id,variantId)=>{
         return (
             <>
             <div  className={style.productSectionContainer}>
+                <BannerSection data={collectionBanner}/>
         {isDealPage  &&
               <div className={style.headingContent}>
               <div className={style.dealHeading}>{isArabic ? resposneValue[0]?.dealHeadingArabic : resposneValue[0]?.dealHeading}</div>
@@ -231,9 +268,13 @@ const handleNonLogin = (id,variantId)=>{
                             "Screen":"Collection"
                         }
                         return (
+                          <>
+                        
                             <div className={style.product}>
+                             
                                 <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice,productName })} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} searchKey={searchKey} />
                             </div>
+                            </>
                         )
                     })}
                 </div>

@@ -1,4 +1,7 @@
 .CategoryIndexPage {
+    .collectionBannerDiv{
+        display: none;
+    }
     .FilterTabOptionMobile {
         display: none;
     }
@@ -27,6 +30,9 @@
 
 @media(max-width:990px) {
     .CategoryIndexPage {
+        .collectionBannerDiv{
+            display: block;
+        }
         .FilterTabOptionMobile {
             display: block !important;
             margin-left: 16px;
