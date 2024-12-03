@@ -252,10 +252,10 @@ const handleNonLogin = (id,variantId)=>{
                         //     id: id || "",
                         //     seoUrl:seoUrl || ""
                         // }
-                        const cardData = mappingHomeSearchDealProducts(item);
+                        const cardData = mappingDealProducts(item);
                         console.log("allProduct",cardData)
                         const productName = cardData.productName;
-                        const productId = cardData.id;
+                        const productId = cardData.productId;
                         const dealId = cardData.dealId;
                         const variantId = cardData.variantId;
                         const isVariant = variantId ? true : false;

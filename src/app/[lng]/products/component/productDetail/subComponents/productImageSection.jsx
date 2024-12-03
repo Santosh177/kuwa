@@ -8,12 +8,11 @@ import "glider-js/glider.min.css";
 import ImageSlider from "@/app/[lng]/components/ImageSlider/imageSlider";
 import { useLanguage } from "@/context/languageDetails";
 
-const ProductImageSection = ({ allImages, dealTag, dealIconUrl, isDealActive, isTimerActive = false, currentTimerStatus, isVariantCurrenTimeStatus = "", isVariantDealActive, isVariantTimeActive, variantdealId = "", selectedVariantTag = "", seleVariantIcon = "",normalInventory,selectedVariantQuantity }) => {
+const ProductImageSection = ({ allImages, dealTag, dealIconUrl, isDealActive, isTimerActive = false, currentTimerStatus, isVariantCurrenTimeStatus = "", isVariantDealActive, isVariantTimeActive, variantdealId = "", selectedVariantTag = "", seleVariantIcon = "",normalInventory,selectedVariantQuantity, bestSeller }) => {
     // const images = ["https://valeo-qa-media.s3.ap-south-1.amazonaws.com/Tribulus-333x235_1675403245987.png", "https://valeo-qa-media.s3.ap-south-1.amazonaws.com/IV-December-Blog-Horizontal_1675403171780.jpg", "https://valeo-qa-media.s3.ap-south-1.amazonaws.com/LoveYourKidney_1675403171457.png"]
     const images = allImages;
     console.log("selectedVariantTag", selectedVariantTag)
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
-
     if (images && images.length > 0) {
         return (
             <div className={styles.imageSectionContainer}>
@@ -33,6 +32,10 @@ const ProductImageSection = ({ allImages, dealTag, dealIconUrl, isDealActive, is
                         </div>
                     }
 
+                    {bestSeller &&  <div className={styles.bestSelleSection}>
+                      <div className={styles.bestSelleTag}>{isArabic ? "الأكثر مبيعًا" : "Best seller"}</div> 
+                      </div>}
+
                     {isVariantDealActive && isVariantTimeActive && variantdealId
                         && isVariantCurrenTimeStatus == "in-between" &&
                         (seleVariantIcon || selectedVariantTag) &&
@@ -47,11 +50,14 @@ const ProductImageSection = ({ allImages, dealTag, dealIconUrl, isDealActive, is
                         </div>}
                     <div>
                  
-                    <ImageSlider images = {images} normalInventory={normalInventory} selectedVariantQuantity={selectedVariantQuantity}/>
+                    <ImageSlider images = {images} normalInventory={normalInventory} selectedVariantQuantity={selectedVariantQuantity} bestSeller={bestSeller}/>
                     </div>
                 </div>
 
                 <div className={styles.isMobile}>
+                {bestSeller &&  <div className={styles.bestSelleSection}>
+                                                        <div className={`${styles.bestSelleTag} ${isArabic ? styles['bestSelleTag-ar'] : '' }`}>{isArabic ? "الأكثر مبيعًا" : "Best seller"}</div> 
+                                                        </div>}
                     <Glider
                         slidesToShow={"auto"}
                         slidesToScroll={1}
@@ -94,6 +100,8 @@ const ProductImageSection = ({ allImages, dealTag, dealIconUrl, isDealActive, is
                                         </div>
 
                                     }
+
+                                
 
                                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} className={styles.imageContainer}>
                                         <img style={{ maxWidth: "278px", width: "100%",maxHeight:"280px",objectFit:"contain" }} src={item} alt={"productImage"} />

@@ -4,32 +4,37 @@ import { useRef } from 'react'
 import ProductSlider from "./ProductSlider/ProductSlider"
 import styles from './best-selling.module.scss'
 import { useLanguage } from '@/context/languageDetails'
-const BestSelling = ({bestSellerCollectioWithProducts}) => {
+const BestSelling = ({bestSellerHomePageDto}) => {
+  console.log("bestSellerCollectionWithProducts",bestSellerHomePageDto)
+  const bestSellerCollectionWithProducts = bestSellerHomePageDto.bestSellerCollectionWithProducts || []
   const useRefscroll = useRef()
+
   const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
-    console.log("bestSellerCollectioWithProducts",bestSellerCollectioWithProducts)
-    const [selectedCollection, setSelectedCollection] = useState( bestSellerCollectioWithProducts.length > 0
-      ? bestSellerCollectioWithProducts[0]?.id
+  
+    const [selectedCollection, setSelectedCollection] = useState( bestSellerCollectionWithProducts.length > 0
+      ? bestSellerCollectionWithProducts[0]?.collectionId
       : null);
 
-  const bestSellerHeadings = bestSellerCollectioWithProducts
-    .map(data => data?.products?.map(product => product?.heading))
-    .flat() 
-    .find(heading => heading !== undefined)?.split(" ")
+  const bestSellerHeadings = bestSellerHomePageDto.heading?.split(" ")
+  //  bestSellerCollectioWithProducts
+  //   .map(data => data?.products?.map(product => product?.heading))
+  //   .flat() 
+  //   .find(heading => heading !== undefined)?.split(" ")
     const headingFirstWord = bestSellerHeadings ? bestSellerHeadings[0] : ""
 
-    const bestSellerHeadingsArabic = bestSellerCollectioWithProducts
-    .map(data => data?.products?.map(product => product?.headingArabic))
-    .flat() 
-    .find(heading => heading !== undefined)?.split(" ")
+    const bestSellerHeadingsArabic = bestSellerHomePageDto.headingArabic?.split(" ")
+    // bestSellerCollectioWithProducts
+    // .map(data => data?.products?.map(product => product?.headingArabic))
+    // .flat() 
+    // .find(heading => heading !== undefined)?.split(" ")
     const headingFirstWordArabic = bestSellerHeadingsArabic ? bestSellerHeadingsArabic[0] : ""
 
     const BestSelling = {
         product: selectedCollection
-          ? bestSellerCollectioWithProducts
-              .find((data) => data?.id === selectedCollection)
-              .products
+          ? bestSellerCollectionWithProducts
+              .find((data) => data?.collectionId === selectedCollection)
+              .productVariantDtoList
           : [],
       headerTitle:"",
       };
@@ -37,7 +42,7 @@ const BestSelling = ({bestSellerCollectioWithProducts}) => {
         setSelectedCollection(collectionId);
         useRefscroll.current.scrollLeft = 100
       };
-    if (bestSellerCollectioWithProducts && bestSellerCollectioWithProducts.length > 0) {
+    if (bestSellerCollectionWithProducts && bestSellerCollectionWithProducts.length > 0) {
         return (
           <>
             <div className={styles.bestSellingContainer}>
@@ -45,13 +50,13 @@ const BestSelling = ({bestSellerCollectioWithProducts}) => {
               <div className={styles.heading}> <span className={styles.firstWord}>{isArabic ? headingFirstWordArabic : headingFirstWord}</span> {isArabic ? bestSellerHeadingsArabic?.slice(1).join(" ") :  bestSellerHeadings?.slice(1).join(" ")}</div>
               <div className={styles.collectionScrollContainer}>
                 <div className={styles.collectionList}>
-                  {bestSellerCollectioWithProducts.map((data, index) => (
+                  {bestSellerCollectionWithProducts.map((data, index) => (
                     <div ref = {useRefscroll}
-                      key={data.id}
-                      className={`${styles.collectionName} ${selectedCollection === data?.id ? styles.selected : ''}`}
-                      onClick={() => handleCollectionClick(data.id)}
+                      key={data.collectionId}
+                      className={`${styles.collectionName} ${selectedCollection === data?.collectionId ? styles.selected : ''}`}
+                      onClick={() => handleCollectionClick(data.collectionId)}
                     >
-                      {isArabic ? data?.nameArabic : data?.name}
+                      {isArabic ? data?.collectionNameArabic : data?.collectionName}
                     </div>
                   
                   ))}   

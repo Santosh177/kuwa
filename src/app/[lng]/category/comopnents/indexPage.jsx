@@ -14,6 +14,7 @@ const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 import { useLanguage } from "@/context/languageDetails";
 import BannerSection from "./BannerSection/BannerSection";
 import Carousel from "../../Home/Carousel/Carousel";
+import { mappingDealProducts } from "@/services";
 
 
 const MainCategory = ({ isDealPage }) => {

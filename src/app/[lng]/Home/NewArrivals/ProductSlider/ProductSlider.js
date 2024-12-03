@@ -182,15 +182,18 @@ const ProductSlider = ({data}) => {
                 const productId = cardData.productId || ""
                 const dealPrice = cardData.dealFinalPrice || ""
                 const dealId = cardData.dealId || null
+                const variantId = cardData.variantId || null
+                const isVariant = cardData.variantId ?  true : false
                 trackData = {
                   "product Name": productName,
                   "quantity": 1,
                   "product Id":productId,
                   "Page URL":window.location.href,
-                  "Screen":"Home"
+                  "Screen":"Home",
+                  "Variant Id":variantId
                 }
                 return (
-                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId,productName})} handleNotifyMe={()=>handleNotifyMe(productId)} handleNonLogin={()=>handleNonLogin(productId)} />
+                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId,productName,variantId,isVariant})} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} />
                 )
             })
          }

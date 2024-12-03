@@ -13,13 +13,13 @@ import { useAuth } from "@/context/userDetail"
 import { useLanguage } from "@/context/languageDetails"
 import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmailPopup"
 import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/NotifySuccessPopup"
+import { mappingDealProducts } from "@/services"
 
 
 
 
 const RelatedProducts = ({ productData = {} }) => {
     const { relatedProduct = [] } = productData || {};
-    console.log("relatedProduct",relatedProduct)
     const [isLodaing, setIsLoading] = useState(false);
     const leftArrow = useRef(null);
     const clevertapEvent = useCleverTapEvents();
@@ -146,49 +146,58 @@ const RelatedProducts = ({ productData = {} }) => {
                         </div>
                         <div ref={leftArrow} className={style.allProducts}>
                             {relatedProduct.map((item, index) => {
-                                const { id = '', image = '', name = '',nameArabic='', price = {}, seoUrl = '', title = '' } = item || {};
-                                const {dealId, isTimerActive,isDealActive,currentTimerStatus='',dealInventory='',dealIconUrl='',dealTag='',dealDiscountPrice='',dealFinalPrice='',dealListPrice='',normalQuantity=""}= item || {}
-                                const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
-                                const cardData = {
-                                    productName: name,
-                                    productNameArabic: nameArabic,
-                                    finalPrice: finalPrice,
-                                    retailPrice: retailPrice,
-                                    currency: currency,
-                                    discount: discount,
-                                    discountType: discountType,
-                                    image: image || "",
-                                    id: id || "",
-                                    seoUrl:seoUrl || "",
-                                    dealId:dealId || "",
-                                    isTimerActive: isTimerActive,
-                                    isDealActive:isDealActive,
-                                    currentTimerStatus:currentTimerStatus,
-                                    dealInventory:dealInventory,
-                                    tagIconUrl:dealIconUrl,
-                                    tag:dealTag,
-                                    dealDiscountPrice:dealDiscountPrice,
-                                    dealFinalPrice:dealFinalPrice,
-                                    dealListPrice:dealListPrice,
-                                    normalInventory:normalQuantity
-                                }
+                              console.log("relatedProduct",item)
+                                // const { id = '', image = '', name = '',nameArabic='', price = {}, seoUrl = '', title = '' } = item || {};
+                                // const {dealId, isTimerActive,isDealActive,currentTimerStatus='',dealInventory='',dealIconUrl='',dealTag='',dealDiscountPrice='',dealFinalPrice='',dealListPrice='',normalQuantity=""}= item || {}
+                                // const { finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '' } = price || {}
+                                // const cardData = {
+                                //     productName: name,
+                                //     productNameArabic: nameArabic,
+                                //     finalPrice: finalPrice,
+                                //     retailPrice: retailPrice,
+                                //     currency: currency,
+                                //     discount: discount,
+                                //     discountType: discountType,
+                                //     image: image || "",
+                                //     id: id || "",
+                                //     seoUrl:seoUrl || "",
+                                //     dealId:dealId || "",
+                                //     isTimerActive: isTimerActive,
+                                //     isDealActive:isDealActive,
+                                //     currentTimerStatus:currentTimerStatus,
+                                //     dealInventory:dealInventory,
+                                //     tagIconUrl:dealIconUrl,
+                                //     tag:dealTag,
+                                //     dealDiscountPrice:dealDiscountPrice,
+                                //     dealFinalPrice:dealFinalPrice,
+                                //     dealListPrice:dealListPrice,
+                                //     normalInventory:normalQuantity
+                                // }
+                                const cardData = mappingDealProducts(item);
+                                const productName = cardData.productName || ""
+                                const productId = cardData.productId || ""
+                                const dealPrice = cardData.dealFinalPrice || ""
+                                const dealId = cardData.dealId || null
+                                const variantId = cardData.variantId || null
+                                const isVariant = cardData.variantId ?  true : false
                                 console.log("cardData", cardData)
                                 trackData = {
-                                    "product Name": name,
-                                    "quantity": 1,
-                                    "product Id": id,
-                                     "Page URL":window.location.href,
-                                      "Screen":"PDP/RelatedProduct"
+                                  "product Name": productName,
+                                  "quantity": 1,
+                                  "product Id":productId,
+                                  "Page URL":window.location.href,
+                                  "Screen":"Home",
+                                  "Variant Id":variantId
                                 }
-                                let addToCartPayload = {};
-                                if(dealId && isDealActive && isTimerActive,currentTimerStatus=="in-between"){
-                                     addToCartPayload= {"product":id,"quantity":1,"dealId":dealId,dealPrice:dealFinalPrice,productName:name}
-                                }
-                                else{
-                                    addToCartPayload = {"product":id, "quantity":1,productName:name}
-                                }
+                                // let addToCartPayload = {};
+                                // if(dealId && isDealActive && isTimerActive,currentTimerStatus=="in-between"){
+                                //      addToCartPayload= {"product":id,"quantity":1,"dealId":dealId,dealPrice:dealFinalPrice,productName:name}
+                                // }
+                                // else{
+                                //     addToCartPayload = {"product":id, "quantity":1,productName:name}
+                                // }
                                 return (
-                                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart(addToCartPayload)} handleNotifyMe={()=>handleNotifyMe(id)} handleNonLogin={()=>handleNonLogin(id)} />
+                                    <ProductCard key={index} cardData={cardData} addToCart={() => onAddToCart({ product:productId, quantity: 1 ,dealPrice,dealId,productName,variantId,isVariant})} handleNotifyMe={()=>handleNotifyMe(id)} handleNonLogin={()=>handleNonLogin(id)} />
                                 )
                             })}
                         </div>

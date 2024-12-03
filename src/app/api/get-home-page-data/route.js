@@ -12,7 +12,7 @@ export async function GET(req,res) {
   try {
     const customHeader = await authHeader();
     console.log("homepagecustomHeader",customHeader)
-    const cartData =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/home-page`, {
+    const cartData =  await fetch(`${process.env.BACKEND_END_POINT_URL}/module/v2/home-page`, {
       method: 'GET',
       headers: customHeader,
       cache: 'no-store'

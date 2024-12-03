@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import "./image-slider.scss"
 import { useLanguage } from '@/context/languageDetails';
 
-const ImageSlider = ({ images,normalInventory ,selectedVariantQuantity}) => {
+const ImageSlider = ({ images,normalInventory ,selectedVariantQuantity, bestSeller}) => {
     const [current, setCurrent] = useState(0);
     const length = images.length;
 

@@ -11,6 +11,7 @@ import { mappingHomeSearchDealProducts } from '@/services';
 import { useLanguage } from '@/context/languageDetails';
 import { saveSearchData } from '@/services';
 import Loader from '../components/Loader/Loader';
+import { useParams } from 'next/navigation';
 
 
 
@@ -31,10 +32,13 @@ export default function Search() {
   const [isLoading, setIsLoading] = useState(false);
   const [totalResultCount, setTotalResultCount] = useState(0)
 
+  const params = useParams();
+  const dealSeoUrl = params.dealId || null;
+
 
 
   const searchDataCount = totalResultCount || 0;
-  const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.id) || [];
+  const ProductIdList = searchData && searchData?.slice(0,12)?.map((data)=> data.productId) || [];
   const productNameList = searchData && searchData?.slice(0,12)?.map((data) => data.productName) || [];
  
   useEffect(() => {
@@ -239,26 +243,8 @@ console.log("isNoResults",isNoResult)
             {
               searchData && searchData.length > 0 && searchData.slice(0,12).map((data, index) => {
 
-                const { id = '', productImage: image, productName:name, seoUrl = '', title = '',finalPrice = '', retailPrice = '', currency = '', discount = '', discountType = '',dealId="" ,isDealActive="",isTimerActive="",tagIconUrl="",tag="",productNameArabic=""} = data || {};
-                  const cardData = {
-                    productName: name,
-                    finalPrice: finalPrice,
-                    retailPrice: retailPrice,
-                    currency: currency,
-                    discount: discount,
-                    discountType: discountType,
-                    image: image || "",
-                    id: id || "",
-                    seoUrl: seoUrl || "",
-                    dealId:dealId,
-                    isDealActive:isDealActive,
-                    isTimerActive:isTimerActive,
-                    tagIconUrl:tagIconUrl,
-                    tag:tag,
-                    productNameArabic: productNameArabic
-                  }
                 return (
-                  <ProductCard cardData={cardData} searchQuery={searchQuery} />
+                  <ProductCard cardData={data} searchQuery={searchQuery} />
                 )
               })
             }

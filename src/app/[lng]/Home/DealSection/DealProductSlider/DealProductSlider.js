@@ -173,7 +173,7 @@ const handleNotify = async() =>{
                         discount: data.productDiscount,
                         dealDiscountPrice:data.dealDiscountPrice,
                         // discountType: discountType,
-                        image: data?.productImage || "",
+                        image: data?.productImage|| "",
                         id: data?.productId || "",
                         seoUrl: data?.productSeoUrl || "",
                         dealInventory:data?.dealInventory,
@@ -184,7 +184,10 @@ const handleNotify = async() =>{
                         isTimerActive:isTimerActive,
                         currentTimerStatus:currentTimeStatus,
                         tagArabic: tagArabic,
-                        productNameArabic: data?.productNameArabic
+                        productNameArabic: data?.productNameArabic,
+                        isProductBestSeller: data?.isProductBestSeller,
+                        ratingsCount:data.ratingsCount,
+                        overallRating:data.overallRating
                       }
                 }else{
                     cardData = {
@@ -209,9 +212,10 @@ const handleNotify = async() =>{
                       isTimerActive:isTimerActive,
                       currentTimerStatus:currentTimeStatus,
                       tagArabic:tagArabic,
-                      productNameArabic: data?.productNameArabic
-
-
+                      productNameArabic: data?.productNameArabic,
+                      isProductBestSeller: data?.isProductBestSeller,
+                      ratingsCount:data.ratingsCount,
+                      overallRating:data.overallRating
                     }
                 }
 

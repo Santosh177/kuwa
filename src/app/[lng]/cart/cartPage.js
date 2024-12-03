@@ -557,12 +557,12 @@ export default  function Cart({cartData}) {
           }] : [])
         ],
       };
-
-    
+      request["requiredBillingContactFields"].push('phone')
+      request["requiredShippingContactFields"].push('phone')
       if(!isLogin){
-          request["requiredBillingContactFields"].push('phone')
+         
           request["requiredBillingContactFields"].push('email')
-          request["requiredShippingContactFields"].push('phone')
+       
           request["requiredShippingContactFields"].push('email')
       }
       appleSession = new ApplePaySession(3, request);
@@ -627,6 +627,7 @@ export default  function Cart({cartData}) {
               let data = {
                 token: getCheckoutToken.token
               } 
+              console.log("applePayData++++",applePayData)
               placeApplePayOrderFlow({applePayData:applePayData,token:getCheckoutToken.token})
             }
         }
@@ -755,8 +756,8 @@ export default  function Cart({cartData}) {
           "countryCode": selectedCountry.code || "",
           "countryId": selectedCountry.id || "",
           "description": description,
-          "finalAmount": priceDetails['totalAmount'] + customFee,
-          "totalAmount": priceDetails['totalAmount'] + customFee,
+          "finalAmount": priceDetails['totalAmount'] - extraDiscount + customFee,
+          "totalAmount": priceDetails['totalAmount']  + customFee,
           "currency": selectedCountry.currency || "",
           "orderSource": "WEBSITE",
           "orderCategory": "CART",
@@ -776,7 +777,7 @@ export default  function Cart({cartData}) {
         
         const applePayTrackData = {
           "Page URL":window.location.href,
-          "purchaseValue":priceDetails['totalAmount'] + customFee,
+          "purchaseValue":priceDetails['totalAmount'] - extraDiscount + customFee,
           'Payment Type':'Apple pay' || ""
         }
         // trackData['Payment Type'] = 'Apple pay' || ''
