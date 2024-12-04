@@ -15,10 +15,6 @@ export const LanguageProvider = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
  
-  
-
-  console.log("routerProperty",router)
-
   const getInitialLanguage = () => {
     if (typeof window !== 'undefined') {
       const savedLanguageCode = localStorage.getItem('selectedLanguage');

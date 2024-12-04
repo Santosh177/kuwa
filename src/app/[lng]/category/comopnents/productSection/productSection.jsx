@@ -14,9 +14,11 @@ import NotifyEmailPopup from "@/app/[lng]/components/NotifyEmailPopup/NotifyEmai
 import NotifySuccessPopup from "@/app/[lng]/components/NotifySuccessPopup/NotifySuccessPopup"
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import DescriptionSection from "../descriptionSection/DescriptionSection"
+import BannerSection from "../BannerSection/BannerSection"
 
 
-const ProductSection = ({ resposneValue = [] ,isDealPage , description=null}) => {
+
+const ProductSection = ({ resposneValue = [] ,isDealPage , description=null, collectionBannerList = []}) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
     // console.log("resposneValue",resposneValue[0])
@@ -40,6 +42,9 @@ const ProductSection = ({ resposneValue = [] ,isDealPage , description=null}) =>
     const searchParams = useSearchParams();
     const searchKey = searchParams.get('search_key') || "";
     console.log("searchKey",searchKey)
+
+    console.log("resposneValue",resposneValue)
+
     const onAddToCart = async (data) => {
         // const trackingData = {
         //     "product Name": data.productName,
@@ -179,7 +184,12 @@ const handleNonLogin = (id,variantId)=>{
     if (resposneValue && resposneValue.length > 0) {
         return (
             <>
+         
+             
             <div  className={style.productSectionContainer}>
+            <div className={style.collectionBanner}>
+            <BannerSection data={collectionBannerList}/>
+            </div>
         {isDealPage  &&
               <div className={style.headingContent}>
               <div className={style.dealHeading}>{isArabic ? resposneValue[0]?.dealHeadingArabic : resposneValue[0]?.dealHeading}</div>
@@ -230,9 +240,13 @@ const handleNonLogin = (id,variantId)=>{
                             "Screen":"Collection"
                         }
                         return (
+                          <>
+                        
                             <div className={style.product}>
+                             
                                 <ProductCard style={{width:'unset'}} key={index} cardData={cardData} addToCart={() => onAddToCart({ product: productId, quantity: 1,dealId:dealId,variantId:variantId,isVariant,dealPrice:dealPrice,productName })} handleNotifyMe={()=>handleNotifyMe(productId,variantId)} handleNonLogin={()=>handleNonLogin(productId,variantId)} searchKey={searchKey} />
                             </div>
+                            </>
                         )
                     })}
                 </div>

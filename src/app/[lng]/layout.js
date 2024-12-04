@@ -56,7 +56,6 @@ const getUser = async () => {
 };
 
 const getCountryList = async() => {
-  console.log("testt")
   const getCountryListResp  =  await fetch(`${process.env.BACKEND_END_POINT_URL}/api/v1/active/countries/`, {
     method: 'GET',
     next: { revalidate: 300 } ,
@@ -65,7 +64,7 @@ const getCountryList = async() => {
     },
   })
   const countryListData = await getCountryListResp.json();
-  console.log("countryListDatacountryListData",countryListData)
+  // console.log("countryListDatacountryListData",countryListData)
   if(countryListData && countryListData.length > 0){
     return countryListData;
   }
@@ -77,7 +76,7 @@ export default async function RootLayout({ children, params: {
 } }) {
   const userData = await getUser();
   const countryList = await getCountryList();
-  console.log("countryListcountryList,",countryList)
+  // console.log("countryListcountryList,",countryList)
   const { isLogin= false, } = userData || {}
   let selectedCountryData = {};
   if(isLogin){
@@ -104,7 +103,7 @@ export default async function RootLayout({ children, params: {
 
   const isProd = (process.env.NODE_ENV === 'pre-prod') || (process.env.NODE_ENV === 'prod')
 
-console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
+// console.log("CLEVER_TAP_FILE_CONFIG",process.env.CLEVER_TAP_FILE_CONFIG)
 
   return (
     <html lang={lng} dir={dir(lng)}>

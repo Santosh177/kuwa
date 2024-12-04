@@ -12,11 +12,12 @@ import { useCountry } from "@/context/contryDetails";
 const filterDataImg = "https://d25uasl7utydze.cloudfront.net/kuwa/filter.svg";
 const sortByImg = "https://d25uasl7utydze.cloudfront.net/kuwa/sort_by.svg";
 import { useLanguage } from "@/context/languageDetails";
+import BannerSection from "./BannerSection/BannerSection";
+import Carousel from "../../Home/Carousel/Carousel";
 import { mappingDealProducts } from "@/services";
 
 
 const MainCategory = ({ isDealPage }) => {
-    console.log("isDealPage", isDealPage)
     const searchParams = useSearchParams();
     const { selectedCountry = {} } = useCountry();
     const router = useRouter();
@@ -27,17 +28,15 @@ const MainCategory = ({ isDealPage }) => {
     const [isLodingProduct, setIsLoadingProduct] = useState(false);
     const [responseData, setResponseData] = useState({})
     const [description,setDescription] = useState(null)
-   
-
     const [paramsData, setParamsData] = useState({})
+    const [collectionBanners, setCollectionBanners] = useState([])
     const params = useParams();
     const dealSeoUrl = params.dealId || "";
     const collectionSeoUrl = params.id || null
     const { listOfLanguages, selectedLanguage, isArabic, isEnglish, changeLanguage = {} } = useLanguage();
-    console.log("collectionSeoUrl", collectionSeoUrl)
 
     const collectionUrl = window.location.origin + window.location.pathname;
-
+    
     useEffect(() => {
         const category = searchParams.get('category');
         const sort = searchParams.get('sort');
@@ -94,7 +93,6 @@ const MainCategory = ({ isDealPage }) => {
             "deal_seo_url":isDealPage ? dealSeoUrl : null,
             "categorySeoList":null,
         }
-        console.log("paramsData",paramsData)
         if (sort && category.length > 0) {
             dealQueryValue = `sort_by=${(sort)}&category=${encodeURIComponent(category.join(','))}`;
             query = {...query,
@@ -169,7 +167,6 @@ const MainCategory = ({ isDealPage }) => {
                 }
             }   
         }
-        console.log("payload",query)
         let endpoint = `${process.env.BACKEND_END_POINT_URL}/module/main/search/product?country=${selectedCountry.id}`;
 
         if (isDealPage) {
@@ -189,8 +186,7 @@ const MainCategory = ({ isDealPage }) => {
             }
            
             const data = await response.json();
-            console.log("searchAllData",data)
-            const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList } = data || {}
+            const {collectionDescription ,collectionDescriptionArabic,productVariantDtoList,collectionBannerList } = data || {}
             
             if(productVariantDtoList && productVariantDtoList.length === 0){
                 window.location.href = '/'
@@ -198,6 +194,7 @@ const MainCategory = ({ isDealPage }) => {
             }
             setResponseValue(productVariantDtoList);
             setDescription(isArabic ? collectionDescriptionArabic : collectionDescription )
+            setCollectionBanners(collectionBannerList)
            
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -261,8 +258,6 @@ const MainCategory = ({ isDealPage }) => {
         isShowDotForSort = true
 
     }
-    console.log(selectedOptionsHead.sort, "slectedFilter");
-    console.log(isShowDotForSort, "slectedFilter");
 
     return (
         <>
@@ -270,9 +265,10 @@ const MainCategory = ({ isDealPage }) => {
         <link rel="canonical" href={collectionUrl}/>
         </head>
         <div className={style.CategoryIndexPage}>
+       
 
             {isHide && <Header setParamsData={setParamsData} paramsData={paramsData} isShowSeeAllBtn={false} />}
-
+            <div className={style.collectionBannerDiv}><Carousel data={collectionBanners}/></div>
             {isHide && <div className={`${style.FilterTabOptionMobile} ${isArabic ? style['FilterTabOptionMobile-ar'] : style['FilterTabOptionMobile-en']}` } >
                 <div className={style.FilterTabOption}>
                     <div className={style.filterContainer} onClick={() => setSelectedFilter("Filter")} >
@@ -295,7 +291,7 @@ const MainCategory = ({ isDealPage }) => {
 
             {<div className={style.productAndFilter}>
                 {<FilterSection paramsData={paramsData} setParamsData={setParamsData} setSelectedOptionsHead={setSelectedOptionsHead} setSelectedFilter={setSelectedFilter} slectedFilter={slectedFilter} responseData={responseData} />}
-                {isHide && <ProductSection resposneValue={resposneValue} isDealPage={isDealPage} description={description}/>}
+                {isHide && <ProductSection resposneValue={resposneValue} isDealPage={isDealPage} description={description} collectionBannerList={collectionBanners}/>}
             </div >}
             {isHide && responseData && Object.keys(responseData).length > 0 && <Footer />}
             <Loader isShow={isLoding} />

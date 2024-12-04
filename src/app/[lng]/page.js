@@ -12,9 +12,9 @@ const mixpanel = Mixpanel.init('d670cab0105c2c17aaea07a016f2d46f',
   });
 
 export const mixPanelTrackEvent=(eventName, eventData,userId,clientIpAddress) => {
-  console.log("clientIp",clientIpAddress)
+  // console.log("clientIp",clientIpAddress)
   const nextCookies = cookies();
-  console.log("cookiesData",nextCookies)
+  // console.log("cookiesData",nextCookies)
   const deviceId = nextCookies.get('deviceID').value; 
   const countryId = nextCookies.get('countryId').value;
   eventData['countryId'] = countryId || null
@@ -32,7 +32,7 @@ export const mixPanelIdentifyUser = (userId, userProperties) => {
 
 
 
-console.log("mixpanel+++",mixpanel.config.logger)
+// console.log("mixpanel+++",mixpanel.config.logger)
 
 export default async function page({req}) {
   console.log("mixpanelbjbejbw",req)
