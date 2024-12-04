@@ -38,7 +38,7 @@ const BannerSection = ({data}) => {
     {
       data.length > 0  &&  <div className={style.bannerSection}>
         <Glider
-          className={`glide ${style.glide}`}
+         className="collection-banner-glider"
           slidesToShow={1}
           slidesToScroll={'auto'}
           dots={true}
@@ -54,7 +54,7 @@ const BannerSection = ({data}) => {
             data.map((item, index) => {
               return (
                 <div key={index} className={style.glideSlide}>
-                  <img src={item.image} alt={item.alt} />
+                  <img src={item.imageUrl} alt={item.alt} />
                   <div className={style.caption}>{item.caption}</div>
                 </div>
               )

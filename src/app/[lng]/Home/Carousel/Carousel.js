@@ -60,7 +60,7 @@ const Carousel = ({ data }) => {
           {data.map((data, index) => (
   <div className={styles.carouselSlide} key={data.id}  onClick={() => router.push(data.redirectionLink)}>
     <img
-     src={data.image}
+     src={data.image || data.imageUrl}
       alt={index}
     />
   </div>

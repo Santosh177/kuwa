@@ -18,7 +18,7 @@ import BannerSection from "../BannerSection/BannerSection"
 
 
 
-const ProductSection = ({ resposneValue = [] ,isDealPage , description=null}) => {
+const ProductSection = ({ resposneValue = [] ,isDealPage , description=null, collectionBannerList = []}) => {
     const {listOfLanguages , selectedLanguage, isArabic, isEnglish, changeLanguage={}} = useLanguage();
 
     // console.log("resposneValue",resposneValue[0])
@@ -43,40 +43,8 @@ const ProductSection = ({ resposneValue = [] ,isDealPage , description=null}) =>
     const searchKey = searchParams.get('search_key') || "";
     console.log("searchKey",searchKey)
 
-    const collectionBanner = [{
-      "id": 12,
-      "createdAt": "2024-03-11T09:17:14",
-      "modifiedAt": "2024-11-14T14:16:48",
-      "isActive": true,
-      "updatedBy": null,
-      "image": "https://dcngmd8umaj1u.cloudfront.net/secondary_%282%29_1710072780303.png",
-      "redirectionLink": "/products/products-elete-electrolytes-citrilyte-hydration-drops-60ml-refill-bottle-makes-20-litres-of-electrolyte-drink-with-a-lemon-twist",
-      "rank": 1,
-      "countryId": 8
-  },
-  {
-      "id": 14,
-      "createdAt": null,
-      "modifiedAt": "2024-11-14T14:16:48",
-      "isActive": true,
-      "updatedBy": null,
-      "image": "https://dcngmd8umaj1u.cloudfront.net/primary_banner_1_1727365870340.jpg",
-      "redirectionLink": "/collections",
-      "rank": 2,
-      "countryId": 8
-  },
-  {
-    "id": 14,
-    "createdAt": null,
-    "modifiedAt": "2024-11-14T14:16:48",
-    "isActive": true,
-    "updatedBy": null,
-    "image": "https://dcngmd8umaj1u.cloudfront.net/primary_banner_1_1727365870340.jpg",
-    "redirectionLink": "/collections",
-    "rank": 2,
-    "countryId": 8
-},
-]
+    console.log("resposneValue",resposneValue)
+
     const onAddToCart = async (data) => {
         // const trackingData = {
         //     "product Name": data.productName,
@@ -216,8 +184,12 @@ const handleNonLogin = (id,variantId)=>{
     if (resposneValue && resposneValue.length > 0) {
         return (
             <>
+         
+             
             <div  className={style.productSectionContainer}>
-                <BannerSection data={collectionBanner}/>
+            <div className={style.collectionBanner}>
+            <BannerSection data={collectionBannerList}/>
+            </div>
         {isDealPage  &&
               <div className={style.headingContent}>
               <div className={style.dealHeading}>{isArabic ? resposneValue[0]?.dealHeadingArabic : resposneValue[0]?.dealHeading}</div>
