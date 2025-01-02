@@ -10,7 +10,7 @@ const DescriptionSection = ({description}) => {
     console.log("collectiondescription", description)
   return (
     <>
-   {(selectedCountry.code == "QA" &&  description) && <div className={style.DescriptionSection}>
+   { description && <div className={style.DescriptionSection}>
     <div className={style.descriptionData} dangerouslySetInnerHTML={{ __html: description }}></div>
     </div>}
     </>

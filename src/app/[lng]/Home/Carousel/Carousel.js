@@ -11,7 +11,6 @@ import styles from './Carsoul.module.scss'
 
 
 const Carousel = ({ data }) => {
-  // console.log("primaryBanner",primaryBanner)
   const router = useRouter();
   const MAX = data && data.length ;
   const intervalRef = React.useRef(null);
@@ -29,7 +28,7 @@ const Carousel = ({ data }) => {
         }, 6000);
       }
     }
-  }, []);
+  }, [MAX]);
 
   React.useEffect(
     () => () => {
