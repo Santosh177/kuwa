@@ -1,8 +1,9 @@
 # Stage 1: Build the Next.js app
-FROM node:14.17.2-slim AS build
-
+#FROM node:14.17.2-slim AS build
+FROM node:16-slim AS build
 # Set environment variables
-ENV NODE_ENV=staging
+#ENV NODE_ENV=staging
+RUN NODE_OPTIONS="--max-old-space-size=4096"
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -13,8 +14,8 @@ RUN npm install -g node-gyp
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
-# Remove package-lock.json (optional, only if you don't need it)
-RUN rm -rf ./package-lock.json
+# Remove package-lock.json (optional, only if you don't need i
+RUN rm -rf node_modules package-lock.json
 
 # Install dependencies
 RUN npm install
@@ -23,7 +24,7 @@ RUN npm install
 COPY . .
 
 # Build the Next.js app
-RUN npm run build
+RUN npm run build --verbose
 
 # Expose the necessary port (default: 3000)
 EXPOSE 3000
