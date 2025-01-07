@@ -15,7 +15,7 @@ RUN npm install -g node-gyp
 COPY package*.json ./
 
 # Remove package-lock.json (optional, only if you don't need i
-RUN rm -rf node_modules package-lock.json
+RUN rm -rf package-lock.json
 
 # Install dependencies
 RUN npm install
@@ -23,11 +23,9 @@ RUN npm install
 # Copy the rest of the application source code
 COPY . .
 
-# Build the Next.js app
-RUN npm run build --verbose
 
 # Expose the necessary port (default: 3000)
 EXPOSE 3000
 
 # Run the Next.js app in production mode
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
