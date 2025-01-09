@@ -41,7 +41,7 @@ const Carousel = ({ data }) => {
 
   return (
     <>
-    {data.length > 0 &&   <div className={styles.carouselContainer} >
+    {data?.length > 0 &&   <div className={styles.carouselContainer} >
         <Glider 
           className="home-banner-glider"
           draggable

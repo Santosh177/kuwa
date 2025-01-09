@@ -36,7 +36,7 @@ const BannerSection = ({data}) => {
   return (
     <>
     {
-      data.length > 0  &&  <div className={style.bannerSection}>
+      data?.length > 0  &&  <div className={style.bannerSection}>
         <Glider
          className="collection-banner-glider"
           slidesToShow={1}
