@@ -1,7 +1,7 @@
 const {
     PHASE_DEVELOPMENT_SERVER,
     PHASE_PRODUCTION_BUILD,
-  } = require('next/constants')
+  } = require('next/constants') 
 
 
 
